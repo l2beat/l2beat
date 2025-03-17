@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 314982694,
+  "blockNumber": 316659947,
   "configHash": "0xd00de7eeca2b2a0b0236bf7cd6a3a412852130f4c848803ffabce6e6a57fd75c",
   "entries": [
     {
@@ -82,9 +82,14 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 31044,
+        "exitNum": 31167,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       }
+    },
+    {
+      "address": "0x0adc7D8eB4C01219858a579C9539780CD9575035",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ConstitutionHash",
@@ -104,6 +109,11 @@
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
       "derivedName": "ArbitrumDAOConstitution"
+    },
+    {
+      "address": "0x25032D068633cfbe52c134EBdD965b2C2B4C2710",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L2SurplusFee",
@@ -332,6 +342,12 @@
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
           "permission": "upgrade",
           "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
           "via": [
@@ -342,6 +358,14 @@
         {
           "permission": "upgrade",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "via": [
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -365,7 +389,23 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "via": [
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "via": [
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -485,6 +525,71 @@
         "l2Router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2DaiGateway"
+    },
+    {
+      "name": "CoreGovernor",
+      "address": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+      "type": "Contract",
+      "template": "orbitstack/layer2/SecurityCouncilMemberElectionGovernor",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xbcc218f5d48d8d9586a0b76adac248d0d98ed5bfff9fe653d1bfe25a169b6ffa"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Governance contract for the Security Council member elections.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
+          "via": [
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "via": [
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to replace a Security Council member cohort."
+        }
+      ],
+      "sinceTimestamp": 1692138965,
+      "sinceBlock": 121763102,
+      "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0xbD5016a7946a82b938242573ED63ccB8962A4acB",
+        "$pastUpgrades": [
+          [
+            "2023-08-15T22:36:05.000Z",
+            "0xb2e6f470d1e229cc4225234ae7df52ace563c7b0b9e3ad63a02f535f47e3ac6b",
+            ["0xbD5016a7946a82b938242573ED63ccB8962A4acB"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "COUNTING_MODE": "support=for&params=account&counting=n-winners",
+        "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "fullWeightDuration": 50400,
+        "name": "SecurityCouncilMemberElectionGovernor",
+        "nomineeElectionGovernor": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
+        "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+        "proposalThreshold": 0,
+        "securityCouncilManager": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+        "token": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "version": "1",
+        "votingDelay": 0,
+        "votingPeriod": 151200
+      },
+      "derivedName": "SecurityCouncilMemberElectionGovernor"
     },
     {
       "name": "yoav.eth-EF",
@@ -668,6 +773,76 @@
       }
     },
     {
+      "name": "CoreGovernor",
+      "address": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+      "type": "Contract",
+      "template": "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x5bdeb7706e97db783f9241a25d475bd0ea0437e6f9447bf27327c10f14f3340f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Governance contract for the Security Council member removals.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
+          "via": [
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "via": [
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to remove a Security Council member."
+        }
+      ],
+      "sinceTimestamp": 1692138965,
+      "sinceBlock": 121763102,
+      "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635",
+        "$pastUpgrades": [
+          [
+            "2023-08-15T22:36:05.000Z",
+            "0xb2e6f470d1e229cc4225234ae7df52ace563c7b0b9e3ad63a02f535f47e3ac6b",
+            ["0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "COUNTING_MODE": "support=for,against&quorum=for",
+        "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
+        "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "lateQuorumVoteExtension": 14400,
+        "name": "SecurityCouncilMemberRemovalGovernor",
+        "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+        "proposalExpirationBlocks": 100800,
+        "proposalThreshold": "1000000000000000000000000",
+        "quorumDenominator": 10000,
+        "quorumNumerator": 1000,
+        "securityCouncilManager": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+        "token": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "version": "1",
+        "VOTE_SUCCESS_DENOMINATOR": 10000,
+        "voteSuccessNumerator": 8333,
+        "votingDelay": 21600,
+        "votingPeriod": 100800
+      },
+      "derivedName": "SecurityCouncilMemberRemovalGovernor"
+    },
+    {
       "name": "UpgradeExecRouteBuilder",
       "address": "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a",
       "type": "Contract",
@@ -771,6 +946,82 @@
       "derivedName": ""
     },
     {
+      "name": "SecurityCouncilNomineeElectionGovernor",
+      "address": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
+      "type": "Contract",
+      "template": "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x1b614f721e7a1fbf0cd6458e4e4e3149daadc88d1ec12b6621c365ea9b6632be"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Governance contract for the Security Council nominee elections.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
+          "via": [
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "via": [
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
+          ]
+        }
+      ],
+      "sinceTimestamp": 1692138965,
+      "sinceBlock": 121763102,
+      "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0xd3Ae921B220bedC2f94a5968E25535a476A9518C",
+        "$pastUpgrades": [
+          [
+            "2023-08-15T22:36:05.000Z",
+            "0xb2e6f470d1e229cc4225234ae7df52ace563c7b0b9e3ad63a02f535f47e3ac6b",
+            ["0x8436A1bc9f9f9EB0cF1B51942C5657b60A40CCDD"]
+          ],
+          [
+            "2024-03-08T13:10:20.000Z",
+            "0x2e784329480dcb755f6224186b5e0d0a32aa666698d06d0fea5c19f71ed5a9c3",
+            ["0xd3Ae921B220bedC2f94a5968E25535a476A9518C"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "COUNTING_MODE": "support=for&params=account&counting=threshold",
+        "currentCohort": 1,
+        "electionCount": 4,
+        "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
+        "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "firstNominationStartDate": {
+          "year": 2023,
+          "month": 9,
+          "day": 15,
+          "hour": 12
+        },
+        "name": "SecurityCouncilNomineeElectionGovernor",
+        "nomineeVetter": "0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C",
+        "nomineeVettingDuration": 100800,
+        "otherCohort": 0,
+        "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+        "proposalThreshold": 0,
+        "quorumDenominator": 10000,
+        "quorumNumerator": 20,
+        "securityCouncilManager": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+        "securityCouncilMemberElectionGovernor": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+        "state": [],
+        "token": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "version": "1",
+        "votingDelay": 50400,
+        "votingPeriod": 50400
+      }
+    },
+    {
       "name": "L2ArbitrumToken",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
       "type": "Contract",
@@ -871,6 +1122,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xa98290a7A282d8249544D35b288E160A5580D57E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L2SecurityCouncilPropose",
       "address": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
       "type": "Contract",
@@ -885,6 +1141,26 @@
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to add a new member to the Security Council."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to remove a Security Council member."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to replace a Security Council member."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to rotate a Security Council member (same member, new address)."
         }
       ],
       "directlyReceivedPermissions": [
@@ -1042,6 +1318,49 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xC3514C143Df27eB29AC4c56c59A260713B841BDd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc43a77b64b34551beA865C9E85A116B444EF44B1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1692125924,
+      "sinceBlock": 121718845,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0xa98290a7A282d8249544D35b288E160A5580D57E",
+          "0xc43a77b64b34551beA865C9E85A116B444EF44B1",
+          "0x25032D068633cfbe52c134EBdD965b2C2B4C2710",
+          "0x0adc7D8eB4C01219858a579C9539780CD9575035",
+          "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2",
+          "0xC3514C143Df27eB29AC4c56c59A260713B841BDd"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xe4f0ec755d38a2bdac77c78b062de0dd8c27b669b85a64db9795ff13d57e3f18",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 6,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "L2ARBGateway",
       "address": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
       "type": "Contract",
@@ -1085,7 +1404,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2022,
+        "exitNum": 2023,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
@@ -1133,6 +1452,11 @@
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200,
           "description": "manage all access control roles and change the minimum delay."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles."
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -1193,6 +1517,54 @@
       "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "description": "schedule a proposal to replace a Security Council member cohort.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "description": "schedule a proposal to remove a Security Council member.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to add a new member to the Security Council.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to remove a Security Council member.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to replace a Security Council member.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to rotate a Security Council member (same member, new address).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
           "permission": "upgrade",
           "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
           "via": [
@@ -1237,8 +1609,10 @@
         ],
         "$upgradeCount": 1,
         "COHORT_REPLACER_ROLE": "0x1b3e51262cf8f48cf0dc9fdd7d86c0378cf467608e72e72cd4da66efe423f195",
+        "cohortReplacerAC": ["0x467923B9AE90BDB36BA88eCA11604D45F13b712C"],
         "cohortSize": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "getBothCohorts": [
           "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
           "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
@@ -1275,6 +1649,13 @@
         "MEMBER_REMOVER_ROLE": "0x1f53fe8d2028e3a743c2a9f8a37ec4e6497bdeb138c332a42c6b247ed57af6bc",
         "MEMBER_REPLACER_ROLE": "0xbc0a6794965897e766f364ebb1616218e4b9b088c2e6fa66bc81beb32118e600",
         "MEMBER_ROTATOR_ROLE": "0xa44e94d0336494999bf078b89dcb976c3a263d47c50d54108482296643cc399d",
+        "memberAdderAC": ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"],
+        "memberRemoverAC": [
+          "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+        ],
+        "memberReplacerAC": ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"],
+        "memberRotatorAC": ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"],
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "router": "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a",
         "securityCouncils": [
@@ -1363,7 +1744,19 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
+        },
+        {
+          "permission": "upgrade",
           "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0"
         },
         {
           "permission": "upgrade",
@@ -1397,6 +1790,11 @@
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "gzeon-OffchainLabs",
@@ -1527,6 +1925,12 @@
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
           "permission": "upgrade",
           "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
           "via": [
@@ -1537,6 +1941,14 @@
         {
           "permission": "upgrade",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "via": [
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1560,7 +1972,23 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "via": [
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+          "via": [
+            { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
+            { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8a1cDA8dee421cD06023470608605934c16A05a0",
           "via": [
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" },
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }
@@ -1730,6 +2158,86 @@
       "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256, uint256, bytes _data) payable returns (bytes res)",
       "function postUpgradeInit()",
       "function router() view returns (address)"
+    ],
+    "0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635": [
+      "constructor()",
+      "error AbstainDisallowed()",
+      "error CallNotRemoveMember(bytes4 selector, bytes4 expectedSelector)",
+      "error Empty()",
+      "error InvalidOperationsLength(uint256 len)",
+      "error InvalidVoteSuccessNumerator(uint256 voteSuccessNumerator)",
+      "error MemberNotFound(address memberToRemove)",
+      "error NotAContract(address account)",
+      "error TargetNotManager(address target)",
+      "error UnexpectedCalldataLength(uint256 len)",
+      "error ValueNotZero(uint256 value)",
+      "event Initialized(uint8 version)",
+      "event LateQuorumVoteExtensionSet(uint64 oldVoteExtension, uint64 newVoteExtension)",
+      "event MemberRemovalProposed(address memberToRemove, string description)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalCanceled(uint256 proposalId)",
+      "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 proposalId)",
+      "event ProposalExtended(uint256 indexed proposalId, uint64 extendedDeadline)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event QuorumNumeratorUpdated(uint256 oldQuorumNumerator, uint256 newQuorumNumerator)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason)",
+      "event VoteCastWithParams(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params)",
+      "event VoteSuccessNumeratorSet(uint256 indexed voteSuccessNumerator)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function BALLOT_TYPEHASH() view returns (bytes32)",
+      "function COUNTING_MODE() pure returns (string)",
+      "function EXCLUDE_ADDRESS() view returns (address)",
+      "function EXTENDED_BALLOT_TYPEHASH() view returns (bytes32)",
+      "function VOTE_SUCCESS_DENOMINATOR() view returns (uint256)",
+      "function castVote(uint256 proposalId, uint8 support) returns (uint256)",
+      "function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) returns (uint256)",
+      "function castVoteWithReason(uint256 proposalId, uint8 support, string reason) returns (uint256)",
+      "function castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) returns (uint256)",
+      "function castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) returns (uint256)",
+      "function execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) payable returns (uint256)",
+      "function getPastCirculatingSupply(uint256 blockNumber) view returns (uint256)",
+      "function getVotes(address account, uint256 blockNumber) view returns (uint256)",
+      "function getVotesWithParams(address account, uint256 blockNumber, bytes params) view returns (uint256)",
+      "function hasVoted(uint256 proposalId, address account) view returns (bool)",
+      "function hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) pure returns (uint256)",
+      "function initialize(uint256 _voteSuccessNumerator, address _securityCouncilManager, address _token, address _owner, uint256 _votingDelay, uint256 _votingPeriod, uint256 _quorumNumerator, uint256 _proposalThreshold, uint64 _minPeriodAfterQuorum, uint256 _proposalExpirationBlocks)",
+      "function lateQuorumVoteExtension() view returns (uint64)",
+      "function name() view returns (string)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function proposalDeadline(uint256 proposalId) view returns (uint256)",
+      "function proposalExpirationBlocks() view returns (uint256)",
+      "function proposalExpirationDeadline(uint256 proposalId) view returns (uint256)",
+      "function proposalSnapshot(uint256 proposalId) view returns (uint256)",
+      "function proposalThreshold() view returns (uint256)",
+      "function proposalVotes(uint256 proposalId) view returns (uint256 againstVotes, uint256 forVotes, uint256 abstainVotes)",
+      "function propose(address[] targets, uint256[] values, bytes[] calldatas, string description) returns (uint256)",
+      "function quorum(uint256 blockNumber) view returns (uint256)",
+      "function quorumDenominator() pure returns (uint256)",
+      "function quorumNumerator(uint256 blockNumber) view returns (uint256)",
+      "function quorumNumerator() view returns (uint256)",
+      "function relay(address target, uint256 value, bytes data)",
+      "function renounceOwnership()",
+      "function securityCouncilManager() view returns (address)",
+      "function separateSelector(bytes calldataWithSelector) pure returns (bytes4, bytes)",
+      "function setLateQuorumVoteExtension(uint64 newVoteExtension)",
+      "function setProposalThreshold(uint256 newProposalThreshold)",
+      "function setVoteSuccessNumerator(uint256 _voteSuccessNumerator)",
+      "function setVotingDelay(uint256 newVotingDelay)",
+      "function setVotingPeriod(uint256 newVotingPeriod)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateQuorumNumerator(uint256 newQuorumNumerator)",
+      "function version() view returns (string)",
+      "function voteSuccessNumerator() view returns (uint256)",
+      "function votingDelay() view returns (uint256)",
+      "function votingPeriod() view returns (uint256)"
     ],
     "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d": [
       "constructor(address[] recipients, uint256[] weights)",
@@ -1918,6 +2426,17 @@
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
     ],
+    "0x467923B9AE90BDB36BA88eCA11604D45F13b712C": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64": [
       "constructor()",
       "error CohortFull(uint8 cohort)",
@@ -2055,6 +2574,17 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unpause()"
     ],
+    "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": [
       "constructor(tuple(uint256 chainId, tuple(address inbox, address upgradeExecutor) location)[] _upgradeExecutors, address _l1ArbitrumTimelock, uint256 _l1TimelockMinDelay)",
       "error EmptyActionBytesData(bytes[])",
@@ -2120,6 +2650,17 @@
       "function postUpgradeInit()",
       "function router() view returns (address)"
     ],
+    "0x8a1cDA8dee421cD06023470608605934c16A05a0": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x912CE59144191C1204E64559FE8253a0e49E6548": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2146,6 +2687,88 @@
     ],
     "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941": [
       "constructor(address _singleton)"
+    ],
+    "0xbD5016a7946a82b938242573ED63ccB8962A4acB": [
+      "constructor()",
+      "error CastVoteDisabled()",
+      "error Empty()",
+      "error FullWeightDurationGreaterThanVotingPeriod(uint256 fullWeightDuration, uint256 votingPeriod)",
+      "error InsufficientVotes(uint256 prevVotesUsed, uint256 votes, uint256 availableVotes)",
+      "error InvalidDurations(uint256 fullWeightDuration, uint256 votingPeriod)",
+      "error InvalidSupport(uint8 support)",
+      "error LengthsDontMatch(uint256 nomineesLength, uint256 weightsLength)",
+      "error NotAContract(address account)",
+      "error NotCompliantNominee(address nominee)",
+      "error NotEnoughNominees(uint256 numNominees, uint256 k)",
+      "error OnlyNomineeElectionGovernor()",
+      "error ProposeDisabled()",
+      "error UintTooLarge(uint256 x)",
+      "error UnexpectedParamsLength(uint256 paramLength)",
+      "error VoteAlreadyCast(address voter, uint256 proposalId, bytes32 replayHash)",
+      "error ZeroWeightVote(uint256 blockNumber, uint256 votes)",
+      "event FullWeightDurationSet(uint256 newFullWeightDuration)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalCanceled(uint256 proposalId)",
+      "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 proposalId)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason)",
+      "event VoteCastForNominee(address indexed voter, uint256 indexed proposalId, address indexed nominee, uint256 votes, uint256 weight, uint256 totalUsedVotes, uint256 usableVotes, uint256 weightReceived)",
+      "event VoteCastWithParams(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function BALLOT_TYPEHASH() view returns (bytes32)",
+      "function COUNTING_MODE() pure returns (string)",
+      "function EXTENDED_BALLOT_TYPEHASH() view returns (bytes32)",
+      "function castVote(uint256, uint8) returns (uint256)",
+      "function castVoteBySig(uint256, uint8, uint8, bytes32, bytes32) returns (uint256)",
+      "function castVoteWithReason(uint256, uint8, string) returns (uint256)",
+      "function castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) returns (uint256)",
+      "function castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) returns (uint256)",
+      "function electionIndexToCohort(uint256 electionIndex) pure returns (uint8)",
+      "function electionIndexToDescription(uint256 electionIndex) pure returns (string)",
+      "function execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) payable returns (uint256)",
+      "function fullWeightDuration() view returns (uint256)",
+      "function fullWeightVotingDeadline(uint256 proposalId) view returns (uint256)",
+      "function getProposeArgs(uint256 electionIndex) pure returns (address[], uint256[], bytes[], string)",
+      "function getVotes(address account, uint256 blockNumber) view returns (uint256)",
+      "function getVotesWithParams(address account, uint256 blockNumber, bytes params) view returns (uint256)",
+      "function hasVoted(uint256 proposalId, address account) view returns (bool)",
+      "function hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) pure returns (uint256)",
+      "function initialize(address _nomineeElectionGovernor, address _securityCouncilManager, address _token, address _owner, uint256 _votingPeriod, uint256 _fullWeightDuration)",
+      "function name() view returns (string)",
+      "function nomineeElectionGovernor() view returns (address)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function proposalDeadline(uint256 proposalId) view returns (uint256)",
+      "function proposalSnapshot(uint256 proposalId) view returns (uint256)",
+      "function proposalThreshold() pure returns (uint256)",
+      "function propose(address[], uint256[], bytes[], string) returns (uint256)",
+      "function proposeFromNomineeElectionGovernor(uint256 electionIndex) returns (uint256)",
+      "function quorum(uint256) pure returns (uint256)",
+      "function relay(address target, uint256 value, bytes data)",
+      "function renounceOwnership()",
+      "function securityCouncilManager() view returns (address)",
+      "function selectTopNominees(address[] nominees, uint240[] weights, uint256 k) pure returns (address[])",
+      "function setFullWeightDuration(uint256 newFullWeightDuration)",
+      "function setProposalThreshold(uint256 newProposalThreshold)",
+      "function setVotingDelay(uint256 newVotingDelay)",
+      "function setVotingPeriod(uint256 newVotingPeriod)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function topNominees(uint256 proposalId) view returns (address[])",
+      "function transferOwnership(address newOwner)",
+      "function usedNonces(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function votesToWeight(uint256 proposalId, uint256 blockNumber, uint256 votes) view returns (uint240)",
+      "function votesUsed(uint256 proposalId, address account) view returns (uint256)",
+      "function votingDelay() view returns (uint256)",
+      "function votingPeriod() view returns (uint256)",
+      "function weightReceived(uint256 proposalId, address nominee) view returns (uint256)"
     ],
     "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649": [
       "constructor(address[] recipients, uint256[] weights)",
@@ -2227,6 +2850,9 @@
       "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
+    "0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C": [
+      "constructor(address _singleton)"
+    ],
     "0xCaD7828a19b363A2B44717AFB1786B5196974D8E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2248,6 +2874,129 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xd3Ae921B220bedC2f94a5968E25535a476A9518C": [
+      "constructor()",
+      "error AccountInOtherCohort(uint8 cohort, address account)",
+      "error AlreadyContender(address contender)",
+      "error CastVoteDisabled()",
+      "error CompliantNomineeTargetHit(uint256 nomineeCount, uint256 expectedCount)",
+      "error CreateTooEarly(uint256 blockTimestamp, uint256 startTime)",
+      "error Deprecated(string message)",
+      "error Empty()",
+      "error InsufficientCompliantNomineeCount(uint256 compliantNomineeCount, uint256 expectedCount)",
+      "error InsufficientTokens(uint256 votes, uint256 prevVotesUsed, uint256 weight)",
+      "error InvalidSignature()",
+      "error InvalidStartDate(uint256 year, uint256 month, uint256 day, uint256 hour)",
+      "error InvalidSupport(uint8 support)",
+      "error LastMemberElectionNotExecuted(uint256 prevProposalId)",
+      "error NomineeAlreadyAdded(address nominee)",
+      "error NomineeAlreadyExcluded(address nominee)",
+      "error NotAContract(address account)",
+      "error NotEligibleContender(address contender)",
+      "error NotNominee(address nominee)",
+      "error OnlyNomineeVetter()",
+      "error ProposalIdMismatch(uint256 nomineeProposalId, uint256 memberProposalId)",
+      "error ProposalInVettingPeriod(uint256 blockNumber, uint256 vettingDeadline)",
+      "error ProposalNotInVettingPeriod(uint256 blockNumber, uint256 vettingDeadline)",
+      "error ProposalNotPending(uint8 state)",
+      "error ProposalNotSucceededState(uint8 state)",
+      "error ProposeDisabled()",
+      "error QuorumNumeratorTooLow(uint256 quorumNumeratorValue)",
+      "error StartDateTooEarly(uint256 startTime, uint256 currentTime)",
+      "error UnexpectedParamsLength(uint256 paramLength)",
+      "error VoteAlreadyCast(address voter, uint256 proposalId, bytes32 replayHash)",
+      "error ZeroAddress()",
+      "event ContenderAdded(uint256 indexed proposalId, address indexed contender)",
+      "event Initialized(uint8 version)",
+      "event NewNominee(uint256 indexed proposalId, address indexed nominee)",
+      "event NomineeExcluded(uint256 indexed proposalId, address indexed nominee)",
+      "event NomineeVetterChanged(address indexed oldNomineeVetter, address indexed newNomineeVetter)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalCanceled(uint256 proposalId)",
+      "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 proposalId)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event QuorumNumeratorUpdated(uint256 oldQuorumNumerator, uint256 newQuorumNumerator)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason)",
+      "event VoteCastForContender(uint256 indexed proposalId, address indexed voter, address indexed contender, uint256 votes, uint256 totalUsedVotes, uint256 usableVotes)",
+      "event VoteCastWithParams(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function BALLOT_TYPEHASH() view returns (bytes32)",
+      "function COUNTING_MODE() pure returns (string)",
+      "function EXCLUDE_ADDRESS() view returns (address)",
+      "function EXTENDED_BALLOT_TYPEHASH() view returns (bytes32)",
+      "function addContender(uint256) pure",
+      "function addContender(uint256 proposalId, bytes signature)",
+      "function castVote(uint256, uint8) returns (uint256)",
+      "function castVoteBySig(uint256, uint8, uint8, bytes32, bytes32) returns (uint256)",
+      "function castVoteWithReason(uint256, uint8, string) returns (uint256)",
+      "function castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) returns (uint256)",
+      "function castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) returns (uint256)",
+      "function compliantNomineeCount(uint256 proposalId) view returns (uint256)",
+      "function compliantNominees(uint256 proposalId) view returns (address[])",
+      "function createElection() returns (uint256 proposalId)",
+      "function currentCohort() view returns (uint8)",
+      "function electionCount() view returns (uint256)",
+      "function electionIndexToCohort(uint256 electionIndex) pure returns (uint8)",
+      "function electionIndexToDescription(uint256 electionIndex) pure returns (string)",
+      "function electionToTimestamp(uint256 electionIndex) view returns (uint256)",
+      "function excludeNominee(uint256 proposalId, address nominee)",
+      "function excludedNomineeCount(uint256 proposalId) view returns (uint256)",
+      "function execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) payable returns (uint256)",
+      "function firstNominationStartDate() view returns (uint256 year, uint256 month, uint256 day, uint256 hour)",
+      "function getPastCirculatingSupply(uint256 blockNumber) view returns (uint256)",
+      "function getProposeArgs(uint256 electionIndex) pure returns (address[], uint256[], bytes[], string)",
+      "function getVotes(address account, uint256 blockNumber) view returns (uint256)",
+      "function getVotesWithParams(address account, uint256 blockNumber, bytes params) view returns (uint256)",
+      "function hasVoted(uint256 proposalId, address account) view returns (bool)",
+      "function hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) pure returns (uint256)",
+      "function includeNominee(uint256 proposalId, address account)",
+      "function initialize(tuple(tuple(uint256 year, uint256 month, uint256 day, uint256 hour) firstNominationStartDate, uint256 nomineeVettingDuration, address nomineeVetter, address securityCouncilManager, address securityCouncilMemberElectionGovernor, address token, address owner, uint256 quorumNumeratorValue, uint256 votingPeriod) params)",
+      "function isCompliantNominee(uint256 proposalId, address account) view returns (bool)",
+      "function isContender(uint256 proposalId, address possibleContender) view returns (bool)",
+      "function isExcluded(uint256 proposalId, address possibleExcluded) view returns (bool)",
+      "function isNominee(uint256 proposalId, address contender) view returns (bool)",
+      "function name() view returns (string)",
+      "function nomineeCount(uint256 proposalId) view returns (uint256)",
+      "function nomineeVetter() view returns (address)",
+      "function nomineeVettingDuration() view returns (uint256)",
+      "function nominees(uint256 proposalId) view returns (address[])",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function otherCohort() view returns (uint8)",
+      "function owner() view returns (address)",
+      "function proposalDeadline(uint256 proposalId) view returns (uint256)",
+      "function proposalSnapshot(uint256 proposalId) view returns (uint256)",
+      "function proposalThreshold() view returns (uint256)",
+      "function proposalVettingDeadline(uint256 proposalId) view returns (uint256)",
+      "function propose(address[], uint256[], bytes[], string) returns (uint256)",
+      "function quorum(uint256 blockNumber) view returns (uint256)",
+      "function quorumDenominator() pure returns (uint256)",
+      "function quorumNumerator(uint256 blockNumber) view returns (uint256)",
+      "function quorumNumerator() view returns (uint256)",
+      "function recoverAddContenderMessage(uint256 proposalId, bytes signature) view returns (address)",
+      "function relay(address target, uint256 value, bytes data)",
+      "function renounceOwnership()",
+      "function securityCouncilManager() view returns (address)",
+      "function securityCouncilMemberElectionGovernor() view returns (address)",
+      "function setNomineeVetter(address _nomineeVetter)",
+      "function setProposalThreshold(uint256 newProposalThreshold)",
+      "function setVotingDelay(uint256 newVotingDelay)",
+      "function setVotingPeriod(uint256 newVotingPeriod)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function token() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function updateQuorumNumerator(uint256 newQuorumNumerator)",
+      "function usedNonces(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function votesReceived(uint256 proposalId, address contender) view returns (uint256)",
+      "function votesUsed(uint256 proposalId, address account) view returns (uint256)",
+      "function votingDelay() view returns (uint256)",
+      "function votingPeriod() view returns (uint256)"
     ],
     "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2326,6 +3075,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "orbitstack/layer2/ConstitutionHash": "0x10d0d32bb0fbfec7ee3f1dc2cf6ac3363249ad1e28d49f3421fa3aeed22cb1e9",
     "orbitstack/layer2/CoreGovernor": "0x4a4d94f8ca063b9c0b64d4d7852d12f942319ff0522943e598e8db4fd645874c",
     "orbitstack/layer2/L2ARBGateway": "0x684643f9d4327e7295f9dfc2874632cf62727339c0cb58341bbc977f9131b8d9",
@@ -2341,8 +3091,11 @@
     "orbitstack/layer2/L2Timelock": "0x74f9898ac4ecc0031a2f119792a6c790b0c320f3166533c467dc3d6eb59889e1",
     "orbitstack/layer2/L2UpgradeExecutor": "0xf101040cdb996345dea48abf86af9a8bd3d3e9c28460dc54d2f2a483118283e5",
     "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
-    "orbitstack/layer2/SecurityCouncilManager": "0xa2e0cd4d0db62e3235208675260da9911677a5376113d380d6b16165e6307741",
+    "orbitstack/layer2/SecurityCouncilManager": "0x977e3d3f9e708d1d6a53dcad69e68086012dcd1edd33f6888c1687907d993b2f",
+    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0xaa32da5be87b002e5c6e6d0ea875435aee00c7d9e1fcc166e0c679c9a8ac2d33",
+    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x88f548f51dd11f9f35cf87211dab019acd2ab5679a5f6b00f186cf30518a37ea",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x474b5acd9cedfb0791633da5fd1e96b7b457faed65dc691ce65923392e0f83dd",
+    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0xdbf4cf11ad5461cde6d7d94f2e18026dd7e8d3fe61fe7c638744fc867fda249e",
     "orbitstack/layer2/TreasuryGovernor": "0x4170b604f2d20c4a0ec807932623e3752e43482c8027706b9b46b9e4430a0f45",
     "orbitstack/layer2/TreasuryTimelock": "0x9f09da651b5fdfb63c9cffbbd429e42697ef61c94b994026a3a341aad5ec98fd",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x9847b746498bffa2a68a790be0db1563328875748cf497ab0a7e58f8872002ac"

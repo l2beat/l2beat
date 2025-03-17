@@ -1,3 +1,248 @@
+Generated with discovered.json: 0x8e7b69955a1dd3f8837c4365d324100398ec362a
+
+# Diff at Mon, 17 Mar 2025 15:10:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 314982694
+- current block number: 316659947
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0) {
+    +++ description: Governance contract for the Security Council nominee elections.
+      values.currentCohort:
+-        0
++        1
+      values.electionCount:
+-        3
++        4
+      values.otherCohort:
+-        1
++        0
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 314982694 (main branch discovery), not current.
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"manage all access control roles.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.11.from:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      receivedPermissions.10.from:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      receivedPermissions.10.via.0.address:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      receivedPermissions.9.from:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      receivedPermissions.8.from:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      receivedPermissions.7.from:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      receivedPermissions.6.from:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      receivedPermissions.5.from:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      receivedPermissions.4:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"schedule a proposal to add a new member to the Security Council."}
+      receivedPermissions.3:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"schedule a proposal to rotate a Security Council member (same member, new address)."}
+      receivedPermissions.2:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"schedule a proposal to remove a Security Council member."}
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"schedule a proposal to replace a Security Council member."}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"manage all access control roles."}
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      issuedPermissions.9:
++        {"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      issuedPermissions.8:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      issuedPermissions.7:
++        {"permission":"interact","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","description":"manage all access control roles.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      issuedPermissions.6:
++        {"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to add a new member to the Security Council.","via":[]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","description":"manage all access control roles.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to rotate a Security Council member (same member, new address).","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0x467923B9AE90BDB36BA88eCA11604D45F13b712C","description":"schedule a proposal to replace a Security Council member cohort.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"schedule a proposal to remove a Security Council member.","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.to:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      issuedPermissions.1.via.1:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.1.via.0:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.1.description:
++        "schedule a proposal to replace a Security Council member."
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
+      issuedPermissions.0.via.1:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.description:
++        "schedule a proposal to remove a Security Council member."
+      values.cohortReplacerAC:
++        ["0x467923B9AE90BDB36BA88eCA11604D45F13b712C"]
+      values.defaultAdminAC:
++        ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
+      values.memberAdderAC:
++        ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"]
+      values.memberRemoverAC:
++        ["0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad","0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"]
+      values.memberReplacerAC:
++        ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"]
+      values.memberRotatorAC:
++        ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"]
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"}
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}
+      directlyReceivedPermissions.7.from:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      directlyReceivedPermissions.6.from:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      directlyReceivedPermissions.5.from:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      directlyReceivedPermissions.4.from:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      directlyReceivedPermissions.3.from:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      directlyReceivedPermissions.2.from:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+    }
+```
+
+```diff
+    contract L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","via":[{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"manage all access control roles.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      receivedPermissions.11.from:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      receivedPermissions.10.from:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      receivedPermissions.10.via.0.address:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      receivedPermissions.9.from:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      receivedPermissions.8.from:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      receivedPermissions.7.from:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      receivedPermissions.6.from:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      receivedPermissions.5.from:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CoreGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
+    +++ description: Governance contract for the Security Council member elections.
+```
+
+```diff
++   Status: CREATED
+    contract CoreGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
+    +++ description: Governance contract for the Security Council member removals.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0)
+    +++ description: Governance contract for the Security Council nominee elections.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe9b58361fb9a31369ad1d3c46178f8a6b66c0efc
 
 # Diff at Thu, 06 Mar 2025 15:34:16 GMT:
