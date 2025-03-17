@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
@@ -9,7 +10,10 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
-  constructor(private readonly rpcs: RpcClient[]) {}
+  constructor(
+    private readonly rpcs: RpcClient[],
+    private logger: Logger,
+  ) {}
 
   async getBalances(
     queries: BalanceQuery[],
@@ -33,6 +37,8 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         } else {
+          this.logger.warn(`Multicall not deployed`, { calls: queries.length })
+
           return Promise.all(
             queries.map(async ({ token, holder }) => {
               if (token === 'native') {

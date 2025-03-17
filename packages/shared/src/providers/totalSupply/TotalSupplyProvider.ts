@@ -1,9 +1,13 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
 
 export class TotalSupplyProvider {
-  constructor(private readonly rpcs: RpcClient[]) {}
+  constructor(
+    private readonly rpcs: RpcClient[],
+    private logger: Logger,
+  ) {}
 
   async getTotalSupplies(
     tokens: EthereumAddress[],
@@ -25,6 +29,7 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         } else {
+          this.logger.warn(`Multicall not deployed`, { calls: calls.length })
           return Promise.all(
             calls.map(async (c) =>
               BigInt((await client.call(c, blockNumber)).toString()),
