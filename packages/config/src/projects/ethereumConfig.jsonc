@@ -65,6 +65,10 @@
 
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
 
+    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto Security Council",
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "Kinto Multisig",
+    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "Turnkey Multisig",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
   },
   "types": {
