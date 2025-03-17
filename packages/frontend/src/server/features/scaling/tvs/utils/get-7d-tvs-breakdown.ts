@@ -1,3 +1,4 @@
+import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
@@ -38,22 +39,32 @@ export interface BreakdownSplit {
   native: number
 }
 
+type TvsBreakdownProps =
+  | {
+      type: 'layer2' | 'bridge' | 'all'
+    }
+  | {
+      type: 'selected'
+      projects: ProjectId[]
+    }
+
 const getCached7dTokenBreakdown = cache(
-  async ({
-    type,
-  }: { type: 'layer2' | 'bridge' | 'all' }): Promise<SevenDayTvsBreakdown> => {
+  async (props: TvsBreakdownProps): Promise<SevenDayTvsBreakdown> => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+
     const tokens = await ps.getTokens()
     const tvsValues = await getTvsValuesForProjects(
       await getTvsProjects(
         (project) =>
-          type === 'all'
-            ? true
-            : type === 'layer2'
-              ? !!project.scalingInfo
-              : !!project.isBridge,
+          props.type === 'selected'
+            ? props.projects.includes(project.id)
+            : props.type === 'all'
+              ? true
+              : props.type === 'layer2'
+                ? !!project.scalingInfo
+                : !!project.isBridge,
         chains,
         tokens,
       ),

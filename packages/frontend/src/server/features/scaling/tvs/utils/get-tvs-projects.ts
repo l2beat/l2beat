@@ -1,7 +1,4 @@
-import {
-  getTvlAmountsConfig,
-  getTvlAmountsConfigForProject,
-} from '@l2beat/backend-shared'
+import { getTvlAmountsConfig } from '@l2beat/backend-shared'
 import type { ChainConfig, Project } from '@l2beat/config'
 import type { AmountConfigEntry, ProjectId, Token } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
@@ -21,35 +18,6 @@ export interface TvsProject {
     }
   >
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
-}
-
-export async function toTvsProject(
-  project: Project<'tvlConfig', 'chainConfig'>,
-  chains: ChainConfig[],
-  tokenList: Token[],
-): Promise<TvsProject> {
-  const amounts = getTvlAmountsConfigForProject(project, chains, tokenList)
-
-  const minTimestamp = amounts
-    .map((x) => x.sinceTimestamp)
-    .reduce((a, b) => Math.min(a, b), UnixTime.now())
-
-  const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
-  for (const amount of amounts) {
-    const source = sources.get(amount.dataSource)
-    if (!source || source.minTimestamp > amount.sinceTimestamp) {
-      sources.set(amount.dataSource, {
-        name: amount.dataSource,
-        minTimestamp: amount.sinceTimestamp,
-      })
-    }
-  }
-
-  return {
-    projectId: project.id,
-    minTimestamp,
-    sources,
-  }
 }
 
 export async function getTvsProjects(
