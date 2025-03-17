@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8e7b69955a1dd3f8837c4365d324100398ec362a
+Generated with discovered.json: 0xf999118dac472b592f4703969b148c8eb21793dd
 
-# Diff at Mon, 17 Mar 2025 15:10:06 GMT:
+# Diff at Mon, 17 Mar 2025 15:18:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 314982694
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x8e7b69955a1dd3f8837c4365d324100398ec362a
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config: Security Council manager cannot act independently, access control permissions defined.
 
 ## Watched changes
 
@@ -32,6 +32,22 @@ Provide description of changes. This section will be preserved.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 314982694 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
 
 ```diff
     contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
@@ -72,6 +88,46 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 ```
 
 ```diff
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318) {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
     contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
     +++ description: None
       receivedPermissions.4:
@@ -86,10 +142,28 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 ```
 
 ```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
     contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
     +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
       directlyReceivedPermissions.3:
 +        {"permission":"interact","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"manage all access control roles."}
+      category:
++        {"name":"Governance","priority":3}
     }
 ```
 
@@ -148,6 +222,8 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 +        ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"]
       values.memberRotatorAC:
 +        ["0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"]
+      category:
++        {"name":"Governance","priority":3}
     }
 ```
 
@@ -178,6 +254,14 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
       directlyReceivedPermissions.2.from:
 -        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
 +        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      category:
++        {"name":"Governance","priority":3}
     }
 ```
 
@@ -221,13 +305,13 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract CoreGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
     +++ description: Governance contract for the Security Council member elections.
 ```
 
 ```diff
 +   Status: CREATED
-    contract CoreGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
     +++ description: Governance contract for the Security Council member removals.
 ```
 

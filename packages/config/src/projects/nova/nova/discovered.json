@@ -61,7 +61,8 @@
         "counterpartGateway": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "defaultGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
         "router": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EmilianoBonassi-Conduit",
@@ -225,7 +226,8 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x722E8BdD2ce80A4422E880164f2079488e115365",
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "JohnMorrow-Gauntlet",
@@ -637,7 +639,8 @@
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "exitNum": 878,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "UpgradeableBeacon",
@@ -1181,11 +1184,11 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
-    "orbitstack/layer2/L2GatewayRouter": "0xde7841cda710dd016b3815e3e941932d9ac3e1cbb99e687910642079e927d33f",
+    "orbitstack/layer2/L2ERC20Gateway": "0xba5db6142b987b2a6602e697b425d74d0a2a12d07223e8f2fad95ce201feb683",
+    "orbitstack/layer2/L2GatewayRouter": "0x5c380ea0096417b6cbc2f018099a5298196b293bd4eb393782c7c49ac4b7d790",
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
     "orbitstack/layer2/L2SurplusFee": "0xc5ab7cd559b6a2c80f92fafb398291abf7be7ffd34761502080874871399f87d",
-    "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
+    "orbitstack/layer2/L2WethGateway": "0xd919f2dcc1dec00dae645f6ec4a132e2267a1b80b348f7885257648311e5653c",
     "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757"
   }
 }
