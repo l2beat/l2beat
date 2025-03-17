@@ -11,7 +11,6 @@ export const everclearbridge: Bridge = {
   addedAt: UnixTime(1742199959), // 2025-03-17
   isUnderReview: true,
   display: {
-    architectureImage: 'everclear',
     name: 'Everclear',
     slug: 'everclearbridge',
     category: 'Liquidity Network',
