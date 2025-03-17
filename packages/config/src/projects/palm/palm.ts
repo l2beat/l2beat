@@ -16,7 +16,6 @@ export const palm: ScalingProject = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://palm.network/'],
-      apps: ['https://app.palm.io/bridge'],
       documentation: ['https://docs.palm.io/'],
       socialMedia: [
         'https://x.com/buildOnPalm',
