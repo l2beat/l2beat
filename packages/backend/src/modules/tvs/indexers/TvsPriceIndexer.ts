@@ -67,14 +67,21 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
             return optimizedRecords
           } catch (error) {
-            this.logger.warn(
-              `Failed to fetch prices for ${configuration.properties.priceId}`,
-              {
-                priceId: configuration.properties.priceId,
-                error,
-              },
-            )
-            return []
+            if (
+              error instanceof Error &&
+              error.message.startsWith('Insufficient data in response')
+            ) {
+              this.logger.warn(
+                `Failed to fetch prices for ${configuration.properties.priceId}`,
+                {
+                  priceId: configuration.properties.priceId,
+                  error,
+                },
+              )
+              return []
+            }
+
+            throw error
           }
         }),
       )
