@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 22022296,
-  "configHash": "0x55af895e88e7dc8ae296e6db106f00cd833e7e66a8bdf1a59134ace5abe2611b",
+  "configHash": "0xfa6a42fde332019e7d869f7f9d7b8ad5e6b9081d22572050247126ed9dc88ec0",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -926,8 +926,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "shared-zk-stack/Diamond": "0x8cb40e023173ca80a645ab2a2c66ca8d9549712cb8e94ee30c4cce516ae25c05",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/Diamond": "0xaecca9b8c784ccd936a4dd3c3683aab317142ad6111e60c34dfc8585cd18f48c",
     "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
     "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
   }

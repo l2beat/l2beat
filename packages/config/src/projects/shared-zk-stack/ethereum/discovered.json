@@ -2212,15 +2212,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "shared-zk-stack/BridgeHub": "0xcb16ba41fa931de4f55a7dfa8868e35f74fdc818a997b86559b1706acca79c97",
-    "shared-zk-stack/ChainAdmin": "0x6c7c04de37114d97be43a477e68b5a413c50b36a8d2d4285eb76dd4c85e561aa",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/BridgeHub": "0x1082a82985b15d3ab60d47289e65d7dcc1df1773aac6a122ad35f518f14990fa",
+    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
     "shared-zk-stack/EmergencyUpgradeBoard": "0x5fc0246dd42a6104ff1f712513ed2995eefc387725294905dd8bfecd8ecfcf66",
     "shared-zk-stack/Guardians": "0x851e167f1e5f305d7b33e62a86f4949a7fa6a9a48a7958c36f7deba2b55ec1ad",
-    "shared-zk-stack/L1SharedBridge": "0xd018882150cb0b1e4aaf9f452725d0255d90d7866a6e2c3eb595480612df078e",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0xaa7f5b9f15cf7b997841415ab9dfffd4073b080ef92f1a6f56d22b562042c441",
+    "shared-zk-stack/L1SharedBridge": "0xf665083b2b6ab25aa8830f7b480d98cd2e84f72f302e7bf4b1dd427d4a8416d4",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0x9450d1e0c166b048608acec0785bee7a01b73bade1ea15c175088cd77de03d89",
     "shared-zk-stack/SecurityCouncil": "0x8223e8d6dab5118334b6988580dc1075eb3813d737a58bfbc15401182fdd4239",
-    "shared-zk-stack/StateTransitionManager": "0x546bd8f21ced5e3b2ec447fee92d810fd00fd1ad413e53ed427a8db41b2c2a57"
+    "shared-zk-stack/StateTransitionManager": "0xa1be5ed4cf272ac426214a1acec35b513dc54451c55865ba7017c625015e5489"
   }
 }

@@ -2416,24 +2416,24 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "gnosisSafeModules/DeputyGuardianModule": "0x715d1bfe3ce1f1283ecd3f6596ea1dbcc0b412c070373612107d49cd820d3d34",
-    "gnosisSafeModules/LivenessModule": "0x3f5f52181a8178585621723ee10f3dbf73da900dbfc2fe32f200824f027685d6",
-    "opstack/AddressManager": "0x8c9ac7748a1262568713d9fd76a505c000592e1d91cfbb172890cdf43e989168",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "gnosisSafeModules/DeputyGuardianModule": "0x4a2b22ad5334cd4e71e6020c4612c57e95553053d2ee36fe43ba3f914322687c",
+    "gnosisSafeModules/LivenessModule": "0xf90b9117ad186ec387de3215eadc19212a511e01409d10592187d05bc009b424",
+    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
     "opstack/AnchorStateRegistry": "0x0220f8aa160565298724f82f068f43b3ff19012d466880e2b0c047c5d637ed83",
     "opstack/DelayedWETH": "0x4816a2aa4820c5ea443c019c01a2c504dfa98d8e78155093582d288f09a0e87b",
     "opstack/DisputeGameFactory": "0x88399acbc0235ec73feab46233a97122db6880ac61aae04011ec9e3b998d109e",
     "opstack/FaultDisputeGame": "0x6dab1805b740041e4dfdb6b5aed33b25846c9afef61b48076241058d020aa4bf",
     "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
     "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
-    "opstack/L1StandardBridge": "0xb6dc5aacd0ae12e0cbff6bd7e1b716b9c40f8001a3e866ad0310330c0817985f",
+    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
     "opstack/MIPS": "0xb30f9bf3d9eff0e1d65f755512e4c7397f4c8ccadda21e32a9fdf0078775d1d4",
     "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
     "opstack/OptimismPortal2": "0x3f395f2052660e13590561ccc701cf1d9588f85f2d81d0c65ce494b57a33d997",
     "opstack/PermissionedDisputeGame": "0xb823f2f439b8aa48fc133c1555317a4f1de7283080806e478144e6be3a32631b",
     "opstack/PreimageOracle": "0x2ad81408cd9e91b7dda81418639f25354a615fdf13c055d718e41a4f964cec67",
-    "opstack/SuperchainConfig": "0x0425f82c8a6563f0939686b89d7cf469a5c95a7b459a406493944be7446a7604",
-    "opstack/SystemConfig": "0x9af908f8e1e59795608f405d1ccb1a9f3b1abeef8c51423d261b5485c39bb5d7"
+    "opstack/SuperchainConfig": "0xc00886ea2b08887032b9216d26a7a14553331a303a68cece2682bb5d160de16a",
+    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44"
   }
 }

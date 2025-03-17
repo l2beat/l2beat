@@ -3918,17 +3918,17 @@
     "eigenlayer/BLSApkRegistry": "0x21d909ecbf50593a76a442d996482439565cbaa2debca03a27d0e03fd8a023fe",
     "eigenlayer/DelegationManager": "0xda8c81cf3b29a6132fdc8e804ce53f45c14c31db7671448021e6d382acbe38ee",
     "eigenlayer/EIGEN token": "0xa6cb7d80d3e8a76b9f8c47979fbb7aaaf4cffe0ba3ab95f4f1c9e027c3c952f0",
-    "eigenlayer/EigenDAServiceManager": "0xfdea706ff15c64065d4cde7bd75073893a995715fde79a591038930967516348",
+    "eigenlayer/EigenDAServiceManager": "0x8b6bd761f0e04837a87de1c2e7f4716bda9bd7ff644b8663c48e977e60006f0e",
     "eigenlayer/EigenPod": "0xdc07a0cafb9fc58e529278b3654b6544c7daee62f1d93ffdb10772a8eb7c4b96",
     "eigenlayer/EigenPodManager": "0xe5f63be89f55e454051cd0207a4aa3dd39ed461894f445d62686dbe78fc499df",
-    "eigenlayer/EjectionManager": "0x36601844abaecaf4da6597946f0d969f8902d14bc319cc5ce562f7c01414ada0",
-    "eigenlayer/PauserRegistry": "0x092f7d3a74ae46dc235ae557fdf6afec0b2211aa3a338cc9871d2c2fa97270e6",
-    "eigenlayer/RegistryCoordinator": "0x0e658cfca6c890aea1391ecb443215bd4a5631df5e4391ea43c690ec53e5fe35",
+    "eigenlayer/EjectionManager": "0xd3e1021c0852372e23a07ee53338a186e999aaf12ae4832d1b7a305653efe099",
+    "eigenlayer/PauserRegistry": "0x3c9034ade599dd1994736f2cc6cfc2bead131094d371f922c17315d0a5f24a5a",
+    "eigenlayer/RegistryCoordinator": "0xab23f48536901c495720d03964b97a8640b4a8e6cc2cbe60ab6c4b0ebee83ae0",
     "eigenlayer/StakeRegistry": "0xd3aa3fbd3802faf805e1fecbaefa0ed9c2af5e9ba05890bb67dd45dc7386462b",
     "eigenlayer/Strategy": "0x1738060bd7e638808bd4e8783a5d6397aa01885989641ba939d83c9a2206ba6d",
     "eigenlayer/StrategyManager": "0x9a0dd7c8051644a2122ac0653e53ee7773dc60239bea7f5a0bef1a0a392f320f",
-    "eigenlayer/TimelockControllerOwning": "0x66c3e2d73b8eb2f059fe09c45ae7df050dad2a4e5f2ee3d39862f57f1c4b918b",
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b"
+    "eigenlayer/TimelockControllerOwning": "0x1ddd587a1324cf30d195a9f277de56699859b7192b297c07d9ae538df25cacda",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

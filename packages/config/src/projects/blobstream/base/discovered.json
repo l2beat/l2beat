@@ -873,9 +873,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "succinct/SP1Blobstream": "0x87495673385e2d916b970c69c62104f9e33caf53aab6575493fc56e7e82c2ff6",
-    "succinct/SP1SuccinctGateway": "0x1d68ad1b788f3c299c31eef783339ed6a722a60ceebd06171a09d25d992ebb93",
-    "succinct/SuccinctGateway": "0x5028f66b2a4189a1177ec089aee903103e2eab113488ea416a791503db0ddc88"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "succinct/SP1Blobstream": "0xc1cd156a92120786c94913e9ef99ee374b6d1d894c49048389a73b08202c0583",
+    "succinct/SP1SuccinctGateway": "0x0be99df0eb5d614a64b5f73fa9c5f72f48b02271ada4fc7990cd2918f42ec7fe",
+    "succinct/SuccinctGateway": "0xe4ded8c094f8bb50ec7e032c9cd3d485fd46a2c65d6c22ef785d22ae71d6dc51"
   }
 }

@@ -4392,7 +4392,7 @@
   },
   "usedTemplates": {
     "global/DepositContract": "0x2670390d33f6569e18f307ef7004eddf7e8b85ffa46fd56c165bbde95fbe5288",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "tokens/Lido/AccountingOracle": "0x8139a6da6c402b974be9098a98b11d68f93843d39550e628c640e2dbb6f53cd8",
     "tokens/Lido/Burner": "0x84faac4ed6b0d97db0d8750b186b54e526b9c7ca898e19b5f554d5ff1d7851e1",
     "tokens/Lido/CSAccounting": "0x64ff0f8fd1c21c380402500d4928273c6e1bd33edeba1b490e9dae27e202b4c7",

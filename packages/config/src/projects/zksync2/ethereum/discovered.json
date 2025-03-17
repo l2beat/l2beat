@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 22044942,
-  "configHash": "0xbbd58ec7a72d2796bdbfac80c71d8dc9d28d52977db72c81f44622dc9a35f97a",
+  "configHash": "0x187e8eba2d47e988a4686bf6dfe6af70951de42d84c6115f41f2c62a1ae100fe",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -1340,7 +1340,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond_v26": "0x6736bb1e947f02cce6826d021426ac2e076fce0ebe1abc72529f4ce7fe8c43ff",
+    "shared-zk-stack/Diamond_v26": "0x96ca6345e559f5aea25045fad5d4da926ada865bc15973eb6f5f1558344d2732",
     "shared-zk-stack/RollupL1DAValidator": "0x747b42383d5be9c7ab5ba95b27b68256f2ded258af3e5f4fe0ea84bc335b8041",
     "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
     "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"

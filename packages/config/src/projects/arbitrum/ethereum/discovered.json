@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 22032270,
-  "configHash": "0x07cdd97510458952591e83abe702c088daf0f6d009e02c43ccaf9916e1bef349",
+  "configHash": "0x0408d5f243afc36f78d99b9c382386bc3cd5cf1bbc791d79cc812260647337c4",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -5107,8 +5107,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "orbitstack/Bridge": "0xb6de3aace8e96d1c35f5d771acfb448858e9d9d487e11cccdc25abeaf18e6515",
     "orbitstack/CustomGateway2": "0x16b1593003bf580c9902f6fa3a7e546fb28535ad335c31377de186f347fb5cf5",
     "orbitstack/EdgeChallengeManager": "0xc8496934329faf979440e55438ccb87b1cde37aa08e27a4e6d83dc535f15c7a5",
@@ -5124,10 +5124,10 @@
     "orbitstack/Outbox": "0xd373d8cd979164d1b6db4271e41638272216305e24f2609767ed253b9a3c594e",
     "orbitstack/ParentToChildRewardRouter": "0x0059c321b89efaaf162d71bd1edd5f1e851891c7bf26a2a6a3943a11727f8915",
     "orbitstack/RollupEventInbox": "0x3a5690d1a8060c59c6dbae9d71027b09f2a694bb8534f4f62feb30efa12c2278",
-    "orbitstack/RollupProxyBoLD": "0x9ed5e4d0710c51ca88a543fcfd28a608cb66a6eb3ac397f959906dc5fd9bdbcb",
+    "orbitstack/RollupProxyBoLD": "0xc368abd85d027afa385650175caadb620e6e595e2298976950ff9aaf940fea53",
     "orbitstack/SecurityCouncil": "0xa82f45a382c62147848179cbb74a879fc3ed813f61f93e11e28b305492fb793c",
-    "orbitstack/SequencerInbox": "0xfc18fbad9fc6449ac8582259c3b99afbd9a44ccb9004844347fa55d16c9d73ea",
-    "orbitstack/Timelock": "0x5351d074ffda5c0390ae09b86bc4c1d5994f8eabad2155f86a750819211ad6b0",
-    "orbitstack/UpgradeExecutor": "0x5b1f5d897f1db7862317618ae2d118c74c2e4a7ad3687c559a51e6adc3a9925f"
+    "orbitstack/SequencerInbox": "0x83141082064c8df924d8ba369b73756b92089971b56e904973687d0fdbff3dee",
+    "orbitstack/Timelock": "0x791f5915862ff41a1f4bd205470950007fa8308953ed31adf7f41d536ab79918",
+    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6"
   }
 }

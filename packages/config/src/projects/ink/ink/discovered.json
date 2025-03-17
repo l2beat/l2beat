@@ -1140,7 +1140,7 @@
     "opstack/Layer2/L1BlockNumber": "0xe3e7a1172e822356e1fd873a453dedc9eb610b0a47d9ccc1a89cbb9b74e5543e",
     "opstack/Layer2/L2CrossDomainMessenger": "0x4fbb9489aa73df9dd7ee9d0c08f49d96d4643c6071ccc0b97ab0d16b56f8c1e6",
     "opstack/Layer2/L2ERC721Bridge": "0x609f74ea64e53a47824983bf09912c56f2185ef2f72c9422c13984b6a5f90ae8",
-    "opstack/Layer2/L2ProxyAdmin": "0x7b39160b6828bd33270f522b5b624967e64645e19ed554c675feb98e41d1b634",
+    "opstack/Layer2/L2ProxyAdmin": "0x2fd148ae251967fd85086d433b97658ccf3359510455207f0639fae617d8e4ac",
     "opstack/Layer2/L2StandardBridge": "0x7a4f8ad9fc5c8651272047535a63d9ff1b003e23b4c246e11fb93ef9db421baa",
     "opstack/Layer2/L2ToL1MessagePasser": "0x2f66cff6c90fa4f9ddd44ed01e04aa4321a82426ba1ff3df9a7686de53a4bd6e",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x9d3872a95b9778b2a6497c4126f00b1aa9d8fc85505fffd7d321f5dd060e0676",

@@ -2076,12 +2076,12 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "shared-sharp-verifier/CairoBootloaderProgram": "0x90eb4fd03d08c3e9bcbf34adb055c090fa538684a6ac21acc6378c7565bf6014",
-    "shared-sharp-verifier/CpuFrilessVerifier": "0x873c73455957e69e36129426f7ebd9153f0dfa79b1504b84b89641f6352ded0e",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0x77f2ca24663ab5caba78448895fa752d22aefbefb5b0c9ba45b86e927f29f892",
     "shared-sharp-verifier/ignoreComputeSpam": "0xca3687b31810b22c8758af1b9d95014347b91a581526f9dca6c6bd1543e98d9a",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x9b2c369fa82d115bec871f4455c8c1d2919f8bfe7a38c14fc7a851cd4cd7d056",
-    "shared-sharp-verifier/SHARPVerifier": "0xf565810fc8307b6c45fda69de8f6b87cc225dc49f11de8d35b43a1a6426f559f",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xeba79f2debe4c399f58c1e19ba9674202ccaf05014dd1a20baffe86461b0c304"
+    "shared-sharp-verifier/SHARPVerifier": "0x78229430f4dcd22c25f0cda3b3d7d41b697185844880bd050840eea095e5ffc4",
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xbf085c1e937d29b1ccf305762d2a4fc67b0ce4a6f205a4da797e205fa7d0065b"
   }
 }

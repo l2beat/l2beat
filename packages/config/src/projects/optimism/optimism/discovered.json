@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 132493968,
-  "configHash": "0x4500d62da82136807a6ea9e9035018303c20b9d5c13b93e2ffa0c98e673caca0",
+  "configHash": "0x8049648a56b749e9d4226cc09eb616fb22eeb76955aee8e66b7793c0a50fb14d",
   "entries": [
     {
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -1373,8 +1373,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "opstack/Layer2/BaseFeeVault": "0x304cafa799df10ec666877e8c6f7290a8504e0a5a1513264b1b2ec48ba50aa23",
     "opstack/Layer2/EAS": "0xb6405a7c046e371609073c5e20ac8d9731cbcc335ad83e370fc8708b13d0fe29",
     "opstack/Layer2/GasPriceOracle": "0xcf4ea52f20e80cc0c9c546cc4d1cac62ad299ed236731c085426c61e6f049091",

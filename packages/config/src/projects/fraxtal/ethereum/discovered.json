@@ -1786,21 +1786,21 @@
     ]
   },
   "usedTemplates": {
-    "fraxtal/EtherRouter": "0x7178e82fa760b9b9196d8782bcf2800269078bf14ef76694b83a72feaf235b0c",
-    "fraxtal/FraxEtherMinter": "0x95e5dc5f0b0d222ba97232db6e0a516a127476fc6f817c8f198637a8ff3ba014",
-    "fraxtal/frxETH": "0x12fa36ae1b8e5762a5b7927ac1ffc819b29e85412229eda7764913debe31409a",
-    "fraxtal/FrxEthMinter": "0xb136691fc092398b541d6cc8359e4dc131edb62a4c6e88f658fdc18619130aeb",
-    "fraxtal/Timelock": "0x66023df6aadc01cb0057303bcee163b4e548cea3a6733613ef49e861591f9bff",
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "opstack/AddressManager": "0x8c9ac7748a1262568713d9fd76a505c000592e1d91cfbb172890cdf43e989168",
+    "fraxtal/EtherRouter": "0x211782b72d871d183a22a6f69e9f628079654b13a278f0efa64db27be4af8952",
+    "fraxtal/FraxEtherMinter": "0x6de2521682a71ff6de9b4de1765b0520c6108b7f621768ce1817303453c61653",
+    "fraxtal/frxETH": "0xbedd59110eeda33cec1ad98c5a4ed33c02d2646c181c00181fd431d2b7124d46",
+    "fraxtal/FrxEthMinter": "0x6508e963f3b48d9e221c9f50e6128e8159d6f05a1f9cdb79d27bfec27693bd2c",
+    "fraxtal/Timelock": "0xb554f971674d20031a767137b764cb8bcd574d03473723aeea75ef599751925e",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
     "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
     "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
-    "opstack/L1StandardBridge": "0xb6dc5aacd0ae12e0cbff6bd7e1b716b9c40f8001a3e866ad0310330c0817985f",
-    "opstack/L2OutputOracle": "0x2f26157e35ecd49da4e89c6e35cc235c74aea7757d8f9051a1b53ab6704b329b",
+    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
+    "opstack/L2OutputOracle": "0xc8c03bf9d2b8af9c211229cb24bbc7abcf2899e0bc8f2e6bd7c846b50051c60c",
     "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
-    "opstack/OptimismPortal": "0x4f3d7d45dd785bb941e72c17af882f48c119621c30ad6225e42b72af13164673",
-    "opstack/SuperchainConfigFake": "0xeb0060986676787c99df61cd292e7d2ebef9245cbf6f36d69f99a0a0954c9948",
-    "opstack/SystemConfig": "0x9af908f8e1e59795608f405d1ccb1a9f3b1abeef8c51423d261b5485c39bb5d7"
+    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
+    "opstack/SuperchainConfigFake": "0x1f1fe2ca60b39e18cfa4f6308beec85f223e5fb7cbcd1a8532a0997bb346617b",
+    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44"
   }
 }

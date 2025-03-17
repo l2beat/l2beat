@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 22022298,
-  "configHash": "0xdd0559da59dee2344b1b87d5b6ecd9b8189e66def8d4cd7b7816fa51085ad0b0",
+  "configHash": "0x2221f64adf867c192f2a8c92888d137c65315ce24ff0978b892a957be9160db0",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -730,9 +730,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "shared-zk-stack/ChainAdmin": "0x6c7c04de37114d97be43a477e68b5a413c50b36a8d2d4285eb76dd4c85e561aa",
-    "shared-zk-stack/Diamond": "0x8cb40e023173ca80a645ab2a2c66ca8d9549712cb8e94ee30c4cce516ae25c05",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
+    "shared-zk-stack/Diamond": "0xaecca9b8c784ccd936a4dd3c3683aab317142ad6111e60c34dfc8585cd18f48c",
     "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
     "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
   }

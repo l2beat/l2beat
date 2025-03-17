@@ -1475,17 +1475,17 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "lido/L1ERC20TokenBridge": "0x951b81a0c3795b9b9e802e931b6afc70562d022821a34113344586a670c0f4a6",
     "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
     "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
-    "opstack/L1StandardBridge": "0xb6dc5aacd0ae12e0cbff6bd7e1b716b9c40f8001a3e866ad0310330c0817985f",
+    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
     "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
-    "opstack/OptimismPortal": "0x4f3d7d45dd785bb941e72c17af882f48c119621c30ad6225e42b72af13164673",
-    "opstack/SystemConfig": "0x9af908f8e1e59795608f405d1ccb1a9f3b1abeef8c51423d261b5485c39bb5d7",
-    "opstack/zircuit/L2OutputOracle": "0x6c3e4dc9b4a296bf039df5fab7b2e5683a6d9f714b40bd54662d9a397c2c78bf",
-    "opstack/zircuit/SuperchainConfig": "0x1242be088e9eefdd2e03d5eeb67b1c95e3ecb666fe5e46918fbff7e99def69df",
+    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
+    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44",
+    "opstack/zircuit/L2OutputOracle": "0xd965b04444d19429a91906b3d19306ae41106bca95c101f6ad39b283bbcc190b",
+    "opstack/zircuit/SuperchainConfig": "0x32fd25c725e76ad10adba9e088c0ab891b438e31c9dd63c5a4f32b0956e8ecfd",
     "opstack/zircuit/Verifier": "0x90a386859ac0109db48c1ba29ea172db9b3cf54dcd8e88251c86e3f99945b90f"
   }
 }

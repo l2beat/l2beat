@@ -347,6 +347,6 @@
     "aztecv1/AztecFeeDistributor": "0x59eeb9e0d54581b5da599e675ff4e083637629698fe93e5364467eace9e21f46",
     "aztecv1/RollupProcessor": "0x415bec659b9411064a9aafbc98dbec5e38c43f5dc953e44e565bc10f5daae684",
     "aztecv1/TurboVerifier": "0x9a1c90664eb8ef35e46f8bdb52d0a4e71c7caed3e725693e83ba928ef990ac0b",
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

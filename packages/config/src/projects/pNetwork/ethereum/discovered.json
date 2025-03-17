@@ -1064,7 +1064,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "tokens/Lido/EVMScriptRegistry": "0xc2ab4645bf784bbbfba61261e18cf70d0f4e86b7109fd5676d1c6a4ee4f5cf17",
     "tokens/Lido/MiniMeToken": "0x1d5ac726979b81b11d64a8be120aa4648a888807c945f1f87c0ebba72c7b34ce"
   }

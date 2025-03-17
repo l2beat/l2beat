@@ -1406,9 +1406,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
     "starkex/Committee": "0xfcf85f66b03b8c054630b329591b5c81c7af04431641bbe93676b13190da7994",
     "starkex/GpsFactRegistryAdapter": "0x5ea00881cdc267a1781e6a48d2817bec048063f94fbed27737fb198427307882",
-    "starkex/StarkPerpetual": "0xd87ddcbde2426dfd052d1fdcc395927db6a35b860d5438ceed0b6666046652fa"
+    "starkex/StarkPerpetual": "0x8a4f1d07f2e84c1429de88eb8e8e0f07dcdd9e7d8cb703f40be8cb6d323e4665"
   }
 }

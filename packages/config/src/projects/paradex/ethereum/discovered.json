@@ -734,8 +734,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "starknet/Starknet": "0x08b35528b2bff18625160fe03c91b6de0efd2d2183c87e3a4c40ab4f88ef357b",
-    "starknet/StarknetERC20Bridge": "0x3bc34b4b14aaf002f01ae56d11fec0831f1223913b2fb74dbe2dd9f9734f9e57"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "starknet/Starknet": "0xb78165b4e6a35a7583178ad3aae7e7da7d211a1e7c43422b189151df65c4f68d",
+    "starknet/StarknetERC20Bridge": "0x7249a25f388785a0277c86b45c8989a6ea7ca38acdb9296c7a78e6a9b69faf29"
   }
 }

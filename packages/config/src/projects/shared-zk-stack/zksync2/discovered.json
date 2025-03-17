@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 57469400,
-  "configHash": "0x2397436af62445aa1c38ed23d4dd405e9f1dc56467826c678431a9a8bdadd15b",
+  "configHash": "0x321dae7683643a871eba936ffd165a85c381305a1ec860e0afa6228093960cb1",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -1929,9 +1929,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
-    "shared-zk-stack/TimelockController": "0x69b19ccac9bd2d7c83a0df368823aec9e8b590a63f128c845bb748e8f8849361",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "shared-zk-stack/TimelockController": "0x2f2b105287184d04941460f01d174eff38c2da4938fac30d1012deb9a91cabdb",
     "shared-zk-stack/ZkGovernor": "0x0f8a0f4fc61a2893850f1128f988717340a4ecc2f251f2d5c51ff23c0d793022",
-    "shared-zk-stack/ZkToken": "0xe97e16de8e4cb8a244ad03a5361cd1d9e632ec05e1c9538931d7f14375bfe7d2"
+    "shared-zk-stack/ZkToken": "0x308f986274bf7bbc2ccfb8b4d1184200c6c7968ff8e1dfda97f60c51d323bc1d"
   }
 }

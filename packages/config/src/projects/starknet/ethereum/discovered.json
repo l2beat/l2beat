@@ -4416,16 +4416,16 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
-    "maker/L1Escrow": "0x77d41dc61a717311af2f0230323b0884472b07cd637fda7e62ab611c37e76668",
-    "starknet/DelayedExecutor": "0xbb8a494e0e0a86303c5049185950c3a5f002e03dd86fdad50b6536b2fb647c3f",
-    "starknet/L1EscrowDAI": "0x1f61c389a1940ef8a4b9f661e20a2bd03d141bebc3da1a6ff23484c4d518db20",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "maker/L1Escrow": "0xb627a41b1a9886a691a0ef1198a3002be9dd4f66e04ead1bbd174d354030180e",
+    "starknet/DelayedExecutor": "0xb9857ff40a4b993bd7e48cfafeea1e48f8bce5ddfce9ef225496960865ca007c",
+    "starknet/L1EscrowDAI": "0x4fec73c3685aada81112c687e859cccf1940bdbf75ff72d98d9f4769a69d846d",
     "starknet/LordsL1Bridge": "0x8cb934f295637a28e190d2750703b3772bf5b062f55ff919a9fa7fec97af058e",
-    "starknet/StarkgateManager": "0x79da62b1348cdaae16e3594d3fa12d2daa4c3c32dc236a5e31cba48d63c8566c",
-    "starknet/StarkgateRegistry": "0x42a972ae5e41533437d5137cd8b97a3631430349101dbcc0b88179c4b9393e33",
-    "starknet/Starknet": "0x08b35528b2bff18625160fe03c91b6de0efd2d2183c87e3a4c40ab4f88ef357b",
-    "starknet/StarknetERC20Bridge": "0x3bc34b4b14aaf002f01ae56d11fec0831f1223913b2fb74dbe2dd9f9734f9e57",
-    "starknet/StarknetEthBridge": "0xfe34f40ba64fee252f7b7a524a6d3586116033c79aad67b59e9878786b9fdab8",
-    "starknet/StarknetMultiBridge": "0x95788545a410bb3cf62ef2f01c3fc3709c1b16e28ecd83c2f9a94f5afc7ad827"
+    "starknet/StarkgateManager": "0xdd26d1b5c0bfb379a8d44eb7889b09f3fe506df4dce96260f8bd015afad231c7",
+    "starknet/StarkgateRegistry": "0xc59a0be45e1fc9208056584cf0fa8d6cb12dfdbd60f8610eda7aef50a7647554",
+    "starknet/Starknet": "0xb78165b4e6a35a7583178ad3aae7e7da7d211a1e7c43422b189151df65c4f68d",
+    "starknet/StarknetERC20Bridge": "0x7249a25f388785a0277c86b45c8989a6ea7ca38acdb9296c7a78e6a9b69faf29",
+    "starknet/StarknetEthBridge": "0x892a1925b98a3ed1298e898f885ccc9f3a9add356d73c674f8ef7bb58f20722a",
+    "starknet/StarknetMultiBridge": "0x34856854dc36975bbcdbfbc1aeba48552c526d926cc44f5065480c2064545366"
   }
 }

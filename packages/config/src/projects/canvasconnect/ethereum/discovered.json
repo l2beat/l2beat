@@ -697,6 +697,6 @@
     "starkex/Committee": "0xfcf85f66b03b8c054630b329591b5c81c7af04431641bbe93676b13190da7994",
     "starkex/GpsFactRegistryAdapter": "0x5ea00881cdc267a1781e6a48d2817bec048063f94fbed27737fb198427307882",
     "starkex/OrderRegistry": "0xed9e510302c2aedb366975ffe5238d2b2f4ac7ff9a482406d0f06f834a3b8419",
-    "starkex/StarkExchange": "0xf480639fdbc2372e9874828f40de25caa4f5b5040ce5eb0c50777487b75184a1"
+    "starkex/StarkExchange": "0xfca558f76aa633db59487de9450f6fcad186bbb3096d62090748b4f7915299f7"
   }
 }
