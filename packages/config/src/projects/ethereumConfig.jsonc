@@ -69,6 +69,9 @@
     "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "Kinto Multisig",
     "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "Turnkey Multisig",
 
+    "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "Morph Multisig 2",
+    "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "Morph Multisig 1",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
   },
   "types": {
