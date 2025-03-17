@@ -98,7 +98,9 @@
     "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165": "TermStructure Multisig 3",
     "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca": "TermStructure Multisig 4",
 
-    
+    "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea": "Race Multisig 1",
+    "0x2E7B9465B25C081c07274A31DbD05C6146f67961": "Race Multisig 2",
+    "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9": "Race Multisig 3",
 
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1"
   },
