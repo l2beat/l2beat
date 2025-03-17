@@ -1,5 +1,6 @@
 interface BulletListNode {
   text: string
+  mergedText?: string // if merging with parent, use this field
   children: BulletListNode[]
 }
 
@@ -21,8 +22,8 @@ export class BulletListBuilder {
   private root: BulletListNode = { text: '', children: [] }
   private indentStack: BulletListNode[] = [this.root]
 
-  public addItem(item: string): BulletListBuilder {
-    this.currentNode().children.push({ text: item, children: [] })
+  public addItem(text: string, mergedText?: string): BulletListBuilder {
+    this.currentNode().children.push({ text, mergedText, children: [] })
     return this
   }
 
@@ -71,7 +72,7 @@ export class BulletListBuilder {
           current.children[0]
         ) {
           current = current.children[0]
-          mergedValue += ' ' + current.text
+          mergedValue += ' ' + (current.mergedText ?? current.text)
         }
 
         lines.push(`${'  '.repeat(currentDepth)}* ${mergedValue}`)

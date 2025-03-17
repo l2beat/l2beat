@@ -122,6 +122,35 @@ describe('BulletListBuilder', () => {
     expect(builder.renderMd()).toEqual(expectedNotMerged)
   })
 
+  it('should use mergedText when merging single subpoints', () => {
+    builder
+      .addItem('item 1')
+      .indent()
+      .addItem('item 1.1')
+      .indent()
+      .addItem('item 1.1.1')
+      .addItem('item 1.1.2')
+      .addItem('item 1.1.3', '(item 1.1.3)')
+      .indent()
+      .addItem('item 1.1.3.1', '(item 1.1.3.1)')
+      .dedent()
+      .addItem('item 1.1.4')
+      .indent()
+      .resetIndent(0)
+      .addItem('item 2')
+
+    const expectedMerged = `
+* item 1 item 1.1
+  * item 1.1.1
+  * item 1.1.2
+  * item 1.1.3 (item 1.1.3.1)
+  * item 1.1.4
+* item 2`.trim()
+    expect(builder.renderMd({ mergeSingleSubpoints: true })).toEqual(
+      expectedMerged,
+    )
+  })
+
   it('should throw error on invalid indentation operations', () => {
     expect(() => builder.indent()).toThrow()
     expect(() => builder.dedent()).toThrow()
