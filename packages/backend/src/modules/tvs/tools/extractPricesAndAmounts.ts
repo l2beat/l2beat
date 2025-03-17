@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import type { ChainConfig } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
@@ -14,19 +15,20 @@ import type {
 } from '../types'
 import { getTimestampsRange } from './timestamps'
 
-export function extractPricesAndAmounts(config: ProjectTvsConfig): {
-  amounts: AmountConfig[]
-  prices: PriceConfig[]
-} {
+export function extractPricesAndAmounts(
+  config: ProjectTvsConfig,
+  chainConfigs: { id: string; chainConfig: ChainConfig }[],
+) {
   const amounts = new Map<string, AmountConfig>()
   const prices = new Map<string, PriceConfig>()
+  const chains = new Set<string>()
 
   for (const token of config.tokens) {
     if (token.amount.type === 'calculation') {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.amount,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
 
       assert(
         formulaPrices.length === 0,
@@ -48,7 +50,7 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
       })
     } else {
       const amount = createAmountConfig(token.amount)
-      setAmount(amounts, amount)
+      setAmount(amounts, chains, amount)
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
@@ -62,7 +64,7 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForProject,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
 
@@ -70,7 +72,7 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForTotal,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
   }
@@ -78,6 +80,18 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig): {
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
+    chains: Array.from(chains.values()).map((c) => {
+      const chain = chainConfigs.find((cc) => cc.id === c)
+      assert(chain, `${c}: chainConfig not configured`)
+      assert(chain.chainConfig.sinceTimestamp)
+
+      return {
+        chainName: c,
+        configurationId: hash([`chain_${c}`]),
+        sinceTimestamp: chain.chainConfig.sinceTimestamp,
+        untilTimestamp: chain.chainConfig.untilTimestamp,
+      }
+    }),
   }
 }
 
@@ -163,10 +177,18 @@ function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
 
 function setAmount(
   amounts: Map<string, AmountConfig>,
+  chains: Set<string>,
   amountToAdd: AmountConfig,
 ) {
   if (amountToAdd.type === 'const') {
     return
+  }
+
+  if (
+    amountToAdd.type === 'balanceOfEscrow' ||
+    amountToAdd.type === 'totalSupply'
+  ) {
+    chains.add(amountToAdd.chain)
   }
 
   const existingAmount = amounts.get(amountToAdd.id)
@@ -239,12 +261,11 @@ export function createAmountConfig(
   }
 }
 
-export function createPriceConfigId(priceId: string): string {
-  const hash = createHash('sha1').update(priceId).digest('hex')
-  return hash.slice(0, 12)
-}
-
 export function hash(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
+}
+
+export function createPriceConfigId(priceId: string): string {
+  return hash([`price_${priceId}`])
 }
