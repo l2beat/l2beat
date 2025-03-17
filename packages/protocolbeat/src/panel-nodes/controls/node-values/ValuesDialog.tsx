@@ -61,16 +61,13 @@ function ValuesDialogBody({ node }: { node: Node }) {
             )
 
             const onChange = () => {
-              if (isHidden) {
-                setHiddenFields((prev) =>
-                  prev.filter((f) => !value.map((fd) => fd.name).includes(f)),
-                )
-              } else {
-                setHiddenFields((prev) => [
-                  ...prev,
-                  ...value.map((f) => f.name),
-                ])
-              }
+              const fieldNames = value.map((f) => f.name)
+
+              setHiddenFields((prev) =>
+                isHidden
+                  ? prev.filter((f) => !fieldNames.includes(f))
+                  : [...prev, ...fieldNames],
+              )
             }
 
             return (
