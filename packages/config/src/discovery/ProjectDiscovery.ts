@@ -800,7 +800,7 @@ export class ProjectDiscovery {
 
     const allActors: ProjectPermission[] = []
     for (const contract of permissionedContracts) {
-      const descriptions = this.describeContractOrEoa(contract, true)
+      const descriptions = this.describeContractOrEoa(contract, false)
       if (isMultisigLike(contract)) {
         allActors.push(
           this.getMultisigPermission(
@@ -1006,7 +1006,9 @@ function isNonNullable<T>(
 
 export function formatAsBulletPoints(description: string[]): string {
   return description.length > 1
-    ? description.map((s) => `* ${s}\n`).join('')
+    ? description
+        .map((s) => (!s.trim().startsWith('* ') ? `* ${s}\n` : s))
+        .join('')
     : description.join(' ')
 }
 
