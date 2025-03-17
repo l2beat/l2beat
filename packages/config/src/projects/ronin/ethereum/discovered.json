@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 21378535,
-  "configHash": "0xacea799aa97352f090f87ed28987f31956ebedc255a26a6c78971ba58342a99c",
+  "configHash": "0x61cb907f3201f6ad2182639be4b2df50bfda2b22e5576370da7e94374b33ad9a",
   "entries": [
     {
       "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
@@ -972,6 +972,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b"
   }
 }

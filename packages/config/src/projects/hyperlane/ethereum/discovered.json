@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21880791,
-  "configHash": "0xe88c99914d9c1b7739c238757ad584240afe41790ed1a25ff845c3d9d5bef4ee",
+  "configHash": "0x4b25f0ed7a0cae50d166d293169c3e761106c9c96f24d8a6884a84cb579b50fb",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -1453,9 +1453,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "hyperlane/HypERC20Collateral": "0x332944d78565b908da038de8d8c95d061d9ab73a01adcda6322fca11dcc68abe",
-    "hyperlane/StaticAggregationIsm": "0x9c35cfb84439778cbdee15c7611d8be531c050c6403740f69e8492b58c6519c3"
+    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "hyperlane/HypERC20Collateral": "0xd07134c4a1b4a61061bcf20764468459f43be270ea7a04dd3f79b3d8b6725488",
+    "hyperlane/StaticAggregationIsm": "0x9846d94207bd830864d9fd05ea5934e441cf867200f46d47c3cece380cc8de90"
   }
 }

@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "linea",
   "blockNumber": 16658503,
-  "configHash": "0x08d005dcc8b632dae79fe072c494580ebaa65817b0a1e6c8e1042fbf41e10431",
+  "configHash": "0x15f6b0722d1cdf68d5ad3e36ea4e3d3ffdd097507fa84517edee99e672469b82",
   "entries": [
     {
       "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
@@ -1445,6 +1445,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b"
   }
 }

@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0xd53540449bd6ef7e623cf66098bb7442e8027b576ddc8f156916bd1794a9c0a1",
+  "configHash": "0x0d77625fd2f7c7397f4aa7cb365cb1b466b36b67e4f59b3eb777508af04a0715",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -724,8 +724,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonZkEVM": "0xa3db9cd4750e048e231aadcba1dd439bc7ca32cfc261f65c34038f8df919df94",
-    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "polygon-cdk/PolygonZkEVM": "0xea4adeca1ae51458fd613f9fd4c0e9f860001682740bb205f2c34ab9142a8891",
+    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
   }
 }

@@ -506,8 +506,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151",
-    "succinct/SP1Vector": "0x65bac712eedd5dff4048b58e0ff75e82f43bd797a0d34109736e092b0cded606"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "succinct/SP1SuccinctGateway": "0x1d68ad1b788f3c299c31eef783339ed6a722a60ceebd06171a09d25d992ebb93",
+    "succinct/SP1Vector": "0xabb52a13c17844b24f406429d101d6905e0dba83cc62296da2774357f739d66d"
   }
 }

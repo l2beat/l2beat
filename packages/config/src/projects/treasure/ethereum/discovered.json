@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22022297,
-  "configHash": "0xd8abd7f315206cfe3ccf14ebabcfd82c59f86cc181d519407fe711521ec0d957",
+  "configHash": "0x9d976c4f5c85dae04722a7a53e7e6a1a2eceb813fcd3c68a95d41d716a3d169e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -753,10 +753,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/ChainAdmin": "0x21362d1e1f6039b145ce8e607cf8c1f6f2d4b7e32cea642e1253fe0302cdb5d6",
-    "shared-zk-stack/Diamond": "0x35d64655368a19cac7e3f39d5009f281ae309f51b9f83661f70c192d3499a227",
-    "shared-zk-stack/ValidatorTimelock": "0x58f7bef19010ef32f238898c7b274dfe08c8412e455fb6bdaf21a44ef0611ca6",
-    "shared-zk-stack/Verifier": "0xdf758e791d4b50d840b7b4546467e86c3b081e1499c51f4ab37caa07476968eb"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "shared-zk-stack/ChainAdmin": "0x6c7c04de37114d97be43a477e68b5a413c50b36a8d2d4285eb76dd4c85e561aa",
+    "shared-zk-stack/Diamond": "0x8cb40e023173ca80a645ab2a2c66ca8d9549712cb8e94ee30c4cce516ae25c05",
+    "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
+    "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
   }
 }

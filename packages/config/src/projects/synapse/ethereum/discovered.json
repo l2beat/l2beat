@@ -2,7 +2,7 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
-  "configHash": "0x91335b2efdaa4382a3820c85b79b01eec741f888197abbaa135d30c72554f9cc",
+  "configHash": "0x3a2727d2cf1e8b1552fe136a70b30b94ae13396e77a97d10448c96160e88c674",
   "entries": [
     {
       "address": "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
@@ -171,6 +171,13 @@
         "paused": false,
         "startBlockNumber": 0,
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "accessControl": {
+          "severity": "MEDIUM",
+          "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
+          "type": "PERMISSION"
+        }
       }
     },
     {
@@ -598,6 +605,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b"
   }
 }

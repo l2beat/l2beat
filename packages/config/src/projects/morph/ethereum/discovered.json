@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0x8294f4084f4fc3ab589e0ac4b9cc025f8719c3a2f52c278e1673775b09a3cfad",
+  "configHash": "0x3dbfe6f2e673dc61b33d4e0edfd920c364916dd72263689665eff3f3942fcb63",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1890,7 +1890,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b"
   }
 }

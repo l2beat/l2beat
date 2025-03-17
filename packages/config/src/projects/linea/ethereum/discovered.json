@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0x3bf54ba30efa92afea17543854ea645eda54195e72e8d6324c80b7c74ac7e026",
+  "configHash": "0x063b648790542132ba434eb6946d6b6a8fb25693f0326fdf3022279fa3921178",
   "entries": [
     {
       "name": "TokenBridge",
@@ -1472,10 +1472,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "global/Timelock": "0x63b12b6a368c044f8110c739995963299475aad5416d02a41a689197cb5de026",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "linea/LineaRollup": "0xaa176c3ecbcb7e80b7d2989b18ee549fd8876f9b36dfc17a554db558d5008937",
-    "linea/TokenBridge": "0x344e398a00b4da4b739370df1e59ae2bc56c107d1b1e6839d965eb131f6110e0"
+    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
+    "global/Timelock": "0x2c8b94e1e85046deb2d904faacfca33321a589e432953735ac944dd049fc1e88",
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "linea/LineaRollup": "0x67b07e540a6d761d184d808754a6f7e63b6ac77b48e09ad23c2ecc1dd9da8de1",
+    "linea/TokenBridge": "0x5aa7cd9a1a400c350e9944b0acddce325b241c48d342618eda3e56e80b3e1c9b"
   }
 }

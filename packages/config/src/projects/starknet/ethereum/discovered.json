@@ -4416,16 +4416,16 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "maker/L1Escrow": "0xfe5c1f545e5d63ef9898c0aba6ba0dc3534f41b038497adb713efd766b66191f",
-    "starknet/DelayedExecutor": "0xe84654e941de1cc1ff6072e9b6fb6e510ed5ac211a5a67cad254a3fe3e740b03",
-    "starknet/L1EscrowDAI": "0x6e4e0a4d90eb5f74198b3d1bf0b319b30310349b960d8f8e15738bd2f70cd7fd",
-    "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
-    "starknet/StarkgateManager": "0xf6401586405cca1328e5b0b0816c24e362fa7e7f090de0377ae01fa930047aac",
-    "starknet/StarkgateRegistry": "0x613178017ba4f030754f316d800cc74f2cb1cd6c26d274dffa2feed755341fc7",
-    "starknet/Starknet": "0xebe5ae41eaeb1d93c4e851cda25f1a4d64b70f6622f4de1aa5d92f744e813262",
-    "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25",
-    "starknet/StarknetEthBridge": "0x11040d009b59811da765704f486c5b464490621c1bda2ab5371652d0a9b9dd3d",
-    "starknet/StarknetMultiBridge": "0x5a6d2f9f38f07271db5134aa28d533bfe3447dafec36af9dc295e556f0f33e7a"
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "maker/L1Escrow": "0x77d41dc61a717311af2f0230323b0884472b07cd637fda7e62ab611c37e76668",
+    "starknet/DelayedExecutor": "0xbb8a494e0e0a86303c5049185950c3a5f002e03dd86fdad50b6536b2fb647c3f",
+    "starknet/L1EscrowDAI": "0x1f61c389a1940ef8a4b9f661e20a2bd03d141bebc3da1a6ff23484c4d518db20",
+    "starknet/LordsL1Bridge": "0x8cb934f295637a28e190d2750703b3772bf5b062f55ff919a9fa7fec97af058e",
+    "starknet/StarkgateManager": "0x79da62b1348cdaae16e3594d3fa12d2daa4c3c32dc236a5e31cba48d63c8566c",
+    "starknet/StarkgateRegistry": "0x42a972ae5e41533437d5137cd8b97a3631430349101dbcc0b88179c4b9393e33",
+    "starknet/Starknet": "0x08b35528b2bff18625160fe03c91b6de0efd2d2183c87e3a4c40ab4f88ef357b",
+    "starknet/StarknetERC20Bridge": "0x3bc34b4b14aaf002f01ae56d11fec0831f1223913b2fb74dbe2dd9f9734f9e57",
+    "starknet/StarknetEthBridge": "0xfe34f40ba64fee252f7b7a524a6d3586116033c79aad67b59e9878786b9fdab8",
+    "starknet/StarknetMultiBridge": "0x95788545a410bb3cf62ef2f01c3fc3709c1b16e28ecd83c2f9a94f5afc7ad827"
   }
 }

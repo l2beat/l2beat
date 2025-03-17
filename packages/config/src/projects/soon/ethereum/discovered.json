@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 21995453,
-  "configHash": "0xe85a747558d45f1920da6cf9a6ddca9211988454a9a78791e9abe31bb881860f",
+  "configHash": "0xd85ebd7818c3e9bd643cca4e746c92862423dd8a5e5c16ab5345adec42a65f47",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -1056,15 +1056,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
-    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
-    "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",
-    "opstack/L1StandardBridge_soon": "0xe2fc423eba030fa71b36128cb0b77b52aadb07a7f85a14849365324cbcbeafec",
-    "opstack/L2OutputOracle": "0x1f3a79744f58781fffa6c018ccd268ad7f3f33c1e89ec7268d7bd19bda0867be",
-    "opstack/OptimismPortal_soon": "0x1e86c96e924f0746c5679f65a9007266fc7248ed4ea1276154ff8ad07070c9e3",
-    "opstack/SuperchainConfigFake": "0x22acab894d140303e6afb5f380229c06db820f2170c959036155a7e73688aef4",
-    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15"
+    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "opstack/AddressManager": "0x8c9ac7748a1262568713d9fd76a505c000592e1d91cfbb172890cdf43e989168",
+    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
+    "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
+    "opstack/L1StandardBridge_soon": "0x4db4ba2c7c23ae11767f3804e40028ace11f94e663111706bdde802189388721",
+    "opstack/L2OutputOracle": "0x2f26157e35ecd49da4e89c6e35cc235c74aea7757d8f9051a1b53ab6704b329b",
+    "opstack/OptimismPortal_soon": "0xf89398b9ee391dfa6efa3524b78aea18d5948c2ca6f413783d949ff5d40a3146",
+    "opstack/SuperchainConfigFake": "0xeb0060986676787c99df61cd292e7d2ebef9245cbf6f36d69f99a0a0954c9948",
+    "opstack/SystemConfig": "0x9af908f8e1e59795608f405d1ccb1a9f3b1abeef8c51423d261b5485c39bb5d7"
   }
 }

@@ -942,14 +942,14 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
-    "opstack/BalanceClaimer": "0xf6a3098000a1bb109df528640acab70c68374647343a484250c2a953b13fc254",
-    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
-    "opstack/L1StandardBridge_PGN_withdraw": "0xb83a7f6ccee9bd4d331a28a9c79df118597f0f023b582fa773ef078065137df6",
-    "opstack/L2OutputOracle": "0x1f3a79744f58781fffa6c018ccd268ad7f3f33c1e89ec7268d7bd19bda0867be",
-    "opstack/OptimismPortal_PGN_withdraw": "0x2ecafcdc51c028916fda124f5ff7fb87a15a0b1a784f9860f39b0c7e12405a89",
-    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15"
+    "global/ProxyAdmin": "0x98f93a14617ddbca244d988fd6e41b84eb61171c7c22eed9dfbb53a2a727b6d0",
+    "GnosisSafe": "0xb9c43c665769455eb4c02a90d1dc87522cd1c4c52d158efa6101e10ba94c568b",
+    "opstack/AddressManager": "0x8c9ac7748a1262568713d9fd76a505c000592e1d91cfbb172890cdf43e989168",
+    "opstack/BalanceClaimer": "0x1a53416327454011631a97df178b7b0528837230ff26b986cfc4b9d4783cbd27",
+    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
+    "opstack/L1StandardBridge_PGN_withdraw": "0x3c9b665f10f075b452e77b2cdaed3ce11fc9f1f834c68ca68614bd2715277146",
+    "opstack/L2OutputOracle": "0x2f26157e35ecd49da4e89c6e35cc235c74aea7757d8f9051a1b53ab6704b329b",
+    "opstack/OptimismPortal_PGN_withdraw": "0x9a2b28cb639bb7e51a1b636ee33f887c944e29921f619e5472c239715488c6ab",
+    "opstack/SystemConfig": "0x9af908f8e1e59795608f405d1ccb1a9f3b1abeef8c51423d261b5485c39bb5d7"
   }
 }

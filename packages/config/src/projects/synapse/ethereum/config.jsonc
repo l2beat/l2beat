@@ -53,9 +53,7 @@
           "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
           "severity": "MEDIUM",
           "type": "PERMISSION",
-          "handler": {
-            "type": "accessControl"
-          }
+          "handler": { "type": "accessControl" }
         }
       }
     },
