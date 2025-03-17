@@ -1,7 +1,11 @@
 {
   "import": ["globalConfig.jsonc"],
   "names": {
-    "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "AlchemyMultisig1"
+    "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "AlchemyMultisig1",
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "OptimismSecurityCouncil",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "OptimismGuardianMultisig"
   },
   "types": {
     "StarknetProgramHash": {
