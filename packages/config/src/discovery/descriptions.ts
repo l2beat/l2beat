@@ -29,7 +29,7 @@ export const UltimatePermissionToPrefix: {
 } = {
   interact: 'Is allowed to interact with',
   upgrade: 'Can upgrade',
-  act: undefined,
+  act: 'Can act on behalf of',
   guard: 'A Guardian',
   challenge: 'A Challenger',
   propose: 'A Proposer',
