@@ -138,6 +138,13 @@ export type PriceConfig = {
   priceId: string
 }
 
+export interface TvsChainConfig {
+  name: string
+  configurationId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+}
+
 export interface TokenValue {
   tokenConfig: Token
   projectId: ProjectId

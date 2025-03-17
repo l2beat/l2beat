@@ -1,12 +1,13 @@
 import { createHash } from 'crypto'
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import type {
   AmountConfig,
   PriceConfig,
   ProjectTvsConfig,
+  TvsChainConfig,
 } from '../../modules/tvs/types'
 import type { TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
@@ -65,12 +66,7 @@ export function readConfigs(
 export async function getAmountsAndPrices(
   projects: ProjectTvsConfig[],
 ): Promise<{
-  chains: {
-    name: string
-    configurationId: string
-    sinceTimestamp: UnixTime
-    untilTimestamp?: UnixTime
-  }[]
+  chains: TvsChainConfig[]
   amounts: (AmountConfig & { project: string; chain?: string })[]
   prices: PriceConfig[]
 }> {
