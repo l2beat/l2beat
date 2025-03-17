@@ -8,8 +8,7 @@ Generated with discovered.json: 0xa924fcf3da78b168688ad2a1f92a990fd1854668
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
+Add erc20 gateway escrow.
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
