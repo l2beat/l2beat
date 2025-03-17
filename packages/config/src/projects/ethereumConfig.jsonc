@@ -77,6 +77,10 @@
 
     "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "Boba Multisig",
 
+    "0x441F31C4cdf772558D4EA31f3114de59aE145E7c": "Hashkey Multisig 1",
+    "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A": "Hashkey Multisig 2",
+    "0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3": "Hashkey Multisig 3",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1"
   },
   "types": {
