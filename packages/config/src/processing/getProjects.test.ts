@@ -16,11 +16,12 @@ import {
 import { getProjects } from './getProjects'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
+import { existsSync } from 'fs'
 
 describe('getProjects', () => {
   const projects = getProjects()
 
-  describe('every project has a unique id and slug', () => {
+  describe('every project has a unique and valid id and slug', () => {
     const ids = new Set<ProjectId>()
     const slugs = new Set<string>()
     for (const project of projects) {
@@ -35,8 +36,12 @@ describe('getProjects', () => {
           // first when querying by slug
           return
         }
+
         expect(slugs.has(project.slug)).toEqual(false)
         slugs.add(project.slug)
+
+        const dir = `./src/projects/${project.id}`
+        expect(existsSync(dir)).toEqual(true)
       })
     }
   })
