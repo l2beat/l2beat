@@ -226,8 +226,11 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     // It's sorted in descending order of count
     const [mostControlling, secondMostControlling] = analysis
 
+    if (!mostControlling) {
+      return
+    }
+
     const isControllingEoa =
-      // is EOA
       mostControlling.type === 'EOA' &&
       // TODO: double check if we want to account for case where there is no second most controlling
       secondMostControlling &&
