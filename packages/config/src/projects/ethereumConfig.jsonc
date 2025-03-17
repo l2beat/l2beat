@@ -81,6 +81,10 @@
     "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A": "Hashkey Multisig 2",
     "0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3": "Hashkey Multisig 3",
 
+    "0xe57E217d8ed498992452791622711B866403E950": "Kroma Multisig",
+
+    
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1"
   },
   "types": {
