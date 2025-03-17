@@ -239,12 +239,11 @@ export function createAmountConfig(
   }
 }
 
-export function createPriceConfigId(priceId: string): string {
-  const hash = createHash('sha1').update(priceId).digest('hex')
-  return hash.slice(0, 12)
-}
-
 export function hash(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
+}
+
+export function createPriceConfigId(priceId: string): string {
+  return hash([`price_${priceId}`])
 }

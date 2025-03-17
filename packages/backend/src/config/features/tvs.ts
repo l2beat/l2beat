@@ -123,7 +123,7 @@ export async function getAmountsAndPrices(
       return {
         name: c,
         configurationId: createHash('sha1')
-          .update(c)
+          .update(`chain_${c}`)
           .digest('hex')
           .slice(0, 12),
         sinceTimestamp: chain.chainConfig.sinceTimestamp,
