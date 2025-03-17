@@ -31,7 +31,7 @@ export function TokenSimpleAmountCell({
 
 function getFormula(supply: Token['supply'], isLockedInEscrow?: boolean) {
   if (isLockedInEscrow) {
-    return 'Tokens locked in the bridge contract'
+    return 'Tokens locked in a bridge contract'
   }
   return supply === 'totalSupply'
     ? 'Total Supply'
