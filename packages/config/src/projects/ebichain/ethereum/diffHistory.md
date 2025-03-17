@@ -1,4 +1,177 @@
-Generated with discovered.json: 0xba12b2a0059d2f95f7e61fadf052ae6151b0304f
+Generated with discovered.json: 0xfd419c7410946e516f33c9debbdb702b7afc3b07
+
+# Diff at Mon, 17 Mar 2025 16:30:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22046061
+- current block number: 22046061
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046061 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x0D51c6664A773873971336850C51A5caE8e63e89) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"},{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x11AaeeDd19D4daf99925231b982CA0A35F77d812"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.description:
+-        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+    }
+```
+
+```diff
+    contract undefined (0x101d02006885979D2F32284c5847dF8616C24436) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0x11AaeeDd19D4daf99925231b982CA0A35F77d812) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x0D51c6664A773873971336850C51A5caE8e63e89","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."}]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x191738BDecD7f73a79F64D689cf91ef873fb4172) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3b7F26ED562e21277c86ea0Ce40BC914653a3555) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x0D51c6664A773873971336850C51A5caE8e63e89"},{"permission":"upgrade","from":"0x191738BDecD7f73a79F64D689cf91ef873fb4172"},{"permission":"upgrade","from":"0x73CF739b0233027cd516998e177d473D0a45E037"},{"permission":"upgrade","from":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"},{"permission":"upgrade","from":"0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f"},{"permission":"upgrade","from":"0xf2dC65BdDb21c5DCC070067434D34a342907b5aE"},{"permission":"upgrade","from":"0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x0D51c6664A773873971336850C51A5caE8e63e89"},{"permission":"upgrade","from":"0x191738BDecD7f73a79F64D689cf91ef873fb4172"},{"permission":"upgrade","from":"0x73CF739b0233027cd516998e177d473D0a45E037"},{"permission":"upgrade","from":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"},{"permission":"upgrade","from":"0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f"},{"permission":"upgrade","from":"0xf2dC65BdDb21c5DCC070067434D34a342907b5aE"},{"permission":"upgrade","from":"0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ConduitMultisig"
++        "Conduit Multisig 1"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0x0D51c6664A773873971336850C51A5caE8e63e89","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0x191738BDecD7f73a79F64D689cf91ef873fb4172","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0x73CF739b0233027cd516998e177d473D0a45E037","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90","via":[{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0xf2dC65BdDb21c5DCC070067434D34a342907b5aE","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]},{"permission":"upgrade","from":"0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81","via":[{"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]
+    }
+```
+
+```diff
+    contract Bridge (0x73CF739b0233027cd516998e177d473D0a45E037) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}
+    }
+```
+
+```diff
+    contract RollupProxy (0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}]}
+      issuedPermissions.0.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x101d02006885979D2F32284c5847dF8616C24436"
++        "0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"
+      issuedPermissions.0.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"},{"permission":"interact","from":"0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."},{"permission":"upgrade","from":"0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90"}]
+    }
+```
+
+```diff
+    contract Inbox (0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}
+    }
+```
+
+```diff
+    contract Outbox (0xf2dC65BdDb21c5DCC070067434D34a342907b5aE) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}
+    }
+```
+
+```diff
+    contract ChallengeManager (0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      issuedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"}
+    }
+```
+
+Generated with discovered.json: 0xc0c4739b73fda5436a5ad0266a09c70e2e69b092
 
 # Diff at Fri, 14 Mar 2025 15:39:02 GMT:
 

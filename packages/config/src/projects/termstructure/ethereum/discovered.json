@@ -2,7 +2,7 @@
   "name": "termstructure",
   "chain": "ethereum",
   "blockNumber": 20469346,
-  "configHash": "0xdb9945f5ebb1a47abbef0a3a3046daedbce7c7d2d1bd12c30dc0826b4a81d1b6",
+  "configHash": "0xd9d7156b3bafb14c0e59b44f343c31884aab7bff7803a80016bec183432d1e6d",
   "entries": [
     {
       "name": "ZkTrueUp",
@@ -265,7 +265,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "VaultMultisig",
+      "name": "TermStructure Multisig 2",
       "address": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -299,7 +299,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "InsuranceMultisig",
+      "name": "TermStructure Multisig 3",
       "address": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -420,7 +420,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "TermStructureMultisig",
+      "name": "TermStructure Multisig 1",
       "address": "0xa00d50A40B1635D293c87BA36503bD2504b5D818",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -459,7 +459,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TreasuryMultisig",
+      "name": "TermStructure Multisig 4",
       "address": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -944,6 +944,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
   }
 }

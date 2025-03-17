@@ -1,4 +1,87 @@
-Generated with discovered.json: 0xf721d34c7c8cb38b97bcfcc9c63e778570a6c8f6
+Generated with discovered.json: 0x4070488929372d51cbe5a86709502f78656dde3f
+
+# Diff at Mon, 17 Mar 2025 16:30:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21995398
+- current block number: 21995398
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995398 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.5:
+-        {"permission":"upgrade","to":"0xD2C37fC6fD89563187f3679304975655e448D192","delay":1209600,"via":[]}
+      issuedPermissions.4:
+-        {"permission":"interact","to":"0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.3:
+-        {"permission":"governStarknet","to":"0xD2C37fC6fD89563187f3679304975655e448D192","via":[]}
+      issuedPermissions.2:
+-        {"permission":"operateStarkEx","to":"0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e","via":[]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xD2C37fC6fD89563187f3679304975655e448D192","description":"manage the token admin role.","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
++        "0xD2C37fC6fD89563187f3679304975655e448D192"
+      issuedPermissions.0.description:
+-        "Can regsiter new tokens for deposits and withdrawals."
+    }
+```
+
+```diff
+    contract undefined (0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"operateStarkEx","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"}]
+    }
+```
+
+```diff
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9","delay":1209600}
+      receivedPermissions.1:
+-        {"permission":"governStarknet","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"}
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.description:
+-        "manage the token admin role."
+    }
+```
+
+```diff
+    contract undefined (0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9","description":"Can regsiter new tokens for deposits and withdrawals."}]
+    }
+```
+
+```diff
+    contract undefined (0xeDb0219557ba13816f1dEb7fA54688362B05A5aE) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5FDCCA53617f4d2b9134B29090C87D01058e27e9","description":"Can regsiter new tokens for deposits and withdrawals."}]
+    }
+```
+
+Generated with discovered.json: 0x3cd2700fd6a41993b5728b1766a1e928eed465cf
 
 # Diff at Tue, 11 Mar 2025 16:09:19 GMT:
 

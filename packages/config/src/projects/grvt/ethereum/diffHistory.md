@@ -1,4 +1,159 @@
-Generated with discovered.json: 0xd900d3f9a9f3725f053c5291e8837d98be3dcc2e
+Generated with discovered.json: 0xbf0bd81433e8bc63d7f29fde4b75a08bb6fb39c2
+
+# Diff at Mon, 17 Mar 2025 16:30:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22022296
+- current block number: 22022296
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022296 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x0b114d4675Cb79507e68F2616c93e124122c6ef0) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"}]
+    }
+```
+
+```diff
+    contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
+    +++ description: None
+      receivedPermissions.3:
+-        {"permission":"interact","from":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D","description":"set the conversion factor for gas token deposits."}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a"}
+      receivedPermissions.1.from:
+-        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
++        "0x3Cd52B238Ac856600b22756133eEb31ECb25109a"
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.from:
+-        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
++        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+      receivedPermissions.0.via:
+-        [{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      issuedPermissions.4:
+-        {"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0xF29bFff344c7ef0186432fE30C39fda0cca0550b","description":"address is part of the GRVTTransactionFilterer whitelist.","via":[]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0xF29bFff344c7ef0186432fE30C39fda0cca0550b","description":"manage the whitelist of addresses.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xE17aeD2fC55f4A876315376ffA49FE6358113a65","description":"address is part of the GRVTTransactionFilterer whitelist.","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xe81d64195072e4d09639b31Abb257d0096FEa9d1"
++        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+      issuedPermissions.0.description:
+-        "address is part of the GRVTTransactionFilterer whitelist."
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","description":"define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."}]
+    }
+```
+
+```diff
+    contract undefined (0x58D14960E0a2be353eDdE61ad719196A2b816522) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"}]
+    }
+```
+
+```diff
+    contract undefined (0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xE17aeD2fC55f4A876315376ffA49FE6358113a65","description":"approve deposits to GRVT via the GRVTBridgeProxy."}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0b114d4675Cb79507e68F2616c93e124122c6ef0","via":[]},{"permission":"validateZkStack","to":"0x58D14960E0a2be353eDdE61ad719196A2b816522","via":[]}]
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."}]
+    }
+```
+
+```diff
+    contract GrvtZkEvmAdmin (0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","description":"set the conversion factor for gas token deposits.","via":[]}]
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."}]
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (0xE17aeD2fC55f4A876315376ffA49FE6358113a65) {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37"
++        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+      issuedPermissions.0.description:
+-        "approve deposits to GRVT via the GRVTBridgeProxy."
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"address is part of the GRVTTransactionFilterer whitelist."}]
+    }
+```
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"}]},{"permission":"interact","to":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.","via":[]},{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+```diff
+    contract Governance (0xe81d64195072e4d09639b31Abb257d0096FEa9d1) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"address is part of the GRVTTransactionFilterer whitelist."}]
+    }
+```
+
+```diff
+    contract undefined (0xF29bFff344c7ef0186432fE30C39fda0cca0550b) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"address is part of the GRVTTransactionFilterer whitelist."},{"permission":"interact","from":"0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"manage the whitelist of addresses."}]
+    }
+```
+
+Generated with discovered.json: 0xda9c13bb7b827b8c3dc6dbf5b0055e3826e957bc
 
 # Diff at Tue, 11 Mar 2025 08:00:15 GMT:
 

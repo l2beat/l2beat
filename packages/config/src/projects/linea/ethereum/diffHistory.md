@@ -1,4 +1,114 @@
-Generated with discovered.json: 0x7d6da8f43ad842769a200f337ac45b02302c4bba
+Generated with discovered.json: 0xd407f578e0eb8b4dbcb82c985fef60fbfc978c8c
+
+# Diff at Mon, 17 Mar 2025 16:30:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}
+      issuedPermissions.0.to:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      issuedPermissions.0.via.1:
+-        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+    }
+```
+
+```diff
+    contract undefined (0x46d2F319fd42165D4318F099E143dEA8124E9E3e) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"operateLinea","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F"}]
+    }
+```
+
+```diff
+    contract undefined (0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"operateLinea","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F"}]
+    }
+```
+
+```diff
+    contract Linea Multisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "LineaAdminMultisig"
++        "Linea Multisig"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"cancel queued transactions."},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready."},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions."},{"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}]}
+      issuedPermissions.1:
+-        {"permission":"operateLinea","to":"0x46d2F319fd42165D4318F099E143dEA8124E9E3e","via":[]}
+      issuedPermissions.0.permission:
+-        "operateLinea"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
++        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"interact","to":"0x892bb7EeD71efB060ab90140e7825d8127991DD3","description":"propose transactions.","via":[]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"cancel queued transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]},{"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"propose transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"manage all access control roles and change the minimum delay."}]
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"cancel queued transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"manage all access control roles and change the minimum delay.","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"propose transactions.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]},{"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"},{"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"},{"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F"}]
+    }
+```
+
+Generated with discovered.json: 0xb20abb3200b9a4c07f68c9579ea8797dd43be3d0
 
 # Diff at Thu, 06 Mar 2025 15:18:48 GMT:
 

@@ -1,4 +1,58 @@
-Generated with discovered.json: 0xe22f4d7dd090c938348230de7ff0316cdd545889
+Generated with discovered.json: 0xcfe03fb85e22aadc5a8b7c919dde7d9bb1156311
+
+# Diff at Mon, 17 Mar 2025 16:50:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 13963893
+- current block number: 13963893
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 13963893 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77"
++        "0xC4673dAbfAf04D2A430e244B63F040D27199102f"
+      issuedPermissions.0.via.0:
+-        {"address":"0xC4673dAbfAf04D2A430e244B63F040D27199102f"}
+    }
+```
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"}]
+    }
+```
+
+```diff
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"}
+      receivedPermissions.1.from:
+-        "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
++        "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"
+      receivedPermissions.1.via:
+-        [{"address":"0xC4673dAbfAf04D2A430e244B63F040D27199102f"}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xC4673dAbfAf04D2A430e244B63F040D27199102f"}]
+    }
+```
+
+Generated with discovered.json: 0xee7f227652a34a9ca343a204712c73101f015a35
 
 # Diff at Tue, 11 Mar 2025 08:13:36 GMT:
 

@@ -1,4 +1,47 @@
-Generated with discovered.json: 0x93c5e59e2fa0701133c119dbdcc3902008780da6
+Generated with discovered.json: 0xb78bf67b7808cb9917112ead40ef88fe35bdb12b
+
+# Diff at Mon, 17 Mar 2025 16:31:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x519E42c24163192Dca44CD3fBDCEBF6be9130987"}]
+    }
+```
+
+```diff
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"sequence","to":"0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800","via":[]}]
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      name:
+-        "PolygonZkEvmEscrowsMultisig"
++        "Polygon zkEVM Multisig"
+    }
+```
+
+Generated with discovered.json: 0x285d00f9c76827cf1b363e698e11b8cb802a1066
 
 # Diff at Tue, 04 Mar 2025 10:39:38 GMT:
 

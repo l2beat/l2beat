@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x0802b24d4f6ec06cd6b5e8697f78aeac13f839cd
+Generated with discovered.json: 0x3b31ea8f5147fcab370ada12244267929f292dc4
+
+# Diff at Mon, 17 Mar 2025 16:47:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 57470008
+- current block number: 57470008
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57470008 (main branch discovery), not current.
+
+```diff
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"}
+      receivedPermissions.0.from:
+-        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
++        "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+      receivedPermissions.0.via:
+-        [{"address":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
++        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+      issuedPermissions.0.via.0:
+-        {"address":"0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"}
+    }
+```
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"}]
+    }
+```
+
+Generated with discovered.json: 0x4813ad4fc859bef92cd5249324318ca6ef9d8e71
 
 # Diff at Tue, 04 Mar 2025 10:40:21 GMT:
 

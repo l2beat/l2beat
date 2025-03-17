@@ -2,7 +2,7 @@
   "name": "espresso",
   "chain": "ethereum",
   "blockNumber": 21372994,
-  "configHash": "0xf6e18ad47d384f4371612299cb68308cec4c936162c704031fe16d7141e108f1",
+  "configHash": "0x3e6de3f893948c271ee60a286e1052d8f505cb5ae23e07415b91c90c4269cadf",
   "entries": [
     {
       "name": "EspressoMultisig",
@@ -15,11 +15,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
-        },
         {
           "permission": "upgrade",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
@@ -54,14 +49,7 @@
     {
       "address": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can call newFinalizedState() to prove the latest HotShot state."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E",
@@ -79,18 +67,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
-          "description": "can call newFinalizedState() to prove the latest HotShot state.",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
@@ -263,6 +239,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
   }
 }

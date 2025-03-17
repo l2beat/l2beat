@@ -1,4 +1,61 @@
-Generated with discovered.json: 0x093b3abaf37eb2d0432e713c51788da08cccc207
+Generated with discovered.json: 0x56984b78c2821f419d9165ca2c53210282e8f792
+
+# Diff at Mon, 17 Mar 2025 16:50:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 76775244
+- current block number: 76775244
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 76775244 (main branch discovery), not current.
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"}
+      receivedPermissions.1.from:
+-        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
+      receivedPermissions.0.from:
+-        "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"
++        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+      receivedPermissions.0.via:
+-        [{"address":"0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"}]
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
++        "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"
+      issuedPermissions.0.via.0:
+-        {"address":"0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"}
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"}]
+    }
+```
+
+Generated with discovered.json: 0xbefe7fa847427c27ae1fa3af0496a0c66c007923
 
 # Diff at Tue, 11 Mar 2025 08:13:33 GMT:
 

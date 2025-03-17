@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x7fe73a875fd2b6e081e131d2b8bf9bd8dcebd9b7
+Generated with discovered.json: 0x8f3ad5d162145d8f7397fa86022ee7b5c27c365b
+
+# Diff at Mon, 17 Mar 2025 16:49:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 82417913
+- current block number: 82417913
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 82417913 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2:
+-        {"permission":"validate","to":"0xB246421622FB931BdAc20B4a26816F881771Db1e","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a","via":[{"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"
++        "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      issuedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.via.0:
+-        {"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."},{"permission":"upgrade","from":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"}]
+    }
+```
+
+```diff
+    contract undefined (0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]},{"permission":"upgrade","from":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0","via":[{"address":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"}]
+    }
+```
+
+```diff
+    contract undefined (0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0xB246421622FB931BdAc20B4a26816F881771Db1e) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91","via":[]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0"
++        "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
+      issuedPermissions.0.description:
+-        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+    }
+```
+
+Generated with discovered.json: 0x0d0982b9475cd9895de66d9f584d3f7fdaebef9a
 
 # Diff at Thu, 06 Mar 2025 09:39:19 GMT:
 

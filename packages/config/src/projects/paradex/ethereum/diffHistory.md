@@ -1,4 +1,130 @@
-Generated with discovered.json: 0x912a5808e1f03b0fa842f95f8bb99f21abf3421e
+Generated with discovered.json: 0xeefcd65eed04a531d9fdb7a74c5d7643a086322f
+
+# Diff at Mon, 17 Mar 2025 16:30:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21979760
+- current block number: 21979760
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21979760 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x0000000000000000000000000000000000000020) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"manage critical access control roles and the role that can upgrade the implementation."}]
+    }
+```
+
+```diff
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      name:
+-        "ParadexAdminMultisig"
++        "Paradex Multisig"
+      severity:
+-        "HIGH"
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0xF338cad020D506e8e3d9B4854986E0EcE6C23640"}
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "upgrade"
+    }
+```
+
+```diff
+    contract undefined (0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0xF338cad020D506e8e3d9B4854986E0EcE6C23640"}
+      receivedPermissions.0.permission:
+-        "governStarknet"
++        "upgrade"
+    }
+```
+
+```diff
+    contract undefined (0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"}
+      receivedPermissions.2:
+-        {"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."}
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+    }
+```
+
+```diff
+    contract undefined (0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"operateStarknet","from":"0xF338cad020D506e8e3d9B4854986E0EcE6C23640"}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.6:
+-        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.5:
+-        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.4:
+-        {"permission":"interact","to":"0x0000000000000000000000000000000000000020","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0x0000000000000000000000000000000000000020","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","description":"manage critical access control roles and the role that can upgrade the implementation.","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      issuedPermissions.0.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.4:
+-        {"permission":"operateStarknet","to":"0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2","via":[]}
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","via":[]}
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x0a64d3D7747549aF6d65C225D56ac8f71e436B93","via":[]}
+      issuedPermissions.1.permission:
+-        "governStarknet"
++        "upgrade"
+      issuedPermissions.0.permission:
+-        "governStarknet"
++        "upgrade"
+    }
+```
+
+Generated with discovered.json: 0x9e8c97803a38377e00ac65da2dc2fbf465369908
 
 # Diff at Thu, 06 Mar 2025 15:19:41 GMT:
 

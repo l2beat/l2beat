@@ -1,4 +1,154 @@
-Generated with discovered.json: 0x9348363aa652ed40f9b18607200d69a6e3deece1
+Generated with discovered.json: 0xac10b8499093c952d10844ac2ed5f2b339cda39c
+
+# Diff at Mon, 17 Mar 2025 16:49:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 81620827
+- current block number: 81620827
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}
+      issuedPermissions.0.to:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      issuedPermissions.0.via.1:
+-        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}
+      issuedPermissions.0.to:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      issuedPermissions.0.via.1:
+-        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}
+      issuedPermissions.0.to:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      issuedPermissions.0.via.1:
+-        {"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"permission":"act","from":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"},{"permission":"upgrade","from":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"},{"permission":"upgrade","from":"0xbf544970E6BD77b21C6492C281AB60d0770451F4"},{"permission":"upgrade","from":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"},{"permission":"upgrade","from":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"},{"permission":"upgrade","from":"0xbf544970E6BD77b21C6492C281AB60d0770451F4"},{"permission":"upgrade","from":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"}]
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}
+      issuedPermissions.0.to:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      issuedPermissions.0.via.1:
+-        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","via":[{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0xbf544970E6BD77b21C6492C281AB60d0770451F4","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","via":[{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}]}
+      issuedPermissions.0.to:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      issuedPermissions.0.via.1:
+-        {"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"permission":"upgrade","from":"0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"permission":"upgrade","from":"0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"}]
+    }
+```
+
+```diff
+    contract L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","via":[{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0xbf544970E6BD77b21C6492C281AB60d0770451F4","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257","via":[{"address":"0xada790b026097BfB36a5ed696859b97a96CEd92C"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]},{"permission":"upgrade","from":"0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD","via":[{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"},{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}]
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"},{"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}]}
+      issuedPermissions.0.to:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      issuedPermissions.0.via.1:
+-        {"address":"0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"}
+    }
+```
+
+Generated with discovered.json: 0x0f9fd24acef4b1b88b8f91085556ec3f994efe3f
 
 # Diff at Tue, 04 Mar 2025 10:42:16 GMT:
 

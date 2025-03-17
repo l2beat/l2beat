@@ -1,4 +1,216 @@
-Generated with discovered.json: 0xab85a9cfa4221858d53762489826288c2ca5059a
+Generated with discovered.json: 0xe5ce6845315dff6fdc32f84742168516f5942312
+
+# Diff at Mon, 17 Mar 2025 16:38:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22029918
+- current block number: 22029918
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22029918 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
+-        {"permission":"guard","to":"0x2c0B27F7C8F083B539557a0bA787041BF22DB276","via":[]}
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      name:
+-        "ZircuitMultiSig2"
++        "Zircuit Multisig 2"
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"},{"permission":"guard","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"},{"permission":"interact","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","description":"manage roles including the guardian role."}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"},{"permission":"upgrade","from":"0x2a721cBE81a128be0F01040e3353c3805A5EA091"},{"permission":"upgrade","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"},{"permission":"upgrade","from":"0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0x6BCe7408c0781dcE7b71494274302D4b75a1447c"},{"permission":"upgrade","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"},{"permission":"upgrade","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4"},{"permission":"upgrade","from":"0x994eEb321F9cD79B077a5455fC248c77f30Dd244"},{"permission":"upgrade","from":"0xC25D093D3A3f58952252D2e763BEAF2559dc9737"},{"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"},{"permission":"upgrade","from":"0x2a721cBE81a128be0F01040e3353c3805A5EA091"},{"permission":"upgrade","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"},{"permission":"upgrade","from":"0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8"},{"permission":"upgrade","from":"0x6BCe7408c0781dcE7b71494274302D4b75a1447c"},{"permission":"upgrade","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"},{"permission":"upgrade","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4"},{"permission":"upgrade","from":"0x994eEb321F9cD79B077a5455fC248c77f30Dd244"},{"permission":"upgrade","from":"0xC25D093D3A3f58952252D2e763BEAF2559dc9737"},{"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"}]
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      issuedPermissions.3:
+-        {"permission":"guard","to":"0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5","via":[]}
+      issuedPermissions.2:
+-        {"permission":"guard","to":"0x2c0B27F7C8F083B539557a0bA787041BF22DB276","via":[]}
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.description:
+-        "manage roles including the guardian role."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.
+      issuedPermissions.2:
+-        {"permission":"propose","to":"0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65","via":[]}
+      issuedPermissions.1:
+-        {"permission":"challenge","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[]}
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract undefined (0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"}]
+    }
+```
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      name:
+-        "ZircuitMultiSig1"
++        "Zircuit Multisig 1"
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"challenge","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4"},{"permission":"interact","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."},{"permission":"upgrade","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x2a721cBE81a128be0F01040e3353c3805A5EA091","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x6BCe7408c0781dcE7b71494274302D4b75a1447c","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0x994eEb321F9cD79B077a5455fC248c77f30Dd244","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0xC25D093D3A3f58952252D2e763BEAF2559dc9737","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]},{"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.to:
+-        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      issuedPermissions.0.via.0:
+-        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract undefined (0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"propose","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4"}]
+    }
+```
+
+```diff
+    contract undefined (0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"}]
+    }
+```
+
+Generated with discovered.json: 0x589c54416be8183b90ad3f744be87009c2ecb803
 
 # Diff at Wed, 12 Mar 2025 10:21:23 GMT:
 

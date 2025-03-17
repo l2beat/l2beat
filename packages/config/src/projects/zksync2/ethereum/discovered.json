@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 22044942,
-  "configHash": "0x187e8eba2d47e988a4686bf6dfe6af70951de42d84c6115f41f2c62a1ae100fe",
+  "configHash": "0x38b2dfa534af17bf1446eb19ec174e37d3994e94ffe4f8dce2909fcdfbe1ebae",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -14,13 +14,6 @@
       ],
       "proxyType": "immutable",
       "description": "Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract."
-        }
-      ],
       "sinceTimestamp": 1701258227,
       "sinceBlock": 18677050,
       "values": {
@@ -36,17 +29,7 @@
     {
       "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ZKsync",
@@ -62,26 +45,6 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": [
         "prepareChainCommitment",
         "getTotalPriorityTxs",
@@ -494,8 +457,7 @@
         },
         "validators": [
           "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-          "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+          "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
         ]
       },
       "fieldMeta": {
@@ -525,17 +487,7 @@
     {
       "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge_wstETH",
@@ -659,25 +611,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
-        }
-      ],
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
       "values": {
@@ -722,25 +655,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "issuedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "to": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "via": []
-        },
-        {
-          "permission": "validateZkStack",
-          "to": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
-        }
-      ],
       "sinceTimestamp": 1739108999,
       "sinceBlock": 21809364,
       "values": {
@@ -768,21 +682,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
-        }
-      ],
       "sinceTimestamp": 1709850611,
       "sinceBlock": 19386286,
       "values": {
@@ -1340,9 +1239,9 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond_v26": "0x96ca6345e559f5aea25045fad5d4da926ada865bc15973eb6f5f1558344d2732",
-    "shared-zk-stack/RollupL1DAValidator": "0x747b42383d5be9c7ab5ba95b27b68256f2ded258af3e5f4fe0ea84bc335b8041",
-    "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
-    "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
+    "shared-zk-stack/Diamond_v26": "0x158d7837552b42737e0455304729f75af50bcab30854a9a6a666720a889f2f40",
+    "shared-zk-stack/RollupL1DAValidator": "0x89f3fc33c5fb826681001a19c5982f059b841b7460d0d5c44d8bfa5ef5580c8f",
+    "shared-zk-stack/ValidatorTimelock": "0x58f7bef19010ef32f238898c7b274dfe08c8412e455fb6bdaf21a44ef0611ca6",
+    "shared-zk-stack/Verifier": "0xdf758e791d4b50d840b7b4546467e86c3b081e1499c51f4ab37caa07476968eb"
   }
 }

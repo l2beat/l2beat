@@ -1,4 +1,76 @@
-Generated with discovered.json: 0xf2150b8aa1dc40fd58abf2b013c62e47da288dd3
+Generated with discovered.json: 0x5acc07c44fdd3452620d513a9e44ea8ab163a140
+
+# Diff at Mon, 17 Mar 2025 16:30:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"}]
+    }
+```
+
+```diff
+    contract Validium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
++        "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"
+      issuedPermissions.0.description:
+-        "manage the members of the data availability committee and the threshold for valid commitments."
+    }
+```
+
+```diff
+    contract undefined (0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"}]
+    }
+```
+
+```diff
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches."},{"permission":"interact","from":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","description":"sole address that can force batches."},{"permission":"interact","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","description":"manage the members of the data availability committee and the threshold for valid commitments."},{"permission":"upgrade","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]
+    }
+```
+
+Generated with discovered.json: 0xe928b996f13f54d4bb1b6388f7faa40375c7e411
 
 # Diff at Tue, 04 Mar 2025 10:38:57 GMT:
 

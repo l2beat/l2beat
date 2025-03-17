@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0xe378672cac844546fa0615f8643d9cd0456828e96ab04806c2ce4b0819ce8bd1",
+  "configHash": "0xf54b2e749ceea90d896d791d9c723bcd070c15efbbe760c9c2bfea7a06859c89",
   "entries": [
     {
       "name": "ProxyAdminOwner",
@@ -1271,6 +1271,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
   }
 }

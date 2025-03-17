@@ -2,11 +2,11 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21973410,
-  "configHash": "0x438164b4c622d8cc183ca81a4f9b3b3e3395e1a54f59c2dd7ecb0c9770a33a96",
+  "configHash": "0xb26443fa3234265d3c6da6e1941d90f6d70b2cf9ebb35538172024235f7644c5",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "name": "StarkgateBridgeMultisig",
+      "name": "Starkware Multisig 2",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -15,218 +15,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
-        },
-        {
-          "permission": "interact",
-          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.."
-        },
-        {
-          "permission": "interact",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
         {
           "permission": "upgrade",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
@@ -237,8 +26,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "delay": 259200
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
         },
         {
           "permission": "upgrade",
@@ -246,28 +34,23 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "delay": 259200
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
         },
         {
           "permission": "upgrade",
-          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "delay": 259200
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
         },
         {
           "permission": "upgrade",
-          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "delay": 259200
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
         },
         {
           "permission": "upgrade",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "delay": 259200
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
         },
         {
           "permission": "upgrade",
-          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "delay": 259200
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
         },
         {
           "permission": "upgrade",
@@ -283,8 +66,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "delay": 259200
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
         },
         {
           "permission": "upgrade",
@@ -379,28 +161,9 @@
       "description": "Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
         }
       ],
       "sinceTimestamp": 1707308579,
@@ -506,12 +269,6 @@
       "description": "A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation..",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
@@ -561,7 +318,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "StarknetSecurityCouncil",
+      "name": "Starkware Security Council",
       "address": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -570,12 +327,7 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        },
         {
           "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
@@ -629,27 +381,8 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -808,13 +541,7 @@
     {
       "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b",
@@ -825,7 +552,6 @@
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -855,24 +581,6 @@
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -1011,7 +719,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StarkgateSecurityAgentMultisig",
+      "name": "Starkware Multisig 4",
       "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1057,7 +765,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StarknetAdminMultisig",
+      "name": "Starkware Multisig 1",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1066,35 +774,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-          "delay": 691200
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672587635,
       "sinceBlock": 16312873,
@@ -1173,27 +852,8 @@
       "description": "Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -1352,27 +1012,8 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -1536,27 +1177,8 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -1705,44 +1327,14 @@
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
-          "permission": "governStarknet",
-          "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
-          "via": []
-        },
-        {
-          "permission": "governStarknet",
-          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
           "via": []
         },
         {
           "permission": "upgrade",
-          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
-          "via": [
-            {
-              "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-              "delay": 691200
-            }
-          ]
+          "to": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -1901,12 +1493,7 @@
       ],
       "proxyType": "immutable",
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
-      "severity": "HIGH",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        },
+      "receivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
@@ -1936,27 +1523,8 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -2122,27 +1690,8 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -2289,24 +1838,6 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
@@ -2445,24 +1976,6 @@
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -2608,24 +2121,6 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
           "via": []
@@ -2763,30 +2258,6 @@
       "proxyType": "StarkWare proxy",
       "description": "Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually).",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -2940,27 +2411,8 @@
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "delay": 259200,
           "via": []
         }
       ],
@@ -3117,7 +2569,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "StarknetSCMinorityMultisig",
+      "name": "Starkware SCMinority Multisig",
       "address": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -3126,12 +2578,6 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1738599755,
       "sinceBlock": 21767145,
@@ -3174,24 +2620,6 @@
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
@@ -4416,16 +3844,16 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "maker/L1Escrow": "0xb627a41b1a9886a691a0ef1198a3002be9dd4f66e04ead1bbd174d354030180e",
-    "starknet/DelayedExecutor": "0xb9857ff40a4b993bd7e48cfafeea1e48f8bce5ddfce9ef225496960865ca007c",
-    "starknet/L1EscrowDAI": "0x4fec73c3685aada81112c687e859cccf1940bdbf75ff72d98d9f4769a69d846d",
-    "starknet/LordsL1Bridge": "0x8cb934f295637a28e190d2750703b3772bf5b062f55ff919a9fa7fec97af058e",
-    "starknet/StarkgateManager": "0xdd26d1b5c0bfb379a8d44eb7889b09f3fe506df4dce96260f8bd015afad231c7",
-    "starknet/StarkgateRegistry": "0xc59a0be45e1fc9208056584cf0fa8d6cb12dfdbd60f8610eda7aef50a7647554",
-    "starknet/Starknet": "0xb78165b4e6a35a7583178ad3aae7e7da7d211a1e7c43422b189151df65c4f68d",
-    "starknet/StarknetERC20Bridge": "0x7249a25f388785a0277c86b45c8989a6ea7ca38acdb9296c7a78e6a9b69faf29",
-    "starknet/StarknetEthBridge": "0x892a1925b98a3ed1298e898f885ccc9f3a9add356d73c674f8ef7bb58f20722a",
-    "starknet/StarknetMultiBridge": "0x34856854dc36975bbcdbfbc1aeba48552c526d926cc44f5065480c2064545366"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
+    "maker/L1Escrow": "0xb382cb75cc03349165d2e88752e51d2634a06b9abf9635f05ab63fc0b9502656",
+    "starknet/DelayedExecutor": "0x848a7d8df6d628508260ee2642b8f0379efb53c798d2fa8fe641b9ae18fd236d",
+    "starknet/L1EscrowDAI": "0x16d6b0df2327545d593c374db025a95e3779c4592395ceeab8203797fae4efdf",
+    "starknet/LordsL1Bridge": "0xfc89ced3e21bae61dfc4abffb8fec98b920463aa7b2605f895caf626b4f54c18",
+    "starknet/StarkgateManager": "0x584623f499f6df367f388dd66c2c2ff3bc98313f7d165215759c4b9858c8ecdf",
+    "starknet/StarkgateRegistry": "0x5a53dabceed1649c85881ae3e2608b98b8f72f00c7383946b693d58db1ad10b1",
+    "starknet/Starknet": "0x6e650467fe4e22f334bdf9441afd06913c2092bbf383589a573eaa0e05cca1b5",
+    "starknet/StarknetERC20Bridge": "0xe95f3a40da0cf1c61d30a4e1fb8e2300d173d6dc1cf48f99387501220fa59a06",
+    "starknet/StarknetEthBridge": "0x46dee2138b1868ea74ced69a662ff6bbb44c77b316dc10d72df748aa0fa13e62",
+    "starknet/StarknetMultiBridge": "0xb2e5ef084c16c2914e5c2b3bbccac389490187b6b0613c6a0fd12b98de148d1c"
   }
 }

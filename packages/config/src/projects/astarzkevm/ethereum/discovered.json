@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0xd9e25e0dd356c6a76abbf20a0d8b08413b906a312d2eaefc722bf8948337ff0f",
+  "configHash": "0xde27364ca05a4b88d2a420ab0833b1c2da996dce9fac8bc9915624ecedd04a85",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -35,7 +35,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
@@ -65,25 +65,6 @@
       "proxyType": "EIP1967 proxy",
       "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "sole address that can force batches.",
-          "via": []
-        },
-        {
-          "permission": "sequence",
-          "to": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1708632059,
       "sinceBlock": 19285389,
@@ -218,15 +199,9 @@
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).",
       "issuedPermissions": [
         {
-          "permission": "interact",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
-          "via": []
-        },
-        {
           "permission": "upgrade",
-          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
-          "via": [{ "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }]
+          "to": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
+          "via": []
         }
       ],
       "sinceTimestamp": 1708624559,
@@ -275,13 +250,7 @@
     {
       "address": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0",
@@ -318,35 +287,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-        },
-        {
-          "permission": "interact",
-          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-          "description": "sole address that can force batches."
-        },
-        {
-          "permission": "interact",
-          "from": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments."
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
-          "via": [{ "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1708444367,
       "sinceBlock": 19269922,
@@ -603,10 +543,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "polygon-cdk/PolygonDataCommittee": "0xeeacc882ef2dd83644ded6e961863fe6da4cb8a36a978c7de9ef5d3d209f6248",
-    "polygon-cdk/PolygonZkEVM": "0x56cf02df517a3e3f6c85d0da12f7f4740428295dd7bdd6a18fd1a12fd48aa527",
-    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
+    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
+    "polygon-cdk/PolygonDataCommittee": "0x174951e75440de05c2a802dda8d5406c3bfc6d20f8ab6277789c5bedf70467a8",
+    "polygon-cdk/PolygonZkEVM": "0x2e2a3a4162db2c3496e13d8bb42697036da267876ba9bd25f596a7e08b001577",
+    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
   }
 }

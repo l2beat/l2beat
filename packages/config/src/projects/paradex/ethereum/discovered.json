@@ -2,33 +2,16 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21979760,
-  "configHash": "0xfd12425177bb22eef1444448ad1b41750c59fe9c7a02cf958b5ef00c75705650",
+  "configHash": "0x17b0b15542e9af60098cd0a30fdae521d9c879c8f896518a09da57f7bb63a7df",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000020",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
-      "name": "ParadexAdminMultisig",
+      "name": "Paradex Multisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -37,12 +20,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        },
         {
           "permission": "upgrade",
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
@@ -80,12 +58,7 @@
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
-        {
-          "permission": "governStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        },
         {
           "permission": "upgrade",
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
@@ -106,23 +79,7 @@
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "disable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "enable the withdrawal limit."
-        },
-        {
-          "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-          "description": "manage critical access control roles and the role that can upgrade the implementation."
-        },
         {
           "permission": "upgrade",
           "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
@@ -137,13 +94,7 @@
     {
       "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "operateStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "USDC Bridge",
@@ -157,42 +108,6 @@
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0000000000000000000000000000000000000020",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x0000000000000000000000000000000000000020",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x0000000000000000000000000000000000000020",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "disable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "enable the withdrawal limit.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
@@ -352,21 +267,6 @@
       "displayName": "Starknet",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
-        {
-          "permission": "governStarknet",
-          "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
-          "via": []
-        },
-        {
-          "permission": "governStarknet",
-          "to": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
-          "via": []
-        },
-        {
-          "permission": "operateStarknet",
-          "to": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
@@ -734,8 +634,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "starknet/Starknet": "0xb78165b4e6a35a7583178ad3aae7e7da7d211a1e7c43422b189151df65c4f68d",
-    "starknet/StarknetERC20Bridge": "0x7249a25f388785a0277c86b45c8989a6ea7ca38acdb9296c7a78e6a9b69faf29"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
+    "starknet/Starknet": "0x6e650467fe4e22f334bdf9441afd06913c2092bbf383589a573eaa0e05cca1b5",
+    "starknet/StarknetERC20Bridge": "0xe95f3a40da0cf1c61d30a4e1fb8e2300d173d6dc1cf48f99387501220fa59a06"
   }
 }

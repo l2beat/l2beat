@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22029702,
-  "configHash": "0x91b9da79c310c7359fba05c226c7a52b1c228d0bd985a0a7c6bc54321524bf88",
+  "configHash": "0x9569e25516bc0bb36f559226e0df135b8f50b8ee2f9d38a8448432db28d4a9a7",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -104,8 +104,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -242,7 +242,7 @@
       }
     },
     {
-      "name": "SecurityCouncil",
+      "name": "Scroll Security Council",
       "address": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -288,7 +288,7 @@
       ]
     },
     {
-      "name": "ScrollExecutorMultisig",
+      "name": "Scroll Multisig 1",
       "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -580,8 +580,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1716184139,
@@ -639,8 +639,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -772,8 +772,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696920095,
@@ -808,8 +808,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -934,8 +934,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1008,89 +1008,6 @@
       ],
       "proxyType": "immutable",
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x987e300fDfb06093859358522a79098848C33852",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xb2b10a289A229415a124EFDeF310C10cb004B6ff",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0xEB803eb3F501998126bf37bB823646Ed3D59d072"
-        }
-      ],
       "sinceTimestamp": 1696782479,
       "sinceBlock": 18306947,
       "values": {
@@ -1206,8 +1123,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1263,8 +1180,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1416,7 +1333,7 @@
       }
     },
     {
-      "name": "ScrollFeeVaultMultisig",
+      "name": "Scroll Multisig 4",
       "address": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1503,8 +1420,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "ignoreInWatchMode": ["l2BaseFee"],
@@ -1589,8 +1506,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "ignoreInWatchMode": ["lastFinalizedBatchIndex"],
@@ -1686,8 +1603,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1731,8 +1648,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1765,7 +1682,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ScrollEmergencyMultisig",
+      "name": "Scroll Multisig 2",
       "address": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1877,8 +1794,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -1957,7 +1874,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B"
@@ -2037,7 +1954,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ScrollOpsMultisig",
+      "name": "Scroll Multisig 3",
       "address": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2081,8 +1998,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "ignoreInWatchMode": ["totalBridgedUSDC"],
@@ -2127,8 +2044,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "via": [{ "address": "0xEB803eb3F501998126bf37bB823646Ed3D59d072" }]
+          "to": "0xEB803eb3F501998126bf37bB823646Ed3D59d072",
+          "via": []
         }
       ],
       "sinceTimestamp": 1696782323,
@@ -3381,7 +3298,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
   }
 }

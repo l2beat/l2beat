@@ -1,4 +1,188 @@
-Generated with discovered.json: 0x3a0c5fda3ddbd2c9440a9dc1ee38055c29c2c622
+Generated with discovered.json: 0x5fdea6ef62729c2c9832b6f4ec1699e70ff32bdf
+
+# Diff at Mon, 17 Mar 2025 16:31:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22046074
+- current block number: 22046074
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046074 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x51D5C516c818dcf63E67B28cB2516166D8578c06","description":"set and change address mappings."},{"permission":"upgrade","from":"0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A"},{"permission":"upgrade","from":"0xa010dE167788ed7d95c770AC478997D3207236AF"},{"permission":"upgrade","from":"0xb45440830bd8D288bB2B5B01Be303ae60fc855d8"},{"permission":"upgrade","from":"0xeBf5859b7646ca9cf8A981613569bF28394F2571"},{"permission":"upgrade","from":"0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8"},{"permission":"upgrade","from":"0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"},{"permission":"upgrade","from":"0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A"},{"permission":"upgrade","from":"0xa010dE167788ed7d95c770AC478997D3207236AF"},{"permission":"upgrade","from":"0xb45440830bd8D288bB2B5B01Be303ae60fc855d8"},{"permission":"upgrade","from":"0xeBf5859b7646ca9cf8A981613569bF28394F2571"},{"permission":"upgrade","from":"0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8"},{"permission":"upgrade","from":"0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e"}]
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]},{"permission":"interact","to":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","description":"can verify proofs for the header range [latestBlock, targetBlock] proof.","via":[]}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ConduitMultisig"
++        "Conduit Multisig 1"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x51D5C516c818dcf63E67B28cB2516166D8578c06","description":"set and change address mappings.","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"interact","from":"0xb45440830bd8D288bB2B5B01Be303ae60fc855d8","description":"can toggle between the optimistic mode and not optimistic (ZK) mode."},{"permission":"interact","from":"0xeBf5859b7646ca9cf8A981613569bF28394F2571","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."},{"permission":"upgrade","from":"0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"upgrade","from":"0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"upgrade","from":"0xa010dE167788ed7d95c770AC478997D3207236AF","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"upgrade","from":"0xb45440830bd8D288bB2B5B01Be303ae60fc855d8","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"upgrade","from":"0xeBf5859b7646ca9cf8A981613569bF28394F2571","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"upgrade","from":"0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]},{"permission":"upgrade","from":"0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]
+    }
+```
+
+```diff
+    contract AddressManager (0x51D5C516c818dcf63E67B28cB2516166D8578c06) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"set and change address mappings.","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+      issuedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.via.0:
+-        {"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A"},{"permission":"guard","from":"0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8"}]
+    }
+```
+
+```diff
+    contract undefined (0x9Fb23129982c993743Eb9bB156af8CC8Fa2aC761) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0xeBf5859b7646ca9cf8A981613569bF28394F2571"}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0xa010dE167788ed7d95c770AC478997D3207236AF) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+      issuedPermissions.0.via.0:
+-        {"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"can toggle between the optimistic mode and not optimistic (ZK) mode.","via":[]}
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+      issuedPermissions.0.via.0:
+-        {"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}
+    }
+```
+
+```diff
+    contract Succinct Multisig 1 (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SuccinctGatewaySP1Multisig"
++        "Succinct Multisig 1"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."}]
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
+```
+
+```diff
+    contract SystemConfig (0xeBf5859b7646ca9cf8A981613569bF28394F2571) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x9Fb23129982c993743Eb9bB156af8CC8Fa2aC761"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4a4962275DF8C60a80d3a25faEc5AA7De116A746","via":[{"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.to:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+      issuedPermissions.0.via.0:
+-        {"address":"0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}
+    }
+```
+
+Generated with discovered.json: 0xd7c01bd1b166e63b6ea8e98af05ea6a685bb0cc5
 
 # Diff at Fri, 14 Mar 2025 15:41:26 GMT:
 

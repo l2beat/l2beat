@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "optimism",
   "blockNumber": 132878181,
-  "configHash": "0xf509725a4cf91c5d6206383be3e1780a685ccba27e42cd564930829a5b3dde61",
+  "configHash": "0x2b78d12655ec6402633e2fe3c3f1b63c998b499512b0d122de6c201be4b2fa0a",
   "entries": [
     {
       "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
@@ -2082,6 +2082,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
   }
 }

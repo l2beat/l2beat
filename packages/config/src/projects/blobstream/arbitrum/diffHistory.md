@@ -1,4 +1,114 @@
-Generated with discovered.json: 0xc75c52ffdbbeb06f7ab83949b3359ddd1988c723
+Generated with discovered.json: 0x6af17a91c97325de98eb2b402d9af68a85eb5cf6
+
+# Diff at Mon, 17 Mar 2025 16:47:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 305996466
+- current block number: 305996466
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305996466 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."}]
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xCafEf00d348Adbd57c37d1B77e0619C6244C6878","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.","via":[]},{"permission":"interact","to":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","description":"can verify proofs for the header range [latestBlock, targetBlock] proof.","via":[]}]
+    }
+```
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3","description":"can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH.","via":[]}]
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"}
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.description:
+-        "can freeze the bridge contract and update the list of authorized relayers."
+    }
+```
+
+```diff
+    contract undefined (0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."}]
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","via":[]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0x738a9b55304f9fcF776B3BA285e50c0f9eF77997","description":"can freeze the bridge contract and update the list of authorized relayers.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC","description":"it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
++        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"
+      issuedPermissions.0.description:
+-        "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+    }
+```
+
+```diff
+    contract Succinct Multisig 1 (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SuccinctGatewaySP1Multisig"
++        "Succinct Multisig 1"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."}]
+    }
+```
+
+```diff
+    contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x6c7a05e0AE641c6559fD76ac56641778B6eCd776","description":"can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."}]
+    }
+```
+
+```diff
+    contract  (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
+```
+
+Generated with discovered.json: 0x3f67b26072aa483c7476dcd8acd7cb2b7bdc5c0c
 
 # Diff at Tue, 04 Mar 2025 10:40:23 GMT:
 

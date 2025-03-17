@@ -1,4 +1,485 @@
-Generated with discovered.json: 0x27275e686acb17335d1455c2e0c51318855bffa9
+Generated with discovered.json: 0x2f0b387db8183e5b5d078f3187347c9e02cd6ac4
+
+# Diff at Mon, 17 Mar 2025 16:30:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21872493
+- current block number: 21872493
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872493 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x075a48633dc6845f92339741E9c96b88f1b2A86f) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd","description":"defines addresses that can pause or unpause ability to invest into strategies."},{"permission":"interact","from":"0xA937660031787C4408587D2c6A67Ec4B260630F5","description":"defines addresses that can pause or unpause ability to deposit tokens into strategies."},{"permission":"interact","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","description":"defines addresses that can pause or unpause ability to deposit tokens into strategies."}]
+    }
+```
+
+```diff
+    contract undefined (0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x3c3a81e81dc49A522A592e7622A7E711c06bf354"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x3c3a81e81dc49A522A592e7622A7E711c06bf354"}]
+    }
+```
+
+```diff
+    contract undefined (0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.
+      issuedPermissions.10:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      issuedPermissions.9:
+-        {"permission":"interact","to":"0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.8:
+-        {"permission":"interact","to":"0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.7:
+-        {"permission":"interact","to":"0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.6:
+-        {"permission":"interact","to":"0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.5:
+-        {"permission":"interact","to":"0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.4:
+-        {"permission":"interact","to":"0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645","description":"sign data commitments for the DA bridge.","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xB61298691FE0df10634A67dd83b2253E74cbF7fb"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      issuedPermissions.0.description:
+-        "sign data commitments for the DA bridge."
+    }
+```
+
+```diff
+    contract undefined (0x207E804758e28F2b3fD6E4219671B327100b82f8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","description":"can register or change status of DA node operators."}]
+    }
+```
+
+```diff
+    contract InvestmentManager (0x23754725a49c0f003C349A6C7869fF8609a7CEfd) {
+    +++ description: Contract managing different investment strategies, forked from EigenLayer StrategyManager.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      issuedPermissions.0.description:
+-        "defines addresses that can pause or unpause ability to invest into strategies."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd"},{"permission":"upgrade","from":"0xA937660031787C4408587D2c6A67Ec4B260630F5"},{"permission":"upgrade","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"},{"permission":"upgrade","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"},{"permission":"upgrade","from":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd"},{"permission":"upgrade","from":"0xA937660031787C4408587D2c6A67Ec4B260630F5"},{"permission":"upgrade","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"},{"permission":"upgrade","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"},{"permission":"upgrade","from":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"}]
+    }
+```
+
+```diff
+    contract undefined (0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x427Ea0710FA5252057F0D88274f7aeb308386cAf"}]
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"challenge","from":"0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"},{"permission":"guard","from":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      issuedPermissions.1:
+-        {"permission":"challenge","to":"0x2F44BD2a54aC3fB20cd7783cF94334069641daC9","via":[]}
+      issuedPermissions.0.permission:
+-        "propose"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x6667961f5e9C98A76a48767522150889703Ed77D"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+      issuedPermissions.0.via.1:
+-        {"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"},{"permission":"upgrade","from":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"},{"permission":"upgrade","from":"0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"},{"permission":"upgrade","from":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"},{"permission":"upgrade","from":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"},{"permission":"upgrade","from":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"},{"permission":"upgrade","from":"0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"},{"permission":"upgrade","from":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"},{"permission":"upgrade","from":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"}]
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.22:
+-        {"permission":"upgrade","from":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.21:
+-        {"permission":"upgrade","from":"0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.20:
+-        {"permission":"upgrade","from":"0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"}
+      receivedPermissions.19:
+-        {"permission":"upgrade","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.18:
+-        {"permission":"upgrade","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","description":"manage all access control roles.","via":[{"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}]}
+      receivedPermissions.16:
+-        {"permission":"interact","from":"0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42","description":"set and change address mappings.","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.15:
+-        {"permission":"upgrade","from":"0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.14:
+-        {"permission":"upgrade","from":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.13:
+-        {"permission":"upgrade","from":"0x427Ea0710FA5252057F0D88274f7aeb308386cAf","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.11:
+-        {"permission":"upgrade","from":"0x3c3a81e81dc49A522A592e7622A7E711c06bf354","via":[{"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"},{"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"0x92986cd63C3409b7dA2882624B6d6E7Cf660707a","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.8:
+-        {"permission":"interact","from":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","description":"manage all access control roles."}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"0x427Ea0710FA5252057F0D88274f7aeb308386cAf","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"0x23754725a49c0f003C349A6C7869fF8609a7CEfd","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"0xA937660031787C4408587D2c6A67Ec4B260630F5","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","description":"execute transactions that are ready."}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","description":"propose transactions."}
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.from:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
+      receivedPermissions.0.description:
+-        "cancel queued transactions."
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"},{"permission":"act","from":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"},{"permission":"act","from":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400},{"permission":"act","from":"0xca35F8338054739D138884685e08b39EE2217794"}]
+    }
+```
+
+```diff
+    contract undefined (0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract DataLayrServiceManager (0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1) {
+    +++ description: This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+    }
+```
+
+```diff
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"cancel queued transactions.","via":[]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"execute transactions that are ready.","via":[]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"manage all access control roles.","via":[]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"manage all access control roles.","via":[{"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}]},{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"propose transactions.","via":[]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"},{"permission":"interact","from":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","description":"manage all access control roles."}]
+    }
+```
+
+```diff
+    contract undefined (0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"}]
+    }
+```
+
+```diff
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","description":"set and change address mappings.","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}]
+    }
+```
+
+```diff
+    contract undefined (0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract undefined (0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract undefined (0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract undefined (0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract PubkeyCompendium (0x92986cd63C3409b7dA2882624B6d6E7Cf660707a) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      issuedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.via.0:
+-        {"address":"0xca35F8338054739D138884685e08b39EE2217794"}
+    }
+```
+
+```diff
+    contract MantleSecondStrat (0xA937660031787C4408587D2c6A67Ec4B260630F5) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      issuedPermissions.0.description:
+-        "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+    }
+```
+
+```diff
+    contract undefined (0xB61298691FE0df10634A67dd83b2253E74cbF7fb) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      issuedPermissions.0.description:
+-        "can register or change status of DA node operators."
+    }
+```
+
+```diff
+    contract undefined (0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+    }
+```
+
+```diff
+    contract DataLayrChallenge (0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42","description":"set and change address mappings."},{"permission":"upgrade","from":"0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"},{"permission":"upgrade","from":"0x427Ea0710FA5252057F0D88274f7aeb308386cAf"},{"permission":"upgrade","from":"0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"},{"permission":"upgrade","from":"0x427Ea0710FA5252057F0D88274f7aeb308386cAf"},{"permission":"upgrade","from":"0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"},{"permission":"upgrade","from":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"}]
+    }
+```
+
+```diff
+    contract MantleFirstStrat (0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1) {
+    +++ description: Basic do-nothing investment strategy.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x4e59e778a0fb77fBb305637435C62FaeD9aED40f","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x075a48633dc6845f92339741E9c96b88f1b2A86f"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      issuedPermissions.0.description:
+-        "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+    }
+```
+
+```diff
+    contract DataLayrChallengeUtils (0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      issuedPermissions.0.via.0:
+-        {"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}
+    }
+```
+
+```diff
+    contract undefined (0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x1eD35B793d887e028493dAC4a11AA5Feb811dd67","description":"sign data commitments for the DA bridge."}]
+    }
+```
+
+```diff
+    contract Delegation (0xeA4F1fE4928f1f83a450899C068bcd455BaF4798) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}
+    }
+```
+
+Generated with discovered.json: 0x26cd811b4563d0d63f285e1ec5d26af71db00c17
 
 # Diff at Tue, 04 Mar 2025 11:25:58 GMT:
 

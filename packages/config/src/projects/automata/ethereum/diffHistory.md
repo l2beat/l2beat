@@ -1,4 +1,213 @@
-Generated with discovered.json: 0x4eb72b0650d4810a456d8a91ab8ece0be8d70856
+Generated with discovered.json: 0xfb21684a98b7e5259644b824fba85db6e750a75e
+
+# Diff at Mon, 17 Mar 2025 16:30:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21715439
+- current block number: 21715439
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715439 (main branch discovery), not current.
+
+```diff
+    contract L1ERC721Bridge (0x00bd00c5C7F60e222D9CB8040270Ba929241A280) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+      issuedPermissions.0.via.0:
+-        {"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}
+    }
+```
+
+```diff
+    contract AutomataUpgradeMultisig (0x03eC1C43434E2f910A2fb984906cd2470fdb39c8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6","description":"set and change address mappings.","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0x00bd00c5C7F60e222D9CB8040270Ba929241A280","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0x08c5DCDD5e46d31CC1591ee15b084663507597f3","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0xa74b7baF04867E62B7824268e96144E503A23666","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0xD52ba64CBE1e3B44167f810622fBef36bE24d95c","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0xdbf381984c4515Fe3285D3C55fDfb3054C52c261","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0xDf87154Ed6cF332931b70014bA3d9dF423074FfF","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]},{"permission":"upgrade","from":"0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0x08c5DCDD5e46d31CC1591ee15b084663507597f3) {
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x03eC1C43434E2f910A2fb984906cd2470fdb39c8","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+      issuedPermissions.0.description:
+-        "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+    }
+```
+
+```diff
+    contract undefined (0x34Faa77b4D1686E399c96deF0de31D30572eaa9F) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"challenge","from":"0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"}]
+    }
+```
+
+```diff
+    contract undefined (0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x08c5DCDD5e46d31CC1591ee15b084663507597f3","description":"can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."},{"permission":"interact","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[{"address":"0x5E2FC552288857cfE709C398Ecac448314dE1320"}]}]
+    }
+```
+
+```diff
+    contract undefined (0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00"}]
+    }
+```
+
+```diff
+    contract AutomataOpsMultisig (0x5E2FC552288857cfE709C398Ecac448314dE1320) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x03eC1C43434E2f910A2fb984906cd2470fdb39c8","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[{"address":"0x5E2FC552288857cfE709C398Ecac448314dE1320"}]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7617f4a55d62b9EE49578D9C90593e58E607415F) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6","description":"set and change address mappings."},{"permission":"upgrade","from":"0x00bd00c5C7F60e222D9CB8040270Ba929241A280"},{"permission":"upgrade","from":"0x08c5DCDD5e46d31CC1591ee15b084663507597f3"},{"permission":"upgrade","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00"},{"permission":"upgrade","from":"0xa74b7baF04867E62B7824268e96144E503A23666"},{"permission":"upgrade","from":"0xD52ba64CBE1e3B44167f810622fBef36bE24d95c"},{"permission":"upgrade","from":"0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"},{"permission":"upgrade","from":"0xDf87154Ed6cF332931b70014bA3d9dF423074FfF"},{"permission":"upgrade","from":"0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5","description":"upgrading the bridge implementation can give access to all funds escrowed therein."}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x00bd00c5C7F60e222D9CB8040270Ba929241A280"},{"permission":"upgrade","from":"0x08c5DCDD5e46d31CC1591ee15b084663507597f3"},{"permission":"upgrade","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00"},{"permission":"upgrade","from":"0xa74b7baF04867E62B7824268e96144E503A23666"},{"permission":"upgrade","from":"0xD52ba64CBE1e3B44167f810622fBef36bE24d95c"},{"permission":"upgrade","from":"0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"},{"permission":"upgrade","from":"0xDf87154Ed6cF332931b70014bA3d9dF423074FfF"},{"permission":"upgrade","from":"0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5"}]
+    }
+```
+
+```diff
+    contract undefined (0x8c6F6580C846634C5DA08c40AE308DE23006a679) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"propose","from":"0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"}]
+    }
+```
+
+```diff
+    contract undefined (0xa5822fb7E3Fb516E518e2629E6786e93858e41F4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"0xD52ba64CBE1e3B44167f810622fBef36bE24d95c"},{"permission":"guard","from":"0xDf87154Ed6cF332931b70014bA3d9dF423074FfF"}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xa74b7baF04867E62B7824268e96144E503A23666) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.to:
+-        "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+      issuedPermissions.0.via.0:
+-        {"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xD52ba64CBE1e3B44167f810622fBef36bE24d95c) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x03eC1C43434E2f910A2fb984906cd2470fdb39c8","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xa5822fb7E3Fb516E518e2629E6786e93858e41F4"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdbf381984c4515Fe3285D3C55fDfb3054C52c261) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x03eC1C43434E2f910A2fb984906cd2470fdb39c8","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}
+      issuedPermissions.1:
+-        {"permission":"challenge","to":"0x34Faa77b4D1686E399c96deF0de31D30572eaa9F","via":[]}
+      issuedPermissions.0.permission:
+-        "propose"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x8c6F6580C846634C5DA08c40AE308DE23006a679"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xDf87154Ed6cF332931b70014bA3d9dF423074FfF) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x03eC1C43434E2f910A2fb984906cd2470fdb39c8","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xa5822fb7E3Fb516E518e2629E6786e93858e41F4"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8"
++        "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
+      issuedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.via.0:
+-        {"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}
+    }
+```
+
+```diff
+    contract AddressManager (0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x03eC1C43434E2f910A2fb984906cd2470fdb39c8","description":"set and change address mappings.","via":[{"address":"0x7617f4a55d62b9EE49578D9C90593e58E607415F"}]}]
+    }
+```
+
+Generated with discovered.json: 0x0d96994560bd2571d0b223565076ce21364cd477
 
 # Diff at Tue, 04 Mar 2025 11:25:26 GMT:
 

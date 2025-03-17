@@ -1,4 +1,132 @@
-Generated with discovered.json: 0x21dafaf9755b5ff44fbccdbbdbf4eb334cb373a9
+Generated with discovered.json: 0xd5988b398c4eb6e2b02432367bc9d7817e4b4058
+
+# Diff at Mon, 17 Mar 2025 16:31:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22017767
+- current block number: 22017767
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22017767 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]}}
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+Generated with discovered.json: 0xb4d6877399660d540ae13abf57dd50a8d46a8b7f
 
 # Diff at Mon, 10 Mar 2025 16:49:34 GMT:
 

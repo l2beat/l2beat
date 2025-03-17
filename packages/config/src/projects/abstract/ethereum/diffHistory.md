@@ -1,4 +1,74 @@
-Generated with discovered.json: 0xee8a394422f577f6337e01e142f4463aa3780798
+Generated with discovered.json: 0x5361dc40e85239ed4451083d6206f33d671d7aa2
+
+# Diff at Mon, 17 Mar 2025 16:29:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22022295
+- current block number: 22022295
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022295 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x11805594be0229EF08429D775AF0c55f7c4535dE) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"}]
+    }
+```
+
+```diff
+    contract AbstractZkEvm (0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]},{"permission":"interact","to":"0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"}]}]
+    }
+```
+
+```diff
+    contract undefined (0x54aB716D465be3D5EEca64E63ac0048D7a81659a) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x11805594be0229EF08429D775AF0c55f7c4535dE","via":[]},{"permission":"validateZkStack","to":"0x54aB716D465be3D5EEca64E63ac0048D7a81659a","via":[]}]
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."}]
+    }
+```
+
+```diff
+    contract AbstractChainAdminMultisig (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"}]
+    }
+```
+
+```diff
+    contract ChainAdmin (0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."}]
+    }
+```
+
+Generated with discovered.json: 0x73294ac6dd44c5538397f22fb449ec013e8cbb9f
 
 # Diff at Tue, 11 Mar 2025 08:00:03 GMT:
 

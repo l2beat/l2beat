@@ -1,4 +1,84 @@
-Generated with discovered.json: 0x81b96dc9d2a65272409825a7aacbeaf4ba570a43
+Generated with discovered.json: 0xa7f9e46ddc814514ad15ea6b5fa3fcb8c1d441ba
+
+# Diff at Mon, 17 Mar 2025 16:30:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x3451F208447c4D81346c10239eF92A1eB98b65C3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"}]
+    }
+```
+
+```diff
+    contract undefined (0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8","description":"manage the members of the data availability committee and the threshold for valid commitments."},{"permission":"interact","from":"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches."},{"permission":"interact","from":"0xC4E903D3Af4c3d2e437492d602adcC9d9b536858","description":"sole address that can force batches."}]
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40"
++        "0xada59D145126A746976F0F56477aafFEB3acc8e3"
+      issuedPermissions.0.description:
+-        "manage the members of the data availability committee and the threshold for valid commitments."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8"}]
+    }
+```
+
+```diff
+    contract undefined (0xb8605297399baEb6628C9E8F5D3E52A056492cfe) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8","via":[{"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}]
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x3451F208447c4D81346c10239eF92A1eB98b65C3","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0xd01d2f69be09a6db99f51f61cadefc18672b04a7
 
 # Diff at Tue, 04 Mar 2025 10:39:13 GMT:
 

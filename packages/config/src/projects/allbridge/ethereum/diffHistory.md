@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xb2cd1b6ee3d1f29fe071ce4fdedaf553a3be6b56
+Generated with discovered.json: 0xcf397143b4c8b159df38834c5168ed1b25cc2c59
+
+# Diff at Mon, 17 Mar 2025 16:29:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21723681
+- current block number: 21723681
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723681 (main branch discovery), not current.
+
+```diff
+    contract Pool (0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D) {
+    +++ description: None
+      template:
+-        "allbridge/pool"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
+    contract Pool (0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d) {
+    +++ description: None
+      template:
+-        "allbridge/pool"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+Generated with discovered.json: 0xb16dd7ded604b70efa6744181f7d83cbaea4c1aa
 
 # Diff at Tue, 04 Mar 2025 10:38:53 GMT:
 

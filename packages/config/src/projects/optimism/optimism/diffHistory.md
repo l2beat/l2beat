@@ -1,4 +1,228 @@
-Generated with discovered.json: 0xe6b0473df29ad1cf15950de02eba3d6d5831321c
+Generated with discovered.json: 0x542463a36a0a2eb2793068ff64305fdaca96822c
+
+# Diff at Mon, 17 Mar 2025 16:48:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 132493968
+- current block number: 132493968
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 132493968 (main branch discovery), not current.
+
+```diff
+    contract MintManagerOwner (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5C4e7Ba1E219E47948e6e3F55019A647bA501005","description":"change the OP token owner to a different MintManager and therefore change the inflation policy."}]
+    }
+```
+
+```diff
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002) {
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x4200000000000000000000000000000000000002"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000007"},{"permission":"upgrade","from":"0x420000000000000000000000000000000000000F"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000010"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000011"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000012"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000013"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000014"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000015"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000016"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000017"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000018"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000019"},{"permission":"upgrade","from":"0x420000000000000000000000000000000000001A"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000020"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000021"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x4200000000000000000000000000000000000002"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000007"},{"permission":"upgrade","from":"0x420000000000000000000000000000000000000F"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000010"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000011"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000012"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000013"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000014"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000015"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000016"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000017"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000018"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000019"},{"permission":"upgrade","from":"0x420000000000000000000000000000000000001A"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000020"},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000021"}]
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      issuedPermissions.0.to:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "0x4200000000000000000000000000000000000018"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4200000000000000000000000000000000000018"}
+    }
+```
+
+```diff
+    contract MintManager (0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26","description":"change the OP token owner to a different MintManager and therefore change the inflation policy.","via":[]}]
+    }
+```
+
+```diff
+    contract undefined (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x4200000000000000000000000000000000000002","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000007","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x420000000000000000000000000000000000000F","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000010","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000011","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000012","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000013","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000014","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000015","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000016","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000017","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000018","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000019","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x420000000000000000000000000000000000001A","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000020","via":[{"address":"0x4200000000000000000000000000000000000018"}]},{"permission":"upgrade","from":"0x4200000000000000000000000000000000000021","via":[{"address":"0x4200000000000000000000000000000000000018"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x4200000000000000000000000000000000000018"}]
+    }
+```
+
+Generated with discovered.json: 0xae44d827b352bcf149799a5d933847d880b58246
 
 # Diff at Tue, 04 Mar 2025 10:40:38 GMT:
 

@@ -2,29 +2,17 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 21766633,
-  "configHash": "0xea41517ea1f5ca89adf3bd29df6815d28135fc03929e0b2f33eff8c417b7f811",
+  "configHash": "0x81b102923f98b537c5ccd2540226413b2724b295a5c94ba70022da7f52591e7c",
   "entries": [
     {
       "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "relay",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x2D407dDb06311396fE14D4b49da5F0471447d45C",
@@ -34,46 +22,22 @@
     {
       "address": "0x32744b98cC03A76C0559e905a31E8474a31729c1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9",
@@ -94,48 +58,6 @@
       ],
       "proxyType": "immutable",
       "description": "Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).",
-      "issuedPermissions": [
-        {
-          "permission": "validateBridge",
-          "to": "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x32744b98cC03A76C0559e905a31E8474a31729c1",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
-          "via": []
-        },
-        {
-          "permission": "validateBridge",
-          "to": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1734690491,
       "sinceBlock": 21443134,
       "values": {
@@ -174,14 +96,6 @@
         "0x8098841579ecf27111655e2469db7694f23f693dcd7bc781864783f8c03ea4df"
       ],
       "proxyType": "immutable",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
-          "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed."
-        }
-      ],
       "sinceTimestamp": 1734690695,
       "sinceBlock": 21443151,
       "values": {
@@ -199,23 +113,6 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-          "description": "set permissioned relayers."
-        },
-        {
-          "permission": "interact",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-          "description": "set the fast lane fee."
-        },
-        {
-          "permission": "interact",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-          "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1734794243,
       "sinceBlock": 21451725,
@@ -245,13 +142,7 @@
     {
       "address": "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MPTProofVerifier",
@@ -269,13 +160,7 @@
     {
       "address": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SonicGatewayMultisig",
@@ -288,31 +173,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
-          "description": "set the proof verifier and the exit administrator."
-        },
-        {
-          "permission": "interact",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-          "description": "manage all access control roles."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
-          "description": "add tokens to the whitelist."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
-          "description": "manage access control roles."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
-          "description": "remove tokens from the whitelist."
-        },
         {
           "permission": "upgrade",
           "from": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
@@ -351,18 +211,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.",
       "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
-          "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "set the proof verifier and the exit administrator.",
-          "via": []
-        },
         {
           "permission": "upgrade",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
@@ -410,13 +258,7 @@
     {
       "address": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "relay",
-          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7",
@@ -433,49 +275,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point for state (oracle) updates.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
-          "description": "set permissioned relayers.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
-          "description": "set the fast lane fee.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
-          "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat).",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "manage all access control roles.",
-          "via": []
-        },
-        {
-          "permission": "relay",
-          "to": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
-          "via": []
-        },
-        {
-          "permission": "relay",
-          "to": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
-          "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
-          "description": "update the state root."
-        }
-      ],
       "ignoreInWatchMode": ["lastBlockNum", "fastLaneInUse"],
       "sinceTimestamp": 1734690815,
       "sinceBlock": 21443161,
@@ -557,14 +356,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple contract that saves the latest state root.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-          "description": "update the state root.",
-          "via": []
-        }
-      ],
       "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "sinceTimestamp": 1734690443,
       "sinceBlock": 21443130,
@@ -580,13 +371,7 @@
     {
       "address": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateBridge",
-          "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenPairs",
@@ -598,26 +383,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "add tokens to the whitelist.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "manage access control roles.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-          "description": "remove tokens from the whitelist.",
-          "via": []
-        }
-      ],
       "sinceTimestamp": 1734690539,
       "sinceBlock": 21443138,
       "values": {
@@ -951,6 +716,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
   }
 }

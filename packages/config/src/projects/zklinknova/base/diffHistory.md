@@ -1,4 +1,53 @@
-Generated with discovered.json: 0xdd45b969e4b9816aa0d7a68f9ce0e54d45cfcba4
+Generated with discovered.json: 0xa5e7b5cee2e74967cf08102c6bd3db1c3be84029
+
+# Diff at Mon, 17 Mar 2025 16:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 27445725
+- current block number: 27445725
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 27445725 (main branch discovery), not current.
+
+```diff
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
+      issuedPermissions.0.via.0:
+-        {"address":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"}
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x80d12A78EfE7604F00ed07aB2f16F643301674D5"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x80d12A78EfE7604F00ed07aB2f16F643301674D5"}]
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0x80d12A78EfE7604F00ed07aB2f16F643301674D5","via":[{"address":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"}]
+    }
+```
+
+Generated with discovered.json: 0x8d24792768686c0b8aadd6b0b099956bedfa7b78
 
 # Diff at Tue, 11 Mar 2025 08:13:22 GMT:
 

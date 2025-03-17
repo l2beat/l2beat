@@ -1,4 +1,596 @@
-Generated with discovered.json: 0x669371923bde4fa52c08178df81bbf7ca378aef9
+Generated with discovered.json: 0x92a15c16c1b5ce1f2f6dffbfc81d85d9aec95338
+
+# Diff at Mon, 17 Mar 2025 16:30:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21786859
+- current block number: 21786859
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786859 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xd3132d052C9045D7cB0236586C9E2276e654343D"
++        "0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d"
+      issuedPermissions.0.via.0:
+-        {"address":"0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d"}
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.4:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B","description":"Add/remove batchPosters (Sequencers).","via":[]}
+      issuedPermissions.1:
+-        {"permission":"sequence","to":"0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      issuedPermissions.0.description:
+-        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+    }
+```
+
+```diff
+    contract CustomGateway (0x23122da8C581AA7E0d07A36Ff1f16F799650232f) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}]}
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      issuedPermissions.0.via.2:
+-        {"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
++        "0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678"
+      issuedPermissions.0.via.0:
+-        {"address":"0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678"}
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x304807A7ed6c1296df2128E6ff3836e477329CD2) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}
+    }
+```
+
+```diff
+    contract Validator (0x3B0369CAD35d257793F51c28213a4Cf4001397AC) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x5B3E4404d05339D41A7E672BC912CBf511Cca294"
++        "0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE"
+      issuedPermissions.0.via.0:
+-        {"address":"0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE"}
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"permission":"act","from":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"permission":"act","from":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"permission":"act","from":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"cancel queued transactions."},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"update the minimum delay and manage all access control roles of the timelock."},{"permission":"interact","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."},{"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88"}]
+    }
+```
+
+```diff
+    contract undefined (0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin 2 (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
++        "0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428"
+      issuedPermissions.0.via.0:
+-        {"address":"0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428"}
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0x5B3E4404d05339D41A7E672BC912CBf511Cca294) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x3B0369CAD35d257793F51c28213a4Cf4001397AC","via":[{"address":"0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE"}]
+    }
+```
+
+```diff
+    contract undefined (0x610Aa279989F440820e14248BD3879B148717974) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
++        "0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B"
+      issuedPermissions.0.via.0:
+-        {"address":"0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B"}
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x71D78dC7cCC0e037e12de1E50f5470903ce37148) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"},{"permission":"upgrade","from":"0x304807A7ed6c1296df2128E6ff3836e477329CD2"},{"permission":"upgrade","from":"0xA59075221b50C598aED0Eae0bB9869639513af0D"},{"permission":"upgrade","from":"0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"},{"permission":"upgrade","from":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949"},{"permission":"upgrade","from":"0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"},{"permission":"upgrade","from":"0x304807A7ed6c1296df2128E6ff3836e477329CD2"},{"permission":"upgrade","from":"0xA59075221b50C598aED0Eae0bB9869639513af0D"},{"permission":"upgrade","from":"0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"},{"permission":"upgrade","from":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949"},{"permission":"upgrade","from":"0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"}]
+    }
+```
+
+```diff
+    contract ArbitrumBridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Contract used to relay governance action messages from Arbitrum One to Ethereum. It is also an escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}]}
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      issuedPermissions.0.via.2:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.1:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      issuedPermissions.0.via.0:
+-        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"cancel queued transactions.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"propose transactions."},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"interact","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x23122da8C581AA7E0d07A36Ff1f16F799650232f","via":[{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x304807A7ed6c1296df2128E6ff3836e477329CD2","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xA59075221b50C598aED0Eae0bB9869639513af0D","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf","via":[{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48","via":[{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"}]
+    }
+```
+
+```diff
+    contract undefined (0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3","via":[{"address":"0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678"}]
+    }
+```
+
+```diff
+    contract ChallengeManager (0xA59075221b50C598aED0Eae0bB9869639513af0D) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}
+    }
+```
+
+```diff
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x23122da8C581AA7E0d07A36Ff1f16F799650232f"},{"permission":"upgrade","from":"0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"},{"permission":"upgrade","from":"0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x23122da8C581AA7E0d07A36Ff1f16F799650232f"},{"permission":"upgrade","from":"0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"},{"permission":"upgrade","from":"0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"}]
+    }
+```
+
+```diff
+    contract undefined (0xAB1A39332e934300eBCc57B5f95cA90631a347FF) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"}]
+    }
+```
+
+```diff
+    contract ERC20Gateway (0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}]}
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      issuedPermissions.0.via.2:
+-        {"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"}]
+    }
+```
+
+```diff
+    contract undefined (0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x3B0369CAD35d257793F51c28213a4Cf4001397AC"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x3B0369CAD35d257793F51c28213a4Cf4001397AC"}]
+    }
+```
+
+```diff
+    contract undefined (0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."}]
+    }
+```
+
+```diff
+    contract Bridge (0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}
+    }
+```
+
+```diff
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76","via":[{"address":"0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428"}]},{"permission":"upgrade","from":"0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87","via":[{"address":"0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4"},{"permission":"act","from":"0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428"}]
+    }
+```
+
+```diff
+    contract Inbox (0xc4448b71118c9071Bcb9734A0EAc55D18A153949) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}
+    }
+```
+
+```diff
+    contract GatewayRouter (0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}]}
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
+      issuedPermissions.0.via.2:
+-        {"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"}
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+    }
+```
+
+```diff
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","description":"Add/remove batchPosters (Sequencers)."}]
+    }
+```
+
+```diff
+    contract undefined (0xd3132d052C9045D7cB0236586C9E2276e654343D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23","via":[{"address":"0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d"}]
+    }
+```
+
+```diff
+    contract Outbox (0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}]}
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
+      issuedPermissions.0.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"}
+    }
+```
+
+```diff
+    contract undefined (0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract undefined (0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x658e8123722462F888b6fa01a7dbcEFe1D6DD709","via":[{"address":"0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B"}]},{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B"}]
+    }
+```
+
+```diff
+    contract ValidatorWallet (0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
++        "0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4"
+      issuedPermissions.0.via.0:
+-        {"address":"0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4"}
+      receivedPermissions:
+-        [{"permission":"validate","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"}]
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions.6:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.5:
+-        {"permission":"interact","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.4:
+-        {"permission":"interact","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","description":"cancel queued transactions.","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","description":"propose transactions.","via":[]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      issuedPermissions.0.description:
+-        "cancel queued transactions."
+      issuedPermissions.0.via.0:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"cancel queued transactions.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"update the minimum delay and manage all access control roles of the timelock.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"interact","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0x23122da8C581AA7E0d07A36Ff1f16F799650232f","via":[{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0x304807A7ed6c1296df2128E6ff3836e477329CD2","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xA59075221b50C598aED0Eae0bB9869639513af0D","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf","via":[{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48","via":[{"address":"0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58","via":[{"address":"0x71D78dC7cCC0e037e12de1E50f5470903ce37148"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]},{"permission":"upgrade","from":"0xFb209827c58283535b744575e11953DCC4bEAD88","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"}]
+    }
+```
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.16:
+-        {"permission":"upgrade","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.15:
+-        {"permission":"validate","to":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.14:
+-        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.13:
+-        {"permission":"validate","to":"0x610Aa279989F440820e14248BD3879B148717974","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.12:
+-        {"permission":"validate","to":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.11:
+-        {"permission":"validate","to":"0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.10:
+-        {"permission":"validate","to":"0x658e8123722462F888b6fa01a7dbcEFe1D6DD709","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.9:
+-        {"permission":"interact","to":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.8:
+-        {"permission":"validate","to":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.7:
+-        {"permission":"interact","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.6:
+-        {"permission":"validate","to":"0x3B0369CAD35d257793F51c28213a4Cf4001397AC","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.5:
+-        {"permission":"validate","to":"0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.4:
+-        {"permission":"validate","to":"0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.3:
+-        {"permission":"validate","to":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.2:
+-        {"permission":"validate","to":"0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"validate","to":"0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.0.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+Generated with discovered.json: 0x96f15918c70e84d63ac24ad38d9af327bb9158ed
 
 # Diff at Wed, 12 Mar 2025 16:12:49 GMT:
 

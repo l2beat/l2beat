@@ -1,4 +1,77 @@
-Generated with discovered.json: 0xee5a8630d1865f0572a9a8c0e41fa5ead72eb987
+Generated with discovered.json: 0x8cfb07d0641b7de3d61310be09f1f091aa3bdb34
+
+# Diff at Mon, 17 Mar 2025 16:38:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22022298
+- current block number: 22022298
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022298 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"}]
+    }
+```
+
+```diff
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      name:
+-        "ZeroNetworkChainAdminMultisig"
++        "Zeronetwork Multisig"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}]
+    }
+```
+
+```diff
+    contract undefined (0x479B7c95b9509E1A834C994fc94e3581aA8A73B9) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      issuedPermissions:
+-        [{"permission":"validateZkStack","to":"0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F","via":[]},{"permission":"validateZkStack","to":"0x479B7c95b9509E1A834C994fc94e3581aA8A73B9","via":[]}]
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."}]
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."}]
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9","description":"manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).","via":[{"address":"0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"}]},{"permission":"interact","to":"0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}]
+    }
+```
+
+Generated with discovered.json: 0x1efef28730c7c3c0e0442fe553c24ab9ce8cba9a
 
 # Diff at Tue, 11 Mar 2025 08:00:32 GMT:
 

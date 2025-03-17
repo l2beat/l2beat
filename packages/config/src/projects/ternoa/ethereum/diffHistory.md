@@ -1,4 +1,76 @@
-Generated with discovered.json: 0xa6c74520f193c8d4a3470b87b30ac5bffb072422
+Generated with discovered.json: 0xc5812a6ae024c4458698042a2a1cd4e67ea28e80
+
+# Diff at Mon, 17 Mar 2025 16:33:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21766747
+- current block number: 21766747
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766747 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x129A94208bb3030D809c36849d43b50d13e0cACf) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"}]
+    }
+```
+
+```diff
+    contract undefined (0x49015545B46B07082bd7faf2633643eae87710EC) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches."},{"permission":"interact","from":"0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789","description":"sole address that can force batches."},{"permission":"interact","from":"0xB408a216927d31A27fd96176dbF1B825630f0301","description":"manage the members of the data availability committee and the threshold for valid commitments."},{"permission":"upgrade","from":"0xB408a216927d31A27fd96176dbF1B825630f0301","via":[{"address":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]
+    }
+```
+
+```diff
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x49015545B46B07082bd7faf2633643eae87710EC","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"interact","to":"0x49015545B46B07082bd7faf2633643eae87710EC","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x129A94208bb3030D809c36849d43b50d13e0cACf","via":[]}]
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x49015545B46B07082bd7faf2633643eae87710EC","via":[{"address":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x49015545B46B07082bd7faf2633643eae87710EC"
++        "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"
+      issuedPermissions.0.description:
+-        "manage the members of the data availability committee and the threshold for valid commitments."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0xB408a216927d31A27fd96176dbF1B825630f0301"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xB408a216927d31A27fd96176dbF1B825630f0301"}]
+    }
+```
+
+Generated with discovered.json: 0x0fd0f01c87cffac0bf954b49da9539a80236973b
 
 # Diff at Tue, 04 Mar 2025 10:40:08 GMT:
 

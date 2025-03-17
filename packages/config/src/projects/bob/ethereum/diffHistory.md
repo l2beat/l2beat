@@ -1,4 +1,128 @@
-Generated with discovered.json: 0xcccbdc6202f7b6a94aeffe532c469972031b64f7
+Generated with discovered.json: 0x09bd54841668d2b4f7f353acfcab0d6e582540cf
+
+# Diff at Mon, 17 Mar 2025 16:30:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22045237
+- current block number: 22045237
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045237 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0xF2dc77c697e892542cC53336178a78Bb313DFDC7","description":"set and change address mappings."},{"permission":"upgrade","from":"0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"},{"permission":"upgrade","from":"0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"},{"permission":"upgrade","from":"0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7"},{"permission":"upgrade","from":"0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"},{"permission":"upgrade","from":"0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"},{"permission":"upgrade","from":"0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"}]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
++        "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"
+      issuedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      issuedPermissions.0.via.0:
+-        {"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}
+    }
+```
+
+```diff
+    contract undefined (0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"propose","from":"0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
++        "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"
+    }
+```
+
+```diff
+    contract SystemConfig (0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11"
++        "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"
+    }
+```
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      name:
+-        "BobMultisig"
++        "Bob Multisig 1"
+      receivedPermissions:
+-        [{"permission":"challenge","from":"0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"},{"permission":"guard","from":"0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E"},{"permission":"interact","from":"0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."},{"permission":"interact","from":"0xF2dc77c697e892542cC53336178a78Bb313DFDC7","description":"set and change address mappings.","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]},{"permission":"upgrade","from":"0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]},{"permission":"upgrade","from":"0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]},{"permission":"upgrade","from":"0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]},{"permission":"upgrade","from":"0xdDa53E23f8a32640b04D7256e651C1db98dB11C1","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdDa53E23f8a32640b04D7256e651C1db98dB11C1) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      issuedPermissions.1:
+-        {"permission":"propose","to":"0x7cB1022D30b9860C36b243E7B181A1d46f618C69","via":[]}
+      issuedPermissions.0.permission:
+-        "challenge"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
++        "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"
+    }
+```
+
+```diff
+    contract AddressManager (0xF2dc77c697e892542cC53336178a78Bb313DFDC7) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E","description":"set and change address mappings.","via":[{"address":"0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}]
+    }
+```
+
+Generated with discovered.json: 0x8780b02edf8fe6470ec7311784e02c8a407bb4a9
 
 # Diff at Fri, 14 Mar 2025 12:52:53 GMT:
 

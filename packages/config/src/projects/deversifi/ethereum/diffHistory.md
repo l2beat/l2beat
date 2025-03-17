@@ -1,4 +1,84 @@
-Generated with discovered.json: 0x69c47fdddfd1feb27b3dbffac24898f3060172f1
+Generated with discovered.json: 0x4974f2c9bab79242e1825d0158bcb994f0da5524
+
+# Diff at Mon, 17 Mar 2025 16:30:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.5:
+-        {"permission":"upgrade","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","delay":259200,"via":[]}
+      issuedPermissions.4:
+-        {"permission":"interact","to":"0x8fDEC5EE435501571034A78a7F3AA167185969b3","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
+      issuedPermissions.2:
+-        {"permission":"operateStarknet","to":"0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5","via":[]}
+      issuedPermissions.1:
+-        {"permission":"governStarknet","to":"0xCCa5De1e10c05c50C51ac551D9182cd31aca1889","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.description:
+-        "manage the token admin role."
+    }
+```
+
+```diff
+    contract undefined (0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"operateStarknet","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"}]
+    }
+```
+
+```diff
+    contract undefined (0x8fDEC5EE435501571034A78a7F3AA167185969b3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","description":"Can regsiter new tokens for deposits and withdrawals."}]
+    }
+```
+
+```diff
+    contract undefined (0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","description":"Can regsiter new tokens for deposits and withdrawals."}]
+    }
+```
+
+```diff
+    contract RhinofiAdminMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: None
+      severity:
+-        "HIGH"
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b","delay":259200}
+      receivedPermissions.1:
+-        {"permission":"governStarknet","from":"0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"}
+      receivedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.0.description:
+-        "manage the token admin role."
+    }
+```
+
+Generated with discovered.json: 0x0bf04d67476f91cbddbc88ea64ddefdb51ac9442
 
 # Diff at Thu, 06 Mar 2025 15:18:15 GMT:
 

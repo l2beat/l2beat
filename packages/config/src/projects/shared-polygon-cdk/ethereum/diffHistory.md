@@ -1,4 +1,138 @@
-Generated with discovered.json: 0x782b0be1b2ed407abd77bdf7adf78a6be8416b51
+Generated with discovered.json: 0x609184b2e72cc69255e0a41d570182c2150b3752
+
+# Diff at Mon, 17 Mar 2025 16:31:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22045960
+- current block number: 22045960
+
+## Description
+
+Config: Change multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045960 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"}]
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"}]
+    }
+```
+
+```diff
+    contract undefined (0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"aggregatePolygon","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"}]
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."},{"permission":"interact","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]},{"permission":"interact","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."},{"permission":"interact","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]},{"permission":"interact","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay"},{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]
+    }
+```
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      issuedPermissions.0.to:
+-        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      issuedPermissions.0.via.1:
+-        {"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+    }
+```
+
+```diff
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."}]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      issuedPermissions.7:
+-        {"permission":"upgrade","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"},{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}
+      issuedPermissions.6:
+-        {"permission":"interact","to":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.","via":[]}
+      issuedPermissions.5:
+-        {"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.","via":[]}
+      issuedPermissions.4:
+-        {"permission":"aggregatePolygon","to":"0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE","via":[]}
+      issuedPermissions.3:
+-        {"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]}
+      issuedPermissions.2:
+-        {"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]}
+      issuedPermissions.1:
+-        {"permission":"aggregatePolygon","to":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      issuedPermissions.0.description:
+-        "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      issuedPermissions.0.to:
+-        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      issuedPermissions.0.via.1:
+-        {"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+    }
+```
+
+```diff
+    contract undefined (0x6329Fe417621925C81c16F9F9a18c203C21Af7ab) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"aggregatePolygon","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"}]
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."}]
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay","via":[]},{"permission":"interact","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"permission":"act","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there would be no delay"},{"permission":"interact","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."},{"permission":"interact","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","condition":"there is no emergency state, in which case there would be no delay"}]
+    }
+```
+
+Generated with discovered.json: 0x8c0476de442f317284132c49f6b444ddd13199ab
 
 # Diff at Fri, 14 Mar 2025 15:19:06 GMT:
 
