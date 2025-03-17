@@ -11,7 +11,7 @@ import {
   OMNICHAIN_TOKENS,
   ORACLES,
   RELAYERS,
-} from './lzOmnichain.contracts'
+} from './contracts'
 
 const discovery = new ProjectDiscovery('lzomnichain')
 
