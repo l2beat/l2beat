@@ -16,6 +16,7 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
+  isArchived: true,
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Poly Bridge',
