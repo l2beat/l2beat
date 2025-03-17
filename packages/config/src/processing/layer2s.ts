@@ -164,7 +164,6 @@ import { silicon } from '../projects/silicon/silicon'
 import { singularityfinance } from '../projects/singularityfinance/singularityfinance'
 import { skatechain } from '../projects/skatechain/skatechain'
 import { snaxchain } from '../projects/snaxchain/snaxchain'
-import { socialnetwork } from '../projects/socialnetwork/socialnetwork'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
@@ -379,7 +378,6 @@ export const layer2s: ScalingProject[] = [
   singularityfinance,
   skatechain,
   snaxchain,
-  socialnetwork,
   solo,
   soneium,
   soon,
