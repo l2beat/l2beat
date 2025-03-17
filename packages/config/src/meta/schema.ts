@@ -135,7 +135,6 @@ export const Scaling = z.object({
       'Polygon',
       'SN Stack',
       'StarkEx',
-      'Starknet',
       'Taiko',
       'ZK Stack',
       'ZKsync Lite',

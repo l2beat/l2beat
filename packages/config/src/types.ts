@@ -308,7 +308,6 @@ export type ProjectScalingStack =
   | 'Polygon'
   | 'SN Stack'
   | 'StarkEx'
-  | 'Starknet'
   | 'Taiko'
   | 'ZK Stack'
   | 'ZKsync Lite'

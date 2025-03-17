@@ -84,7 +84,6 @@ function stackToBadge(stack: Schema.Scaling['stack']): Types.Badge | undefined {
     Polygon: BADGES.Stack.PolygonCDK,
     'SN Stack': BADGES.Stack.SNStack,
     StarkEx: BADGES.Stack.StarkEx,
-    Starknet: BADGES.Fork.StarknetFork,
     Taiko: BADGES.Fork.TaikoFork,
     'ZK Stack': BADGES.Stack.ZKStack,
     'ZKsync Lite': BADGES.Fork.ZKsyncLiteFork,
