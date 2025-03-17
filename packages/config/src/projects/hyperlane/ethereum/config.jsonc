@@ -32,7 +32,7 @@
       "ignoreMethods": ["latestDispatchedId", "nonce"],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them."
@@ -41,7 +41,7 @@
         },
         "defaultIsm": {
           "description": "The default ISM contract that is used for all destination contracts that do not override it.",
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "verify messages for destination contracts that do not specify a custom ISM."
@@ -78,7 +78,7 @@
       "fields": {
         "owner": {
           "severity": "HIGH",
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage the domain -> ISM contract mapping."
@@ -135,7 +135,7 @@
               "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
             ]
           },
-          "targetPermissions": [{ "type": "validateBridge2" }]
+          "permissions": [{ "type": "validateBridge2" }]
         },
         "threshold": {
           "handler": {

@@ -29,7 +29,7 @@
     "$admin": {
       "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.",
       "severity": "HIGH",
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "upgrade",
           "delay": "{{StarkWareDiamond_upgradeDelay}}"
@@ -58,7 +58,7 @@
           "event": "LogTokenAdminRemoved"
         }
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "Can regsiter new tokens for deposits and withdrawals."
@@ -75,7 +75,7 @@
         "add": { "event": "LogOperatorAdded" },
         "remove": { "event": "LogOperatorRemoved" }
       },
-      "targetPermissions": [{ "type": "operateStarknet" }]
+      "permissions": [{ "type": "operateStarknet" }]
     }
   }
 }

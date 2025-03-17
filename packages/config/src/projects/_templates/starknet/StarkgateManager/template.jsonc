@@ -6,7 +6,7 @@
     "$admin": {
       "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).",
       "severity": "HIGH",
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "upgrade",
           "delay": "{{getUpgradeActivationDelay}}"
@@ -33,7 +33,7 @@
         },
         "pickRoleMembers": "GOVERNANCE_ADMIN"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "manage critical access control roles and the role that can upgrade the implementation."
@@ -49,7 +49,7 @@
         },
         "pickRoleMembers": "TOKEN_ADMIN"
       },
-      "targetPermissions": [
+      "permissions": [
         // {
         //   "type": "act" // only specific manager actions
         // },

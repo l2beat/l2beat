@@ -50,7 +50,7 @@
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal (for delegates) and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
       "fields": {
         "PROPOSE_GUARDIAN": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to {{isProposeGuarded}}."
@@ -58,7 +58,7 @@
           ]
         },
         "VETO_GUARDIAN": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
@@ -72,7 +72,7 @@
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
       "fields": {
         "VETO_GUARDIAN": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."

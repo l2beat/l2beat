@@ -8,7 +8,7 @@
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "manage all access control roles."
@@ -33,7 +33,7 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "propose transactions."
@@ -45,7 +45,7 @@
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "cancel queued transactions."
@@ -57,7 +57,7 @@
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "execute transactions that are ready."

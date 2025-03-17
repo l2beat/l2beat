@@ -5,7 +5,7 @@
   "ignoreRelatives": ["addressManager"],
   "fields": {
     "owner": {
-      "targetPermissions": [{ "type": "act" }]
+      "permissions": [{ "type": "act" }]
     }
   }
 }

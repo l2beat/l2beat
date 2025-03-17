@@ -4,7 +4,7 @@
   "description": "allows the {{ deputyGuardian }}, called the deputy guardian, to act on behalf of the Gnosis Safe.",
   "fields": {
     "deputyGuardian": {
-      "targetPermissions": [
+      "permissions": [
         { "type": "act", "condition": "not revoked by the Security Council" }
       ]
     }

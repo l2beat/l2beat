@@ -22,7 +22,7 @@
       "ignoreRelatives": ["endpoint", "token"],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
@@ -39,7 +39,7 @@
           "handler": {
             "type": "accessControl"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "directly controls the UTB contract's critical functions like updating all roles and modules."

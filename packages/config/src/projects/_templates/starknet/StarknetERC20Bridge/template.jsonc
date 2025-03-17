@@ -24,7 +24,7 @@
     "$admin": {
       "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.",
       "severity": "HIGH",
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "upgrade",
           "delay": "{{getUpgradeActivationDelay}}"
@@ -73,7 +73,7 @@
         "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
         "returnType": "address"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "deactivate bridging for deposits into the escrow."
@@ -134,7 +134,7 @@
         },
         "pickRoleMembers": "GOVERNANCE_ADMIN"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "manage critical access control roles and the role that can upgrade the implementation."
@@ -149,7 +149,7 @@
         },
         "pickRoleMembers": "SECURITY_ADMIN"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "disable the withdrawal limit."
@@ -164,7 +164,7 @@
         },
         "pickRoleMembers": "SECURITY_AGENT"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "enable the withdrawal limit."

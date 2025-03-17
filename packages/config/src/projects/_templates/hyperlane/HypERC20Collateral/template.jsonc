@@ -3,7 +3,7 @@
   "ignoreRelatives": ["wrappedToken"],
   "fields": {
     "owner": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees."

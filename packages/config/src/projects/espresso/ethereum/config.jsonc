@@ -24,7 +24,7 @@
       ],
       "fields": {
         "permissionedProver": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can call newFinalizedState() to prove the latest HotShot state."
@@ -32,7 +32,7 @@
           ]
         },
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."

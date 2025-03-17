@@ -15,7 +15,7 @@
           "where": ["!=", "#canPause", true]
         }
       },
-      "targetPermissions": [{ "type": "act" }]
+      "permissions": [{ "type": "act" }]
     }
   }
 }

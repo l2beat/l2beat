@@ -5,7 +5,7 @@
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "timelock_address": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can add and remove frxETH minters and set a new timelock address."
@@ -13,7 +13,7 @@
       ]
     },
     "minters_array": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can mint frxETH tokens."

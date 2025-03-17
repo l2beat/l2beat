@@ -15,7 +15,7 @@
         "type": "accessControl",
         "pickRoleMembers": "MINTER_ADMIN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
@@ -27,7 +27,7 @@
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "control all roles in the ZkToken access control, including the minter roles."

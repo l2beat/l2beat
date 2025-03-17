@@ -22,7 +22,7 @@
       }
     },
     "batchPosterManager": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "Add/remove batchPosters (Sequencers)."
@@ -30,7 +30,7 @@
       ]
     },
     "batchPosters": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "sequence",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."

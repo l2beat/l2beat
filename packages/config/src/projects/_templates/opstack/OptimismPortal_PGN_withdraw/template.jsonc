@@ -6,13 +6,13 @@
   "ignoreInWatchMode": ["params"],
   "fields": {
     "guardian": {
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     },
     "GUARDIAN": {
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     },
     "BALANCE_CLAIMER": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "withdraw ETH escrowed in the OptimismPortal."

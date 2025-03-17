@@ -4,7 +4,7 @@
   "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
   "fields": {
     "owner": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "set and change address mappings."

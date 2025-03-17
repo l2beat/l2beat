@@ -67,7 +67,7 @@
         },
         "pickRoleMembers": "TRUSTED_AGGREGATOR"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "aggregatePolygon"
         }
@@ -79,7 +79,7 @@
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
@@ -95,7 +95,7 @@
         },
         "pickRoleMembers": "TWEAK_PARAMETERS"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
@@ -110,7 +110,7 @@
         },
         "pickRoleMembers": "CREATE_ROLLUP"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
@@ -126,7 +126,7 @@
         },
         "pickRoleMembers": "EMERGENCY_COUNCIL_ADMIN"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."

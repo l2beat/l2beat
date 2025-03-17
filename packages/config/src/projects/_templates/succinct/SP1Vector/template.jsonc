@@ -21,7 +21,7 @@
         "type": "hardcoded",
         "value": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"]
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
@@ -33,7 +33,7 @@
         "type": "accessControl",
         "pickRoleMembers": "GUARDIAN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can freeze the Vector contract and update the list of authorized relayers."
@@ -45,7 +45,7 @@
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ROLE"
       },
-      "targetPermissions": [{ "type": "upgrade" }]
+      "permissions": [{ "type": "upgrade" }]
     }
   }
 }

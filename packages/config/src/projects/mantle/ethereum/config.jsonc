@@ -55,7 +55,7 @@
       "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
       "fields": {
         "pauserRegistry": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "defines addresses that can pause or unpause ability to invest into strategies."
@@ -116,7 +116,7 @@
             "method": "operatorList",
             "length": "{{ numOperators }}"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "sign data commitments for the DA bridge."
@@ -157,7 +157,7 @@
       ],
       "fields": {
         "pauserRegistry": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
@@ -177,7 +177,7 @@
       ],
       "fields": {
         "pauserRegistry": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
@@ -194,7 +194,7 @@
       // RegistryPermission
       "fields": {
         "permissionPerson": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can register or change status of DA node operators."

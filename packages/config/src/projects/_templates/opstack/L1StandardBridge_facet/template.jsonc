@@ -5,7 +5,7 @@
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge", "weth"],
   "fields": {
     "$admin": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "upgrade",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein."

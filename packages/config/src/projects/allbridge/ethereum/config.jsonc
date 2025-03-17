@@ -80,7 +80,7 @@
       "ignoreMethods": ["gasUsage", "getTransactionCost", "otherBridges"],
       "fields": {
         "DAI_POOL": {
-          "targetTemplate": "allbridge/pool",
+          "template": "allbridge/pool",
           "handler": {
             "type": "call",
             "method": "pools",
@@ -90,7 +90,7 @@
           }
         },
         "USDC_POOL": {
-          "targetTemplate": "allbridge/pool",
+          "template": "allbridge/pool",
           "handler": {
             "type": "call",
             "method": "pools",
@@ -100,7 +100,7 @@
           }
         },
         "USDT_POOL": {
-          "targetTemplate": "allbridge/pool",
+          "template": "allbridge/pool",
           "handler": {
             "type": "call",
             "method": "pools",

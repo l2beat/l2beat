@@ -47,7 +47,7 @@
             "select": "predicateAddress",
             "add": { "event": "PredicateRegistered" }
           },
-          "targetTemplate": "polygonposbridge/predicate" // adds accesscontrol discovery
+          "template": "polygonposbridge/predicate" // adds accesscontrol discovery
         }
       }
     },

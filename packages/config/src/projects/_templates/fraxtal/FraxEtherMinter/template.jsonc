@@ -4,7 +4,7 @@
   "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
   "fields": {
     "timelockAddress": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
@@ -12,7 +12,7 @@
       ]
     },
     "operatorAddress": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."

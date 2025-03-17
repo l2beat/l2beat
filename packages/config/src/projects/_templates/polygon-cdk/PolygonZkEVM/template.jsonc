@@ -6,7 +6,7 @@
   "ignoreRelatives": ["gasTokenAddress", "GLOBAL_EXIT_ROOT_MANAGER_L2", "pol"],
   "fields": {
     "admin": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
@@ -14,12 +14,12 @@
       ]
     },
     "trustedSequencer": {
-      "targetPermissions": [{ "type": "sequence" }]
+      "permissions": [{ "type": "sequence" }]
     },
     "forceBatchAddress": {
       "severity": "HIGH",
       "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "sole address that can force batches."

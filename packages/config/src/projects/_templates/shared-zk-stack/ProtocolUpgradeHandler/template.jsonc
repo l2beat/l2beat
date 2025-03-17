@@ -4,10 +4,10 @@
   "ignoreRelatives": ["ZKSYNC_ERA"],
   "fields": {
     "emergencyUpgradeBoard": {
-      "targetPermissions": [{ "type": "act" }]
+      "permissions": [{ "type": "act" }]
     },
     "guardians": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "extend the legal veto period, approve a protocol upgrade."
@@ -15,7 +15,7 @@
       ]
     },
     "securityCouncil": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "soft freeze, hard freeze, approve a protocol upgrade."
@@ -23,7 +23,7 @@
       ]
     },
     "L2_PROTOCOL_GOVERNOR": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "start (queue) upgrades."

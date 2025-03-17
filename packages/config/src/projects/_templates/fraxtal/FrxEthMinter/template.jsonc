@@ -7,7 +7,7 @@
   "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
   "fields": {
     "timelock_address": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."

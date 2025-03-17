@@ -10,7 +10,7 @@
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "update the minimum delay and manage all access control roles of the timelock."
@@ -35,7 +35,7 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "propose transactions."
@@ -51,7 +51,7 @@
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "cancel queued transactions."

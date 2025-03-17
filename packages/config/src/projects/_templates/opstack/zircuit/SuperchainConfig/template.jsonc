@@ -21,11 +21,11 @@
         },
         "pickRoleMembers": "MONITOR_ROLE"
       },
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     },
     "defaultAdmin": {
       // weird superchain fake with accesscontrol and custom roles
-      "targetPermissions": [
+      "permissions": [
         { "type": "guard" },
         {
           "type": "interact",

@@ -21,13 +21,13 @@
       "ignoreInWatchMode": ["params"],
       "fields": {
         "guardian": {
-          "targetPermissions": [{ "type": "guard" }]
+          "permissions": [{ "type": "guard" }]
         },
         "GUARDIAN": {
-          "targetPermissions": [{ "type": "guard" }]
+          "permissions": [{ "type": "guard" }]
         },
         "operator": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."

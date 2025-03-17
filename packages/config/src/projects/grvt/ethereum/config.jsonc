@@ -32,7 +32,7 @@
               "where": ["=", "#chainId", 325]
             }
           },
-          "targetPermissions": [{ "type": "validateZkStack" }]
+          "permissions": [{ "type": "validateZkStack" }]
         }
       }
     },
@@ -42,7 +42,7 @@
       "ignoreRelatives": ["baseToken"],
       "fields": {
         "depositApprover": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "approve deposits to GRVT via the GRVTBridgeProxy."
@@ -71,7 +71,7 @@
             },
             "pickRoleMembers": "L2_TX_SENDER_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "address is part of the GRVTTransactionFilterer whitelist."
@@ -83,7 +83,7 @@
             "type": "accessControl",
             "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage the whitelist of addresses."

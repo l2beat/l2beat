@@ -24,7 +24,7 @@
   "ignoreRelatives": ["getBaseToken"],
   "fields": {
     "getAdmin": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
@@ -39,7 +39,7 @@
         "select": ["newTransactionFilterer"],
         "add": { "event": "NewTransactionFilterer" }
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
@@ -50,7 +50,7 @@
       "handler": {
         "type": "zksynceraValidators"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."

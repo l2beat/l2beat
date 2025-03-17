@@ -3,10 +3,10 @@
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {
     "owner": {
-      "targetPermissions": [{ "type": "act" }]
+      "permissions": [{ "type": "act" }]
     },
     "tokenMultiplierSetter": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "set the conversion factor for gas token deposits."

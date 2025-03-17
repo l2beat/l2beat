@@ -34,7 +34,7 @@
               "where": ["=", "#chainId", 324]
             }
           },
-          "targetPermissions": [{ "type": "validateZkStack" }]
+          "permissions": [{ "type": "validateZkStack" }]
         }
       }
     },
@@ -51,7 +51,7 @@
           "returnType": "(FormatSeconds)"
         },
         "owner": {
-          "targetPermissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }]
         }
       }
     },
@@ -64,7 +64,7 @@
       ],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract." // {{$$.address}} does not work
@@ -112,7 +112,7 @@
               "event": "event ValidatorRemoved(address validator)"
             }
           },
-          "targetPermissions": [{ "type": "validateZkStack" }]
+          "permissions": [{ "type": "validateZkStack" }]
         }
       }
     },

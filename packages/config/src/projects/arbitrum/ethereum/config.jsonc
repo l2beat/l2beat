@@ -56,7 +56,7 @@
             "method": "function allowedOutboxList(uint256) view returns (address)",
             "args": [0]
           },
-          "targetPermissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }]
         }
       }
     },

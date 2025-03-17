@@ -17,7 +17,7 @@
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "delay": "{{getMinDelay}}",

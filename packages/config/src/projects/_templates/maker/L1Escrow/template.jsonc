@@ -10,7 +10,7 @@
         "add": { "event": "Rely" },
         "remove": { "event": "Deny" }
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "access all tokens in the escrow and manage the wards role."

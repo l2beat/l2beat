@@ -78,7 +78,7 @@
       "ignoreInWatchMode": ["clock"],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
@@ -209,7 +209,7 @@
       "ignoreMethods": ["proxiableUUID"],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "send tokens and ETH from the Treasury to any address without delay."
@@ -253,7 +253,7 @@
       "fields": {
         "owner": {
           "severity": "HIGH",
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
@@ -314,7 +314,7 @@
             "type": "accessControl",
             "pickRoleMembers": "UPGRADER_ROLE"
           },
-          "targetPermissions": [{ "type": "upgrade" }]
+          "permissions": [{ "type": "upgrade" }]
         },
         "KYC_PROVIDERs": {
           "severity": "MEDIUM",
@@ -322,7 +322,7 @@
             "type": "accessControl",
             "pickRoleMembers": "KYC_PROVIDER_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
@@ -335,7 +335,7 @@
             "type": "accessControl",
             "pickRoleMembers": "GOVERNANCE_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
@@ -348,7 +348,7 @@
             "type": "accessControl",
             "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "transfer KYC NFTs to a different address."
@@ -373,7 +373,7 @@
       "fields": {
         "owner": {
           "severity": "HIGH",
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."

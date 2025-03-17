@@ -21,7 +21,7 @@
       "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             { "type": "interact", "description": "update the state root." }
           ]
         }
@@ -44,7 +44,7 @@
       "ignoreRelatives": ["bridge"],
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "set the proof verifier and the exit administrator."
@@ -59,7 +59,7 @@
         },
         "exitAdministrator": {
           "severity": "HIGH",
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed."
@@ -92,7 +92,7 @@
             "type": "accessControl",
             "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage access control roles."
@@ -104,7 +104,7 @@
             "type": "accessControl",
             "pickRoleMembers": "REGISTER_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "add tokens to the whitelist."
@@ -116,7 +116,7 @@
             "type": "accessControl",
             "pickRoleMembers": "UNREGISTER_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "remove tokens from the whitelist."
@@ -141,7 +141,7 @@
             "type": "accessControl",
             "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage all access control roles."
@@ -153,7 +153,7 @@
             "type": "accessControl",
             "pickRoleMembers": "FEE_SETTER_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "set the fast lane fee."
@@ -165,7 +165,7 @@
             "type": "accessControl",
             "pickRoleMembers": "HEARTBEAT_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
@@ -177,14 +177,14 @@
             "type": "accessControl",
             "pickRoleMembers": "RELAY_ROLE"
           },
-          "targetPermissions": [{ "type": "relay" }]
+          "permissions": [{ "type": "relay" }]
         },
         "acRelayAdmin": {
           "handler": {
             "type": "accessControl",
             "pickRoleMembers": "RELAY_ADMIN_ROLE"
           },
-          "targetPermissions": [
+          "permissions": [
             { "type": "interact", "description": "set permissioned relayers." }
           ]
         }
@@ -198,7 +198,7 @@
           "handler": {
             "type": "array"
           },
-          "targetPermissions": [{ "type": "validateBridge" }]
+          "permissions": [{ "type": "validateBridge" }]
         },
         // manual check of weights
         "validator1Weight": {

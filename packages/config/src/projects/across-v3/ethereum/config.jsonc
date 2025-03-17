@@ -50,7 +50,7 @@
           }
         },
         "Adapters": {
-          "targetTemplate": "acrossv3/adapter", // this template is used to ignore common relatives (like bridged and tokens) found in adapters
+          "template": "acrossv3/adapter", // this template is used to ignore common relatives (like bridged and tokens) found in adapters
           "handler": {
             "type": "event",
             "select": "adapter",

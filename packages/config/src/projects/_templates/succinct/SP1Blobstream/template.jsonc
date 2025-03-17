@@ -11,7 +11,7 @@
       }
     },
     "guardians": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can freeze the bridge contract and update the list of authorized relayers."
@@ -24,7 +24,7 @@
       }
     },
     "relayers": {
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."

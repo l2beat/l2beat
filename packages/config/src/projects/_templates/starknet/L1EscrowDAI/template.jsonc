@@ -12,7 +12,7 @@
         "add": { "event": "Rely" },
         "remove": { "event": "Deny" }
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "close the gateway (preventing deposits and forced withdrawals), set ceiling and max deposits and manage the wards role."

@@ -158,7 +158,7 @@ export function getTargetsMeta(
 
   for (const [fieldName, value] of Object.entries(values)) {
     const field = fields[fieldName]
-    const target = field?.targetPermissions
+    const target = field?.permissions
     if (target) {
       for (const address of getAddresses(value)) {
         const meta = mergeContractMeta(
@@ -204,14 +204,14 @@ function targetConfigToMeta(
   field: DiscoveryContractField,
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
-  if (field.targetPermissions === undefined) {
+  if (field.permissions === undefined) {
     return undefined
   }
 
   const result: ContractMeta = {
     displayName: undefined,
     description: undefined,
-    permissions: field.targetPermissions?.map((p) =>
+    permissions: field.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
     types: toSet(field.type),

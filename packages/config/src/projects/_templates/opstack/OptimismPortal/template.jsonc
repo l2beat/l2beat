@@ -6,10 +6,10 @@
   "ignoreInWatchMode": ["params"],
   "fields": {
     "guardian": {
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     },
     "GUARDIAN": {
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     }
   },
   "category": "core"

@@ -66,13 +66,13 @@ export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
   // NOTE(radomski): Structural configuration
   handler: z.optional(UserHandlerDefinition),
-  targetTemplate: z.string().optional(),
+  template: z.string().optional(),
 
   // NOTE(radomski): Color configuration
   description: z.string().optional(),
   returnType: z.string().optional(),
   severity: z.optional(ContractFieldSeverity),
-  targetPermissions: z.array(RawPermissionConfiguration).optional(),
+  permissions: z.array(RawPermissionConfiguration).optional(),
   type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),
 })
 

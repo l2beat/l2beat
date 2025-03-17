@@ -311,12 +311,12 @@ describe('metaUtils', () => {
       const selfAddress = EthereumAddress.from('0x1234')
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
-          targetPermissions: [{ type: 'interact', delay: 0 }],
+          permissions: [{ type: 'interact', delay: 0 }],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         owner: {
-          targetPermissions: [
+          permissions: [
             {
               type: 'interact',
               delay: 0,
@@ -328,7 +328,7 @@ describe('metaUtils', () => {
           type: 'CODE_CHANGE',
         },
         resourceConfig: {
-          targetPermissions: [
+          permissions: [
             {
               type: 'upgrade',
               delay: 0,
@@ -347,7 +347,7 @@ describe('metaUtils', () => {
           type: ['L2', 'EXTERNAL'],
         },
         scalar: {
-          targetPermissions: [{ type: 'interact', delay: 0 }],
+          permissions: [{ type: 'interact', delay: 0 }],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
@@ -459,7 +459,7 @@ describe('metaUtils', () => {
 
       const fields: { [field: string]: DiscoveryContractField } = {
         configuredUpgrade: {
-          targetPermissions: [
+          permissions: [
             {
               type: 'upgrade',
               delay: 100,

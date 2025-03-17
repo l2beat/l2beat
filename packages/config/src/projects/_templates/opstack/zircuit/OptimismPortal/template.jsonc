@@ -11,10 +11,10 @@
   "fields": {
     // would like to add the withdrawable eth per period with the Undecimal18 typecaster here to use it in the description but alas it is not possible because pickFields cannot fully extract a single value from a struct
     "guardian": {
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     },
     "GUARDIAN": {
-      "targetPermissions": [{ "type": "guard" }]
+      "permissions": [{ "type": "guard" }]
     }
   },
   "category": "core"

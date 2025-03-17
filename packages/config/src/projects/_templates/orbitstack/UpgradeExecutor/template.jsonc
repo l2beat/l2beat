@@ -14,7 +14,7 @@
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
-      "targetPermissions": [{ "type": "act" }]
+      "permissions": [{ "type": "act" }]
     }
   }
 }

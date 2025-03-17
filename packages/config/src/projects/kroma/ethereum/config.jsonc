@@ -43,7 +43,7 @@
               "0x0000dead" // identifier for kroma is unknown
             ]
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
@@ -133,7 +133,7 @@
       "ignoreInWatchMode": ["params"],
       "fields": {
         "GUARDIAN": {
-          "targetPermissions": [{ "type": "guard" }]
+          "permissions": [{ "type": "guard" }]
         }
       }
     },
@@ -147,7 +147,7 @@
       ],
       "fields": {
         "SECURITY_COUNCIL": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "dismiss ongoing challenges and override state roots (`forceDeleteOutput()`)."
@@ -178,7 +178,7 @@
       "ignoreInWatchMode": ["nextValidator", "validatorCount"],
       "fields": {
         "SECURITY_COUNCIL": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "become a validator without posting a bond."
@@ -220,7 +220,7 @@
       "ignoreInWatchMode": ["clock"],
       "fields": {
         "token": {
-          "targetPermissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }]
         }
       }
     },
@@ -275,7 +275,7 @@
             "method": "ownerOf",
             "indices": "{{ tokens }}"
           },
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "one of the signers of the KromaSecurityCouncil."

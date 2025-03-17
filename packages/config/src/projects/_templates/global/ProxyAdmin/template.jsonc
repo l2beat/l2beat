@@ -3,7 +3,7 @@
   "displayName": "ProxyAdmin",
   "fields": {
     "owner": {
-      "targetPermissions": [{ "type": "act" }]
+      "permissions": [{ "type": "act" }]
     }
   }
 }

@@ -29,7 +29,7 @@
               "where": ["=", "#chainId", 388]
             }
           },
-          "targetPermissions": [{ "type": "validateZkStack" }]
+          "permissions": [{ "type": "validateZkStack" }]
         }
       }
     },
@@ -37,7 +37,7 @@
       // TransactionFiltererDenyList
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "manage the blacklist of addresses in the TransactionFilterer."
@@ -72,7 +72,7 @@
             },
             "pickRoleMembers": "ADMIN"
           },
-          "targetPermissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }]
         }
       }
     }

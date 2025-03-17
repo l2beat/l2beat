@@ -4,7 +4,7 @@
   "category": "gov",
   "fields": {
     "owner": {
-      "targetPermissions": [{ "type": "act", "delay": "{{executionDelay}}" }]
+      "permissions": [{ "type": "act", "delay": "{{executionDelay}}" }]
     },
     "executionDelayFmt": {
       "handler": {

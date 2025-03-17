@@ -45,7 +45,7 @@
       "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: {{ paused }}.",
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             { "type": "interact", "description": "can pause and unpause" }
           ]
         }
@@ -55,7 +55,7 @@
       // ProxyAdmin
       "fields": {
         "owner": {
-          "targetPermissions": [{ "type": "act" }]
+          "permissions": [{ "type": "act" }]
         }
       }
     },
@@ -65,7 +65,7 @@
       "ignoreMethods": ["getStakers", "stakerSet"], // TODO: add the whitelist
       "fields": {
         "getActiveStakers": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "sequence",
               "description": "Actors allowed to commit transaction batches and propose state roots"
@@ -167,10 +167,10 @@
               "where": ["!=", "#status", true]
             }
           },
-          "targetPermissions": [{ "type": "challenge" }]
+          "permissions": [{ "type": "challenge" }]
         },
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"

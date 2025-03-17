@@ -38,7 +38,7 @@
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."

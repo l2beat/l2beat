@@ -73,7 +73,7 @@
       "description": "This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.",
       "fields": {
         "owner": {
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "interact",
               "description": "can manage asset strategies and fees for the user's funds backing reETH."
@@ -82,7 +82,7 @@
         },
         "proposal": {
           // 'proposal' is misleading as this role allows to directly access the migrateVault() function
-          "targetPermissions": [
+          "permissions": [
             {
               "type": "upgrade"
             }

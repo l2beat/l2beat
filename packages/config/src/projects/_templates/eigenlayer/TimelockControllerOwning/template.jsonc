@@ -12,7 +12,7 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "act",
           "delay": "{{ getMinDelay }}"
@@ -24,7 +24,7 @@
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "executes scheduled operations after the delay"
@@ -36,7 +36,7 @@
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "interact",
           "description": "can cancel scheduled operations"

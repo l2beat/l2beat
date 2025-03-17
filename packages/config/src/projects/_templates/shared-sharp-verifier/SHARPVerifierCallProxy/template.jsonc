@@ -6,7 +6,7 @@
   "fields": {
     "$admin": {
       "severity": "HIGH",
-      "targetPermissions": [
+      "permissions": [
         {
           "type": "upgrade",
           "delay": "{{getUpgradeActivationDelay}}"
