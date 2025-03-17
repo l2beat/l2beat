@@ -8,9 +8,9 @@ export function assertUniqueIndexerId(id: string) {
   INDEXER_IDS.add(id)
 }
 
-export function assertUniqueConfigId(id: string) {
+export function assertUniqueConfigId(id: string, indexerId: string) {
   if (CONFIG_IDS.has(id)) {
-    throw new Error(`Configuration id ${id} is duplicated!`)
+    throw new Error(`Configuration id ${id} is duplicated in ${indexerId}`)
   }
   CONFIG_IDS.add(id)
 }
