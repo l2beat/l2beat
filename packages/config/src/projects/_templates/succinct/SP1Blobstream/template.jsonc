@@ -11,28 +11,25 @@
       }
     },
     "guardians": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can freeze the bridge contract and update the list of authorized relayers."
-          }
-        ]
-      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
+        }
+      ],
+
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "GUARDIAN_ROLE"
       }
     },
     "relayers": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
-          }
-        ]
-      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ],
       // No events are emitted when relayers are added or removed, so we must hardcode the list of relayers.
       // Use the slot explorer for the reference:
       // https://explorer.sim.io/eth/21436312/0x7cf3876f681dbb6eda8f6ffc45d66b996df08fae/approvedRelayers#map

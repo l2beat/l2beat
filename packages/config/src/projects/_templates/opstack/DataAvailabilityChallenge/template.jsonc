@@ -9,14 +9,12 @@
   ],
   "fields": {
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+        }
+      ]
     }
   },
   "category": "core"

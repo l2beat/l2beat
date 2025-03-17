@@ -19,7 +19,8 @@
     "0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D": "TokenOwnerMultisig"
   },
   "overrides": {
-    "ValidatorUtils": {
+    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": {
+      // ValidatorUtils
       "fields": {
         "GRAVITY_STAKERS": {
           "handler": {
@@ -31,10 +32,12 @@
       },
       "ignoreRelatives": ["SXNETWORK_STAKERS"]
     },
-    "G": {
+    "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649": {
+      // G
       "ignoreMethods": ["totalSupply"]
     },
-    "TokenOwnerMultisig": {
+    "0xbD6e434dB90FD8AD4E28d85C133AD34cA6fbfB6D": {
+      // TokenOwnerMultisig
       "ignoreDiscovery": true
     }
   }

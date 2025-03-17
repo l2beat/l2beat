@@ -11,7 +11,8 @@
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "SocketVault_Reya"
   },
   "overrides": {
-    "SocketVault_Reya": {
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": {
+      // SocketVault_Reya
       "ignoreMethods": ["hook__", "token"]
     }
   }

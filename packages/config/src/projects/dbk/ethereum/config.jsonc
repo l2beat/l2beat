@@ -9,7 +9,8 @@
     "0xfB04A190dC7D91E86109433858A48E0B98EF1450": "DeBankChainMultisig"
   },
   "overrides": {
-    "SystemConfig": {
+    "0xcCcc98e93CeE060a03604D3916EE527a57078c8b": {
+      // SystemConfig
       "ignoreRelatives": ["disputeGameFactory", "gasPayingToken"] // current OptimismPortal doesn't support dispute games
     }
   }

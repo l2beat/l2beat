@@ -15,7 +15,8 @@
     "0xEA0337EFC12e98AB118948dA570C07691E8E4b37": "Sequencer"
   },
   "overrides": {
-    "FuelERC20Gateway": {
+    "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67": {
+      // FuelERC20Gateway
       "ignoreMethods": ["proxiableUUID"],
       "fields": {
         "accessControl": {
@@ -25,7 +26,8 @@
         }
       }
     },
-    "FuelMessagePortal": {
+    "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf": {
+      // FuelMessagePortal
       "ignoreMethods": ["proxiableUUID", "messageSender"],
       "ignoreInWatchMode": [
         "getNextOutgoingMessageNonce",
@@ -41,7 +43,8 @@
         }
       }
     },
-    "FuelChainState": {
+    "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130": {
+      // FuelChainState
       "ignoreMethods": ["proxiableUUID", "blockHashAtCommit"],
       "fields": {
         "accessControl": {
@@ -51,7 +54,8 @@
         }
       }
     },
-    "FuelSecurityCouncil": {
+    "0x32da601374b38154f05904B16F44A1911Aa6f314": {
+      // FuelSecurityCouncil
       "references": [
         {
           "text": "Security Council members - Fuel Ignition docs",

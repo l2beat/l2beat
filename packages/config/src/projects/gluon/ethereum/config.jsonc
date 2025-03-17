@@ -29,7 +29,8 @@
     "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": "SpotLogic"
   },
   "overrides": {
-    "Gluon": {
+    "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB": {
+      // Gluon
       "fields": {
         "getOwners": {
           "handler": {
@@ -57,7 +58,8 @@
         }
       }
     },
-    "StakeLogic": {
+    "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4": {
+      // StakeLogic
       "ignoreMethods": ["getInterval", "intervals", "toBeDistributed"],
       "ignoreInWatchMode": ["currentIntervalIndex", "getToBeDistributed"],
       "ignoreRelatives": [
@@ -197,7 +199,8 @@
         }
       }
     },
-    "LegacyTokensExtension": {
+    "0xDA88EfA53c85Afa30564bb651A2E76b99a232082": {
+      // LegacyTokensExtension
       "ignoreRelatives": ["tokens", "getTokens"],
       "fields": {
         "getOwners": {
@@ -234,7 +237,8 @@
         }
       }
     },
-    "DerivativesLogic": {
+    "0xDfBFe895e07e5115773Cb9631CB2148114589caC": {
+      // DerivativesLogic
       "fields": {
         "abandonPoint": {
           "handler": {
@@ -390,7 +394,8 @@
         }
       }
     },
-    "SpotLogic": {
+    "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": {
+      // SpotLogic
       "fields": {
         "abandonPoint": {
           "handler": {

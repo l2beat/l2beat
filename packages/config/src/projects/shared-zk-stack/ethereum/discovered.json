@@ -2212,15 +2212,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/BridgeHub": "0xde0af5a3f8a91464429b95799ce4283902cf96e2c28439e7146b6d967dc914f9",
-    "shared-zk-stack/ChainAdmin": "0x21362d1e1f6039b145ce8e607cf8c1f6f2d4b7e32cea642e1253fe0302cdb5d6",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0x948712aabe7f05cbc6e1633d6843efe53638a67d5c14d20bd45ec7f7a41c3d44",
-    "shared-zk-stack/Guardians": "0x16f50acae053e052f68e51a684cce1b26ae63463f998b5da0c5ed4e163e2198d",
-    "shared-zk-stack/L1SharedBridge": "0x5388c2d5f463b7fd28ed2a90a5cac7b7e0ff2ced789fb7a38dd0672a7a98a5af",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0xeb6b04e146f0ca77cb2460aa4bdb38131f656cb142b969cbf4741fef9ccfbd4d",
-    "shared-zk-stack/SecurityCouncil": "0x87e0adc2a1e574876e1221c8f98856984803a02867ad94dc110cb2c6708cb7b9",
-    "shared-zk-stack/StateTransitionManager": "0xb1344a1a1ee8c6443e263eb382d17777f08477c985763c4e737cf0d457034c29"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/BridgeHub": "0x1082a82985b15d3ab60d47289e65d7dcc1df1773aac6a122ad35f518f14990fa",
+    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0x5fc0246dd42a6104ff1f712513ed2995eefc387725294905dd8bfecd8ecfcf66",
+    "shared-zk-stack/Guardians": "0x851e167f1e5f305d7b33e62a86f4949a7fa6a9a48a7958c36f7deba2b55ec1ad",
+    "shared-zk-stack/L1SharedBridge": "0xf665083b2b6ab25aa8830f7b480d98cd2e84f72f302e7bf4b1dd427d4a8416d4",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0x9450d1e0c166b048608acec0785bee7a01b73bade1ea15c175088cd77de03d89",
+    "shared-zk-stack/SecurityCouncil": "0x8223e8d6dab5118334b6988580dc1075eb3813d737a58bfbc15401182fdd4239",
+    "shared-zk-stack/StateTransitionManager": "0xa1be5ed4cf272ac426214a1acec35b513dc54451c55865ba7017c625015e5489"
   }
 }

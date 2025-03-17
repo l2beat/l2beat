@@ -10,7 +10,8 @@
     "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827": "LayerZeroMultisig_pzkevm"
   },
   "overrides": {
-    "Endpoint": {
+    "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4": {
+      // Endpoint
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "fields": {
         "libraryLookup": {
@@ -25,7 +26,8 @@
         }
       }
     },
-    "UltraLightNodeV2": {
+    "0xFe7C30860D01e28371D40434806F4A8fcDD3A098": {
+      // UltraLightNodeV2
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",

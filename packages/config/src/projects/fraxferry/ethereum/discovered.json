@@ -2,7 +2,7 @@
   "name": "fraxferry",
   "chain": "ethereum",
   "blockNumber": 21880952,
-  "configHash": "0x320d6f1e1e1e8499c2decb450daee14db72da8941b137dc03d9f249a96a4e760",
+  "configHash": "0xfb26c9bb2b16aa821c9d04dcf0dbf1b5989c04f04d1b60b8a492eba3fbcbb985",
   "entries": [
     {
       "name": "sfrxETH Ferry Bridge (Optimism)",
@@ -6252,7 +6252,7 @@
     ]
   },
   "usedTemplates": {
-    "fraxferry/Fraxferry": "0xf15a479fa63c1d7903c09fc695460d8d09ee97999ced2dcbdccbe29238602e5a",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "fraxferry/Fraxferry": "0x9db47e3b63e43f7bdbe927f59aa5121d91dbf32bc28613589f1801287d312f71",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

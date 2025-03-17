@@ -15,7 +15,8 @@
     "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE": "BaseProxyAdmin"
   },
   "overrides": {
-    "BaseL2Gateway": {
+    "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011": {
+      // BaseL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }

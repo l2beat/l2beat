@@ -15,7 +15,8 @@
     "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F": "ArbitrumOwner"
   },
   "overrides": {
-    "ArbitrumL2Gateway": {
+    "0x7bd79DEd935B542fb22c74305a4d2A293C18483a": {
+      // ArbitrumL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }
