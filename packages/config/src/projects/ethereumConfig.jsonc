@@ -41,6 +41,9 @@
     "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
     "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council",
 
+    "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "Zircuit Multisig 1",
+    "0x2c0B27F7C8F083B539557a0bA787041BF22DB276": "Zircuit Multisig 2",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
   },
   "types": {
