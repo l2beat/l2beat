@@ -43,7 +43,7 @@ export class BalanceProvider {
                   blockNumber,
                 )
 
-                return BigInt(res.toString())
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
               }
             }),
           )
