@@ -49,7 +49,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
         ...node.box,
         height:
           HEADER_HEIGHT +
-          (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+          (node.fields.length - hiddenFields.length) * FIELD_HEIGHT +
           BOTTOM_PADDING,
       },
     }
@@ -57,6 +57,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
     setNodes(nodes.map((n) => (n.id === node.id ? newNode : n)))
 
     const nodeLocations: NodeLocations = {}
+
     for (const node of nodes) {
       nodeLocations[node.id] = { x: node.box.x, y: node.box.y }
     }
