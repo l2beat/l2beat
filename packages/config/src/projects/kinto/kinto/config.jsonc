@@ -47,14 +47,17 @@
     // "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b":{
     //   "extends": "orbitstack/UpgradeExecutor"
     // },
-    "BeaconKintoWallet": {
+    "0x87f0eE85bF3198654900a422832157abBba30828": {
+      // BeaconKintoWallet
       "ignoreRelatives": ["implementation"]
     },
-    "KintoAdminMultisig": {
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": {
+      // KintoAdminMultisig
       "ignoreMethods": ["owners"],
       "ignoreInWatchMode": ["getNonce"]
     },
-    "NioGovernor": {
+    "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": {
+      // NioGovernor
       "description": "Governance contract allowing token- and NFT based voting.",
       "ignoreMethods": [
         "proposalDeadline",
@@ -68,24 +71,24 @@
       ],
       "ignoreInWatchMode": ["clock"]
     },
-    "NioGuardians": {
+    "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": {
+      // NioGuardians
       "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
       "ignoreMethods": ["exists", "getPastTotalSupply"],
       "ignoreInWatchMode": ["clock"],
       "fields": {
         "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+            }
+          ]
         }
       }
     },
-    "AccessManager": {
+    "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": {
+      // AccessManager
       "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
       "fields": {
         "accessControl": {
@@ -190,7 +193,8 @@
         }
       }
     },
-    "Socket": {
+    "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": {
+      // Socket
       "ignoreInWatchMode": ["globalMessageCount"],
       "ignoreRelatives": [
         "capacitorFactory__",
@@ -199,29 +203,30 @@
         "transmitManager__"
       ]
     },
-    "Treasury": {
+    "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
+      // Treasury
       "description": "Kinto Treasury.",
       "ignoreMethods": ["proxiableUUID"],
       "fields": {
         "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "send tokens and ETH from the Treasury to any address without delay."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "send tokens and ETH from the Treasury to any address without delay."
+            }
+          ]
         }
       }
     },
-    "BridgedKinto": {
+    "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": {
+      // BridgedKinto
       "description": "KINTO token contract.",
       "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply", "clock"],
       "ignoreRelatives": ["miningContract", "SALE"]
     },
-    "RewardsDistributor": {
+    "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
+      // RewardsDistributor
       "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
       "ignoreInWatchMode": [
         "getTotalLimit",
@@ -230,33 +235,35 @@
         "root"
       ]
     },
-    "Faucet": {
+    "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": {
+      // Faucet
       "ignoreMethods": ["proxiableUUID"]
     },
-    "SponsorPaymaster": {
+    "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": {
+      // SponsorPaymaster
       "description": "Paymaster used for user transactions eligible for sponsorship.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getDeposit"]
     },
-    "KintoWalletFactory": {
+    "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+      // KintoWalletFactory
       "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalWallets"],
       "fields": {
         "owner": {
           "severity": "HIGH",
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+            }
+          ]
         }
       }
     },
-    "KintoID": {
+    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
+      // KintoID
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
       "ignoreMethods": [
         "proxiableUUID",
@@ -307,9 +314,7 @@
             "type": "accessControl",
             "pickRoleMembers": "UPGRADER_ROLE"
           },
-          "target": {
-            "permissions": [{ "type": "upgrade" }]
-          }
+          "permissions": [{ "type": "upgrade" }]
         },
         "KYC_PROVIDERs": {
           "severity": "MEDIUM",
@@ -317,14 +322,12 @@
             "type": "accessControl",
             "pickRoleMembers": "KYC_PROVIDER_ROLE"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+            }
+          ]
         },
         "GOVERNANCErs": {
           "severity": "HIGH",
@@ -332,14 +335,12 @@
             "type": "accessControl",
             "pickRoleMembers": "GOVERNANCE_ROLE"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+            }
+          ]
         },
         "DEFAULT_ADMINs": {
           "severity": "HIGH",
@@ -347,18 +348,17 @@
             "type": "accessControl",
             "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "transfer KYC NFTs to a different address."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "transfer KYC NFTs to a different address."
+            }
+          ]
         }
       }
     },
-    "KintoAppRegistry": {
+    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+      // KintoAppRegistry
       "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.",
       "ignoreMethods": [
         "proxiableUUID",
@@ -373,14 +373,12 @@
       "fields": {
         "owner": {
           "severity": "HIGH",
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+            }
+          ]
         },
         "getSystemContracts": {
           "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA.",

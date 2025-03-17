@@ -48,24 +48,41 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
     const records = (
       await Promise.all(
         configurations.map(async (configuration) => {
-          const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
-            CoingeckoId(configuration.properties.priceId),
-            UnixTime(from),
-            adjustedTo,
-          )
+          try {
+            const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
+              CoingeckoId(configuration.properties.priceId),
+              UnixTime(from),
+              adjustedTo,
+            )
+            const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
+              configurationId: configuration.id,
+              timestamp: p.timestamp,
+              priceUsd: p.value,
+              priceId: configuration.properties.priceId,
+            }))
 
-          const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
-            configurationId: configuration.id,
-            timestamp: p.timestamp,
-            priceUsd: p.value,
-            priceId: configuration.properties.priceId,
-          }))
+            const optimizedRecords = configurationRecords.filter((p) =>
+              this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
+            )
 
-          const optimizedRecords = configurationRecords.filter((p) =>
-            this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
-          )
+            return optimizedRecords
+          } catch (error) {
+            if (
+              error instanceof Error &&
+              error.message.startsWith('Insufficient data in response')
+            ) {
+              this.logger.warn(
+                `Failed to fetch prices for ${configuration.properties.priceId}`,
+                {
+                  priceId: configuration.properties.priceId,
+                  error,
+                },
+              )
+              return []
+            }
 
-          return optimizedRecords
+            throw error
+          }
         }),
       )
     ).flat()

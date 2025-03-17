@@ -25,7 +25,8 @@
     "0x7E6c183F538abb8572F5cd17109C617b994d6944": "UnichainProxyAdminOwner_L2Alias"
   },
   "overrides": {
-    "DeployerWhitelist": {
+    "0x4200000000000000000000000000000000000002": {
+      // DeployerWhitelist
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     }
   }

@@ -2,7 +2,7 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 21086404,
-  "configHash": "0xe6da7f44bdbe6205835b55fb5511cab23ecc2028508934c255f8eda524a5ef82",
+  "configHash": "0x615c42a889a09e8257fa50fb7e93dce44678b130160051d114aae3b127ea9d33",
   "entries": [
     {
       "name": "ZKFairAdmin",
@@ -893,7 +893,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

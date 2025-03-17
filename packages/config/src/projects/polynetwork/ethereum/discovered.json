@@ -2,7 +2,7 @@
   "name": "polynetwork",
   "chain": "ethereum",
   "blockNumber": 20675914,
-  "configHash": "0xa2986d01b5b186322acef84ccd55f3938b4876f8e155c201a37e117be171168a",
+  "configHash": "0xb976cdc94583fd518215224867cbb19e57c6673f7fe4ca8e093a9dbb87101dcb",
   "entries": [
     {
       "address": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",

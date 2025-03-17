@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "mantle",
   "blockNumber": 75699152,
-  "configHash": "0xf7e9f768422951664d960b160842cc17aab592805f9da69fb822466e731294e1",
+  "configHash": "0x208aaf382c37c1bd21bffeb0c791636779f731b32502f8b4b8146addc9248738",
   "entries": [
     {
       "name": "TokenMessaging",

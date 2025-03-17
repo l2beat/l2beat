@@ -14,7 +14,8 @@
     "0x6BCe7408c0781dcE7b71494274302D4b75a1447c": "Verifier"
   },
   "overrides": {
-    "Verifier": {
+    "0x6BCe7408c0781dcE7b71494274302D4b75a1447c": {
+      // Verifier
       "category": "spam", // cannot be used, see L2OutputOracle
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
     }

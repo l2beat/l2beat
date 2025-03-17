@@ -47,16 +47,20 @@
     "0x8B63b3DE93431C0f756A493644d128134291fA1b": "ARM"
   },
   "overrides": {
-    "LinkToken": {
+    "0x514910771AF9Ca656af840dff83E8264EcF986CA": {
+      // LinkToken
       "ignoreDiscovery": true
     },
-    "ARM": {
+    "0x8B63b3DE93431C0f756A493644d128134291fA1b": {
+      // ARM
       "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote
     },
-    "EtherSenderReceiver": {
+    "0x66598216D8E4d9AFE0F06d525B335b762229842f": {
+      // EtherSenderReceiver
       "ignoreMethods": ["i_weth"]
     },
-    "RBACTimelock": {
+    "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449": {
+      // RBACTimelock
       "fields": {
         "accessControl": {
           "handler": {

@@ -8,7 +8,7 @@ import { PROOFS } from '../../common'
 import type { BaseProject } from '../../types'
 
 export const nebraupa: BaseProject = {
-  id: ProjectId('nebra-upa'),
+  id: ProjectId('nebraupa'),
   slug: 'nebra-upa',
   name: 'Nebra UPA',
   shortName: undefined,
