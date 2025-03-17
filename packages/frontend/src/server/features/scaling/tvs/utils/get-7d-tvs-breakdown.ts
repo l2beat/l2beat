@@ -22,7 +22,10 @@ export interface SevenDayTvsBreakdown {
 }
 
 export interface ProjectSevenDayTvsBreakdown {
-  breakdown: BreakdownSplit
+  breakdown: BreakdownSplit & {
+    ether: number
+    stablecoin: number
+  }
   associated: BreakdownSplit
   change: BreakdownSplit
   changeExcludingAssociated: BreakdownSplit
@@ -36,13 +39,24 @@ export interface BreakdownSplit {
 }
 
 const getCached7dTokenBreakdown = cache(
-  async (): Promise<SevenDayTvsBreakdown> => {
+  async ({
+    type,
+  }: { type: 'layer2' | 'bridge' | 'all' }): Promise<SevenDayTvsBreakdown> => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
     const tokens = await ps.getTokens()
     const tvsValues = await getTvsValuesForProjects(
-      await getTvsProjects((project) => !!project.scalingInfo, chains, tokens),
+      await getTvsProjects(
+        (project) =>
+          type === 'all'
+            ? true
+            : type === 'layer2'
+              ? !!project.scalingInfo
+              : !!project.isBridge,
+        chains,
+        tokens,
+      ),
       '7d',
     )
 
@@ -75,6 +89,8 @@ const getCached7dTokenBreakdown = cache(
                 native: breakdown.native / 100,
                 canonical: breakdown.canonical / 100,
                 external: breakdown.external / 100,
+                ether: breakdown.ether / 100,
+                stablecoin: breakdown.stablecoin / 100,
               },
               associated: {
                 total: associatedTotal / 100,
@@ -152,6 +168,8 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             canonical: 30,
             native: 20,
             external: 10,
+            ether: 30,
+            stablecoin: 30,
           },
           associated: {
             total: 6,
