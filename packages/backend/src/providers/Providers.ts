@@ -1,9 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   AvailDaProvider,
+  BalanceProvider,
+  BlockProvider,
+  BlockTimestampProvider,
   CelestiaDaProvider,
+  CoingeckoQueryService,
   DaProvider,
   EthereumDaProvider,
+  PriceProvider,
+  TotalSupplyProvider,
 } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
@@ -15,18 +21,20 @@ import {
 } from './CirculatingSupplyProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'
-import { type PriceProviders, initPriceProviders } from './PriceProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
 
 export class Providers {
   block: BlockProviders
-  price: PriceProviders | undefined
+  price: PriceProvider
   uops: UopsAnalyzers
   day: DayProviders
   circulatingSupply: CirculatingSupplyProviders | undefined
   blob: BlobProviders | undefined
   da: DaProvider
   clients: Clients
+  blockTimestamp: BlockTimestampProvider
+  totalSupply: TotalSupplyProvider
+  balance: BalanceProvider
 
   constructor(
     readonly config: Config,
@@ -37,10 +45,12 @@ export class Providers {
     this.circulatingSupply = config.tvl
       ? initCirculatingSupplyProviders(this.clients.coingecko)
       : undefined
-    this.price =
-      config.tvl || config.tvs
-        ? initPriceProviders(this.clients.coingecko)
-        : undefined
+    this.price = new PriceProvider(
+      new CoingeckoQueryService(
+        this.clients.coingecko,
+        logger.tag({ tag: 'prices' }),
+      ),
+    )
     this.uops = new UopsAnalyzers(config.chainConfig)
     this.day = new DayProviders(config.chainConfig, this.clients.starkex)
     this.blob =
@@ -58,6 +68,14 @@ export class Providers {
         (c) => new AvailDaProvider(c.client, c.daLayer),
       ),
     ])
+    this.blockTimestamp = new BlockTimestampProvider({
+      indexerClients: this.clients.indexer,
+      blockProviders: this.clients.block.map(
+        (c) => new BlockProvider(c.chain, [c]),
+      ),
+    })
+    this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients, logger)
+    this.balance = new BalanceProvider(this.clients.rpcClients, logger)
   }
 
   getPriceProviders() {

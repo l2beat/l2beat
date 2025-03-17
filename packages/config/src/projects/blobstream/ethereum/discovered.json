@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21686332,
-  "configHash": "0xce06d85d79f0e42ac6789a5c9be5fbfdd0d2bfe0be6198bbfd09f15de150734a",
+  "configHash": "0xfcb0f284cf4c4793748be92764070baf3d40156019bf9ad942a71677c9694478",
   "entries": [
     {
       "name": "NextHeaderVerifier",
@@ -756,9 +756,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "succinct/SP1Blobstream": "0x594e33b67e9567cb684ee6e5145bf328d6a21adde6d56019482a7de9241c460b",
-    "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151",
-    "succinct/SuccinctGateway": "0xee3e679e5e4af6a88d7c2bf61aa7e3b2d955ef5e35994c84d082522365c545db"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "succinct/SP1Blobstream": "0xc1cd156a92120786c94913e9ef99ee374b6d1d894c49048389a73b08202c0583",
+    "succinct/SP1SuccinctGateway": "0x0be99df0eb5d614a64b5f73fa9c5f72f48b02271ada4fc7990cd2918f42ec7fe",
+    "succinct/SuccinctGateway": "0xe4ded8c094f8bb50ec7e032c9cd3d485fd46a2c65d6c22ef785d22ae71d6dc51"
   }
 }

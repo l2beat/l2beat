@@ -60,7 +60,8 @@
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow"
   },
   "overrides": {
-    "Scroll Security Council": {
+    "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {
+      // Scroll Security Council
       "references": [
         {
           "text": "Security Council members - Scroll Docs",
@@ -68,17 +69,21 @@
         }
       ]
     },
-    "pufETHEscrow": {
+    "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": {
+      // pufETHEscrow
       "ignoreRelatives": ["owner", "$admin", "counterpart"]
     },
-    "DaiEscrow": {
+    "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
+      // DaiEscrow
       "ignoreRelatives": ["counterpart"]
     },
-    "wstETHescrowLido": {
+    "0x6625C6332c9F91F2D27c304E729B86db87A3f504": {
+      // wstETHescrowLido
       "ignoreMethods": ["l1Token", "l2Token"],
       "ignoreRelatives": ["owner", "$admin"]
     },
-    "L1MessageQueue": {
+    "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B": {
+      // L1MessageQueue
       "ignoreMethods": [
         "estimateCrossDomainMessageFee",
         "getCrossDomainMessage",
@@ -93,14 +98,17 @@
         "nextUnfinalizedQueueIndex"
       ]
     },
-    "L1ScrollMessenger": {
+    "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367": {
+      // L1ScrollMessenger
       "ignoreMethods": ["prevReplayIndex"]
     },
-    "OLD_L2GasPriceOracle": {
+    "0x987e300fDfb06093859358522a79098848C33852": {
+      // OLD_L2GasPriceOracle
       "ignoreMethods": ["estimateCrossDomainMessageFee"],
       "ignoreInWatchMode": ["l2BaseFee"]
     },
-    "ScrollChain": {
+    "0xa13BAF47339d63B743e7Da8741db5456DAc1E556": {
+      // ScrollChain
       "ignoreMethods": [
         "committedBatches",
         "finalizedStateRoots",
@@ -146,7 +154,8 @@
         }
       }
     },
-    "MultipleVersionRollupVerifier": {
+    "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F": {
+      // MultipleVersionRollupVerifier
       "description": "Used to update the verifier and keep track of current and old versions.",
       "ignoreMethods": ["getVerifier"],
       "fields": {
@@ -174,7 +183,8 @@
         }
       }
     },
-    "ScrollOwner": {
+    "0x798576400F7D662961BA15C6b3F3d813447a26a6": {
+      // ScrollOwner
       "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
       "fields": {
         "accessControl": {
@@ -193,7 +203,8 @@
         }
       }
     },
-    "TimelockSlow": {
+    "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd": {
+      // TimelockSlow
       "fields": {
         "accessControl": {
           "handler": {
@@ -202,7 +213,8 @@
         }
       }
     },
-    "TimelockFast": {
+    "0x0e58939204eEDa84F796FBc86840A50af10eC4F4": {
+      // TimelockFast
       "fields": {
         "accessControl": {
           "handler": {
@@ -211,7 +223,8 @@
         }
       }
     },
-    "TimelockSC": {
+    "0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44": {
+      // TimelockSC
       "fields": {
         "accessControl": {
           "handler": {
@@ -220,7 +233,8 @@
         }
       }
     },
-    "TimelockEmergency": {
+    "0x826714adD4dDA2b8750794A467C892c0Cd49216b": {
+      // TimelockEmergency
       "fields": {
         "accessControl": {
           "handler": {
@@ -229,14 +243,17 @@
         }
       }
     },
-    "L1USDCGateway": {
+    "0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B": {
+      // L1USDCGateway
       "ignoreMethods": ["l1USDC"],
       "ignoreInWatchMode": ["totalBridgedUSDC"]
     },
-    "L1WETHGateway": {
+    "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE": {
+      // L1WETHGateway
       "ignoreMethods": ["WETH"]
     },
-    "Whitelist": {
+    "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37": {
+      // Whitelist
       "fields": {
         "whitelisted": {
           "handler": {
@@ -254,7 +271,8 @@
         }
       }
     },
-    "EnforcedTxGateway": {
+    "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d": {
+      // EnforcedTxGateway
       "fields": {
         "paused": {
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
@@ -262,27 +280,32 @@
         }
       }
     },
-    "PlonkVerifierV0": {
+    "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
+      // PlonkVerifierV0
       "manualSourcePaths": {
         "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.9.5/evm_verifier.yul"
       }
     },
-    "PlonkVerifierV1": {
+    "0x2293cd12e8564e8219d314b075867c2f66ac6941": {
+      // PlonkVerifierV1
       "manualSourcePaths": {
         "0x2293cd12e8564e8219d314b075867c2f66ac6941": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.10.3/evm_verifier.yul"
       }
     },
-    "PlonkVerifierV1-1": {
+    "0x03a72B00D036C479105fF98A1953b15d9c510110": {
+      // PlonkVerifierV1-1
       "manualSourcePaths": {
         "0x03a72B00D036C479105fF98A1953b15d9c510110": "https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul"
       }
     },
-    "PlonkVerifierV2": {
+    "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": {
+      // PlonkVerifierV2
       "manualSourcePaths": {
         "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.12.0/evm_verifier.yul"
       }
     },
-    "PlonkVerifierV2-1": {
+    "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": {
+      // PlonkVerifierV2-1
       "manualSourcePaths": {
         "0x8c1b52757b5c571ADcB5572E992679d4D48e30f7": "https://github.com/scroll-tech/scroll-prover/blob/main/release-v0.13.0/evm_verifier.yul"
       }

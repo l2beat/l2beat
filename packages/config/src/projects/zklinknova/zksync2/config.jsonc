@@ -15,7 +15,8 @@
     "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": "EraProxyAdmin"
   },
   "overrides": {
-    "EraL2Gateway": {
+    "0xC203a2DF4DDFF9eDE2200F1F02054fD721182535": {
+      // EraL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }

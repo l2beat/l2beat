@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 21995407,
-  "configHash": "0x8124bbb03cb91b8f14969eed6366866dba69e3eca470229a3f583ad590edc019",
+  "configHash": "0xbf4f187d3c7cc5b1b36d1ae31f051d23caaaf0658a1f914e21cb26c8264d05e0",
   "entries": [
     {
       "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
@@ -796,6 +796,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

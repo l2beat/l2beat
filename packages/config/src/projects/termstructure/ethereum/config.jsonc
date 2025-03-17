@@ -18,7 +18,8 @@
     "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8": "Operator"
   },
   "overrides": {
-    "ZkTrueUp": {
+    "0x09E01425780094a9754B2bd8A3298f73ce837CF9": {
+      // ZkTrueUp
       "ignoreInWatchMode": [
         "getAccountNum",
         "getBlockNum",

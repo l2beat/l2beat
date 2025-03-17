@@ -22,7 +22,8 @@
     "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": "GovernanceUpgradeBeacon"
   },
   "overrides": {
-    "HomeBeaconProxy": {
+    "0xa73a3a74C7044B5411bD61E1990618A1400DA379": {
+      // HomeBeaconProxy
       "proxyType": "Optics Beacon proxy",
       "ignoreInWatchMode": [
         "committedRoot",
@@ -34,15 +35,18 @@
         "suggestUpdate"
       ]
     },
-    "ReplicaBeaconProxy": {
+    "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785": {
+      // ReplicaBeaconProxy
       "proxyType": "Optics Beacon proxy",
       "ignoreInWatchMode": ["committedRoot"]
     },
-    "BridgeRouterBeaconProxy": {
+    "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892": {
+      // BridgeRouterBeaconProxy
       "proxyType": "Optics Beacon proxy",
       "ignoreMethods": ["tokenBeacon"]
     },
-    "GovernanceRouterBeaconProxy": {
+    "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94": {
+      // GovernanceRouterBeaconProxy
       "proxyType": "Optics Beacon proxy",
       "fields": {
         "routers": {
@@ -54,19 +58,24 @@
         }
       }
     },
-    "BridgeUpgradeBeacon": {
+    "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE": {
+      // BridgeUpgradeBeacon
       "proxyType": "immutable"
     },
-    "ReplicaUpgradeBeacon": {
+    "0xA734EDE8229970776e1B68085D579b6b6E97dAd4": {
+      // ReplicaUpgradeBeacon
       "proxyType": "immutable"
     },
-    "HomeUpgradeBeacon": {
+    "0x101a39eA1143cb252fc8093847399046fc35Db89": {
+      // HomeUpgradeBeacon
       "proxyType": "immutable"
     },
-    "GovernanceUpgradeBeacon": {
+    "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c": {
+      // GovernanceUpgradeBeacon
       "proxyType": "immutable"
     },
-    "XAppConnectionManager": {
+    "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD": {
+      // XAppConnectionManager
       "fields": {
         "watchers": {
           "handler": {

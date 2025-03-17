@@ -3,17 +3,5 @@
   "displayName": "L1ERC721Bridge",
   "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge"],
-  "fields": {
-    "superchainConfig": {
-      "target": {
-        "category": "Upgrades&Governance"
-      }
-    },
-    "messenger": {
-      "target": {
-        "category": "Core"
-      }
-    }
-  },
   "category": "bridge-canonical"
 }

@@ -2,7 +2,7 @@
   "name": "hyperliquid",
   "chain": "arbitrum",
   "blockNumber": 300202969,
-  "configHash": "0x725010ec574a0cea774278d954364cd48af8ffb57bdcd4314230acefb85b8fca",
+  "configHash": "0xdc4bb292220596c1da425287b1f366f634e336c88144e913bd9130c815d7c28c",
   "entries": [
     {
       "address": "0x263294039413B96D25E4173a5F7599F8b3801504",

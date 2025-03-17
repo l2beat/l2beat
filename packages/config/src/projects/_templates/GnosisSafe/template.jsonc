@@ -4,9 +4,7 @@
   "ignoreMethods": ["getThreshold", "getOwners"],
   "fields": {
     "GnosisSafe_modules": {
-      "target": {
-        "permissions": [{ "type": "act" }]
-      }
+      "permissions": [{ "type": "act" }]
     }
   }
 }

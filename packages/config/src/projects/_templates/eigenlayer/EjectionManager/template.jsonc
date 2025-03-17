@@ -15,14 +15,12 @@
           "where": ["!=", "#status", true]
         }
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can eject DA operators from a quorum."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can eject DA operators from a quorum."
+        }
+      ]
     },
     "ejectionRateLimitWindow": {
       "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta.",

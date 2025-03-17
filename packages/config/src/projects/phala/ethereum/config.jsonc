@@ -10,10 +10,12 @@
     "0xeBf5859b7646ca9cf8A981613569bF28394F2571": "SystemConfig"
   },
   "overrides": {
-    "SystemConfig": {
+    "0xeBf5859b7646ca9cf8A981613569bF28394F2571": {
+      // SystemConfig
       "ignoreRelatives": ["disputeGameFactory"] // not used
     },
-    "SP1VerifierGateway": {
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
+      // SP1VerifierGateway
       "fields": {
         "opSuccinctVerifier": {
           "handler": {

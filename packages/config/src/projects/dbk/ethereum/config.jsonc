@@ -8,7 +8,8 @@
     "0xcCcc98e93CeE060a03604D3916EE527a57078c8b": "SystemConfig"
   },
   "overrides": {
-    "SystemConfig": {
+    "0xcCcc98e93CeE060a03604D3916EE527a57078c8b": {
+      // SystemConfig
       "ignoreRelatives": ["disputeGameFactory", "gasPayingToken"] // current OptimismPortal doesn't support dispute games
     }
   }

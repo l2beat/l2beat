@@ -5,25 +5,15 @@
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
   "fields": {
     "$admin": {
-      "target": {
-        "permissions": [
-          {
-            "type": "upgrade",
-            "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
+        }
+      ]
     },
-    "superchainConfig": {
-      "target": {
-        "category": "Upgrades&Governance"
-      }
-    },
-    "messenger": {
-      "target": {
-        "category": "Core"
-      }
-    }
+    "superchainConfig": {},
+    "messenger": {}
   },
   "category": "bridge-canonical"
 }

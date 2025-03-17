@@ -17,17 +17,20 @@
   },
   "sharedModules": ["shared-polygon-cdk"],
   "overrides": {
-    "wstETHBridge": {
+    "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": {
+      // wstETHBridge
       "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreRelatives": ["originTokenAddress", "wrappedTokenAddress"],
       "ignoreMethods": ["proxiableUUID", "getStETHByWstETH", "getWstETHByStETH"]
     },
-    "usdcBridge": {
+    "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": {
+      // usdcBridge
       "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreRelatives": ["l1USDC"],
       "ignoreMethods": ["proxiableUUID"]
     },
-    "daiBridge": {
+    "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": {
+      // daiBridge
       "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreRelatives": ["dai", "destAddress", "sdai", "beneficiary"],
       "ignoreMethods": ["proxiableUUID"],

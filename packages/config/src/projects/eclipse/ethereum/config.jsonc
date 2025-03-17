@@ -6,19 +6,20 @@
   "initialAddresses": [
     "0xD7E4b67E735733aC98a88F13d087D8aac670E644", // Treasury
     "0xb23B2492f7A9631104A5877F7FFA00633660968d", // Mailbox
-    "0x2b08d7cf7eaff0f5f6623d9fb09b080726d4be11" // CanonicalBridge
+    "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11" // CanonicalBridge
   ],
   "names": {
     "0xb23B2492f7A9631104A5877F7FFA00633660968d": "Mailbox",
     "0xD7E4b67E735733aC98a88F13d087D8aac670E644": "Treasury",
-    "0x2b08d7cf7eaff0f5f6623d9fb09b080726d4be11": "CanonicalBridge",
+    "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": "CanonicalBridge",
     "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "EtherBridge",
     "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "TreasuryOwner",
     "0x4720342419C1D316B948690d12C86D5b485C64E0": "AuthorityMultisig",
     "0xD02f545d57536BC1E8F12D867731F006AacE71E3": "Upgrader0to1"
   },
   "overrides": {
-    "Upgrader0to1": {
+    "0xD02f545d57536BC1E8F12D867731F006AacE71E3": {
+      // Upgrader0to1
       "fields": {
         "accessControl": {
           "handler": {
@@ -37,7 +38,8 @@
         }
       }
     },
-    "Mailbox": {
+    "0xb23B2492f7A9631104A5877F7FFA00633660968d": {
+      // Mailbox
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -54,7 +56,8 @@
         }
       }
     },
-    "Treasury": {
+    "0xD7E4b67E735733aC98a88F13d087D8aac670E644": {
+      // Treasury
       "fields": {
         "accessControl": {
           "handler": {
@@ -79,7 +82,8 @@
         }
       }
     },
-    "EtherBridge": {
+    "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": {
+      // EtherBridge
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -96,7 +100,8 @@
         }
       }
     },
-    "CanonicalBridge": {
+    "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": {
+      // CanonicalBridge
       "fields": {
         "accessControl": {
           "handler": {

@@ -4,7 +4,7 @@ import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
   constructor(
-    private readonly chain: string,
+    readonly chain: string,
     private readonly clients: BlockClient[],
   ) {
     assert(clients.length > 0, 'Clients cannot be empty')

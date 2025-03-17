@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 763803,
-  "configHash": "0x0ddaf713e19c927bd926e631f9eb8d9fa9527c451187118dc5babe8e371ad648",
+  "configHash": "0x2d3fcf1937cf10f3d840b1f50a5520ba1b9ff4ece86545d7932d6bb1cbb9ef75",
   "entries": [
     {
       "name": "NioGuardians",
@@ -3941,6 +3941,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3"
   }
 }

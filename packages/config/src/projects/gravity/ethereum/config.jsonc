@@ -8,7 +8,8 @@
     "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": "Gravity"
   },
   "overrides": {
-    "Gravity": {
+    "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": {
+      // Gravity
       "ignoreInWatchMode": [
         "state_gravityId",
         "state_lastEventNonce",

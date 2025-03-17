@@ -254,6 +254,25 @@ model FlatSources {
   @@id([projectName, chainId])
 }
 
+model TvsAmount {
+  timestamp       DateTime @db.Timestamp(6)
+  amount          Decimal  @db.Decimal(80, 0)
+  configurationId String   @db.Char(12)
+  project         String   @db.VarChar(255)
+
+  @@id([timestamp, configurationId])
+  @@index([project])
+}
+
+model TvsBlockTimestamp {
+  chain           String   @db.VarChar(255)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+  configurationId String   @db.Char(12)
+
+  @@id([chain, timestamp])
+}
+
 model TvsPrice {
   configurationId String   @db.Char(12)
   timestamp       DateTime @db.Timestamp(6)

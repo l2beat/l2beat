@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x54ab725e2a71277c42d4fe99a8155f73cac3b0a3
+
+# Diff at Mon, 17 Mar 2025 15:29:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      fieldMeta:
++        {"accessControl":{"severity":"MEDIUM","description":"Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()","type":"PERMISSION"}}
+    }
+```
+
 Generated with discovered.json: 0x5e69847f392d74b03c5b88f11f10814c98aa7d7c
 
 # Diff at Tue, 04 Mar 2025 10:40:06 GMT:
