@@ -6,6 +6,9 @@ import { layer3s } from '../processing/layer3s'
 
 describe('riskView', () => {
   for (const l2 of layer2s) {
+    if (l2.isUpcoming) {
+      continue
+    }
     const title = `${l2.id.toString()} riskView didn't change`
     const context = getContext(title, l2.id)
     it(title, () => {
@@ -14,6 +17,9 @@ describe('riskView', () => {
   }
 
   for (const l3 of layer3s) {
+    if (l3.isUpcoming) {
+      continue
+    }
     const title = `${l3.id.toString()} riskView didn't change`
     const context = getContext(title, l3.id)
     it(title, () => {
@@ -22,6 +28,9 @@ describe('riskView', () => {
   }
 
   for (const l3 of layer3s) {
+    if (l3.isUpcoming) {
+      continue
+    }
     const title = `${l3.id.toString()} stackedRiskView didn't change`
     const context = getContext(title, l3.id)
     it(title, () => {

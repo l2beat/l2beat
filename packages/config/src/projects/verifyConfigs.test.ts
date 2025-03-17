@@ -1,17 +1,7 @@
-import path from 'path'
 import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import { expect } from 'earl'
 
 describe('Verify Discovery config files', () => {
-  const dir = process.cwd()
-
-  process.chdir(path.resolve(__dirname, './..'))
-  console.log('cwd', process.cwd())
-
-  after(() => {
-    process.chdir(dir)
-  })
-
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const chains = configReader.readAllChains()
