@@ -130,6 +130,21 @@ export const zircuit: ScalingProject = opStackL2({
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber, bytes _proof)',
         sinceTimestamp: UnixTime(1720137600),
+        untilTimestamp: UnixTime(1741654919),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x92Ef6Af472b39F1b363da45E35530c24619245A4'),
+        selector: '0x1bf75d29',
+        functionSignature:
+          'function proposeL2OutputV2(uint256 _batchIndex, bytes32 _batchHash, bytes32 _poseidonPostStateRoot, bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber, bytes _aggrProof) payable',
+        sinceTimestamp: UnixTime(1741654919),
       },
     },
   ],
