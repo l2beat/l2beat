@@ -503,7 +503,7 @@ export class ProjectDiscovery {
       contractIdentifier,
       '$members',
     ).length
-    return `${threshold} / ${size}`
+    return `${threshold}/${size}`
   }
 
   getConstructorArg<T extends ContractValue>(

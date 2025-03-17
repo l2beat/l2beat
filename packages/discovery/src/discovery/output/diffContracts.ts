@@ -1,4 +1,4 @@
-import { diff } from 'deep-diff'
+import { orderIndependentDiff } from 'deep-diff'
 import type {
   ContractFieldSeverity,
   ContractValueType,
@@ -20,7 +20,7 @@ export function diffContracts(
   after: EntryParameters,
   ignore: string[],
 ): FieldDiff[] {
-  const differences = diff(before, after)
+  const differences = orderIndependentDiff(before, after)
 
   if (differences === undefined) {
     return []
