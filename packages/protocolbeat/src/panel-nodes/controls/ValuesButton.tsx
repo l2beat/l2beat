@@ -14,7 +14,7 @@ export function ValuesButton() {
   const isSingleSelected =
     selectedNode && rest.length === 0 && selectedNode.fields.length > 0
   const hasAnyFields = selectedNode && selectedNode.fields.length > 0
-  const disabled = !isSingleSelected && !hasAnyFields
+  const disabled = !isSingleSelected || !hasAnyFields
 
   return (
     <ValuesDialog.Root>
