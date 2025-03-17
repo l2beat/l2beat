@@ -1,4 +1,4 @@
-import type { Box, Connection, Field, State } from '../State'
+import type { Box, Connection, State } from '../State'
 import { BOTTOM_PADDING, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 
 export function updateNodePositions(state: State): State {
@@ -43,6 +43,12 @@ export function updateNodePositions(state: State): State {
             // this should never happen
             throw new Error('missing dimensions for node ' + field.target)
           }
+
+          // Calculate the actual visible index by counting non-hidden fields up to the current index
+          const visibleIndex = node.fields
+            .slice(0, index)
+            .filter((f) => !node.hiddenFields.includes(f.name)).length
+
           return {
             ...field,
             box: {
@@ -53,15 +59,7 @@ export function updateNodePositions(state: State): State {
             },
             connection: {
               nodeId: field.target,
-              ...processConnection(
-                index,
-                {
-                  ...box,
-                  fields: node.fields,
-                  hiddenFields: node.hiddenFields,
-                },
-                to,
-              ),
+              ...processConnection(visibleIndex, box, to),
             },
           }
         }),
@@ -78,16 +76,10 @@ function processConnection(
     x: number
     y: number
     width: number
-    fields: Field[]
-    hiddenFields: string[]
   },
   to: { x: number; y: number; width: number },
 ): Omit<Connection, 'nodeId'> {
-  // Calculate the actual visible index by counting non-hidden fields up to the current index
-  const visibleIndex = from.fields
-    .slice(0, index)
-    .filter((f) => !from.hiddenFields.includes(f.name)).length
-  const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (visibleIndex + 0.5)
+  const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5)
   const toY = to.y + HEADER_HEIGHT / 2
 
   const left = from.x
