@@ -177,6 +177,9 @@ You can find us to discuss everything related to Lisk’s governance, from curre
 
 ## **ZkSync**
 
+## **Active Votes**
+
+[[ZIP-8] Upgrade Chain Creation Params](https://www.tally.xyz/gov/zksync/proposal/98806622840077485421207653857298019081476009136539565020582912190689619102417?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) - ends on March 17 at 21:20 UTC. 
 
 ### **TPP-X: Unified Elastic Network Dashboard**
 
@@ -209,6 +212,8 @@ You can find us to discuss everything related to ZkSync’s governance, from cur
 
 
 ## **Scroll**
+
+[Scroll DAO Constitution](https://gov.scroll.io/proposals/1247605826408291988137032745109360457689615424039552986782425232092434978933) - ends on March 21 at 04:08 UTC.
 
 Scroll’s governance hasn’t seen any new developments over the last week. If you believe we might have missed something, please let us know.
 
