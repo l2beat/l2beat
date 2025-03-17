@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 import type { ReactNode } from 'react'
 
 export function ControlButton(props: {
-  onClick: () => void
+  onClick?: () => void
   children: ReactNode
   disabled?: boolean
   className?: string
