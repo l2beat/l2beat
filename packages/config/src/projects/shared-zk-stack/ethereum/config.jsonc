@@ -7,10 +7,8 @@
     "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB" // L1SharedBridge
   ],
   "names": {
-    "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock",
     "0x2cf3bD6a9056b39999F3883955E183F655345063": "EraAdminProxy",
-    "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZkFoundationMultisig",
     "0x085b8B6407f150D62adB1EF926F7f304600ec714": "ProtocolTimelockController(L2->L1)",
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub",
     //deprecated

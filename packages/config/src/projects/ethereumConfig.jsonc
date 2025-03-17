@@ -5,18 +5,21 @@
 
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
-    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "OptimismSecurityCouncil",
-    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "OptimismGuardianMultisig",
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "Optimism Security Council",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "Optimism Guardian Multisig",
 
-    "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "ArbitrumMultisig1",
-    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ArbitrumMultisig2",
-    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "ArbitrumSecurityCouncil",
+    "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "Arbitrum Multisig 1",
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "Arbitrum Multisig 2",
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "Arbitrum Security Council",
 
-    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "BaseMultisig1",
-    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "BaseMultisig2",
-    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "BaseMultisig3",
+    "0x9855054731540A48b28990B63DcF4f33d8AE46A1": "Base Multisig 1",
+    "0x14536667Cd30e52C0b458BaACcB9faDA7046E056": "Base Multisig 2",
+    "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": "Base Multisig 3",
 
-    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoMultisig1",
+    "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
+    "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZK Foundation Multisig",
+    
+    "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
 
 
   },
