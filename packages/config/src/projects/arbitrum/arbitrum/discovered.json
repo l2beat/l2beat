@@ -539,7 +539,7 @@
         "0xbcc218f5d48d8d9586a0b76adac248d0d98ed5bfff9fe653d1bfe25a169b6ffa"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Governance contract for the Security Council member elections.",
+      "description": "Token governance contract for the Security Council member elections.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -788,7 +788,7 @@
         "0x5bdeb7706e97db783f9241a25d475bd0ea0437e6f9447bf27327c10f14f3340f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Governance contract for the Security Council member removals.",
+      "description": "Token governance contract for the Security Council member removals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -879,7 +879,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
+      "description": "Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -962,7 +962,7 @@
         "0x1b614f721e7a1fbf0cd6458e4e4e3149daadc88d1ec12b6621c365ea9b6632be"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Governance contract for the Security Council nominee elections.",
+      "description": "Token governance contract for the Security Council nominee elections.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1846,7 +1846,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.",
+      "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -3090,7 +3090,7 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "orbitstack/layer2/ConstitutionHash": "0x10d0d32bb0fbfec7ee3f1dc2cf6ac3363249ad1e28d49f3421fa3aeed22cb1e9",
-    "orbitstack/layer2/CoreGovernor": "0x0f61666bda8f1a6b839ef6000c415825b9c58c5162e80bd8293008f8c2853e96",
+    "orbitstack/layer2/CoreGovernor": "0xb19ecb8312976eadbd935bf988977d8e2e725a5fa41a0dbc8b2d7cf18684fc43",
     "orbitstack/layer2/L2ARBGateway": "0x7de94773eea788ccb0da96cbbfd87e35e1318ddd1b8d6bdae144c1919f6810e1",
     "orbitstack/layer2/L2ArbitrumToken": "0xce8b9ed107289e7841621ee7fbe1a902511314f181cfd1f19ae0430c2ce0bc0d",
     "orbitstack/layer2/L2BaseFee": "0x94a0bd2de227f8393be3cb1d9c7f7227ff96b5623cca10cafc19c2ec35bb0eac",
@@ -3105,11 +3105,11 @@
     "orbitstack/layer2/L2UpgradeExecutor": "0x99b86fd374f0d0c46eff253c6053b7e4068c6ade4087493dbd8362c58d9c7777",
     "orbitstack/layer2/L2WethGateway": "0xd919f2dcc1dec00dae645f6ec4a132e2267a1b80b348f7885257648311e5653c",
     "orbitstack/layer2/SecurityCouncilManager": "0xd9c8d50c36b6633a81ade92b91e7da1db007c33056b32d9ef7c1ce00ed787878",
-    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0xb4ce52823aaa905b0df6f7b3971d64900a5a8144423e3acafa3311fc30a2f041",
-    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0xe3b2775d45128912c4accb4e494f709cf38e2e748716a34a419c75a96a6a871f",
+    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0xeaf1fe0850f4cf90bcb61cee14d51307296d55d9ae9ff3c246af9f6ba798b114",
+    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0xa96dd24db2143927d9e269887f3dee32efd1dbcd5ec8e38ebf1f0a3a699824cf",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x474b5acd9cedfb0791633da5fd1e96b7b457faed65dc691ce65923392e0f83dd",
-    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0x4f47b6434eb641f98c2c4ba5c70cca14f1b1c94e73fd897c1715e8a21ad6a2c0",
-    "orbitstack/layer2/TreasuryGovernor": "0x8086b174f1a5493007508d3854c0ea5fc4d0acf4cf809039b50dcda4724def8d",
+    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0xfcf77f1727eaa9d9dd6754ea4021dd1e9b7d75f92277b7bf707fdd0fcc3ce759",
+    "orbitstack/layer2/TreasuryGovernor": "0xafa4b770f366e220275cc348f87007f716ffa8ceca3598152febb897d467c9d0",
     "orbitstack/layer2/TreasuryTimelock": "0x833de49095de55061cc75e5c4c0843aed72aa3ed46610bef1a9a11c73680b5d9",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x9847b746498bffa2a68a790be0db1563328875748cf497ab0a7e58f8872002ac"
   }

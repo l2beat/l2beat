@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf999118dac472b592f4703969b148c8eb21793dd
+Generated with discovered.json: 0xf851945092ed5a2a19ce7e2f20a13c0e4134307b
 
-# Diff at Mon, 17 Mar 2025 15:18:38 GMT:
+# Diff at Mon, 17 Mar 2025 15:25:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 314982694
@@ -14,7 +14,7 @@ Config: Security Council manager cannot act independently, access control permis
 
 ```diff
     contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0) {
-    +++ description: Governance contract for the Security Council nominee elections.
+    +++ description: Token governance contract for the Security Council nominee elections.
       values.currentCohort:
 -        0
 +        1
@@ -121,7 +121,10 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 
 ```diff
     contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
-    +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+    +++ description: Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      description:
+-        "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
++        "Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
       category:
 +        {"name":"Governance","priority":3}
     }
@@ -259,7 +262,10 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 
 ```diff
     contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
-    +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      description:
+-        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
++        "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
       category:
 +        {"name":"Governance","priority":3}
     }
@@ -306,19 +312,19 @@ discovery. Values are for block 314982694 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
-    +++ description: Governance contract for the Security Council member elections.
+    +++ description: Token governance contract for the Security Council member elections.
 ```
 
 ```diff
 +   Status: CREATED
     contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
-    +++ description: Governance contract for the Security Council member removals.
+    +++ description: Token governance contract for the Security Council member removals.
 ```
 
 ```diff
 +   Status: CREATED
     contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0)
-    +++ description: Governance contract for the Security Council nominee elections.
+    +++ description: Token governance contract for the Security Council nominee elections.
 ```
 
 ```diff
