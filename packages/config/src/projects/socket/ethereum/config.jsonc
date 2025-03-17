@@ -1,0 +1,361 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "socket",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x943AC2775928318653e91d350574436A1b9b16f9", // Socket
+    // SOCKET SCRIPT OUTPUT FROM HERE ------------V
+    // Derive
+    "0xE3E96892D30E0ee1a8131BAf87c891201F7137bf",
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A",
+    "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142",
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+    "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91",
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+    "0x35d4D9bc79B0a543934b1769304B90d752691caD",
+    "0x76624ff43D610F64177Bb9c194A2503642e9B803",
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+    "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5",
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
+    "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50",
+    // Kinto
+    "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
+    "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
+    "0x2f87464d5F5356dB350dcb302FE28040986783a7",
+    "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
+    "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
+    "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+    "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
+    "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2",
+    "0xdb161cdc9c11892922F7121a409b196f3b00e640",
+    "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
+    "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013",
+    "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8",
+    "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
+    "0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
+    "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
+    "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2",
+    "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
+    "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9",
+    "0x1D18263107a138C7fb0De65b4a78d193ff9664c1",
+    // Polynomial
+    "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F",
+    "0xDE1617Ddb7C8A250A409D986930001985cfad76F",
+    "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
+    "0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc",
+    // Blast
+    "0xa83B4006c16DAeAb2718294696c0122519195137",
+    // Zora
+    "0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2",
+    "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB",
+    "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8",
+    // Reya
+    "0x0A5A19376064fED2A0A9f3120B2426c957BC289D",
+    "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E",
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
+    "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35",
+    "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3",
+    "0x64dF894688c5052BeAdC35371cF69151Ebc5D658",
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6"
+    // TO HERE ----------------------------------^
+  ],
+  // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
+  "names": {
+    "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
+    "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": "OptimismSwitchboard",
+    "0x053407DFA30267f6332f3c94a9e9F704A55e62CD": "PolygonL1Switchboard",
+    "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": "ArbitrumL1Switchboard",
+    "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
+    "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
+    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "LyraMultisig",
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "KintoMultisig",
+    "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF": "HookOwnerEOA",
+    "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34": "socketadmin.eth EOA",
+    "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13": "LooksRareMultisig",
+    "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C": "ExecutionManager",
+    "0xeD037aFBffC65a94E9CC592947E851FB2f730341": "TransmitManager",
+    // SOCKET SCRIPT OUTPUT FROM HERE ------------V
+    // Derive
+    "0xE3E96892D30E0ee1a8131BAf87c891201F7137bf": "sUSDe Vault Derive",
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault Derive",
+    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A": "USDe Vault Derive",
+    "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142": "sDAI Vault Derive",
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": "USDT Vault Derive",
+    "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91": "DAI Vault Derive",
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78": "weETH Vault Derive",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Derive",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Derive",
+    "0x35d4D9bc79B0a543934b1769304B90d752691caD": "rsETH Vault Derive",
+    "0x76624ff43D610F64177Bb9c194A2503642e9B803": "LBTC Vault Derive",
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault Derive",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Derive",
+    "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5": "eBTC Vault Derive",
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault Derive",
+    "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50": "cbBTC Vault Derive",
+    // Kinto
+    "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85": "sDAI Vault Kinto",
+    "0x43b718Aa5e678b08615CA984cbe25f690B085b32": "sUSDe Vault Kinto",
+    "0x2f87464d5F5356dB350dcb302FE28040986783a7": "KINTO Vault Kinto",
+    "0x755cD5d147036E11c76F1EeffDd94794fC265f0d": "USDC Vault Kinto",
+    "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8": "SPX Vault Kinto",
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e": "USDe Vault Kinto",
+    "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd": "ENA Vault Kinto",
+    "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": "ETHFI Vault Kinto",
+    "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2": "MKR Vault Kinto",
+    "0xdb161cdc9c11892922F7121a409b196f3b00e640": "EIGEN Vault Kinto",
+    "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": "wstETH Vault Kinto",
+    "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013": "LINK Vault Kinto",
+    "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8": "SOL Vault Kinto",
+    "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": "weETH Vault Kinto",
+    "0xDB0e855F55ff35dA8754e5297925bd6c4Cb1Fa48": "eUSD Vault Kinto",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
+    "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": "DAI Vault Kinto",
+    "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2": "PAXG Vault Kinto",
+    "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF": "XAUt Vault Kinto",
+    "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9": "cbBTC Vault Kinto",
+    "0x1D18263107a138C7fb0De65b4a78d193ff9664c1": "USDT Vault Kinto",
+    // Polynomial
+    "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F": "USD0++ Vault Polynomial",
+    "0xDE1617Ddb7C8A250A409D986930001985cfad76F": "USDC Vault Polynomial",
+    "0xC6cfb996A7CFEB89813A68CD13942CD75553032b": "sUSDe Vault Polynomial",
+    "0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc": "sDAI Vault Polynomial",
+    // Blast
+    "0xa83B4006c16DAeAb2718294696c0122519195137": "LOOKS Vault Blast",
+    // Zora
+    "0x528DBFcf6e2cbC62B05d7a74711AA7C44FF43cA2": "KLAUS Vault Zora",
+    "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB": "USDT Vault Zora",
+    "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8": "USDC Vault Zora",
+    // Reya
+    "0x0A5A19376064fED2A0A9f3120B2426c957BC289D": "sdeUSD Vault Reya",
+    "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E": "deUSD Vault Reya",
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya",
+    "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35": "USDe Vault Reya",
+    "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3": "sUSDe Vault Reya",
+    "0x64dF894688c5052BeAdC35371cF69151Ebc5D658": "WETH Vault Reya",
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": "WBTC Vault Reya"
+    // TO HERE ----------------------------------^
+  },
+  "overrides": {
+    "TransmitManager": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl", // handler cannot handle since the event is different ('grantBatchRole')
+            "roleNames": {
+              "0xc4c453d647953c0fd35db5a34ee76e60fb4abc3a8fb891a25936b70b38f29253": "RESCUE_ROLE",
+              "0x5d8e12c39142ff96d79d04d15d1ba1269e4fe57bb9d26f43523628b34ba108ec": "WITHDRAW_ROLE",
+              "0xd66a896d5b3e8cd31bfd557e6ebdb5bba4561c7ce6573d5c6716876cbc83dbdd": "TRIP_ROLE",
+              "0xb0a81253fa41a5cd7c5885c220c30d519a0d552984e0d69edda03449f69fa6db": "UN_TRIP_ROLE",
+              "0xd6a0f92c822ccba0fa91b30f08f085e68bc8eb3bb140aa16f8dc33ea47eb6cf2": "TRANSMITTER_ROLE",
+              "0x2125d1e225cadc5c8296e2cc1f96ee607770bf4a4a16131e62f6819937437c89": "WATCHER_ROLE",
+              "0x429672025b2dcb8754ca4b57943f34ac66900598787cb1f1e857291dedbf34d3": "FEES__UPDATER_ROLE",
+              "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+              "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "Socket": {
+      "ignoreInWatchMode": ["globalMessageCount"],
+      "fields": {
+        "executionManager__": {
+          "description": "Manages crosschain execution and -fees."
+        },
+        "plugs": {
+          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
+          "severity": "LOW",
+          "type": "CODE_CHANGE",
+          "handler": {
+            "type": "event",
+            "select": "plug",
+            "add": { "event": "PlugConnected" },
+            "ignoreRelative": true
+          }
+        },
+        "inboundSwitchboards": {
+          "handler": {
+            "type": "event",
+            "select": "inboundSwitchboard",
+            "add": { "event": "PlugConnected" }
+          }
+        },
+        "outboundSwitchboards": {
+          "handler": {
+            "type": "event",
+            "select": "outboundSwitchboard",
+            "add": { "event": "PlugConnected" }
+          }
+        }
+      }
+    },
+    "OptimismSwitchboard": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
+      "ignoreRelatives": [
+        "capacitor__",
+        "crossDomainMessenger__",
+        "remoteNativeSwitchboard"
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
+    },
+    "OptimismSwitchboard2": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
+      "ignoreRelatives": [
+        "capacitor__",
+        "crossDomainMessenger__",
+        "remoteNativeSwitchboard"
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
+    },
+    "PolygonL1Switchboard": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
+      "ignoreRelatives": [
+        "capacitor__",
+        "checkpointManager",
+        "fxRoot",
+        "remoteNativeSwitchboard"
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
+    },
+    "ArbitrumL1Switchboard": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
+      "ignoreRelatives": [
+        "capacitor__",
+        "bridge__",
+        "inbox__",
+        "outbox__",
+        "remoteNativeSwitchboard"
+      ],
+      "fields": {
+        "switchboardFees": {
+          "description": "Fee charged by the switchboard for processing a transaction",
+          "severity": "LOW"
+        },
+        "verificationOverheadFees": {
+          "description": "Fee charged for verifying transaction",
+          "severity": "LOW"
+        }
+      }
+    },
+    "FastSwitchboard": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+            }
+          }
+        }
+      }
+    },
+    "LyraMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "KintoMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    // SOCKET SCRIPT OUTPUT FROM HERE ------------V
+    // Derive
+    "sUSDe Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDC Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDe Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "sDAI Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDT Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "DAI Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "weETH Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WETH Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "rswETH Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "rsETH Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "LBTC Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "SNX Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WBTC Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "eBTC Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "wstETH Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "cbBTC Vault Derive": { "ignoreMethods": ["token", "token__", "hook__"] },
+    // Kinto
+    "sDAI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "sUSDe Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "KINTO Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDC Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "SPX Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDe Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "ENA Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "ETHFI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "MKR Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "EIGEN Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "wstETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "LINK Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "SOL Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "weETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "eUSD Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "DAI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "PAXG Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "XAUt Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "cbBTC Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDT Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    // Polynomial
+    "USD0++ Vault Polynomial": {
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "USDC Vault Polynomial": {
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "sUSDe Vault Polynomial": {
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "sDAI Vault Polynomial": {
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    // Blast
+    "LOOKS Vault Blast": { "ignoreMethods": ["token", "token__", "hook__"] },
+    // Zora
+    "KLAUS Vault Zora": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDT Vault Zora": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDC Vault Zora": { "ignoreMethods": ["token", "token__", "hook__"] },
+    // Reya
+    "sdeUSD Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "deUSD Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDe Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "sUSDe Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WETH Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WBTC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] }
+    // TO HERE ----------------------------------^
+  }
+}

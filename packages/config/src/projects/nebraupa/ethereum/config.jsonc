@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "nebraupa",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x3B946743DEB7B6C97F05B7a31B23562448047E3E"],
+  "names": {
+    "0x3B946743DEB7B6C97F05B7a31B23562448047E3E": "UpaVerifier",
+    "0xb463603469Bf31f189E3F6625baf8378880Df14e": "NebraOwner"
+  },
+  "overrides": {
+    "UpaVerifier": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": [
+        "claimableFees",
+        "nextSubmissionIdxToVerify",
+        "nextProofIdx",
+        "getNextSubmissionIdx",
+        "lastVerifiedSubmissionHeight"
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "StarkExchange",
+  "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+  "category": "core",
+  "ignoreMethods": [
+    "getEthKey",
+    "getQuantum",
+    "isAssetRegistered",
+    "validatedSelectors",
+    "getAssetInfo",
+    "getActionCount",
+    "getActionHashByIndex",
+    "initializerSize",
+    "identify",
+    "UPGRADE_DELAY_SLOT",
+    "readyForClearance",
+    "isBlockListed"
+  ],
+  "ignoreInWatchMode": [
+    "getLastBatchId",
+    "getOrderRoot",
+    "getOrderTreeHeight",
+    "getSequenceNumber",
+    "getVaultRoot",
+    "getValidiumVaultRoot"
+  ],
+  "fields": {
+    "$admin": {
+      "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.",
+      "severity": "HIGH",
+      "target": {
+        "permissions": [
+          {
+            "type": "upgrade",
+            "delay": "{{StarkWareDiamond_upgradeDelay}}"
+          },
+          {
+            "type": "governStarknet"
+          },
+          {
+            "type": "interact",
+            "description": "manage the token admin role."
+          }
+        ]
+      }
+    },
+    "isFinalized": {
+      "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).",
+      "severity": "HIGH"
+    },
+    "tokenAdmins": {
+      "handler": {
+        "type": "event",
+        "select": "tokenAdmin",
+        "add": {
+          "event": "LogTokenAdminAdded"
+        },
+        "remove": {
+          "event": "LogTokenAdminRemoved"
+        }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "Can regsiter new tokens for deposits and withdrawals."
+          }
+        ]
+      }
+    },
+    "DEPOSIT_CANCEL_DELAY": {
+      "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": "operator",
+        "add": { "event": "LogOperatorAdded" },
+        "remove": { "event": "LogOperatorRemoved" }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "operateStarknet"
+          }
+        ]
+      }
+    }
+  }
+}

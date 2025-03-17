@@ -189,9 +189,11 @@ describe(AddressAnalyzer.name, () => {
         sourceBundles: sources.sources,
         targetsMeta: {
           [admin.toString()]: {
+            canActIndependently: undefined,
             displayName: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
+            references: undefined,
             severity: undefined,
             types: undefined,
           },
@@ -312,9 +314,11 @@ describe(AddressAnalyzer.name, () => {
         sourceBundles: sources.sources,
         targetsMeta: {
           [admin.toString()]: {
+            canActIndependently: undefined,
             displayName: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
+            references: undefined,
             severity: undefined,
             types: undefined,
           },
@@ -432,9 +436,11 @@ describe(AddressAnalyzer.name, () => {
         sourceBundles: sources.sources,
         targetsMeta: {
           [admin.toString()]: {
+            canActIndependently: undefined,
             displayName: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
+            references: undefined,
             severity: undefined,
             types: undefined,
           },

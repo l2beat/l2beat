@@ -126,19 +126,19 @@ function SummaryThroughputBox({
     {
       label: 'Ethereum',
       value: latest.ethereum,
-      className: 'bg-[hsl(var(--chart-ethereum))]',
+      className: 'bg-chart-ethereum',
       percentage: round((latest.ethereum / total) * 100, 2),
     },
     {
       label: 'Celestia',
       value: latest.celestia,
-      className: 'bg-[hsl(var(--chart-da-celestia))]',
+      className: 'bg-chart-da-celestia',
       percentage: round((latest.celestia / total) * 100, 2),
     },
     {
       label: 'Avail',
       value: latest.avail,
-      className: 'bg-[hsl(var(--chart-emerald))]',
+      className: 'bg-chart-emerald',
       percentage: round((latest.avail / total) * 100, 2),
     },
   ]

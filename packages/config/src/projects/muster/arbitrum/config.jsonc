@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "muster",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1" // Bridge
+  ]
+}

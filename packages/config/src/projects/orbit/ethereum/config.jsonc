@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "orbit",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"],
+  "names": {
+    "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": "ETH Vault",
+    "0x830433dE03ABedE062660CC629e1A2c714272474": "USDC Farm",
+    "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9": "USDT Farm",
+    "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da": "WBTC Farm",
+    "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0": "DAI Farm"
+  },
+  "overrides": {
+    "ETH Vault": {
+      "proxyType": "call implementation proxy",
+      "ignoreMethods": [
+        "owners",
+        "getConfirmationCount",
+        "getConfirmations",
+        "isConfirmed",
+        "transactions"
+      ],
+      "fields": {
+        "usdtFarm": {
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"]
+          }
+        },
+        "daiFarm": {
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0x6B175474E89094C44Da98b954EedeAC495271d0F"]
+          }
+        },
+        "usdcFarm": {
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+          }
+        },
+        "wbtcFarm": {
+          "handler": {
+            "type": "call",
+            "method": "function farms(address token) view returns (address)",
+            "args": ["0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
+          }
+        },
+        "policyAdmin": {
+          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        },
+        "required": {
+          "description": "Threshold of the bridge governance admin multisig",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        }
+      },
+      "ignoreInWatchMode": ["depositCount", "transactionCount"]
+    },
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      // Tether
+      "ignoreDiscovery": true
+    },
+    "0xC355fe6E4e99C0B93577F08c4e9a599714435912": {
+      // Ether Dai Token (immutable)
+      "ignoreDiscovery": true
+    },
+    "0xdb3516D4C062180e5e947F21C9476FF24D4A0900": {
+      // DAI proxy
+      "ignoreDiscovery": true
+    },
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      // DAI
+      "ignoreDiscovery": true
+    }
+  }
+}

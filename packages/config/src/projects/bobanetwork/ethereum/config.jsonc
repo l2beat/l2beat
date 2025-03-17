@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "bobanetwork",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB" // SystemConfig
+  ],
+  "names": {
+    "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "BobaMultisig"
+  }
+}

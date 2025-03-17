@@ -1,18 +1,15 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
-import type { RawDiscoveryConfig } from '@l2beat/discovery'
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
-import { readConfig } from '../config/readConfig'
+import { type RawDiscoveryConfig, getDiscoveryPaths } from '@l2beat/discovery'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export function initDiscovery(
   project: string,
   chain: string,
   initalAddresses: EthereumAddress[],
 ) {
-  const config = readConfig()
-  assert(config.discoveryPath, '.l2b does not specify the discovery path')
-
-  const projectPath = path.join(config.discoveryPath, project, chain)
+  const paths = getDiscoveryPaths()
+  const projectPath = path.join(paths.discovery, project, chain)
   mkdirSync(projectPath, { recursive: true })
 
   const configPath = path.join(projectPath, 'config.jsonc')

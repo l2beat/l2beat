@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "category": "gov",
+  "description": "A timelock with access control. In the case of an activated emergency state in the {{polygonZkEVM}}, all transactions through this timelock are immediately executable. The current minimum delay is {{getMinDelayFormatted}}.",
+  "ignoreMethods": [
+    "CANCELLER_ROLE",
+    "DEFAULT_ADMIN_ROLE",
+    "EXECUTOR_ROLE",
+    "PROPOSER_ROLE",
+    "TIMELOCK_ADMIN_ROLE"
+  ],
+  "fields": {
+    "timelockAdminAC": {
+      // assuming they also have PROPOSER_ROLE, EXECUTOR_ROLE, CANCELLER_ROLE roles
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "delay": "{{getMinDelay}}",
+            "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+            "condition": "there is no emergency state, in which case there would be no delay"
+          },
+          {
+            "type": "act",
+            "delay": "{{getMinDelay}}",
+            "condition": "there is no emergency state, in which case there would be no delay"
+          }
+        ]
+      }
+    },
+    "getMinDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "scheduledTransactionsDecoded": {
+      "handler": {
+        "type": "polygoncdkScheduledTransactions"
+      }
+    }
+  }
+}

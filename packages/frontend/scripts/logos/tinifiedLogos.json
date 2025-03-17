@@ -106,7 +106,6 @@
   "specular.png": "986510d31bd9d899f96ad1a452039c70",
   "stargate.png": "2a3433c4d46985138657da25c0fd7935",
   "starknet.png": "32dab98fd430168d8311c640acdf5adc",
-  "stealthchain.png": "43ee928e21215e66411e44cfbee5bfc1",
   "symbiosis.png": "6ac7e2749f8e3c35bddc28fd1c7e3b4a",
   "synapse.png": "60524670cf8f6a71118de808abd2b1d0",
   "taiko.png": "6ef59b76ae086c61751ff3e214b69293",
@@ -361,5 +360,6 @@
   "quarkchain.png": "d878c1b5c9a333055f8b42af4a305fdb",
   "gasp.png": "9c2d303ca18a7b10070e8dbe299764c0",
   "train.png": "abec536a4d7311a186887e258b3bae85",
-  "skatechain.png": "206dfe080cad7ceaa9dbddffd5124318"
+  "skatechain.png": "206dfe080cad7ceaa9dbddffd5124318",
+  "hyperagi.png": "ffda8302c715c6469a220a3b4dce7819"
 }

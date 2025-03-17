@@ -55,8 +55,7 @@ export function getCommonScalingEntry({
       verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
         isUnderReview: project.statuses.isUnderReview,
-        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
-        implementationChanged: !!changes?.implementationChanged,
+        impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
       countdowns: {

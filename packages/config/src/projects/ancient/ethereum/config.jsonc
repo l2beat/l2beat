@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "ancient",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+    "0x132b3456300332d488f946B818eB9512931eBCAa",
+    "0xd5e3eDf5b68135D559D572E26bF863FBC1950033",
+    "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
+    "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80"
+  ],
+  "names": {
+    "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": "Ancient8GuardianMultisig"
+  }
+}

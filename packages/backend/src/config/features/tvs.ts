@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import type { Project, ProjectService } from '@l2beat/config'
-import { extractPricesAndAmounts } from '../../modules/tvs/mapConfig'
+import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import type {
   AmountConfig,
   PriceConfig,
@@ -44,8 +44,9 @@ export function readConfigs(
   for (const project of projects) {
     const fileName = project.id.replace(/[=;]+/g, '')
     const filePath = `./src/modules/tvs/config/${fileName}.json`
+
     if (!fs.existsSync(filePath)) {
-      throw new Error(`File ${filePath} not found`)
+      continue
     }
 
     const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))

@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PolygonZkEVM",
+  "description": "The main system contract defining the {{networkName}} Layer 2 logic. Entry point for sequencing batches.",
+  "ignoreInWatchMode": ["lastAccInputHash"],
+  "ignoreRelatives": ["gasTokenAddress", "GLOBAL_EXIT_ROOT_MANAGER_L2", "pol"],
+  "fields": {
+    "admin": {
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+          }
+        ]
+      }
+    },
+    "trustedSequencer": {
+      "target": {
+        "permissions": [
+          {
+            "type": "sequence"
+          }
+        ]
+      }
+    },
+    "forceBatchAddress": {
+      "severity": "HIGH",
+      "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "sole address that can force batches."
+          }
+        ]
+      }
+    }
+  },
+  "category": "core"
+}

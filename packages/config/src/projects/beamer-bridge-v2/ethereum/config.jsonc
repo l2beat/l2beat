@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "beamer-bridge-v2",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x12B8489913E2afBCed131d52c345C380BBB65baf",
+    "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
+    "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
+    "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
+    "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3"
+  ],
+  "names": {
+    "0xCb60516819a28431233195A8b7E0227C288B61AD": "Resolver",
+    "0x12B8489913E2afBCed131d52c345C380BBB65baf": "EthereumL1Messenger",
+    "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": "EthereumRequestManager",
+    "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": "EthereumFillManager",
+    "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": "EthereumL2Messenger",
+    "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": "OptimismL1Messenger",
+    "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": "ArbitrumL1Messenger"
+  },
+  "overrides": {
+    "Resolver": {
+      "ignoreMethods": ["sourceChainInfos"]
+    },
+    "EthereumRequestManager": {
+      "ignoreMethods": ["protocolFee"],
+      "fields": {
+        "chains": {
+          "handler": {
+            "type": "event",
+            "select": ["finalityPeriod", "transferCost", "targetWeightPPM"],
+            "set": { "event": "ChainUpdated" },
+            "groupBy": "chainId"
+          }
+        }
+      },
+      "ignoreInWatchMode": ["chains", "currentNonce"]
+    },
+    "EthereumFillManager": {
+      "fields": {
+        "liquidityProviders": {
+          "handler": {
+            "type": "event",
+            "select": "lp",
+            "add": { "event": "LpAdded" },
+            "remove": { "event": "LpRemoved" }
+          }
+        }
+      }
+    },
+    "0x124198789EF8d82050E620De2b73332C3c6C2eD4": {
+      // Optimism network: RequestManager
+      "ignoreDiscovery": true
+    },
+    "0x889aa3c5b5298d70613373F25Ef66Fede25B4de1": {
+      // Optimism network: FillManager
+      "ignoreDiscovery": true
+    },
+    "0xddF87c859c713E1BDfDC95BAF1cabB5FBc83C1F8": {
+      // Optimism network: OptimismL2Messenger
+      "ignoreDiscovery": true
+    },
+    "0x13bAF73f48FCF6A8aAb8431CA3A38c624cdfd8F3": {
+      // Arbitrum network: RequestManager
+      "ignoreDiscovery": true
+    },
+    "0x27f72B9745CDE0fbAFe0A0d1119D75f4082bFc47": {
+      // Arbitrum network: FillManager
+      "ignoreDiscovery": true
+    },
+    "0x8868eDed0b126f0C9bd3388a3003F13FB91c31Bb": {
+      // Arbitrum network: ArbitrumL2Messenger
+      "ignoreDiscovery": true
+    },
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": {
+      // Non beamer code: OptimismPortal
+      "ignoreDiscovery": true
+    },
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": {
+      // Non beamer code: GnosisSafe
+      "ignoreDiscovery": true
+    },
+    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": {
+      // Non beamer code: L1CrossDomainMessenger
+      "ignoreDiscovery": true
+    },
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
+      // Non beamer code: Arbitrum bridge
+      "ignoreDiscovery": true
+    },
+    "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": {
+      // Non beamer code: Arbitrum: Sequencer Inbox
+      "ignoreDiscovery": true
+    },
+    "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35": {
+      // Non beamer code:  Arbitrum: rollup
+      "ignoreDiscovery": true
+    },
+    "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": {
+      // Non beamer code: Arbitrum: Delayed Inbox
+      "ignoreDiscovery": true
+    }
+  }
+}

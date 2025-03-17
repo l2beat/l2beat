@@ -16,7 +16,7 @@ import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
-export const TEMPLATES_PATH = path.join('discovery', '_templates')
+export const TEMPLATES_PATH = path.join('_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 interface ShapeCriteria {
@@ -33,7 +33,7 @@ export class TemplateService {
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
 
-  constructor(private readonly rootPath: string = '') {}
+  constructor(private readonly rootPath: string) {}
 
   /**
    * @returns A record where the keys are template IDs (relative paths from the templates

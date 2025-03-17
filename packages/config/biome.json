@@ -8,13 +8,10 @@
       "scripts/multichain/cache.json",
       "scripts/multichain/intermediate.json",
       "cache/",
-      "discovery/**/.code",
-      "discovery/**/.code@*",
-      "discovery/**/.flat*",
-      "discovery/**/mermaid",
-      "discovery/**/.mermaid",
-      "discovery/**/.flat",
-      "discovery/**/script-ts"
+      "src/projects/**/.code",
+      "src/projects/**/.code@*",
+      "src/projects/**/.flat",
+      "src/projects/**/.flat@*"
     ]
   }
 }

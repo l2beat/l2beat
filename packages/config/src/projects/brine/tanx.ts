@@ -58,6 +58,7 @@ export const tanx: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
+    architectureImage: 'starkex',
     name: 'tanX',
     slug: 'tanx',
     description: 'tanX is a DEX powered by StarkEx technology.',

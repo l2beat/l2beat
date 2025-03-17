@@ -1,7 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "ChallengeManager",
-  "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
-  "ignoreRelatives": ["stakeToken"],
-  "category": "core"
-}

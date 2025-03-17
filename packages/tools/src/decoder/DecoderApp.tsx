@@ -29,7 +29,14 @@ export function DecoderApp() {
       >
         Decode
       </button>
-      {toDecode && <Decoded encoded={toDecode as `0x${string}`} />}
+      {toDecode && <Decoded encoded={add0xPrefix(toDecode)} />}
     </div>
   )
+}
+
+function add0xPrefix(hex: string): `0x${string}` {
+  if (hex.startsWith('0x')) {
+    return hex as `0x${string}`
+  }
+  return `0x${hex}`
 }

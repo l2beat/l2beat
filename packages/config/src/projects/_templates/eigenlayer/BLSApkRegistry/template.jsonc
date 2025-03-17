@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Keeps track of the BLS public keys of each operator and the quorum aggregated keys."
+}
