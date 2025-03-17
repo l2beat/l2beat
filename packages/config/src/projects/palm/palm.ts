@@ -18,10 +18,8 @@ export const palm: ScalingProject = upcomingL2({
       websites: ['https://palm.network/'],
       apps: ['https://app.palm.io/bridge'],
       documentation: ['https://docs.palm.io/'],
-      explorers: ['https://ondora.xyz/network/palm'],
       socialMedia: [
         'https://x.com/buildOnPalm',
-        'https://instagram.com/palm_network/',
         'https://t.me/PalmDAO_Community',
         'https://linkedin.com/company/92910058/',
       ],
