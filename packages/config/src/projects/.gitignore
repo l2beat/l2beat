@@ -5,3 +5,4 @@
 **/*.lp
 !_templates/**/*.lp
 !_clingo/**/*.lp
+**/project.json

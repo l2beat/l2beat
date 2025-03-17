@@ -23,6 +23,7 @@ import {
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
 import { bridges } from './bridges'
+import { getJsonProjects } from './getJsonProjects'
 import { isVerified } from './isVerified'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -35,6 +36,9 @@ import { isUnderReview } from './utils/isUnderReview'
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
+  const jsonProjects = getJsonProjects()
+  const jsonIds = new Set(jsonProjects.map((p) => p.id))
+
   const chains = [...refactored, ...layer2s, ...layer3s, ...bridges]
     .map((p) => p.chainConfig)
     .filter((c) => c !== undefined)
@@ -44,6 +48,8 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map((p) => layer2Or3ToProject(p, [], tokenList)))
     .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, tokenList)))
     .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
+    .filter((p) => !jsonIds.has(p.id))
+    .concat(jsonProjects)
 }
 
 function layer2Or3ToProject(
