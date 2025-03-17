@@ -5,6 +5,7 @@ export function ControlButton(props: {
   onClick: () => void
   children: ReactNode
   disabled?: boolean
+  className?: string
 }) {
   return (
     <button
@@ -13,6 +14,7 @@ export function ControlButton(props: {
         'whitespace-pre border border-coffee-600 bg-coffee-800 px-2 py-1 text-xs',
         !props.disabled && '',
         props.disabled && 'text-coffee-400',
+        props.className,
       )}
       onClick={props.onClick}
     >

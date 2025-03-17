@@ -169,7 +169,8 @@
         "type": "totalSupply",
         "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
         "chain": "bob",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1723638067
       },
       "valueForProject": {
         "type": "calculation",
@@ -182,7 +183,8 @@
               "type": "totalSupply",
               "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
               "chain": "bob",
-              "decimals": 18
+              "decimals": 18,
+              "sinceTimestamp": 1723638067
             }
           },
           {
@@ -193,12 +195,12 @@
               "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
               "chain": "bob",
               "decimals": 18,
-              "escrowAddress": "0x742779748Dc07943E97c2cf30B48A57b96E033e1"
+              "escrowAddress": "0x742779748Dc07943E97c2cf30B48A57b96E033e1",
+              "sinceTimestamp": 1723638067
             }
           }
         ]
       },
-      "sinceTimestamp": 1723638067,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -213,9 +215,9 @@
         "type": "totalSupply",
         "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
         "chain": "bob",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1724924787
       },
-      "sinceTimestamp": 1724924787,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -338,7 +340,8 @@
         "type": "totalSupply",
         "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
         "chain": "bob",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1712862107
       },
       "valueForProject": {
         "type": "calculation",
@@ -351,7 +354,8 @@
               "type": "totalSupply",
               "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
               "chain": "bob",
-              "decimals": 8
+              "decimals": 8,
+              "sinceTimestamp": 1712862107
             }
           },
           {
@@ -362,12 +366,12 @@
               "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
               "chain": "bob",
               "decimals": 8,
-              "escrowAddress": "0x33b7A7a164B77433A61d4B49bD780a2718812e6e"
+              "escrowAddress": "0x33b7A7a164B77433A61d4B49bD780a2718812e6e",
+              "sinceTimestamp": 1712862107
             }
           }
         ]
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false

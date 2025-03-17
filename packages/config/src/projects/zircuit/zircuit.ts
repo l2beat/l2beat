@@ -77,6 +77,11 @@ export const zircuit: ScalingProject = opStackL2({
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
   },
+  activityConfig: {
+    // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount
+    type: 'block',
+    startBlock: 1,
+  },
   chainConfig: {
     name: 'zircuit',
     chainId: 48900,

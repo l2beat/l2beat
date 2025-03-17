@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x441f8f0c763961a0ab0cd2e995716b46ef96bd3e
+
+# Diff at Fri, 14 Mar 2025 12:28:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7e4a57fcd450755873041cc11fbeeb4f06e39d5c block: 21944318
+- current block number: 21944318
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21944318 (main branch discovery), not current.
+
+```diff
+    contract StargateMultiRewarder (0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc36d2c5087e47e6fad11a1bea54e8da1eba1b67863c32a5961968d43a77b2f0b"
++        "0x3ba9eb19565a1f8da529d4ad153c9ed3c8e64a7f5912a29c4aee7b7fc14d3cda"
+    }
+```
+
 Generated with discovered.json: 0xc86d7925390034d0c96d7130c701179d7d153aa3
 
 # Diff at Thu, 06 Mar 2025 15:20:39 GMT:

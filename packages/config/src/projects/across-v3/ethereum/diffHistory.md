@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x0b6e740af428f8f26fcc79737bcc3c0b4ed60b2e
+
+# Diff at Fri, 14 Mar 2025 12:33:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 21802758
+- current block number: 22045124
+
+## Description
+
+ZkStack adapter added (replaces ZkSync adapter). Currently targeting the old shared bridge address.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.324:
+-        "0xE233009838CB898b50e0012a6E783FC9FeE447FB"
++        "0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkSync_Adapter (0xE233009838CB898b50e0012a6E783FC9FeE447FB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_Adapter (0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ZkStack_Adapter.sol}                           | 214 ++++++++++++---------
+ 1 file changed, 125 insertions(+), 89 deletions(-)
+```
+
 Generated with discovered.json: 0xc753ebcff88fc4ca6a584bd241359bf7e72ae340
 
 # Diff at Tue, 04 Mar 2025 10:38:49 GMT:
