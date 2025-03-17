@@ -6,6 +6,7 @@ import { HideUnknownsButton } from './HideUnknowns'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
+import { ValuesButton } from './ValuesButton'
 
 interface ControlsProps {
   panelMode: boolean
@@ -23,6 +24,7 @@ export function Controls(props: ControlsProps) {
       <span className="text-coffee-600">|</span>
       <HideButton />
       <ColorButton />
+      <ValuesButton />
       {!props.panelMode && (
         <>
           <span className="text-coffee-600">|</span>
