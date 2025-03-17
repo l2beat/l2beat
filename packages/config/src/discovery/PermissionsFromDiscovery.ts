@@ -223,22 +223,20 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       .filter((result) => result.count > 0)
       .sort((a, b) => b.count - a.count)
 
-    // It's sorted, it will select first of type
-    const mostControllingEoa = analysis.find((c) => c.type === 'EOA')
-    const mostControllingContract = analysis.find((c) => c.type === 'Contract')
+    // It's sorted in descending order of count
+    const [mostControlling, secondMostControlling] = analysis
 
-    if (
-      mostControllingEoa === undefined ||
-      mostControllingContract === undefined
-    ) {
-      return
+    const isControllingEoa =
+      // is EOA
+      mostControlling.type === 'EOA' &&
+      // TODO: double check if we want to account for case where there is no second most controlling
+      secondMostControlling &&
+      mostControlling.count >= secondMostControlling.count
+
+    if (isControllingEoa) {
+      return mostControlling.address
     }
 
-    const isControlling =
-      mostControllingEoa.count >= mostControllingContract.count
-
-    if (isControlling) {
-      return mostControllingEoa.address
-    }
+    return
   }
 }
