@@ -1,0 +1,326 @@
+{
+  "$ref": "#/definitions/Project",
+  "definitions": {
+    "Badge": {
+      "type": "string",
+      "enum": [
+        "DA.Avail",
+        "DA.Celestia",
+        "DA.CelestiaBlobstream",
+        "DA.CustomDA",
+        "DA.DAC",
+        "DA.EigenDA",
+        "DA.EthereumBlobs",
+        "DA.EthereumCalldata",
+        "DA.NearDA",
+        "Fork.LoopringFork",
+        "Fork.OVM",
+        "Fork.StarknetFork",
+        "Fork.TaikoFork",
+        "Fork.ZKsyncLiteFork",
+        "Infra.AggLayer",
+        "Infra.ElasticChain",
+        "Infra.SHARP",
+        "Infra.Superchain",
+        "L3ParentChain.Arbitrum",
+        "L3ParentChain.Base",
+        "L3ParentChain.Linea",
+        "L3ParentChain.Nova",
+        "L3ParentChain.OpMainnet",
+        "Other.AccountAbstraction",
+        "Other.BasedSequencing",
+        "Other.EspressoPreconfs",
+        "Other.Governance",
+        "Other.L3HostChain",
+        "Other.MigratedFromL1",
+        "RaaS.Alchemy",
+        "RaaS.AltLayer",
+        "RaaS.Caldera",
+        "RaaS.Conduit",
+        "RaaS.Gateway",
+        "RaaS.Gelato",
+        "RaaS.Karnot",
+        "RaaS.Quicknode",
+        "RaaS.Syndicate",
+        "RaaS.Zeeve",
+        "Stack.Cartesi",
+        "Stack.Nitro",
+        "Stack.OPStack",
+        "Stack.Orbit",
+        "Stack.PolygonCDK",
+        "Stack.SNStack",
+        "Stack.StarkEx",
+        "Stack.ZKStack",
+        "VM.AppChain",
+        "VM.AztecVM",
+        "VM.CairoVM",
+        "VM.CartesiVM",
+        "VM.EVM",
+        "VM.EVMLike",
+        "VM.FuelVM",
+        "VM.MoveVM",
+        "VM.SolanaVM",
+        "VM.WasmVM"
+      ]
+    },
+    "ChainConfig": {
+      "type": "object",
+      "properties": {
+        "chainId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "explorerUrl": {
+          "type": "string"
+        },
+        "gasTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "multicallContracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MulticallContractConfig"
+          }
+        },
+        "coingeckoPlatform": {
+          "type": "string"
+        },
+        "sinceTimestamp": {
+          "$ref": "#/definitions/UnixTime"
+        },
+        "untilTimestamp": {
+          "$ref": "#/definitions/UnixTime"
+        }
+      },
+      "required": [
+        "chainId"
+      ],
+      "additionalProperties": false
+    },
+    "DateYYYYMMDD": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "Display": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "websites": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "apps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "documentation": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explorers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "repositories": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "socialMedia": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rollupCodes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "badges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Badge"
+          }
+        }
+      },
+      "required": [
+        "badges"
+      ],
+      "additionalProperties": false
+    },
+    "EthereumAddress": {
+      "type": "string",
+      "pattern": "^0x[\\da-f]{40}$"
+    },
+    "HttpsUrl": {
+      "type": "string",
+      "pattern": "^https:\\/\\/"
+    },
+    "Milestone": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "general",
+            "incident"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date": {
+          "$ref": "#/definitions/DateYYYYMMDD"
+        },
+        "url": {
+          "$ref": "#/definitions/HttpsUrl"
+        }
+      },
+      "required": [
+        "type",
+        "title",
+        "date",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "MulticallContractConfig": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/EthereumAddress"
+        },
+        "sinceBlock": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "batchSize": {
+          "type": "integer"
+        },
+        "version": {
+          "type": "string",
+          "enum": [
+            "1",
+            "2",
+            "3",
+            "optimism"
+          ]
+        },
+        "isNativeBalanceSupported": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "address",
+        "sinceBlock",
+        "batchSize",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "Project": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "extends": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "statuses": {
+          "$ref": "#/definitions/Statuses"
+        },
+        "display": {
+          "$ref": "#/definitions/Display"
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Milestone"
+          }
+        },
+        "chainConfig": {
+          "$ref": "#/definitions/ChainConfig"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Statuses": {
+      "type": "object",
+      "properties": {
+        "yellowWarning": {
+          "type": "string"
+        },
+        "redWarning": {
+          "type": "string"
+        },
+        "isUnderReview": {
+          "type": "boolean"
+        },
+        "isUnverified": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UnixTime": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 946684800,
+          "maximum": 4102444800
+        },
+        {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$"
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

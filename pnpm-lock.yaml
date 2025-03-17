@@ -254,18 +254,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
-      ethers:
-        specifier: ^5.7.2
-        version: 5.7.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       sqlite3:
         specifier: 5.1.7
         version: 5.1.7
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
     devDependencies:
       '@l2beat/backend-tools':
         specifier: workspace:*
@@ -291,15 +282,27 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      ethers:
+        specifier: ^5.7.2
+        version: 5.7.2
       jsonc-parser:
         specifier: ^3.2.0
         version: 3.3.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
       p-limit:
         specifier: ^6.1.0
         version: 6.1.0
+      zod:
+        specifier: ^3.22.2
+        version: 3.23.8
+      zod-to-json-schema:
+        specifier: ^3.24.4
+        version: 3.24.4(zod@3.23.8)
 
   packages/database:
     dependencies:
@@ -7481,6 +7484,11 @@ packages:
   zip-stream@4.1.1:
     resolution: {integrity: sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==}
     engines: {node: '>= 10'}
+
+  zod-to-json-schema@3.24.4:
+    resolution: {integrity: sha512-0uNlcvgabyrni9Ag8Vghj21drk7+7tp7VTwwR7KxxXXc/3pbXz2PHlDgj3cICahgF1kHm4dExBFj7BXrZJXzig==}
+    peerDependencies:
+      zod: ^3.24.1
 
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
@@ -14785,6 +14793,10 @@ snapshots:
       archiver-utils: 3.0.4
       compress-commons: 4.1.2
       readable-stream: 3.6.2
+
+  zod-to-json-schema@3.24.4(zod@3.23.8):
+    dependencies:
+      zod: 3.23.8
 
   zod@3.23.8: {}
 
