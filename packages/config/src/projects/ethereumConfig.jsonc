@@ -27,6 +27,9 @@
     "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "Starkware Security Council",
     "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARP Multisig",
 
+    "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05": "BlastMultisig 1",
+    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BlastMultisig 2",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
   },
   "types": {
