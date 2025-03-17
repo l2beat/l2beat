@@ -35,6 +35,12 @@
     "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "Bob Multisig 1",
     "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "Bob Multisig 2",
 
+    "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f": "Scroll Multisig 1",
+    "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": "Scroll Multisig 2",
+    "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",
+    "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
+    "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council",
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
   },
   "types": {
