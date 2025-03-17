@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xded5d5ac84012cf76d88c88cc7227047daa21c54
+Generated with discovered.json: 0x76d035b516278b0a34db99ab4c50ed5c5090b539
 
-# Diff at Mon, 17 Mar 2025 08:05:14 GMT:
+# Diff at Mon, 17 Mar 2025 09:02:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22065300
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery, waiting for more contract verifications.
 
 ## Initial discovery
 

@@ -7,7 +7,7 @@ Generated with discovered.json: 0x0c5241a3321e352ee219af3c7b8bd8bbac10cd9b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery using the custom Everclear proxy handler.
 
 ## Initial discovery
 
