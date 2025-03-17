@@ -298,7 +298,7 @@ export const termstructure: ScalingProject = {
           'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
         ),
         discovery.getMultisigPermission(
-          'TermStructureMultisig',
+          'TermStructure Multisig 1',
           'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
         ),
         discovery.getPermissionDetails(
@@ -325,15 +325,15 @@ export const termstructure: ScalingProject = {
           'Can execute blocks on L1.',
         ),
         discovery.getMultisigPermission(
-          'VaultMultisig',
+          'Termstructure Multisig 2',
           `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
         ),
         discovery.getMultisigPermission(
-          'InsuranceMultisig',
+          'Termstructure Multisig 3',
           `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
         ),
         discovery.getMultisigPermission(
-          'TreasuryMultisig',
+          'Termstructure Multisig 4',
           `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
         ),
       ],

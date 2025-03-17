@@ -93,6 +93,13 @@
 
     "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C": "Optopia Multisig",
 
+    "0xa00d50A40B1635D293c87BA36503bD2504b5D818": "TermStructure Multisig 1",
+    "0x23bCad9BFB1378cd45b32525B835F037b673f529": "TermStructure Multisig 2",
+    "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165": "TermStructure Multisig 3",
+    "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca": "TermStructure Multisig 4",
+
+    
+
     "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1"
   },
   "types": {
