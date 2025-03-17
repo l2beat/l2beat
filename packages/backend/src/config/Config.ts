@@ -20,6 +20,7 @@ import type {
 } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
+  BlockTimestampConfig,
   PriceConfig,
   ProjectTvsConfig,
 } from '../modules/tvs/types'
@@ -108,12 +109,7 @@ export interface TvsConfig {
   readonly projects: ProjectTvsConfig[]
   readonly amounts: (AmountConfig & { project: string; chain?: string })[]
   readonly prices: PriceConfig[]
-  readonly chains: {
-    name: string
-    configurationId: string
-    sinceTimestamp: UnixTime
-    untilTimestamp?: UnixTime
-  }[]
+  readonly chains: BlockTimestampConfig[]
 }
 
 export interface TrackedTxProject {

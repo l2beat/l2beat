@@ -138,8 +138,8 @@ export type PriceConfig = {
   priceId: string
 }
 
-export interface TvsChainConfig {
-  name: string
+export interface BlockTimestampConfig {
+  chainName: string
   configurationId: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime

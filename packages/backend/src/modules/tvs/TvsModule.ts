@@ -73,7 +73,7 @@ export function initTvsModule(
           id: chain.configurationId,
           minHeight: chain.sinceTimestamp,
           maxHeight: chain.untilTimestamp ?? null,
-          properties: { chain: chain.name },
+          properties: chain,
         },
       ],
       serializeConfiguration: (value) => JSON.stringify(value),
@@ -84,13 +84,13 @@ export function initTvsModule(
 
     const configurations = config.tvs.amounts.filter(
       (a) =>
-        a.chain === chain.name &&
+        a.chain === chain.chainName &&
         (a.type === 'totalSupply' || a.type === 'balanceOfEscrow'),
     ) as OnchainAmountConfig[]
 
     const amountIndexer = new OnchainAmountIndexer({
       syncOptimizer,
-      chain: chain.name,
+      chain: chain.chainName,
       totalSupplyProvider: providers.totalSupply,
       balanceProvider: providers.balance,
       parents: [blockTimestampIndexer],

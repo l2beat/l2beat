@@ -10,10 +10,7 @@ import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-
-export interface BlockTimestampConfig {
-  chain: string
-}
+import type { BlockTimestampConfig } from '../types'
 
 interface BlockTimestampIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<BlockTimestampConfig>, 'name'> {
@@ -34,8 +31,8 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
       ...$,
       name: INDEXER_NAMES.TVS_BLOCK_TIMESTAMP,
       tags: {
-        tag: $.configurations[0].properties.chain,
-        chain: $.configurations[0].properties.chain,
+        tag: $.configurations[0].properties.chainName,
+        chain: $.configurations[0].properties.chainName,
       },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
@@ -63,7 +60,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
     const blockNumber =
       await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(
         timestamp,
-        configurations[0].properties.chain,
+        configurations[0].properties.chainName,
       )
 
     this.logger.info('Fetched block number for timestamp', {
@@ -82,7 +79,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
       await this.$.db.tvsBlockTimestamp.insertMany([
         {
           configurationId: configurations[0].id,
-          chain: configurations[0].properties.chain,
+          chain: configurations[0].properties.chainName,
           timestamp,
           blockNumber,
         },
