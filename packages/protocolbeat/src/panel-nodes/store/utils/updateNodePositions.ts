@@ -1,4 +1,4 @@
-import type { Box, Connection, State } from '../State'
+import type { Box, Connection, Field, State } from '../State'
 import { BOTTOM_PADDING, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 
 export function updateNodePositions(state: State): State {
@@ -18,7 +18,9 @@ export function updateNodePositions(state: State): State {
     nodeDimensions[node.id] = {
       width: node.box.width,
       height:
-        HEADER_HEIGHT + node.fields.length * FIELD_HEIGHT + BOTTOM_PADDING,
+        HEADER_HEIGHT +
+        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+        BOTTOM_PADDING,
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }
@@ -51,7 +53,15 @@ export function updateNodePositions(state: State): State {
             },
             connection: {
               nodeId: field.target,
-              ...processConnection(index, box, to),
+              ...processConnection(
+                index,
+                {
+                  ...box,
+                  fields: node.fields,
+                  hiddenFields: node.hiddenFields,
+                },
+                to,
+              ),
             },
           }
         }),
@@ -64,10 +74,20 @@ export function updateNodePositions(state: State): State {
 
 function processConnection(
   index: number,
-  from: { x: number; y: number; width: number },
+  from: {
+    x: number
+    y: number
+    width: number
+    fields: Field[]
+    hiddenFields: string[]
+  },
   to: { x: number; y: number; width: number },
 ): Omit<Connection, 'nodeId'> {
-  const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5)
+  // Calculate the actual visible index by counting non-hidden fields up to the current index
+  const visibleIndex = from.fields
+    .slice(0, index)
+    .filter((f) => !from.hiddenFields.includes(f.name)).length
+  const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (visibleIndex + 0.5)
   const toY = to.y + HEADER_HEIGHT / 2
 
   const left = from.x

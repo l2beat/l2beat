@@ -72,6 +72,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           hueShift,
           data: null,
           fields: toNodeFields(contract.fields),
+          hiddenFields: [],
         }
         nodes.push(node)
       }
@@ -88,6 +89,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           hueShift,
           data: null,
           fields: [],
+          hiddenFields: [],
         }
         nodes.push(node)
       }
