@@ -32,6 +32,24 @@ describe(UnixTime.name, () => {
     )
   })
 
+  describe('from', () => {
+    it('works for a number', () => {
+      expect(UnixTime.from(1234)).toEqual(1234)
+    })
+
+    it('works for a Date', () => {
+      expect(UnixTime.from(new Date(1234000))).toEqual(1234)
+    })
+
+    it('works for a date string', () => {
+      expect(UnixTime.from('2025-03-17')).toEqual(1742169600)
+    })
+
+    it('works for a datetime string', () => {
+      expect(UnixTime.from('2025-03-17T11:10:34Z')).toEqual(1742209834)
+    })
+  })
+
   describe('maths', () => {
     it('can add days', () => {
       const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
