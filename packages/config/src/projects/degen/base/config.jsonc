@@ -16,37 +16,35 @@
     "0xc207cbC35DD3CD172059730380A45aE14eb0e403": "DegenFastConfirmerMultisig"
   },
   "overrides": {
-    "OrbitERC20OFTAdapter": {
+    "0xDb8E759859058952c34953c8469f464109826e52": {
+      // OrbitERC20OFTAdapter
       "description": "As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.",
       "ignoreRelatives": ["endpoint", "token"],
       "fields": {
         "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
+            }
+          ]
         }
       }
     },
-    "UTBDecent": {
+    "0x43019F8BE1F192587883b67dEA2994999f5a2de2": {
+      // UTBDecent
       "description": "The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.",
       "fields": {
         "accessControl": {
           "handler": {
             "type": "accessControl"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
+            }
+          ]
         }
       }
     }

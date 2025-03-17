@@ -148,7 +148,14 @@ export const CommonDiscoveryConfig = z.object({
   import: z.optional(z.array(z.string())),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number()),
-  overrides: z.optional(z.record(z.string(), DiscoveryContract)),
+  overrides: z.optional(
+    z.record(
+      z.string().refine((key) => EthereumAddress.check(key), {
+        message: 'Invalid Ethereum address',
+      }),
+      DiscoveryContract,
+    ),
+  ),
   sharedModules: z.optional(z.array(z.string())),
 
   // NOTE(radomski): Color configuration

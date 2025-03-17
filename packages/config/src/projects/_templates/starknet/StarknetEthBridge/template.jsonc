@@ -24,14 +24,12 @@
     "$admin": {
       "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).",
       "severity": "HIGH",
-      "target": {
-        "permissions": [
-          {
-            "type": "upgrade",
-            "delay": "{{getUpgradeActivationDelay}}"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{getUpgradeActivationDelay}}"
+        }
+      ]
     },
     "withdrawalLimitStatus": {
       "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left.",
@@ -75,14 +73,12 @@
         "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
         "returnType": "address"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "deactivate bridging for deposits into the escrow."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "deactivate bridging for deposits into the escrow."
+        }
+      ]
     },
     "bridgedToken": {
       "handler": {
@@ -138,14 +134,12 @@
         },
         "pickRoleMembers": "GOVERNANCE_ADMIN"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+        }
+      ]
     },
     "secAdminAC": {
       "handler": {
@@ -155,14 +149,12 @@
         },
         "pickRoleMembers": "SECURITY_ADMIN"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "disable the withdrawal limit."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "disable the withdrawal limit."
+        }
+      ]
     },
     "secAgentAC": {
       "handler": {
@@ -172,14 +164,12 @@
         },
         "pickRoleMembers": "SECURITY_AGENT"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "enable the withdrawal limit."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "enable the withdrawal limit."
+        }
+      ]
     }
   }
 }

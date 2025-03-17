@@ -22,24 +22,20 @@
       }
     },
     "batchPosterManager": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "Add/remove batchPosters (Sequencers)."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "Add/remove batchPosters (Sequencers)."
+        }
+      ]
     },
     "batchPosters": {
-      "target": {
-        "permissions": [
-          {
-            "type": "sequence",
-            "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
-          }
-        ]
-      },
+      "targetPermissions": [
+        {
+          "type": "sequence",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ],
       "handler": {
         "type": "arbitrumActors",
         "actorType": "batchPoster"

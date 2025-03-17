@@ -4,14 +4,12 @@
   "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently {{getAmountOfMembers}}/{{requiredAmountOfSignatures}}).",
   "fields": {
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage the members of the data availability committee and the threshold for valid commitments."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        }
+      ]
     },
     "members": {
       "handler": {

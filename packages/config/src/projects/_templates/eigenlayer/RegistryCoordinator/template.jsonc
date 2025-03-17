@@ -47,24 +47,20 @@
       "type": "RISK_PARAMETER"
     },
     "churnApprover": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can approve the replacement of churned operators from a quorum"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can approve the replacement of churned operators from a quorum"
+        }
+      ]
     },
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can add and remove strategies"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can add and remove strategies"
+        }
+      ]
     }
   }
 }

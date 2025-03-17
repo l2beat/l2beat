@@ -6,9 +6,7 @@
       "handler": {
         "type": "constructorArgs"
       },
-      "target": {
-        "template": "shared-sharp-verifier/ignoreComputeSpam"
-      }
+      "targetTemplate": "shared-sharp-verifier/ignoreComputeSpam"
     }
   }
 }

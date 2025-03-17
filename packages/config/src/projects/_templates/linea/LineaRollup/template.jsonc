@@ -41,9 +41,7 @@
         "type": "accessControl",
         "pickRoleMembers": "OPERATOR_ROLE"
       },
-      "target": {
-        "permissions": [{ "type": "operateLinea" }]
-      }
+      "targetPermissions": [{ "type": "operateLinea" }]
     },
     // enum PauseType {
     // 0  UNUSED,

@@ -13,20 +13,19 @@
     "0x2227E9C08ae00750e0a5eD8da09Fa321A9DD7185": "SankoOftMultisig"
   },
   "overrides": {
-    "OrbitProxyOFT1_2": {
+    "0xa9Aa07F082D9c15D0B6D7e9e5B68b1f898399C29": {
+      // OrbitProxyOFT1_2
       "description": "OFT Adapter contract using the LayerZero v1 AMB for messaging. This contract can mint tokens on Sanko and steal tokens from the canonical bridge escrow. Its security depends on LayerZero v1 security.",
       "ignoreRelatives": ["lzEndpoint", "token"],
       "ignoreInWatchMode": ["circulatingSupply"],
       "fields": {
         "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "Can change security parameters of the DMT token (Sanko gas token) and its OFT adapters (LayerZero). This includes the permission to mint unlimited tokens or steal tokens in the canonical bridge escrow."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "Can change security parameters of the DMT token (Sanko gas token) and its OFT adapters (LayerZero). This includes the permission to mint unlimited tokens or steal tokens in the canonical bridge escrow."
+            }
+          ]
         }
       }
     }

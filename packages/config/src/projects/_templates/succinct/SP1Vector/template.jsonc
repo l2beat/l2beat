@@ -21,41 +21,31 @@
         "type": "hardcoded",
         "value": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"]
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
+        }
+      ]
     },
     "guardians": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "GUARDIAN_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can freeze the Vector contract and update the list of authorized relayers."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can freeze the Vector contract and update the list of authorized relayers."
+        }
+      ]
     },
     "timelocks": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "upgrade"
-          }
-        ]
-      }
+      "targetPermissions": [{ "type": "upgrade" }]
     }
   }
 }

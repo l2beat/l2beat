@@ -5,14 +5,12 @@
   "ignoreRelatives": ["ERA_DIAMOND_PROXY", "legacyBridge"],
   "fields": {
     "admin": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "register new Elastic Chains in the shared bridge."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "register new Elastic Chains in the shared bridge."
+        }
+      ]
     }
   },
   "category": "shared"

@@ -46,30 +46,32 @@
     "0x47D58744D8515d9aaEAf961bc03625118bd91EBb": {
       "extends": "global/ProxyAdmin" // shape does not work (tofix)
     },
-    "MantleTokenProxyAdmin": {
+    "0x0cac2B1a172ac24012621101634DD5ABD6399ADd": {
+      // MantleTokenProxyAdmin
       "extends": "global/ProxyAdmin" // shape does not work (tofix)
     },
-    "InvestmentManager": {
+    "0x23754725a49c0f003C349A6C7869fF8609a7CEfd": {
+      // InvestmentManager
       "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
       "fields": {
         "pauserRegistry": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "defines addresses that can pause or unpause ability to invest into strategies."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "defines addresses that can pause or unpause ability to invest into strategies."
+            }
+          ]
         }
       }
     },
-    "L1MantleToken": {
+    "0x3c3a81e81dc49A522A592e7622A7E711c06bf354": {
+      // L1MantleToken
       "description": "MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.",
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "EigenDataLayerChain": {
+    "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": {
+      // EigenDataLayerChain
       "ignoreMethods": [
         "getRollupStoreByRollupBatchIndex",
         "reRollupBatchIndex",
@@ -83,7 +85,8 @@
         "rollupBatchIndex"
       ]
     },
-    "DataLayrServiceManager": {
+    "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1": {
+      // DataLayrServiceManager
       "description": "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.",
       "ignoreMethods": [
         "zeroPolynomialCommitmentMerkleRoots",
@@ -92,7 +95,8 @@
       ],
       "ignoreInWatchMode": ["dataStoresForDuration"]
     },
-    "BLSRegistry": {
+    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67": {
+      // BLSRegistry
       "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
       "ignoreMethods": [
         "apk",
@@ -112,18 +116,17 @@
             "method": "operatorList",
             "length": "{{ numOperators }}"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "sign data commitments for the DA bridge."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "sign data commitments for the DA bridge."
+            }
+          ]
         }
       }
     },
-    "TssStakingSlashing": {
+    "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": {
+      // TssStakingSlashing
       "ignoreMethods": [
         "sharesToUnderlying",
         "sharesToUnderlyingView",
@@ -131,7 +134,8 @@
         "underlyingToSharesView"
       ]
     },
-    "AssertionMap": {
+    "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": {
+      // AssertionMap
       "ignoreMethods": [
         "assertions",
         "getDeadline",
@@ -142,7 +146,8 @@
         "getNumStakers"
       ]
     },
-    "MantleSecondStrat": {
+    "0xA937660031787C4408587D2c6A67Ec4B260630F5": {
+      // MantleSecondStrat
       "description": "Basic do-nothing investment strategy.",
       "ignoreMethods": [
         "sharesToUnderlying",
@@ -152,18 +157,17 @@
       ],
       "fields": {
         "pauserRegistry": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+            }
+          ]
         }
       }
     },
-    "MantleFirstStrat": {
+    "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1": {
+      // MantleFirstStrat
       "description": "Basic do-nothing investment strategy.",
       "ignoreMethods": [
         "sharesToUnderlying",
@@ -173,31 +177,29 @@
       ],
       "fields": {
         "pauserRegistry": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
+            }
+          ]
         }
       }
     },
-    "DataLayrChallengeUtils": {
+    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": {
+      // DataLayrChallengeUtils
       "ignoreMethods": ["nextPowerOf2"]
     },
-    "RegistryPermission": {
+    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": {
+      // RegistryPermission
       "fields": {
         "permissionPerson": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "can register or change status of DA node operators."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "can register or change status of DA node operators."
+            }
+          ]
         },
         "dataStorePermission": {
           "handler": {

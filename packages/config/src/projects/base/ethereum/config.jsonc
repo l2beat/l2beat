@@ -22,7 +22,8 @@
       "ignoreInWatchMode": ["gasLimit"], // custom ignore for weekly gas limit raise on Base
       "extends": "opstack/SystemConfig"
     },
-    "wstETHEscrow": {
+    "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": {
+      // wstETHEscrow
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": {
         "accessControl": {

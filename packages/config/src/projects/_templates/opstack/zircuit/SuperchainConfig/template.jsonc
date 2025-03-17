@@ -21,21 +21,17 @@
         },
         "pickRoleMembers": "MONITOR_ROLE"
       },
-      "target": {
-        "permissions": [{ "type": "guard" }]
-      }
+      "targetPermissions": [{ "type": "guard" }]
     },
     "defaultAdmin": {
       // weird superchain fake with accesscontrol and custom roles
-      "target": {
-        "permissions": [
-          { "type": "guard" },
-          {
-            "type": "interact",
-            "description": "manage roles including the guardian role."
-          }
-        ]
-      }
+      "targetPermissions": [
+        { "type": "guard" },
+        {
+          "type": "interact",
+          "description": "manage roles including the guardian role."
+        }
+      ]
     }
   },
   "category": "gov"

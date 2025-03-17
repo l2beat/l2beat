@@ -17,10 +17,12 @@
     "0xF140024969F6c76494a78518D9a99c8776B55f70": "Sentinel"
   },
   "overrides": {
-    "MessageBusOwner": {
+    "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": {
+      // MessageBusOwner
       "ignoreMethods": ["countVotes", "nextProposalId", "proposals", "voters"]
     },
-    "Liquidity Network": {
+    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": {
+      // Liquidity Network
       "fields": {
         "pausers": {
           "handler": {
@@ -41,7 +43,8 @@
       },
       "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"]
     },
-    "OriginalTokenVault": {
+    "0xB37D31b2A74029B5951a2778F959282E2D518595": {
+      // OriginalTokenVault
       "fields": {
         "pausers": {
           "handler": {
@@ -61,7 +64,8 @@
         }
       }
     },
-    "SimpleGovernance": {
+    "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": {
+      // SimpleGovernance
       "ignoreMethods": ["voters", "proposals"],
       "ignoreInWatchMode": ["nextProposalId"]
     },
@@ -69,7 +73,8 @@
       // WETH9
       "ignoreDiscovery": true
     },
-    "Sentinel": {
+    "0xF140024969F6c76494a78518D9a99c8776B55f70": {
+      // Sentinel
       "description": "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.",
       "fields": {
         "governors": {

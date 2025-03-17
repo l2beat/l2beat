@@ -18,7 +18,8 @@
     "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E": "PHA" // Phala Network token contract - currently the integrated route on Sygma protocol between EVM<->PHA/KHA on Polkadot
   },
   "overrides": {
-    "FeeHandlerRouter": {
+    "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": {
+      // FeeHandlerRouter
       "fields": {
         "accessControl": {
           "handler": {
@@ -27,7 +28,8 @@
         }
       }
     },
-    "Bridge": {
+    "0xC832588193cd5ED2185daDA4A531e0B26eC5B830": {
+      // Bridge
       // TODO: query all handlers
       "fields": {
         "handler1": {
@@ -46,7 +48,8 @@
         }
       }
     },
-    "AccessControlSegregator": {
+    "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": {
+      // AccessControlSegregator
       "fields": {
         "role_pauseTransfers": {
           "handler": {

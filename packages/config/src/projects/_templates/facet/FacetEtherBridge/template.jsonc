@@ -4,24 +4,20 @@
   "description": "Official Facet implementation of the Ether Bridge.",
   "fields": {
     "getAdmin": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can withdraw all funds from the bridge."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can withdraw all funds from the bridge."
+        }
+      ]
     },
     "getSigner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can sign arbitrary withdrawals for users."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can sign arbitrary withdrawals for users."
+        }
+      ]
     }
   }
 }

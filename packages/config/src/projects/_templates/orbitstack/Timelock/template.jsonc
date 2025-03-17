@@ -10,14 +10,12 @@
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "update the minimum delay and manage all access control roles of the timelock."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "update the minimum delay and manage all access control roles of the timelock."
+        }
+      ]
     },
     "getMinDelayFormatted": {
       "handler": {
@@ -37,32 +35,28 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "propose transactions."
-          },
-          {
-            "type": "act",
-            "delay": "{{getMinDelay}}"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "propose transactions."
+        },
+        {
+          "type": "act",
+          "delay": "{{getMinDelay}}"
+        }
+      ]
     },
     "Canceller": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "cancel queued transactions."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "cancel queued transactions."
+        }
+      ]
     },
     "Executor": {
       "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",

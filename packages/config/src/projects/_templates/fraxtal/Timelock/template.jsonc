@@ -12,9 +12,7 @@
       "returnType": "(FormatSeconds)"
     },
     "admin": {
-      "target": {
-        "permissions": [{ "type": "act", "delay": "{{delay}}" }]
-      }
+      "targetPermissions": [{ "type": "act", "delay": "{{delay}}" }]
     }
   }
 }

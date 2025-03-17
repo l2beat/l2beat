@@ -29,31 +29,25 @@
               "where": ["=", "#chainId", 388]
             }
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "validateZkStack"
-              }
-            ]
-          }
+          "targetPermissions": [{ "type": "validateZkStack" }]
         }
       }
     },
-    "TransactionFiltererDenyList": {
+    "0xA8998F231a660Eca365B382943c71ad9b7619139": {
+      // TransactionFiltererDenyList
       "fields": {
         "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "manage the blacklist of addresses in the TransactionFilterer."
-              }
-            ]
-          }
+          "targetPermissions": [
+            {
+              "type": "interact",
+              "description": "manage the blacklist of addresses in the TransactionFilterer."
+            }
+          ]
         }
       }
     },
-    "CronosZkEVMAdmin": {
+    "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4": {
+      // CronosZkEVMAdmin
       "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
       "fields": {
         "accessControl": {
@@ -78,13 +72,7 @@
             },
             "pickRoleMembers": "ADMIN"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "act"
-              }
-            ]
-          }
+          "targetPermissions": [{ "type": "act" }]
         }
       }
     }

@@ -3,23 +3,15 @@
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "act"
-          }
-        ]
-      }
+      "targetPermissions": [{ "type": "act" }]
     },
     "tokenMultiplierSetter": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "set the conversion factor for gas token deposits."
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "set the conversion factor for gas token deposits."
+        }
+      ]
     },
     "upgradeTimestamps": {
       "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",

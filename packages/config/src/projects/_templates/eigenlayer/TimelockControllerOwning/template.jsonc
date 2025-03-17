@@ -12,42 +12,36 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "act",
-            "delay": "{{ getMinDelay }}"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "act",
+          "delay": "{{ getMinDelay }}"
+        }
+      ]
     },
     "executors": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "executes scheduled operations after the delay"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "executes scheduled operations after the delay"
+        }
+      ]
     },
     "cancellers": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "can cancel scheduled operations"
-          }
-        ]
-      }
+      "targetPermissions": [
+        {
+          "type": "interact",
+          "description": "can cancel scheduled operations"
+        }
+      ]
     }
   }
 }

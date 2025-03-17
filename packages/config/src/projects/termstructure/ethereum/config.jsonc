@@ -22,7 +22,8 @@
     "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca": "TreasuryMultisig"
   },
   "overrides": {
-    "ZkTrueUp": {
+    "0x09E01425780094a9754B2bd8A3298f73ce837CF9": {
+      // ZkTrueUp
       "ignoreInWatchMode": [
         "getAccountNum",
         "getBlockNum",
