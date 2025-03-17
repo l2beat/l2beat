@@ -3,5 +3,5 @@
   "chain": "ethereum",
   "name": "mint",
   "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": ["0x2b3F201543adF73160bA42E1a5b7750024F30420"], //L1StandardBridge
+  "initialAddresses": ["0x2b3F201543adF73160bA42E1a5b7750024F30420"] //L1StandardBridge
 }

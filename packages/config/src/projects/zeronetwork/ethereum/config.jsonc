@@ -6,8 +6,7 @@
   "initialAddresses": ["0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"],
   "names": {
     "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9": "ZeroNetworkZkEvm",
-    "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3": "ZeroNetworkZkEvmAdmin",
-    
+    "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3": "ZeroNetworkZkEvmAdmin"
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {

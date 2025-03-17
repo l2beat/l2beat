@@ -5,5 +5,5 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x680969A6c58183987c8126ca4DE6b59C6540Cd2a" // ERC20 Bridge
-  ],
+  ]
 }

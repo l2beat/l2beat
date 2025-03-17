@@ -5,5 +5,5 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xed7525946A09056C6AaE29941b8323017382050e" // bridge
-  ],
+  ]
 }
