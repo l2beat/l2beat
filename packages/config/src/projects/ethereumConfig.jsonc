@@ -18,7 +18,7 @@
 
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "Matter Labs Multisig",
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZK Foundation Multisig",
-    
+
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "Starkware Multisig 1",
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "Starkware Multisig 2",
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "Starkware Multisig 3",
@@ -72,10 +72,12 @@
     "0xB822319ab7848b7cC4537c8409e50f85BFb04377": "Morph Multisig 2",
     "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": "Morph Multisig 1",
 
-     "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "Zora Multisig 1",
+    "0xC72aE5c7cc9a332699305E29F68Be66c73b60542": "Zora Multisig 1",
     "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72": "Zora Multisig 2",
 
-    "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1",
+    "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "Boba Multisig",
+
+    "0x73b047fe6337183A454c5217241D780a932777bD": "Lido Multisig 1"
   },
   "types": {
     "StarknetProgramHash": {

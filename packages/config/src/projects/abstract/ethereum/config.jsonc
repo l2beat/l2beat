@@ -5,7 +5,7 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"],
   "names": {
-    "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "AbstractZkEvm",
+    "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": "AbstractZkEvm"
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {
