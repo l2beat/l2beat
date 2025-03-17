@@ -1,5 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { type SVGProps, useCallback, useState } from 'react'
+import { type SVGProps, useCallback, useMemo, useState } from 'react'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import {
@@ -33,9 +33,13 @@ function ValuesDialogTrigger({ disabled }: { disabled: boolean }) {
 function ValuesDialogBody({ node }: { node: Node }) {
   const setNodes = useStore((state) => state.setNodes)
   const nodes = useStore((state) => state.nodes)
-  const [hiddenFields, setHiddenFields] = useState(node.hiddenFields)
-  const groupedFields = groupJsonFields(node.fields)
   const layout = useStore((state) => state.layout)
+
+  const [hiddenFields, setHiddenFields] = useState(node.hiddenFields)
+  const groupedFields = useMemo(
+    () => groupJsonFields(node.fields),
+    [node.fields],
+  )
 
   const modifyNode = useCallback(() => {
     const newNode = {
@@ -49,11 +53,14 @@ function ValuesDialogBody({ node }: { node: Node }) {
           BOTTOM_PADDING,
       },
     }
+
     setNodes(nodes.map((n) => (n.id === node.id ? newNode : n)))
+
     const nodeLocations: NodeLocations = {}
     for (const node of nodes) {
       nodeLocations[node.id] = { x: node.box.x, y: node.box.y }
     }
+
     layout(nodeLocations)
   }, [node, hiddenFields, setNodes])
 
