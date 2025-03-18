@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 81620827,
+  "blockNumber": 82818646,
   "configHash": "0xf6e68858da784e8e4197330b796dec4bb0dfcd3785238d30db8fc86b6568bea1",
   "entries": [
     {
@@ -485,7 +485,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2374,
+        "exitNum": 2377,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -637,7 +637,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 878,
+        "exitNum": 900,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
@@ -824,7 +824,7 @@
         "l2Gateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "221776137865927120728272"
+        "totalSupply": "221751729861181297118468"
       },
       "derivedName": "L2CustomGatewayToken"
     }
@@ -1184,11 +1184,11 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "orbitstack/layer2/L2ERC20Gateway": "0x03e3cfa2da39b87465155bdb0ece0e0607b1500fe5384c1ceada5939c5b91b9f",
-    "orbitstack/layer2/L2GatewayRouter": "0x767828d37dbb10de4aafd3bfc35ffe7b9ef6ed4be90869457ea49a5d69f56aaa",
+    "orbitstack/layer2/L2ERC20Gateway": "0xee9b49621a188bc6396c7ae566d02857498bc2f84c6df7cdb208470d60488760",
+    "orbitstack/layer2/L2GatewayRouter": "0x50668f2bdd694e6879b8f361ab9a75ea31cba7fdd32382b5008974bd612c2e29",
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0x82a0c1a1dc89f4b74d9468a660ce45f8ba5cb73dbea35d1af3b062722be6f700",
     "orbitstack/layer2/L2SurplusFee": "0xfbb5a7e8b8f6169f98883c454a11a4d39a1b801c57f49fed8b9a6a5524c44227",
-    "orbitstack/layer2/L2WethGateway": "0x0fe7cdc09bee48a6f1c87078c5a67633ca9d615ddd2e79afbca3fd25e376ff5e",
+    "orbitstack/layer2/L2WethGateway": "0xe77b21156bba4dd952ebb9ee761c95428d848b786646c6390abd113aa72938e1",
     "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6"
   }
 }
