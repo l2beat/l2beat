@@ -28,9 +28,9 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
     !!stageConfig.additionalConsiderations
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild disabledOnMobile>
-        <TableLink href={href}>
+    <TableLink href={href}>
+      <Tooltip>
+        <TooltipTrigger disabledOnMobile>
           <div className="flex gap-1">
             <StageBadge
               stage={stageConfig.stage}
@@ -51,11 +51,11 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
                 <StopwatchIcon className="mt-px md:mt-[3px]" />
               )}
           </div>
-        </TableLink>
-      </TooltipTrigger>
-      <TooltipContent className="max-w-[360px]">
-        <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
-      </TooltipContent>
-    </Tooltip>
+        </TooltipTrigger>
+        <TooltipContent className="max-w-[360px]">
+          <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
+        </TooltipContent>
+      </Tooltip>
+    </TableLink>
   )
 }
