@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "blast",
   "blockNumber": 16435499,
-  "configHash": "0x32b8cd12183cf5ec2fc3089f48ce2050bd1f46bee6c89aebffd50a42ca524fab",
+  "configHash": "0x6374d23a55ee29f9203a5f8689101af47ae8807b7780a04f5c55894d5f48d6ae",
   "entries": [
     {
       "address": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
@@ -145,6 +145,17 @@
         {
           "permission": "upgrade",
           "from": "0x3f64e2e09732969813904a8473074CFADeE66AF1"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b",
+          "via": [{ "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -195,8 +206,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19",
-          "via": []
+          "to": "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
+          "via": [{ "address": "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19" }]
         }
       ],
       "sinceTimestamp": 1710427013,
@@ -232,7 +243,7 @@
       ],
       "proxyType": "immutable",
       "displayName": "ProxyAdmin",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
@@ -484,9 +495,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
-    "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "zklinknova/secondaryGateway": "0xae4633b0c19837b8498530c044983ef690045619ab067153aba46ce5a6df3754",
+    "zklinknova/secondaryZkLink": "0x12a9cdcec147f5d122326b6aeed5399a2f45432083570dac54f7c95a38557887"
   }
 }

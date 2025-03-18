@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 21802913,
-  "configHash": "0xa67c55733304487b364db2ddb2de055fb4d2c86f3c3dbc22d01b39be5a9fa4aa",
+  "configHash": "0xc6fd690e93d2ce8fec39cd13984162001f19391188540c54e946ac7ecdd53667",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -23,8 +23,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -116,7 +116,12 @@
         "0x1d29007e3a6ea19186d632b4d79251aa21baae9b59fbc0b4c88ff3958b5c2730"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings."
+        },
         {
           "permission": "upgrade",
           "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
@@ -127,7 +132,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+          "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -173,9 +179,20 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "permission": "interact",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
@@ -265,8 +282,9 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -300,9 +318,14 @@
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "permission": "guard",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -365,6 +388,20 @@
       ],
       "proxyType": "immutable",
       "description": "ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1734221171,
       "sinceBlock": 21404227,
       "values": {
@@ -390,6 +427,31 @@
       ],
       "proxyType": "immutable",
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "can mint frxETH tokens.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "description": "can add and remove frxETH minters and set a new timelock address.",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can mint frxETH tokens.",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1665022895,
       "sinceBlock": 15686046,
@@ -414,7 +476,13 @@
     {
       "address": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+        }
+      ]
     },
     {
       "name": "SuperchainConfig",
@@ -429,9 +497,14 @@
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "permission": "guard",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -478,9 +551,19 @@
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "permission": "challenge",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "via": []
+        },
+        {
+          "permission": "propose",
+          "to": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -566,6 +649,27 @@
       ],
       "proxyType": "immutable",
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens."
+        }
+      ],
       "sinceTimestamp": 1734221195,
       "sinceBlock": 21404229,
       "values": {
@@ -590,6 +694,28 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
+        },
+        {
+          "permission": "interact",
+          "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
+        },
+        {
+          "permission": "interact",
+          "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+        },
+        {
+          "permission": "interact",
+          "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1665087971,
       "sinceBlock": 15691435,
@@ -625,6 +751,18 @@
       ],
       "proxyType": "immutable",
       "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can add and remove frxETH minters and set a new timelock address."
+        },
+        {
+          "permission": "interact",
+          "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
+        }
+      ],
       "sinceTimestamp": 1608140486,
       "sinceBlock": 11465576,
       "values": {
@@ -649,6 +787,14 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        }
+      ],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
@@ -675,8 +821,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "via": []
+          "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         }
       ],
       "sinceTimestamp": 1706811599,
@@ -757,6 +903,37 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can add and remove frxETH minters and set a new timelock address.",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+          "delay": 172800
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1629667690,
       "sinceBlock": 13077564,
@@ -790,6 +967,26 @@
       ],
       "proxyType": "immutable",
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "via": [
+            {
+              "address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens."
+        }
+      ],
       "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "sinceTimestamp": 1665022895,
       "sinceBlock": 15686046,
@@ -841,6 +1038,74 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+        },
+        {
+          "permission": "guard",
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+        },
+        {
+          "permission": "guard",
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+        },
+        {
+          "permission": "interact",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "interact",
+          "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
@@ -867,7 +1132,14 @@
     {
       "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+        }
+      ]
     },
     {
       "address": "0xfF000000000000000000000000000000000420fC",
@@ -1514,21 +1786,21 @@
     ]
   },
   "usedTemplates": {
-    "fraxtal/EtherRouter": "0x714eec522870b9fca7482d6cb54511e9956376fc5efccb3ec67539f38f16bc3a",
-    "fraxtal/FraxEtherMinter": "0xfc77d9611b900b647c4646f1b58bbd89eed204b53e6795555c2ac74e22446e08",
-    "fraxtal/frxETH": "0xb37a5017dfa7bf00a173742f10ba2cc060d4739798fc2b641b3dbc97e2de9324",
-    "fraxtal/FrxEthMinter": "0xc29f39c0fae88cec47acb3abcdb7da25218f3fdfb78e525df6e9f757a8b9ba71",
-    "fraxtal/Timelock": "0xced929148ff1b878f79824765502a396058104e7deba740676cb4a088a8ac997",
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "opstack/AddressManager": "0x73e20cba70b07122c3e15e79e952fee1f154815e3fbf8805a6521f15f6538da5",
-    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
-    "opstack/L1ERC721Bridge": "0xb98abe9a097e28cc757795bb36041bea3aa0ae6aedec55290cec5a90f567b169",
-    "opstack/L1StandardBridge": "0x2c203b1e84018105cf241afde6a5c7ac9d742c0038b60ee17a12d3d90a68c090",
-    "opstack/L2OutputOracle": "0xfc21ed5f05c54a5cffdcfb04ddf665d74d7882519d78cedafd374226447581d4",
-    "opstack/OptimismMintableERC20Factory": "0x94a824239f1587e05df64a98760971f5fc65b12b15362902586c7988c99f53bc",
-    "opstack/OptimismPortal": "0x3425c023c492d471f304617050eeab78a8fa8ef2d20008ad1df49e619c3b004f",
-    "opstack/SuperchainConfigFake": "0x6b747177869097f57534cdca440710d981646c4d13e32e2b422d3116ebabe8fb",
-    "opstack/SystemConfig": "0x829993351a1d672d646c41f74fa425220bc1f0b2c51e7781bfbf43debadb4349"
+    "fraxtal/EtherRouter": "0x211782b72d871d183a22a6f69e9f628079654b13a278f0efa64db27be4af8952",
+    "fraxtal/FraxEtherMinter": "0x6de2521682a71ff6de9b4de1765b0520c6108b7f621768ce1817303453c61653",
+    "fraxtal/frxETH": "0xbedd59110eeda33cec1ad98c5a4ed33c02d2646c181c00181fd431d2b7124d46",
+    "fraxtal/FrxEthMinter": "0x6508e963f3b48d9e221c9f50e6128e8159d6f05a1f9cdb79d27bfec27693bd2c",
+    "fraxtal/Timelock": "0xb554f971674d20031a767137b764cb8bcd574d03473723aeea75ef599751925e",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
+    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
+    "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
+    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
+    "opstack/L2OutputOracle": "0xc8c03bf9d2b8af9c211229cb24bbc7abcf2899e0bc8f2e6bd7c846b50051c60c",
+    "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
+    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
+    "opstack/SuperchainConfigFake": "0x1f1fe2ca60b39e18cfa4f6308beec85f223e5fb7cbcd1a8532a0997bb346617b",
+    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44"
   }
 }

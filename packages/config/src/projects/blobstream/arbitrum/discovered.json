@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 305996466,
-  "configHash": "0x2a00fb16ecaaf02ef949395382c9e8b0d0e1b04af996c9b30e8ab4f799f06206",
+  "configHash": "0x730ac057c6466179491861979fe6c3144c2f3b610e0ab1eeb7ac473890ab0bd4",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -37,7 +37,14 @@
     {
       "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
     },
     {
       "name": "SuccinctGatewaySP1",
@@ -49,6 +56,20 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1719523665,
       "sinceBlock": 226384983,
       "values": {
@@ -125,6 +146,14 @@
       ],
       "proxyType": "immutable",
       "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1709852148,
       "sinceBlock": 188141651,
       "values": {
@@ -179,6 +208,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
+        },
+        {
           "permission": "upgrade",
           "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
         }
@@ -225,7 +259,14 @@
     {
       "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
     },
     {
       "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
@@ -244,6 +285,24 @@
       "proxyType": "EIP1967 proxy",
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
@@ -324,7 +383,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig 1",
+      "name": "SuccinctGatewaySP1Multisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -333,6 +392,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1724204782,
       "sinceBlock": 245028307,
@@ -375,6 +441,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678822125,
       "sinceBlock": 69837457,
@@ -403,6 +476,13 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
       "sinceTimestamp": 1735949706,
       "sinceBlock": 291720238,
       "values": { "$immutable": true }
@@ -714,9 +794,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "succinct/SP1Blobstream": "0xd2096c975a13e5b8053c17b06377ee9f97ede7707dfb6ee96d79c1d5662d6707",
-    "succinct/SP1SuccinctGateway": "0xd2d6a6ab32075a5ca535c81dd35702f87c4bed7d41742237098e0903594e8f75",
-    "succinct/SuccinctGateway": "0xe92c13a0869c49b01e157d5eedbdbe5df5756d117d03cad3d8ae0d7a4b4a4f2e"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "succinct/SP1Blobstream": "0xc1cd156a92120786c94913e9ef99ee374b6d1d894c49048389a73b08202c0583",
+    "succinct/SP1SuccinctGateway": "0x0be99df0eb5d614a64b5f73fa9c5f72f48b02271ada4fc7990cd2918f42ec7fe",
+    "succinct/SuccinctGateway": "0xe4ded8c094f8bb50ec7e032c9cd3d485fd46a2c65d6c22ef785d22ae71d6dc51"
   }
 }

@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0xf7d3492086e488c994aca619dc7a8d78a6995310c4a83d28ff5adae8da9d5618",
+  "configHash": "0x063b648790542132ba434eb6946d6b6a8fb25693f0326fdf3022279fa3921178",
   "entries": [
     {
       "name": "TokenBridge",
@@ -18,8 +18,20 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-          "via": []
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "via": [
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "via": [
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
+          ]
         }
       ],
       "sinceTimestamp": 1691067875,
@@ -211,7 +223,13 @@
     {
       "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        }
+      ]
     },
     {
       "address": "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
@@ -270,7 +288,13 @@
     {
       "address": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "operateLinea",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        }
+      ]
     },
     {
       "address": "0x5822D8457c00FB82203918ED92907b935B9D40AE",
@@ -278,7 +302,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Linea Multisig",
+      "name": "LineaAdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -287,6 +311,51 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689149759,
       "sinceBlock": 17676233,
@@ -388,9 +457,31 @@
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "permission": "operateLinea",
+          "to": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
           "via": []
+        },
+        {
+          "permission": "operateLinea",
+          "to": "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "via": [
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "via": [
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -611,6 +702,70 @@
       "proxyType": "immutable",
       "displayName": "L1Timelock",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "cancel queued transactions.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "execute transactions that are ready.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "propose transactions.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay."
+        }
+      ],
       "sinceTimestamp": 1689150959,
       "sinceBlock": 17676332,
       "values": {
@@ -660,6 +815,59 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel queued transactions.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "execute transactions that are ready.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "via": [
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "via": [
+            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" },
+            { "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        }
+      ],
       "sinceTimestamp": 1700506439,
       "sinceBlock": 18614911,
       "values": {
@@ -732,7 +940,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
@@ -1264,10 +1472,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "global/Timelock": "0xb47b37eaff31c864259912b1666ca6a4db16d4c7e174cd6ebc0c499a39762624",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "linea/LineaRollup": "0x6b62912f2fbf577082798e96a3f0022a8edf243776a2168855998b6b34e0f767",
-    "linea/TokenBridge": "0x344e398a00b4da4b739370df1e59ae2bc56c107d1b1e6839d965eb131f6110e0"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "global/Timelock": "0x3fe72ab0869272db5300a19a5bfa7d22334918ab00e9d074c0869c48b3404f87",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "linea/LineaRollup": "0xcc673f509d9fc923a4147269c4fc55dbfdf25d94b8abc768c4fcd480febb4dfd",
+    "linea/TokenBridge": "0x5aa7cd9a1a400c350e9944b0acddce325b241c48d342618eda3e56e80b3e1c9b"
   }
 }

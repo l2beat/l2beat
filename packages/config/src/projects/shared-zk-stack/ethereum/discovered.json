@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22037103,
-  "configHash": "0xceabd00b2fcbf1681b543968a3cf77cf70d7acdecb3693379bae02420dc6886e",
+  "configHash": "0x71855febe3a1f40ef64a239209565db6f663472d4562500daaea2def7a3d4c67",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -46,6 +46,13 @@
       "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "start (queue) upgrades."
+        }
+      ],
       "derivedName": ""
     },
     {
@@ -136,7 +143,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
@@ -206,6 +213,23 @@
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
       "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
+        },
+        {
+          "permission": "interact",
+          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "register new Elastic Chains in the shared bridge."
+        }
+      ],
       "sinceTimestamp": 1722434735,
       "sinceBlock": 20427018,
       "values": {
@@ -250,9 +274,18 @@
       "description": "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+          "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.",
+          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        },
+        {
           "permission": "upgrade",
-          "to": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-          "via": []
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "via": [
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
+            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
         }
       ],
       "sinceTimestamp": 1717520639,
@@ -513,6 +546,32 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.",
+          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.",
+          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "register new Elastic Chains in the shared bridge.",
+          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1666872275,
       "sinceBlock": 15839298,
@@ -654,6 +713,13 @@
       ],
       "proxyType": "immutable",
       "description": "Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "extend the legal veto period, approve a protocol upgrade."
+        }
+      ],
       "sinceTimestamp": 1738855979,
       "sinceBlock": 21788383,
       "values": {
@@ -715,6 +781,13 @@
       ],
       "proxyType": "immutable",
       "description": "Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "description": "soft freeze, hard freeze, approve a protocol upgrade."
+        }
+      ],
       "sinceTimestamp": 1738855991,
       "sinceBlock": 21788384,
       "values": {
@@ -1108,7 +1181,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZK Foundation Multisig",
+      "name": "ZkFoundationMultisig",
       "address": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1149,7 +1222,7 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
@@ -1188,9 +1261,18 @@
       "description": "Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+          "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.",
+          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        },
+        {
           "permission": "upgrade",
-          "to": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-          "via": []
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "via": [
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
+            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
         }
       ],
       "sinceTimestamp": 1717520663,
@@ -1353,9 +1435,18 @@
       "description": "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+          "description": "register new Elastic Chains in the shared bridge.",
+          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        },
+        {
           "permission": "upgrade",
-          "to": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-          "via": []
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "via": [
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
+            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
+          ]
         }
       ],
       "sinceTimestamp": 1717521479,
@@ -1419,9 +1510,40 @@
       "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+          "permission": "interact",
+          "to": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "description": "start (queue) upgrades.",
           "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
+          "description": "extend the legal veto period, approve a protocol upgrade.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
+          "description": "soft freeze, hard freeze, approve a protocol upgrade.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "via": [
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
+            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+        },
+        {
+          "permission": "act",
+          "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
         }
       ],
       "sinceTimestamp": 1738855967,
@@ -1481,6 +1603,46 @@
       ],
       "proxyType": "immutable",
       "description": "A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "via": [
+            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "via": [
+            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "via": [
+            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "via": [
+            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
+            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+        }
+      ],
       "sinceTimestamp": 1738856003,
       "sinceBlock": 21788385,
       "values": {
@@ -2050,15 +2212,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "shared-zk-stack/BridgeHub": "0x0ed3084958637a972697f50db49ea1b49378389e3bfe84cc7d86bc52b98de5da",
-    "shared-zk-stack/ChainAdmin": "0x0eccaea895a6c64efb677c08a6f6db02b72ab02db2fbaea4c8a67757e55d901c",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0x948712aabe7f05cbc6e1633d6843efe53638a67d5c14d20bd45ec7f7a41c3d44",
-    "shared-zk-stack/Guardians": "0x16f50acae053e052f68e51a684cce1b26ae63463f998b5da0c5ed4e163e2198d",
-    "shared-zk-stack/L1SharedBridge": "0xcd9bf0d6a3ea2404756f083929a0caefca7fa928b4aba978796143f3b3cee0cf",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0x52867dac0fa8f823633531ee619913cb0384be461a616bb16cd0cb56446966a1",
-    "shared-zk-stack/SecurityCouncil": "0x87e0adc2a1e574876e1221c8f98856984803a02867ad94dc110cb2c6708cb7b9",
-    "shared-zk-stack/StateTransitionManager": "0x30f7b585d7a8eae80d7ad91894992d7809e5df02f054ebf618969ab56bb7205e"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/BridgeHub": "0x1082a82985b15d3ab60d47289e65d7dcc1df1773aac6a122ad35f518f14990fa",
+    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0x5fc0246dd42a6104ff1f712513ed2995eefc387725294905dd8bfecd8ecfcf66",
+    "shared-zk-stack/Guardians": "0x851e167f1e5f305d7b33e62a86f4949a7fa6a9a48a7958c36f7deba2b55ec1ad",
+    "shared-zk-stack/L1SharedBridge": "0xf665083b2b6ab25aa8830f7b480d98cd2e84f72f302e7bf4b1dd427d4a8416d4",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0x9450d1e0c166b048608acec0785bee7a01b73bade1ea15c175088cd77de03d89",
+    "shared-zk-stack/SecurityCouncil": "0x8223e8d6dab5118334b6988580dc1075eb3813d737a58bfbc15401182fdd4239",
+    "shared-zk-stack/StateTransitionManager": "0xa1be5ed4cf272ac426214a1acec35b513dc54451c55865ba7017c625015e5489"
   }
 }

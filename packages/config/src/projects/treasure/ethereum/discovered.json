@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22022297,
-  "configHash": "0x96a05f681a91733826d8860822bb0d04cb95689bfd3605dba72baec09915edc0",
+  "configHash": "0xbccd3bfff4cd6ed29ed4c7d170249cf50e626998d938b611121c845f39154055",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -41,7 +41,13 @@
     {
       "address": "0x2572835e02b59078711aa0800490e80975e4169d",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
     },
     {
       "name": "TreasureChainAdminMultisig",
@@ -53,6 +59,20 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732645991,
       "sinceBlock": 21273741,
@@ -80,7 +100,13 @@
     {
       "address": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
     },
     {
       "address": "0x58244EA236D2ff57c023A4028E228f77dc328894",
@@ -97,6 +123,25 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "issuedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "to": "0x2572835e02b59078711aa0800490e80975e4169d",
+          "via": []
+        },
+        {
+          "permission": "validateZkStack",
+          "to": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+        }
+      ],
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
       "values": {
@@ -129,6 +174,20 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x282370D1e925ee897CB29Cb3beC13aAe0743067C",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -334,6 +393,21 @@
         "0x3423f941c413d4f07703ba62723b05600f2a33f8725e8d89a53194efb05f4086"
       ],
       "proxyType": "immutable",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
+          "description": "set the conversion factor for gas token deposits.",
+          "via": []
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+        }
+      ],
       "sinceTimestamp": 1731546443,
       "sinceBlock": 21182547,
       "values": {
@@ -361,7 +435,14 @@
     {
       "address": "0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871",
+          "description": "set the conversion factor for gas token deposits."
+        }
+      ]
     },
     {
       "address": "0xe25AdA29FA5873A24afEe1342422BD14e5809e03",
@@ -672,10 +753,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "shared-zk-stack/ChainAdmin": "0x0eccaea895a6c64efb677c08a6f6db02b72ab02db2fbaea4c8a67757e55d901c",
-    "shared-zk-stack/Diamond": "0xa57c7b8a9be19a417633e9f82f08a698eeffeb0a2e607b75c24e4f291a2d8a5d",
-    "shared-zk-stack/ValidatorTimelock": "0x58f7bef19010ef32f238898c7b274dfe08c8412e455fb6bdaf21a44ef0611ca6",
-    "shared-zk-stack/Verifier": "0xdf758e791d4b50d840b7b4546467e86c3b081e1499c51f4ab37caa07476968eb"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
+    "shared-zk-stack/Diamond": "0xaecca9b8c784ccd936a4dd3c3683aab317142ad6111e60c34dfc8585cd18f48c",
+    "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
+    "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
   }
 }

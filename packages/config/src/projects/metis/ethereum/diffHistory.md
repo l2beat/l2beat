@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb13aaa2f5091699c46d2a28cf957fe7f8b66ca67
+Generated with discovered.json: 0x96b5d9264a8ee413caef5a3cb8b059312929a0d7
 
-# Diff at Mon, 17 Mar 2025 16:30:47 GMT:
+# Diff at Mon, 17 Mar 2025 15:28:48 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21242106
 - current block number: 21242106
 
 ## Description
 
-Config: Change multisig names.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -17,88 +17,10 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21242106 (main branch discovery), not current.
 
 ```diff
-    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
-    +++ description: None
-      issuedPermissions.0.to:
--        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
-+        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
-      issuedPermissions.0.via.0:
--        {"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}
-    }
-```
-
-```diff
-    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
-    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"}
-      receivedPermissions.6:
--        {"permission":"upgrade","from":"0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"}
-      receivedPermissions.5:
--        {"permission":"upgrade","from":"0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"}
-      receivedPermissions.4.from:
--        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
-+        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
-      receivedPermissions.3.permission:
--        "interact"
-+        "upgrade"
-      receivedPermissions.3.from:
--        "0x918778e825747a892b17C66fe7D24C618262867d"
-+        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
-      receivedPermissions.3.description:
--        "set and change address mappings."
-      receivedPermissions.2.from:
--        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
-+        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
-      receivedPermissions.1.from:
--        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
-+        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
-      receivedPermissions.1.via:
--        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
-      receivedPermissions.0.from:
--        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
-+        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
-      receivedPermissions.0.via:
--        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
-      directlyReceivedPermissions:
--        [{"permission":"act","from":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
-    }
-```
-
-```diff
     contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
     +++ description: Escrows staking rewards for Sequencers.
       description:
 +        "Escrows staking rewards for Sequencers."
-    }
-```
-
-```diff
-    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
-    +++ description: None
-      directlyReceivedPermissions:
--        [{"permission":"upgrade","from":"0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"},{"permission":"upgrade","from":"0xD54c868362C2098E0E46F12E7D924C6A332952Dd"}]
-      receivedPermissions:
-+        [{"permission":"upgrade","from":"0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"},{"permission":"upgrade","from":"0xD54c868362C2098E0E46F12E7D924C6A332952Dd"}]
-    }
-```
-
-```diff
-    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
-      issuedPermissions:
--        [{"permission":"interact","to":"0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21","description":"set and change address mappings.","via":[]}]
-    }
-```
-
-```diff
-    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
-    +++ description: None
-      issuedPermissions.0.to:
--        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
-+        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
-      issuedPermissions.0.via.0:
--        {"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}
     }
 ```
 

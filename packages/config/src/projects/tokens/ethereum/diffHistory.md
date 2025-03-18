@@ -1,31 +1,4 @@
-Generated with discovered.json: 0x9862ec572811c66bdd20c105fda8035148b30a01
-
-# Diff at Mon, 17 Mar 2025 16:38:13 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 22017795
-- current block number: 22017795
-
-## Description
-
-Config: Change multisig names.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22017795 (main branch discovery), not current.
-
-```diff
-    contract Lido Dao Agent (0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
-    +++ description: None
-      name:
--        "LidoDaoAgent"
-+        "Lido Dao Agent"
-    }
-```
-
-Generated with discovered.json: 0xeadb57c8b2f79ede10bef1935290c8a570b0e5c7
+Generated with discovered.json: 0xcc4a9f1c640a86b61bd22c6e6fc9b1007c0f4ce7
 
 # Diff at Tue, 04 Mar 2025 10:40:09 GMT:
 

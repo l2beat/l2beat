@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 763803,
-  "configHash": "0xe002e41aa5f4368c22b9f73f6a4e2fb3b83a7b85b1c541b97370dcb16b1ca7da",
+  "configHash": "0x2d3fcf1937cf10f3d840b1f50a5520ba1b9ff4ece86545d7932d6bb1cbb9ef75",
   "entries": [
     {
       "name": "NioGuardians",
@@ -13,6 +13,14 @@
       ],
       "proxyType": "immutable",
       "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1729791292,
       "sinceBlock": 234135,
@@ -46,6 +54,14 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract allowing token- and NFT based voting.",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        }
+      ],
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1729791297,
       "sinceBlock": 234141,
@@ -479,6 +495,7 @@
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
+      "severity": "HIGH",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -488,12 +505,36 @@
       ],
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
+          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "transfer KYC NFTs to a different address."
+        },
+        {
           "permission": "upgrade",
           "from": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
         },
         {
           "permission": "upgrade",
           "from": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ],
       "ignoreInWatchMode": ["getNonce"],
@@ -722,8 +763,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-          "via": []
+          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -856,7 +897,15 @@
     {
       "address": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "MEDIUM",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        }
+      ]
     },
     {
       "address": "0x5420f6C9Bc0495d24f35Ba25Be8e259693615625",
@@ -884,6 +933,12 @@
       "proxyType": "EIP1967 proxy",
       "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
@@ -1132,12 +1187,28 @@
     {
       "address": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "MEDIUM",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        }
+      ]
     },
     {
       "address": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "MEDIUM",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        }
+      ]
     },
     {
       "address": "0x6E6E2044A4cfeA057E02d6FB72c33Fc893A9B788",
@@ -1147,7 +1218,15 @@
     {
       "address": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "MEDIUM",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        }
+      ]
     },
     {
       "address": "0x70E218164e6A59AE756107D0D6eC2c498110Bc2E",
@@ -1180,6 +1259,12 @@
       "proxyType": "EIP1967 proxy",
       "description": "Kinto Treasury.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "send tokens and ETH from the Treasury to any address without delay.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
@@ -1227,8 +1312,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-          "via": []
+          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -1287,8 +1372,31 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-          "via": []
+          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x87799989341A07F495287B1433eea98398FD73aA",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
+          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x9eC0253E4174a14C0536261888416451A407Bf79"
         }
       ],
       "sinceTimestamp": 1702609595,
@@ -1327,6 +1435,12 @@
       "proxyType": "EIP1967 proxy",
       "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
@@ -1519,7 +1633,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "KintsugiFoundation",
+      "name": "MamoriLabs2",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1564,7 +1678,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x340487b92808B84c2bd97C87B590EE81267E04a7"
@@ -1609,7 +1723,38 @@
       ],
       "proxyType": "immutable",
       "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+        },
+        {
+          "permission": "interact",
+          "from": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
+          "description": "send tokens and ETH from the Treasury to any address without delay."
+        },
+        {
+          "permission": "interact",
+          "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "transfer KYC NFTs to a different address."
+        },
         {
           "permission": "upgrade",
           "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
@@ -1621,6 +1766,10 @@
         {
           "permission": "upgrade",
           "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ],
       "sinceTimestamp": 1729791296,
@@ -1864,7 +2013,15 @@
     {
       "address": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "MEDIUM",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        }
+      ]
     },
     {
       "address": "0xBD85550C39dE4844E501A278D6b632FbE68cF70F",
@@ -2064,6 +2221,90 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "transfer KYC NFTs to a different address.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "transfer KYC NFTs to a different address.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "sinceTimestamp": 1703803592,
       "sinceBlock": 59,
@@ -3700,6 +3941,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3"
   }
 }

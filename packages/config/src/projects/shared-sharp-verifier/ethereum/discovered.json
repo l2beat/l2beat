@@ -2,17 +2,74 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 21973570,
-  "configHash": "0x165f5369a979b77ecefc5f5e6fc4cea9f32daecb4dfb0d239459082ddd3f18d9",
+  "configHash": "0x37d0ef91e725903fe6ee2d4e37c083012e6f88f7502079507ef7003dd56010e0",
   "entries": [
+    {
+      "name": "EcdsaPointsXColumn",
+      "address": "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "address": "0x032e5cDb729Ce94638ACA9e82A22688109B43046",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829143,
+      "sinceBlock": 20376819,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
     {
       "address": "0x0405107a60391Eb51821be373ff978115Ee58488",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "PedersenHashPointsXColumn",
+      "address": "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0x05C98569CA566a2035b87dE7d1b623C950798035",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "name": "CpuFrilessVerifier",
       "address": "0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0xa78b7bb374044ea6a603766c4b16c5d1ec5573ddc1dfb9b9413701020ebfe195"
       ],
@@ -21,18 +78,63 @@
       "sinceBlock": 20376782,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+            "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
+          ],
+          "0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 15 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x0436bd83534187cf17ffbb4cc97b6caab2a1ac66d80a9daef6d6589e93bb4c77"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828723,
+      "sinceBlock": 20376784,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "address": "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
       "address": "0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0x6156385d69e1bf7290adaaaa1e5d33748df1c8da588f686403aca38710f05693"
       ],
@@ -41,16 +143,46 @@
       "sinceBlock": 20376784,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+            "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
+          ],
+          "0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 23, "selectedBuiltins": 63 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "SHARP Multisig",
+      "name": "PedersenHashPointsYColumn",
+      "address": "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "SHARPVerifierAdminMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -59,6 +191,7 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -91,6 +224,7 @@
       "name": "CpuFrilessVerifier",
       "address": "0x243682b9A01455ac671c97D8dE686EBd4EE25791",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0xdea77b54fa6a0489f5a57f0dc4ade2e0082aa3017b33bb8b4c47b5c693c65383"
       ],
@@ -99,18 +233,77 @@
       "sinceBlock": 20376816,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+            "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
+          ],
+          "0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 21, "selectedBuiltins": 31 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "FriStatementContract",
+      "address": "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xdb6522c746b47c8025bdd3942737207a45de03416b891219d4ad3328e3cbcb07"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "MerkleStatementContract",
+      "address": "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x353a1ed6ef3ef47ed725cf0832c357c4e71680318751a7bbd706d607d8acb7aa"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0x351666E9EeA6E012f08695ccd1923f37519563f1",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xc6b85b7926407ac9352754cb496033d4bf5689bc99395d4b8b15d2d79b245209"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828723,
+      "sinceBlock": 20376784,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
       "address": "0x3d57526c1C8D63fa2A8704487Df65e9000166c8E",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0x0bb18873bc3a6a2cc498c681c3bc67777185bf377294eb531123d4529deb8b38"
       ],
@@ -119,18 +312,35 @@
       "sinceBlock": 20376781,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+            "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
+          ],
+          "0xA9db7bDfbc3664C8954f490e4d94B8607a080f23",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 15 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
       "address": "0x42AF9498647Be47A256C9cc8278eE94473Cb7771",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0xcc5a725835dea04291bf4edd2b8b39c4d15358a01b6baa116e9aede7b897fdf4"
       ],
@@ -139,13 +349,32 @@
       "sinceBlock": 20377720,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0x05C98569CA566a2035b87dE7d1b623C950798035",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0xedFfEA8296945aA91FC035Aefc8c33D737dBc573",
+            "0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc",
+            "0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8",
+            "0x53daC4aB94955f35657463252a7b25F343A14451",
+            "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2"
+          ],
+          "0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 21, "selectedBuiltins": 151 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SHARPVerifierCallProxy",
@@ -230,6 +459,90 @@
       "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "derivedName": "CallProxy",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0x4742f8723CAE9C17Cb1D54708898904fB43621c9",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x9c476ab40346f6531ff512dbd20c84273a3cca2fb0e870b6aed5c67aa20d32f8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829155,
+      "sinceBlock": 20376820,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "address": "0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x01d75ee9eb5d04eb0bdef657f41a7a4953dfc1dbb219b2c2c4504f988d4054da"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "address": "0x53daC4aB94955f35657463252a7b25F343A14451",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x5014b4dd4ac75d575b7511cda643b511a4f57eaffccb5aad8fe12fd2a412be65"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828723,
+      "sinceBlock": 20376784,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CairoBootloaderProgram",
@@ -1053,6 +1366,7 @@
       "name": "CpuFrilessVerifier",
       "address": "0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0x6c96d348b73a5436aaac0d8de8c5f06a7a625c1ff02b0c069fc677f0ac01c009"
       ],
@@ -1061,18 +1375,76 @@
       "sinceBlock": 20376784,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+            "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
+          ],
+          "0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 15 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x2263b0314ef958372095f3d5a50817b8f1de525cc589a9a6acd462814968c84a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828699,
+      "sinceBlock": 20376782,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828723,
+      "sinceBlock": 20376784,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "address": "0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829131,
+      "sinceBlock": 20376818,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SHARPVerifier",
@@ -1119,9 +1491,38 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "name": "CpuConstraintPoly",
+      "address": "0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829107,
+      "sinceBlock": 20376816,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0xA9db7bDfbc3664C8954f490e4d94B8607a080f23",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xea43d74304db71ee531509d5f054b9172347c79c10ce2ef9fe7da542b11b420b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "name": "CpuFrilessVerifier",
       "address": "0xAaAe0edF6536de72E7163D293518c40011179f8a",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0x683cac2609eeb80f624fedec43b3622138b0579960bf74162c2f49eebd1e1b4d"
       ],
@@ -1130,18 +1531,145 @@
       "sinceBlock": 20376784,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0x351666E9EeA6E012f08695ccd1923f37519563f1",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed"
+          ],
+          "0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 19, "selectedBuiltins": 23 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xeb39302b38f5f5b329700407c9c1c9f7b90dd0550f5bc4d1273e365ff48b5eb3"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828735,
+      "sinceBlock": 20376785,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828699,
+      "sinceBlock": 20376782,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "address": "0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829143,
+      "sinceBlock": 20376819,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "address": "0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828699,
+      "sinceBlock": 20376782,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "address": "0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829107,
+      "sinceBlock": 20376816,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x6e983e16c9f7b72cb7f29f2e7fcb0061acc1622409a2e45534fa03fd05ff9672"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828723,
+      "sinceBlock": 20376784,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "CpuOods",
+      "address": "0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x996c7267677d4955986302f31421117e77179197ff49e9dab8e8fff5c0f41257"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828699,
+      "sinceBlock": 20376782,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "address": "0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721829131,
+      "sinceBlock": 20376818,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CpuFrilessVerifier",
       "address": "0xe155154845950573EC5F518fC0D4950AB71303ff",
       "type": "Contract",
+      "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sourceHashes": [
         "0x16540ae818b59b005fe1cee4b1fbc4d3e29806d95076929b196adc7e3f347522"
       ],
@@ -1150,13 +1678,48 @@
       "sinceBlock": 20376821,
       "values": {
         "$immutable": true,
+        "constructorArgs": [
+          [
+            "0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE",
+            "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+            "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+            "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+            "0xE3929Ea107238Ce59d64A3cE497f12b57846B716",
+            "0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540",
+            "0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc",
+            "0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD",
+            "0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF",
+            "0x032e5cDb729Ce94638ACA9e82A22688109B43046"
+          ],
+          "0x4742f8723CAE9C17Cb1D54708898904fB43621c9",
+          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
+          "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+          "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+          "80",
+          "0"
+        ],
         "getLayoutInfo": { "publicMemoryOffset": 25, "selectedBuiltins": 191 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "EcdsaPointsYColumn",
+      "address": "0xE3929Ea107238Ce59d64A3cE497f12b57846B716",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721828687,
+      "sinceBlock": 20376781,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MemoryPageFactRegistry",
@@ -1176,9 +1739,46 @@
       "address": "0xebc8416179fE90854fe8B3f774801165572cfD7F",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "address": "0xedFfEA8296945aA91FC035Aefc8c33D737dBc573",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "address": "0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc",
+      "type": "Contract",
+      "template": "shared-sharp-verifier/ignoreComputeSpam",
+      "sourceHashes": [
+        "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1721840015,
+      "sinceBlock": 20377720,
+      "values": { "$immutable": true },
+      "category": { "name": "Spam", "priority": -1 }
     }
   ],
   "abis": {
+    "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
+    "0x032e5cDb729Ce94638ACA9e82A22688109B43046": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
+    "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
     "0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
@@ -1196,6 +1796,9 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
+    "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
     "0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
@@ -1212,6 +1815,9 @@
       "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
+    ],
+    "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": [
+      "function compute(uint256 x) pure returns (uint256 result)"
     ],
     "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
       "constructor(address _singleton)"
@@ -1232,6 +1838,17 @@
       "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
+    ],
+    "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": [
+      "event LogGas(string name, uint256 val)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function verifyFRI(uint256[] proof, uint256[] friQueue, uint256 evaluationPoint, uint256 friStepSize, uint256 expectedRoot)"
+    ],
+    "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": [
+      "function hasRegisteredFact() view returns (bool)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function verifyMerkle(uint256[] merkleView, uint256[] initialMerkleQueue, uint256 height, uint256 expectedRoot)"
     ],
     "0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
@@ -1293,6 +1910,12 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
+    "0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
+    "0x53daC4aB94955f35657463252a7b25F343A14451": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
     "0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": [
       "function getCompiledProgram() pure returns (uint256[794])"
     ],
@@ -1312,6 +1935,9 @@
       "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
+    ],
+    "0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": [
+      "function compute(uint256 x) pure returns (uint256 result)"
     ],
     "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": [
       "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 simpleBootloaderProgramHash, uint256 applicativeBootloaderProgramHash, uint256 hashedSupportedCairoVerifiers, address referenceVerifier, uint256 referralDurationSeconds)",
@@ -1346,6 +1972,12 @@
       "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
+    ],
+    "0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
+    "0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": [
+      "function compute(uint256 x) pure returns (uint256 result)"
     ],
     "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458": [
       "function CALL_PROXY_VERSION() view returns (string)",
@@ -1404,6 +2036,9 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
     "0xe155154845950573EC5F518fC0D4950AB71303ff": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
@@ -1421,6 +2056,9 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
+    "0xE3929Ea107238Ce59d64A3cE497f12b57846B716": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
     "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": [
       "event LogMemoryPageFactContinuous(bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "event LogMemoryPageFactRegular(bytes32 factHash, uint256 memoryHash, uint256 prod)",
@@ -1429,13 +2067,21 @@
       "function registerContinuousMemoryPage(uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "function registerContinuousPageBatch(tuple(uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime)[] memoryPageEntries)",
       "function registerRegularMemoryPage(uint256[] memoryPairs, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)"
+    ],
+    "0xedFfEA8296945aA91FC035Aefc8c33D737dBc573": [
+      "function compute(uint256 x) pure returns (uint256 result)"
+    ],
+    "0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc": [
+      "function compute(uint256 x) pure returns (uint256 result)"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "shared-sharp-verifier/CairoBootloaderProgram": "0xe1ac1234f16fd1598f20d38a9433e8627cf917b39d28b52ac7647868464f9480",
-    "shared-sharp-verifier/MemoryPageFactRegistry": "0x9d20c368762ce440ae399894b7a294136feccea1ff9eb6939dc2887cca6835d9",
-    "shared-sharp-verifier/SHARPVerifier": "0xeeab0018736bb0a1852feff0d9cfe421ed5e1282d29f67d81f61c7e71142c950",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x1abcb57a4d8fd88037be089737be98e0c081eb5ae436b9b293072411604876e6"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-sharp-verifier/CairoBootloaderProgram": "0x90eb4fd03d08c3e9bcbf34adb055c090fa538684a6ac21acc6378c7565bf6014",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0x77f2ca24663ab5caba78448895fa752d22aefbefb5b0c9ba45b86e927f29f892",
+    "shared-sharp-verifier/ignoreComputeSpam": "0xca3687b31810b22c8758af1b9d95014347b91a581526f9dca6c6bd1543e98d9a",
+    "shared-sharp-verifier/MemoryPageFactRegistry": "0x9b2c369fa82d115bec871f4455c8c1d2919f8bfe7a38c14fc7a851cd4cd7d056",
+    "shared-sharp-verifier/SHARPVerifier": "0x78229430f4dcd22c25f0cda3b3d7d41b697185844880bd050840eea095e5ffc4",
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xbf085c1e937d29b1ccf305762d2a4fc67b0ce4a6f205a4da797e205fa7d0065b"
   }
 }

@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21880791,
-  "configHash": "0x7483ce4205151d8fabd26364d28a2dff37bb1805b2b1b6ba15156ea900a7a452",
+  "configHash": "0x9a02c0019f1ec810b07473e1351f5b43cb062499361a8c75642680915882208b",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -28,7 +28,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xef899e92DA472E014bE795Ecce948308958E25A2"
@@ -44,7 +44,14 @@
     {
       "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
     },
     {
       "name": "HyperlaneMultisig",
@@ -56,6 +63,70 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+        },
+        {
+          "permission": "interact",
+          "from": "0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+        },
+        {
+          "permission": "interact",
+          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them."
+        },
+        {
+          "permission": "interact",
+          "from": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+        },
+        {
+          "permission": "interact",
+          "from": "0xc72f634784EA020b703E11e88582Beb5903792b9",
+          "description": "manage the domain -> ISM contract mapping."
+        },
+        {
+          "permission": "interact",
+          "from": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1704913967,
       "sinceBlock": 18978558,
@@ -127,7 +198,14 @@
     {
       "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
     },
     {
       "name": "StaticAggregationIsm_default",
@@ -139,6 +217,13 @@
       ],
       "proxyType": "immutable",
       "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835,0xc72f634784EA020b703E11e88582Beb5903792b9] ISM contracts successfully verify a message.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "description": "verify messages for destination contracts that do not specify a custom ISM."
+        }
+      ],
       "sinceTimestamp": 1739918735,
       "sinceBlock": 21876328,
       "values": {
@@ -177,9 +262,15 @@
       "description": "Escrow for WBTC that is bridged from Ethereum to Eclipse.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         }
       ],
       "sinceTimestamp": 1730465603,
@@ -228,9 +319,15 @@
       "description": "Escrow for USDT that is bridged from Ethereum to Eclipse.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         }
       ],
       "sinceTimestamp": 1730465339,
@@ -270,7 +367,7 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
@@ -328,7 +425,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
@@ -387,6 +484,24 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "via": [{ "address": "0x9Fca159607687AE26367d66166e680A930af0780" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x9Fca159607687AE26367d66166e680A930af0780"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1639516769,
       "sinceBlock": 13805677,
@@ -473,9 +588,21 @@
       "description": "The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them.",
           "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x57e1787fbdCCf7516721DC621CE17C45509cc2DB",
+          "description": "verify messages for destination contracts that do not specify a custom ISM.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         }
       ],
       "sinceTimestamp": 1698180311,
@@ -518,9 +645,15 @@
       "description": "Escrow for tETH that is bridged from Ethereum to Eclipse.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         }
       ],
       "sinceTimestamp": 1726764215,
@@ -559,6 +692,14 @@
       ],
       "proxyType": "immutable",
       "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "manage the domain -> ISM contract mapping.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1739918651,
       "sinceBlock": 21876321,
       "values": {
@@ -603,6 +744,24 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "via": [{ "address": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710735815,
       "sinceBlock": 19459281,
@@ -644,9 +803,15 @@
       "description": "Escrow for apxETH that is bridged from Ethereum to Eclipse.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x9Fca159607687AE26367d66166e680A930af0780",
+          "permission": "interact",
+          "to": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
+          "via": [{ "address": "0x9Fca159607687AE26367d66166e680A930af0780" }]
         }
       ],
       "sinceTimestamp": 1732622615,
@@ -685,9 +850,15 @@
       "description": "Escrow for USDC that is bridged from Ethereum to Eclipse.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "via": [{ "address": "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }]
         }
       ],
       "sinceTimestamp": 1726761887,
@@ -725,12 +896,26 @@
     {
       "address": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
     },
     {
       "address": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
     },
     {
       "name": "HypERC20Collateral",
@@ -745,9 +930,15 @@
       "description": "Escrow for weETHs that is bridged from Ethereum to Eclipse.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08",
+          "permission": "interact",
+          "to": "0xCEA8039076E35a825854c5C2f85659430b06ec96",
+          "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xCEA8039076E35a825854c5C2f85659430b06ec96",
+          "via": [{ "address": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08" }]
         }
       ],
       "sinceTimestamp": 1730893655,
@@ -787,6 +978,28 @@
       ],
       "proxyType": "immutable",
       "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.",
+      "issuedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "to": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+          "via": []
+        },
+        {
+          "permission": "validateBridge2",
+          "to": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+          "via": []
+        },
+        {
+          "permission": "validateBridge2",
+          "to": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+          "via": []
+        },
+        {
+          "permission": "validateBridge2",
+          "to": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1726245995,
       "sinceBlock": 20742975,
       "values": {
@@ -1240,9 +1453,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "hyperlane/HypERC20Collateral": "0xc98ab3986cda4e167e397b60f84eceed8fcf040d4357b9812fc82266caf06910",
-    "hyperlane/StaticAggregationIsm": "0x9c35cfb84439778cbdee15c7611d8be531c050c6403740f69e8492b58c6519c3"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "hyperlane/HypERC20Collateral": "0x57fca843c9a1a4567135c9180f6b8aaf2984875782d63269f693af7e19fc141e",
+    "hyperlane/StaticAggregationIsm": "0x9846d94207bd830864d9fd05ea5934e441cf867200f46d47c3cece380cc8de90"
   }
 }

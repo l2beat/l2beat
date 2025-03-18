@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0x6dc0a03f30abe7d812672df112337756edbab70a000eb3e97e9e35b382b6a8fa",
+  "configHash": "0x29e90915c2e940eae9c5f7787133cc1539781684ac6c4e35fdf680ca4b57e7df",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -22,7 +22,18 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
+          "from": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+          "via": [{ "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -70,8 +81,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
-          "via": []
+          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+          "via": [{ "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }]
         }
       ],
       "sinceTimestamp": 1709297079,
@@ -164,7 +175,7 @@
       ],
       "proxyType": "immutable",
       "displayName": "ProxyAdmin",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
@@ -263,7 +274,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

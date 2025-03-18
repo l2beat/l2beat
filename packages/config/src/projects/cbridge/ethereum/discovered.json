@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0xc4901efef7babb0280c7f3d4cef2de443c724a7f3050b9817277d348952f1bba",
+  "configHash": "0x35770130e8c69c7a91034a288edc47378564f70750f334a054fb339d768639b5",
   "entries": [
     {
       "name": "PeggedTokenBridge",
@@ -238,7 +238,7 @@
       ],
       "proxyType": "immutable",
       "displayName": "ProxyAdmin",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xF140024969F6c76494a78518D9a99c8776B55f70"
@@ -337,8 +337,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
-          "via": []
+          "to": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
+          "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
         }
       ],
       "sinceTimestamp": 1691384579,
@@ -403,6 +403,19 @@
         "0xd51a863b498f5cbb3e78ed94d7e69fa4cd246b862a12894d80ec1dedad934361"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+        }
+      ],
       "ignoreInWatchMode": ["nextProposalId"],
       "sinceTimestamp": 1656926298,
       "sinceBlock": 15075143,
@@ -955,6 +968,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3"
   }
 }

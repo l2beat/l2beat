@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0xcf4bbee5e64778a8d521ef9d14db0c2d1d5aa31ed53722ce346a0d0fdad7631e",
+  "configHash": "0x0bb62411fe6008f26c051d4f0b666e699df4dcda331feaeb0ed7de5d84c34650",
   "entries": [
     {
       "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -55,8 +55,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-          "via": []
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         }
       ],
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"],
@@ -215,6 +215,16 @@
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
+          "description": "set and change address mappings."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
+        },
+        {
           "permission": "upgrade",
           "from": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
         },
@@ -228,11 +238,22 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
         },
         {
           "permission": "upgrade",
           "from": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -438,7 +459,7 @@
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
@@ -466,6 +487,14 @@
       "proxyType": "immutable",
       "displayName": "AddressManager",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "description": "set and change address mappings.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1637047108,
       "sinceBlock": 13625248,
       "values": {
@@ -620,8 +649,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-          "via": []
+          "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+          "via": [{ "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -1413,8 +1442,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "opstack/AddressManager": "0x73e20cba70b07122c3e15e79e952fee1f154815e3fbf8805a6521f15f6538da5"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512"
   }
 }

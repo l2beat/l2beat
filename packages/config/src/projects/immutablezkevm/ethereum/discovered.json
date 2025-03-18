@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "blockNumber": 21995404,
-  "configHash": "0x859cf74a92e60c5d84ec6f946755a620a9301bf2ebe60a10728c1fe40d92ed00",
+  "configHash": "0x561c5d938341d452d8ad26b46554a4932f7aef103461794aeb826b64f6f39f58",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000007B",
@@ -58,8 +58,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
-          "via": []
+          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
+          "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         }
       ],
       "sinceTimestamp": 1702962623,
@@ -157,8 +157,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
-          "via": []
+          "to": "0xD2C37fC6fD89563187f3679304975655e448D192",
+          "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
         }
       ],
       "ignoreInWatchMode": ["withdrawalQueueActivated"],
@@ -222,6 +222,24 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "via": [{ "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702945151,
       "sinceBlock": 18816399,
@@ -265,7 +283,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
@@ -565,7 +583,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 21723791,
-  "configHash": "0x159256f7cf9582d4a2fb333a870f3d465815622ec72c1ccbd01bcc3893a4afe0",
+  "configHash": "0x81b8f72a693a62866e0a1c151b3ec15acc3068561e56a33a38947f5a783740d4",
   "entries": [
     {
       "name": "LayerZero Proof Library",
@@ -750,6 +750,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

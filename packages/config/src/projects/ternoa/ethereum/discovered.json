@@ -2,18 +2,53 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 21766747,
-  "configHash": "0xcacf96deb566fefd83b36518efec3a711544f83972d77099e4d5be90c4ef2d5e",
+  "configHash": "0x7ba4341d4528ff5ca6806bfc99c43724e54e68e1f06df8718c1b1b99491a39e0",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
       "address": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
+        }
+      ]
     },
     {
       "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "description": "sole address that can force batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "via": [{ "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"
+        }
+      ]
     },
     {
       "address": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0",
@@ -29,6 +64,25 @@
       "proxyType": "EIP1967 proxy",
       "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x49015545B46B07082bd7faf2633643eae87710EC",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x49015545B46B07082bd7faf2633643eae87710EC",
+          "description": "sole address that can force batches.",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1735650935,
       "sinceBlock": 21522690,
@@ -114,9 +168,15 @@
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "to": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
+          "permission": "interact",
+          "to": "0x49015545B46B07082bd7faf2633643eae87710EC",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x49015545B46B07082bd7faf2633643eae87710EC",
+          "via": [{ "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b" }]
         }
       ],
       "sinceTimestamp": 1735824851,
@@ -155,7 +215,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0xB408a216927d31A27fd96176dbF1B825630f0301"
@@ -338,9 +398,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "polygon-cdk/PolygonDataCommittee": "0x174951e75440de05c2a802dda8d5406c3bfc6d20f8ab6277789c5bedf70467a8",
-    "polygon-cdk/PolygonZkEVM": "0x2e2a3a4162db2c3496e13d8bb42697036da267876ba9bd25f596a7e08b001577",
-    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "polygon-cdk/PolygonDataCommittee": "0xeeacc882ef2dd83644ded6e961863fe6da4cb8a36a978c7de9ef5d3d209f6248",
+    "polygon-cdk/PolygonZkEVM": "0x56cf02df517a3e3f6c85d0da12f7f4740428295dd7bdd6a18fd1a12fd48aa527",
+    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
   }
 }

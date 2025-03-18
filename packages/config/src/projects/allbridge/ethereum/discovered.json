@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 21723681,
-  "configHash": "0x952c8e0ea034c3ceda8b5e8cc07e7cc5443b3957a701549847f9498a07d1299f",
+  "configHash": "0x77d51fd4945782e370b64e329966b2ef338905e780973c1dbe741afa1ad2633b",
   "entries": [
     {
       "address": "0x01a494079DCB715f622340301463cE50cd69A4D0",
@@ -99,15 +99,33 @@
       "name": "Pool",
       "address": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
       "type": "Contract",
+      "template": "allbridge/pool",
       "sourceHashes": [
         "0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "d",
+        "getPrice",
+        "getY",
+        "reserves",
+        "tokenBalance",
+        "totalSupply",
+        "vUsdBalance"
+      ],
       "sinceTimestamp": 1694519831,
       "sinceBlock": 18120096,
       "values": {
         "$immutable": true,
         "a": 20,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "accRewardPerShareP": "1083504370947232914",
         "adminFeeAmount": 14760508008,
         "adminFeeShareBP": 2000,
@@ -186,15 +204,33 @@
       "name": "Pool",
       "address": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
       "type": "Contract",
+      "template": "allbridge/pool",
       "sourceHashes": [
         "0xb2eff5db97a89eb54072562067b928bf496762048db22261130e67145170d1b5"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "accRewardPerShareP",
+        "adminFeeAmount",
+        "d",
+        "getPrice",
+        "getY",
+        "reserves",
+        "tokenBalance",
+        "totalSupply",
+        "vUsdBalance"
+      ],
       "sinceTimestamp": 1685102651,
       "sinceBlock": 17343152,
       "values": {
         "$immutable": true,
         "a": 20,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "accRewardPerShareP": "1338465061338040792",
         "adminFeeAmount": 17681022672,
         "adminFeeShareBP": 2000,
@@ -644,5 +680,7 @@
       "function withdrawGas(uint256 amount)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "allbridge/pool": "0xabdf45202ead8a93a9dc710a5618e466d9822975139194cf72381b67b49e7c6f"
+  }
 }

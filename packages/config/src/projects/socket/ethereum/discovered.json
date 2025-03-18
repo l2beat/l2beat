@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 22046031,
-  "configHash": "0x704181b275e6eff4e0318a2b6a991873ddc11495d849736ca17e65a9563ad78b",
+  "configHash": "0xaea29ee727a89c3ec3e0cf1286c5293925ea72541c5c59b1353eebf917005d79",
   "entries": [
     {
       "name": "WETH Vault Kinto",
@@ -999,7 +999,7 @@
       }
     },
     {
-      "name": "KintsugiFoundation",
+      "name": "MamoriLabs2",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
       "proxyType": "EOA",
@@ -4303,6 +4303,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

@@ -1,31 +1,4 @@
-Generated with discovered.json: 0x0edb795f1979fe55819191212543db933793acd3
-
-# Diff at Mon, 17 Mar 2025 16:30:24 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21630407
-- current block number: 21630407
-
-## Description
-
-Config: Change multisig names.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21630407 (main branch discovery), not current.
-
-```diff
-    contract Fuel Security Council (0x32da601374b38154f05904B16F44A1911Aa6f314) {
-    +++ description: None
-      name:
--        "FuelSecurityCouncil"
-+        "Fuel Security Council"
-    }
-```
-
-Generated with discovered.json: 0xcb0254fbfc5d0d66c9a5158ad4b59cf5e5605846
+Generated with discovered.json: 0x42da0cba8414b4b9ce24c5e228be54af50bc8257
 
 # Diff at Tue, 04 Mar 2025 10:39:11 GMT:
 

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x80aace62c84e70905eaac073fa28cda7fa66730d
+Generated with discovered.json: 0x54ab725e2a71277c42d4fe99a8155f73cac3b0a3
 
-# Diff at Mon, 17 Mar 2025 16:31:44 GMT:
+# Diff at Mon, 17 Mar 2025 15:29:31 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21387773
 - current block number: 21387773
 
 ## Description
 
-Config: Change multisig names.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -21,14 +21,6 @@ discovery. Values are for block 21387773 (main branch discovery), not current.
     +++ description: None
       fieldMeta:
 +        {"accessControl":{"severity":"MEDIUM","description":"Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()","type":"PERMISSION"}}
-    }
-```
-
-```diff
-    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
-    +++ description: None
-      directlyReceivedPermissions:
--        [{"permission":"act","from":"0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"}]
     }
 ```
 

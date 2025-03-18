@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0x868b088a5c3810dde85b331e044bfb472711da6535b50212e14f785fc927d7ac",
+  "configHash": "0x0d77625fd2f7c7397f4aa7cb365cb1b466b36b67e4f59b3eb777508af04a0715",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -13,7 +13,13 @@
     {
       "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+        }
+      ]
     },
     {
       "name": "daiBridge",
@@ -89,6 +95,13 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.",
+      "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "to": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1706364971,
       "sinceBlock": 19098451,
@@ -315,7 +328,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Polygon zkEVM Multisig",
+      "name": "PolygonZkEvmEscrowsMultisig",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -711,8 +724,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "polygon-cdk/PolygonZkEVM": "0x2e2a3a4162db2c3496e13d8bb42697036da267876ba9bd25f596a7e08b001577",
-    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "polygon-cdk/PolygonZkEVM": "0x56cf02df517a3e3f6c85d0da12f7f4740428295dd7bdd6a18fd1a12fd48aa527",
+    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
   }
 }

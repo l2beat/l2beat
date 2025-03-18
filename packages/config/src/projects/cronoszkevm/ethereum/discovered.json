@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 22022296,
-  "configHash": "0x5fcaa1f48c18ad7cbe4e258e9b88bd8e68df565447aca066279aa8e952fd30da",
+  "configHash": "0xfa6a42fde332019e7d869f7f9d7b8ad5e6b9081d22572050247126ed9dc88ec0",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -38,6 +38,20 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1723609295,
       "sinceBlock": 20524449,
@@ -74,6 +88,25 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "issuedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "to": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7",
+          "via": []
+        },
+        {
+          "permission": "validateZkStack",
+          "to": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+        }
+      ],
       "sinceTimestamp": 1717520615,
       "sinceBlock": 20019826,
       "values": {
@@ -100,6 +133,13 @@
         "0xe77f0ac44ab78d4c02668f0f81051a448ab8a4b96343747f6bd1143acc7748a8"
       ],
       "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+        }
+      ],
       "sinceTimestamp": 1726967543,
       "sinceBlock": 20802749,
       "values": {
@@ -167,6 +207,38 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xA8998F231a660Eca365B382943c71ad9b7619139",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        }
+      ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -376,7 +448,13 @@
     {
       "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
     },
     {
       "name": "TransactionFiltererDenyList",
@@ -386,6 +464,22 @@
         "0x69b34ba871ceb0dbecab437be2d0701a5d768bb541a738bb3a7d2883d10a403e"
       ],
       "proxyType": "immutable",
+      "severity": "HIGH",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
+          "description": "manage the blacklist of addresses in the TransactionFilterer.",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
+        }
+      ],
       "sinceTimestamp": 1722304883,
       "sinceBlock": 20416268,
       "values": {
@@ -402,7 +496,13 @@
     {
       "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+        }
+      ]
     },
     {
       "name": "TxFiltererOwnerMultisig",
@@ -414,6 +514,25 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xA8998F231a660Eca365B382943c71ad9b7619139",
+          "description": "manage the blacklist of addresses in the TransactionFilterer."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722375731,
       "sinceBlock": 20422122,
@@ -450,7 +569,21 @@
     {
       "address": "0xfD7a03Cdb68E6488F950108A4d24f15519b87339",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4"
+        }
+      ]
     }
   ],
   "abis": {
@@ -793,9 +926,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "shared-zk-stack/Diamond": "0xa57c7b8a9be19a417633e9f82f08a698eeffeb0a2e607b75c24e4f291a2d8a5d",
-    "shared-zk-stack/ValidatorTimelock": "0x58f7bef19010ef32f238898c7b274dfe08c8412e455fb6bdaf21a44ef0611ca6",
-    "shared-zk-stack/Verifier": "0xdf758e791d4b50d840b7b4546467e86c3b081e1499c51f4ab37caa07476968eb"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "shared-zk-stack/Diamond": "0xaecca9b8c784ccd936a4dd3c3683aab317142ad6111e60c34dfc8585cd18f48c",
+    "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
+    "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
   }
 }

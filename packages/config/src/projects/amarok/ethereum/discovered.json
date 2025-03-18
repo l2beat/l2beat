@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0x25be93bbd76eb61b5c637bea3d27b913b3405afc287b59734b345e0df4edbdf4",
+  "configHash": "0x635379e52a7ef675c7efcf877d54335d4ed5102473759700686a63b9a33dacb0",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -126,6 +126,12 @@
         "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
       ],
       "proxyType": "gnosis safe zodiac module",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+        }
+      ],
       "sinceTimestamp": 1693752671,
       "sinceBlock": 18056674,
       "values": {
@@ -640,6 +646,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
+        },
         {
           "permission": "upgrade",
           "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
@@ -1399,6 +1410,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
+          "to": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
+        },
+        {
+          "permission": "upgrade",
           "to": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
           "via": []
         }
@@ -1595,6 +1611,24 @@
         "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "via": [{ "address": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+        }
+      ],
       "sinceTimestamp": 1603880884,
       "sinceBlock": 11144602,
       "values": {
@@ -3827,8 +3861,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x3a6be074287901cfb38c447116b5565a612e3c23598ab099b9337c2d868f886c",
-    "amarok/RelayerProxyHub": "0x405525f0dd20eb304bbc081d98ee126da402d6e417535ac48d0012300c14c9a8",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f"
+    "amarok/Relayer": "0x4abb285cff2bca205292f0470fe80007ce1fc62ecb8049d1347145deb2394b4c",
+    "amarok/RelayerProxyHub": "0x4e86b082d1daa02b9ac2c6868e33e37a1f13de0f6f89107d86849e61a4c41d20",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

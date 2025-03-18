@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 132493968,
-  "configHash": "0x1d040b52083c4c54d9dbd28a5be0e3abe0a4bf9a3b9ec7325088a79de830d735",
+  "configHash": "0x8049648a56b749e9d4226cc09eb616fb22eeb76955aee8e66b7793c0a50fb14d",
   "entries": [
     {
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -19,6 +19,13 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+          "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1650712171,
       "sinceBlock": 6297293,
@@ -60,8 +67,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -89,8 +96,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["messageNonce"],
@@ -129,8 +136,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
@@ -179,8 +186,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -211,8 +218,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -242,8 +249,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -271,8 +278,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -299,8 +306,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1664918265,
@@ -337,8 +344,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -391,8 +398,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -420,8 +427,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -449,11 +456,11 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000002"
@@ -545,8 +552,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -575,8 +582,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -605,8 +612,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -639,8 +646,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1636665399,
@@ -701,6 +708,14 @@
       ],
       "proxyType": "immutable",
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
+          "description": "change the OP token owner to a different MintManager and therefore change the inflation policy.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1665174739,
       "sinceBlock": 28103702,
       "values": {
@@ -716,7 +731,95 @@
     {
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000002",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000007",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x420000000000000000000000000000000000000F",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000010",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000011",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000012",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000013",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000014",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000015",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000016",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000017",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000018",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000019",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x420000000000000000000000000000000000001A",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000020",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000021",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x4200000000000000000000000000000000000018"
+        }
+      ]
     },
     {
       "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
@@ -1270,21 +1373,21 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x4637c5ec65e96d3b6c7598f590111497a4aec794b5504e287e7fb59445854d81",
-    "GnosisSafe": "0xaae4ceb3ab17525638c5f164c89aee1cfa5a071129df0635d536987eb216d93f",
-    "opstack/Layer2/BaseFeeVault": "0x1712bddec7a5a95490382076ea6e3905b665cf7fcc8f544f9cbb322addd03493",
-    "opstack/Layer2/EAS": "0x68be5841f0d2d1500f01a43fad5ac0f19dd143482ec7d0522bed2d792f5d516a",
-    "opstack/Layer2/GasPriceOracle": "0xec3a63ae5e374c9d60b093148e973b9b3a0e80d7cfc6117de71ed560e5541da2",
-    "opstack/Layer2/L1Block": "0x0efaa9627630398f5f36d8d15f901df9f53e82e1276b922d7d5edb9ddad03c1c",
-    "opstack/Layer2/L1BlockNumber": "0x9e117ac1aa13ebca691fa34c4efdc181225a9046c45703a17b79f434ddae7a63",
-    "opstack/Layer2/L1FeeVault": "0x3dd95b3e371ecdf10c6aeb5578ae0c1fe4da8c5d23a30884231f93c54f01d3c0",
-    "opstack/Layer2/L2CrossDomainMessenger": "0x2322423e0cc39c40cfc8896d9b4a89235c68a48facfc0748dddece5bb0643ea2",
-    "opstack/Layer2/L2ERC721Bridge": "0xf26bb3478909d44da27de601dc17eb79cee6333bbf34c3d2d9005f80a1377024",
-    "opstack/Layer2/L2StandardBridge": "0x968a64fb492d6b57cf8c9ddaca9605f5495f12a80b3548cc9f3a33db6a9722aa",
-    "opstack/Layer2/L2ToL1MessagePasser": "0xdd61530f54cee5e5ec7646388307ca74647ec91aa19a183cf85d8cb4f0f57bfb",
-    "opstack/Layer2/OptimismMintableERC20Factory": "0xc7a314ca7624e6056853eded40254a42e8bf2d9d96a9c4124e323664caa3fa8d",
-    "opstack/Layer2/OptimismMintableERC721Factory": "0x83b5082a5b1a255037e5cb39b93e34b4c45e63df2351d035770153fc55f9a836",
-    "opstack/Layer2/SchemaRegistry": "0x6de6cfeea7afca40224334935b2576943882fada7f44852e0614d88e6f3d4796",
-    "opstack/Layer2/SequencerFeeVault": "0xf57290e1817879f70342718a01eb26c384e447018d7710156fb2930625c70e0f"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "opstack/Layer2/BaseFeeVault": "0x304cafa799df10ec666877e8c6f7290a8504e0a5a1513264b1b2ec48ba50aa23",
+    "opstack/Layer2/EAS": "0xb6405a7c046e371609073c5e20ac8d9731cbcc335ad83e370fc8708b13d0fe29",
+    "opstack/Layer2/GasPriceOracle": "0xcf4ea52f20e80cc0c9c546cc4d1cac62ad299ed236731c085426c61e6f049091",
+    "opstack/Layer2/L1Block": "0x44884c1d9d68870c918407df5e07399fb79bca9b121bca7572486ce9c10f85bf",
+    "opstack/Layer2/L1BlockNumber": "0xe3e7a1172e822356e1fd873a453dedc9eb610b0a47d9ccc1a89cbb9b74e5543e",
+    "opstack/Layer2/L1FeeVault": "0x81775150f8ede7a4800cf186635ab2f2fd66a5053ac1aafc5720c95ea1a17b60",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x4fbb9489aa73df9dd7ee9d0c08f49d96d4643c6071ccc0b97ab0d16b56f8c1e6",
+    "opstack/Layer2/L2ERC721Bridge": "0x609f74ea64e53a47824983bf09912c56f2185ef2f72c9422c13984b6a5f90ae8",
+    "opstack/Layer2/L2StandardBridge": "0x7a4f8ad9fc5c8651272047535a63d9ff1b003e23b4c246e11fb93ef9db421baa",
+    "opstack/Layer2/L2ToL1MessagePasser": "0x2f66cff6c90fa4f9ddd44ed01e04aa4321a82426ba1ff3df9a7686de53a4bd6e",
+    "opstack/Layer2/OptimismMintableERC20Factory": "0x9d3872a95b9778b2a6497c4126f00b1aa9d8fc85505fffd7d321f5dd060e0676",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0xd2b0c67c0a9c0e463b92a616ce9fa5f9fc27cbf4e9553829977016fc60f22bc9",
+    "opstack/Layer2/SchemaRegistry": "0xda13fcbc1ed748b07a624830903209695f9c3550578abb2bc2ad5c43bcf6e0d5",
+    "opstack/Layer2/SequencerFeeVault": "0xdfa23130a6a73150f232beb59013d4dd7c3e77944a930fd80129f9a520c7280a"
   }
 }
