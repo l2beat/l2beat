@@ -1,16 +1,17 @@
 import type { Bridge } from '../internalTypes'
-import { acrossV3 } from '../projects/across-v3/acrossV3'
+import { acrossV3 } from '../projects/across-v3/across-v3'
 import { allbridge } from '../projects/allbridge/allbridge'
 import { amarok } from '../projects/amarok/amarok'
 import { ankr } from '../projects/ankr/ankr'
 import { aptos } from '../projects/aptos/aptos'
 import { avalanche } from '../projects/avalanche/avalanche'
-import { beamerbridgev2 } from '../projects/beamer-bridge-v2/beamerBridgeV2'
-import { cBridge } from '../projects/cBridge/cBridge'
+import { beamerbridgev2 } from '../projects/beamer-bridge-v2/beamer-bridge-v2'
+import { cBridge } from '../projects/cbridge/cbridge'
 import { chainport } from '../projects/chainport/chainport'
 import { connext } from '../projects/connext/connext'
 import { davos } from '../projects/davos/davos'
 import { debridge } from '../projects/debridge/debridge'
+import { everclearbridge } from '../projects/everclearbridge/everclearbridge'
 import { fraxferry } from '../projects/fraxferry/fraxferry'
 import { gravity } from '../projects/gravity/gravity'
 import { harmony } from '../projects/harmony/harmony'
@@ -18,7 +19,7 @@ import { hop } from '../projects/hop/hop'
 import { hyperlane } from '../projects/hyperlane/hyperlane'
 import { hyphen } from '../projects/hyphen/hyphen'
 import { layerzerov2oft } from '../projects/layerzerov2oft/layerzerov2oft'
-import { lzOmnichain } from '../projects/lzOmnichain/lzOmnichain'
+import { lzOmnichain } from '../projects/lzomnichain/lzomnichain'
 import { multichain } from '../projects/multichain/multichain'
 import { near } from '../projects/near/near'
 import { nomad } from '../projects/nomad/nomad'
@@ -33,7 +34,7 @@ import { portal } from '../projects/portal/portal'
 import { pulseChain } from '../projects/pulseChain/pulseChain'
 import { ronin } from '../projects/ronin/ronin'
 import { satellite } from '../projects/satellite/satellite'
-import { skaleIMA } from '../projects/skale-ima/skaleIMA'
+import { skaleIMA } from '../projects/skale-ima/skale-ima'
 import { socket } from '../projects/socket/socket'
 import { sollet } from '../projects/sollet/sollet'
 import { sonicgateway } from '../projects/sonicgateway/sonicgateway'
@@ -59,6 +60,7 @@ export const bridges: Bridge[] = [
   connext,
   debridge,
   davos,
+  everclearbridge,
   gravity,
   harmony,
   hyperlane,

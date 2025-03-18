@@ -47,7 +47,7 @@ describe(DaIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'day'),
@@ -73,7 +73,7 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
         expect(safeHeight).toEqual(150)
       })
 
@@ -85,7 +85,7 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 200)
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
         expect(safeHeight).toEqual(200)
       })
     })
@@ -99,7 +99,7 @@ describe(DaIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(100, 200, [])
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 200)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(safeHeight).toEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
@@ -190,7 +190,6 @@ function mockIndexer($: {
     db: mockDatabase({
       dataAvailability: repository,
     }),
-    serializeConfiguration: (value: DaTrackingConfig) => JSON.stringify(value),
   })
 
   return { repository, indexer, daService, daProvider }

@@ -78,6 +78,8 @@ export function getContractsSection(
           layerName: projectParams.daSolution.layerName,
           bridgeName: projectParams.daSolution.bridgeName,
           hostChainName: projectParams.daSolution.hostChainName,
+          layerSlug: projectParams.daSolution.layerSlug,
+          bridgeSlug: projectParams.daSolution.bridgeSlug,
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             return makeTechnologyContract(
               contract,

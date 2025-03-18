@@ -76,7 +76,6 @@ export function createTrackedTxsModule(
     })),
     updaters,
     db: peripherals.database,
-    serializeConfiguration: (config) => JSON.stringify(config),
   })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined

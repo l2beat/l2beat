@@ -1,8 +1,10 @@
 'use client'
+import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
+import { TableLink } from '~/components/table/table-link'
 import { useTable } from '~/hooks/use-table'
 import type {
   DaBridgeSummaryEntry,
@@ -22,6 +24,11 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
     data: items,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
+    },
   })
 
   const renderSpanFill = ({ row }: { row: Row<DaSummaryEntry> }) => {
@@ -35,10 +42,11 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
       <>
         {remainingBridges.map((bridge) => (
           <TableRow
-            key={bridge.href}
+            slug={row.original.slug}
+            key={bridge.slug}
             className={getRowTypeClassNames({ isEthereum: false })}
           >
-            <BridgeCells bridge={bridge} />
+            <BridgeCells layer={row.original} bridge={bridge} />
           </TableRow>
         ))}
       </>
@@ -50,7 +58,9 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
       return null
     }
 
-    return <BridgeCells bridge={row.original.bridges[0]!} />
+    return (
+      <BridgeCells layer={row.original} bridge={row.original.bridges[0]!} />
+    )
   }
 
   return (
@@ -63,28 +73,33 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
 }
 
 function BridgeCells({
+  layer,
   bridge,
 }: {
+  layer: DaSummaryEntry
   bridge: DaBridgeSummaryEntry
-  excludeBridge?: boolean
 }) {
   return (
     <>
-      <TableCell
-        href={bridge.href}
-        className="text-sm font-medium group-first:pl-0"
-      >
-        <div className="pl-4">{bridge.name}</div>
+      <TableCell className="text-sm font-medium first:pl-0">
+        <TableLink href={bridge.href} className="ml-4 md:ml-1">
+          {bridge.name}
+        </TableLink>
+      </TableCell>
+      <TableCell className="flex items-center justify-center pl-4">
+        <GrissiniCell
+          values={bridge.risks}
+          href={
+            layer.id === ProjectId.ETHEREUM
+              ? undefined
+              : `/data-availability/risk?tab=${layer.tab}&highlight=${layer.slug}`
+          }
+          disabledOnMobile
+        />
       </TableCell>
       <TableCell
-        href={bridge.href}
-        className="flex items-center justify-center pl-4"
-      >
-        <GrissiniCell values={bridge.risks} />
-      </TableCell>
-      <TableCell
-        className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
-        href={bridge.href}
+        className="pr-[30px] text-sm font-medium md:pr-[42px]"
+        align="right"
       >
         {formatDollarValueNumber(bridge.tvs.latest)}
       </TableCell>

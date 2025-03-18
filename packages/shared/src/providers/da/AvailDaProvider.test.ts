@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { PolkadotRpcClient } from '../../clients'
 import { AvailDaProvider } from './AvailDaProvider'
-import type { AvailBlob } from './DaProvider'
+import type { AvailBlob } from './types'
 
 describe(AvailDaProvider.name, () => {
   describe(AvailDaProvider.prototype.getBlobs.name, () => {

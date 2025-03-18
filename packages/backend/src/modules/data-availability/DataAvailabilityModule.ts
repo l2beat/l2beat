@@ -1,10 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
-import type {
-  DaTrackingConfig,
-  DataAvailabilityTrackingConfig,
-} from '../../config/Config'
+import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
@@ -77,7 +74,6 @@ function createIndexers(
   const daService = new DaService()
   const indexerService = new IndexerService(database)
   const blockProviders = providers.block
-  const daProviders = providers.getDaProviders()
 
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
@@ -95,8 +91,6 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const daProvider = daProviders.getProvider(daLayer.name)
-
     const configurations = config.projects.filter(
       (c) => c.config.daLayer === daLayer.name,
     )
@@ -108,7 +102,7 @@ function createIndexers(
         maxHeight: c.config.untilBlock ?? null,
         properties: c.config,
       })),
-      daProvider,
+      daProvider: providers.da,
       daService,
       logger,
       daLayer: daLayer.name,
@@ -116,8 +110,6 @@ function createIndexers(
       parents: [targetIndexer],
       indexerService,
       db: database,
-      serializeConfiguration: (value: DaTrackingConfig) =>
-        JSON.stringify(value),
     })
     daIndexers.push(indexer)
   }

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "tokens",
+  "chain": "ethereum",
+  "initialAddresses": [
+    "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766", // STRK
+    "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0" // wstETH
+  ],
+  "import": ["../../ethereumConfig.jsonc"]
+}

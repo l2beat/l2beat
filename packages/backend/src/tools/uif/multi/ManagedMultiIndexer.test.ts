@@ -56,7 +56,7 @@ describe(ManagedMultiIndexer.name, () => {
           name: 'other-name',
           configurations: [mockObject<Configuration<string>>({ id: 'a' })],
         })
-      }).toThrow('Configuration id a is duplicated!')
+      }).toThrow('Configuration id a is duplicated in other-name')
     })
   })
 

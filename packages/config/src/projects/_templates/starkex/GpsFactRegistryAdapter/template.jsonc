@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GpsFactRegistryAdapter",
+  "description": "Adapter between the core contract and the {{gpsContract}}. Stores the Cairo programHash (`{{programHash}}`).",
+  "fields": {
+    "programHashMapped": {
+      "handler": {
+        "type": "call",
+        "method": "programHash",
+        "args": []
+      },
+      "returnType": "(StarknetProgramHash)"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { BridgesTvsChart } from '~/components/chart/tvs/bridges-tvs-chart'
 import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'

@@ -261,10 +261,8 @@ describe(decode.name, () => {
 
   it('can decode parameters', () => {
     const abi = '(address, uint, bool)'
-    const encoded = encodeAbiParameters(parseAbiParameters(abi.slice(1, -1)), [
-      '0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB',
-      2n,
-      true,
+    const encoded = encodeAbiParameters(parseAbiParameters(abi), [
+      ['0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB', 2n, true],
     ])
 
     const decoded = decode(encoded, [abi])
@@ -274,11 +272,17 @@ describe(decode.name, () => {
     expect(decoded.values).toEqual([
       {
         stack: ['0'],
-        type: 'address',
-        value: '0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB',
+        type: 'tuple',
+        value: [
+          {
+            stack: ['0', '0'],
+            type: 'address',
+            value: '0xABaBaBaBABabABabAbAbABAbABabababaBaBABaB',
+          },
+          { stack: ['0', '1'], type: 'uint256', value: 2n },
+          { stack: ['0', '2'], type: 'bool', value: true },
+        ],
       },
-      { stack: ['1'], type: 'uint256', value: 2n },
-      { stack: ['2'], type: 'bool', value: true },
     ])
   })
 })

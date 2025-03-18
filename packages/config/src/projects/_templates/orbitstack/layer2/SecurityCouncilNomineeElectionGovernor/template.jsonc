@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "gov",
+  "description": "Token governance contract for the Security Council nominee elections.",
+  "ignoreMethods": [
+    "compliantNomineeCount",
+    "compliantNominees",
+    "electionIndexToCohort",
+    "electionIndexToDescription",
+    "electionToTimestamp",
+    "excludedNomineeCount",
+    "getPastCirculatingSupply",
+    "getProposeArgs",
+    "nomineeCount",
+    "nominees",
+    "proposalDeadline",
+    "proposalSnapshot",
+    "proposalVettingDeadline",
+    "quorum"
+  ]
+}

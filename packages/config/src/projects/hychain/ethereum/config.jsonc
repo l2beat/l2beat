@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "hychain",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x73C6af7029E714DFf1F1554F88b79B335011Da68"], // Bridge
+  "names": {
+    "0x798Fa726f0B4DF564681446D051b344E3FE4a6ca": "HychainMultisig"
+  }
+}

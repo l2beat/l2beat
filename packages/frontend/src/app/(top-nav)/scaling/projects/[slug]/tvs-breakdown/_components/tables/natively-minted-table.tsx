@@ -11,6 +11,7 @@ export type NativelyMintedTokenEntry =
 
 interface Props {
   tokens: NativelyMintedTokenEntry[]
+  id: string
 }
 
 export function NativelyMintedTable(props: Props) {
@@ -27,7 +28,7 @@ export function NativelyMintedTable(props: Props) {
   return (
     <div className="flex flex-col">
       <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
-        Natively Minted Value
+        <a href={`#${props.id}`}>Natively Minted Value</a>
       </h2>
       <TokenTable table={table} />
       <TableSum amount={usdSum} />
