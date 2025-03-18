@@ -195,11 +195,11 @@ export class ZkStackDataFetcher {
   }
 
   private getPubdataModeName(mode: number): string {
-    return this.pubdataModes[mode] || `Mode ${mode}`
+    return this.pubdataModes[mode] || `mode ${mode}`
   }
 
   private getChainName(chainID: string): string {
-    return this.chainIdToName[chainID] || `L2 Chain ${chainID}`
+    return this.chainIdToName[chainID] || `chain ${chainID}`
   }
 
   private formatProtocolVersion(version: {
@@ -233,7 +233,7 @@ export class ZkStackDataFetcher {
       this.provider,
     )
 
-    console.log('Fetching zkStack L2 data...')
+    console.log('fetching L2 data...')
 
     try {
       // Fetch all hyperchain addresses and chain IDs
@@ -244,7 +244,7 @@ export class ZkStackDataFetcher {
 
       // Check if we have data
       if (chainAddresses.length === 0 || chainIDs.length === 0) {
-        console.log('No hyperchains found')
+        console.log('no hyperchains found')
         return
       }
 
@@ -260,7 +260,7 @@ export class ZkStackDataFetcher {
         }
 
         const chainID = chainIDs[i]
-        console.log(`Fetching data for chain ID: ${chainID.toString()}`)
+        console.log(`fetching data for chain ID: ${chainID.toString()}`)
 
         try {
           // Get chain admin
@@ -277,13 +277,13 @@ export class ZkStackDataFetcher {
           const baseToken = await this.safeContractCall(
             () => diamond.getBaseToken(),
             '0x0000000000000000000000000000000000000000',
-            `Failed to get base token for chain ${chainID.toString()}`,
+            `failed to get base token for chain ${chainID.toString()}`,
           )
 
           const pubdataPricingMode = await this.safeContractCall(
             () => diamond.getPubdataPricingMode(),
             0,
-            `Failed to get pubdata pricing mode for chain ${chainID.toString()}`,
+            `failed to get pubdata pricing mode for chain ${chainID.toString()}`,
           )
 
           let major = 0,
@@ -293,14 +293,14 @@ export class ZkStackDataFetcher {
             ;[major, minor, patch] = await diamond.getSemverProtocolVersion()
           } catch (_error) {
             console.warn(
-              `Failed to get protocol version for chain ${chainID.toString()}`,
+              `failed to get protocol version for chain ${chainID.toString()}`,
             )
           }
 
           const totalBlocksExecuted = await this.safeContractCall(
             () => diamond.getTotalBlocksExecuted(),
             ethers.BigNumber.from(0),
-            `Failed to get total blocks executed for chain ${chainID.toString()}`,
+            `failed to get total blocks executed for chain ${chainID.toString()}`,
           )
 
           // Add to our data list
@@ -319,7 +319,7 @@ export class ZkStackDataFetcher {
           })
         } catch (error: unknown) {
           console.error(
-            `Error processing chain ${chainID.toString()}: ${
+            `rrror processing chain ${chainID.toString()}: ${
               error instanceof Error ? error.message : String(error)
             }`,
           )
@@ -357,14 +357,14 @@ export class ZkStackDataFetcher {
         this.outputFilePath,
         JSON.stringify(formattedData, null, 2),
       )
-      console.log(`Full data saved to ${this.outputFilePath}`)
+      console.log(`full data saved to ${this.outputFilePath}`)
 
       // Display table
-      console.log('zkStack L2 Data Summary:')
+      console.log('ZK stack summary:')
       console.log(this.createConsoleTable(formattedData))
     } catch (error: unknown) {
       console.error(
-        `Error fetching zkStack data: ${
+        `error fetching data: ${
           error instanceof Error ? error.message : String(error)
         }`,
       )
