@@ -21,6 +21,11 @@ export function DaRiskTable({
     data: items,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
+    },
   })
 
   const renderSpanFill = ({ row }: { row: Row<DaRiskEntry> }) => {
