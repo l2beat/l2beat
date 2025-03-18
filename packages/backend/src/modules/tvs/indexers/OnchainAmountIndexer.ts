@@ -123,7 +123,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     this.logger.info('Fetched escrow balances')
 
     return balances.map((supply, i) => ({
-      configId: escrows[i].id,
+      configurationId: escrows[i].id,
       amount: supply,
       timestamp,
       project: escrows[i].properties.project,
@@ -153,7 +153,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     this.logger.info('Fetched tokens total supplies')
 
     return totalSupplies.map((supply, i) => ({
-      configId: tokens[i].id,
+      configurationId: tokens[i].id,
       amount: supply,
       timestamp,
       project: tokens[i].properties.project,

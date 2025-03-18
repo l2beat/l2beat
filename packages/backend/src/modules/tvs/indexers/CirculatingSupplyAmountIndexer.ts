@@ -1,6 +1,6 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
-import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
-import type { PriceProvider } from '@l2beat/shared'
+import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
+import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import {
   CoingeckoId,
   type RemovalConfiguration,
@@ -13,19 +13,26 @@ import type {
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import type { PriceConfig } from '../types'
+import type { CirculatingSupplyAmountFormula } from '../types'
 
-export interface TvsPriceIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<PriceConfig>, 'name'> {
-  syncOptimizer: SyncOptimizer
-  priceProvider: PriceProvider
+export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula & {
+  project: string
 }
 
-export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
-  constructor(private readonly $: TvsPriceIndexerDeps) {
+export interface CirculatingSupplyAmountIndexerDeps
+  extends Omit<
+    ManagedMultiIndexerOptions<CirculatingSupplyAmountConfig>,
+    'name'
+  > {
+  syncOptimizer: SyncOptimizer
+  circulatingSupplyProvider: CirculatingSupplyProvider
+}
+
+export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountConfig> {
+  constructor(private readonly $: CirculatingSupplyAmountIndexerDeps) {
     super({
       ...$,
-      name: INDEXER_NAMES.TVS_PRICE,
+      name: INDEXER_NAMES.TVS_CIRCULATING_SUPPLY,
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }
@@ -33,13 +40,13 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<PriceConfig>[],
+    configurations: Configuration<CirculatingSupplyAmountConfig>[],
   ) {
-    const adjustedTo = this.$.priceProvider.getAdjustedTo(from, to)
+    const adjustedTo = this.$.circulatingSupplyProvider.getAdjustedTo(from, to)
 
     // TODO: return if range too small
 
-    this.logger.info('Fetching prices', {
+    this.logger.info('Fetching circulating supplies', {
       from,
       to: adjustedTo,
       configurations: configurations.length,
@@ -49,19 +56,19 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       await Promise.all(
         configurations.map(async (configuration) => {
           try {
-            const prices = await this.$.priceProvider.getUsdPriceHistoryHourly(
-              CoingeckoId(configuration.properties.priceId),
-              UnixTime(from),
-              adjustedTo,
-            )
-            const configurationRecords: TvsPriceRecord[] = prices.map((p) => ({
+            const supplies =
+              await this.$.circulatingSupplyProvider.getCirculatingSupplies(
+                CoingeckoId(configuration.properties.apiId),
+                { from: from, to: adjustedTo },
+              )
+            const supplyRecords: TvsAmountRecord[] = supplies.map((p) => ({
               configurationId: configuration.id,
               timestamp: p.timestamp,
-              priceUsd: p.value,
-              priceId: configuration.properties.priceId,
+              amount: BigInt(p.value * 10 ** configuration.properties.decimals),
+              project: configuration.properties.project,
             }))
 
-            const optimizedRecords = configurationRecords.filter((p) =>
+            const optimizedRecords = supplyRecords.filter((p) =>
               this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
             )
 
@@ -72,9 +79,9 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
               error.message.startsWith('Insufficient data in response')
             ) {
               this.logger.warn(
-                `Failed to fetch prices for ${configuration.properties.priceId}`,
+                `Failed to fetch for ${configuration.properties.apiId}`,
                 {
-                  priceId: configuration.properties.priceId,
+                  priceId: configuration.properties.apiId,
                   error,
                 },
               )
@@ -87,7 +94,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
       )
     ).flat()
 
-    this.logger.info('Fetched prices', {
+    this.logger.info('Fetched circulating supplies', {
       from,
       to: adjustedTo,
       configurations: configurations.length,
@@ -95,7 +102,7 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
     })
 
     return async () => {
-      await this.$.db.tvsPrice.insertMany(records)
+      await this.$.db.tvsAmount.insertMany(records)
 
       this.logger.info('Saved prices into DB', {
         from,
@@ -109,11 +116,12 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
   override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
-      const deletedRecords = await this.$.db.tvsPrice.deleteByConfigInTimeRange(
-        configuration.id,
-        UnixTime(configuration.from),
-        UnixTime(configuration.to),
-      )
+      const deletedRecords =
+        await this.$.db.tvsAmount.deleteByConfigInTimeRange(
+          configuration.id,
+          UnixTime(configuration.from),
+          UnixTime(configuration.to),
+        )
 
       this.logger.info('Deleted records', {
         from: configuration.from,

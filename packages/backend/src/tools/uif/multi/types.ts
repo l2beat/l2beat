@@ -38,7 +38,7 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   name: string
   indexerService: IndexerService
   configurations: Configuration<T>[]
-  serializeConfiguration: (value: T) => string
+  serializeConfiguration?: (value: T) => string
   db: Database
   logger: Logger
   // Optionals

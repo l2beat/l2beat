@@ -9,13 +9,13 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { SyncOptimizer } from '../tvl/utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
+import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import {
   type OnchainAmountConfig,
   OnchainAmountIndexer,
 } from './indexers/OnchainAmountIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { createAmountConfig } from './tools/extractPricesAndAmounts'
-import type { PriceConfig } from './types'
 
 export function initTvsModule(
   config: Config,
@@ -54,8 +54,25 @@ export function initTvsModule(
       maxHeight: price.untilTimestamp ?? null,
       properties: price,
     })),
-    serializeConfiguration: (value: PriceConfig) => JSON.stringify(value),
     priceProvider: providers.price,
+    syncOptimizer,
+    db: database,
+  })
+
+  const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer({
+    logger,
+    parents: [hourlyIndexer],
+    indexerService,
+    configurations: config.tvs.amounts
+      .filter((a) => a.type === 'circulatingSupply')
+      .map((amount) => ({
+        // configurationId has to be 12 characters long so we cannot use the priceId directly
+        id: amount.id,
+        minHeight: amount.sinceTimestamp,
+        maxHeight: amount.untilTimestamp ?? null,
+        properties: amount,
+      })),
+    circulatingSupplyProvider: providers.circulatingSupply,
     syncOptimizer,
     db: database,
   })
@@ -76,7 +93,6 @@ export function initTvsModule(
           properties: chain,
         },
       ],
-      serializeConfiguration: (value) => JSON.stringify(value),
       db: database,
       logger,
     })
@@ -101,7 +117,6 @@ export function initTvsModule(
         maxHeight: c.untilTimestamp ?? null,
         properties: c,
       })),
-      serializeConfiguration: (value) => JSON.stringify(value),
       db: database,
       logger,
     })
@@ -111,6 +126,7 @@ export function initTvsModule(
   const start = async () => {
     await hourlyIndexer.start()
     await priceIndexer.start()
+    await circulatingSupplyIndexer.start()
 
     for (const indexer of indexers) {
       await indexer.start()
