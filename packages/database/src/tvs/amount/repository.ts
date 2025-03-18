@@ -1,6 +1,7 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type TvsAmountRecord, toRow } from './entity'
+import { type TvsAmountRecord, toRecord, toRow } from './entity'
+import { selectTvsAmount } from './select'
 
 export class TvsAmountRepository extends BaseRepository {
   async insertMany(records: TvsAmountRecord[]): Promise<number> {
@@ -11,6 +12,30 @@ export class TvsAmountRepository extends BaseRepository {
       await this.db.insertInto('TvsAmount').values(batch).execute()
     })
     return rows.length
+  }
+
+  async getAmounts(configurationIds: string[], timestamps: UnixTime[]) {
+    const from = timestamps[0]
+    const to = timestamps[timestamps.length - 1]
+    assert(from && to, 'Timestamps should not be empty')
+
+    const rows = await this.db
+      .selectFrom('TvsAmount')
+      .select(selectTvsAmount)
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .execute()
+
+    const records = rows.map(toRecord)
+
+    const result = new Map(timestamps.map((t) => [t, new Map()]))
+
+    for (const r of records) {
+      result.get(r.timestamp)?.set(r.configurationId, r.amount)
+    }
+
+    return result
   }
 
   async deleteByConfigInTimeRange(

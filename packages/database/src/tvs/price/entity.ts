@@ -14,7 +14,7 @@ export function toRecord(row: Selectable<TvsPrice>): TvsPriceRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     configurationId: row.configurationId,
     priceId: row.priceId,
-    priceUsd: +row.priceUsd,
+    priceUsd: row.priceUsd,
   }
 }
 
