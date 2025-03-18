@@ -20,6 +20,7 @@ import {
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
+import { PlusIcon } from '~/icons/plus'
 import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
 import { TableFilterValueMenuItems } from './table-filter-value-menu'
@@ -107,13 +108,15 @@ function Trigger() {
   return (
     <>
       <FilterIcon />
-      {state.length === 0 && (
+      {state.length === 0 ? (
         <>
           <span className="text-xs font-medium md:text-sm">Filters</span>
           <kbd className="flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-mono text-3xs font-bold text-primary-invert max-md:hidden">
             F
           </kbd>
         </>
+      ) : (
+        <PlusIcon className="size-4" />
       )}
     </>
   )
