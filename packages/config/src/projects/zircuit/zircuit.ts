@@ -46,6 +46,16 @@ const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
   ],
 }
 
+const sequencerAddress = EthereumAddress(
+  discovery.getContractValue('SystemConfig', 'batcherHash'),
+)
+const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+
+const genesisTimestamp = UnixTime(1719936217)
+
 export const zircuit: ScalingProject = opStackL2({
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
@@ -71,7 +81,7 @@ export const zircuit: ScalingProject = opStackL2({
     },
     architectureImage: 'zircuit',
   },
-  genesisTimestamp: UnixTime(1719936217),
+  genesisTimestamp,
   // Chain ID: 48900
   isNodeAvailable: 'UnderReview',
   nonTemplateTechnology: {
@@ -135,8 +145,22 @@ export const zircuit: ScalingProject = opStackL2({
     },
     {
       uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: sequencerAddress,
+        to: sequencerInbox,
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+    {
+      uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
         { type: 'l2costs', subtype: 'stateUpdates' },
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
       ],
       query: {
         formula: 'functionCall',
