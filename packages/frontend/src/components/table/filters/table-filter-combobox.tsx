@@ -60,18 +60,13 @@ function MobileFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const { state } = useTableFilterContext()
-
   return (
     <>
       <button
         onClick={() => setOpen(true)}
         className={cn(popoverTriggerClasses, 'h-8')}
       >
-        <FilterIcon />
-        {state.length === 0 && (
-          <span className="text-xs font-medium md:text-sm">Filters</span>
-        )}
+        <Trigger />
       </button>
       <CommandDialog
         open={open}
@@ -94,25 +89,33 @@ function DesktopFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const { state } = useTableFilterContext()
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className="flex h-8 gap-1.5">
-        <FilterIcon />
-        {state.length === 0 && (
-          <>
-            <span className="text-xs font-medium md:text-sm">Filters</span>
-            <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert">
-              F
-            </kbd>
-          </>
-        )}
+        <Trigger />
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start" side="bottom">
         <Content entries={entries} />
       </PopoverContent>
     </Popover>
+  )
+}
+
+function Trigger() {
+  const { state } = useTableFilterContext()
+
+  return (
+    <>
+      <FilterIcon />
+      {state.length === 0 && (
+        <>
+          <span className="text-xs font-medium md:text-sm">Filters</span>
+          <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert max-md:hidden">
+            F
+          </kbd>
+        </>
+      )}
+    </>
   )
 }
 
