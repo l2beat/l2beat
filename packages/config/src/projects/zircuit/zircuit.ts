@@ -160,7 +160,6 @@ export const zircuit: ScalingProject = opStackL2({
         { type: 'liveness', subtype: 'stateUpdates' },
         { type: 'l2costs', subtype: 'stateUpdates' },
         { type: 'liveness', subtype: 'proofSubmissions' },
-        { type: 'l2costs', subtype: 'proofSubmissions' },
       ],
       query: {
         formula: 'functionCall',
