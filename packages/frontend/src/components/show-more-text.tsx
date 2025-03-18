@@ -1,7 +1,9 @@
 'use client'
 import type { ReactNode } from 'react'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useEventCallback } from '~/hooks/use-event-callback'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
 import {
   Drawer,
@@ -30,28 +32,22 @@ export function ShowMoreText({
   const contentRef = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
 
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (contentRef.current) {
-        if (isMobile) {
-          const { scrollHeight, offsetHeight } = contentRef.current
-          setIsOverflowing(scrollHeight > offsetHeight)
-        } else {
-          const { scrollWidth, clientWidth } = contentRef.current
-          setIsOverflowing(scrollWidth > clientWidth)
-        }
+  const handleResize = useEventCallback(() => {
+    if (contentRef.current) {
+      const { scrollHeight, offsetHeight, clientWidth, scrollWidth } =
+        contentRef.current
+      if (isMobile) {
+        setIsOverflowing(scrollHeight > offsetHeight)
+      } else {
+        setIsOverflowing(scrollWidth > clientWidth)
       }
     }
+  })
 
-    checkOverflow()
-    window.addEventListener('resize', checkOverflow)
-    return () => window.removeEventListener('resize', checkOverflow)
-  }, [children, isMobile])
-
-  const toggleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    setExpanded(!expanded)
-  }
+  useEffect(() => {
+    handleResize()
+  }, [handleResize])
+  useEventListener('resize', handleResize)
 
   return (
     <div className={cn('w-full', className)}>
@@ -60,7 +56,7 @@ export function ShowMoreText({
           {children}
           <button
             className={cn('ml-1 cursor-pointer underline', textClassName)}
-            onClick={toggleExpand}
+            onClick={() => setExpanded((s) => !s)}
           >
             Show less
           </button>
@@ -86,7 +82,7 @@ export function ShowMoreText({
                 'hidden md:block',
                 textClassName,
               )}
-              onClick={toggleExpand}
+              onClick={() => setExpanded((s) => !s)}
             >
               Show more
             </button>
