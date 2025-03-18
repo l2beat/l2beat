@@ -3,20 +3,20 @@ import type { Insertable, Selectable } from 'kysely'
 import type { TvsBlockTimestamp } from '../../kysely/generated/types'
 
 export interface TvsBlockTimestampRecord {
-  chain: string
   timestamp: UnixTime
-  blockNumber: number
   configurationId: string
+  chain: string
+  blockNumber: number
 }
 
 export function toRecord(
   entity: Selectable<TvsBlockTimestamp>,
 ): TvsBlockTimestampRecord {
   return {
-    chain: entity.chain,
     timestamp: UnixTime.fromDate(entity.timestamp),
-    blockNumber: entity.blockNumber,
     configurationId: entity.configurationId,
+    chain: entity.chain,
+    blockNumber: entity.blockNumber,
   }
 }
 
@@ -24,9 +24,9 @@ export function toRow(
   blockTimestamp: TvsBlockTimestampRecord,
 ): Insertable<TvsBlockTimestamp> {
   return {
-    chain: blockTimestamp.chain,
     timestamp: UnixTime.toDate(blockTimestamp.timestamp),
-    blockNumber: blockTimestamp.blockNumber,
     configurationId: blockTimestamp.configurationId,
+    chain: blockTimestamp.chain,
+    blockNumber: blockTimestamp.blockNumber,
   }
 }

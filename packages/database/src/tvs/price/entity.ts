@@ -3,26 +3,26 @@ import type { Insertable, Selectable } from 'kysely'
 import type { TvsPrice } from '../../kysely/generated/types'
 
 export interface TvsPriceRecord {
-  configurationId: string
   timestamp: UnixTime
-  priceUsd: number
+  configurationId: string
   priceId: string
+  priceUsd: number
 }
 
 export function toRecord(row: Selectable<TvsPrice>): TvsPriceRecord {
   return {
-    configurationId: row.configurationId,
     timestamp: UnixTime.fromDate(row.timestamp),
-    priceUsd: +row.priceUsd,
+    configurationId: row.configurationId,
     priceId: row.priceId,
+    priceUsd: +row.priceUsd,
   }
 }
 
 export function toRow(record: TvsPriceRecord): Insertable<TvsPrice> {
   return {
-    configurationId: record.configurationId,
     timestamp: UnixTime.toDate(record.timestamp),
-    priceUsd: record.priceUsd,
+    configurationId: record.configurationId,
     priceId: record.priceId,
+    priceUsd: record.priceUsd,
   }
 }
