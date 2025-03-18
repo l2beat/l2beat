@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type TvsBlockTimestampRecord, toRow } from './entity'
+import { type TvsBlockTimestampRecord, toRecord, toRow } from './entity'
 
 export class TvsBlockTimestampRepository extends BaseRepository {
   async insertMany(records: TvsBlockTimestampRecord[]): Promise<number> {
@@ -37,6 +37,21 @@ export class TvsBlockTimestampRepository extends BaseRepository {
       .where('configurationId', '=', configId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async getAll(): Promise<TvsBlockTimestampRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsBlockTimestamp')
+      .select(['timestamp', 'configurationId', 'chain', 'blockNumber'])
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('TvsBlockTimestamp')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
