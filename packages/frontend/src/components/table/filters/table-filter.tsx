@@ -15,7 +15,7 @@ import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
 import { TableFilterValueMenu } from './table-filter-value-menu'
 import type { FilterState } from './use-filter-state'
-import { filterIdToLabel } from './utils/filter-id-to-label'
+import { filterIdToLabel, filterIdToValues } from './utils/filter-id-to-label'
 
 interface Props {
   filter: FilterState[number]
@@ -63,7 +63,7 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
 
   const label =
     filter.values.length > 1
-      ? `${filter.values.length} values`
+      ? `${filter.values.length} ${filterIdToValues[filter.id]}`
       : filter.values[0]
 
   if (isMobile) {

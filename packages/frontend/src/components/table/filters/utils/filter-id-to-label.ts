@@ -8,3 +8,14 @@ export const filterIdToLabel = {
   raas: 'RaaS',
   validatedBy: 'Validated by',
 }
+
+export const filterIdToValues: Record<keyof typeof filterIdToLabel, string> = {
+  type: 'types',
+  stack: 'stacks',
+  stage: 'stages',
+  purpose: 'purposes',
+  hostChain: 'chains',
+  daLayer: 'layers',
+  raas: 'providers',
+  validatedBy: 'validators',
+}
