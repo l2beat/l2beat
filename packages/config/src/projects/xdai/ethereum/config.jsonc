@@ -22,7 +22,8 @@
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "GnosisBridgeGovernanceMultisig"
   },
   "overrides": {
-    "DaiForeignBridge": {
+    "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473": {
+      // DaiForeignBridge
       "ignoreRelatives": [
         "compToken",
         "cDaiToken",
@@ -48,7 +49,8 @@
         }
       }
     },
-    "SDaiForeignBridge": {
+    "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
+      // SDaiForeignBridge
       "proxyType": "Eternal Storage proxy",
       "ignoreRelatives": [
         "compToken",
@@ -66,7 +68,8 @@
       ],
       "ignoreInWatchMode": ["maxAvailablePerTx"]
     },
-    "BridgeValidators": {
+    "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
+      // BridgeValidators
       "proxyType": "Eternal Storage proxy"
     }
   }

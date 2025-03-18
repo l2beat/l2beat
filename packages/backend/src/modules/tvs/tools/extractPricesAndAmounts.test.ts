@@ -1,3 +1,4 @@
+import type { ChainConfig } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ProjectTvsConfig, Token } from '../types'
@@ -65,7 +66,7 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
 
-    const result = extractPricesAndAmounts(tvsConfig)
+    const result = extractPricesAndAmounts(tvsConfig, CHAIN_CONFIG)
     expect(result).toEqual({
       amounts: [
         {
@@ -102,16 +103,24 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: '2c139cafd2fc',
+          id: 'fff2dc754e81',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
           priceId: 'price-ARB',
         },
         {
-          id: '17ca46353457',
+          id: '56cbc9892d6c',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
           priceId: 'price-ATH',
+        },
+      ],
+      chains: [
+        {
+          chainName: 'arbitrum',
+          configurationId: 'd09f3d9fe936',
+          sinceTimestamp: 1000,
+          untilTimestamp: 10000,
         },
       ],
     })
@@ -189,7 +198,7 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
 
-    const result = extractPricesAndAmounts(tvsConfig)
+    const result = extractPricesAndAmounts(tvsConfig, CHAIN_CONFIG)
     expect(result).toEqual({
       amounts: [
         {
@@ -221,16 +230,24 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: 'b1094eff0b2f',
+          id: 'e335909ed429',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
           priceId: 'price-WBTC',
         },
         {
-          id: 'e0e7a23aa426',
+          id: '2822264dfb65',
           sinceTimestamp: UnixTime(100),
           untilTimestamp: undefined,
           priceId: 'price-SolvBTC',
+        },
+      ],
+      chains: [
+        {
+          chainName: 'bob',
+          configurationId: 'a8926b157038',
+          sinceTimestamp: 2000,
+          untilTimestamp: 20000,
         },
       ],
     })
@@ -326,7 +343,7 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
 
-    const result = extractPricesAndAmounts(tvsConfig)
+    const result = extractPricesAndAmounts(tvsConfig, CHAIN_CONFIG)
     expect(result).toEqual({
       amounts: [
         {
@@ -341,24 +358,56 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: '5805b54d53ce',
+          id: '959fffc0b0f8',
           sinceTimestamp: 50,
           untilTimestamp: 300,
           priceId: 'price-A',
         },
         {
-          id: '319118d11330',
+          id: '8c0be66d180a',
           priceId: 'price-B',
           sinceTimestamp: 50,
           untilTimestamp: undefined,
         },
         {
-          id: '67821b81fda4',
+          id: '472a7a716596',
           sinceTimestamp: 300,
           untilTimestamp: 500,
           priceId: 'price-C',
         },
       ],
+      chains: [
+        {
+          chainName: 'chain',
+          configurationId: 'dfd8c3833a97',
+          sinceTimestamp: 3000,
+          untilTimestamp: 30000,
+        },
+      ],
     })
   })
 })
+
+const CHAIN_CONFIG = [
+  {
+    id: 'arbitrum',
+    chainConfig: mockObject<ChainConfig>({
+      sinceTimestamp: 1000,
+      untilTimestamp: 10_000,
+    }),
+  },
+  {
+    id: 'bob',
+    chainConfig: mockObject<ChainConfig>({
+      sinceTimestamp: 2000,
+      untilTimestamp: 20_000,
+    }),
+  },
+  {
+    id: 'chain',
+    chainConfig: mockObject<ChainConfig>({
+      sinceTimestamp: 3000,
+      untilTimestamp: 30_000,
+    }),
+  },
+]

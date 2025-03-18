@@ -111,10 +111,7 @@ export class DiscoveryConfig {
       throw new Error(`Cannot resolve ${nameOrAddress.toString()}`)
     }
 
-    const unparsedOverride =
-      this.config.overrides?.[address.toString()] ??
-      this.config.overrides?.[name ?? ''] ??
-      {}
+    const unparsedOverride = this.config.overrides?.[address.toString()] ?? {}
 
     const override = DiscoveryContract.parse(unparsedOverride)
     return { name, address, ...override }

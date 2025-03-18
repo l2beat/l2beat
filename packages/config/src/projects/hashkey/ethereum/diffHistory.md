@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x0c7b5fa920c41816288afd2af9ad58b16487b463
+Generated with discovered.json: 0x3dbb999518d6cda50b090d4f6007591bbacb07fb
+
+# Diff at Tue, 18 Mar 2025 08:12:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21680579
+- current block number: 21680579
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680579 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 3 (0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3) {
+    +++ description: None
+      name:
+-        "HashkeyOpsMultisig"
++        "Hashkey Multisig 3"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      name:
+-        "HashkeyUpgradeMultisig"
++        "Hashkey Multisig 1"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 2 (0xC7fCbE26c1Db751d63869F72F782a56710f6be5A) {
+    +++ description: None
+      name:
+-        "HashkeyGuardianMultisig"
++        "Hashkey Multisig 2"
+    }
+```
+
+Generated with discovered.json: 0x7ac57517f8403e7b8c906f7b419ec3e32048218f
 
 # Diff at Tue, 04 Mar 2025 11:25:46 GMT:
 

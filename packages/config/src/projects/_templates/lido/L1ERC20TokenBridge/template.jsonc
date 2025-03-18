@@ -8,17 +8,5 @@
     "l2TokenBridge",
     "$admin",
     "proxy__getAdmin"
-  ],
-  "fields": {
-    // "$admin": {
-    //   "target": {
-    //     "permissions": [
-    //       {
-    //         "type": "upgrade",
-    //         "description": "allows to access all escrowed funds and change every component of the smart contract."
-    //       }
-    //     ]
-    //   }
-    // }
-  }
+  ]
 }

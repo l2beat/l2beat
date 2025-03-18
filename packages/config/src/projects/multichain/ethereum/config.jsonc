@@ -23,10 +23,12 @@
     "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": "AnyswapV6Router"
   },
   "overrides": {
-    "AnyswapV4Router": {
+    "0x6b7a87899490EcE95443e979cA9485CBE7E71522": {
+      // AnyswapV4Router
       "ignoreRelatives": ["wNATIVE", "factory"]
     },
-    "AnyswapV6Router": {
+    "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": {
+      // AnyswapV6Router
       "ignoreRelatives": ["wNATIVE", "factory"]
     }
   }

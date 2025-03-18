@@ -15,7 +15,8 @@
     "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": "OptimismProxyAdmin"
   },
   "overrides": {
-    "OptimismL2Gateway": {
+    "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": {
+      // OptimismL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }

@@ -112,7 +112,7 @@ function getTechnologySection(
               text: 'Learn more about the DA layer here:',
               project: {
                 name: daSolution.layerName,
-                slug: `${daSolution.layerName}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
+                slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
                 type: 'data-availability',
               },
             }

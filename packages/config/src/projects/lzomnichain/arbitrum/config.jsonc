@@ -13,16 +13,20 @@
     "0x9c8D8A224545c15024cB50C7c02cf3EA9AA1bF36": "PriceFeed"
   },
   "overrides": {
-    "PriceFeed": {
+    "0x9c8D8A224545c15024cB50C7c02cf3EA9AA1bF36": {
+      // PriceFeed
       "ignoreDiscovery": true
     },
-    "Stargate Bridge": {
+    "0x352d8275AAE3e0c2404d9f68f6cEE084B5bEB3DD": {
+      // Stargate Bridge
       "ignoreDiscovery": true
     },
-    "Stargate Token": {
+    "0x6694340fc020c5E6B96567843da2df01b2CE1eb6": {
+      // Stargate Token
       "ignoreDiscovery": true
     },
-    "Endpoint": {
+    "0x3c2269811836af69497E5F486A85D7316753cf62": {
+      // Endpoint
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "fields": {
         "libraryLookup": {
@@ -37,10 +41,12 @@
         }
       }
     },
-    "LayerZero Multisig": {
+    "0xFE22f5D2755b06b9149656C5793Cb15A08d09847": {
+      // LayerZero Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "UltraLightNodeV2": {
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": {
+      // UltraLightNodeV2
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",

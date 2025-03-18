@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x4e6f4753085b1c670a0bf84577515c07a1defe0c
+Generated with discovered.json: 0xa82a7c98f5a846577150800cb5effb38da5e1ad4
+
+# Diff at Tue, 18 Mar 2025 08:12:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22032270
+- current block number: 22032270
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22032270 (main branch discovery), not current.
+
+```diff
+    contract Arbitrum Multisig 1 (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      name:
+-        "BatchPosterManagerMultisig"
++        "Arbitrum Multisig 1"
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      name:
+-        "SecurityCouncil"
++        "Arbitrum Security Council"
+    }
+```
+
+Generated with discovered.json: 0x4b94c84e06d078fd492f410f46939a0f5ea3ec0b
 
 # Diff at Wed, 12 Mar 2025 17:26:59 GMT:
 

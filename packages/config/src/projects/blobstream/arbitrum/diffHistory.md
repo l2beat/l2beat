@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x3f67b26072aa483c7476dcd8acd7cb2b7bdc5c0c
+Generated with discovered.json: 0xbe0b3c14166a19e5c55611acee595cdfaf6f4c20
+
+# Diff at Tue, 18 Mar 2025 08:14:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 305996466
+- current block number: 305996466
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305996466 (main branch discovery), not current.
+
+```diff
+    contract Succinct Multisig 1 (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SuccinctGatewaySP1Multisig"
++        "Succinct Multisig 1"
+    }
+```
+
+Generated with discovered.json: 0xc75c52ffdbbeb06f7ab83949b3359ddd1988c723
 
 # Diff at Tue, 04 Mar 2025 10:40:23 GMT:
 

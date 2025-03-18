@@ -1,4 +1,49 @@
-Generated with discovered.json: 0xa3d8ef4c176e83c0aec91771bb89672b5bb8fedf
+Generated with discovered.json: 0x3900d8f1e6671fdbdb837e89737abaef0d91f68d
+
+# Diff at Tue, 18 Mar 2025 08:13:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21242938
+- current block number: 21242938
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242938 (main branch discovery), not current.
+
+```diff
+    contract Race Multisig 2 (0x2E7B9465B25C081c07274A31DbD05C6146f67961) {
+    +++ description: None
+      name:
+-        "RaceMultisig2"
++        "Race Multisig 2"
+    }
+```
+
+```diff
+    contract Race Multisig 1 (0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea) {
+    +++ description: None
+      name:
+-        "RaceMultisig1"
++        "Race Multisig 1"
+    }
+```
+
+```diff
+    contract Race Multisig 3 (0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9) {
+    +++ description: None
+      name:
+-        "RaceMultisig3"
++        "Race Multisig 3"
+    }
+```
+
+Generated with discovered.json: 0x04b0486994e64807830cd99cf5859f42004e003d
 
 # Diff at Tue, 04 Mar 2025 11:26:12 GMT:
 

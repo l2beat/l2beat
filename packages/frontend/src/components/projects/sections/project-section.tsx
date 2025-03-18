@@ -1,6 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
 
+import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
 import type { ProjectSectionId } from './types'
@@ -20,34 +21,40 @@ export interface ExtendedProjectSectionProps {
 export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   return (
-    <Component
+    <HighlightablePrimaryCard
       id={props.id}
+      data-role="project-section"
       className={cn(
-        'border-divider bg-surface-primary px-4 py-8 primary-card max-md:border-b max-md:last:border-none md:mt-10 md:rounded-lg md:p-8',
+        'scroll-mt-10 px-4 py-8 md:mt-10 md:scroll-mt-8 md:p-8',
+        'max-md:border-b max-md:border-divider max-md:last:border-none',
+        'md:rounded-lg',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
+      asChild
     >
-      <ProjectDetailsSectionHeader
-        title={props.title}
-        id={props.id}
-        sectionOrder={props.sectionOrder}
-        nested={props.nested}
-        className="mb-4"
-      />
-      {props.isUnderReview ? (
-        !props.hideChildrenIfUnderReview ? (
-          <>
-            <UnderReviewCallout className="mb-4" />
-            {props.children}
-          </>
+      <Component>
+        <ProjectDetailsSectionHeader
+          title={props.title}
+          id={props.id}
+          sectionOrder={props.sectionOrder}
+          nested={props.nested}
+          className="mb-4"
+        />
+        {props.isUnderReview ? (
+          !props.hideChildrenIfUnderReview ? (
+            <>
+              <UnderReviewCallout className="mb-4" />
+              {props.children}
+            </>
+          ) : (
+            <UnderReviewCallout />
+          )
         ) : (
-          <UnderReviewCallout />
-        )
-      ) : (
-        props.children
-      )}
-    </Component>
+          props.children
+        )}
+      </Component>
+    </HighlightablePrimaryCard>
   )
 }
 

@@ -42,10 +42,12 @@
     "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {
-    "PriceFeed": {
+    "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": {
+      // PriceFeed
       "ignoreDiscovery": true
     },
-    "PolyhedraDVN": {
+    "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": {
+      // PolyhedraDVN
       "ignoreRelatives": [
         "layerZeroEndpointV1",
         "mptValidator",
@@ -54,7 +56,8 @@
       ],
       "ignoreMethods": ["feeBalance"]
     },
-    "SendUln302": {
+    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
+      // SendUln302
       "fields": {
         "defaultExecutor_ENA": {
           "description": "The default executor can be different for every OApp. In practice it is the same for most OApps. (LayerZero Executor) Should be reviewed if changed.",
@@ -91,7 +94,8 @@
         }
       }
     },
-    "EndpointV2": {
+    "0x1a44076050125825900e736c501f859c50fE728c": {
+      // EndpointV2
       "fields": {
         "getRegisteredLibraries": {
           "description": "All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.",

@@ -15,7 +15,8 @@
     "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": "MantaProxyAdmin"
   },
   "overrides": {
-    "MantaL2Gateway": {
+    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": {
+      // MantaL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }
