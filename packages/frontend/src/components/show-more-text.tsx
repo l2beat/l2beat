@@ -104,7 +104,7 @@ export function ShowMoreText({
                   <DrawerTitle className="mb-2.5 text-lg font-semibold text-primary">
                     {pageTitle}
                   </DrawerTitle>
-                  <DrawerDescription className={textClassName}>
+                  <DrawerDescription className="text-xs font-normal text-primary">
                     {children}
                   </DrawerDescription>
                 </DrawerHeader>
