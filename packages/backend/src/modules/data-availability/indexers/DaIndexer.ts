@@ -55,7 +55,11 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       to: adjustedTo,
     })
 
-    const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
+    const blobs = await this.$.daProvider.getBlobs(
+      this.daLayer,
+      from,
+      adjustedTo,
+    )
 
     if (blobs.length === 0) {
       this.logger.info('Empty blobs response received', {

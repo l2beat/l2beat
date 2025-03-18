@@ -1,0 +1,280 @@
+{
+  "name": "zklinknova",
+  "chain": "zksync2",
+  "blockNumber": 57470008,
+  "configHash": "0x29e90915c2e940eae9c5f7787133cc1539781684ac6c4e35fdf680ca4b57e7df",
+  "entries": [
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EraOwner",
+      "address": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+          "via": [{ "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1692606473,
+      "sinceBlock": 11790443,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
+        "$members": [
+          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+          "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+          "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+          "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+          "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+          "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+        ],
+        "$threshold": 5,
+        "domainSeparator": "0x2fc8d44f06e5c668fb84e60b612f3ec676602d5b1dbd747529f1a000b6a03ab1",
+        "getChainId": 324,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 29,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L1ERC20Bridge",
+      "address": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+          "via": [{ "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }]
+        }
+      ],
+      "sinceTimestamp": 1709297079,
+      "sinceBlock": 27865488,
+      "values": {
+        "$admin": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+        "$implementation": "0xdBA32e62e929a7e2Fa65782F812416CA65208E40",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T12:44:39.000Z",
+            "0x0564dfd39bc1c198014393565488b4808d94d76790f60c342ac6b031a000233d",
+            ["0x022c9D356d6B020D3128de430458A28C7183a13d"]
+          ],
+          [
+            "2024-04-04T06:25:17.000Z",
+            "0x7886648572871a6eb12027c117e273d16ee8026b5f51c0b01b209c0218caf005",
+            ["0xdBA32e62e929a7e2Fa65782F812416CA65208E40"]
+          ]
+        ],
+        "$upgradeCount": 2
+      },
+      "derivedName": ""
+    },
+    {
+      "name": "zkLink",
+      "address": "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1709280624,
+      "sinceBlock": 27849895,
+      "values": {
+        "$admin": "0x3334552599C9aA1FE08CfF276A02033FF37646ca",
+        "$implementation": "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E",
+        "$pastUpgrades": [
+          [
+            "2024-03-01T08:10:24.000Z",
+            "0xc46fbc277cb8c7a4cc234225d13ef11be35301d8aae17df2537a2b54692ab750",
+            ["0x1D3A82B3BDE1d23D3989b77325C4875395c9D6a9"]
+          ],
+          [
+            "2024-03-09T10:21:56.000Z",
+            "0x36b4b07ab7556a46e511974d1e6ef3baacce9b569299326bba10f33d8166d0f0",
+            ["0xCaAeA20e1e35214342f4Efe87d3912493E3e1CE5"]
+          ],
+          [
+            "2024-04-22T02:28:56.000Z",
+            "0x35dad9f42bcd7e9c55385a3656325f94616498878f636e080dbd059f80618492",
+            ["0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"]
+          ]
+        ],
+        "$upgradeCount": 3
+      },
+      "derivedName": ""
+    },
+    {
+      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "EraProxyAdmin",
+      "address": "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
+      "proxyType": "immutable",
+      "displayName": "ProxyAdmin",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+        }
+      ],
+      "sinceTimestamp": 1709297074,
+      "sinceBlock": 27865483,
+      "values": {
+        "$immutable": true,
+        "owner": "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x3334552599C9aA1FE08CfF276A02033FF37646ca": [
+      "constructor(address _singleton)"
+    ],
+    "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+  }
+}

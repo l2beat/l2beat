@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Verifier",
+  "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
+  "category": "core"
+}

@@ -162,7 +162,7 @@ function ChartLegendContent({
         const key = `${nameKey ?? item.dataKey ?? 'value'}`
         const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
-        if (!itemConfig) return null
+        if (!itemConfig || item.type === 'none') return null
 
         return (
           <div

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2ARBGateway",
+  "description": "ARB sent from L2 to L1 is escrowed in this contract and minted on L1.",
+  "ignoreRelatives": ["counterpartGateway"],
+  "ignoreInWatchMode": ["exitNum"]
+}

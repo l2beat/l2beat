@@ -141,6 +141,7 @@ export async function getTvsBreakdown(
             name: priceConfig.chain,
             id: ChainId(chainConverter.toChainId(priceConfig.chain)),
           },
+          isLockedInEscrow: config.type === 'escrow',
           amount: amountAsNumber,
           usdValue: valueAsNumber,
           usdPrice: price.toString(),

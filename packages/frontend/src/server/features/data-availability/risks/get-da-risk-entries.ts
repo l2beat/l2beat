@@ -1,4 +1,4 @@
-import type { DaBridgeRisks, DaLayerRisks, Project } from '@l2beat/config'
+import type { DaBridgeRisks, Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { TabbedDaEntries } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
 import { groupByDaTabs } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
@@ -8,7 +8,10 @@ import {
   getCommonDaEntry,
   getCommonDacDaEntry,
 } from '../get-common-da-entry'
-import { getDaLayerRisks } from '../utils/get-da-layer-risks'
+import {
+  type AdjustedDaLayerRisks,
+  getDaLayerRisks,
+} from '../utils/get-da-layer-risks'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvs,
@@ -50,7 +53,7 @@ export async function getDaRiskEntries(): Promise<
 
 export interface DaRiskEntry extends CommonDaEntry {
   tvs: number
-  risks: DaLayerRisks
+  risks: AdjustedDaLayerRisks
   bridges: DaBridgeRiskEntry[]
 }
 
@@ -124,7 +127,7 @@ function getDacEntry(
   }
   return {
     ...getCommonDacDaEntry({ project }),
-    risks: project.customDa.risks,
+    risks: getDaLayerRisks(project.customDa),
     tvs: tvs.latest,
     bridges: [bridgeEntry],
   }

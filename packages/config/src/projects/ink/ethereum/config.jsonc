@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "ink",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364" // SystemConfig
+  ]
+}

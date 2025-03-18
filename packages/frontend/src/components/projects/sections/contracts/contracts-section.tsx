@@ -39,28 +39,17 @@ export function ContractsSection(props: ContractsSectionProps) {
 
   const partitionedContracts = Object.fromEntries(
     Object.entries(props.contracts).map(([chainName, contracts]) => {
-      return [
-        chainName,
-        partition(
-          contracts,
-          (c) => c.implementationChanged || c.highSeverityFieldChanged,
-        ),
-      ]
+      return [chainName, partition(contracts, (c) => c.impactfulChange)]
     }),
   )
 
   const [changedEscrows, unchangedEscrows] = partition(
     props.escrows,
-    (c) => c.implementationChanged || c.highSeverityFieldChanged,
+    (c) => c.impactfulChange,
   )
-  const hasImplementationChanged = Object.values(props.contracts).some((p) =>
-    p.some((c) => !!c.implementationChanged),
+  const hasContractsChanged = Object.values(props.contracts).some((p) =>
+    p.some((c) => !!c.impactfulChange),
   )
-  const hasHighSeverityFieldChanged = Object.values(props.contracts).some((p) =>
-    p.some((c) => !!c.highSeverityFieldChanged),
-  )
-  const hasContractsChanged =
-    hasImplementationChanged || hasHighSeverityFieldChanged
 
   return (
     <ProjectSection
@@ -95,10 +84,8 @@ export function ContractsSection(props: ContractsSectionProps) {
                     />
                   ))}
                   {changedContracts.length > 0 && (
-                    <ImplementationHasChangedContracts
+                    <ContractsWithImpactfulChanges
                       contracts={changedContracts}
-                      hasImplementationChanged={hasImplementationChanged}
-                      hasHighSeverityFieldChanged={hasHighSeverityFieldChanged}
                     />
                   )}
                 </div>
@@ -142,11 +129,7 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             ))}
             {changedEscrows.length > 0 && (
-              <ImplementationHasChangedContracts
-                contracts={changedEscrows}
-                hasImplementationChanged={hasImplementationChanged}
-                hasHighSeverityFieldChanged={hasHighSeverityFieldChanged}
-              />
+              <ContractsWithImpactfulChanges contracts={changedEscrows} />
             )}
           </div>
         </>
@@ -172,15 +155,14 @@ function ChainNameHeader(props: { children: React.ReactNode }) {
   )
 }
 
-function ImplementationHasChangedContracts(props: {
+function ContractsWithImpactfulChanges(props: {
   contracts: TechnologyContract[]
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
 }) {
   return (
     <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        {statusToText(props)}
+        There are impactful changes to the following contracts, and part of the
+        information might be outdated.
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry
@@ -192,22 +174,4 @@ function ImplementationHasChangedContracts(props: {
       ))}
     </div>
   )
-}
-
-function statusToText({
-  hasImplementationChanged,
-  hasHighSeverityFieldChanged,
-}: {
-  hasImplementationChanged: boolean
-  hasHighSeverityFieldChanged: boolean
-}) {
-  if (hasImplementationChanged && hasHighSeverityFieldChanged) {
-    return "There are changes to the following contracts' implementations and properties, and part of the information might be outdated."
-  }
-  if (hasImplementationChanged) {
-    return 'There are implementation changes and part of the information might be outdated.'
-  }
-  if (hasHighSeverityFieldChanged) {
-    return "There are changes to the following contracts' properties, and part of the information might be outdated."
-  }
 }

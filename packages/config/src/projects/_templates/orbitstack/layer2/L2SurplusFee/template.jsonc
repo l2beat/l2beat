@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2SurplusFee",
+  "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
+  "fields": {
+    "recipientsData": {
+      "description": "Lists recipients and weights using events, while the latest represents the current state.",
+      "handler": {
+        "type": "event",
+        "select": ["recipients", "weights"],
+        "add": { "event": "RecipientsUpdated" }
+      }
+    }
+  },
+  "ignoreRelatives": ["recipientsData"]
+}

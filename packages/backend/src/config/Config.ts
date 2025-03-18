@@ -6,7 +6,11 @@ import type {
   ProjectDaTrackingConfig,
   ProjectFinalityConfig,
 } from '@l2beat/config'
-import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type {
+  ConfigReader,
+  DiscoveryChainConfig,
+  DiscoveryPaths,
+} from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
@@ -16,6 +20,7 @@ import type {
 } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
+  BlockTimestampConfig,
   PriceConfig,
   ProjectTvsConfig,
 } from '../modules/tvs/types'
@@ -102,8 +107,9 @@ export interface TvlConfig {
 
 export interface TvsConfig {
   readonly projects: ProjectTvsConfig[]
-  readonly amounts: AmountConfig[]
+  readonly amounts: (AmountConfig & { project: string; chain?: string })[]
   readonly prices: PriceConfig[]
+  readonly chains: BlockTimestampConfig[]
 }
 
 export interface TrackedTxProject {
@@ -187,6 +193,8 @@ export interface MetricsAuthConfig {
 }
 
 export interface UpdateMonitorConfig {
+  readonly configReader: ConfigReader
+  readonly paths: DiscoveryPaths
   readonly runOnStart?: boolean
   readonly cacheEnabled?: boolean
   readonly cacheUri: string

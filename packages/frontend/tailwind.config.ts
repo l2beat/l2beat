@@ -187,6 +187,12 @@ const config: Config = {
       link: 'hsl(var(--link))',
       'link-stroke': 'hsl(var(--link-stroke))',
       'chart-ethereum': 'hsl(var(--chart-ethereum))',
+      'chart-da-celestia': 'hsl(var(--chart-da-celestia))',
+      'chart-emerald': 'hsl(var(--chart-emerald))',
+      'chart-stacked-blue': 'hsl(var(--chart-stacked-blue))',
+      'chart-stacked-yellow': 'hsl(var(--chart-stacked-yellow))',
+      'chart-stacked-pink': 'hsl(var(--chart-stacked-pink))',
+      'chart-stacked-purple': 'hsl(var(--chart-stacked-purple))',
     },
     screens: {
       xs: '400px',

@@ -135,7 +135,7 @@ function getRisks(
 ): EntryRisks | undefined {
   if (project.customDa) {
     return {
-      daLayer: mapLayerRisksToRosetteValues(project.customDa.risks),
+      daLayer: mapLayerRisksToRosetteValues(getDaLayerRisks(project.customDa)),
       daBridge: mapBridgeRisksToRosetteValues(project.customDa.risks),
     }
   }
@@ -157,7 +157,6 @@ function getRisks(
 
   return {
     daLayer: mapLayerRisksToRosetteValues(
-      // It's really bad and it will be replaced soon
       getDaLayerRisks(daLayerProject.daLayer, tvs, economicSecurity),
     ),
     daBridge: daBridgeProject
