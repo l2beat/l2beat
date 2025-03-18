@@ -29,7 +29,7 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger disabledOnMobile className="size-full">
+      <TooltipTrigger disabledOnMobile className="h-full">
         <TableLink href={href}>
           <div className="flex gap-1">
             <StageBadge
