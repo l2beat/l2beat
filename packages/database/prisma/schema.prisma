@@ -283,3 +283,16 @@ model TvsPrice {
   @@id([timestamp, configurationId])
   @@index([priceId])
 }
+
+model TokenValue {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  project         String   @db.VarChar(255)
+  amount          Float    @db.Real
+  value           Float    @db.Real
+  valueForProject Float    @db.Real
+  valueForSummary Float    @db.Real
+
+  @@id([timestamp, configurationId])
+  @@index([project])
+}
