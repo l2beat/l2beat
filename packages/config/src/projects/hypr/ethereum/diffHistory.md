@@ -1,3 +1,82 @@
+Generated with discovered.json: 0x08272b03dd66822df41be0458e349c6625098687
+
+# Diff at Tue, 18 Mar 2025 08:12:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22046063
+- current block number: 22046063
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046063 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ConduitMultisig"
++        "Conduit Multisig 1"
+    }
+```
+
+Generated with discovered.json: 0xf146b6309ec46189cf9125af7e3d8aed7983687a
+
+# Diff at Fri, 14 Mar 2025 15:39:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@002bac09dea3b1154ecc36736323fb7552478ce4 block: 21637077
+- current block number: 22046063
+
+## Description
+
+Conduit MS changes.
+
+## Watched changes
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.9:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.8:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.7:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.6:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.5:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.4:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.3:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.2:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.1:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.$members.0:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 10 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x7188b6cb348459b053536431f8985fa6541ec0f4
 
 # Diff at Tue, 04 Mar 2025 11:25:50 GMT:

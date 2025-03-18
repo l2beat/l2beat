@@ -1,3 +1,115 @@
+Generated with discovered.json: 0x82c2252746ae3338cfd2f6384d4a9616d3703c9b
+
+# Diff at Tue, 18 Mar 2025 08:14:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22065781
+- current block number: 22065781
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22065781 (main branch discovery), not current.
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      name:
+-        "GelatoMultisig"
++        "Gelato Multisig"
+    }
+```
+
+Generated with discovered.json: 0x71d682b85faa2262d9cd7e0da04de00d239cc8ca
+
+# Diff at Mon, 17 Mar 2025 09:43:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@90da84321b8376c8ab52bfe726fd12b8e67b7d2e block: 21994047
+- current block number: 22065781
+
+## Description
+
+Add erc20 gateway escrow.
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21994047 (main branch discovery), not current.
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xEa83E8907C89Bc0D9517632f0ba081972E328631","via":[{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"},{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0xD80a805c86C14c879420eC6acb366D04D318fC0C","via":[{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"},{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"}]}
+      receivedPermissions.8.from:
+-        "0xEa83E8907C89Bc0D9517632f0ba081972E328631"
++        "0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91"
+      receivedPermissions.7.from:
+-        "0xD80a805c86C14c879420eC6acb366D04D318fC0C"
++        "0xB360b2f57c645E847148d7C479b7468AbF6F707d"
+      receivedPermissions.6.from:
+-        "0xB360b2f57c645E847148d7C479b7468AbF6F707d"
++        "0xa104C0426e95a5538e89131DbB4163d230C35f86"
+      receivedPermissions.5.from:
+-        "0xa104C0426e95a5538e89131DbB4163d230C35f86"
++        "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
+      receivedPermissions.4.from:
+-        "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
++        "0x73cfa0F6ae141212115657ad91Ad918E5d34d882"
+      receivedPermissions.3.from:
+-        "0x73cfa0F6ae141212115657ad91Ad918E5d34d882"
++        "0x5F00446D785421d65B50c192D7129e3C3906438A"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xe8606A55d105EF857F187C32Ae0E9a168aF8F497) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"0xEa83E8907C89Bc0D9517632f0ba081972E328631"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"0xD80a805c86C14c879420eC6acb366D04D318fC0C"}
+      directlyReceivedPermissions.6.from:
+-        "0xEa83E8907C89Bc0D9517632f0ba081972E328631"
++        "0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91"
+      directlyReceivedPermissions.5.from:
+-        "0xD80a805c86C14c879420eC6acb366D04D318fC0C"
++        "0xB360b2f57c645E847148d7C479b7468AbF6F707d"
+      directlyReceivedPermissions.4.from:
+-        "0xB360b2f57c645E847148d7C479b7468AbF6F707d"
++        "0xa104C0426e95a5538e89131DbB4163d230C35f86"
+      directlyReceivedPermissions.3.from:
+-        "0xa104C0426e95a5538e89131DbB4163d230C35f86"
++        "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
+      directlyReceivedPermissions.2.from:
+-        "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
++        "0x73cfa0F6ae141212115657ad91Ad918E5d34d882"
+      directlyReceivedPermissions.1.from:
+-        "0x73cfa0F6ae141212115657ad91Ad918E5d34d882"
++        "0x5F00446D785421d65B50c192D7129e3C3906438A"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0x5F00446D785421d65B50c192D7129e3C3906438A)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
 Generated with discovered.json: 0xe590dafcc3293f1592cab3c459745bece2ffd6b8
 
 # Diff at Fri, 07 Mar 2025 09:16:35 GMT:

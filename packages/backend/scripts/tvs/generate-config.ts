@@ -14,9 +14,6 @@ import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 import type { Token, TokenId } from '../../src/modules/tvs/types'
 
-// some projects are VERY slow to sync, to get config for them you need to run this script with the project name as an argument
-const PROJECTS_TO_SKIP = ['silicon']
-
 const args = {
   project: positional({
     type: optional(string),
@@ -65,7 +62,7 @@ const cmd = command({
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     for (const project of projects) {
-      if (!args.project && PROJECTS_TO_SKIP.includes(project.id)) {
+      if (!args.project) {
         logger.info(`Skipping project ${project.id}`)
         continue
       }

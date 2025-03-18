@@ -24,7 +24,8 @@
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumBridge"
   },
   "overrides": {
-    "ValidatorUtils": {
+    "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": {
+      // ValidatorUtils
       "fields": {
         "NOVA_STAKERS": {
           "handler": {
@@ -36,11 +37,13 @@
       },
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
-    "L1Timelock": {
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+      // L1Timelock
       "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
     },
     // Arbitrum One Bridge
-    "ArbitrumBridge": {
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
+      // ArbitrumBridge
       "ignoreMethods": [
         "acceptFundsFromOldBridge",
         "activeOutbox",
@@ -66,7 +69,8 @@
         "submitBatchSpendingReport"
       ]
     },
-    "L1DaiGateway": {
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": {
+      // L1DaiGateway
       "ignoreRelatives": [
         "counterpartGateway",
         "inbox",
@@ -76,7 +80,8 @@
         "l2Dai"
       ]
     },
-    "ValidatorOwnerMultisig": {
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": {
+      // ValidatorOwnerMultisig
       "ignoreInWatchMode": ["nonce"]
     }
   }

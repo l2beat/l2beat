@@ -9,7 +9,8 @@
     "0xb463603469Bf31f189E3F6625baf8378880Df14e": "NebraOwner"
   },
   "overrides": {
-    "UpaVerifier": {
+    "0x3B946743DEB7B6C97F05B7a31B23562448047E3E": {
+      // UpaVerifier
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": [
         "claimableFees",

@@ -21,7 +21,7 @@ import { educhain } from '../projects/educhain/educhain'
 import { evedex } from '../projects/evedex/evedex'
 import { fiefdom } from '../projects/fiefdom/fiefdom'
 import { forta } from '../projects/forta/forta'
-import { g7 } from '../projects/game7/g7'
+import { game7 } from '../projects/game7/game7'
 import { geist } from '../projects/geist/geist'
 import { ham } from '../projects/ham/ham'
 import { henez } from '../projects/henez/henez'
@@ -88,7 +88,7 @@ export const layer3s: ScalingProject[] = [
   evedex,
   fiefdom,
   forta,
-  g7,
+  game7,
   geist,
   inevm,
   ham,

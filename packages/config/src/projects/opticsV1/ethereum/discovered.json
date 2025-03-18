@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "blockNumber": 21937199,
-  "configHash": "0xd8c458168a05408f482071505e07f91fdb1c6ddb0e9f6de601d9b667319aaa5a",
+  "configHash": "0x5b6a9c14fce305368e74b153695792a73a73f34941c462d8c4ba52b689f34c44",
   "entries": [
     {
       "address": "0x07f5bFE05C5C4BF4a86af7BAf667e3737A3BA18F",
@@ -727,6 +727,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

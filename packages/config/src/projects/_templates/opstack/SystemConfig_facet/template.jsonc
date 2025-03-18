@@ -21,14 +21,12 @@
       "severity": "LOW"
     },
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        }
+      ]
     }
   },
   "category": "core"

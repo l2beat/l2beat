@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x5b56243eeed4ffa66ccf73bbfbb0878a2bad55f1
+Generated with discovered.json: 0x52adb00fc528d034ea73742a31096846848e729a
+
+# Diff at Tue, 18 Mar 2025 08:14:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22037103
+- current block number: 22037103
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22037103 (main branch discovery), not current.
+
+```diff
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      name:
+-        "ZkFoundationMultisig"
++        "ZK Foundation Multisig"
+    }
+```
+
+Generated with discovered.json: 0xb97d73a0cddfe9c506f4b6cd79c5aa3a58f21584
 
 # Diff at Thu, 13 Mar 2025 09:38:55 GMT:
 

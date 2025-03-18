@@ -17,7 +17,8 @@
     "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "BridgeAdminMultisig"
   },
   "overrides": {
-    "NearBridge": {
+    "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873": {
+      // NearBridge
       "ignoreMethods": ["checkBlockProducerSignatureInHead"], // too many values
       "ignoreInWatchMode": ["bridgeState", "lastValidAt"]
     }

@@ -16,6 +16,7 @@ import {
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
+import { TableLink } from '../../../../../../components/table/table-link'
 
 export interface TotalCellProps {
   breakdown:
@@ -27,13 +28,14 @@ export interface TotalCellProps {
       }
     | undefined
   associatedTokenSymbols: string[]
+  href: string
   change?: number
   tvsWarnings?: WarningWithSentiment[]
   gasTokens?: string[]
 }
 
-export function TotalCell(data: TotalCellProps) {
-  const tvsWarnings = data.tvsWarnings ?? []
+export function TotalCell(props: TotalCellProps) {
+  const tvsWarnings = props.tvsWarnings ?? []
   const anyBadWarnings = tvsWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tvsWarnings.some((w) => w.sentiment === 'warning')
 
@@ -45,7 +47,7 @@ export function TotalCell(data: TotalCellProps) {
       }
     />
   ) : null
-  if (data.breakdown?.total === undefined) {
+  if (props.breakdown?.total === undefined) {
     return (
       <Tooltip>
         <TooltipTrigger className="flex items-center">
@@ -71,36 +73,38 @@ export function TotalCell(data: TotalCellProps) {
     )
   }
 
-  const totalTvs = data.breakdown.total
+  const totalTvs = props.breakdown.total
 
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <div className="flex flex-col items-end">
-          <div className="flex items-center">
-            {icon}
-            <ValueWithPercentageChange change={data.change}>
-              {formatDollarValueNumber(totalTvs)}
-            </ValueWithPercentageChange>
+      <TooltipTrigger disabledOnMobile className="h-full">
+        <TableLink href={props.href}>
+          <div className="flex flex-col items-end">
+            <div className="flex items-center">
+              {icon}
+              <ValueWithPercentageChange change={props.change}>
+                {formatDollarValueNumber(totalTvs)}
+              </ValueWithPercentageChange>
+            </div>
+            <TokenBreakdown
+              total={props.breakdown.total}
+              associated={props.breakdown.associated}
+              ether={props.breakdown.ether}
+              stablecoin={props.breakdown.stablecoin}
+              className="h-[3px] w-[180px]"
+            />
           </div>
-          <TokenBreakdown
-            total={data.breakdown.total}
-            associated={data.breakdown.associated}
-            ether={data.breakdown.ether}
-            stablecoin={data.breakdown.stablecoin}
-            className="h-[3px] w-[180px]"
-          />
-        </div>
+        </TableLink>
       </TooltipTrigger>
       <TooltipContent>
         <TokenBreakdownTooltipContent
-          total={data.breakdown.total}
-          associated={data.breakdown.associated}
-          ether={data.breakdown.ether}
-          stablecoin={data.breakdown.stablecoin}
+          total={props.breakdown.total}
+          associated={props.breakdown.associated}
+          ether={props.breakdown.ether}
+          stablecoin={props.breakdown.stablecoin}
           tvsWarnings={tvsWarnings}
-          associatedTokenSymbols={data.associatedTokenSymbols}
-          gasTokens={data.gasTokens}
+          associatedTokenSymbols={props.associatedTokenSymbols}
+          gasTokens={props.gasTokens}
         />
       </TooltipContent>
     </Tooltip>

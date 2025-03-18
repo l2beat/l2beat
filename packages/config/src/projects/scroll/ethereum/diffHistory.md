@@ -1,4 +1,67 @@
-Generated with discovered.json: 0xabbeed0a41fe30355582a3964e106741f8c8269a
+Generated with discovered.json: 0x86aee7e91435769c1b415546da5f7483915792ad
+
+# Diff at Tue, 18 Mar 2025 08:13:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22029702
+- current block number: 22029702
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22029702 (main branch discovery), not current.
+
+```diff
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      name:
+-        "SecurityCouncil"
++        "Scroll Security Council"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      name:
+-        "ScrollExecutorMultisig"
++        "Scroll Multisig 1"
+    }
+```
+
+```diff
+    contract Scroll Multisig 4 (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      name:
+-        "ScrollFeeVaultMultisig"
++        "Scroll Multisig 4"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      name:
+-        "ScrollEmergencyMultisig"
++        "Scroll Multisig 2"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      name:
+-        "ScrollOpsMultisig"
++        "Scroll Multisig 3"
+    }
+```
+
+Generated with discovered.json: 0xf9f62321a78d0513bf4666cd50c5a957ff1bd664
 
 # Diff at Wed, 12 Mar 2025 08:50:49 GMT:
 

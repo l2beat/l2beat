@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "celo",
   "blockNumber": 30784081,
-  "configHash": "0xe45400b6775dbf6a56d3c8acbbc836f9a3d775f9f5207a3f627200b883753a49",
+  "configHash": "0x6ad4f2b6656da8898c892b765d92c72ce96cee7df4374c9884521cb59523d78c",
   "entries": [
     {
       "name": "OpticsV2Governor",
@@ -292,6 +292,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

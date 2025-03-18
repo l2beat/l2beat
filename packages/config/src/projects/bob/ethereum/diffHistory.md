@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xe3b8c868fe6dcf05dbf42c6b6b3491d433bdbb48
+
+# Diff at Tue, 18 Mar 2025 08:12:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22045237
+- current block number: 22045237
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045237 (main branch discovery), not current.
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      name:
+-        "BobMultisig"
++        "Bob Multisig 1"
+    }
+```
+
+Generated with discovered.json: 0xcccbdc6202f7b6a94aeffe532c469972031b64f7
+
+# Diff at Fri, 14 Mar 2025 12:52:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 20921492
+- current block number: 22045237
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract BobMultisig (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.6:
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.5:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.4:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6"
+      values.$members.2:
+-        "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6"
++        "0xC9D2c719d6C8Ba2876FC9B443c7d2690072F04ad"
+      values.$members.1:
+-        "0xC9D2c719d6C8Ba2876FC9B443c7d2690072F04ad"
++        "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436"
+      values.$members.0:
+-        "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436"
++        "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "5 of 7 (71%)"
+    }
+```
+
 Generated with discovered.json: 0xf67bb30ea352197e59028c245d08509696eee4a3
 
 # Diff at Tue, 04 Mar 2025 11:25:30 GMT:

@@ -24,9 +24,7 @@
         "slot": 5,
         "returnType": "address"
       },
-      "target": {
-        "template": "shared-sharp-verifier/Level2CpuFrilessVerifier"
-      }
+      "template": "shared-sharp-verifier/Level2CpuFrilessVerifier"
     }
   }
 }

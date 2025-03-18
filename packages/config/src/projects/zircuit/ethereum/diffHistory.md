@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x589c54416be8183b90ad3f744be87009c2ecb803
+Generated with discovered.json: 0x8b07abbfd95be79e39621b828a3c2ab00f2bc20b
+
+# Diff at Tue, 18 Mar 2025 08:14:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22029918
+- current block number: 22029918
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22029918 (main branch discovery), not current.
+
+```diff
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      name:
+-        "ZircuitMultiSig2"
++        "Zircuit Multisig 2"
+    }
+```
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      name:
+-        "ZircuitMultiSig1"
++        "Zircuit Multisig 1"
+    }
+```
+
+Generated with discovered.json: 0xab85a9cfa4221858d53762489826288c2ca5059a
 
 # Diff at Wed, 12 Mar 2025 10:21:23 GMT:
 

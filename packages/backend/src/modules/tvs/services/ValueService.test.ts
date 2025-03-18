@@ -1,7 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from '../tools/DataStorage'
-import { createAmountConfig } from '../tools/extractPricesAndAmounts'
+import {
+  createAmountConfig,
+  createPriceConfigId,
+} from '../tools/extractPricesAndAmounts'
 import {
   type BalanceOfEscrowAmountFormula,
   type CalculationFormula,
@@ -18,6 +21,7 @@ describe(ValueService.name, () => {
   describe(ValueService.prototype.calculate.name, () => {
     it('should calculate TVS - simple scenario', async () => {
       const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
 
       const amountFormula = {
         type: 'totalSupply',
@@ -49,7 +53,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(10000n)
           .resolvesToOnce(10000n),
         getPrice: mockFn()
-          .given(priceId, mockTimestamp)
+          .given(priceConfigId, mockTimestamp)
           .resolvesToOnce(200)
           .resolvesToOnce(200),
       })
@@ -157,9 +161,9 @@ describe(ValueService.name, () => {
         ],
       })
 
-      const wBTCPriceConfigId = 'price-WBTC'
+      const wBTCPriceConfigId = createPriceConfigId('price-WBTC')
 
-      const solvBTCPriceConfigId = 'price-solvBTC'
+      const solvBTCPriceConfigId = createPriceConfigId('price-solvBTC')
 
       const mockTimestamp = UnixTime.now()
 
@@ -221,6 +225,7 @@ describe(ValueService.name, () => {
 
     it('should calculate TVS - amount as minimum of const and dynamic value', async () => {
       const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
 
       const amountFormula = {
         type: 'calculation',
@@ -265,7 +270,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(10000n)
           .resolvesToOnce(10000n),
         getPrice: mockFn()
-          .given(priceId, mockTimestamp)
+          .given(priceConfigId, mockTimestamp)
           .resolvesToOnce(200)
           .resolvesToOnce(200),
       })

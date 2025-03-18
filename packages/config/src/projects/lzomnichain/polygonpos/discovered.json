@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "polygonpos",
   "blockNumber": 68758698,
-  "configHash": "0xde80241f668992056997498abbedb442b078c83f4b74be9d0db2a09ed6705feb",
+  "configHash": "0x6fb8be392e5aae2c3e2e24543513312833bd18ceaf53a5148151ec692559e20f",
   "entries": [
     {
       "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
@@ -2126,6 +2126,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

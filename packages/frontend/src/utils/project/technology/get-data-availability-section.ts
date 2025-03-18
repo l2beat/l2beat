@@ -7,6 +7,7 @@ import {
 import type { GroupSectionProps } from '~/components/projects/sections/group-section'
 import type { TechnologySectionProps } from '~/components/projects/sections/technology-section'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getTechnologySectionProps } from './get-technology-section-props'
@@ -47,7 +48,7 @@ function getCustomDaSection(
   const daSubsections: ProjectDetailsSection[] = []
 
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
-    project.customDa.risks,
+    getDaLayerRisks(project.customDa),
   )
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
     project.customDa.risks,
@@ -111,7 +112,7 @@ function getTechnologySection(
               text: 'Learn more about the DA layer here:',
               project: {
                 name: daSolution.layerName,
-                slug: `${daSolution.layerName}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
+                slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
                 type: 'data-availability',
               },
             }

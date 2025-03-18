@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xbff570f28830806075253acaf776c2dcce5a7039
+
+# Diff at Fri, 14 Mar 2025 12:53:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 21786519
+- current block number: 22045239
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.5:
++        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+      values.$members.4:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
+      values.$members.3:
+-        "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
++        "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.$members.2:
+-        "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
++        "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
+      values.$members.1:
+-        "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
++        "0xaBd099133278ACF0415186c88F34e01b05D116f6"
+      values.$members.0:
+-        "0xaBd099133278ACF0415186c88F34e01b05D116f6"
++        "0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x233c22c60b0653353f74a5835ea7ccec3f1242e4
 
 # Diff at Tue, 04 Mar 2025 10:39:07 GMT:

@@ -1,4 +1,67 @@
-Generated with discovered.json: 0xa41fabe16f60c3f2f8803157c765c5b4948fa642
+Generated with discovered.json: 0x76bf46b305667b7de93bd56407aaae4371e57bcb
+
+# Diff at Tue, 18 Mar 2025 08:14:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21973410
+- current block number: 21973410
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973410 (main branch discovery), not current.
+
+```diff
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      name:
+-        "StarkgateBridgeMultisig"
++        "Starkware Multisig 2"
+    }
+```
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      name:
+-        "StarknetSecurityCouncil"
++        "Starkware Security Council"
+    }
+```
+
+```diff
+    contract Starkware Multisig 4 (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      name:
+-        "StarkgateSecurityAgentMultisig"
++        "Starkware Multisig 4"
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      name:
+-        "StarknetAdminMultisig"
++        "Starkware Multisig 1"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      name:
+-        "StarknetSCMinorityMultisig"
++        "Starkware SCMinority Multisig"
+    }
+```
+
+Generated with discovered.json: 0x36c3aebb0cbe7f1137f8cfe5c07eeb078dc60b2a
 
 # Diff at Thu, 06 Mar 2025 15:20:39 GMT:
 

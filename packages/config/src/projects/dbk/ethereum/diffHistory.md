@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xea92c07c34eead00a8ba52fc85fb181964b840e4
+Generated with discovered.json: 0xfd08f88be27eecc3fb8916a514dd016ba4ea9ac4
+
+# Diff at Tue, 18 Mar 2025 08:12:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 20792021
+- current block number: 20792021
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792021 (main branch discovery), not current.
+
+```diff
+    contract DeBank Multisig (0xfB04A190dC7D91E86109433858A48E0B98EF1450) {
+    +++ description: None
+      name:
+-        "DeBankChainMultisig"
++        "DeBank Multisig"
+    }
+```
+
+Generated with discovered.json: 0xe1ad5fbcb574304626228a7f1fa6b6bf9c5b492c
 
 # Diff at Tue, 04 Mar 2025 11:25:34 GMT:
 

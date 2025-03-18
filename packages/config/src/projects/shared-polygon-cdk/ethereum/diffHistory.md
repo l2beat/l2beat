@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xa8ec986290e4a149c272cd400de0cfeaa16df3cf
+
+# Diff at Fri, 14 Mar 2025 15:19:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@002bac09dea3b1154ecc36736323fb7552478ce4 block: 21988681
+- current block number: 22045960
+
+## Description
+
+Transaction queued to add a new rollupType. This is the second rollupType with a pessimistic verifier, using the same forkID as polygon zkevm.
+
+added current agglayer chain data from the `l2b fetchagg` script.
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.23:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","forkID":12,"rollupVerifierType":1,"genesis":"0x0000000000000000000000000000000000000000000000000000000000000000","description":"Type: Pessimistic, Version: v0.2.5, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU","programVKey":"0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
 Generated with discovered.json: 0x15662af018b78a0f906a35ea6da90ee771892d94
 
 # Diff at Thu, 06 Mar 2025 15:16:23 GMT:

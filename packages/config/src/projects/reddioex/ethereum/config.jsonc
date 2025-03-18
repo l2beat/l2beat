@@ -14,7 +14,8 @@
       // spam
       "ignoreDiscovery": true
     },
-    "StarkExchange": {
+    "0xB62BcD40A24985f560b5a9745d478791d8F1945C": {
+      // StarkExchange
       "ignoreMethods": [
         "configurationHash",
         "getEthKey",
@@ -47,7 +48,8 @@
         }
       }
     },
-    "DACommittee": {
+    "0x4b2Bf1Cb06CB636e8A14540F76c477E61d8B6669": {
+      // DACommittee
       "fields": {
         "constructorArgs": {
           "handler": {

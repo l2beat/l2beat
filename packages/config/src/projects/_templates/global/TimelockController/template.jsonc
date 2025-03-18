@@ -8,14 +8,12 @@
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage all access control roles."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all access control roles."
+        }
+      ]
     },
     "getMinDelayFormatted": {
       "handler": {
@@ -35,46 +33,40 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "propose transactions."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "propose transactions."
+        }
+      ]
     },
     "Canceller": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "cancel queued transactions."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel queued transactions."
+        }
+      ]
     },
     "Executor": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "execute transactions that are ready."
-          },
-          {
-            "type": "act",
-            "delay": "{{getMinDelay}}"
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "type": "act",
+          "delay": "{{getMinDelay}}"
+        }
+      ]
     }
   }
 }

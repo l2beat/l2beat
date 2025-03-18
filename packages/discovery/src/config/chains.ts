@@ -283,4 +283,14 @@ export const chains: ChainConfig[] = [
       url: 'https://explorer.inkonchain.com/api',
     },
   },
+  {
+    name: 'everclear',
+    chainId: 25327,
+    shortName: 'everclear',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://scan.everclear.org/api',
+    },
+  },
 ] as const satisfies ChainConfig[]

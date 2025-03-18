@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 21995661,
-  "configHash": "0x1f1aac9d10ffc803988f4ac6cec823c61f8f6f14b30eaa045a302b7c01387943",
+  "blockNumber": 22046031,
+  "configHash": "0x704181b275e6eff4e0318a2b6a991873ddc11495d849736ca17e65a9563ad78b",
   "entries": [
     {
       "name": "WETH Vault Kinto",
@@ -302,7 +302,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 407,
+        "nonce": 409,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -808,7 +808,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 11902,
+        "globalMessageCount": 12066,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -972,7 +972,17 @@
           "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E",
           "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD",
           "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5",
-          "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
+          "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8",
+          "0xD3a00E95658b05eBac3246e84f6583251dEd5D93",
+          "0x88444394f970B6F21C4f5101003ea513dE3E5406",
+          "0x67c97Bd542B3a7F1F1EcF85CBC4409421ccAe971",
+          "0xBEF69d0acC388091c7C9702aCbFB3b8A873e239e",
+          "0x96E1e9c80619D2038afe30450b3cBeCb2A7D94cd",
+          "0xB4e78DAEaE4aA911f2427FF4af4B10AFe70D9891",
+          "0x134643Df54DCaaAf343505361D1Eac58A7400b3d",
+          "0x8E8D89410000A993d2537d26366e1C3010AB90ff",
+          "0x5E72430EC945CCc183c34e2860FFC2b5bac712c2",
+          "0x15CEcd5190A43C7798dD2058308781D0662e678E"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -989,7 +999,7 @@
       }
     },
     {
-      "name": "MamoriLabs2",
+      "name": "KintsugiFoundation",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
       "proxyType": "EOA",
@@ -4293,6 +4303,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

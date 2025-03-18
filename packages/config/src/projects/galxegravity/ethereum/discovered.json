@@ -1,8 +1,8 @@
 {
   "name": "galxegravity",
   "chain": "ethereum",
-  "blockNumber": 21994041,
-  "configHash": "0x59ee198997ecb303b674ad1b4a83187440b5d14e984fae3c4af5d93dc4b60bbc",
+  "blockNumber": 22046063,
+  "configHash": "0xe11dbe9551f978ab8868338d25e047e4a7208f50deb3be184b59c031185136e0",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -132,7 +132,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -223,6 +223,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -237,8 +238,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 82,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -345,7 +346,7 @@
           "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
         ],
         "allowedOutboxList": ["0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"],
-        "delayedMessageCount": 13945,
+        "delayedMessageCount": 14011,
         "inboxHistory": [
           "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
           "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
@@ -354,8 +355,8 @@
         "outboxHistory": ["0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"],
         "rollup": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerInbox": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
-        "sequencerMessageCount": 55676,
-        "sequencerReportedSubMessageCount": 46925814
+        "sequencerMessageCount": 56619,
+        "sequencerReportedSubMessageCount": 48789808
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -423,6 +424,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SequencerInbox",
       "address": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
       "type": "Contract",
@@ -463,7 +469,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 55676,
+        "batchCount": 56619,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xBa369bd77a346babCd282cB1a015194E8ec54542"],
         "bridge": "0x7983403dDA368AA7d67145a9b81c5c517F364c42",
@@ -493,7 +499,7 @@
         "rollup": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 13945,
+        "totalDelayedMessagesRead": 14011,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -809,13 +815,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 542,
+        "firstUnresolvedNode": 556,
         "inbox": "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19907386,
-        "latestConfirmed": 541,
-        "latestNodeCreated": 552,
+        "latestConfirmed": 555,
+        "latestNodeCreated": 566,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF",
@@ -1502,21 +1508,21 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
-    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
-    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
-    "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
-    "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
-    "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
-    "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
-    "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
-    "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
-    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
-    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
-    "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "orbitstack/Bridge": "0xb6de3aace8e96d1c35f5d771acfb448858e9d9d487e11cccdc25abeaf18e6515",
+    "orbitstack/ChallengeManager": "0xb1c9d340512fa1eaea79b3c47d8e5a2008266b78c1ccb64c36eb9f3b5cc7df24",
+    "orbitstack/Inbox": "0x66868b7e34292ed83b16b6175f5c8510c0f1a715b5b3d2f7656916e583076e5f",
+    "orbitstack/OneStepProofEntry": "0xf8ebd4d19d87374ce2a6fe109880b1ce7c70b34da3dae92daf6eb74aa569ba5b",
+    "orbitstack/OneStepProver0": "0xbfd9c37860b90ef123f1e1d8c1284d326876f1ae15967fb68bf6b1310f91fc97",
+    "orbitstack/OneStepProverHostIo": "0x89c4a4838f36b8bd9d0c403568fb1715cd775d20d38a87761baf6f3336e03d32",
+    "orbitstack/OneStepProverMath": "0x7fb24b2d51176c431d0d17781a0adfa99724f41f64aa965e55910ce52e1e3c05",
+    "orbitstack/OneStepProverMemory": "0x63d1aaa9a4215b12a93a37b5d383142fd73c6d8ecaae85e2a8254d85e96006d9",
+    "orbitstack/Outbox": "0xd373d8cd979164d1b6db4271e41638272216305e24f2609767ed253b9a3c594e",
+    "orbitstack/RollupEventInbox": "0x3a5690d1a8060c59c6dbae9d71027b09f2a694bb8534f4f62feb30efa12c2278",
+    "orbitstack/RollupProxy_fastConfirm": "0xa98ce9521103f854d86e758f43770f88c8c7a393f8137e887c0e1888cf6ea44d",
+    "orbitstack/SequencerInbox": "0x83141082064c8df924d8ba369b73756b92089971b56e904973687d0fdbff3dee",
+    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6",
+    "orbitstack/ValidatorUtils": "0x4cda90e9e8df55c2a790c46e2515efa956af71e323ed688286d6bb8152aed0a9"
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 307386152,
-  "configHash": "0x794d4fd554e8b717e53b8c6785ad0e13f326d9fc141ce92267d5c0a0bec20dde",
+  "blockNumber": 315644612,
+  "configHash": "0xddac970d5b1f64f0d97bc8227e29975131d717ee2ae2db641a32c8ac6c961fc1",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -66,7 +66,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 42,
+        "nonce": 582,
         "VERSION": "1.3.0"
       }
     },
@@ -115,7 +115,7 @@
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
         ],
         "allowedOutboxList": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
-        "delayedMessageCount": 260,
+        "delayedMessageCount": 355,
         "inboxHistory": [
           "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
@@ -125,8 +125,8 @@
         "outboxHistory": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 536,
-        "sequencerReportedSubMessageCount": 486670
+        "sequencerMessageCount": 1239,
+        "sequencerReportedSubMessageCount": 1513756
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -356,7 +356,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 536,
+        "batchCount": 1239,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"],
         "bridge": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
@@ -386,7 +386,7 @@
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 260,
+        "totalDelayedMessagesRead": 355,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -485,13 +485,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 150,
+        "firstUnresolvedNode": 690,
         "inbox": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20938249,
-        "latestConfirmed": 149,
-        "latestNodeCreated": 149,
+        "latestConfirmed": 689,
+        "latestNodeCreated": 689,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -569,7 +569,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ConduitMultisig2",
+      "name": "Conduit Multisig 2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -676,6 +676,7 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
@@ -686,12 +687,12 @@
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
-        "$threshold": 3,
+        "$threshold": 4,
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 67,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 69,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -786,6 +787,11 @@
         "totalChallengesCreated": 0
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -1949,24 +1955,24 @@
     ]
   },
   "usedTemplates": {
-    "circle/L1OrbitUSDCGateway": "0xfadb184ab15a78d5aa2a9b75bcab34fb46021bea30ab93ceef86b4809e710903",
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
-    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
-    "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
-    "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
-    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
-    "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
-    "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
-    "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
-    "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
-    "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
-    "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
-    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
-    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
-    "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
+    "circle/L1OrbitUSDCGateway": "0x09f1522eff3aaf5037f93437cfe1e6f74f4b566f69b870eed70cd48971744016",
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "orbitstack/Bridge": "0xb6de3aace8e96d1c35f5d771acfb448858e9d9d487e11cccdc25abeaf18e6515",
+    "orbitstack/ChallengeManager": "0xb1c9d340512fa1eaea79b3c47d8e5a2008266b78c1ccb64c36eb9f3b5cc7df24",
+    "orbitstack/ERC20Gateway": "0x76cecfc80c9723f4b387e4a35b686925321492e057f34090e4f39d1509c1280e",
+    "orbitstack/GatewayRouter": "0x440c8eb716ccc968e9fcdd86268f9ba430dc15f171efd6e33e449c6a19696baa",
+    "orbitstack/Inbox": "0x66868b7e34292ed83b16b6175f5c8510c0f1a715b5b3d2f7656916e583076e5f",
+    "orbitstack/OneStepProofEntry": "0xf8ebd4d19d87374ce2a6fe109880b1ce7c70b34da3dae92daf6eb74aa569ba5b",
+    "orbitstack/OneStepProver0": "0xbfd9c37860b90ef123f1e1d8c1284d326876f1ae15967fb68bf6b1310f91fc97",
+    "orbitstack/OneStepProverHostIo": "0x89c4a4838f36b8bd9d0c403568fb1715cd775d20d38a87761baf6f3336e03d32",
+    "orbitstack/OneStepProverMath": "0x7fb24b2d51176c431d0d17781a0adfa99724f41f64aa965e55910ce52e1e3c05",
+    "orbitstack/OneStepProverMemory": "0x63d1aaa9a4215b12a93a37b5d383142fd73c6d8ecaae85e2a8254d85e96006d9",
+    "orbitstack/Outbox": "0xd373d8cd979164d1b6db4271e41638272216305e24f2609767ed253b9a3c594e",
+    "orbitstack/RollupEventInbox": "0x3a5690d1a8060c59c6dbae9d71027b09f2a694bb8534f4f62feb30efa12c2278",
+    "orbitstack/RollupProxy_fastConfirm": "0xa98ce9521103f854d86e758f43770f88c8c7a393f8137e887c0e1888cf6ea44d",
+    "orbitstack/SequencerInbox": "0x83141082064c8df924d8ba369b73756b92089971b56e904973687d0fdbff3dee",
+    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6",
+    "orbitstack/ValidatorUtils": "0x4cda90e9e8df55c2a790c46e2515efa956af71e323ed688286d6bb8152aed0a9"
   }
 }

@@ -1,3 +1,4 @@
+import { existsSync } from 'fs'
 import {
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
@@ -20,7 +21,7 @@ import { layer3s } from './layer3s'
 describe('getProjects', () => {
   const projects = getProjects()
 
-  describe('every project has a unique id and slug', () => {
+  describe('every project has a unique and valid id and slug', () => {
     const ids = new Set<ProjectId>()
     const slugs = new Set<string>()
     for (const project of projects) {
@@ -35,8 +36,12 @@ describe('getProjects', () => {
           // first when querying by slug
           return
         }
+
         expect(slugs.has(project.slug)).toEqual(false)
         slugs.add(project.slug)
+
+        const dir = `./src/projects/${project.id}/${project.id}.ts`
+        expect(existsSync(dir)).toEqual(true)
       })
     }
   })
@@ -335,7 +340,7 @@ describe('getProjects', () => {
           for (const config of functionCallConfigs ?? []) {
             const key = `${config.params.address.toString()}-${
               config.params.selector
-            }-${config.untilTimestamp?.toString()}-${config.type}`
+            }-${config.untilTimestamp?.toString()}-${config.type}-${config.subtype}`
             assert(
               !functionCalls.has(key),
               `Duplicate function call config in ${project.id}`,

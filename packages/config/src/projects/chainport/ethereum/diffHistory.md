@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x561a8081b16f2380caaaf422ccaa4599dcaa2269
+
+# Diff at Fri, 14 Mar 2025 13:07:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 21744139
+- current block number: 22045311
+
+## Description
+
+Proposal 64 queued 'Upgrade Arbitrage Manager + add routers'.
+https://app.blocksec.com/explorer/tx/eth/0x6830c8e9be63e9982b88791331f4ef194e66ce0bd880e4af42e21546005d2fcf
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        63
++        64
+    }
+```
+
 Generated with discovered.json: 0xd23305ed5153775acdb2f744058039f45d85bf42
 
 # Diff at Tue, 04 Mar 2025 10:39:02 GMT:

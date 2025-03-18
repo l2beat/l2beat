@@ -54,10 +54,12 @@
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
   "overrides": {
-    "Connext Fee Multisig": {
+    "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": {
+      // Connext Fee Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "ConnextBridge": {
+    "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": {
+      // ConnextBridge
       "fields": {
         "SEQUENCERS": {
           "handler": {
@@ -92,7 +94,8 @@
       "ignoreInWatchMode": ["nonce", "proposedTimestamp", "ROUTERS"],
       "ignoreRelatives": ["lpTokenTargetAddress"]
     },
-    "MainnetSpokeConnector": {
+    "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc": {
+      // MainnetSpokeConnector
       "fields": {
         "optimisticMode": {
           "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
@@ -108,7 +111,8 @@
         "rateLimitBlocks"
       ]
     },
-    "WatcherManager": {
+    "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d": {
+      // WatcherManager
       "fields": {
         "WATCHERS": {
           "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
@@ -124,7 +128,8 @@
       },
       "ignoreInWatchMode": ["proposedTimestamp", "proposed"]
     },
-    "RootManager": {
+    "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": {
+      // RootManager
       "fields": {
         "optimisticMode": {
           "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
@@ -164,7 +169,8 @@
         "proposed"
       ]
     },
-    "PolygonHubConnector": {
+    "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": {
+      // PolygonHubConnector
       "ignoreRelatives": [
         "fxChildTunnel",
         "mirrorConnector",
@@ -175,67 +181,83 @@
       ],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "ArbitrumHubConnector": {
+    "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82": {
+      // ArbitrumHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector", "rollup", "outbox"],
       "ignoreMethods": ["processed"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "WormholeHubConnector": {
+    "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA": {
+      // WormholeHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreMethods": ["processed"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "OptimismHubConnector": {
+    "0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A": {
+      // OptimismHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "GnosisHubConnector": {
+    "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": {
+      // GnosisHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "LineaHubConnector": {
+    "0x56Ab287e5c33Ee70158c951f34818bd095446255": {
+      // LineaHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "NewWormholeHubConnector": {
+    "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": {
+      // NewWormholeHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "MantleHubConnector": {
+    "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": {
+      // MantleHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "BaseHubConnector": {
+    "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": {
+      // BaseHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "PolygonZkHubConnector": {
+    "0x7ed49D0a13255802A281C08688563bd8D5f726b1": {
+      // PolygonZkHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "xLayerZkHubConnector": {
+    "0x279fDA9AdDB854541f0bb86733d924e28c24c625": {
+      // xLayerZkHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "MetisHubConnector": {
+    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": {
+      // MetisHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "ModeHubConnector": {
+    "0x7b2bE683266909A6a4068e743083dd40621d663E": {
+      // ModeHubConnector
       "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "RootChain": {
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": {
+      // RootChain
       "ignoreMethods": ["headerBlocks"]
     },
-    "Connext Multisig": {
+    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": {
+      // Connext Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "GovernorV2": {
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": {
+      // GovernorV2
       "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"],
       "ignoreInWatchMode": ["numProposals"]
     },
-    "ProposerV2": {
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": {
+      // ProposerV2
       "ignoreMethods": ["bondedProposals"],
       "ignoreInWatchMode": ["bond", "getCurrentTime"]
     },
@@ -247,19 +269,24 @@
       // OptimisticOracleV3 cachedOracle
       "ignoreDiscovery": true
     },
-    "USDC": {
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      // USDC
       "ignoreDiscovery": true
     },
-    "OptimisticGovernor": {
+    "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": {
+      // OptimisticGovernor
       "ignoreMethods": ["getCurrentTime"]
     },
-    "EmergencyProposer": {
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
+      // EmergencyProposer
       "ignoreMethods": ["getCurrentTime"]
     },
-    "WETH9": {
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      // WETH9
       "ignoreDiscovery": true
     },
-    "OptimisticOracleV3": {
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": {
+      // OptimisticOracleV3
       "ignoreMethods": ["getCurrentTime"]
     },
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
@@ -276,19 +303,47 @@
     "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44": {
       "ignoreDiscovery": true
     },
-    "RelayerProxyHub1": { "extends": "amarok/RelayerProxyHub" },
-    "RelayerProxyHub2": { "extends": "amarok/RelayerProxyHub" },
-    "RelayerProxyHub3": { "extends": "amarok/RelayerProxyHub" },
-    "Relayer1": { "extends": "amarok/Relayer" },
-    "Relayer2": { "extends": "amarok/Relayer" },
-    "Relayer3": { "extends": "amarok/Relayer" },
-    "Relayer4": { "extends": "amarok/Relayer" },
-    "Relayer5": { "extends": "amarok/Relayer" },
-    "Relayer6": { "extends": "amarok/Relayer" },
-    "Relayer7": { "extends": "amarok/Relayer" },
-    "Relayer8": { "extends": "amarok/Relayer" },
-    "Relayer9": { "extends": "amarok/Relayer" },
-    "Relayer10": { "extends": "amarok/Relayer" },
-    "Relayer11": { "extends": "amarok/Relayer" }
+    "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
+      "extends": "amarok/RelayerProxyHub"
+    }, // RelayerProxyHub1
+    "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28": {
+      "extends": "amarok/RelayerProxyHub"
+    }, // RelayerProxyHub2
+    "0xB4F8D176466f5F544bAd53737bffAaeA17185c05": {
+      "extends": "amarok/RelayerProxyHub"
+    }, // RelayerProxyHub3
+    "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": {
+      "extends": "amarok/Relayer"
+    }, // Relayer1
+    "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2": {
+      "extends": "amarok/Relayer"
+    }, // Relayer2
+    "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9": {
+      "extends": "amarok/Relayer"
+    }, // Relayer3
+    "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47": {
+      "extends": "amarok/Relayer"
+    }, // Relayer4
+    "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007": {
+      "extends": "amarok/Relayer"
+    }, // Relayer5
+    "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE": {
+      "extends": "amarok/Relayer"
+    }, // Relayer6
+    "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": {
+      "extends": "amarok/Relayer"
+    }, // Relayer7
+    "0x43728A95386D64384C76Afd416Dcc8118869BA6c": {
+      "extends": "amarok/Relayer"
+    }, // Relayer8
+    "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6": {
+      "extends": "amarok/Relayer"
+    }, // Relayer9
+    "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99": {
+      "extends": "amarok/Relayer"
+    }, // Relayer10
+    "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0": {
+      "extends": "amarok/Relayer"
+    } // Relayer11
   }
 }

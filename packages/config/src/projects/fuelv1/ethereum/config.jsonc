@@ -8,7 +8,8 @@
     "0x6880f6Fd960D1581C2730a451A22EED1081cfD72": "Fuel"
   },
   "overrides": {
-    "Fuel": {
+    "0x6880f6Fd960D1581C2730a451A22EED1081cfD72": {
+      // Fuel
       "manualSourcePaths": {
         // FuelV1 contract written in Yul+
         "0x6880f6Fd960D1581C2730a451A22EED1081cfD72": "https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Fuel.yulp"

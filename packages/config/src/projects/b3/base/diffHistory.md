@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xb8ca6451bbaccf4b5c447a93f8ae851675c6f6e6
+
+# Diff at Fri, 14 Mar 2025 13:06:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a22da884d1a9470186e80799bc96392136af1fbe block: 27417923
+- current block number: 27584106
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract B3Multisig (0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce) {
+    +++ description: None
+      values.$members.8:
+-        "0x03A0080CA69B333F2a3697Eed806Bd8c31baCF8B"
+      values.$members.7:
+-        "0x8486C301D5719ADdf6AB789E92D24423c50a940D"
+      values.$members.6:
+-        "0xB6faDA40e4376D262e25068534df4788023Bb8A3"
+      values.$members.5:
+-        "0x34f1fb4c76019d83Eb287B56bAa5466Fc130A028"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0xc32873ffec167a282d70863fe8547e7c911c5682
 
 # Diff at Mon, 10 Mar 2025 16:46:47 GMT:

@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2Timelock",
+  "category": "gov",
   "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
   "fields": {
     "timelockAdminAC": {
@@ -8,15 +9,13 @@
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "delay": "{{getMinDelay}}",
-            "description": "manage all access control roles and change the minimum delay."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "{{getMinDelay}}",
+          "description": "manage all access control roles and change the minimum delay."
+        }
+      ]
     },
     "getMinDelayFormatted": {
       "handler": {
@@ -36,32 +35,28 @@
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "propose transactions."
-          },
-          {
-            "type": "act",
-            "delay": "{{getMinDelay}}"
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "propose transactions."
+        },
+        {
+          "type": "act",
+          "delay": "{{getMinDelay}}"
+        }
+      ]
     },
     "Canceller": {
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "cancel queued transactions."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "cancel queued transactions."
+        }
+      ]
     },
     "Executor": {
       "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address",

@@ -10,7 +10,6 @@ import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   type ContractMeta,
   findHighestSeverity,
-  getMetaFromUpgradeability,
   getTargetsMeta,
   interpolateString,
   invertMeta,
@@ -160,29 +159,28 @@ describe('metaUtils', () => {
       expect(mergePermissions([], a)).toEqual(a)
     })
 
-    it('keeps only entries with the highest delay', () => {
+    it('keeps only entries with the shortest delay', () => {
       const a: PermissionConfiguration[] = [
         { type: 'interact', delay: 5, target: EthereumAddress.from('0x1234') },
-        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
       ]
       const b: PermissionConfiguration[] = [
         {
           type: 'interact',
-          delay: 10,
+          delay: 5,
           target: EthereumAddress.from('0x1234'),
         },
       ]
       expect(mergePermissions(a, b)).toEqual([
         {
           type: 'interact',
-          delay: 10,
+          delay: 0,
           target: EthereumAddress.from('0x1234'),
         },
-        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
       ])
     })
 
-    it('prefers entries with a description at the same highest delay', () => {
+    it('prefers entries with a description at the same shortest delay', () => {
       const a: PermissionConfiguration[] = [
         {
           type: 'upgrade',
@@ -213,7 +211,7 @@ describe('metaUtils', () => {
       ])
     })
 
-    it('retains multiple described entries if they share the same largest delay', () => {
+    it('retains multiple described entries if they share the same shorest delay', () => {
       const a: PermissionConfiguration[] = [
         {
           type: 'interact',
@@ -313,53 +311,43 @@ describe('metaUtils', () => {
       const selfAddress = EthereumAddress.from('0x1234')
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
-          target: {
-            permissions: [{ type: 'interact', delay: 0 }],
-          },
+          permissions: [{ type: 'interact', delay: 0 }],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         owner: {
-          target: {
-            permissions: [
-              {
-                type: 'interact',
-                delay: 0,
-                description:
-                  'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
-              },
-            ],
-          },
+          permissions: [
+            {
+              type: 'interact',
+              delay: 0,
+              description:
+                'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
+            },
+          ],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         resourceConfig: {
-          target: {
-            // description: 'The resource config of the contract {{ $.address }}',
-            permissions: [
-              {
-                type: 'upgrade',
-                delay: 0,
-                description:
-                  'upgrading the {{ $.address }} contract gives access to all funds',
-              },
-              {
-                type: 'interact',
-                condition: 'condition C1 is met',
-                delay: 0,
-                description:
-                  'configuring the {{ $.address }} contract allows freeze funds',
-              },
-            ],
-          },
+          permissions: [
+            {
+              type: 'upgrade',
+              delay: 0,
+              description:
+                'upgrading the {{ $.address }} contract gives access to all funds',
+            },
+            {
+              type: 'interact',
+              condition: 'condition C1 is met',
+              delay: 0,
+              description:
+                'configuring the {{ $.address }} contract allows freeze funds',
+            },
+          ],
           severity: 'HIGH',
           type: ['L2', 'EXTERNAL'],
         },
         scalar: {
-          target: {
-            // description: 'The scalar of the contract',
-            permissions: [{ type: 'interact', delay: 0 }],
-          },
+          permissions: [{ type: 'interact', delay: 0 }],
           severity: 'LOW',
           type: 'CODE_CHANGE',
         },
@@ -385,7 +373,6 @@ describe('metaUtils', () => {
           displayName: undefined,
           description: undefined,
           permissions: [
-            { type: 'upgrade', delay: 0, target: selfAddress },
             {
               type: 'interact',
               delay: 0,
@@ -394,6 +381,7 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 allows to change this number: 1122',
               condition: undefined,
             },
+            { type: 'upgrade', delay: 0, target: selfAddress },
           ],
           severity: 'LOW',
           types: new Set(['CODE_CHANGE']),
@@ -451,6 +439,67 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
           references: undefined,
         },
+      })
+    })
+
+    it('should not override existing upgrade permission with default', () => {
+      const selfAddress = EthereumAddress.from('0x1234')
+      const existingUpgradeAddress = EthereumAddress.from('0x456')
+
+      const handlerResults = [
+        {
+          field: 'configuredUpgrade',
+          value: existingUpgradeAddress.toString(),
+        },
+        {
+          field: '$admin',
+          value: existingUpgradeAddress.toString(),
+        },
+      ]
+
+      const fields: { [field: string]: DiscoveryContractField } = {
+        configuredUpgrade: {
+          permissions: [
+            {
+              type: 'upgrade',
+              delay: 100,
+              description: 'Existing configured upgrade permission',
+            },
+          ],
+          severity: 'HIGH',
+          type: 'CODE_CHANGE',
+        },
+      }
+
+      const mergedValues = {
+        ...Object.fromEntries(
+          handlerResults.map(({ field, value }) => [field, value]),
+        ),
+      }
+
+      const result = getTargetsMeta(
+        selfAddress,
+        mergedValues,
+        fields,
+        generateFakeAnalysis(selfAddress),
+      )
+
+      expect(result?.[existingUpgradeAddress.toString()]).toEqual({
+        canActIndependently: undefined,
+        description: undefined,
+        displayName: undefined,
+        permissions: [
+          {
+            condition: undefined,
+            type: 'upgrade',
+            delay: 100,
+            target: selfAddress,
+            description: 'Existing configured upgrade permission',
+          },
+        ],
+        references: undefined,
+        severity: 'HIGH',
+        types: new Set(['CODE_CHANGE']),
       })
     })
   })
@@ -603,25 +652,6 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
           references: undefined,
-        },
-      })
-    })
-  })
-
-  describe('getMetaFromUpgradeability', () => {
-    it('should properly get meta from upgradeability', () => {
-      const selfAddress = EthereumAddress.from('0x1234')
-      const admin = EthereumAddress.from('0xabcd')
-
-      const result = getMetaFromUpgradeability(selfAddress, [admin])
-
-      expect(result).toEqual({
-        [admin.toString()]: {
-          displayName: undefined,
-          description: undefined,
-          severity: undefined,
-          types: undefined,
-          permissions: [{ type: 'upgrade', delay: 0, target: selfAddress }],
         },
       })
     })
