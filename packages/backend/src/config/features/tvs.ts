@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import type {
   AmountConfig,
@@ -104,6 +105,7 @@ export async function getAmountsAndPrices(
       prices.set(price.priceId, price)
     }
 
+    assert(projectChains, 'Chains should be defined here')
     for (const chain of projectChains) {
       chains.set(chain.chainName, chain)
     }

@@ -20,6 +20,46 @@ export class LocalStorage implements DataStorage {
     this.blocks = blocks
   }
 
+  async getPrices(
+    ids: string[],
+    timestamps: UnixTime[],
+  ): Promise<Map<UnixTime, Map<string, number>>> {
+    const result = new Map<UnixTime, Map<string, number>>()
+
+    for (const timestamp of timestamps) {
+      const perTimestamp = new Map<string, number>()
+      for (const id of ids) {
+        const price = this.prices.get(key(id, timestamp))
+        if (price) {
+          perTimestamp.set(id, price)
+        }
+      }
+      result.set(timestamp, perTimestamp)
+    }
+
+    return await Promise.resolve(result)
+  }
+
+  async getAmounts(
+    ids: string[],
+    timestamps: UnixTime[],
+  ): Promise<Map<UnixTime, Map<string, bigint>>> {
+    const result = new Map<UnixTime, Map<string, bigint>>()
+
+    for (const timestamp of timestamps) {
+      const perTimestamp = new Map<string, bigint>()
+      for (const id of ids) {
+        const amount = this.amounts.get(key(id, timestamp))
+        if (amount) {
+          perTimestamp.set(id, BigInt(amount))
+        }
+      }
+      result.set(timestamp, perTimestamp)
+    }
+
+    return await Promise.resolve(result)
+  }
+
   async writePrice(
     id: string,
     timestamp: UnixTime,

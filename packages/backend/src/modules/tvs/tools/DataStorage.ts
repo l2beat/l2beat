@@ -2,16 +2,13 @@ import type { UnixTime } from '@l2beat/shared-pure'
 
 export interface DataStorage {
   writePrice(id: string, timestamp: UnixTime, price: number): Promise<void>
-  getPrice(id: string, timestamp: UnixTime): Promise<number | undefined>
+  getPrices(
+    ids: string[],
+    timestamps: UnixTime[],
+  ): Promise<Map<UnixTime, Map<string, number>>>
   writeAmount(id: string, timestamp: UnixTime, amount: bigint): Promise<void>
-  getAmount(id: string, timestamp: UnixTime): Promise<bigint | undefined>
-  writeBlockNumber(
-    chain: string,
-    timestamp: UnixTime,
-    blockNumber: number,
-  ): Promise<void>
-  getBlockNumber(
-    chain: string,
-    timestamp: UnixTime,
-  ): Promise<number | undefined>
+  getAmounts(
+    ids: string[],
+    timestamps: UnixTime[],
+  ): Promise<Map<UnixTime, Map<string, bigint>>>
 }
