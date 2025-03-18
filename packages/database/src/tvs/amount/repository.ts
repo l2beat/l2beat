@@ -52,4 +52,17 @@ export class TvsAmountRepository extends BaseRepository {
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+
+  async getAll(): Promise<TvsAmountRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'project', 'amount'])
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('TvsAmount').executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
 }
