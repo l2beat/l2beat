@@ -17,6 +17,7 @@ import type {
 export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
   private readonly indexerId: string
+  private serializeConfiguration: (value: T) => string
 
   constructor(readonly options: ManagedMultiIndexerOptions<T>) {
     const logger = options.logger.tag(options.tags ?? {})
@@ -32,6 +33,10 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     for (const configuration of options.configurations) {
       assertUniqueConfigId(configuration.id, this.indexerId)
     }
+
+    this.serializeConfiguration = this.options.serializeConfiguration
+      ? this.options.serializeConfiguration
+      : (value) => JSON.stringify(value)
   }
 
   // #region initialize
@@ -43,7 +48,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     const state = mergeConfigurations(
       saved,
       this.options.configurations,
-      this.options.serializeConfiguration,
+      this.serializeConfiguration,
       this.options.configurationsTrimmingDisabled,
     )
     await this.updateSavedConfigurations(state.diff)
@@ -66,7 +71,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
           await this.options.indexerService.insertConfigurations(
             this.indexerId,
             diff.toAdd,
-            this.options.serializeConfiguration,
+            this.serializeConfiguration,
           )
         }
 
@@ -74,7 +79,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
           await this.options.indexerService.upsertConfigurations(
             this.indexerId,
             diff.toUpdate,
-            this.options.serializeConfiguration,
+            this.serializeConfiguration,
           )
         }
 

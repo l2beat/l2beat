@@ -16,7 +16,6 @@ import {
 } from './indexers/OnchainAmountIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { createAmountConfig } from './tools/extractPricesAndAmounts'
-import type { PriceConfig } from './types'
 
 export function initTvsModule(
   config: Config,
@@ -55,8 +54,7 @@ export function initTvsModule(
       maxHeight: price.untilTimestamp ?? null,
       properties: price,
     })),
-    serializeConfiguration: (value: PriceConfig) => JSON.stringify(value),
-    priceProvider: providers.price,
+p    priceProvider: providers.price,
     syncOptimizer,
     db: database,
   })
@@ -74,7 +72,6 @@ export function initTvsModule(
         maxHeight: amount.untilTimestamp ?? null,
         properties: amount,
       })),
-    serializeConfiguration: (value) => JSON.stringify(value),
     circulatingSupplyProvider: providers.circulatingSupply,
     syncOptimizer,
     db: database,
@@ -96,7 +93,6 @@ export function initTvsModule(
           properties: chain,
         },
       ],
-      serializeConfiguration: (value) => JSON.stringify(value),
       db: database,
       logger,
     })
@@ -121,7 +117,6 @@ export function initTvsModule(
         maxHeight: c.untilTimestamp ?? null,
         properties: c,
       })),
-      serializeConfiguration: (value) => JSON.stringify(value),
       db: database,
       logger,
     })

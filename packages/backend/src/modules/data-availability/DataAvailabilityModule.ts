@@ -1,10 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
-import type {
-  DaTrackingConfig,
-  DataAvailabilityTrackingConfig,
-} from '../../config/Config'
+import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
@@ -113,8 +110,6 @@ function createIndexers(
       parents: [targetIndexer],
       indexerService,
       db: database,
-      serializeConfiguration: (value: DaTrackingConfig) =>
-        JSON.stringify(value),
     })
     daIndexers.push(indexer)
   }
