@@ -13,9 +13,10 @@ import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
+import { TableFilterValue } from './table-filter-value'
 import { TableFilterValueMenu } from './table-filter-value-menu'
 import type { FilterState } from './use-filter-state'
-import { filterIdToLabel, filterIdToValues } from './utils/labels'
+import { filterIdToLabel } from './utils/labels'
 
 interface Props {
   filter: FilterState[number]
@@ -61,11 +62,6 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
   const [open, setOpen] = useState(false)
   const isMobile = useIsMobile()
 
-  const label =
-    filter.values.length > 1
-      ? `${filter.values.length} ${filterIdToValues[filter.id]}`
-      : filter.values[0]
-
   if (isMobile) {
     return (
       <>
@@ -73,7 +69,7 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
           onClick={() => setOpen(true)}
           className={cn(popoverTriggerClasses, 'h-8')}
         >
-          {label}
+          <TableFilterValue values={filter.values} filterId={filter.id} />
         </button>
         <CommandDialog
           open={open}
@@ -95,7 +91,7 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
     <Popover>
       <PopoverAnchor className="h-full" />
       <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-medium">
-        {label}
+        <TableFilterValue values={filter.values} filterId={filter.id} />
       </PopoverTrigger>
       <PopoverContent align="start" className="p-0" side="bottom">
         <TableFilterValueMenu filterId={filter.id} values={possibleValues} />

@@ -9,6 +9,7 @@ import {
 } from '~/components/core/command'
 import { TableFilterCheckbox } from './table-filter-checkbox'
 import { useTableFilterContext } from './table-filter-context'
+import { TableFilterValue } from './table-filter-value'
 import type { FilterableValueId } from './types'
 import { filterValuesSortFn } from './utils/filter-values-sort-fn'
 import { emtpyStateLabel, inputPlaceholder } from './utils/labels'
@@ -71,7 +72,7 @@ export function TableFilterValueMenuItems({
                 }}
               >
                 <TableFilterCheckbox checked={true} />
-                {value}
+                <TableFilterValue values={[value]} filterId={filterId} />
               </CommandItem>
             )
           })}
@@ -97,7 +98,7 @@ export function TableFilterValueMenuItems({
                 }}
               >
                 <TableFilterCheckbox checked={false} />
-                {value}
+                <TableFilterValue values={[value]} filterId={filterId} />
               </CommandItem>
             )
           })}
