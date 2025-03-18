@@ -55,14 +55,14 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       expect(inserted).toEqual(0)
     })
 
-    it('performs batch insert when more than 2000 records', async () => {
+    it('performs batch insert when more than 1000 records', async () => {
       const records = []
-      for (let i = 0; i < 2500; i++) {
+      for (let i = 0; i < 1500; i++) {
         records.push(blockTimestamp('a', 'ethereum', UnixTime(i), i + 1000))
       }
 
       const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(2500)
+      expect(inserted).toEqual(1500)
     })
   })
 

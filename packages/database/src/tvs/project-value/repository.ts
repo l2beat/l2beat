@@ -6,7 +6,7 @@ export class ProjectValueRepository extends BaseRepository {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    await this.batch(rows, 5_000, async (batch) => {
+    await this.batch(rows, 1_000, async (batch) => {
       await this.db
         .insertInto('ProjectValue')
         .values(batch)
