@@ -15,6 +15,12 @@
     {
       "atom": "showContractInPermissionsSection",
       "params": [
+        "gnosisSafeL2_arbitrum_0xc610984d9c96a7ce54bcd335ceee9b0e3874380c"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
         "securityCouncilManager_arbitrum_0xd509e5f5aee2a205f554f36e8a7d56094494edfc"
       ]
     },
@@ -27,13 +33,13 @@
     {
       "atom": "showContractInPermissionsSection",
       "params": [
-        "batchPosterManagerMultisig_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b"
+        "arbitrum_Multisig_1_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b"
       ]
     },
     {
       "atom": "showContractInPermissionsSection",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85"
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85"
       ]
     },
     {
@@ -44,11 +50,15 @@
     },
     {
       "atom": "showEoaInPermissionsSection",
-      "params": ["eoa_ethereum_0x0c5911d57b24fcf1dc8b2608efbae57c7098e32d"]
+      "params": [
+        "eoa_ethereum_0x0c5911d57b24fcf1dc8b2608efbae57c7098e32d"
+      ]
     },
     {
       "atom": "showEoaInPermissionsSection",
-      "params": ["eoa_ethereum_0xc1b634853cb333d3ad8663715b08f41a3aec47cc"]
+      "params": [
+        "eoa_ethereum_0xc1b634853cb333d3ad8663715b08f41a3aec47cc"
+      ]
     },
     {
       "atom": "addressDescription",
@@ -88,6 +98,13 @@
     {
       "atom": "addressDescription",
       "params": [
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
+        "Token governance contract for the Security Council member elections."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
         "l2GatewayRouter_arbitrum_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
         "Router managing token <–> gateway mapping on L2."
       ]
@@ -109,8 +126,22 @@
     {
       "atom": "addressDescription",
       "params": [
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        "Token governance contract for the Security Council member removals."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
         "treasuryGovernor_arbitrum_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
-        "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
+        "Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
+        "Token governance contract for the Security Council nominee elections."
       ]
     },
     {
@@ -166,7 +197,7 @@
       "atom": "addressDescription",
       "params": [
         "coreGovernor_arbitrum_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
-        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
+        "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
       ]
     },
     {
@@ -382,6 +413,13 @@
     {
       "atom": "addressName",
       "params": [
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
+        "SecurityCouncilMemberElectionGovernor"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
         "yoav_eth_EF_arbitrum_0x475816ca2a31d601b4e336f5c2418a67978abf09",
         "yoav.eth-EF"
       ]
@@ -431,6 +469,13 @@
     {
       "atom": "addressName",
       "params": [
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        "SecurityCouncilMemberRemovalGovernor"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
         "upgradeExecRouteBuilder_arbitrum_0x7481716f05e315fc4c4a64e56dcd9bc1d6f24c0a",
         "UpgradeExecRouteBuilder"
       ]
@@ -454,6 +499,13 @@
       "params": [
         "griffGreen_Giveth_arbitrum_0x882c6fcb3d358b9d70b97c6999159cea64168b6f",
         "GriffGreen-Giveth"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
+        "SecurityCouncilNomineeElectionGovernor"
       ]
     },
     {
@@ -503,6 +555,13 @@
       "params": [
         "treasuryTimelock_arbitrum_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
         "TreasuryTimelock"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "gnosisSafeL2_arbitrum_0xc610984d9c96a7ce54bcd335ceee9b0e3874380c",
+        "GnosisSafeL2"
       ]
     },
     {
@@ -830,8 +889,8 @@
     {
       "atom": "addressName",
       "params": [
-        "batchPosterManagerMultisig_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
-        "BatchPosterManagerMultisig"
+        "arbitrum_Multisig_1_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "Arbitrum Multisig 1"
       ]
     },
     {
@@ -865,8 +924,8 @@
     {
       "atom": "addressName",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
-        "SecurityCouncil"
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "Arbitrum Security Council"
       ]
     },
     {
@@ -900,8 +959,22 @@
     {
       "atom": "addressType",
       "params": [
+        "eoa_arbitrum_0x0adc7d8eb4c01219858a579c9539780cd9575035",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
         "constitutionHash_arbitrum_0x1d62ffeb72e4c360ccbbacf7c965153b00260417",
         "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_arbitrum_0x25032d068633cfbe52c134ebdd965b2c2b4c2710",
+        "eoa"
       ]
     },
     {
@@ -957,6 +1030,13 @@
       "atom": "addressType",
       "params": [
         "l2DAIGateway_arbitrum_0x467194771dae2967aef3ecbedd3bf9a310c76c65",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
         "contract"
       ]
     },
@@ -1019,6 +1099,13 @@
     {
       "atom": "addressType",
       "params": [
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
         "upgradeExecRouteBuilder_arbitrum_0x7481716f05e315fc4c4a64e56dcd9bc1d6f24c0a",
         "contract"
       ]
@@ -1042,6 +1129,13 @@
       "params": [
         "griffGreen_Giveth_arbitrum_0x882c6fcb3d358b9d70b97c6999159cea64168b6f",
         "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
+        "contract"
       ]
     },
     {
@@ -1082,6 +1176,13 @@
     {
       "atom": "addressType",
       "params": [
+        "eoa_arbitrum_0xa98290a7a282d8249544d35b288e160a5580d57e",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
         "l2SecurityCouncilPropose_arbitrum_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
         "contract"
       ]
@@ -1112,6 +1213,27 @@
       "params": [
         "eoa_arbitrum_0xc232ee726e3c51b86778bb4dbe61c52cc07a60f3",
         "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_arbitrum_0xc3514c143df27eb29ac4c56c59a260713b841bdd",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_arbitrum_0xc43a77b64b34551bea865c9e85a116b444ef44b1",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "gnosisSafeL2_arbitrum_0xc610984d9c96a7ce54bcd335ceee9b0e3874380c",
+        "contract"
       ]
     },
     {
@@ -1161,6 +1283,13 @@
       "params": [
         "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
         "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_arbitrum_0xde82b19aa75d93eb9fca9a284dd0eb643d5e35c2",
+        "eoa"
       ]
     },
     {
@@ -1558,7 +1687,7 @@
     {
       "atom": "addressType",
       "params": [
-        "batchPosterManagerMultisig_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "arbitrum_Multisig_1_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
         "contract"
       ]
     },
@@ -1600,7 +1729,7 @@
     {
       "atom": "addressType",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "contract"
       ]
     },
@@ -1646,9 +1775,25 @@
     {
       "atom": "address",
       "params": [
+        "eoa_arbitrum_0x0adc7d8eb4c01219858a579c9539780cd9575035",
+        "arbitrum",
+        "0x0adc7d8eb4c01219858a579c9539780cd9575035"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
         "constitutionHash_arbitrum_0x1d62ffeb72e4c360ccbbacf7c965153b00260417",
         "arbitrum",
         "0x1d62ffeb72e4c360ccbbacf7c965153b00260417"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_arbitrum_0x25032d068633cfbe52c134ebdd965b2c2b4c2710",
+        "arbitrum",
+        "0x25032d068633cfbe52c134ebdd965b2c2b4c2710"
       ]
     },
     {
@@ -1718,6 +1863,14 @@
     {
       "atom": "address",
       "params": [
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
+        "arbitrum",
+        "0x467923b9ae90bdb36ba88eca11604d45f13b712c"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
         "yoav_eth_EF_arbitrum_0x475816ca2a31d601b4e336f5c2418a67978abf09",
         "arbitrum",
         "0x475816ca2a31d601b4e336f5c2418a67978abf09"
@@ -1782,6 +1935,14 @@
     {
       "atom": "address",
       "params": [
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        "arbitrum",
+        "0x6f3a242ca91a119f872f0073bc14bc8a74a315ad"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
         "upgradeExecRouteBuilder_arbitrum_0x7481716f05e315fc4c4a64e56dcd9bc1d6f24c0a",
         "arbitrum",
         "0x7481716f05e315fc4c4a64e56dcd9bc1d6f24c0a"
@@ -1809,6 +1970,14 @@
         "griffGreen_Giveth_arbitrum_0x882c6fcb3d358b9d70b97c6999159cea64168b6f",
         "arbitrum",
         "0x882c6fcb3d358b9d70b97c6999159cea64168b6f"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
+        "arbitrum",
+        "0x8a1cda8dee421cd06023470608605934c16a05a0"
       ]
     },
     {
@@ -1854,6 +2023,14 @@
     {
       "atom": "address",
       "params": [
+        "eoa_arbitrum_0xa98290a7a282d8249544d35b288e160a5580d57e",
+        "arbitrum",
+        "0xa98290a7a282d8249544d35b288e160a5580d57e"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
         "l2SecurityCouncilPropose_arbitrum_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
         "arbitrum",
         "0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941"
@@ -1889,6 +2066,30 @@
         "eoa_arbitrum_0xc232ee726e3c51b86778bb4dbe61c52cc07a60f3",
         "arbitrum",
         "0xc232ee726e3c51b86778bb4dbe61c52cc07a60f3"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_arbitrum_0xc3514c143df27eb29ac4c56c59a260713b841bdd",
+        "arbitrum",
+        "0xc3514c143df27eb29ac4c56c59a260713b841bdd"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_arbitrum_0xc43a77b64b34551bea865c9e85a116b444ef44b1",
+        "arbitrum",
+        "0xc43a77b64b34551bea865c9e85a116b444ef44b1"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "gnosisSafeL2_arbitrum_0xc610984d9c96a7ce54bcd335ceee9b0e3874380c",
+        "arbitrum",
+        "0xc610984d9c96a7ce54bcd335ceee9b0e3874380c"
       ]
     },
     {
@@ -1945,6 +2146,14 @@
         "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
         "arbitrum",
         "0xdb216562328215e010f819b5abe947bad4ca961e"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_arbitrum_0xde82b19aa75d93eb9fca9a284dd0eb643d5e35c2",
+        "arbitrum",
+        "0xde82b19aa75d93eb9fca9a284dd0eb643d5e35c2"
       ]
     },
     {
@@ -2398,7 +2607,7 @@
     {
       "atom": "address",
       "params": [
-        "batchPosterManagerMultisig_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "arbitrum_Multisig_1_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
         "ethereum",
         "0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b"
       ]
@@ -2446,7 +2655,7 @@
     {
       "atom": "address",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "ethereum",
         "0xf06e95ef589d9c38af242a8aaee8375f14023f85"
       ]
@@ -2566,7 +2775,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "batchPosterManagerMultisig_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "arbitrum_Multisig_1_ethereum_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
         "interact",
         "sequencerInbox_ethereum_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
         0,
@@ -2579,7 +2788,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "act",
         "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
         0,
@@ -2631,28 +2840,6 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
-        "interact",
-        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
-        259200,
-        "update the minimum delay and manage all access control roles of the timelock.",
-        259200,
-        [
-          {
-            "atom": "tuple",
-            "params": [
-              "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
-              "act",
-              0
-            ]
-          }
-        ],
-        "isFinal"
-      ]
-    },
-    {
-      "atom": "filteredTransitivePermission",
-      "params": [
         "l2SecurityCouncilEmergency_arbitrum_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
         "interact",
         "l2Timelock_arbitrum_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
@@ -2697,7 +2884,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
@@ -2719,7 +2906,51 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "update the minimum delay and manage all access control roles of the timelock.",
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "cancel queued transactions.",
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "interact",
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
@@ -2983,6 +3214,126 @@
       "params": [
         "l2SecurityCouncilEmergency_arbitrum_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
         "upgrade",
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_arbitrum_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l1Timelock_l2alias_arbitrum_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_arbitrum_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_arbitrum_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_arbitrum_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l1Timelock_l2alias_arbitrum_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_arbitrum_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_arbitrum_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
         "treasuryGovernor_arbitrum_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
         0,
         null,
@@ -3014,6 +3365,66 @@
         "l1Timelock_l2alias_arbitrum_0xf7951d92b0c345144506576ec13ecf5103ac905a",
         "upgrade",
         "treasuryGovernor_arbitrum_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_arbitrum_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_arbitrum_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_arbitrum_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l1Timelock_l2alias_arbitrum_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
         0,
         null,
         0,
@@ -3401,7 +3812,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "outbox_ethereum_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
         0,
@@ -3431,7 +3842,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "sequencerInbox_ethereum_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
         0,
@@ -3461,7 +3872,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "inbox_ethereum_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
         0,
@@ -3491,7 +3902,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "rollupEventInbox_ethereum_0x57bd336d579a51938619271a7cc137a46d0501b1",
         0,
@@ -3521,7 +3932,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "outboxV0_ethereum_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
         0,
@@ -3551,7 +3962,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "outboxV1_ethereum_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
         0,
@@ -3581,7 +3992,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "bridge_ethereum_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
         0,
@@ -3611,7 +4022,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "edgeChallengeManager_ethereum_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
         0,
@@ -3641,7 +4052,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
         0,
@@ -3671,7 +4082,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
         0,
@@ -3701,7 +4112,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "gatewayRouter_ethereum_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
         0,
@@ -3731,7 +4142,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "l1ERC20Gateway_ethereum_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
         0,
@@ -3761,7 +4172,7 @@
     {
       "atom": "filteredTransitivePermission",
       "params": [
-        "securityCouncil_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "arbitrum_Security_Council_ethereum_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
         "upgrade",
         "l1CustomGateway_ethereum_0xcee284f754e854890e311e3280b767f80797180d",
         0,
@@ -3906,11 +4317,11 @@
       "atom": "filteredTransitivePermission",
       "params": [
         "l2SecurityCouncilPropose_arbitrum_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
-        "interact",
-        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
-        259200,
-        "update the minimum delay and manage all access control roles of the timelock.",
-        1759416,
+        "upgrade",
+        "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        0,
+        null,
+        1500216,
         [
           {
             "atom": "tuple",
@@ -3960,11 +4371,11 @@
       "atom": "filteredTransitivePermission",
       "params": [
         "securityCouncilManager_arbitrum_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
-        "interact",
-        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
-        259200,
-        "update the minimum delay and manage all access control roles of the timelock.",
-        1759416,
+        "upgrade",
+        "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        0,
+        null,
+        1500216,
         [
           {
             "atom": "tuple",
@@ -4014,11 +4425,11 @@
       "atom": "filteredTransitivePermission",
       "params": [
         "coreGovernor_arbitrum_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
-        "interact",
-        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
-        259200,
-        "update the minimum delay and manage all access control roles of the timelock.",
-        1759416,
+        "upgrade",
+        "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        0,
+        null,
+        1500216,
         [
           {
             "atom": "tuple",
@@ -4068,10 +4479,10 @@
       "atom": "filteredTransitivePermission",
       "params": [
         "l2SecurityCouncilPropose_arbitrum_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
-        "upgrade",
-        "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
         0,
-        null,
+        "update the minimum delay and manage all access control roles of the timelock.",
         1500216,
         [
           {
@@ -4122,10 +4533,10 @@
       "atom": "filteredTransitivePermission",
       "params": [
         "securityCouncilManager_arbitrum_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
-        "upgrade",
-        "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
         0,
-        null,
+        "update the minimum delay and manage all access control roles of the timelock.",
         1500216,
         [
           {
@@ -4176,10 +4587,172 @@
       "atom": "filteredTransitivePermission",
       "params": [
         "coreGovernor_arbitrum_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
-        "upgrade",
-        "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
         0,
-        null,
+        "update the minimum delay and manage all access control roles of the timelock.",
+        1500216,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_arbitrum_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "act",
+              691200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_ethereum_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "act",
+              549816
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_ethereum_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2SecurityCouncilPropose_arbitrum_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "cancel queued transactions.",
+        1500216,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_arbitrum_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "act",
+              691200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_ethereum_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "act",
+              549816
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_ethereum_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "securityCouncilManager_arbitrum_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "cancel queued transactions.",
+        1500216,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_arbitrum_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "act",
+              691200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_ethereum_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "act",
+              549816
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_ethereum_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ],
+        "isFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "coreGovernor_arbitrum_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "cancel queued transactions.",
         1500216,
         [
           {
@@ -6889,7 +7462,46 @@
       "params": [
         "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
         "upgrade",
+        "securityCouncilMemberElectionGovernor_arbitrum_0x467923b9ae90bdb36ba88eca11604d45f13b712c",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "securityCouncilMemberRemovalGovernor_arbitrum_0x6f3a242ca91a119f872f0073bc14bc8a74a315ad",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
         "treasuryGovernor_arbitrum_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "l2ProxyAdmin_arbitrum_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "securityCouncilNomineeElectionGovernor_arbitrum_0x8a1cda8dee421cd06023470608605934c16a05a0",
         0,
         null,
         0,
@@ -7035,6 +7647,32 @@
         "rollupProxy_ethereum_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
         0,
         "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+        0,
+        null,
+        "nonFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "cancel queued transactions.",
+        0,
+        null,
+        "nonFinal"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "interact",
+        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        0,
+        "update the minimum delay and manage all access control roles of the timelock.",
         0,
         null,
         "nonFinal"
@@ -7257,19 +7895,6 @@
         691200,
         "manage all access control roles and change the minimum delay.",
         691200,
-        null,
-        "nonFinal"
-      ]
-    },
-    {
-      "atom": "filteredTransitivePermission",
-      "params": [
-        "upgradeExecutor_ethereum_0x3fffbadaf827559da092217e474760e2b2c3cedd",
-        "interact",
-        "l1Timelock_ethereum_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
-        259200,
-        "update the minimum delay and manage all access control roles of the timelock.",
-        259200,
         null,
         "nonFinal"
       ]
