@@ -20,7 +20,7 @@ const expirationPeriod = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: [{ name: 'TermStructureMultisig', delay: 'no' }],
+  upgradableBy: [{ name: 'TermStructure Multisig 1', delay: 'no' }],
 }
 
 const treasuryWeight =
@@ -325,15 +325,15 @@ export const termstructure: ScalingProject = {
           'Can execute blocks on L1.',
         ),
         discovery.getMultisigPermission(
-          'Termstructure Multisig 2',
+          'TermStructure Multisig 2',
           `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
         ),
         discovery.getMultisigPermission(
-          'Termstructure Multisig 3',
+          'TermStructure Multisig 3',
           `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
         ),
         discovery.getMultisigPermission(
-          'Termstructure Multisig 4',
+          'TermStructure Multisig 4',
           `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
         ),
       ],

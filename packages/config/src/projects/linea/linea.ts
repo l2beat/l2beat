@@ -41,14 +41,14 @@ const timelockDelayString = formatSeconds(timelockDelay)
 const upgradesTimelock = {
   upgradableBy: [
     {
-      name: 'LineaAdminMultisig',
+      name: 'Linea Multisig',
       delay: timelockDelay === 0 ? 'no' : timelockDelayString,
     },
   ],
 }
 
 const upgrades = {
-  upgradableBy: [{ name: 'LineaAdminMultisig', delay: 'no' }],
+  upgradableBy: [{ name: 'Linea Multisig', delay: 'no' }],
 }
 
 const zodiacRoles = discovery.getContractValue<{
@@ -515,7 +515,7 @@ export const linea: ScalingProject = {
     [discovery.chain]: {
       actors: [
         discovery.getMultisigPermission(
-          'LineaAdminMultisig',
+          'Linea Multisig',
           'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
         ),
         discovery.getPermissionDetails(
@@ -534,7 +534,7 @@ export const linea: ScalingProject = {
         discovery.getPermissionDetails(
           'Pauser',
           zodiacPausers,
-          'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
+          'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the Linea Multisig).',
         ),
       ],
     },
@@ -554,9 +554,9 @@ export const linea: ScalingProject = {
             assert(addresses.length === 1)
             assert(
               addresses[0] ===
-                discovery.getContract('LineaAdminMultisig').address,
+                discovery.getContract('Linea Multisig').address,
             )
-            return { pausableBy: ['LineaAdminMultisig'], paused: isPaused }
+            return { pausableBy: ['Linea Multisig'], paused: isPaused }
           })(),
           references: [
             {
