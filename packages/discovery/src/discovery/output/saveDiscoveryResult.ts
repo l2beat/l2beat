@@ -5,6 +5,7 @@ import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
+import { TemplateService } from '../analysis/TemplateService'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { buildAndSaveModels } from '../modelling/build'
@@ -41,8 +42,18 @@ export async function saveDiscoveryResult(
   )
   await mkdirp(projectDiscoveryFolder)
 
-  const discoveryOutput = toDiscoveryOutput(config, blockNumber, results)
-  await saveDiscoveredJson(discoveryOutput, projectDiscoveryFolder, options)
+  const templateService = new TemplateService(options.paths.discovery)
+  const discoveryOutput = toDiscoveryOutput(
+    templateService,
+    config,
+    blockNumber,
+    results,
+  )
+  await saveDiscoveredJson(
+    discoveryOutput,
+    projectDiscoveryFolder,
+    options.discoveryFilename,
+  )
   await saveFlatSources(projectDiscoveryFolder, results, logger, options)
   if (options.saveSources) {
     await saveSources(projectDiscoveryFolder, results, options)
@@ -59,14 +70,14 @@ export async function saveDiscoveryResult(
   }
 }
 
-async function saveDiscoveredJson(
+export async function saveDiscoveredJson(
   discoveryOutput: DiscoveryOutput,
   rootPath: string,
-  options: SaveDiscoveryResultOptions,
+  discoveryFilename: string | undefined = undefined,
 ): Promise<void> {
   const json = await toPrettyJson(discoveryOutput)
-  const discoveryFilename = options.discoveryFilename ?? 'discovered.json'
-  await writeFile(posix.join(rootPath, discoveryFilename), json)
+  const outputPath = discoveryFilename ?? 'discovered.json'
+  await writeFile(posix.join(rootPath, outputPath), json)
 }
 
 async function saveSources(

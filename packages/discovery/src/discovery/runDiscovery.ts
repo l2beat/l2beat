@@ -149,7 +149,9 @@ async function justDiscover(
     http,
     overwriteCache,
   )
-  return toDiscoveryOutput(config, blockNumber, result)
+
+  const templateService = new TemplateService(paths.discovery)
+  return toDiscoveryOutput(templateService, config, blockNumber, result)
 }
 
 export async function discover(

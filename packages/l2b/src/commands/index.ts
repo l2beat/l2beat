@@ -1,6 +1,7 @@
 import { AddShape } from './AddShape'
 import { AdriansCommand } from './AdriansCommand'
 import { CheckRpc } from './CheckRpc'
+import { Colorize } from './Colorize'
 import { CompareFlatSources } from './CompareFlatSources'
 import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
@@ -35,6 +36,7 @@ export function getSubcommands() {
     AddShape,
     AdriansCommand,
     CheckRpc,
+    Colorize,
     CompareFlatSources,
     CompareOpStacks,
     CompareOrbitStacks,

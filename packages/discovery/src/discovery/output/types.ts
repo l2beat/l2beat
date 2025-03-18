@@ -12,6 +12,17 @@ export type ContractValue =
   | ContractValue[]
   | { [key: string]: ContractValue | undefined }
 
+export interface StructureOutput {
+  name: string
+  chain: string
+  blockNumber: number
+  entries: StructureEntry[]
+  abis: Record<string, string[]>
+  configHash: Hash256
+  sharedModules?: string[]
+  usedTemplates: Record<string, Hash256>
+}
+
 export interface DiscoveryOutput {
   name: string
   chain: string
@@ -60,26 +71,14 @@ export type ExternalReference = {
   href: string
 }
 
-export interface Meta {
-  issuedPermissions?: IssuedPermission[]
-  receivedPermissions?: ReceivedPermission[]
-  directlyReceivedPermissions?: ReceivedPermission[]
-  description?: string
-  references?: ExternalReference[]
-  category?: ContractCategory
-}
-
 export interface ContractCategory {
   name: string
   priority: number
 }
 
-export type EntryParameters = {
+export type StructureEntry = {
   type: 'Contract' | 'EOA'
-  name?: string
   address: EthereumAddress
-  displayName?: string
-  description?: string
   derivedName?: string
   template?: string
   sourceHashes?: string[]
@@ -91,5 +90,18 @@ export type EntryParameters = {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
+}
+
+export type ColorEntry = {
+  name?: string
+  displayName?: string
+  description?: string
   fieldMeta?: Record<string, FieldMeta>
-} & Meta
+  issuedPermissions?: IssuedPermission[]
+  receivedPermissions?: ReceivedPermission[]
+  directlyReceivedPermissions?: ReceivedPermission[]
+  references?: ExternalReference[]
+  category?: ContractCategory
+}
+
+export type EntryParameters = StructureEntry & ColorEntry
