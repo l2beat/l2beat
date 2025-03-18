@@ -18,8 +18,8 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/popover'
 import { useIsMobile } from '~/hooks/use-breakpoint'
-import { useTracking } from '~/hooks/use-custom-event'
 import { useEventListener } from '~/hooks/use-event-listener'
+import { useTracking } from '~/hooks/use-tracking'
 import { FilterIcon } from '~/icons/filter'
 import { PlusIcon } from '~/icons/plus'
 import { cn } from '~/utils/cn'

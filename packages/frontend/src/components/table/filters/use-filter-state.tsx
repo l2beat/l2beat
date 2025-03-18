@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { useReducer } from 'react'
-import { useTracking } from '~/hooks/use-custom-event'
+import { useTracking } from '~/hooks/use-tracking'
 import type { FilterableValueId } from './types'
 
 type Filter = {

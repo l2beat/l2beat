@@ -15,8 +15,8 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
-import { useTracking } from '~/hooks/use-custom-event'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
+import { useTracking } from '~/hooks/use-tracking'
 import { useRouterWithProgressBar } from '../progress-bar'
 import type { SearchBarCategory } from './search-bar-categories'
 import { searchBarCategories } from './search-bar-categories'

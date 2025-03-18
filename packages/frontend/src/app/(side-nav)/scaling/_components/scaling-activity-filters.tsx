@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { TableFilters } from '~/components/table/filters/table-filters'
 import type { FilterableEntry } from '~/components/table/filters/types'
-import { useTracking } from '~/hooks/use-custom-event'
+import { useTracking } from '~/hooks/use-tracking'
 import { cn } from '~/utils/cn'
 
 interface Props {
