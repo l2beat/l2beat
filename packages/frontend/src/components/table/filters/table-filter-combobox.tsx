@@ -1,7 +1,7 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
 import type { Dispatch, SetStateAction } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Command,
   CommandDialog,
@@ -18,6 +18,7 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/popover'
 import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useTracking } from '~/hooks/use-custom-event'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
 import { PlusIcon } from '~/icons/plus'
@@ -34,9 +35,9 @@ import {
 export function TableFilterCombobox({
   entries,
 }: { entries: FilterableEntry[] }) {
-  useTableFilterContext()
   const [open, setOpen] = useState(false)
   const isMobile = useIsMobile()
+  const { track } = useTracking()
 
   useEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'f') {
@@ -44,6 +45,12 @@ export function TableFilterCombobox({
       setOpen((open) => !open)
     }
   })
+
+  useEffect(() => {
+    if (open) {
+      track('filtersOpened')
+    }
+  }, [open, track])
 
   if (isMobile) {
     return <MobileFilters entries={entries} open={open} setOpen={setOpen} />
@@ -127,6 +134,7 @@ function Content({
 }: {
   entries: FilterableEntry[]
 }) {
+  const { track } = useTracking()
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
   )
@@ -158,7 +166,12 @@ function Content({
                 className="font-medium"
                 key={id}
                 value={id}
-                onSelect={() => setSelectedId(id)}
+                onSelect={() => {
+                  setSelectedId(id)
+                  track('filterIdSelected', {
+                    props: { name: id },
+                  })
+                }}
               >
                 {filterIdToLabel[id]}
               </CommandItem>

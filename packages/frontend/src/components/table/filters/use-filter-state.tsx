@@ -46,13 +46,26 @@ type SetInversedFilterAction = {
 }
 
 // Our reducer function that uses a switch statement to handle our actions
-function filterReducer(state: FilterState, action: FilterAction) {
+function filterReducer(
+  state: FilterState,
+  action: FilterAction,
+  track: ReturnType<typeof useTracking>['track'],
+) {
   switch (action.type) {
     case 'add':
       const existingFilter = state.find(
         (filter) => filter.id === action.payload.id,
       )
+
       if (existingFilter) {
+        track('filterValueSelected', {
+          props: {
+            name: action.payload.id,
+            value: action.payload.value,
+            otherValues: existingFilter.values,
+            additionalFilters: state.length - 1,
+          },
+        })
         return state.map((filter) =>
           filter.id === action.payload.id
             ? {
@@ -63,6 +76,14 @@ function filterReducer(state: FilterState, action: FilterAction) {
         )
       }
 
+      track('filterValueSelected', {
+        props: {
+          name: action.payload.id,
+          value: action.payload.value,
+          otherValues: [],
+          additionalFilters: state.length,
+        },
+      })
       return [
         ...state,
         {
@@ -81,10 +102,27 @@ function filterReducer(state: FilterState, action: FilterAction) {
               }
             : filter,
         )
-        return updatedState.filter((filter) => filter.values.length > 0)
+        const remainingFilters = updatedState.filter(
+          (filter) => filter.values.length > 0,
+        )
+        if (remainingFilters.length === 0) {
+          track('filterRemoved', {
+            props: { name: action.payload.id },
+          })
+        }
+        return remainingFilters
       }
       return state.filter((filter) => filter.id !== action.payload.id)
     case 'setInversed':
+      if (action.payload.value === true) {
+        track('filterInversed', {
+          props: {
+            name: action.payload.id,
+            values: state.find((filter) => filter.id === action.payload.id)!
+              .values,
+          },
+        })
+      }
       return state.map((filter) =>
         filter.id === action.payload.id
           ? { ...filter, inversed: action.payload.value }
@@ -98,8 +136,12 @@ function filterReducer(state: FilterState, action: FilterAction) {
 }
 
 export function useFilterState() {
-  useTracking()
-  const [state, dispatch] = useReducer(filterReducer, [])
+  const { track } = useTracking()
+  const [state, dispatch] = useReducer(
+    (state: FilterState, action: FilterAction) =>
+      filterReducer(state, action, track),
+    [],
+  )
 
   return {
     state,
