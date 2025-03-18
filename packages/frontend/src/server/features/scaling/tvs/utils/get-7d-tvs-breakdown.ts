@@ -1,6 +1,7 @@
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
+import { z } from 'zod'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -39,17 +40,17 @@ export interface BreakdownSplit {
   native: number
 }
 
-type TvsBreakdownProps =
-  | {
-      type: 'layer2' | 'bridge' | 'all'
-    }
-  | {
-      type: 'selected'
-      projects: ProjectId[]
-    }
+export const TvsBreakdownProjectFilter = z.discriminatedUnion('type', [
+  z.object({
+    type: z.enum(['all', 'layer2', 'bridge']),
+  }),
+  z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
+])
+
+type TvsBreakdownProjectFilter = z.infer<typeof TvsBreakdownProjectFilter>
 
 const getCached7dTokenBreakdown = cache(
-  async (props: TvsBreakdownProps): Promise<SevenDayTvsBreakdown> => {
+  async (props: TvsBreakdownProjectFilter): Promise<SevenDayTvsBreakdown> => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
@@ -57,14 +58,7 @@ const getCached7dTokenBreakdown = cache(
     const tokens = await ps.getTokens()
     const tvsValues = await getTvsValuesForProjects(
       await getTvsProjects(
-        (project) =>
-          props.type === 'selected'
-            ? props.projects.includes(project.id)
-            : props.type === 'all'
-              ? true
-              : props.type === 'layer2'
-                ? !!project.scalingInfo
-                : !!project.isBridge,
+        createTvsBreakdownProjectFilter(props),
         chains,
         tokens,
       ),
@@ -166,6 +160,20 @@ const getCached7dTokenBreakdown = cache(
   },
 )
 
+function createTvsBreakdownProjectFilter(
+  filter: TvsBreakdownProjectFilter,
+): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
+  switch (filter.type) {
+    case 'projects':
+      return (project) => filter.projectIds.includes(project.id)
+    case 'all':
+      return () => true
+    case 'layer2':
+      return (project) => !!project.scalingInfo
+    case 'bridge':
+      return (project) => !!project.isBridge
+  }
+}
 async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
   const projects = await ps.getProjects({ where: ['tvlConfig'] })
   return {

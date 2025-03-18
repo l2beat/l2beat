@@ -122,7 +122,7 @@ export async function getScalingProjectEntry(
     await Promise.all([
       getProjectsChangeReport(),
       getActivityProjectStats(project.id),
-      get7dTvsBreakdown({ type: 'selected', projects: [project.id] }),
+      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     ])
 
   const tvsProjectStats = tvsStats.projects[project.id]

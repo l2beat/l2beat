@@ -77,7 +77,7 @@ export async function getBridgesProjectEntry(
 ): Promise<BridgesProjectEntry> {
   const [projectsChangeReport, tvsStats] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'selected', projects: [project.id] }),
+    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
   ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
