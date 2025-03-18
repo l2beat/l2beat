@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { type ProjectValueRecord, toRow } from './entity'
+import { type ProjectValueRecord, toRecord, toRow } from './entity'
 
 export class ProjectValueRepository extends BaseRepository {
   async upsertMany(records: ProjectValueRecord[]) {
@@ -26,5 +26,15 @@ export class ProjectValueRepository extends BaseRepository {
     })
 
     return records.length
+  }
+
+  async getAll(): Promise<ProjectValueRecord[]> {
+    const rows = await this.db.selectFrom('ProjectValue').selectAll().execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('ProjectValue').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }
