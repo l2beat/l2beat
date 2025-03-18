@@ -380,6 +380,8 @@ export class ProjectDiscovery {
   ): ProjectPermissionedAccount[] {
     const result: ProjectPermissionedAccount[] = []
 
+    const controllingEoa = this.permissionRegistry.getControllingEoa()
+
     for (const account of accounts) {
       assert(
         isString(account) && EthereumAddress.check(account),
@@ -399,8 +401,16 @@ export class ProjectDiscovery {
         `Failed to find explorer url for chain [${this.chain}]`,
       )
       const url = `${explorerUrl}/address/${address}`
+      const isControllingEoa = address.toString() === controllingEoa
 
-      result.push({ address: address, type, isVerified, name, url })
+      result.push({
+        address: address,
+        type,
+        isVerified,
+        name,
+        url,
+        isControllingEoa,
+      })
     }
 
     return result
@@ -978,6 +988,10 @@ export class ProjectDiscovery {
     })
 
     return result
+  }
+
+  getControllingEoa(): string | undefined {
+    return this.permissionRegistry.getControllingEoa()
   }
 }
 

@@ -190,6 +190,7 @@ function toTechnologyContract(
       participants,
       references: permission.references ?? [],
       impactfulChange: false,
+      isControllingEoa: permission.accounts.some((a) => a.isControllingEoa),
     },
   ]
 

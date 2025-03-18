@@ -173,6 +173,10 @@ export class PermissionsFromModel implements PermissionRegistry {
       })
     return upgradersWithDelay
   }
+
+  getControllingEoa(): string | undefined {
+    throw new Error('To be implemented')
+  }
 }
 
 function renderTransitivePermissionVia(via: TransitivePermissionVia): string {

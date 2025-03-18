@@ -124,7 +124,7 @@ export interface BaseProject {
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
-  redWarning: string | undefined
+  redWarning: string | undefined | false
   isUnderReview: boolean
   isUnverified: boolean
   // countdowns
@@ -864,6 +864,7 @@ export interface ProjectPermissionedAccount {
   address: EthereumAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
+  isControllingEoa: boolean
 }
 
 export interface ProjectContracts {

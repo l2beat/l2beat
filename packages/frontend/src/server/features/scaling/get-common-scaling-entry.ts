@@ -51,7 +51,9 @@ export function getCommonScalingEntry({
     href: `/scaling/projects/${project.slug}`,
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
-      redWarning: project.statuses.redWarning,
+      redWarning: project.statuses.redWarning
+        ? project.statuses.redWarning
+        : undefined,
       verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
         isUnderReview: project.statuses.isUnderReview,

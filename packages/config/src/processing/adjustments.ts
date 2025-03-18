@@ -34,8 +34,12 @@ export function runConfigAdjustments() {
   layer2s.forEach((p) => {
     adjustLegacy(p, chains)
     adjustBadges(p, layer3s)
+    adjustRedWarnings(p)
   })
-  layer3s.forEach((p) => adjustLegacy(p, chains))
+  layer3s.forEach((p) => {
+    adjustLegacy(p, chains)
+    adjustRedWarnings(p)
+  })
   bridges.forEach((p) => adjustLegacy(p, chains))
   refactored.forEach((p) => adjustRefactored(p, chains))
 }
@@ -108,5 +112,29 @@ function adjustBadges(project: ScalingProject, l3s: ScalingProject[]) {
 function adjustEscrows(project: ScalingProject | Bridge) {
   if (project.contracts) {
     project.contracts.escrows = project.config.escrows
+  }
+}
+
+function adjustRedWarnings(project: ScalingProject) {
+  const { redWarning } = project.display
+
+  // If redWarning is false, we disable automatic red warning
+  if (redWarning === false) {
+    return
+  }
+
+  // If redWarning is set, we use it as is
+  if (redWarning) {
+    return redWarning
+  }
+
+  // If there is an EOA that can upgrade contracts, we add a red warning
+  if (
+    Object.values(project.permissions ?? {})
+      .flatMap((p) => p.actors)
+      .some((a) => a?.accounts.some((b) => b.isControllingEoa))
+  ) {
+    project.display.redWarning =
+      'Contracts can be upgraded by an EOA which could result in the loss of all funds.'
   }
 }

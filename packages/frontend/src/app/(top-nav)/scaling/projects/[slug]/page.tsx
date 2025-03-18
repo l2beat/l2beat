@@ -33,6 +33,7 @@ export async function generateMetadata(props: Props) {
     select: ['display'],
     where: ['scalingInfo'],
   })
+
   if (!project) {
     notFound()
   }
@@ -82,6 +83,7 @@ export default async function Page(props: Props) {
       'trackedTxsConfig',
     ],
   })
+
   if (!project) {
     notFound()
   }

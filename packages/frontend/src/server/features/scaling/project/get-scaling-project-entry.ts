@@ -128,7 +128,9 @@ export async function getScalingProjectEntry(
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
-    redWarning: project.statuses.redWarning,
+    redWarning: project.statuses.redWarning
+      ? project.statuses.redWarning
+      : undefined,
     category: isProjectOther(project.scalingInfo)
       ? 'Other'
       : project.scalingInfo.type,
@@ -373,7 +375,9 @@ export async function getScalingProjectEntry(
         },
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
-        redWarning: project.statuses.redWarning,
+        redWarning: project.statuses.redWarning
+          ? project.statuses.redWarning
+          : undefined,
         isVerified: !project.statuses.isUnverified,
         isUnderReview: project.statuses.isUnderReview,
       },
@@ -386,7 +390,9 @@ export async function getScalingProjectEntry(
         title: 'Risk analysis',
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
-        redWarning: project.statuses.redWarning,
+        redWarning: project.statuses.redWarning
+          ? project.statuses.redWarning
+          : undefined,
         isVerified: !project.statuses.isUnverified,
         isUnderReview: project.statuses.isUnderReview,
       },
