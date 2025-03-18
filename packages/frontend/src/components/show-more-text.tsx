@@ -1,8 +1,7 @@
 'use client'
 import type { ReactNode } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
-import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
 import {
@@ -32,7 +31,7 @@ export function ShowMoreText({
   const contentRef = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
 
-  const handleResize = useEventCallback(() => {
+  const handleResize = useCallback(() => {
     if (contentRef.current) {
       const { scrollHeight, offsetHeight, clientWidth, scrollWidth } =
         contentRef.current
@@ -42,7 +41,7 @@ export function ShowMoreText({
         setIsOverflowing(scrollWidth > clientWidth)
       }
     }
-  })
+  }, [isMobile, contentRef])
 
   useEffect(() => {
     handleResize()
