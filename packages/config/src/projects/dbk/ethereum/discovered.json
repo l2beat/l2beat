@@ -2,7 +2,7 @@
   "name": "dbk",
   "chain": "ethereum",
   "blockNumber": 20792021,
-  "configHash": "0xc27eb7a71c4453789081aed39b2b067c3349f9414e7a6e0d6e8c139091acc8a9",
+  "configHash": "0x49aaeadf7281c87493b54279aabfeacbf4e1ef1c9719b39ed8a79701e676ae41",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -593,7 +593,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "DeBankChainMultisig",
+      "name": "DeBank Multisig",
       "address": "0xfB04A190dC7D91E86109433858A48E0B98EF1450",
       "type": "Contract",
       "template": "GnosisSafe",

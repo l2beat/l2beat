@@ -2,7 +2,7 @@
   "name": "aevo",
   "chain": "ethereum",
   "blockNumber": 22046056,
-  "configHash": "0xd37542e7f568ca7f112c75105072b03d6d4ef63496e66bfa24e04acee53d47b9",
+  "configHash": "0xe1bd7b71f82c008633129a0e1f9f2c59b828b5c72bb40e13be0c2e9d50831d78",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -163,7 +163,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

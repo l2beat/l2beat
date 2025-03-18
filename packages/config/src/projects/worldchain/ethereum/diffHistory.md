@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xb3e3ed47af1ef1f56669ff4c61e35d06eb197409
+
+# Diff at Tue, 18 Mar 2025 08:14:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21895014
+- current block number: 21895014
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21895014 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "SuperchainGuardianMultisig"
++        "Optimism Guardian Multisig"
+    }
+```
+
+```diff
+    contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      name:
+-        "AlchemyMultisig1"
++        "Alchemy Multisig 1"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      name:
+-        "SecurityCouncilMultisig"
++        "Optimism Security Council"
+    }
+```
+
 Generated with discovered.json: 0x3ed0c27d50bebcde863cc997064b2a6e47b203ed
 
 # Diff at Tue, 04 Mar 2025 11:26:49 GMT:

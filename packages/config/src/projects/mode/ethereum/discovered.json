@@ -2,7 +2,7 @@
   "name": "mode",
   "chain": "ethereum",
   "blockNumber": 22046068,
-  "configHash": "0xe5e6194131b1f13782f809d7c3832a1c7102afcc0b5c77e9c033ee74ecd9f11a",
+  "configHash": "0x837eee46d3b1b50a175eb2994bbde94705a0fbb8fc5c5bcab75f0288d06ea854",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -58,7 +58,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -189,7 +189,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ModeMultisig",
+      "name": "Mode Multisig",
       "address": "0x309Fe2536d01867018D120b40e4676723C53A14C",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -405,7 +405,7 @@
       }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1318,7 +1318,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

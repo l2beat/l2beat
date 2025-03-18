@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd4e9848672fc9d754440b51240baf6bdf304f473
+
+# Diff at Tue, 18 Mar 2025 08:12:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21994038
+- current block number: 21994038
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21994038 (main branch discovery), not current.
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      name:
+-        "GelatoMultisig"
++        "Gelato Multisig"
+    }
+```
+
 Generated with discovered.json: 0xf9724296caf8f0725b3427c70c827b3fd7971106
 
 # Diff at Fri, 07 Mar 2025 09:14:54 GMT:

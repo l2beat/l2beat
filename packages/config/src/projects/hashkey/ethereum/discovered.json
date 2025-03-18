@@ -2,7 +2,7 @@
   "name": "hashkey",
   "chain": "ethereum",
   "blockNumber": 21680579,
-  "configHash": "0xd4eecca4fb7cc549e6d0ff2ed066016f417a676978b24c08792976009283d2d4",
+  "configHash": "0x3ee3d4d16b1fcef135ecccddc372be64427a6a99f9e1cf39759164af65b4cd14",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -151,7 +151,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "HashkeyOpsMultisig",
+      "name": "Hashkey Multisig 3",
       "address": "0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -381,7 +381,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "HashkeyUpgradeMultisig",
+      "name": "Hashkey Multisig 1",
       "address": "0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -885,7 +885,7 @@
       ]
     },
     {
-      "name": "HashkeyGuardianMultisig",
+      "name": "Hashkey Multisig 2",
       "address": "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A",
       "type": "Contract",
       "template": "GnosisSafe",

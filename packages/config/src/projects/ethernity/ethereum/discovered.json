@@ -2,7 +2,7 @@
   "name": "ethernity",
   "chain": "ethereum",
   "blockNumber": 21802884,
-  "configHash": "0x9c9f9378a415c3361bd4e020e9de3bea749052979791bf9b28c2de0555ed4552",
+  "configHash": "0x9e14b218dcd73bb65949535521029bba218e0bfba19822a585026f85454f4a2c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -581,7 +581,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

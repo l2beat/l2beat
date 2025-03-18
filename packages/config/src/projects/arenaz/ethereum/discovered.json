@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "blockNumber": 21829667,
-  "configHash": "0xa7dd507bc1d3d056d87c27022910ac95857725ae5e4878631402c1cbb97a2a68",
+  "configHash": "0xca263f31a38f4e3bceb2967adb81e242f1f5c768701e33e0a06df1fb00207531",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -63,7 +63,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1229,7 +1229,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1284,7 +1284,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

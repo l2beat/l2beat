@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21678827,
-  "configHash": "0xa3afc2987b7d7caa5f150ed881cb867a202220ccaaef48271c5299e75c7d77c3",
+  "configHash": "0x520556ec0247c9b33a90a25051296c0f421733ddb20b149c51e03730720dcf99",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -299,7 +299,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "FacetMultisig",
+      "name": "Facet Multisig",
       "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
       "type": "Contract",
       "template": "GnosisSafe",

@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 21988484,
-  "configHash": "0xadbb7bbc1a112f01a8f87322518d8023981b61c5aee51fdb44b62dd32ff67151",
+  "configHash": "0x888cca9a4a484751cce03f2aa293e01a850ed93f8ac49c2bd61babb685d99e06",
   "entries": [
     {
       "name": "Hypernative",
@@ -132,7 +132,7 @@
       }
     },
     {
-      "name": "Kinto SecurityCouncil",
+      "name": "Kinto Security Council",
       "address": "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1142,7 +1142,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "TurnkeyMultisig",
+      "name": "Turnkey Multisig",
       "address": "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1233,7 +1233,7 @@
       }
     },
     {
-      "name": "BridgerOwnerMultisig",
+      "name": "Kinto Multisig",
       "address": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "type": "Contract",
       "template": "GnosisSafe",

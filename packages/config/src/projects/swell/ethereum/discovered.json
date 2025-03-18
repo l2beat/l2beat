@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "blockNumber": 21829674,
-  "configHash": "0x6b4df33a0aef74acae57db6d0dfa5668dc80193001c7aecd340618056f08a13f",
+  "configHash": "0x9743293e8f75487e34cfddd849088c5d7c1dc8acf9a793e0abab94a4b74cd759",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -53,7 +53,7 @@
       }
     },
     {
-      "name": "SwellChainMultisig",
+      "name": "Swell Multisig",
       "address": "0x06F7fB1C74147e34Fce04a6828c7BF809B038d0E",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -96,7 +96,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1047,7 +1047,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x37d91059705772d4f5a34498f54b9e0749bfa46a
+
+# Diff at Tue, 18 Mar 2025 08:12:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      name:
+-        "BlastMultisig"
++        "BlastMultisig 1"
+    }
+```
+
+```diff
+    contract BlastMultisig 2 (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) {
+    +++ description: None
+      name:
+-        "BridgeOwner"
++        "BlastMultisig 2"
+    }
+```
+
 Generated with discovered.json: 0xb7f233cae118451506efc6bc50c5b9828843d6d6
 
 # Diff at Tue, 04 Mar 2025 11:25:29 GMT:

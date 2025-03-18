@@ -2,7 +2,7 @@
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0xb498b45dd65be9b269555d439ecec0a3e32b84fe11698d2b368352513a9bfa14",
+  "configHash": "0xf14ceb099f8b0aecc42ea110adb2e098168239d7e504586c7fa4fef25766c53b",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -136,7 +136,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

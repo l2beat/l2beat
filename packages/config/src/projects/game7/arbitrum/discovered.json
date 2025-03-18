@@ -2,7 +2,7 @@
   "name": "game7",
   "chain": "arbitrum",
   "blockNumber": 315644612,
-  "configHash": "0x794d4fd554e8b717e53b8c6785ad0e13f326d9fc141ce92267d5c0a0bec20dde",
+  "configHash": "0xddac970d5b1f64f0d97bc8227e29975131d717ee2ae2db641a32c8ac6c961fc1",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -569,7 +569,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ConduitMultisig2",
+      "name": "Conduit Multisig 2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "type": "Contract",
       "template": "GnosisSafe",

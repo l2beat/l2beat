@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x615130103cd713cddc9c2147ce69707534e36233
+
+# Diff at Tue, 18 Mar 2025 08:15:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 763803
+- current block number: 763803
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 763803 (main branch discovery), not current.
+
+```diff
+    contract KintsugiFoundation (0x94561e98DD5E55271f91A103e4979aa6C493745E) {
+    +++ description: None
+      name:
+-        "MamoriLabs2"
++        "KintsugiFoundation"
+    }
+```
+
 Generated with discovered.json: 0xa3d8f1aee8bb53b2fab30e3822288740bf1ca64c
 
 # Diff at Thu, 06 Mar 2025 15:34:47 GMT:

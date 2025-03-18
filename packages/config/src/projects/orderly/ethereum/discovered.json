@@ -2,7 +2,7 @@
   "name": "orderly",
   "chain": "ethereum",
   "blockNumber": 22046069,
-  "configHash": "0x278e3a12d2bd9bc66a36e1c92b2b5bea2263bda390e9bea3db0728411f599597",
+  "configHash": "0xbd863950bec4c2d1702fc1b14ed7a52cde9eabd7344db5916a82d9a53105cd86",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -20,7 +20,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

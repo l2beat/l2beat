@@ -2,7 +2,7 @@
   "name": "winr",
   "chain": "arbitrum",
   "blockNumber": 315644762,
-  "configHash": "0x807dfed3bff430536d472b709f8e27c1f5180588c544b5823582d563ed8f3187",
+  "configHash": "0x8d8d35e1fb10f3b39442405ef527e430cf344714595d78717641cd4b628dbdec",
   "entries": [
     {
       "name": "ChallengeManager",
@@ -334,7 +334,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "ConduitMultisig2",
+      "name": "Conduit Multisig 2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "type": "Contract",
       "template": "GnosisSafe",

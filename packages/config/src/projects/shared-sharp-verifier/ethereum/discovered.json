@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 21973570,
-  "configHash": "0x37d0ef91e725903fe6ee2d4e37c083012e6f88f7502079507ef7003dd56010e0",
+  "configHash": "0x165f5369a979b77ecefc5f5e6fc4cea9f32daecb4dfb0d239459082ddd3f18d9",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",
@@ -182,7 +182,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "SHARPVerifierAdminMultisig",
+      "name": "SHARP Multisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "type": "Contract",
       "template": "GnosisSafe",

@@ -2,7 +2,7 @@
   "name": "stack",
   "chain": "base",
   "blockNumber": 25121106,
-  "configHash": "0xc331595c2fa8f509056d94cd972353e33cb4139c4990b5446bd447b4ea02fae2",
+  "configHash": "0x321519e39cd4e8e3bc03b85bd3efc122329458e72d2e4aff4d8e0d1523bab03e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -282,7 +282,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ConduitMultisig3",
+      "name": "Conduit Multisig 3",
       "address": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
       "type": "Contract",
       "template": "GnosisSafe",

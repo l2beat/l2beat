@@ -2,7 +2,7 @@
   "name": "popboss",
   "chain": "arbitrum",
   "blockNumber": 315644724,
-  "configHash": "0xd6d9ac38e497a4199dbb30efba632dbd6f48198f7d52d0424d09e9396e22a7fc",
+  "configHash": "0x3524e48eaaf9883a389142b6da27fd30b7c74824c9bdfd827952c2491ffef3f9",
   "entries": [
     {
       "name": "UpgradeExecutor",
@@ -540,7 +540,7 @@
       ]
     },
     {
-      "name": "ConduitMultisig2",
+      "name": "Conduit Multisig 2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "type": "Contract",
       "template": "GnosisSafe",

@@ -2,7 +2,7 @@
   "name": "popapex",
   "chain": "arbitrum",
   "blockNumber": 315644682,
-  "configHash": "0x2476a26b73b8a0d9d632c78f6b9b067de2b0c465c4c35e08cd24672b5825466d",
+  "configHash": "0x7e965cfd0b06f9b5d5a1869840b25eaea0663fcd2e7b7378280e0a77b4a39a19",
   "entries": [
     {
       "name": "Bridge",
@@ -420,7 +420,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "ConduitMultisig2",
+      "name": "Conduit Multisig 2",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "type": "Contract",
       "template": "GnosisSafe",

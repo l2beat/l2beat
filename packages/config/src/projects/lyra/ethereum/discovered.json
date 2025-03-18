@@ -2,7 +2,7 @@
   "name": "lyra",
   "chain": "ethereum",
   "blockNumber": 22046064,
-  "configHash": "0x64488aa1d51c97b1a6f32d2a7f7c01816652871a18bc83627aeccfb8fc480be6",
+  "configHash": "0x09f00ca34e8cf7bf3a46759dac34401d7a7a819d969e25f41c285a617f7075e3",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -269,7 +269,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

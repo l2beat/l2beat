@@ -2,7 +2,7 @@
   "name": "alienx",
   "chain": "ethereum",
   "blockNumber": 21465135,
-  "configHash": "0x5fbd9971ef2ad3da3d4d758b27dbfa27f2adc55b77f2603e8f08d25596b67c66",
+  "configHash": "0x465f740935c11827ec07d0ace7c834163c08655bc7924034360c4138113b955e",
   "entries": [
     {
       "address": "0x0060621AFB2583db1c7b31406a2A3a6d15d9252f",

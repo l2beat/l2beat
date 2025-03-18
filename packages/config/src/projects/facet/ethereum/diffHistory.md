@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xa69feb0928c371cfca9b9ebf0870afe592f5c8cc
+
+# Diff at Tue, 18 Mar 2025 08:12:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21678827
+- current block number: 21678827
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678827 (main branch discovery), not current.
+
+```diff
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      name:
+-        "FacetMultisig"
++        "Facet Multisig"
+    }
+```
+
 Generated with discovered.json: 0xb5f13dfa0dff0f30a70ecc0a71d79f4ec65ca876
 
 # Diff at Tue, 04 Mar 2025 10:39:09 GMT:

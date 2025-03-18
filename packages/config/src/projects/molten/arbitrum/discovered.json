@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 287771961,
-  "configHash": "0x945964365fa6c315eb6cdab1947b739735ded1480004f3a4faef238bc25f9f70",
+  "configHash": "0x8522dabf16ed748f08da0529771ce7a01deacafcc9a78801a2977188a32ff7b6",
   "entries": [
     {
       "name": "OneStepProver0",
@@ -422,7 +422,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Caldera Multisig",
+      "name": "Caldera Multisig 1",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
       "type": "Contract",
       "template": "GnosisSafe",

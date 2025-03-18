@@ -14,12 +14,8 @@
     "0x955cdD2E56Ca2776a101a552A318d28fe311398D": "RollupFacet",
     "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A": "AccountFacet",
     "0x882aBFb2F6A67d36350499991638044e8Bd83a72": "EvacuationFacet",
-    "0xa00d50A40B1635D293c87BA36503bD2504b5D818": "TermStructureMultisig",
     "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12": "Rolluper",
-    "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8": "Operator",
-    "0x23bCad9BFB1378cd45b32525B835F037b673f529": "VaultMultisig",
-    "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165": "InsuranceMultisig",
-    "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca": "TreasuryMultisig"
+    "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8": "Operator"
   },
   "overrides": {
     "0x09E01425780094a9754B2bd8A3298f73ce837CF9": {

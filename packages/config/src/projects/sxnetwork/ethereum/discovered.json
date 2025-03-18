@@ -2,7 +2,7 @@
   "name": "sxnetwork",
   "chain": "ethereum",
   "blockNumber": 22065781,
-  "configHash": "0xcabafdb327748e8072453e420c8194dab04ceff4ce21f3e110c8a0d385b5ba98",
+  "configHash": "0x0adfe7a485c21d32b7c1ff4541e0076d9f26ad3c03cf2f2995b221778a85a63a",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -780,7 +780,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

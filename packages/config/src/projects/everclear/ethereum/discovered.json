@@ -2,7 +2,7 @@
   "name": "everclear",
   "chain": "ethereum",
   "blockNumber": 21994003,
-  "configHash": "0xeeeba34708346b5ba55edb3f6472d74de4da28b73ff4b776cb438e738d1dc910",
+  "configHash": "0x9c0ffdca3124853b31ab795d23711cb340e70b7b956a4983f776535973a369d1",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -686,7 +686,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

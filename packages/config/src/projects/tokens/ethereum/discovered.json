@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22017795,
-  "configHash": "0xf88703ec362520746136ff6938f548d69071d9411e7d8a15d680db69b67f7ecf",
+  "configHash": "0xdd1b54a7822ca95f3c33b38e1727a7dfc63218f2669578621a97e9226c00ce4d",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -220,7 +220,7 @@
       }
     },
     {
-      "name": "LidoDaoAgent",
+      "name": "Lido Dao Agent",
       "address": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "type": "Contract",
       "sourceHashes": [

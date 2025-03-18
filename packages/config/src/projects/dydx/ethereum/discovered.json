@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0x51d5dd9acb39c4046101c051101b0063c338a18ae06524190747ef2bc8c744d2",
+  "configHash": "0x008056c49421969a0d45d9e6db0873a9d9fd81f2d458e61105fd006802216ea4",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",

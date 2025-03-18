@@ -2,7 +2,7 @@
   "name": "ebichain",
   "chain": "ethereum",
   "blockNumber": 22046061,
-  "configHash": "0x5b7fd8e6f017db4307d5cf3dffaf8a0994fdf393aae7fcab0b5d63b85a53394b",
+  "configHash": "0x1cade8acc16b931e1a97897bffec960a4ad07c649e1e13068782eb380f999970",
   "entries": [
     {
       "name": "SequencerInbox",
@@ -228,7 +228,7 @@
       }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

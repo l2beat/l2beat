@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 22046068,
-  "configHash": "0x2b0c0e98b51ebf20eadc3658694a19b1593358a55511dbe18db35e7eefbb25d5",
+  "configHash": "0xa37f932f14f3beb10271e2f916db8e51802b14bf813f10a8481ad638ab5c1e4c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -65,7 +65,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

@@ -439,7 +439,7 @@ The protocol for these two other tracks is similar to the first part of the stan
 Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
 ## Emergency path
 SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
-        'ZkFoundationMultisig',
+        'ZK Foundation Multisig',
       )}) form a de-facto 3/3 Multisig
 by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
 ## Upgrade Delays

@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "celo",
   "blockNumber": 30784081,
-  "configHash": "0x8700bcd5a63f0e2cda78f61697173edf5d1231ad4e332e8ae296f765e17c38a0",
+  "configHash": "0x6ad4f2b6656da8898c892b765d92c72ce96cee7df4374c9884521cb59523d78c",
   "entries": [
     {
       "name": "OpticsV2Governor",

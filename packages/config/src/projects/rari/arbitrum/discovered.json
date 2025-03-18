@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 303211044,
-  "configHash": "0x86efe657c351047793f4cfaa175026a48a11383acf1fd420bf22bc6636a4131f",
+  "configHash": "0x45af42c528fa495b687a1bc241f43d5f0f700b0adbc5cd4215929aa5f0006fda",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000100",
@@ -631,7 +631,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "Caldera Multisig",
+      "name": "Caldera Multisig 1",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
       "type": "Contract",
       "template": "GnosisSafe",

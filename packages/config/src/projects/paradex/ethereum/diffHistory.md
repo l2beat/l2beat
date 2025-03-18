@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6c824524074953d0ab51266e48e430626c1ae9f4
+
+# Diff at Tue, 18 Mar 2025 08:13:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21979760
+- current block number: 21979760
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21979760 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      name:
+-        "ParadexAdminMultisig"
++        "Paradex Multisig"
+    }
+```
+
 Generated with discovered.json: 0x912a5808e1f03b0fa842f95f8bb99f21abf3421e
 
 # Diff at Thu, 06 Mar 2025 15:19:41 GMT:

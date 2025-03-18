@@ -2,7 +2,7 @@
   "name": "geist",
   "chain": "base",
   "blockNumber": 25463362,
-  "configHash": "0xaa984e644a761f848f4e036cf3ddf604456d7935191e21c3e63617e808972b05",
+  "configHash": "0xe989ddf622f9fbee255a26fc30618a5070c945b8670f0d0a0119829c3f33e632",
   "entries": [
     {
       "name": "OneStepProver0",

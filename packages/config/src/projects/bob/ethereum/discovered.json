@@ -2,7 +2,7 @@
   "name": "bob",
   "chain": "ethereum",
   "blockNumber": 22045237,
-  "configHash": "0x7cfaa409867ccf7bbfd47f90338dfc2ccb14c04f8874224a16eeafee00cf3f24",
+  "configHash": "0xb8d43454b86ef0c1e259431b17491cb7bda03f20610650a1f0eb7e6add4f4a93",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -337,7 +337,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BobMultisig",
+      "name": "Bob Multisig 1",
       "address": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
       "type": "Contract",
       "template": "GnosisSafe",

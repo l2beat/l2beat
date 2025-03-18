@@ -2,7 +2,7 @@
   "name": "reya",
   "chain": "ethereum",
   "blockNumber": 21994045,
-  "configHash": "0x9034617840a1e45feaf8462af8dfc753c9190052784bc5c50bf0a4bb675baa8c",
+  "configHash": "0x16142f1d569769ab069fa5392d88f83e604dc283f1b7553d61d1229e8cec0f7f",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -718,7 +718,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

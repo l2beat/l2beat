@@ -2,7 +2,7 @@
   "name": "educhain",
   "chain": "arbitrum",
   "blockNumber": 314868001,
-  "configHash": "0x02b38263367d67c16e68c1dced5c750205669fa3e431fbfffacbfd4e47cb8ccf",
+  "configHash": "0xef70b157b76da82f01a652b0fb812d6eb6047abfb5c5c43dcd98ebe70a9aa0d4",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -808,7 +808,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

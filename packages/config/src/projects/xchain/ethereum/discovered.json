@@ -2,7 +2,7 @@
   "name": "xchain",
   "chain": "ethereum",
   "blockNumber": 22046075,
-  "configHash": "0xcd3e98949149f6b5342934345adbf6f730e11baa594a9120bfc1aae797d4cb13",
+  "configHash": "0xf33b30925d6d4cba8353a90ee24bf738a993f7ca47319bb8b4b1067a9a5da8b3",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -403,7 +403,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

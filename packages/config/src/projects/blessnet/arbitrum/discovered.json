@@ -2,7 +2,7 @@
   "name": "blessnet",
   "chain": "arbitrum",
   "blockNumber": 308389533,
-  "configHash": "0xe02a018dfd3f6eb935f1fb78c3db42dff72527c816e387d5e02a8127c47f09f8",
+  "configHash": "0x4e674ffb60458a461709ec0b2faea8d8c789cf14ac37cc9a68750273aeb84b37",
   "entries": [
     {
       "name": "GnosisSafeL2",
@@ -437,7 +437,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Caldera Multisig",
+      "name": "Caldera Multisig 1",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
       "type": "Contract",
       "template": "GnosisSafe",

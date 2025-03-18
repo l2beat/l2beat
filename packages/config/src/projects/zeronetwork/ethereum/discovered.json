@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 22022298,
-  "configHash": "0x2221f64adf867c192f2a8c92888d137c65315ce24ff0978b892a957be9160db0",
+  "configHash": "0x0b3d4821cb81725fb9601abcbdc111dee053ce36fbd44e128e133e29f0a5883f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -35,7 +35,7 @@
       ]
     },
     {
-      "name": "ZeroNetworkChainAdminMultisig",
+      "name": "Zeronetwork Multisig",
       "address": "0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9",
       "type": "Contract",
       "template": "GnosisSafe",
