@@ -5,6 +5,7 @@ import {
   type DiscoveryEngine,
   DiscoveryLogger,
   type DiscoveryOutput,
+  type TemplateService,
   flattenDiscoveredSources,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
@@ -36,6 +37,7 @@ export class DiscoveryRunner {
   constructor(
     private readonly allProviders: AllProviders,
     private readonly discoveryEngine: DiscoveryEngine,
+    private readonly templateService: TemplateService,
     readonly chain: string,
   ) {}
 
@@ -52,7 +54,12 @@ export class DiscoveryRunner {
 
     setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 
-    const discovery = toRawDiscoveryOutput(config, blockNumber, result)
+    const discovery = toRawDiscoveryOutput(
+      this.templateService,
+      config,
+      blockNumber,
+      result,
+    )
     const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
 
     return { discovery, flatSources }

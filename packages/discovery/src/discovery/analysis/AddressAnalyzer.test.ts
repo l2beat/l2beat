@@ -70,10 +70,8 @@ describe(AddressAnalyzer.name, () => {
         ...EMPTY_ANALYZED_EOA,
         type: 'EOA',
         name: undefined,
-        category: undefined,
         deploymentTimestamp: undefined,
         deploymentBlockNumber: undefined,
-        references: undefined,
         targetsMeta: undefined,
         address,
       })
@@ -172,14 +170,12 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
-        category: undefined,
         name: 'Test',
         derivedName: 'Test',
         isVerified: true,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
-        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -191,10 +187,7 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             canActIndependently: undefined,
-            displayName: undefined,
-            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            references: undefined,
           },
         },
         relatives: {
@@ -298,12 +291,10 @@ describe(AddressAnalyzer.name, () => {
         name: 'Test',
         derivedName: 'Test',
         address,
-        category: undefined,
         isVerified: false,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
-        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -315,10 +306,7 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             canActIndependently: undefined,
-            displayName: undefined,
-            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            references: undefined,
           },
         },
         relatives: {
@@ -417,14 +405,12 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
-        category: undefined,
         name: 'Test',
         derivedName: 'Test',
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
         isVerified: true,
         proxyType: 'EIP1967 proxy',
-        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -436,10 +422,7 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             canActIndependently: undefined,
-            displayName: undefined,
-            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            references: undefined,
           },
         },
         relatives: {

@@ -4,6 +4,7 @@ import {
   DiscoveryConfig,
   type DiscoveryEngine,
   type IProvider,
+  type TemplateService,
 } from '@l2beat/discovery'
 import { expect, mockFn, mockObject } from 'earl'
 
@@ -29,6 +30,7 @@ describe(DiscoveryRunner.name, () => {
           }),
         }),
         engine,
+        mockObject<TemplateService>(),
         'ethereum',
       )
       await runner.discoverWithRetry(sourceConfig, 1, Logger.SILENT)
@@ -54,6 +56,7 @@ describe(DiscoveryRunner.name, () => {
             }),
           }),
           engine,
+          mockObject<TemplateService>(),
           'ethereum',
         )
 
@@ -79,6 +82,7 @@ describe(DiscoveryRunner.name, () => {
             }),
           }),
           engine,
+          mockObject<TemplateService>(),
           'ethereum',
         )
 

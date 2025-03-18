@@ -1,4 +1,6 @@
 export { discover } from './cli/discoverCommand'
+export { colorize } from './discovery/colorize/colorize'
+export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export { getChainConfig, getChainShortName } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
