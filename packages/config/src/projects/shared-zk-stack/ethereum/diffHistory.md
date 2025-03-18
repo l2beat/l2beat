@@ -1,3 +1,127 @@
+Generated with discovered.json: 0x92892605ac04b5a1259170f85043e26738caff55
+
+# Diff at Tue, 18 Mar 2025 11:38:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 22037103
+- current block number: 22073511
+
+## Description
+
+New validium deployed. The current list is (pretty script soon):
+
+🚀: posting batches
+✅: officially launched 
+
+Current ZK stack chains (BH.getAllHyperchains array): 
+1) ZKsync Era 324 RU 0x32400084C286CF3E17e7B677ea9583e60a000324 ETH 🚀✅
+2) CronosZkEvm 388 Validium 0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc zkCRO 🚀✅
+3) Sophon 50104 Validium 0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3 SOPH 🚀
+4) ZeroNetwork 543210 RU 0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9 ETH 🚀✅
+5) [Abstract](docs.abs.xyz) 2741 RU 0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9 ETH 🚀
+6) [GRVT](https://grvt.gitbook.io/grvt/introduction/architecture-overview) 325 Validium 0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E GBT (GRVTBaseToken) 🚀
+7) [Treasure Chain](https://docs.treasure.lol/chain) 61166 Validium 0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879 MAGIC 🚀✅
+8) Unknown 1345 Validium 0x89f90748A9a36C30A324481133fa198f4E16A824 ozETH
+9) lumoz 9637 validium 0xC8C4cB5AF7c723c7EfD360898B47920679f92C92 ETH
+10) ZKcandy 320 validium 0xF2704433d11842d15aa76BBF0E00407267a99C92  ETH
+11) lens 232 validium 0xc29d04A93F893700015138E3E334eB828dAC3cef LGHO
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
++++ description: All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs.
+      values.chainsCreated.10:
++        {"chainId":9637,"stateTransitionManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.9.chainId:
+-        9637
++        388
+      values.chainsCreated.9.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.8.chainId:
+-        388
++        325
+      values.chainsCreated.8.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.7.chainId:
+-        325
++        320
+      values.chainsCreated.7.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.6.chainId:
+-        320
++        324
+      values.chainsCreated.6.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.5.chainId:
+-        324
++        50104
+      values.chainsCreated.5.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.chainsCreated.4.chainId:
+-        50104
++        543210
+      values.chainsCreated.4.chainGovernance:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      values.chainsCreated.3.chainId:
+-        543210
++        2741
+      values.chainsCreated.3.chainGovernance:
+-        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
+      values.chainsCreated.2.chainId:
+-        2741
++        1345
+      values.chainsCreated.2.chainGovernance:
+-        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
++        "0x49664fFe2c2335c28631629606E26a6971aEf261"
+      values.chainsCreated.1.chainId:
+-        1345
++        232
+      values.chainsCreated.1.chainGovernance:
+-        "0x49664fFe2c2335c28631629606E26a6971aEf261"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      values.getAllHyperchainChainIDs.10:
++        388
+      values.getAllHyperchainChainIDs.9:
+-        388
++        325
+      values.getAllHyperchainChainIDs.8:
+-        325
++        324
+      values.getAllHyperchainChainIDs.7:
+-        324
++        320
+      values.getAllHyperchainChainIDs.6:
+-        320
++        232
+      values.getAllHyperchains.10:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllHyperchains.9:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      values.getAllHyperchains.8:
+-        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.getAllHyperchains.7:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
+    }
+```
+
 Generated with discovered.json: 0x52adb00fc528d034ea73742a31096846848e729a
 
 # Diff at Tue, 18 Mar 2025 08:14:00 GMT:
