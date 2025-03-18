@@ -344,6 +344,12 @@
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
           "permission": "upgrade",
           "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
           "via": [
@@ -550,6 +556,13 @@
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
           ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to replace a Security Council member cohort."
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -792,6 +805,13 @@
             { "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" },
             { "address": "0xdb216562328215E010F819B5aBe947bad4ca961e" }
           ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to remove a Security Council member."
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -1129,6 +1149,26 @@
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to add a new member to the Security Council."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to remove a Security Council member."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to replace a Security Council member."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "schedule a proposal to rotate a Security Council member (same member, new address)."
         }
       ],
       "directlyReceivedPermissions": [
@@ -1422,6 +1462,11 @@
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200,
           "description": "manage all access control roles and change the minimum delay."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles."
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -1482,6 +1527,54 @@
       "proxyType": "EIP1967 proxy",
       "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0x467923B9AE90BDB36BA88eCA11604D45F13b712C",
+          "description": "schedule a proposal to replace a Security Council member cohort.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad",
+          "description": "schedule a proposal to remove a Security Council member.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to add a new member to the Security Council.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to remove a Security Council member.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to replace a Security Council member.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "schedule a proposal to rotate a Security Council member (same member, new address).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "description": "manage all access control roles.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
         {
           "permission": "upgrade",
           "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
@@ -1842,6 +1935,12 @@
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200,
           "description": "manage all access control roles and change the minimum delay.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+          "description": "manage all access control roles.",
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
@@ -3005,7 +3104,7 @@
     "orbitstack/layer2/L2Timelock": "0x74a65168792a91aec1a591b44cea4c1dbf008352c73ccfa3e9c3461e058547f1",
     "orbitstack/layer2/L2UpgradeExecutor": "0x4385f70ccf3ae062dc9164efb1d523d1005922c38af00685f57c96c15519a2b7",
     "orbitstack/layer2/L2WethGateway": "0xe77b21156bba4dd952ebb9ee761c95428d848b786646c6390abd113aa72938e1",
-    "orbitstack/layer2/SecurityCouncilManager": "0x99c0c194ec1ced8d425cd024bf233567553806ba4632a0cc4851967909c4d4ab",
+    "orbitstack/layer2/SecurityCouncilManager": "0xfdc43e7126ff1db2d4fdf80dc016c814524eb9456f556717717204b16eabed6e",
     "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0xa3be4cad6820cd643073cd22884390f6868afd16555277a239027ed42f364f24",
     "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x7020b1dcdf3452e729ad3b662101ef04fce3628aa861c979d49ccdec43c9ed0c",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x42d46b63ab70308e7c450d25c29583fc80f4ea36cc1cb3b178a540b741521f7e",

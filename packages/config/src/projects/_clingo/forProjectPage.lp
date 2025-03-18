@@ -52,10 +52,12 @@ filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, To
 
 % 3. In Permissions section, show only addresses that have some final permission
 showInPermissionsSection(Address) :-
+  not canActIndependently(Address, no),
   filteredTransitivePermission(Address, Permission, _, _, _, _, _, isFinal).
 
 % ...and always show multisigs
 showInPermissionsSection(Address) :-
+  not canActIndependently(Address, no),
   msig(Address, _).
 
 showContractInPermissionsSection(Address) :-
@@ -73,3 +75,4 @@ showEoaInPermissionsSection(Address) :-
 #show filteredTransitivePermission/8.
 #show showContractInPermissionsSection/1.
 #show showEoaInPermissionsSection/1.
+#show canActIndependently/2.

@@ -941,10 +941,13 @@ export class ProjectDiscovery {
   }
 
   getDiscoveredContracts(): ProjectContract[] {
+    const permissionedContracts =
+      this.permissionRegistry.getPermissionedContracts()
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
       )
+      .filter((contract) => !permissionedContracts.includes(contract.address))
       .filter((contract) => contract.category?.priority !== -1)
       .sort((a, b) => {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
@@ -955,7 +958,7 @@ export class ProjectDiscovery {
     )
     const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
-      .filter((contract) => contract.receivedPermissions === undefined)
+      // .filter((contract) => contract.receivedPermissions === undefined)
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
         const upgradableBy = this.permissionRegistry.getUpgradableBy(contract)
