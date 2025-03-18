@@ -54,7 +54,7 @@ export function initTvsModule(
       maxHeight: price.untilTimestamp ?? null,
       properties: price,
     })),
-p    priceProvider: providers.price,
+    priceProvider: providers.price,
     syncOptimizer,
     db: database,
   })
