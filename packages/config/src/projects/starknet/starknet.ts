@@ -230,9 +230,7 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
 const finalizationPeriod = 0
 
 const scThreshold = discovery.getMultisigStats('Starkware Security Council')
-const sharpMsThreshold = discovery.getMultisigStats(
-  'SHARP Multisig',
-)
+const sharpMsThreshold = discovery.getMultisigStats('SHARP Multisig')
 
 export const starknet: ScalingProject = {
   type: 'layer2',

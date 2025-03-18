@@ -553,8 +553,7 @@ export const linea: ScalingProject = {
             ).members
             assert(addresses.length === 1)
             assert(
-              addresses[0] ===
-                discovery.getContract('Linea Multisig').address,
+              addresses[0] === discovery.getContract('Linea Multisig').address,
             )
             return { pausableBy: ['Linea Multisig'], paused: isPaused }
           })(),
