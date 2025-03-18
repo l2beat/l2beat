@@ -17,14 +17,12 @@
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage all access control roles."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all access control roles."
+        }
+      ]
     },
     "cohortReplacerAC": {
       "handler": {
@@ -34,14 +32,12 @@
         },
         "pickRoleMembers": "COHORT_REPLACER"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "schedule a proposal to replace a Security Council member cohort."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule a proposal to replace a Security Council member cohort."
+        }
+      ]
     },
     "memberAdderAC": {
       "handler": {
@@ -51,14 +47,12 @@
         },
         "pickRoleMembers": "MEMBER_ADDER"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "schedule a proposal to add a new member to the Security Council."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule a proposal to add a new member to the Security Council."
+        }
+      ]
     },
     "memberReplacerAC": {
       "handler": {
@@ -68,14 +62,12 @@
         },
         "pickRoleMembers": "MEMBER_REPLACER"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "schedule a proposal to replace a Security Council member."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule a proposal to replace a Security Council member."
+        }
+      ]
     },
     "memberRotatorAC": {
       "handler": {
@@ -85,14 +77,12 @@
         },
         "pickRoleMembers": "MEMBER_ROTATOR"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "schedule a proposal to rotate a Security Council member (same member, new address)."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule a proposal to rotate a Security Council member (same member, new address)."
+        }
+      ]
     },
     "memberRemoverAC": {
       "handler": {
@@ -102,14 +92,12 @@
         },
         "pickRoleMembers": "MEMBER_REMOVER"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "schedule a proposal to remove a Security Council member."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "schedule a proposal to remove a Security Council member."
+        }
+      ]
     }
   }
 }

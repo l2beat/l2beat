@@ -6,7 +6,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -126,7 +126,6 @@ export async function getScalingProjectEntry(
     ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  assert(tvsProjectStats, 'Tvs project stats not found')
 
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
@@ -142,33 +141,34 @@ export async function getScalingProjectEntry(
       project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
         ? project.scalingInfo.hostChain.name
         : undefined,
-    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id)
-      ? {
-          breakdown: {
-            ...tvsProjectStats.breakdown,
-            totalChange: tvsProjectStats.change.total,
-          },
-          warning: project.tvlInfo.warnings[0],
-          tokens: {
+    tvs:
+      !env.EXCLUDED_TVS_PROJECTS?.includes(project.id) && tvsProjectStats
+        ? {
             breakdown: {
               ...tvsProjectStats.breakdown,
-              associated: tvsProjectStats.associated.total,
+              totalChange: tvsProjectStats.change.total,
             },
-            warnings: compact([
-              tvsProjectStats &&
-                tvsProjectStats.breakdown.total > 0 &&
-                getAssociatedTokenWarning({
-                  associatedRatio:
-                    tvsProjectStats.associated.total /
-                    tvsProjectStats.breakdown.total,
-                  name: project.name,
-                  associatedTokens: project.tvlInfo.associatedTokens,
-                }),
-            ]),
-            associatedTokens: project.tvlInfo.associatedTokens,
-          },
-        }
-      : undefined,
+            warning: project.tvlInfo.warnings[0],
+            tokens: {
+              breakdown: {
+                ...tvsProjectStats.breakdown,
+                associated: tvsProjectStats.associated.total,
+              },
+              warnings: compact([
+                tvsProjectStats &&
+                  tvsProjectStats.breakdown.total > 0 &&
+                  getAssociatedTokenWarning({
+                    associatedRatio:
+                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.total,
+                    name: project.name,
+                    associatedTokens: project.tvlInfo.associatedTokens,
+                  }),
+              ]),
+              associatedTokens: project.tvlInfo.associatedTokens,
+            },
+          }
+        : undefined,
     badges: project.display.badges,
     gasTokens: project.chainConfig?.gasTokens,
   }
