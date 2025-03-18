@@ -59,6 +59,7 @@ export const scalingArchivedColumns = [
         </span>
       )
     },
+    sortUndefined: 'last',
     sortingFn: ({ original: a }, { original: b }) => {
       const aTvs = a.totalTvs ?? 0
       const bTvs = b.totalTvs ?? 0
