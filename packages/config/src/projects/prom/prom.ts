@@ -1,8 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
 
-export const prom: ScalingProject = upcomingL2({
+export const prom: ScalingProject = underReviewL2({
   id: 'prom',
   capability: 'universal',
   addedAt: UnixTime(1741702000),
@@ -29,4 +29,27 @@ export const prom: ScalingProject = upcomingL2({
       ],
     },
   },
+  chainConfig: {
+    name: 'prom',
+    chainId: 227,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.prom.io/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+  },
+  escrows: [
+    {
+      address: EthereumAddress('0x19Cc29954A602761aa3180cd0A33752DcBF4c290'),
+      sinceTimestamp: UnixTime(1730199911),
+      tokens: '*',
+      chain: 'ethereum',
+    },
+  ],
 })
