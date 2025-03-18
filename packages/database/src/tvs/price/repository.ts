@@ -28,7 +28,9 @@ export class TvsPriceRepository extends BaseRepository {
 
     const records = rows.map(toRecord)
 
-    const result = new Map(timestamps.map((t) => [t, new Map()]))
+    const result = new Map(
+      timestamps.map((t) => [t, new Map<string, number>()]),
+    )
 
     for (const r of records) {
       result.get(r.timestamp)?.set(r.configurationId, r.priceUsd)
