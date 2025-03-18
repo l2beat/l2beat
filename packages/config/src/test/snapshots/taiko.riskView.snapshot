@@ -18,7 +18,7 @@
     value: "Self propose"
   }
   sequencerFailure: {
-    description: "The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay."
+    description: "The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The Taiko multisig can pause block proposals without delay."
     sentiment: "good"
     value: "Self sequence"
   }
