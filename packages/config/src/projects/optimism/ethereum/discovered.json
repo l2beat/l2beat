@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 21829671,
-  "configHash": "0xaef547ae853a6c66e6259fca9a197d61cd0297ae283a4f49dbe668288185d317",
+  "configHash": "0xd86185f930eff3a38ab9a39479dc1a1d98b54144a40cfe95ec4f3000a6bd7200",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -56,7 +56,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -375,7 +375,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "35d",
+        "timeSinceLastL2beatInteraction": "35d 17h",
         "version": "1.0.0"
       }
     },
@@ -1621,7 +1621,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

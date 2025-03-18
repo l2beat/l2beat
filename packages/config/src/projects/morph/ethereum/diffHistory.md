@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x81d51fe537c97dca8d85d550b74365900fdc1b5d
+
+# Diff at Tue, 18 Mar 2025 08:13:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21716626
+- current block number: 21716626
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
+    contract Morph Multisig 2 (0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      name:
+-        "MorphOpsMultisig"
++        "Morph Multisig 2"
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) {
+    +++ description: None
+      name:
+-        "MorphUpgradeMultisig"
++        "Morph Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0xee4fe0398b7223b4347af94b4b267fcac13515f0
 
 # Diff at Tue, 04 Mar 2025 10:39:27 GMT:

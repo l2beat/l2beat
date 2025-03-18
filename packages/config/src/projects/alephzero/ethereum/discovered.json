@@ -2,7 +2,7 @@
   "name": "alephzero",
   "chain": "ethereum",
   "blockNumber": 21993982,
-  "configHash": "0x2d2a04a5d0e2fed4f19d3e292cd7d2aafedc56af20d7fe6085c25c8535e63e95",
+  "configHash": "0xb983f5a2fa3f243110a8810d5c677b66c5df27ee52184c3513ca0001647c00b6",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -773,7 +773,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

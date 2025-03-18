@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x3bd773ae22fd6cd8e381a6a4e4383bb8160cdd58
+
+# Diff at Tue, 18 Mar 2025 08:13:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22046074
+- current block number: 22046074
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046074 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ConduitMultisig"
++        "Conduit Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0xcc3760e033f9b7c1b4fe90533003dfb5384a3999
 
 # Diff at Fri, 14 Mar 2025 15:41:41 GMT:

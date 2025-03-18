@@ -2,7 +2,7 @@
   "name": "race",
   "chain": "ethereum",
   "blockNumber": 21242938,
-  "configHash": "0xdd6570437ee4ca4e171d69d216719c910f00c76c5d9d7808c1dae12181b3d2b5",
+  "configHash": "0xa313ebf2720b96fe151efa5d60931f26b079c273dc6ac1a900385e04215d0590",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -147,7 +147,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "RaceMultisig2",
+      "name": "Race Multisig 2",
       "address": "0x2E7B9465B25C081c07274A31DbD05C6146f67961",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -220,7 +220,7 @@
       }
     },
     {
-      "name": "RaceMultisig1",
+      "name": "Race Multisig 1",
       "address": "0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -523,7 +523,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "RaceMultisig3",
+      "name": "Race Multisig 3",
       "address": "0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9",
       "type": "Contract",
       "template": "GnosisSafe",

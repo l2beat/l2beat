@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 22032270,
-  "configHash": "0x0408d5f243afc36f78d99b9c382386bc3cd5cf1bbc791d79cc812260647337c4",
+  "configHash": "0xe01129cc1335f10c587ac15efb14bfd826bca9d761fcd086e4c1fb56be81a45e",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -1929,7 +1929,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "BatchPosterManagerMultisig",
+      "name": "Arbitrum Multisig 1",
       "address": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -3810,7 +3810,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncil",
+      "name": "Arbitrum Security Council",
       "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
       "type": "Contract",
       "template": "orbitstack/SecurityCouncil",

@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 21829669,
-  "configHash": "0x6f4193cf8a1f0699cb1417617fb448cb8bd0c108907115b74eb0979977e031b1",
+  "configHash": "0xdff31980f609c3afe2162bfbb7c69fb7b8bca2570f97c4f9b20110b42ee08f82",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -63,7 +63,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1305,7 +1305,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1360,7 +1360,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

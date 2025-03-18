@@ -2,7 +2,7 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 21829679,
-  "configHash": "0x69c6b0a22873dac1558a22247f33e57ea2d91917c4a50e3b0259a331e54def62",
+  "configHash": "0xc62ca35dd9e9b96029faedbb17066643063663937908912cfb9dd00226f929e2",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -53,7 +53,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1020,7 +1020,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1145,7 +1145,7 @@
       }
     },
     {
-      "name": "ZoraMultisig",
+      "name": "Zora Multisig 1",
       "address": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1190,7 +1190,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "ZoraMultisig2",
+      "name": "Zora Multisig 2",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "type": "Contract",
       "template": "GnosisSafe",

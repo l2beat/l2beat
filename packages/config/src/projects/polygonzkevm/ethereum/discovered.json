@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0x0d77625fd2f7c7397f4aa7cb365cb1b466b36b67e4f59b3eb777508af04a0715",
+  "configHash": "0x868b088a5c3810dde85b331e044bfb472711da6535b50212e14f785fc927d7ac",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -328,7 +328,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PolygonZkEvmEscrowsMultisig",
+      "name": "Polygon zkEVM Multisig",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "type": "Contract",
       "template": "GnosisSafe",

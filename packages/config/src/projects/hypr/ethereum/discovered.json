@@ -2,7 +2,7 @@
   "name": "hypr",
   "chain": "ethereum",
   "blockNumber": 22046063,
-  "configHash": "0xbc3ffed4ef486632ae49aeeda8adba53454e14d84fad5f55afa1cbc53fdf0cde",
+  "configHash": "0x11bde1420bddf47d2d18f5dd7601358cbe011e19f82236a3df684235ed2bd0dc",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -258,7 +258,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

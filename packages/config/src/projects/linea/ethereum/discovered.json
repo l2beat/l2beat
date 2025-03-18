@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0x063b648790542132ba434eb6946d6b6a8fb25693f0326fdf3022279fa3921178",
+  "configHash": "0xf7d3492086e488c994aca619dc7a8d78a6995310c4a83d28ff5adae8da9d5618",
   "entries": [
     {
       "name": "TokenBridge",
@@ -302,7 +302,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "LineaAdminMultisig",
+      "name": "Linea Multisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
       "template": "GnosisSafe",

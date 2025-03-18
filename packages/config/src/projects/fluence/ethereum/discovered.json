@@ -2,7 +2,7 @@
   "name": "fluence",
   "chain": "ethereum",
   "blockNumber": 21994038,
-  "configHash": "0x4d5bd16337810f77b7ca6d48cca20823f9a98f493ce5e8ac61189f01760926aa",
+  "configHash": "0x5bcbae570bab185c3a115f59270a3ad2b345a2ccd398cb67ff34f759d7d5f48a",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -620,7 +620,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

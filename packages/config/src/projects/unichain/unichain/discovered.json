@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 9916035,
-  "configHash": "0xa269b62c54fdc35f158602a3b425c831fdd76f88b45d45d6b6ba3330c059388d",
+  "configHash": "0x03b1804d05fa169fd71750b3bcfb0c949fb3cd48f3846f99f858af90ba2e46b1",
   "entries": [
     {
       "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",

@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 21895014,
-  "configHash": "0x0bc4b1fe198e90456a8986d502262c6b5259c97c07410ecf0724264a97602459",
+  "configHash": "0xfbaf4d0d550981a07c631a60130181dd49076968f415ed6330528249c9c06f89",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -100,7 +100,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1050,7 +1050,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AlchemyMultisig1",
+      "name": "Alchemy Multisig 1",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1171,7 +1171,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

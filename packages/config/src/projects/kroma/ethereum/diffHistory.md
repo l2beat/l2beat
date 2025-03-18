@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x918a8fdeb7f5105f5754abb718814cb5627f86c6
+
+# Diff at Tue, 18 Mar 2025 08:13:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22022417
+- current block number: 22022417
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022417 (main branch discovery), not current.
+
+```diff
+    contract Succinct Multisig 1 (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SuccinctGatewaySP1Multisig"
++        "Succinct Multisig 1"
+    }
+```
+
+```diff
+    contract Kroma Multisig (0xe57E217d8ed498992452791622711B866403E950) {
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+      name:
+-        "KromaRewardVaultMultisig"
++        "Kroma Multisig"
+    }
+```
+
 Generated with discovered.json: 0x4bdc424d5bcdc6382dc5f5d21461e09e88cc2201
 
 # Diff at Thu, 06 Mar 2025 15:18:45 GMT:

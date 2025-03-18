@@ -2,7 +2,7 @@
   "name": "pepeunchained",
   "chain": "ethereum",
   "blockNumber": 22046072,
-  "configHash": "0x55ca59c56590f5a28b7a84e230a10ef5db0614686af87f7ac78c08e64b5bc553",
+  "configHash": "0x1265fbe1d58864e41f18d21db18aff84f8b2655be35b67ff2f44c32b14638e7e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -283,7 +283,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

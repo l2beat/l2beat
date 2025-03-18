@@ -2,7 +2,7 @@
   "name": "lisk",
   "chain": "ethereum",
   "blockNumber": 21635783,
-  "configHash": "0x594d5f25937b2961d7baaa75569ba3bf4bd8c083b5fe3e75d00e2793b66029a8",
+  "configHash": "0xc22de4a980018679d5af0cba6b619e91a67b7867977a856a19874fd1dd7eac72",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -540,7 +540,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -801,7 +801,7 @@
       }
     },
     {
-      "name": "LiskRollupOwnerMultisig",
+      "name": "Lisk Multisig",
       "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45",
       "type": "Contract",
       "template": "GnosisSafe",

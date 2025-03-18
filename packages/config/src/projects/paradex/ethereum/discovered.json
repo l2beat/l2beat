@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21979760,
-  "configHash": "0xfd12425177bb22eef1444448ad1b41750c59fe9c7a02cf958b5ef00c75705650",
+  "configHash": "0x17b0b15542e9af60098cd0a30fdae521d9c879c8f896518a09da57f7bb63a7df",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "ParadexAdminMultisig",
+      "name": "Paradex Multisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "type": "Contract",
       "template": "GnosisSafe",

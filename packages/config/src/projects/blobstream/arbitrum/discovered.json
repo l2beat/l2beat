@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 305996466,
-  "configHash": "0x730ac057c6466179491861979fe6c3144c2f3b610e0ab1eeb7ac473890ab0bd4",
+  "configHash": "0x2a00fb16ecaaf02ef949395382c9e8b0d0e1b04af996c9b30e8ab4f799f06206",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -383,7 +383,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuccinctGatewaySP1Multisig",
+      "name": "Succinct Multisig 1",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",

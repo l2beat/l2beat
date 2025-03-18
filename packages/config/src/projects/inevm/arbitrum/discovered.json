@@ -2,7 +2,7 @@
   "name": "inevm",
   "chain": "arbitrum",
   "blockNumber": 287771173,
-  "configHash": "0x3c9effbe8ba58caf0aaa2c184e82b9c0f6d2b6c8207f5bb202b99975ed9eb401",
+  "configHash": "0x192250ad4c005a0b930b4d06f90f5c32796d73db563d4f0e66b844caf1f341a3",
   "entries": [
     {
       "name": "CustomGateway",
@@ -621,7 +621,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "Caldera Multisig",
+      "name": "Caldera Multisig 1",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
       "type": "Contract",
       "template": "GnosisSafe",

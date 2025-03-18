@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0x282b2bce3075ff3899300358172bf634a5eabc7e539d62166aa8eb9505615efa",
+  "configHash": "0x10363a40add96cd3c2c7b9b94f00552b61425bce886e48a9d989d26313dcbd58",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -232,7 +232,7 @@
       }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

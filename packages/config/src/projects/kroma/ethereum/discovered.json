@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 22022417,
-  "configHash": "0x1cd8fc09fa2d0a4f022524dfe64b3a6bb0e663fd355de9ea7ae5c9ca5b58e5c5",
+  "configHash": "0x767cf99caa643b539d5fde7009d51489be2131d8643e1c01b8fc5135637cc00b",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1304,7 +1304,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuccinctGatewaySP1Multisig",
+      "name": "Succinct Multisig 1",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1708,7 +1708,7 @@
       "derivedName": "SecurityCouncilToken"
     },
     {
-      "name": "KromaRewardVaultMultisig",
+      "name": "Kroma Multisig",
       "address": "0xe57E217d8ed498992452791622711B866403E950",
       "type": "Contract",
       "template": "GnosisSafe",

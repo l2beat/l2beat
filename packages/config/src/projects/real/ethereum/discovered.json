@@ -2,7 +2,7 @@
   "name": "real",
   "chain": "ethereum",
   "blockNumber": 21994043,
-  "configHash": "0xf49769883e011d128f44efd7e0dc1cfdec52133752ceb2d5ee61411a749954f2",
+  "configHash": "0x65a754b610cd4f28ec9e5891afc1678e890633cdda6bb791ddc4afb93f62badd",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -794,7 +794,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GelatoMultisig",
+      "name": "Gelato Multisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "type": "Contract",
       "template": "GnosisSafe",

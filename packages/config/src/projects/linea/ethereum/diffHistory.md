@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x237fef947af146f2431caf0e74ab78bdf6433e57
+
+# Diff at Tue, 18 Mar 2025 08:13:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract Linea Multisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "LineaAdminMultisig"
++        "Linea Multisig"
+    }
+```
+
 Generated with discovered.json: 0x7d6da8f43ad842769a200f337ac45b02302c4bba
 
 # Diff at Thu, 06 Mar 2025 15:18:48 GMT:

@@ -2,7 +2,7 @@
   "name": "galxegravity",
   "chain": "ethereum",
   "blockNumber": 22046063,
-  "configHash": "0xe27bc7ac814dd6e41e86131f050c103a760c7139e40a18adcc3cf8845ebfe6c3",
+  "configHash": "0xe11dbe9551f978ab8868338d25e047e4a7208f50deb3be184b59c031185136e0",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -132,7 +132,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",

@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 22029918,
-  "configHash": "0xbd6383aace16d75b6027f9ca88c675eb706f11f797b7826241d9428d828b09fc",
+  "configHash": "0xb52cd98bc74b0c50c459d52b5dd8705501d78941bf51b7d6110fed1acd9824bf",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -134,7 +134,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ZircuitMultiSig2",
+      "name": "Zircuit Multisig 2",
       "address": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -787,7 +787,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZircuitMultiSig1",
+      "name": "Zircuit Multisig 1",
       "address": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
       "type": "Contract",
       "template": "GnosisSafe",

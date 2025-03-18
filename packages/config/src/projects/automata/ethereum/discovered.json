@@ -2,7 +2,7 @@
   "name": "automata",
   "chain": "ethereum",
   "blockNumber": 21715439,
-  "configHash": "0xe1ba19be335811986fef21a688ba49798d317cc54243e40671a12e021f09f1ae",
+  "configHash": "0xf70f0007967cbff6e039a1cf25d988ec200d54a8ed7ba1c825bdd51b62cc18bc",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

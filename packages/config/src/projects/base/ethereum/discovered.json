@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 21880945,
-  "configHash": "0x052fd65924353b04e16ea26b0443ccfee1b1e29297a4ace246b300f36265dbb3",
+  "configHash": "0xe8ed7c2de65debbdef5104d8659bd5b9c617b77ea07c23a882d71baaed78d20b",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -161,7 +161,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -199,7 +199,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BaseMultisig2",
+      "name": "Base Multisig 2",
       "address": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -913,7 +913,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BaseAdminMultisig",
+      "name": "Base Multisig 3",
       "address": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1270,7 +1270,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "BaseMultisig1",
+      "name": "Base Multisig 1",
       "address": "0x9855054731540A48b28990B63DcF4f33d8AE46A1",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1545,7 +1545,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",

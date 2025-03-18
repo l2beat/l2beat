@@ -2,7 +2,7 @@
   "name": "hychain",
   "chain": "ethereum",
   "blockNumber": 21465186,
-  "configHash": "0x6b96007aa41472f657ca6a4ddcaf6ee6ff0ee5ae2a7e6131b075554da6de93c5",
+  "configHash": "0xeca7ba2bdcedce035a6d25c5e1fd8cdefdd6d2a6050a89481c619bd6bc1b1901",
   "entries": [
     {
       "name": "Outbox",

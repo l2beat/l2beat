@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd9f03ffc59ee55444916c143fd330a797702cbf3
+
+# Diff at Tue, 18 Mar 2025 08:13:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      name:
+-        "PolygonZkEvmEscrowsMultisig"
++        "Polygon zkEVM Multisig"
+    }
+```
+
 Generated with discovered.json: 0x93c5e59e2fa0701133c119dbdcc3902008780da6
 
 # Diff at Tue, 04 Mar 2025 10:39:38 GMT:

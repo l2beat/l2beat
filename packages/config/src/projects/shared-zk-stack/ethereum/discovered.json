@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22037103,
-  "configHash": "0x71855febe3a1f40ef64a239209565db6f663472d4562500daaea2def7a3d4c67",
+  "configHash": "0xceabd00b2fcbf1681b543968a3cf77cf70d7acdecb3693379bae02420dc6886e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -1181,7 +1181,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZkFoundationMultisig",
+      "name": "ZK Foundation Multisig",
       "address": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c",
       "type": "Contract",
       "template": "GnosisSafe",
