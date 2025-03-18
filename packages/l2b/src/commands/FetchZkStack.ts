@@ -18,7 +18,8 @@ export const FetchZkStack = command({
       type: HttpUrl,
       long: 'output-path',
       short: 'o',
-      defaultValue: () => './fetchZkStack_output.json',
+      defaultValue: () =>
+        '../config/src/projects/shared-zk-stack/ethereum/l2b-fetchzkstack_output.json',
       defaultValueIsSerializable: true,
     }),
   },

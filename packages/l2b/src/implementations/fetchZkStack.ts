@@ -53,11 +53,14 @@ export class ZkStackDataFetcher {
     '0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C'
   private outputFilePath: string
 
-  // Configuration - easily modifiable
   private tokenAddresses: TokenAddressMap = {
     '0x0000000000000000000000000000000000000001': 'ETH',
-    '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48': 'USDC',
-    // Add more token mappings as needed
+    '0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2': 'zkCRO',
+    '0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0': 'SOPH',
+    '0xAB3B124052F0389D1cbED221d912026Ac995bb95': 'GBT',
+    '0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A': 'MAGIC',
+    '0x03F5BE358fc2C4DF88723a63148bd829B8AA5c91': 'ozETH',
+    '0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a': 'LGHO',
   }
 
   private pubdataModes: PubdataModeMap = {
@@ -82,12 +85,12 @@ export class ZkStackDataFetcher {
 
   // Default table display configuration
   private tableFields: TableField[] = [
-    { key: 'chainID', header: 'Chain ID' },
-    { key: 'name', header: 'Name' },
-    { key: 'baseTokenName', header: 'Gas Token' },
-    { key: 'pubdataModeName', header: 'DA Mode' },
-    { key: 'protocolVersion', header: 'Version' },
-    { key: 'totalBlocksExecuted', header: 'Blocks' },
+    { key: 'chainID', header: 'chain ID' },
+    { key: 'name', header: 'name' },
+    { key: 'baseTokenName', header: 'gas token' },
+    { key: 'pubdataModeName', header: 'DA' },
+    { key: 'protocolVersion', header: 'v' },
+    { key: 'totalBlocksExecuted', header: 'blocks executed' },
   ]
 
   // ABIs - separated for easy maintenance
@@ -184,7 +187,7 @@ export class ZkStackDataFetcher {
 
   // Helper functions
   private getTokenName(address: string): string {
-    const key = address.toLowerCase()
+    const key = address
     return (
       this.tokenAddresses[key] ||
       address.substring(0, 6) + '...' + address.substring(address.length - 4)
@@ -215,7 +218,7 @@ export class ZkStackDataFetcher {
   ): Promise<T> {
     try {
       return await contractCall()
-    } catch (error) {
+    } catch (_error) {
       console.warn(errorMessage)
       return errorValue
     }
@@ -288,7 +291,7 @@ export class ZkStackDataFetcher {
             patch = 0
           try {
             ;[major, minor, patch] = await diamond.getSemverProtocolVersion()
-          } catch (error) {
+          } catch (_error) {
             console.warn(
               `Failed to get protocol version for chain ${chainID.toString()}`,
             )
@@ -314,9 +317,11 @@ export class ZkStackDataFetcher {
             },
             totalBlocksExecuted,
           })
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error(
-            `Error processing chain ${chainID.toString()}: ${error.message}`,
+            `Error processing chain ${chainID.toString()}: ${
+              error instanceof Error ? error.message : String(error)
+            }`,
           )
         }
       }
@@ -357,8 +362,12 @@ export class ZkStackDataFetcher {
       // Display table
       console.log('zkStack L2 Data Summary:')
       console.log(this.createConsoleTable(formattedData))
-    } catch (error: any) {
-      console.error(`Error fetching zkStack data: ${error.message}`)
+    } catch (error: unknown) {
+      console.error(
+        `Error fetching zkStack data: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      )
     }
   }
 
