@@ -48,8 +48,6 @@ function MobileFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const { state } = useTableFilterContext()
-
   return (
     <>
       <button
@@ -57,9 +55,7 @@ function MobileFilters({
         className={cn(popoverTriggerClasses, 'h-8')}
       >
         <FilterIcon />
-        {state.length === 0 && (
-          <span className="text-xs font-medium md:text-sm">Filters</span>
-        )}
+        <span className="text-xs font-medium md:text-sm">Filters</span>
       </button>
       <CommandDialog
         open={open}

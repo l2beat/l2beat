@@ -26,7 +26,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
   const { dispatch } = useTableFilterContext()
 
   return (
-    <div className="flex h-8 select-none items-center rounded-lg bg-surface-primary text-xs font-medium leading-none primary-card:bg-surface-secondary md:text-sm">
+    <div className="flex h-8 w-max select-none items-center rounded-lg bg-surface-primary text-xs font-medium leading-none primary-card:bg-surface-secondary md:text-sm">
       <div className="flex h-full items-center justify-center pl-2.5 pr-2">
         {filterIdToLabel[filter.id]}
       </div>
