@@ -1,7 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "L1OpUSDCBridgeAdapter",
-  "description": "Escrow for USDC that uses the canonical bridge for messaging but is governed externally.",
-  "ignoreRelatives": ["USDC", "LINKED_ADAPTER", "$admin", "owner"],
-  "ignoreMethods": ["proxiableUUID"]
-}

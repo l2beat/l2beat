@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "avalanche",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x8EB8a3b98659Cce290402893d0123abb75E3ab28" // Bridge Wardens
+  ]
+}

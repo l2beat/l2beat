@@ -68,9 +68,14 @@ function getChainDiscoveryConfig(
   const multicallV3 = chainConfig.multicallContracts?.find(
     (x) => x.version === '3',
   )
-  if (!multicallV3) {
-    throw new Error('Missing multicallV3 for chain: ' + chain)
-  }
+
+  const multicallConfig = multicallV3
+    ? getMulticall3Config(
+        multicallV3.sinceBlock,
+        multicallV3.address,
+        multicallV3.batchSize,
+      )
+    : undefined
 
   const explorerApi = chainConfig.apis.find(
     (x) => x.type === 'etherscan' || x.type === 'blockscout',
@@ -102,11 +107,7 @@ function getChainDiscoveryConfig(
       'CELESTIA_API_URL_FOR_DISCOVERY',
       'CELESTIA_API_URL',
     ]),
-    multicall: getMulticall3Config(
-      multicallV3.sinceBlock,
-      multicallV3.address,
-      multicallV3.batchSize,
-    ),
+    multicall: multicallConfig,
     explorer:
       explorerApi.type === 'blockscout'
         ? {

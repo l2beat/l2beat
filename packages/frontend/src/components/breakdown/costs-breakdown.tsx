@@ -13,19 +13,19 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
   const groups = compact([
     props.calldata && {
       value: props.calldata,
-      className: 'dark:bg-sky-500 bg-sky-550',
+      className: 'bg-chart-stacked-blue',
     },
     props.blobs && {
       value: props.blobs,
-      className: 'dark:bg-yellow-100 bg-orange-400',
+      className: 'bg-chart-stacked-yellow',
     },
     props.compute && {
       value: props.compute,
-      className: 'bg-pink-100',
+      className: 'bg-chart-stacked-pink',
     },
     props.overhead && {
       value: props.overhead,
-      className: 'bg-purple-100',
+      className: 'bg-chart-stacked-purple',
     },
   ])
 

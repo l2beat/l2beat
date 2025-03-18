@@ -259,6 +259,11 @@ describe('layer2s', () => {
         })
 
       for (const { id, assessCount } of opAndArbL2sWithActivity) {
+        if (id === 'zircuit') {
+          // we skip zircuit, it is an anomaly. the research team decided to not
+          // do any adjustment and overcount by 1/6.
+          continue
+        }
         it(`${id.toString()}`, () => {
           expect(assessCount).not.toBeNullish()
         })

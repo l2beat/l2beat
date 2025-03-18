@@ -4,7 +4,8 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
@@ -77,6 +78,8 @@ export function getContractsSection(
           layerName: projectParams.daSolution.layerName,
           bridgeName: projectParams.daSolution.bridgeName,
           hostChainName: projectParams.daSolution.hostChainName,
+          layerSlug: projectParams.daSolution.layerSlug,
+          bridgeSlug: projectParams.daSolution.bridgeSlug,
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
             return makeTechnologyContract(
               contract,
@@ -208,27 +211,18 @@ function makeTechnologyContract(
     }
   }
 
-  const changes = (
-    projectChangeReport !== undefined ? Object.values(projectChangeReport) : []
-  ).flat()
-  const implementationChangeAddresses = changes.flatMap((c) =>
-    c.implementations.map((i) => i.containingContract.toString()),
-  )
-  const highSeverityFieldChangeAddresses = changes.flatMap((c) =>
-    c.fieldHighSeverityChanges.map((i) => i.address.toString()),
+  const changes = Object.values(projectChangeReport ?? {}).flat()
+  const impactfulChangeAddresses = changes.flatMap((c) =>
+    c.implementationContaining
+      .concat(c.fieldHighSeverityContaining)
+      .concat(c.upgradeChanges),
   )
 
-  const implementationChanged = implementationChangeAddresses.some(
-    (changedAddress) =>
-      addresses.map((a) => a.address).includes(changedAddress),
-  )
-  const highSeverityFieldChanged = highSeverityFieldChangeAddresses.some(
-    (changedAddress) =>
-      addresses.map((a) => a.address).includes(changedAddress),
+  const impactfulChange = impactfulChangeAddresses.some((changedAddress) =>
+    addresses.map((a) => a.address).includes(changedAddress),
   )
 
   const additionalReferences: ReferenceLink[] = []
-
   const usedInProjects = uniqBy(
     [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
       (address) =>
@@ -245,8 +239,7 @@ function makeTechnologyContract(
     usedInProjects,
     references: (item.references ?? []).concat(additionalReferences),
     chain,
-    implementationChanged,
-    highSeverityFieldChanged,
+    impactfulChange,
     upgradeableBy: item.upgradableBy,
     upgradeConsiderations: item.upgradeConsiderations,
   }

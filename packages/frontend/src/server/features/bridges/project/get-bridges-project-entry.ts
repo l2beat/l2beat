@@ -4,6 +4,7 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -19,7 +20,7 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/get-techn
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getTvsProjectStats } from '../../scaling/tvs/get-tvs-project-stats'
+import { get7dTvsBreakdown } from '../../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
 
 export interface BridgesProjectEntry {
@@ -74,10 +75,13 @@ export async function getBridgesProjectEntry(
     | 'permissions'
   >,
 ): Promise<BridgesProjectEntry> {
-  const [projectsChangeReport, tvsProjectStats] = await Promise.all([
+  const [projectsChangeReport, tvsStats] = await Promise.all([
     getProjectsChangeReport(),
-    getTvsProjectStats(project),
+    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
   ])
+
+  const tvsProjectStats = tvsStats.projects[project.id]
+  assert(tvsProjectStats, 'Tvs project stats not found')
 
   const changes = projectsChangeReport.getChanges(project.id)
 
@@ -97,20 +101,24 @@ export async function getBridgesProjectEntry(
       tvs: tvsProjectStats
         ? {
             tokenBreakdown: {
-              ...tvsProjectStats.tokenBreakdown,
+              ...tvsProjectStats.breakdown,
+              associated: tvsProjectStats.associated.total,
               warnings: compact([
-                tvsProjectStats.tokenBreakdown.total > 0 &&
+                tvsProjectStats.breakdown.total > 0 &&
                   getAssociatedTokenWarning({
                     associatedRatio:
-                      tvsProjectStats.tokenBreakdown.associated /
-                      tvsProjectStats.tokenBreakdown.total,
+                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.total,
                     name: project.name,
                     associatedTokens: project.tvlInfo.associatedTokens,
                   }),
               ]),
               associatedTokens: project.tvlInfo.associatedTokens,
             },
-            tvsBreakdown: tvsProjectStats.tvsBreakdown,
+            tvsBreakdown: {
+              ...tvsProjectStats.breakdown,
+              totalChange: tvsProjectStats.change.total,
+            },
           }
         : undefined,
       destination: getDestination(project.bridgeInfo.destination),

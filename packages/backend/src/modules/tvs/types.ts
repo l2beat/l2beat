@@ -78,10 +78,13 @@ export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
 export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
   AmountConfigBase
 
+export type ConstAmountConfig = ConstAmountFormula & AmountConfigBase
+
 export type AmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
   | CirculatingSupplyAmountConfig
+  | ConstAmountConfig
 
 // token deployed to single chain
 export interface Token {
@@ -129,7 +132,17 @@ export type ProjectTvsConfig = {
 }
 
 export type PriceConfig = {
+  id: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   priceId: string
+}
+
+export interface BlockTimestampConfig {
+  chainName: string
+  configurationId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface TokenValue {

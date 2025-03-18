@@ -1,5 +1,7 @@
+import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
+import { z } from 'zod'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -22,7 +24,10 @@ export interface SevenDayTvsBreakdown {
 }
 
 export interface ProjectSevenDayTvsBreakdown {
-  breakdown: BreakdownSplit
+  breakdown: BreakdownSplit & {
+    ether: number
+    stablecoin: number
+  }
   associated: BreakdownSplit
   change: BreakdownSplit
   changeExcludingAssociated: BreakdownSplit
@@ -35,14 +40,28 @@ export interface BreakdownSplit {
   native: number
 }
 
+export const TvsBreakdownProjectFilter = z.discriminatedUnion('type', [
+  z.object({
+    type: z.enum(['all', 'layer2', 'bridge']),
+  }),
+  z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
+])
+
+type TvsBreakdownProjectFilter = z.infer<typeof TvsBreakdownProjectFilter>
+
 const getCached7dTokenBreakdown = cache(
-  async (): Promise<SevenDayTvsBreakdown> => {
+  async (props: TvsBreakdownProjectFilter): Promise<SevenDayTvsBreakdown> => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
+
     const tokens = await ps.getTokens()
     const tvsValues = await getTvsValuesForProjects(
-      await getTvsProjects((project) => !!project.scalingInfo, chains, tokens),
+      await getTvsProjects(
+        createTvsBreakdownProjectFilter(props),
+        chains,
+        tokens,
+      ),
       '7d',
     )
 
@@ -75,6 +94,8 @@ const getCached7dTokenBreakdown = cache(
                 native: breakdown.native / 100,
                 canonical: breakdown.canonical / 100,
                 external: breakdown.external / 100,
+                ether: breakdown.ether / 100,
+                stablecoin: breakdown.stablecoin / 100,
               },
               associated: {
                 total: associatedTotal / 100,
@@ -139,6 +160,20 @@ const getCached7dTokenBreakdown = cache(
   },
 )
 
+function createTvsBreakdownProjectFilter(
+  filter: TvsBreakdownProjectFilter,
+): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
+  switch (filter.type) {
+    case 'projects':
+      return (project) => filter.projectIds.includes(project.id)
+    case 'all':
+      return () => true
+    case 'layer2':
+      return (project) => !!project.scalingInfo
+    case 'bridge':
+      return (project) => !!project.isBridge
+  }
+}
 async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
   const projects = await ps.getProjects({ where: ['tvlConfig'] })
   return {
@@ -152,6 +187,8 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             canonical: 30,
             native: 20,
             external: 10,
+            ether: 30,
+            stablecoin: 30,
           },
           associated: {
             total: 6,

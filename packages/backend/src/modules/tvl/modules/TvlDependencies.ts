@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { CirculatingSupplyProviders } from '../../../providers/CirculatingSupplyProviders'
+import type { PriceProvider } from '@l2beat/shared'
 import type { Clients } from '../../../providers/Clients'
-import type { PriceProviders } from '../../../providers/PriceProviders'
 import type { Providers } from '../../../providers/Providers'
 import type { Clock } from '../../../tools/Clock'
 import { HourlyIndexer } from '../../../tools/HourlyIndexer'
@@ -18,9 +17,8 @@ export class TvlDependencies {
   readonly syncOptimizer: SyncOptimizer
   readonly indexerService: IndexerService
   readonly valueService: ValueService
+  readonly priceProvider: PriceProvider
   readonly priceService: PriceService
-  readonly priceProviders: PriceProviders
-  readonly circulatingSupplyProviders: CirculatingSupplyProviders
   readonly circulatingSupplyService: CirculatingSupplyService
   readonly clients: Clients
 
@@ -34,16 +32,14 @@ export class TvlDependencies {
     this.syncOptimizer = new SyncOptimizer(this.clock)
     this.indexerService = new IndexerService(this.database)
     this.valueService = new ValueService(this.database)
-    this.priceProviders = providers.getPriceProviders()
+    this.priceProvider = providers.price
     this.priceService = new PriceService({
-      priceProvider: this.priceProviders.getPriceProvider(),
+      priceProvider: providers.price,
       database,
       logger,
     })
-    this.circulatingSupplyProviders = providers.getCirculatingSupplyProviders()
     this.circulatingSupplyService = new CirculatingSupplyService({
-      circulatingSupplyProvider:
-        this.circulatingSupplyProviders.getCirculatingSupplyProvider(),
+      circulatingSupplyProvider: providers.circulatingSupply,
       database,
       logger,
     })

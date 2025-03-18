@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PermissionedDisputeGame",
+  "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+  "ignoreMethods": [
+    "getNumToResolve",
+    "resolutionCheckpoints",
+    "resolvedSubgames"
+  ],
+  "fields": {
+    "absolutePrestateDecoded": {
+      "description": "Prestate tag for known prestates.",
+      "handler": {
+        "type": "call",
+        "method": "absolutePrestate",
+        "args": []
+      },
+      "returnType": "(OpStackAbsolutePrestate)"
+    }
+  }
+}

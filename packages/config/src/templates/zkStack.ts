@@ -146,7 +146,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const protLateQuorumVoteExtensionS =
     discovery_ZKstackGovL2.getContractValue<number>(
       'ZkProtocolGovernor',
-      'votingPeriod',
+      'lateQuorumVoteExtension',
     )
   const protTlMinDelayS = discovery_ZKstackGovL2.getContractValue<number>(
     'ProtocolTimelockController',
@@ -231,8 +231,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
-  const scThresholdString = `${scMainThreshold} / ${scMemberCount}`
-  const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
+  const scThresholdString = `${scMainThreshold}/${scMemberCount}`
+  const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
   return {
@@ -439,7 +439,7 @@ The protocol for these two other tracks is similar to the first part of the stan
 Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
 ## Emergency path
 SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
-        'ZkFoundationMultisig',
+        'ZK Foundation Multisig',
       )}) form a de-facto 3/3 Multisig
 by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
 ## Upgrade Delays

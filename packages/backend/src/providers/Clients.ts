@@ -16,6 +16,7 @@ import {
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { MulticallV3Client } from '@l2beat/shared/build/clients/rpc/multicall/MulticallV3Client'
 import type { Config } from '../config/Config'
 
 export interface Clients {
@@ -31,6 +32,7 @@ export interface Clients {
   avail: { daLayer: string; client: PolkadotRpcClient }[]
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
+  rpcClients: RpcClient[]
 }
 
 export function initClients(config: Config, logger: Logger): Clients {
@@ -66,6 +68,13 @@ export function initClients(config: Config, logger: Logger): Clients {
     for (const blockApi of chain.blockApis) {
       switch (blockApi.type) {
         case 'rpc': {
+          const multicallClient = blockApi.multicallV3
+            ? new MulticallV3Client(
+                blockApi.multicallV3.address,
+                blockApi.multicallV3.sinceBlock,
+                500,
+              )
+            : undefined
           const rpcClient = new RpcClient({
             sourceName: chain.name,
             url: blockApi.url,
@@ -73,6 +82,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
+            multicallClient,
           })
           blockClients.push(rpcClient)
           rpcClients.push(rpcClient)
@@ -247,5 +257,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     avail,
     getStarknetClient,
     getRpcClient,
+    rpcClients,
   }
 }

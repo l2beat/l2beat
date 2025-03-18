@@ -1,6 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "L2DAIGateway",
-  "description": "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.",
-  "ignoreRelatives": ["l1Dai", "l2Dai"]
-}

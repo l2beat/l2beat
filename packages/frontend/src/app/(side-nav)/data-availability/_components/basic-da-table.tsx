@@ -9,10 +9,7 @@ import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
 import type { CSSProperties } from 'react'
 import React from 'react'
-import {
-  getBasicTableGroupParams,
-  getBasicTableHref,
-} from '~/components/table/basic-table'
+import { getBasicTableGroupParams } from '~/components/table/basic-table'
 import { SortingArrows } from '~/components/table/sorting/sorting-arrows'
 import {
   Table,
@@ -105,6 +102,9 @@ export function BasicDaTable<T extends BasicEntry>({
                       colSpan={header.colSpan}
                       className={cn(
                         'font-medium tracking-[-0.13px] text-primary',
+                        header.column.getIsPinned() &&
+                          getRowTypeClassNamesWithoutOpacity(),
+
                         !header.isPlaceholder &&
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
@@ -183,6 +183,7 @@ export function BasicDaTable<T extends BasicEntry>({
           return (
             <React.Fragment key={row.id}>
               <TableRow
+                slug={row.original.slug}
                 className={cn(
                   getRowTypeClassNames({
                     isEthereum: row.original.slug === 'ethereum',
@@ -192,7 +193,6 @@ export function BasicDaTable<T extends BasicEntry>({
                 {row.getVisibleCells().map((cell) => {
                   const { meta } = cell.column.columnDef
                   const groupParams = getBasicTableGroupParams(cell.column)
-                  const href = getBasicTableHref(row.original.href, meta?.hash)
 
                   const rowSpan = meta?.rowSpan
                     ? meta.rowSpan(cell.getContext())
@@ -207,11 +207,12 @@ export function BasicDaTable<T extends BasicEntry>({
                   return (
                     <TableCell
                       key={`${row.id}-${cell.id}`}
-                      href={href}
                       align={meta?.align}
                       className={cn(
                         cell.column.getIsPinned() &&
-                          getRowTypeClassNamesWithoutOpacity(),
+                          getRowTypeClassNamesWithoutOpacity({
+                            isEthereum: row.original.slug === 'ethereum',
+                          }),
                         groupParams?.isFirstInGroup && 'pl-6',
                         groupParams?.isLastInGroup && '!pr-6',
                         cell.column.getCanSort() && meta?.align === undefined
@@ -286,6 +287,8 @@ export function getRowTypeClassNames({ isEthereum }: { isEthereum?: boolean }) {
   )
 }
 
-function getRowTypeClassNamesWithoutOpacity() {
-  return 'bg-surface-primary group-hover/row:bg-[#EEEEEE] dark:group-hover/row:bg-[#35363A]'
+function getRowTypeClassNamesWithoutOpacity({
+  isEthereum,
+}: { isEthereum?: boolean } = {}) {
+  return cn('bg-surface-primary', isEthereum && 'bg-blue-400 dark:bg-blue-900')
 }

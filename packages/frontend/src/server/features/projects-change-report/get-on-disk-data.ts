@@ -6,7 +6,7 @@ export function getOnDiskData() {
     // TODO: This is the only place we are not using getDiscoveryPaths()
     // This feature is architected incorrectly and instead we should save
     // the info about implementation/highSeverityField change in the db directly
-    path.join(process.cwd(), '../config/discovery'),
+    path.join(process.cwd(), '../config/src/projects'),
   )
   const chains = configReader.readAllChains()
   const projects: Record<string, string[]> = {}

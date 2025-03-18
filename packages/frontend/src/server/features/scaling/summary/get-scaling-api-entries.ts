@@ -4,7 +4,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { get7dTokenBreakdown } from '../tvs/utils/get-7d-token-breakdown'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 
 export interface ScalingApiEntry {
   id: string
@@ -37,7 +37,7 @@ export interface ScalingApiEntry {
 export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTokenBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvlInfo'],
       whereNot: ['isArchived', 'isUpcoming'],
@@ -63,8 +63,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
         isUpcoming: false,
         isUnderReview: !!getUnderReviewStatus({
           isUnderReview: project.statuses.isUnderReview,
-          implementationChanged: changes.implementationChanged,
-          highSeverityFieldChanged: changes.highSeverityFieldChanged,
+          impactfulChange: !!changes?.impactfulChange,
         }),
         badges: project.display.badges,
         stage: project.scalingInfo.stage,
@@ -72,13 +71,18 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
           project.scalingRisks.stacked ?? project.scalingRisks.self,
         ),
         tvs: {
-          breakdown: latestTvs?.breakdown ?? {
-            total: 0,
-            associated: 0,
-            ether: 0,
-            stablecoin: 0,
-          },
-          change7d: latestTvs?.change ?? 0,
+          breakdown: latestTvs?.breakdown
+            ? {
+                ...latestTvs.breakdown,
+                associated: latestTvs.associated.total,
+              }
+            : {
+                total: 0,
+                associated: 0,
+                ether: 0,
+                stablecoin: 0,
+              },
+          change7d: latestTvs?.change.total ?? 0,
           associatedTokens: project.tvlInfo.associatedTokens,
         },
       }

@@ -102,10 +102,10 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       undefined,
       undefined,
       {
-        a: { target: { template: 'template1' } },
-        b: { target: { template: 'template2' } },
-        c: { target: { template: 'template4' } },
-        d: { target: { template: 'template3' } },
+        a: { template: 'template1' },
+        b: { template: 'template2' },
+        c: { template: 'template4' },
+        d: { template: 'template3' },
       },
     )
 
@@ -130,9 +130,9 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       ['second'],
       [ADDRESS_C],
       {
-        first: { target: { template: 'template1' } },
-        second: { target: { template: 'template2' } },
-        third: { target: { template: 'template2' } },
+        first: { template: 'template1' },
+        second: { template: 'template2' },
+        third: { template: 'template2' },
       },
     )
 

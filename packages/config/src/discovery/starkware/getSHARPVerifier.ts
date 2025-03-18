@@ -102,7 +102,7 @@ export function getSHARPVerifierGovernors(
   assert(
     verifierAddress === SHARP_VERIFIER_PROXY.address &&
       getProxyGovernance(discovery, 'SHARPVerifierCallProxy')[0].address ===
-        discovery.getContract('SHARPVerifierAdminMultisig').address &&
+        discovery.getContract('SHARP Multisig').address &&
       getProxyGovernance(discovery, 'SHARPVerifierCallProxy').length === 1,
     `SHARPVerifierCallProxy or governance address mismatch. This project probably uses a different SHARP verifier or the admin has changed (${projectDiscovery.projectName})`,
   )
@@ -115,7 +115,7 @@ export function getSHARPVerifierGovernors(
         delayDescriptionFromSeconds(upgradeDelay),
     ),
     discovery.getMultisigPermission(
-      'SHARPVerifierAdminMultisig',
+      'SHARP Multisig',
       'SHARP Verifier Governor.',
     ),
   ]

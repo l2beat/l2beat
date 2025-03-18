@@ -6,7 +6,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -34,8 +34,8 @@ import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
@@ -118,12 +118,15 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
+  const [projectsChangeReport, activityProjectStats, tvsStats] =
     await Promise.all([
       getProjectsChangeReport(),
       getActivityProjectStats(project.id),
-      getTvsProjectStats(project),
+      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     ])
+
+  const tvsProjectStats = tvsStats.projects[project.id]
+  assert(tvsProjectStats, 'Tvs project stats not found')
 
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
@@ -141,17 +144,23 @@ export async function getScalingProjectEntry(
         : undefined,
     tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id)
       ? {
-          breakdown: tvsProjectStats?.tvsBreakdown,
+          breakdown: {
+            ...tvsProjectStats.breakdown,
+            totalChange: tvsProjectStats.change.total,
+          },
           warning: project.tvlInfo.warnings[0],
           tokens: {
-            breakdown: tvsProjectStats?.tokenBreakdown,
+            breakdown: {
+              ...tvsProjectStats.breakdown,
+              associated: tvsProjectStats.associated.total,
+            },
             warnings: compact([
               tvsProjectStats &&
-                tvsProjectStats.tokenBreakdown.total > 0 &&
+                tvsProjectStats.breakdown.total > 0 &&
                 getAssociatedTokenWarning({
                   associatedRatio:
-                    tvsProjectStats.tokenBreakdown.associated /
-                    tvsProjectStats.tokenBreakdown.total,
+                    tvsProjectStats.associated.total /
+                    tvsProjectStats.breakdown.total,
                   name: project.name,
                   associatedTokens: project.tvlInfo.associatedTokens,
                 }),
@@ -414,7 +423,7 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const technologySection = await getScalingTechnologySection(project)
+  const technologySection = getScalingTechnologySection(project)
   if (technologySection) {
     sections.push({
       type: 'TechnologySection',
@@ -427,18 +436,19 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const dataAvailabilitySection = getDataAvailabilitySection(
+    project,
+    daSolution,
+  )
   if (dataAvailabilitySection) {
     sections.push({
-      type: 'Group',
+      type: dataAvailabilitySection.type,
       props: {
         id: 'da-layer',
         title: 'Data availability',
-        items: dataAvailabilitySection,
-        description: project.customDa?.description,
-        isUnderReview: project.statuses.isUnderReview,
+        ...dataAvailabilitySection.props,
       },
-    })
+    } as ProjectDetailsSection)
   }
 
   if (project.scalingTechnology.stateDerivation) {

@@ -10,16 +10,18 @@ export const palm: ScalingProject = upcomingL2({
     name: 'Palm',
     slug: 'palm',
     description:
-      'The Palm network is a sidechain focused on NFTs that will transition from a Proof of Authority network to a ZK Rollup in 2024.',
+      'The Palm Network is the L2 for Sports, Culture and Entertainment.',
     purposes: ['NFT'],
     category: 'Validium',
     stack: 'Polygon',
     links: {
       websites: ['https://palm.network/'],
-      apps: ['https://app.palm.io/bridge', 'https://uniswap-v3.scroll.io'],
       documentation: ['https://docs.palm.io/'],
-      explorers: ['https://explorer.palm.io/'],
-      socialMedia: ['https://twitter.com/palmnetwork3'],
+      socialMedia: [
+        'https://x.com/buildOnPalm',
+        'https://t.me/PalmDAO_Community',
+        'https://linkedin.com/company/92910058/',
+      ],
     },
   },
 })
