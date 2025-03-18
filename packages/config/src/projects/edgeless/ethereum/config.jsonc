@@ -19,7 +19,8 @@
     "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7": "WrappedToken"
   },
   "overrides": {
-    "StakingManager": {
+    "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227": {
+      // StakingManager
       "description": "Manages strategies to be used with funds forwarded from the EdgelessDeposit contract.",
       "ignoreMethods": ["proxiableUUID"],
       "fields": {
@@ -41,19 +42,23 @@
         }
       }
     },
-    "WrappedToken": {
+    "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7": {
+      // WrappedToken
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "EdgelessDeposit": {
+    "0x7E0bc314535f430122caFEF18eAbd508d62934bf": {
+      // EdgelessDeposit
       "description": "Receives deposits and issues ewETH tokens. Funds are forwarded to the StakingManger contract.",
       "ignoreMethods": ["proxiableUUID"]
     },
-    "EthStrategy": {
+    "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b": {
+      // EthStrategy
       "description": "Deposits funds into the Lido protocol.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["underlyingAssetAmount", "ethUnderWithdrawal"]
     },
-    "RenzoStrategy": {
+    "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9": {
+      // RenzoStrategy
       "description": "Deposits funds into the Renzo protocol.",
       "ignoreRelatives": ["renzo", "ezETH"],
       "ignoreMethods": ["proxiableUUID"],

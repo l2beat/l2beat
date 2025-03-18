@@ -3,14 +3,10 @@
   "displayName": "ProxyAdmin",
   "fields": {
     "OP_SIGNER": {
-      "target": {
-        "permissions": [{ "type": "act" }]
-      }
+      "permissions": [{ "type": "act" }]
     },
     "OTHER_SIGNER": {
-      "target": {
-        "permissions": [{ "type": "act" }]
-      }
+      "permissions": [{ "type": "act" }]
     }
   }
 }

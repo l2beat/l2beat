@@ -19,7 +19,5 @@
     "0x41d3D33156aE7c62c094AAe2995003aE63f587B3", // USDC escrow
     "0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC", // USDT escrow
     "0x095D2918B03b2e86D68551DCF11302121fb626c9" // DAI escrow
-  ],
-  "names": {},
-  "overrides": {}
+  ]
 }

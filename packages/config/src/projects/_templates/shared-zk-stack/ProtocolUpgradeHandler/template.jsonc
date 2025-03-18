@@ -4,39 +4,31 @@
   "ignoreRelatives": ["ZKSYNC_ERA"],
   "fields": {
     "emergencyUpgradeBoard": {
-      "target": {
-        "permissions": [{ "type": "act" }]
-      }
+      "permissions": [{ "type": "act" }]
     },
     "guardians": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "extend the legal veto period, approve a protocol upgrade."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "extend the legal veto period, approve a protocol upgrade."
+        }
+      ]
     },
     "securityCouncil": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "soft freeze, hard freeze, approve a protocol upgrade."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "soft freeze, hard freeze, approve a protocol upgrade."
+        }
+      ]
     },
     "L2_PROTOCOL_GOVERNOR": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "start (queue) upgrades."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "start (queue) upgrades."
+        }
+      ]
     },
     "protocolFrozenUntil": {
       "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)",

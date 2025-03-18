@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0x8294f4084f4fc3ab589e0ac4b9cc025f8719c3a2f52c278e1673775b09a3cfad",
+  "configHash": "0x5a595c791f2818cc3174e20b55d266f674e80495e7e8b55e680f004bd97a851e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -975,7 +975,7 @@
       ]
     },
     {
-      "name": "MorphOpsMultisig",
+      "name": "Morph Multisig 2",
       "address": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1269,7 +1269,7 @@
       }
     },
     {
-      "name": "MorphUpgradeMultisig",
+      "name": "Morph Multisig 1",
       "address": "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1890,7 +1890,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
   }
 }

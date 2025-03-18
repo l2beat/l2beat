@@ -15,7 +15,8 @@
     "0x43B68ccBa7FC726540768fD1537c3179283140ed": "DeleteVerifierSize100"
   },
   "overrides": {
-    "WorldIdIdentityManager2": {
+    "0xf7134CE138832c1456F2a91D64621eE90c2bddEa": {
+      // WorldIdIdentityManager2
       "description": "Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.",
       "ignoreMethods": ["proxiableUUID", "queryRoot"],
       "ignoreInWatchMode": ["latestRoot"],
@@ -25,7 +26,8 @@
         }
       }
     },
-    "RegisterIdentitiesVerifierLookupTable": {
+    "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49": {
+      // RegisterIdentitiesVerifierLookupTable
       "fields": {
         "additionalBatchSizes": {
           "handler": {
@@ -52,7 +54,8 @@
         }
       }
     },
-    "DeleteIdentitiesVerifierLookupTable": {
+    "0x39CcB3b670651a14da8b3835f42924f49C2C5986": {
+      // DeleteIdentitiesVerifierLookupTable
       "fields": {
         "additionalBatchSizes": {
           "handler": {

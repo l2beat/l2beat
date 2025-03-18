@@ -13,7 +13,10 @@ import { formatCurrency } from '~/utils/number-format/format-currency'
 const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 
 export const bridgesArchivedColumns = [
-  ...getBridgesCommonProjectColumns(columnHelper),
+  ...getBridgesCommonProjectColumns(
+    columnHelper,
+    (row) => `/bridges/projects/${row.slug}`,
+  ),
   columnHelper.accessor((e) => adjustTableValue(e.validatedBy), {
     header: 'Validated by',
     cell: (ctx) => <TableValueCell value={ctx.row.original.validatedBy} />,

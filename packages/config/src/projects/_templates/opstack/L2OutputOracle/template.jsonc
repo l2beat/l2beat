@@ -20,25 +20,17 @@
     },
     "proposer": {
       "severity": "HIGH",
-      "target": {
-        "permissions": [{ "type": "propose" }]
-      }
+      "permissions": [{ "type": "propose" }]
     },
     "PROPOSER": {
-      "target": {
-        "permissions": [{ "type": "propose" }]
-      }
+      "permissions": [{ "type": "propose" }]
     },
     "challenger": {
       "severity": "HIGH",
-      "target": {
-        "permissions": [{ "type": "challenge" }]
-      }
+      "permissions": [{ "type": "challenge" }]
     },
     "CHALLENGER": {
-      "target": {
-        "permissions": [{ "type": "challenge" }]
-      }
+      "permissions": [{ "type": "challenge" }]
     },
     "deletedOutputs": {
       "severity": "HIGH",

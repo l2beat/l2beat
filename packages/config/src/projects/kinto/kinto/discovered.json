@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 763803,
-  "configHash": "0x0ddaf713e19c927bd926e631f9eb8d9fa9527c451187118dc5babe8e371ad648",
+  "configHash": "0xfa9eab284b2b2c3fe373faf5f04c7785549358dc970c9e2f14b833937af7c1b6",
   "entries": [
     {
       "name": "NioGuardians",
@@ -1633,7 +1633,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "MamoriLabs2",
+      "name": "KintsugiFoundation",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
       "proxyType": "EOA",
@@ -3941,6 +3941,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3"
   }
 }

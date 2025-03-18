@@ -24,7 +24,8 @@
     "0xC04A10Fd5e6513242558f47331568aBD6185a310": "ContractManager"
   },
   "overrides": {
-    "MessageProxyForMainnet": {
+    "0x8629703a9903515818C2FeB45a6f6fA5df8Da404": {
+      // MessageProxyForMainnet
       "ignoreInWatchMode": [
         "gasLimit",
         "headerMessageGasCost",
@@ -34,20 +35,24 @@
         "REVERT_REASON_LENGTH"
       ]
     },
-    "DepositBoxERC20": {
+    "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669": {
+      // DepositBoxERC20
       "ignoreMethods": ["delayedTransfers", "delayedTransfersSize"]
     },
-    "CommunityPool": {
+    "0x588801cA36558310D91234aFC2511502282b1621": {
+      // CommunityPool
       "ignoreInWatchMode": [
         "minTransactionGas",
         "multiplierDivider",
         "multiplierNumerator"
       ]
     },
-    "ContractManager": {
+    "0xC04A10Fd5e6513242558f47331568aBD6185a310": {
+      // ContractManager
       "ignoreDiscovery": true
     },
-    "ProxyAdminOwner": {
+    "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": {
+      // ProxyAdminOwner
       "ignoreInWatchMode": ["nonce"]
     }
   }

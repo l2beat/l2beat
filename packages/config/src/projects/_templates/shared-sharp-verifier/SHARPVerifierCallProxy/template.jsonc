@@ -6,14 +6,12 @@
   "fields": {
     "$admin": {
       "severity": "HIGH",
-      "target": {
-        "permissions": [
-          {
-            "type": "upgrade",
-            "delay": "{{getUpgradeActivationDelay}}"
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{getUpgradeActivationDelay}}"
+        }
+      ]
     },
     "upgradeActivationDelayFmt": {
       "handler": {

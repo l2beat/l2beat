@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "ethereum",
   "blockNumber": 21914468,
-  "configHash": "0x4088571c6b1d4e26e08be1588a81b1ecea74132d705196a98d9046872089db08",
+  "configHash": "0x5ec63efce253b0a5cae62b4d54decb8d0dc0c8f4cfb948c3733077d1a3d6db47",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -139,7 +139,7 @@
       ]
     },
     {
-      "name": "SuperchainGuardianMultisig",
+      "name": "Optimism Guardian Multisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -932,7 +932,7 @@
       }
     },
     {
-      "name": "UnichainMultisig2",
+      "name": "Unichain Multisig 2",
       "address": "0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1250,7 +1250,7 @@
       }
     },
     {
-      "name": "UnichainMultisig1",
+      "name": "Unichain Multisig 1",
       "address": "0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1298,7 +1298,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "Optimism Security Council",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2619,24 +2619,24 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
-    "gnosisSafeModules/LivenessModule": "0xaf5f707166f662310012e2d9d33d92bef536591231e024ae86fe1fb1d74633f8",
-    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
-    "opstack/AnchorStateRegistry": "0x5edafcbd7ee4adf7acb235602afad395d234f30cb9b817bdcf13429ac1c3c77a",
-    "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",
-    "opstack/DisputeGameFactory": "0xed9f221cf5f60eb469643b038cfa3bf76ea0e8243c0eecfede5928935c09d1dc",
-    "opstack/FaultDisputeGame": "0x57d768d0dd6fc21301d9fcb21579f79b9cfad8fc0a92327ae034cd8102d946b9",
-    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
-    "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",
-    "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
-    "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
-    "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
-    "opstack/OptimismPortal2": "0x88e1ec872b590b2d98ed6383fc9d7759688e0f13d4b733cd63a7bcae7c5ce99d",
-    "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
-    "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
-    "opstack/SuperchainConfig": "0x38b312497b6b9a5247e304b69929d797dffc28d476435a84fdeb9f5d901bc1c2",
-    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "gnosisSafeModules/DeputyGuardianModule": "0x4a2b22ad5334cd4e71e6020c4612c57e95553053d2ee36fe43ba3f914322687c",
+    "gnosisSafeModules/LivenessModule": "0xf90b9117ad186ec387de3215eadc19212a511e01409d10592187d05bc009b424",
+    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
+    "opstack/AnchorStateRegistry": "0x0220f8aa160565298724f82f068f43b3ff19012d466880e2b0c047c5d637ed83",
+    "opstack/DelayedWETH": "0x4816a2aa4820c5ea443c019c01a2c504dfa98d8e78155093582d288f09a0e87b",
+    "opstack/DisputeGameFactory": "0x88399acbc0235ec73feab46233a97122db6880ac61aae04011ec9e3b998d109e",
+    "opstack/FaultDisputeGame": "0x6dab1805b740041e4dfdb6b5aed33b25846c9afef61b48076241058d020aa4bf",
+    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
+    "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
+    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
+    "opstack/MIPS": "0xb30f9bf3d9eff0e1d65f755512e4c7397f4c8ccadda21e32a9fdf0078775d1d4",
+    "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
+    "opstack/OptimismPortal2": "0x3f395f2052660e13590561ccc701cf1d9588f85f2d81d0c65ce494b57a33d997",
+    "opstack/PermissionedDisputeGame": "0xb823f2f439b8aa48fc133c1555317a4f1de7283080806e478144e6be3a32631b",
+    "opstack/PreimageOracle": "0x2ad81408cd9e91b7dda81418639f25354a615fdf13c055d718e41a4f964cec67",
+    "opstack/SuperchainConfig": "0xc00886ea2b08887032b9216d26a7a14553331a303a68cece2682bb5d160de16a",
+    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44"
   }
 }

@@ -5,7 +5,6 @@ import {} from 'react/canary'
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
-    hash?: string
     cellClassName?: string
     headClassName?: string
     align?: 'right' | 'center'

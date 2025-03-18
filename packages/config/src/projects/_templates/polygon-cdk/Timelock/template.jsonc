@@ -17,21 +17,19 @@
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "delay": "{{getMinDelay}}",
-            "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
-            "condition": "there is no emergency state, in which case there would be no delay"
-          },
-          {
-            "type": "act",
-            "delay": "{{getMinDelay}}",
-            "condition": "there is no emergency state, in which case there would be no delay"
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "{{getMinDelay}}",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
+          "condition": "there is no emergency state, in which case there would be no delay"
+        },
+        {
+          "type": "act",
+          "delay": "{{getMinDelay}}",
+          "condition": "there is no emergency state, in which case there would be no delay"
+        }
+      ]
     },
     "getMinDelayFormatted": {
       "handler": {

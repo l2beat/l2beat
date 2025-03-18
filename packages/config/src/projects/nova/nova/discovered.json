@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 81620827,
-  "configHash": "0x587a8a8bfb98fbdbe322a281e1530a4fe194f1ab25670cef685dfac07426a3b6",
+  "configHash": "0xf6e68858da784e8e4197330b796dec4bb0dfcd3785238d30db8fc86b6568bea1",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -1183,12 +1183,12 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "orbitstack/layer2/L2ERC20Gateway": "0xba5db6142b987b2a6602e697b425d74d0a2a12d07223e8f2fad95ce201feb683",
-    "orbitstack/layer2/L2GatewayRouter": "0x5c380ea0096417b6cbc2f018099a5298196b293bd4eb393782c7c49ac4b7d790",
-    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
-    "orbitstack/layer2/L2SurplusFee": "0xc5ab7cd559b6a2c80f92fafb398291abf7be7ffd34761502080874871399f87d",
-    "orbitstack/layer2/L2WethGateway": "0xd919f2dcc1dec00dae645f6ec4a132e2267a1b80b348f7885257648311e5653c",
-    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757"
+    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
+    "orbitstack/layer2/L2ERC20Gateway": "0x03e3cfa2da39b87465155bdb0ece0e0607b1500fe5384c1ceada5939c5b91b9f",
+    "orbitstack/layer2/L2GatewayRouter": "0x767828d37dbb10de4aafd3bfc35ffe7b9ef6ed4be90869457ea49a5d69f56aaa",
+    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x82a0c1a1dc89f4b74d9468a660ce45f8ba5cb73dbea35d1af3b062722be6f700",
+    "orbitstack/layer2/L2SurplusFee": "0xfbb5a7e8b8f6169f98883c454a11a4d39a1b801c57f49fed8b9a6a5524c44227",
+    "orbitstack/layer2/L2WethGateway": "0x0fe7cdc09bee48a6f1c87078c5a67633ca9d615ddd2e79afbca3fd25e376ff5e",
+    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6"
   }
 }

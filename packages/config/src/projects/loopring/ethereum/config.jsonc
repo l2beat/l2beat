@@ -19,10 +19,12 @@
     "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470"
   ],
   "overrides": {
-    "ForcedWithdrawalAgent": {
+    "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": {
+      // ForcedWithdrawalAgent
       "description": "Auxiliary contract able to force withdrawals from L1 on behalf of users."
     },
-    "ExchangeV3": {
+    "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": {
+      // ExchangeV3
       "ignoreMethods": ["getBlockInfo"],
       "ignoreInWatchMode": [
         "getBlockHeight",
@@ -48,7 +50,8 @@
         }
       }
     },
-    "AgentRegistry": {
+    "0x39B9bf169a7e225ba037C443A40460c77438ea14": {
+      // AgentRegistry
       "fields": {
         "agents": {
           "handler": {
@@ -67,7 +70,8 @@
         }
       }
     },
-    "LoopringIOExchangeOwner": {
+    "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": {
+      // LoopringIOExchangeOwner
       "fields": {
         "blockSubmitters": {
           "handler": {
@@ -93,7 +97,8 @@
         }
       }
     },
-    "UserStakingPool": {
+    "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": {
+      // UserStakingPool
       "ignoreInWatchMode": ["total", "getTotalStaking", "numAddresses"]
     }
   }

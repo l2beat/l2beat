@@ -27,13 +27,7 @@
               "where": ["=", "#chainId", 61166]
             }
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "validateZkStack"
-              }
-            ]
-          }
+          "permissions": [{ "type": "validateZkStack" }]
         }
       }
     }

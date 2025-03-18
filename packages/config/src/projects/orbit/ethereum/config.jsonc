@@ -12,7 +12,8 @@
     "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0": "DAI Farm"
   },
   "overrides": {
-    "ETH Vault": {
+    "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": {
+      // ETH Vault
       "proxyType": "call implementation proxy",
       "ignoreMethods": [
         "owners",
