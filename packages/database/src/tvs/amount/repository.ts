@@ -1,7 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type TvsAmountRecord, toRecord, toRow } from './entity'
-import { selectTvsAmount } from './select'
 
 export class TvsAmountRepository extends BaseRepository {
   async insertMany(records: TvsAmountRecord[]): Promise<number> {
@@ -21,7 +20,7 @@ export class TvsAmountRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('TvsAmount')
-      .select(selectTvsAmount)
+      .select(['timestamp', 'configurationId', 'project', 'amount'])
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<=', UnixTime.toDate(to))

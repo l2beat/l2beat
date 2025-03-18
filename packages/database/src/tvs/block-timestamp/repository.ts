@@ -3,6 +3,16 @@ import { BaseRepository } from '../../BaseRepository'
 import { type TvsBlockTimestampRecord, toRow } from './entity'
 
 export class TvsBlockTimestampRepository extends BaseRepository {
+  async insertMany(records: TvsBlockTimestampRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 2_000, async (batch) => {
+      await this.db.insertInto('TvsBlockTimestamp').values(batch).execute()
+    })
+    return rows.length
+  }
+
   async findBlockNumberByChainAndTimestamp(
     chain: string,
     timestamp: UnixTime,
@@ -15,16 +25,6 @@ export class TvsBlockTimestampRepository extends BaseRepository {
       .limit(1)
       .executeTakeFirst()
     return row?.blockNumber
-  }
-
-  async insertMany(records: TvsBlockTimestampRecord[]): Promise<number> {
-    if (records.length === 0) return 0
-
-    const rows = records.map(toRow)
-    await this.batch(rows, 2_000, async (batch) => {
-      await this.db.insertInto('TvsBlockTimestamp').values(batch).execute()
-    })
-    return rows.length
   }
 
   async deleteByConfigInTimeRange(
