@@ -2,7 +2,7 @@ import type { BridgeCategory, TableReadyValue } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import { get7dTokenBreakdown } from '../scaling/tvs/utils/get-7d-token-breakdown'
+import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
@@ -17,7 +17,7 @@ export async function getBridgesArchivedEntries(): Promise<
   BridgesArchivedEntry[]
 > {
   const [tvs7dBreakdown, projectsChangeReport, projects] = await Promise.all([
-    get7dTokenBreakdown({ type: 'bridge' }),
+    get7dTvsBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
     ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
