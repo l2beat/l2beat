@@ -17,30 +17,21 @@ import { emtpyStateLabel, inputPlaceholder } from './utils/labels'
 interface Props {
   filterId: FilterableValueId
   values: string[]
-  onSelect?: (value: string) => void
 }
 
-export function TableFilterValueMenu({ filterId, values, onSelect }: Props) {
+export function TableFilterValueMenu({ filterId, values }: Props) {
   return (
     <Command className="border border-divider">
       <CommandInput className="h-9" placeholder={inputPlaceholder(filterId)} />
       <CommandList>
         <CommandEmpty>{emtpyStateLabel(filterId)}</CommandEmpty>
-        <TableFilterValueMenuItems
-          filterId={filterId}
-          values={values}
-          onSelect={onSelect}
-        />
+        <TableFilterValueMenuItems filterId={filterId} values={values} />
       </CommandList>
     </Command>
   )
 }
 
-export function TableFilterValueMenuItems({
-  filterId,
-  values,
-  onSelect,
-}: Props) {
+export function TableFilterValueMenuItems({ filterId, values }: Props) {
   const { state, dispatch } = useTableFilterContext()
 
   const sortedValues = values.sort(filterValuesSortFn)
@@ -61,7 +52,6 @@ export function TableFilterValueMenuItems({
                 key={value}
                 value={value}
                 onSelect={(value) => {
-                  onSelect?.(value)
                   dispatch({
                     type: 'remove',
                     payload: {
@@ -87,7 +77,6 @@ export function TableFilterValueMenuItems({
                 key={value}
                 value={value}
                 onSelect={(value) => {
-                  onSelect?.(value)
                   dispatch({
                     type: 'add',
                     payload: {

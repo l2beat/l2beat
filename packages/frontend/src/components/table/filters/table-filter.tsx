@@ -77,11 +77,7 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
           title={'Filters'}
           description={'Select filters to apply'}
         >
-          <TableFilterValueMenu
-            filterId={filter.id}
-            values={possibleValues}
-            onSelect={() => setOpen(false)}
-          />
+          <TableFilterValueMenu filterId={filter.id} values={possibleValues} />
         </CommandDialog>
       </>
     )

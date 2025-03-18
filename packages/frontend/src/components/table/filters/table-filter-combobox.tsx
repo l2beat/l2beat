@@ -79,7 +79,7 @@ function MobileFilters({
         title={'Filters'}
         description={'Select filters to apply'}
       >
-        <Content entries={entries} onValueSelect={() => setOpen(false)} />
+        <Content entries={entries} />
       </CommandDialog>
     </>
   )
@@ -118,10 +118,8 @@ function DesktopFilters({
 
 function Content({
   entries,
-  onValueSelect,
 }: {
   entries: FilterableEntry[]
-  onValueSelect?: (value: string) => void
 }) {
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
@@ -146,7 +144,6 @@ function Content({
                 (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
               ),
             ).filter(notUndefined)}
-            onSelect={onValueSelect}
           />
         ) : (
           <CommandGroup>
