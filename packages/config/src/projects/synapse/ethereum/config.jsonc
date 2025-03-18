@@ -26,6 +26,7 @@
   },
   "overrides": {
     "0x647489df0673E17dB3163c47d5233EBB6F5cAc70": {
+      //
       "ignoreMethods": [
         "DEFAULT_ADMIN_ROLE",
         "EXECUTOR_ROLE",
@@ -41,6 +42,7 @@
       }
     },
     "0x2796317b0fF8538F253012862c06787Adfb8cEb6": {
+      // SynapseBridge
       "ignoreMethods": [
         "DEFAULT_ADMIN_ROLE",
         "GOVERNANCE_ROLE",
@@ -48,29 +50,24 @@
       ],
       "fields": {
         "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
+          "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
+          "severity": "MEDIUM",
+          "type": "PERMISSION",
+          "handler": { "type": "accessControl" }
         }
       }
     },
     "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       // WETH9
+      // WETH9
       "ignoreDiscovery": true
     },
-    "Bridge Multisig": {
+    "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": {
+      // Bridge Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "SynapseBridge": {
-      "fields": {
-        "accessControl": {
-          "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
-          "severity": "MEDIUM",
-          "type": "PERMISSION"
-        }
-      }
-    },
-    "L1BridgeZap": {
+    "0x6571d6be3d8460CF5F7d6711Cd9961860029D85F": {
+      // L1BridgeZap
       "ignoreRelatives": [
         "WETH_ADDRESS",
         "baseSwap",
@@ -78,11 +75,13 @@
         "baseTokens"
       ]
     },
-    "Liquidity Pool": {
+    "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": {
+      // Liquidity Pool
       "ignoreMethods": ["calculateRemoveLiquidity"],
       "ignoreInWatchMode": ["getAdminBalance", "getVirtualPrice"]
     },
-    "LPToken": {
+    "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F": {
+      // LPToken
       "ignoreMethods": ["totalSupply"]
     }
   }

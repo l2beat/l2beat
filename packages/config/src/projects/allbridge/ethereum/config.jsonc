@@ -41,14 +41,16 @@
     "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT"
   },
   "overrides": {
-    "CctpBridge": {
+    "0xC51397b75B783E31469bFaADE79913F3f82210d6": {
+      // CctpBridge
       "ignoreMethods": [
         "gasUsage",
         "getBridgingCostInTokens",
         "getTransactionCost"
       ]
     },
-    "GasOracle": {
+    "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": {
+      // GasOracle
       "ignoreMethods": ["chainData", "crossRate", "price"],
       "fields": {
         "owner": {
@@ -60,7 +62,8 @@
         }
       }
     },
-    "FeeOracle": {
+    "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6": {
+      // FeeOracle
       "fields": {
         "owner": {
           "handler": {
@@ -72,13 +75,12 @@
       },
       "ignoreMethods": ["chainData", "crossRate", "price"]
     },
-    "LPBridge": {
+    "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": {
+      // LPBridge
       "ignoreMethods": ["gasUsage", "getTransactionCost", "otherBridges"],
       "fields": {
         "DAI_POOL": {
-          "target": {
-            "template": "allbridge/pool"
-          },
+          "template": "allbridge/pool",
           "handler": {
             "type": "call",
             "method": "pools",
@@ -88,9 +90,7 @@
           }
         },
         "USDC_POOL": {
-          "target": {
-            "template": "allbridge/pool"
-          },
+          "template": "allbridge/pool",
           "handler": {
             "type": "call",
             "method": "pools",
@@ -100,9 +100,7 @@
           }
         },
         "USDT_POOL": {
-          "target": {
-            "template": "allbridge/pool"
-          },
+          "template": "allbridge/pool",
           "handler": {
             "type": "call",
             "method": "pools",
@@ -113,7 +111,8 @@
         }
       }
     },
-    "TokenBridge": {
+    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": {
+      // TokenBridge
       "fields": {
         "accessControl": {
           "handler": {
@@ -133,7 +132,8 @@
         "TOKEN_MANAGER"
       ]
     },
-    "AllbridgeMessenger": {
+    "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": {
+      // AllbridgeMessenger
       "fields": {
         "owner": {
           "handler": {
@@ -145,7 +145,8 @@
       },
       "ignoreMethods": ["gasUsage", "getTransactionCost"]
     },
-    "WormholeMessenger": {
+    "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": {
+      // WormholeMessenger
       "fields": {
         "owner": {
           "handler": {
@@ -157,13 +158,16 @@
       },
       "ignoreMethods": ["gasUsage", "getTransactionCost"]
     },
-    "USDT": {
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      // USDT
       "ignoreDiscovery": true
     },
-    "USDC": {
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      // USDC
       "ignoreDiscovery": true
     },
-    "DAI": {
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      // DAI
       "ignoreDiscovery": true
     }
   }

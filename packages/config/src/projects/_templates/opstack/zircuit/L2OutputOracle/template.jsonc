@@ -19,15 +19,11 @@
   "fields": {
     "proposer": {
       "severity": "HIGH",
-      "target": {
-        "permissions": [{ "type": "propose" }]
-      }
+      "permissions": [{ "type": "propose" }]
     },
     "challenger": {
       "severity": "HIGH",
-      "target": {
-        "permissions": [{ "type": "challenge" }]
-      }
+      "permissions": [{ "type": "challenge" }]
     },
     "deletedOutputs": {
       "severity": "HIGH",

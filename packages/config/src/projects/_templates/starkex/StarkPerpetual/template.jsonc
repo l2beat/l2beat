@@ -29,21 +29,19 @@
     "$admin": {
       "description": "Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.",
       "severity": "HIGH",
-      "target": {
-        "permissions": [
-          {
-            "type": "upgrade",
-            "delay": "{{getUpgradeActivationDelay}}"
-          },
-          {
-            "type": "governStarknet"
-          },
-          {
-            "type": "interact",
-            "description": "manage the token admin role."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{getUpgradeActivationDelay}}"
+        },
+        {
+          "type": "governStarknet"
+        },
+        {
+          "type": "interact",
+          "description": "manage the token admin role."
+        }
+      ]
     },
     "isFinalized": {
       "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade).",
@@ -60,14 +58,12 @@
           "event": "LogTokenAdminRemoved"
         }
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "Can regsiter new tokens for deposits and withdrawals."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can regsiter new tokens for deposits and withdrawals."
+        }
+      ]
     },
     "DEPOSIT_CANCEL_DELAY": {
       "description": "The time delay required before canceled deposits to the L2 can be reclaimed."
@@ -79,13 +75,7 @@
         "add": { "event": "LogOperatorAdded" },
         "remove": { "event": "LogOperatorRemoved" }
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "operateStarknet"
-          }
-        ]
-      }
+      "permissions": [{ "type": "operateStarknet" }]
     },
     "escapeVerifier": {
       "handler": {

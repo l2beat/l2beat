@@ -26,18 +26,22 @@
     "0x62478E4eeb4070fE399866aB05e821AB97200947": "RewardEscrowerMultisig"
   },
   "overrides": {
-    "RewardEscrowerMultisig": {
+    "0x62478E4eeb4070fE399866aB05e821AB97200947": {
+      // RewardEscrowerMultisig
       "description": "Escrows staking rewards for Sequencers.",
       "ignoreInWatchMode": ["nonce"]
     },
-    "EquilibriaStakingPool": {
+    "0x735Aad08c5eF7620b6422E85613f8335Ec07b573": {
+      // EquilibriaStakingPool
       // StakingPool owner deployed by Equilibria Finance
       "ignoreDiscovery": true
     },
-    "LockingInfo": {
+    "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": {
+      // LockingInfo
       "ignoreInWatchMode": ["totalLocked", "totalRewardsLiquidated"] // 'liquidated' here = withdrawn
     },
-    "LockingPool": {
+    "0xD54c868362C2098E0E46F12E7D924C6A332952Dd": {
+      // LockingPool
       "fields": {
         "sequencers": {
           "handler": {
@@ -61,7 +65,8 @@
       ],
       "ignoreRelatives": ["rewardRecipient"]
     },
-    "Lib_AddressManager": {
+    "0x918778e825747a892b17C66fe7D24C618262867d": {
+      // Lib_AddressManager
       "fields": {
         "BondManager": {
           "handler": {
@@ -180,7 +185,8 @@
         }
       }
     },
-    "StateCommitmentChain": {
+    "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": {
+      // StateCommitmentChain
       "fields": {
         "getLastSequencerTimestampByChainId": {
           "handler": {
@@ -213,7 +219,8 @@
         "getTotalElementsByChainId"
       ]
     },
-    "ChainStorageContainer-SCC-batches": {
+    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": {
+      // ChainStorageContainer-SCC-batches
       "ignoreMethods": ["get"],
       "fields": {
         "getGlobalMetadataByChainId": {
@@ -245,6 +252,7 @@
       "ignoreMethods": ["get", "chain_under_challenge"]
     },
     "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": {
+      // ChainStorageContainer-CTC-batches
       "ignoreMethods": [
         "get",
         "getGlobalMetadata",
@@ -252,9 +260,6 @@
         "length",
         "lengthByChainId"
       ]
-    },
-    "0x62478E4eeb4070fE399866aB05e821AB97200947": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": {
       "ignoreInWatchMode": [
@@ -280,6 +285,7 @@
       ]
     },
     "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": {
+      // ChainStorageContainer-CTC-queue
       "fields": {
         "getGlobalMetadataByChainId": {
           "handler": {
@@ -300,7 +306,8 @@
     "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": {
       "ignoreMethods": ["chain_under_challenge"]
     },
-    "Metis Multisig": {
+    "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": {
+      // Metis Multisig
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "ignoreInWatchMode": ["nonce"],
       "fields": {
@@ -314,7 +321,8 @@
         }
       }
     },
-    "MToken": {
+    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": {
+      // MToken
       // isOwner() compares caller to 0x00.. which gives true for call()
       // and returns false for multicall(). Let's ignore it.
       "ignoreMethods": ["isOwner"]

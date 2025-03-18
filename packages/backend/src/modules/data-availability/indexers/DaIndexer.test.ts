@@ -190,7 +190,6 @@ function mockIndexer($: {
     db: mockDatabase({
       dataAvailability: repository,
     }),
-    serializeConfiguration: (value: DaTrackingConfig) => JSON.stringify(value),
   })
 
   return { repository, indexer, daService, daProvider }

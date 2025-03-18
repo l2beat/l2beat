@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { PrimaryCard } from '~/components/primary-card'
+import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { env } from '~/env'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
 import type { BaseAssetBreakdownData } from '~/server/features/scaling/tvs/breakdown/types'
@@ -63,7 +64,7 @@ export default async function Page(props: Props) {
     notFound()
   }
 
-  const projects7dData = await get7dTvsBreakdown()
+  const projects7dData = await get7dTvsBreakdown({ type: 'layer2' })
   const project7dData = projects7dData.projects[project.id.toString()]!
   if (!project7dData) {
     notFound()
@@ -127,22 +128,21 @@ export default async function Page(props: Props) {
         </PrimaryCard>
 
         {canonical.length > 0 && (
-          <PrimaryCard>
-            <CanonicallyBridgedTable tokens={canonical} />
-          </PrimaryCard>
+          <HighlightablePrimaryCard id="canonical" className="md:scroll-mt-6">
+            <CanonicallyBridgedTable tokens={canonical} id="canonical" />
+          </HighlightablePrimaryCard>
         )}
         {native.length > 0 && (
-          <PrimaryCard>
-            <NativelyMintedTable tokens={native} />
-          </PrimaryCard>
+          <HighlightablePrimaryCard id="native" className="md:scroll-mt-6">
+            <NativelyMintedTable tokens={native} id="native" />
+          </HighlightablePrimaryCard>
         )}
         {external.length > 0 && (
-          <PrimaryCard>
-            <ExternallyBridgedTable tokens={external} />
-          </PrimaryCard>
+          <HighlightablePrimaryCard id="external" className="md:scroll-mt-6">
+            <ExternallyBridgedTable tokens={external} id="external" />
+          </HighlightablePrimaryCard>
         )}
       </div>
-
       <RequestTokenBox />
     </>
   )

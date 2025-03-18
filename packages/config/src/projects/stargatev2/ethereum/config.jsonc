@@ -26,13 +26,16 @@
     "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": "Nethermind Verifier"
   },
   "overrides": {
-    "StargateMultiRewarder": {
+    "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": {
+      // StargateMultiRewarder
       "ignoreRelatives": ["rewardTokens", "staking"]
     },
-    "Nethermind Verifier": {
+    "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": {
+      // Nethermind Verifier
       "ignoreRelatives": ["workerFeeLib", "priceFeed"]
     },
-    "EndpointV2": {
+    "0x1a44076050125825900e736c501f859c50fE728c": {
+      // EndpointV2
       "description": "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.",
       "fields": {
         "getRegisteredLibraries": {
@@ -67,7 +70,8 @@
         }
       }
     },
-    "ReceiveUln302": {
+    "0xc02Ab410f0734EFa3F14628780e6e695156024C2": {
+      // ReceiveUln302
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "fields": {
         "getUlnConfig": {
@@ -79,7 +83,8 @@
         }
       }
     },
-    "SendUln302": {
+    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": {
+      // SendUln302
       "description": "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.",
       "fields": {
         "getExecutorConfig": {
@@ -91,10 +96,12 @@
         }
       }
     },
-    "TokenMessaging": {
+    "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980": {
+      // TokenMessaging
       "description": "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
     },
-    "CreditMessaging": {
+    "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d": {
+      // CreditMessaging
       "fields": {
         "maxAssetId": {
           "description": "The highest currently registered assetID"
@@ -110,6 +117,7 @@
       }
     },
     "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": {
+      // StargatePool (0xc026395860Db2d07ee33e05fE50ed7bD583189C7)
       "ignoreRelatives": [
         "endpoint",
         "getAddressConfig",
@@ -126,6 +134,7 @@
       ]
     },
     "0x933597a323Eb81cAe705C5bC29985172fd5A3973": {
+      // StargatePool (0x933597a323Eb81cAe705C5bC29985172fd5A3973)
       "ignoreRelatives": [
         "endpoint",
         "getAddressConfig",
@@ -142,6 +151,7 @@
       ]
     },
     "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": {
+      // StargatePool (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931)
       "ignoreRelatives": [
         "endpoint",
         "getAddressConfig",
@@ -158,6 +168,7 @@
       ]
     },
     "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": {
+      // StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3)
       "ignoreRelatives": [
         "endpoint",
         "getAddressConfig",
@@ -174,6 +185,7 @@
       ]
     },
     "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": {
+      // StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D)
       "ignoreRelatives": [
         "endpoint",
         "getAddressConfig",

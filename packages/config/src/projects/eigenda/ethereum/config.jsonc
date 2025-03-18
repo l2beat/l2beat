@@ -18,7 +18,8 @@
     "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil"
   },
   "overrides": {
-    "EIGEN Token": {
+    "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {
+      // EIGEN Token
       "ignoreRelatives": ["bEIGEN"]
     },
     "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {

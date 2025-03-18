@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21979760,
-  "configHash": "0xfd12425177bb22eef1444448ad1b41750c59fe9c7a02cf958b5ef00c75705650",
+  "configHash": "0x17b0b15542e9af60098cd0a30fdae521d9c879c8f896518a09da57f7bb63a7df",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "ParadexAdminMultisig",
+      "name": "Paradex Multisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -734,8 +734,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0xebe5ae41eaeb1d93c4e851cda25f1a4d64b70f6622f4de1aa5d92f744e813262",
-    "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25"
+    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
+    "starknet/Starknet": "0xb78165b4e6a35a7583178ad3aae7e7da7d211a1e7c43422b189151df65c4f68d",
+    "starknet/StarknetERC20Bridge": "0x7249a25f388785a0277c86b45c8989a6ea7ca38acdb9296c7a78e6a9b69faf29"
   }
 }

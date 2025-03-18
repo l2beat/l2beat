@@ -34,8 +34,8 @@ import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
@@ -118,12 +118,14 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
+  const [projectsChangeReport, activityProjectStats, tvsStats] =
     await Promise.all([
       getProjectsChangeReport(),
       getActivityProjectStats(project.id),
-      getTvsProjectStats(project),
+      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     ])
+
+  const tvsProjectStats = tvsStats.projects[project.id]
 
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
@@ -139,27 +141,34 @@ export async function getScalingProjectEntry(
       project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
         ? project.scalingInfo.hostChain.name
         : undefined,
-    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id)
-      ? {
-          breakdown: tvsProjectStats?.tvsBreakdown,
-          warning: project.tvlInfo.warnings[0],
-          tokens: {
-            breakdown: tvsProjectStats?.tokenBreakdown,
-            warnings: compact([
-              tvsProjectStats &&
-                tvsProjectStats.tokenBreakdown.total > 0 &&
-                getAssociatedTokenWarning({
-                  associatedRatio:
-                    tvsProjectStats.tokenBreakdown.associated /
-                    tvsProjectStats.tokenBreakdown.total,
-                  name: project.name,
-                  associatedTokens: project.tvlInfo.associatedTokens,
-                }),
-            ]),
-            associatedTokens: project.tvlInfo.associatedTokens,
-          },
-        }
-      : undefined,
+    tvs:
+      !env.EXCLUDED_TVS_PROJECTS?.includes(project.id) && tvsProjectStats
+        ? {
+            breakdown: {
+              ...tvsProjectStats.breakdown,
+              totalChange: tvsProjectStats.change.total,
+            },
+            warning: project.tvlInfo.warnings[0],
+            tokens: {
+              breakdown: {
+                ...tvsProjectStats.breakdown,
+                associated: tvsProjectStats.associated.total,
+              },
+              warnings: compact([
+                tvsProjectStats &&
+                  tvsProjectStats.breakdown.total > 0 &&
+                  getAssociatedTokenWarning({
+                    associatedRatio:
+                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.total,
+                    name: project.name,
+                    associatedTokens: project.tvlInfo.associatedTokens,
+                  }),
+              ]),
+              associatedTokens: project.tvlInfo.associatedTokens,
+            },
+          }
+        : undefined,
     badges: project.display.badges,
     gasTokens: project.chainConfig?.gasTokens,
   }

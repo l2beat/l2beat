@@ -35,7 +35,8 @@
     "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC": "HOP"
   },
   "overrides": {
-    "USDC Bridge": {
+    "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a": {
+      // USDC Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -45,7 +46,8 @@
         "isChainIdPaused"
       ]
     },
-    "DAI Bridge": {
+    "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1": {
+      // DAI Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -55,7 +57,8 @@
         "isChainIdPaused"
       ]
     },
-    "USDT Bridge": {
+    "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6": {
+      // USDT Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -65,7 +68,8 @@
         "isChainIdPaused"
       ]
     },
-    "ETH Bridge": {
+    "0xb8901acB165ed027E32754E0FFe830802919727f": {
+      // ETH Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -75,7 +79,8 @@
         "isChainIdPaused"
       ]
     },
-    "MATIC Bridge": {
+    "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2": {
+      // MATIC Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -85,7 +90,8 @@
         "isChainIdPaused"
       ]
     },
-    "WBTC Bridge": {
+    "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849": {
+      // WBTC Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -95,7 +101,8 @@
         "isChainIdPaused"
       ]
     },
-    "SNX Bridge": {
+    "0x893246FACF345c99e4235E5A7bbEE7404c988b96": {
+      // SNX Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -105,7 +112,8 @@
         "isChainIdPaused"
       ]
     },
-    "HOP Bridge": {
+    "0x914f986a44AcB623A277d6Bd17368171FCbe4273": {
+      // HOP Bridge
       "ignoreMethods": [
         "chainBalance",
         "crossDomainMessengerWrappers",
@@ -115,10 +123,12 @@
         "isChainIdPaused"
       ]
     },
-    "Hop Multisig": {
+    "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": {
+      // Hop Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "Timelock Controller": {
+    "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a": {
+      // Timelock Controller
       "fields": {
         "accessControl": {
           "handler": {
@@ -133,7 +143,8 @@
         "TIMELOCK_ADMIN_ROLE"
       ]
     },
-    "Hop Governor": {
+    "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48": {
+      // Hop Governor
       "ignoreMethods": [
         "proposalDeadline",
         "proposalEta",
@@ -142,25 +153,32 @@
         "quorum"
       ]
     },
-    "USDC": {
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+      // USDC
       "ignoreDiscovery": true
     },
-    "DAI": {
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+      // DAI
       "ignoreDiscovery": true
     },
-    "USDT": {
+    "0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+      // USDT
       "ignoreDiscovery": true
     },
-    "MATIC": {
+    "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0": {
+      // MATIC
       "ignoreDiscovery": true
     },
-    "WBTC": {
+    "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599": {
+      // WBTC
       "ignoreDiscovery": true
     },
-    "SNX": {
+    "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F": {
+      // SNX
       "ignoreDiscovery": true
     },
-    "HOP": {
+    "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC": {
+      // HOP
       "ignoreDiscovery": true
     }
   }

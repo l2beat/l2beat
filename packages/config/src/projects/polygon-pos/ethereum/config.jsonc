@@ -38,7 +38,8 @@
     "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
   },
   "overrides": {
-    "RootChainManager": {
+    "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": {
+      // RootChainManager
       "fields": {
         "PREDICATES": {
           "handler": {
@@ -46,23 +47,28 @@
             "select": "predicateAddress",
             "add": { "event": "PredicateRegistered" }
           },
-          "target": { "template": "polygonposbridge/predicate" } // adds accesscontrol discovery
+          "template": "polygonposbridge/predicate" // adds accesscontrol discovery
         }
       }
     },
-    "RootChainInitialImplementation": {
+    "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": {
+      // RootChainInitialImplementation
       "ignoreMethods": ["headerBlocks"]
     },
-    "Aavegotchi": {
+    "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": {
+      // Aavegotchi
       "ignoreDiscovery": true // predicate
     },
-    "DepositManager": {
+    "0x401F6c983eA34274ec46f84D70b31C151321188b": {
+      // DepositManager
       "ignoreMethods": ["deposits"]
     },
-    "WithdrawManager": {
+    "0x2A88696e0fFA76bAA1338F2C74497cC013495922": {
+      // WithdrawManager
       "ignoreMethods": ["exits"]
     },
-    "StateSender": {
+    "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE": {
+      // StateSender
       "fields": {
         "REGISTRATIONS": {
           "handler": {
@@ -75,11 +81,13 @@
       "ignoreInWatchMode": ["counter"],
       "ignoreRelatives": ["REGISTRATIONS"]
     },
-    "StakingNFT": {
+    "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F": {
+      // StakingNFT
       "ignoreMethods": ["tokenByIndex"],
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "RootChain": {
+    "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": {
+      // RootChain
       "fields": {
         "constructorArgs": {
           "handler": {
@@ -95,7 +103,8 @@
         "currentHeaderBlock"
       ]
     },
-    "StakeManager": {
+    "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": {
+      // StakeManager
       "ignoreRelatives": ["token", "tokenMatic", "migration"],
       "ignoreMethods": [
         "getValidatorContract",
@@ -121,14 +130,16 @@
         "NFTCounter"
       ]
     },
-    "StakingInfo": {
+    "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": {
+      // StakingInfo
       "ignoreMethods": [
         "getValidatorContractAddress",
         "totalValidatorStake",
         "validatorNonce"
       ]
     },
-    "StakeManagerExtension": {
+    "0xef49Ea6996073752b6840CDA34773FFA78F78166": {
+      // StakeManagerExtension
       "ignoreMethods": [
         "latestSignerUpdateEpoch",
         "validatorAuction",
@@ -136,13 +147,16 @@
         "validatorStateChanges"
       ]
     },
-    "ExitNFT": {
+    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": {
+      // ExitNFT
       "ignoreMethods": ["exists"]
     },
-    "ValidatorShare": {
+    "0x7e94d6cAbb20114b22a088d828772645f68CC67B": {
+      // ValidatorShare
       "ignoreMethods": ["getRewardPerShare"]
     },
-    "Timelock": {
+    "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": {
+      // Timelock
       "fields": {
         "accessControl": {
           "handler": {

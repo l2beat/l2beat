@@ -11,17 +11,21 @@
     "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "BridgeValidators"
   },
   "overrides": {
-    "WETHOmnibridgeRouter": {
+    "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": {
+      // WETHOmnibridgeRouter
       "ignoreMethods": ["WETH"]
     },
-    "ForeignOmnibridge": {
+    "0x1715a3E4A142d8b698131108995174F37aEBA10D": {
+      // ForeignOmnibridge
       "ignoreInWatchMode": ["getCurrentDay"],
       "proxyType": "Eternal Storage proxy"
     },
-    "ForeignAMB": {
+    "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": {
+      // ForeignAMB
       "proxyType": "Eternal Storage proxy"
     },
-    "BridgeValidators": {
+    "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": {
+      // BridgeValidators
       "proxyType": "Eternal Storage proxy"
     }
   }

@@ -25,6 +25,9 @@ export function DaThroughputPublicTable({ items }: Props) {
     data: tableEntries,
     initialState: {
       sorting: [{ id: 'pastDayAvgThroughputPerSecond', desc: true }],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

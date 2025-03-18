@@ -5,7 +5,5 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA" // SystemConfig
-  ],
-  "names": {},
-  "overrides": {}
+  ]
 }
