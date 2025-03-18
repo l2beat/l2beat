@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2ProxyAdmin",
+  "description": "Administration contract for other contract proxies.",
+  "ignoreRelatives": ["addressManager"],
+  "fields": {
+    "owner": {
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}

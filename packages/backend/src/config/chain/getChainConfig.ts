@@ -17,6 +17,10 @@ export async function getChainConfig(
   for (const project of projects) {
     const chain = project.chainConfig.name
 
+    const multicallV3 = project.chainConfig.multicallContracts?.find(
+      (m) => m.version === '3',
+    )
+
     const indexerApis: IndexerApi[] = []
     const blockApis: BlockApi[] = []
 
@@ -46,6 +50,12 @@ export async function getChainConfig(
               Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
               api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
             ),
+            multicallV3: multicallV3
+              ? {
+                  address: multicallV3.address,
+                  sinceBlock: multicallV3.sinceBlock,
+                }
+              : undefined,
             // TODO: add configuration param
             retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
           })

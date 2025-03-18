@@ -13,9 +13,9 @@
         "address": "0xe7c3755482d0dA522678Af05945062d4427e0923",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -31,9 +31,9 @@
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -49,9 +49,9 @@
         "address": "0xbdab72602e9AD40FC6a6852CAf43258113B8F7a5",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -71,18 +71,19 @@
             "address": "native",
             "chain": "ethereum",
             "escrowAddress": "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1712862059
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
             "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-            "decimals": 18
+            "decimals": 18,
+            "sinceTimestamp": 1712862107
           }
         ]
       },
-      "sinceTimestamp": 1712862059,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -97,9 +98,9 @@
         "type": "totalSupply",
         "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
         "chain": "bob",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1725879531
       },
-      "sinceTimestamp": 1725879531,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -115,9 +116,9 @@
         "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -133,9 +134,9 @@
         "address": "0x8236a87084f8B84306f72007F36F2618A5634494",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1724889600
       },
-      "sinceTimestamp": 1724889600,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -151,9 +152,9 @@
         "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
@@ -168,7 +169,8 @@
         "type": "totalSupply",
         "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
         "chain": "bob",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1723638067
       },
       "valueForProject": {
         "type": "calculation",
@@ -181,7 +183,8 @@
               "type": "totalSupply",
               "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
               "chain": "bob",
-              "decimals": 18
+              "decimals": 18,
+              "sinceTimestamp": 1723638067
             }
           },
           {
@@ -192,12 +195,12 @@
               "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
               "chain": "bob",
               "decimals": 18,
-              "escrowAddress": "0x742779748Dc07943E97c2cf30B48A57b96E033e1"
+              "escrowAddress": "0x742779748Dc07943E97c2cf30B48A57b96E033e1",
+              "sinceTimestamp": 1723638067
             }
           }
         ]
       },
-      "sinceTimestamp": 1723638067,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -212,9 +215,9 @@
         "type": "totalSupply",
         "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
         "chain": "bob",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1724924787
       },
-      "sinceTimestamp": 1724924787,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -230,9 +233,9 @@
         "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -248,9 +251,9 @@
         "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -266,9 +269,9 @@
         "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -283,9 +286,9 @@
         "type": "totalSupply",
         "address": "0x236f8c0a61dA474dB21B693fB2ea7AAB0c803894",
         "chain": "bob",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1724924845
       },
-      "sinceTimestamp": 1724924845,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -302,9 +305,9 @@
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
         "escrowAddress": "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1714403615
       },
-      "sinceTimestamp": 1714403615,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -320,9 +323,9 @@
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "chain": "ethereum",
         "escrowAddress": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1712862107
       },
-      "sinceTimestamp": 1712862107,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
@@ -337,7 +340,8 @@
         "type": "totalSupply",
         "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
         "chain": "bob",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1712862107
       },
       "valueForProject": {
         "type": "calculation",
@@ -350,7 +354,8 @@
               "type": "totalSupply",
               "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
               "chain": "bob",
-              "decimals": 8
+              "decimals": 8,
+              "sinceTimestamp": 1712862107
             }
           },
           {
@@ -361,12 +366,12 @@
               "address": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
               "chain": "bob",
               "decimals": 8,
-              "escrowAddress": "0x33b7A7a164B77433A61d4B49bD780a2718812e6e"
+              "escrowAddress": "0x33b7A7a164B77433A61d4B49bD780a2718812e6e",
+              "sinceTimestamp": 1712862107
             }
           }
         ]
       },
-      "sinceTimestamp": 1712862107,
       "category": "other",
       "source": "canonical",
       "isAssociated": false
@@ -383,9 +388,9 @@
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
         "escrowAddress": "0x091dF5E1284E49fA682407096aD34cfD42B95B72",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1713786239
       },
-      "sinceTimestamp": 1713786239,
       "category": "ether",
       "source": "external",
       "isAssociated": false

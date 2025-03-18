@@ -7,6 +7,7 @@ import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
 import { Events } from './Events'
+import { FetchAgglayer } from './FetchAggLayer'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
@@ -49,6 +50,7 @@ export function getSubcommands() {
     RefreshDiscovery,
     SolFmt,
     StarknetProgramHashes,
+    FetchAgglayer,
     FindL2,
     Init,
     InitTemplate,

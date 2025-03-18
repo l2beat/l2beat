@@ -65,18 +65,22 @@ export function mergePermissions(
   b: PermissionConfiguration[] = [],
 ): PermissionConfiguration[] | undefined {
   const encodeKey = (v: PermissionConfiguration): string => {
-    return `${v.type}-${v.target.toString()}-${v.condition ?? ''}`
+    const key = `${v.type}-${v.target.toString()}-${v.condition ?? ''}`
+    // 'interact' permission is special - what it does is in its description,
+    // e.g. [interact "cancel tx"] and [interact "add tx"] shouldn't be grouped,
+    // regardless of the delay.
+    return v.type === 'interact' ? `${key}-${v.description ?? ''}` : key
   }
 
   const result: PermissionConfiguration[] = []
   const grouping = groupBy(a.concat(b), encodeKey)
   for (const key in grouping) {
     const allEntries = grouping[key] ?? []
-    const highestDelay = allEntries.reduce(
-      (a, b) => Math.max(a, b.delay),
-      -Infinity,
+    const shortestDelay = allEntries.reduce(
+      (a, b) => Math.min(a, b.delay),
+      Infinity,
     )
-    const entries = allEntries.filter((e) => e.delay === highestDelay)
+    const entries = allEntries.filter((e) => e.delay === shortestDelay)
 
     const withDescription = entries.filter((e) => e.description !== undefined)
     if (withDescription.length > 0) {
@@ -150,16 +154,16 @@ export function getTargetsMeta(
   fields: { [address: string]: DiscoveryContractField } = {},
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): AddressToMetaMap | undefined {
-  const result = getMetaFromUpgradeability(self, get$Admins(values))
+  const result: AddressToMetaMap = {}
 
   for (const [fieldName, value] of Object.entries(values)) {
     const field = fields[fieldName]
-    const target = field?.target
+    const target = field?.permissions
     if (target) {
       for (const address of getAddresses(value)) {
         const meta = mergeContractMeta(
           result[address.toString()],
-          targetConfigToMeta(self, field, target, analysis),
+          targetConfigToMeta(self, field, analysis),
         )
         if (meta) {
           result[address.toString()] = meta
@@ -168,42 +172,46 @@ export function getTargetsMeta(
     }
   }
 
-  return isEmptyObject(result) ? undefined : result
-}
+  // NOTE(radomski): Only add an upgrade permission if it hasn't been
+  // configured previously. This is necessary because if a template configures
+  // the upgrade permission with a delay, we shouldn't override it with the
+  // default zero-delay permission. We always search for the smallest delay, so
+  // a zero delay would always take precedence.
+  for (const upgradeabilityAdmin of get$Admins(values)) {
+    const permissions =
+      result[upgradeabilityAdmin.toString()]?.permissions ?? []
 
-export function getMetaFromUpgradeability(
-  self: EthereumAddress,
-  admins: EthereumAddress[],
-): AddressToMetaMap {
-  const result: Record<string, ContractMeta> = {}
-  for (const upgradeabilityAdmin of admins) {
-    if (upgradeabilityAdmin !== undefined) {
-      result[upgradeabilityAdmin.toString()] = {
+    if (!permissions.some((p) => p.type === 'upgrade')) {
+      const meta = mergeContractMeta(result[upgradeabilityAdmin.toString()], {
         displayName: undefined,
         description: undefined,
         severity: undefined,
         types: undefined,
         permissions: [{ type: 'upgrade', target: self, delay: 0 }],
+      })
+
+      if (meta) {
+        result[upgradeabilityAdmin.toString()] = meta
       }
     }
   }
-  return result
+
+  return isEmptyObject(result) ? undefined : result
 }
 
 function targetConfigToMeta(
   self: EthereumAddress,
   field: DiscoveryContractField,
-  target: DiscoveryContractField['target'],
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
-  if (target === undefined) {
+  if (field.permissions === undefined) {
     return undefined
   }
 
   const result: ContractMeta = {
     displayName: undefined,
     description: undefined,
-    permissions: target.permissions?.map((p) =>
+    permissions: field.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
     types: toSet(field.type),

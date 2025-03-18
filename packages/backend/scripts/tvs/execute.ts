@@ -9,12 +9,12 @@ import {
 import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
-import { LocalExecutor } from '../../src/modules/tvs/LocalExecutor'
+import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import type {
+  ProjectTvsConfig,
   Token,
   TokenValue,
   TvsBreakdown,
-  TvsConfig,
 } from '../../src/modules/tvs/types'
 
 const args = {
@@ -42,17 +42,17 @@ const cmd = command({
     const config = {
       projectId: ProjectId(args.project),
       tokens,
-    } as TvsConfig
+    } as ProjectTvsConfig
 
     const tvs = await localExecutor.run(config, [timestamp], false)
 
     const tvsBreakdown = calculateBreakdown(tvs, timestamp, args.project)
 
     logger.info(`TVS: ${tvsBreakdown.tvs}`)
-    logger.info(`Go to ./src/modules/tvs/breakdown.json for more details`)
+    logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
 
     fs.writeFileSync(
-      './src/modules/tvs/breakdown.json',
+      './scripts/tvs/breakdown.json',
       JSON.stringify(tvsBreakdown, null, 2),
     )
 

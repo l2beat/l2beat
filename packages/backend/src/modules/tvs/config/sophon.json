@@ -8,7 +8,6 @@
       "priceId": "beam-2",
       "symbol": "BEAM",
       "name": "Beam",
-      "sinceTimestamp": 1729531437,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -16,7 +15,8 @@
         "type": "totalSupply",
         "address": "0x7A94dFb534ec790277Ad332EFB9B11687A130880",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -25,14 +25,14 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
-      "sinceTimestamp": 1729531437,
       "category": "ether",
       "source": "canonical",
       "amount": {
         "type": "totalSupply",
         "address": "0x72af9F169B619D85A47Dfa8fefbCD39dE55c567D",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       },
       "isAssociated": false
     },
@@ -42,7 +42,6 @@
       "priceId": "open-ticketing-ecosystem",
       "symbol": "OPN",
       "name": "Open Ecosystem Token",
-      "sinceTimestamp": 1729531437,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -50,7 +49,8 @@
         "type": "totalSupply",
         "address": "0xA96aD8EC6A83F23e0A75E5d8c9cE13C1042c4295",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -59,7 +59,6 @@
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
-      "sinceTimestamp": 1729531437,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -67,7 +66,8 @@
         "type": "totalSupply",
         "address": "0x06432e41131B70708c1C46814c2fcE9e720edd8A",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -76,7 +76,6 @@
       "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
-      "sinceTimestamp": 1729531437,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -84,7 +83,8 @@
         "type": "totalSupply",
         "address": "0xeCcbb9360d235548473Cb8C752735F68e652439B",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -93,7 +93,6 @@
       "priceId": "aethir",
       "symbol": "stAethir",
       "name": "Staked Aethir",
-      "sinceTimestamp": 1729531437,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -101,7 +100,8 @@
         "type": "totalSupply",
         "address": "0x42E5bFdC7032D1F8e4B4D3fea3Eb5dB9C01Ef997",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -110,7 +110,6 @@
       "priceId": "staked-avail",
       "symbol": "stAVAIL",
       "name": "Staked Avail",
-      "sinceTimestamp": 1730764800,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -118,7 +117,8 @@
         "type": "totalSupply",
         "address": "0xB2253e3D9A00e1471Ae7A3F77cBe7d81ec542A3e",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1730764800
       }
     },
     {
@@ -127,7 +127,6 @@
       "priceId": "azuro-protocol",
       "symbol": "stAZUR",
       "name": "Staked $AZUR",
-      "sinceTimestamp": 1729531437,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -135,7 +134,8 @@
         "type": "totalSupply",
         "address": "0x841bE23f3872309f50E0c955c8Cb4b660f733811",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -150,9 +150,9 @@
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
         "escrowAddress": "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1734114251
       },
-      "sinceTimestamp": 1734114251,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -163,7 +163,6 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
-      "sinceTimestamp": 1729531437,
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -171,7 +170,8 @@
         "type": "totalSupply",
         "address": "0x6386dA73545ae4E2B2E0393688fA8B65Bb9a7169",
         "chain": "sophon",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -180,7 +180,6 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
-      "sinceTimestamp": 1729531437,
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -188,7 +187,8 @@
         "type": "totalSupply",
         "address": "0xF1f9E08a0818594FDe4713AE0Db1E46672Ca960E",
         "chain": "sophon",
-        "decimals": 8
+        "decimals": 8,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -197,7 +197,6 @@
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
-      "sinceTimestamp": 1729531437,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -205,7 +204,8 @@
         "type": "totalSupply",
         "address": "0x5E9Fc50b44988B66BA84500f8Bc32C0493fe8F8D",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     },
     {
@@ -214,7 +214,6 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
-      "sinceTimestamp": 1729531437,
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -222,7 +221,8 @@
         "type": "totalSupply",
         "address": "0x60D02F185F80644e1A5ae35497736dd31d1b078B",
         "chain": "sophon",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1729531437
       }
     }
   ]

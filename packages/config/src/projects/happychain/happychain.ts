@@ -3,7 +3,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
 export const happychain: ScalingProject = upcomingL2({
-  id: 'happy-chain',
+  id: 'happychain',
   capability: 'universal',
   addedAt: UnixTime(1727519160), // 2024-09-27T17:09:00Z
   display: {

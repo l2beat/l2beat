@@ -12,7 +12,7 @@ import { get7dTvsBreakdown } from './utils/get-7d-tvs-breakdown'
 export async function getScalingTvsEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTvsBreakdown(),
+    get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'tvlInfo', 'display'],
       where: ['isScaling'],
@@ -50,7 +50,6 @@ function getScalingTvsEntry(
 ): ScalingTvsEntry | undefined {
   return {
     ...getCommonScalingEntry({ project, changes }),
-    href: `/scaling/projects/${project.slug}/tvs-breakdown`,
     tvs: {
       data,
       associatedTokens: project.tvlInfo.associatedTokens,

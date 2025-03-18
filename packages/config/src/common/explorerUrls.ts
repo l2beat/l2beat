@@ -28,4 +28,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   blast: 'https://blastscan.io',
   unichain: 'https://uniscan.xyz',
   ink: 'https://explorer.inkonchain.com',
+  everclear: 'https://scan.everclear.org',
 }

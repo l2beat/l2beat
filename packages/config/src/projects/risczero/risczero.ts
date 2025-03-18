@@ -8,7 +8,7 @@ import { PROOFS } from '../../common'
 import type { BaseProject } from '../../types'
 
 export const risczero: BaseProject = {
-  id: ProjectId('riskzero'),
+  id: ProjectId('risczero'),
   slug: 'risczero',
   name: 'RISC Zero',
   shortName: undefined,

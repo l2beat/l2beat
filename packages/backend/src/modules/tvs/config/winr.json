@@ -14,18 +14,19 @@
         "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
         "chain": "arbitrum",
         "escrowAddress": "0x023d27390aEd70aA39823A1e1e06a0b075400214",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1724262320
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1724262320
         },
         "priceId": "arbitrum"
       },
-      "sinceTimestamp": 1724262320,
       "category": "other",
       "source": "external",
       "isAssociated": false
@@ -42,18 +43,19 @@
         "address": "native",
         "chain": "arbitrum",
         "escrowAddress": "0x0aE2F220cE9698b1c9853f7288aC882150291dca",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1722608704
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1722608704
         },
         "priceId": "ethereum"
       },
-      "sinceTimestamp": 1722608704,
       "category": "ether",
       "source": "external",
       "isAssociated": false
@@ -70,18 +72,19 @@
         "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
         "chain": "arbitrum",
         "escrowAddress": "0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1722608545
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1722608545
         },
         "priceId": "usd-coin"
       },
-      "sinceTimestamp": 1722608545,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -98,18 +101,19 @@
         "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "chain": "arbitrum",
         "escrowAddress": "0x6aDFbA9e45b5c1685007Fe48A784e971e412f839",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1722608646
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1722608646
         },
         "priceId": "usd-coin"
       },
-      "sinceTimestamp": 1722608646,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -126,18 +130,19 @@
         "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
         "chain": "arbitrum",
         "escrowAddress": "0x3222f0F281F1630C50f86fFaA29A29A06559eca8",
-        "decimals": 6
+        "decimals": 6,
+        "sinceTimestamp": 1722608690
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1722608690
         },
         "priceId": "tether"
       },
-      "sinceTimestamp": 1722608690,
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
@@ -154,18 +159,19 @@
         "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "chain": "arbitrum",
         "escrowAddress": "0x8b961A67f49bc6334CBA09dbd70a2F14Fc8226a1",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1722608661
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1722608661
         },
         "priceId": "weth"
       },
-      "sinceTimestamp": 1722608661,
       "category": "ether",
       "source": "external",
       "isAssociated": false
@@ -181,18 +187,19 @@
         "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
         "chain": "arbitrum",
         "escrowAddress": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
-        "decimals": 18
+        "decimals": 18,
+        "sinceTimestamp": 1715799374
       },
       "valueForTotal": {
         "type": "value",
         "amount": {
           "type": "const",
           "value": "0",
-          "decimals": 0
+          "decimals": 0,
+          "sinceTimestamp": 1715799374
         },
         "priceId": "winr-protocol"
       },
-      "sinceTimestamp": 1715799374,
       "category": "other",
       "source": "canonical",
       "isAssociated": true

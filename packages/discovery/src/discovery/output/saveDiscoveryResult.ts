@@ -6,6 +6,7 @@ import { rimraf } from 'rimraf'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { buildAndSaveModels } from '../modelling/build'
 import { buildProjectPageFacts } from '../modelling/projectPageFacts'
 import { removeSharedNesting } from '../source/removeSharedNesting'
@@ -15,7 +16,7 @@ import { toPrettyJson } from './toPrettyJson'
 import type { DiscoveryOutput } from './types'
 
 export interface SaveDiscoveryResultOptions {
-  rootFolder: string
+  paths: DiscoveryPaths
   sourcesFolder?: string
   flatSourcesFolder?: string
   discoveryFilename?: string
@@ -34,8 +35,7 @@ export async function saveDiscoveryResult(
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const projectDiscoveryFolder = posix.join(
-    options.rootFolder,
-    'discovery',
+    options.paths.discovery,
     config.name,
     config.chain,
   )
@@ -55,7 +55,7 @@ export async function saveDiscoveryResult(
     )
   }
   if (options.buildProjectPageFacts) {
-    await buildProjectPageFacts(config.name, options.rootFolder)
+    await buildProjectPageFacts(config.name, options.paths)
   }
 }
 

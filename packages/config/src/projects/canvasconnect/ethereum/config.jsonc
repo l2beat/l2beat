@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "canvasconnect",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"],
+  "sharedModules": ["shared-sharp-verifier"]
+}

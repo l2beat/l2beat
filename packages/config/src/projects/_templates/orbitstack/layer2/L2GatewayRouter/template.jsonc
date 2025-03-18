@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2GatewayRouter",
+  "category": "bridge-canonical",
+  "description": "Router managing token <–> gateway mapping on L2.",
+  "ignoreRelatives": ["counterpartGateway"]
+}

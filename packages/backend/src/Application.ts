@@ -13,6 +13,7 @@ import { createFlatSourcesModule } from './modules/flat-sources/createFlatSource
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvlModule } from './modules/tvl/modules/TvlModule'
+import { initTvsModule } from './modules/tvs/TvsModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
@@ -71,6 +72,7 @@ export class Application {
         trackedTxsModule?.indexer,
       ),
       initTvlModule(config, logger, database, providers, clock),
+      initTvsModule(config, logger, database, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createDaBeatModule(config, logger, peripherals, providers, clock),
     ]

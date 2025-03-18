@@ -33,7 +33,9 @@
         "mantapacific",
         "mantle",
         "blast",
-        "zksync2"
+        "zksync2",
+        "kinto",
+        "everclear"
       ]
     },
     "initialAddresses": {

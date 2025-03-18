@@ -11,7 +11,10 @@ import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-val
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
 export const scalingArchivedColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.display({
     header: 'Risks',
     cell: (ctx) => {
@@ -22,6 +25,7 @@ export const scalingArchivedColumns = [
 
       return (
         <PizzaRosetteCell
+          href={`/scaling/projects/${ctx.row.original.slug}#risk-analysis`}
           values={risks}
           isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
         />
@@ -59,6 +63,7 @@ export const scalingArchivedColumns = [
         </span>
       )
     },
+    sortUndefined: 'last',
     sortingFn: ({ original: a }, { original: b }) => {
       const aTvs = a.totalTvs ?? 0
       const bTvs = b.totalTvs ?? 0

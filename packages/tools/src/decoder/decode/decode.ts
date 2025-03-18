@@ -11,13 +11,8 @@ export function decode(data: `0x${string}`, abi: string[]): DecodedResult {
         return decodeFunction(data, abiItem)
       } else if (abiItem === 'plugin:multisend') {
         return decodeMultisend(data)
-      } else if (abiItem.startsWith('(')) {
-        return decodeParameters(data, abiItem)
       } else {
-        return {
-          type: 'error',
-          error: 'Cannot decode data. See console for details.',
-        }
+        return decodeParameters(data, abiItem)
       }
     } catch (e) {
       console.error(`Error while decoding: ${abiItem}`, e)

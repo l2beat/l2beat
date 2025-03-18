@@ -1,5 +1,0 @@
-{
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "OneStepProver0",
-  "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine."
-}

@@ -6,6 +6,7 @@ import { getScalingCommonProjectColumns } from '~/components/table/utils/common-
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
+import { TableLink } from '../../../../../../components/table/table-link'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
 import type { CostsMetric } from '../costs-metric-context'
@@ -38,7 +39,10 @@ const columnHelper = createColumnHelper<ScalingCostsTableEntry>()
 
 export function getScalingCostsColumns(metric: CostsMetric) {
   return [
-    ...getScalingCommonProjectColumns(columnHelper),
+    ...getScalingCommonProjectColumns(
+      columnHelper,
+      (row) => `/scaling/projects/${row.slug}#onchain-costs`,
+    ),
     columnHelper.group({
       id: 'total-cost-group',
       header: undefined,
@@ -61,7 +65,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
           ),
           sortUndefined: 'last',
           meta: {
-            hash: 'onchain-costs',
             align: 'center',
             tooltip: `The ${metric === 'total' ? 'total cost' : 'average cost per L2 user operation'} that is a sum of the costs for calldata, computation, blobs, and overhead.`,
           },
@@ -85,12 +88,10 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-sky-550',
-          'dark:before:bg-sky-500',
+          'before:bg-chart-stacked-blue',
         ),
         tooltip:
           'The cost for posting data as calldata on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -110,12 +111,10 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-orange-400',
-          'dark:before:bg-yellow-100',
+          'before:bg-chart-stacked-yellow',
         ),
         tooltip:
           'The cost for posting data as blobs on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -138,11 +137,10 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-pink-100',
+          'before:bg-chart-stacked-pink',
         ),
         tooltip:
           'The cost for carrying out different operations within a transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -165,11 +163,10 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       ),
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         headClassName: getColumnHeaderUnderline(
           'w-[132px]',
-          'before:bg-purple-100',
+          'before:bg-chart-stacked-purple',
         ),
         tooltip:
           'The cost of the fixed 21,000 GAS overhead per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
@@ -183,7 +180,13 @@ export function getScalingCostsColumns(metric: CostsMetric) {
         if (data.type === 'available') {
           const value = data.uopsCount
           if (value === undefined) return <NoDataBadge />
-          return formatNumber(value)
+          return (
+            <TableLink
+              href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            >
+              {formatNumber(value)}
+            </TableLink>
+          )
         }
 
         switch (data.reason) {
@@ -197,7 +200,6 @@ export function getScalingCostsColumns(metric: CostsMetric) {
       },
       sortUndefined: 'last',
       meta: {
-        hash: 'onchain-costs',
         align: 'right',
         tooltip: 'Total number of L2 User ops over the selected time period.',
       },

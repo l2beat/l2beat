@@ -22,7 +22,7 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('taiko')
 
 const upgradesTaikoMultisig = {
-  upgradableBy: [{ name: 'TaikoAdmin', delay: 'no' }],
+  upgradableBy: [{ name: 'Taiko Multisig', delay: 'no' }],
 }
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
@@ -140,14 +140,14 @@ export const taiko: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    name: 'Taiko',
+    name: 'Taiko Alethia',
     slug: 'taiko',
     stack: 'Taiko',
     // headerWarning: hasThreeTiers
     //   ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
     //   : undefined,
     description:
-      'Taiko is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
+      'Taiko Alethia is an Ethereum-equivalent Optimistic Rollup on the Ethereum network. In the future it aims to add zkVerifier making it a hybrid, optimistic-zk construction. Taiko combines based sequencing and a contestation mechanism with multi-proofs.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -309,7 +309,7 @@ export const taiko: ScalingProject = {
     },
     sequencerFailure: {
       description:
-        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The TaikoAdmin multisig can pause block proposals without delay.',
+        'The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The Taiko multisig can pause block proposals without delay.',
       sentiment: 'good',
       value: 'Self sequence', // based rollup sequencing
     },
@@ -404,7 +404,7 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
       name: `Users can force any transaction`,
       description: `The system is designed to allow users to propose L2 blocks directly on L1.
         Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
-        The TaikoAdmin multisig can pause block proposals without delay.`,
+        The Taiko multisig can pause block proposals without delay.`,
       references: [],
       risks: [],
     },
@@ -494,13 +494,13 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
     [discovery.chain]: {
       actors: [
         discovery.getMultisigPermission(
-          'TaikoAdmin',
+          'Taiko Multisig',
           'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
         ),
         discovery.getPermissionDetails(
           'GuardianProvers',
           discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
-          `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
+          `Guardians can prove blocks on the highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
         ),
         discovery.getPermissionDetails(
           'GuardianMinorityProver',
@@ -508,7 +508,7 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
             'GuardianMinorityProver',
             'guardians',
           ),
-          `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
+          `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the Taiko multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
         ),
         discovery.getPermissionDetails(
           'ChainWatchdog',

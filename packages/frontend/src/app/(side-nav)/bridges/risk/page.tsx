@@ -1,5 +1,5 @@
 import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'

@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 import { chains } from '../processing/chains'
@@ -5,8 +6,8 @@ import type { GeneratedToken } from './types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
 
-const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
-const OUTPUT_FILE_PATH = './src/tokens/generated.json'
+const SOURCE_FILE_PATH = join(__dirname, 'tokens.jsonc')
+const OUTPUT_FILE_PATH = join(__dirname, 'generated.json')
 
 describe('tokens script', () => {
   const logger = ScriptLogger.SILENT

@@ -23,13 +23,13 @@ export const cheese: ScalingProject = underReviewL3({
     description: 'CheeseChain is an Orbit stack Optimium using $CHEESE.',
     purposes: ['Universal'],
     links: {
-      websites: ['https://docs.cheesechain.lol/'],
+      websites: ['https://docs.cheesechain.xyz/'],
       apps: [
         'https://cheesechain.bridge.caldera.xyz/',
-        'https://bridge.cheesechain.lol/',
+        'https://bridge.cheesechain.xyz/',
       ],
-      documentation: ['https://docs.cheesechain.lol/'],
-      explorers: ['https://fetascan.io/'],
+      documentation: ['https://docs.cheesechain.xyz/'],
+      explorers: ['https://fetascan.xyz/'],
       socialMedia: [
         'https://x.com/layerofcheese',
         'https://t.me/cheesegateway',

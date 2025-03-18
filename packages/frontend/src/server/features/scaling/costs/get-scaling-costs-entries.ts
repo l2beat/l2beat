@@ -53,7 +53,6 @@ function getScalingCostEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes }),
-    href: `/scaling/projects/${project.slug}#onchain-costs`,
     costsWarning: project.costsInfo.warning,
     costOrder: costPerUop,
   }

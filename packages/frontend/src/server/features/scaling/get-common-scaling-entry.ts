@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import type { ActivityChartType } from '~/components/chart/activity/activity-chart'
 import type { FilterableEntry } from '~/components/table/filters/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
@@ -8,7 +7,7 @@ import type { CommonProjectEntry } from '../utils/get-common-project-entry'
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
-  tab: ActivityChartType
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
 }
@@ -34,15 +33,13 @@ export function getCommonScalingEntry({
         ? undefined
         : `L3 on ${project.scalingInfo.hostChain.shortName ?? project.scalingInfo.hostChain.name}`,
     shortName: project.shortName,
-    href: `/scaling/projects/${project.slug}`,
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
       redWarning: project.statuses.redWarning,
       verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
         isUnderReview: project.statuses.isUnderReview,
-        highSeverityFieldChanged: !!changes?.highSeverityFieldChanged,
-        implementationChanged: !!changes?.implementationChanged,
+        impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
       countdowns: {
@@ -50,10 +47,10 @@ export function getCommonScalingEntry({
       },
     },
     tab: project.scalingInfo.isOther
-      ? 'Others'
+      ? 'others'
       : isRollup
-        ? 'Rollups'
-        : 'ValidiumsAndOptimiums',
+        ? 'rollups'
+        : 'validiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },

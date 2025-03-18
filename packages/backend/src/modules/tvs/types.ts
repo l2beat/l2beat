@@ -27,34 +27,40 @@ export type AmountFormula =
 
 export interface BalanceOfEscrowAmountFormula {
   type: 'balanceOfEscrow'
-  // token contract address
-  address: EthereumAddress | 'native'
-  // token chain
   chain: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // token contract to query balanceOf
+  address: EthereumAddress | 'native'
+  decimals: number
   // escrow contract address
   escrowAddress: EthereumAddress
-  // decimals
-  decimals: number
 }
 
 export interface TotalSupplyAmountFormula {
   type: 'totalSupply'
-  // token contract address
-  address: EthereumAddress
-  // token chain
   chain: string
-  // decimals
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // token contract address to query totalSupply
+  address: EthereumAddress
   decimals: number
 }
 
 export interface CirculatingSupplyAmountFormula {
   type: 'circulatingSupply'
-  priceId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // token id in coingecko API
+  apiId: string
   decimals: number
 }
 
 export interface ConstAmountFormula {
   type: 'const'
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // hardcoded value represented as bigint
   value: string
   decimals: number
 }
@@ -72,10 +78,13 @@ export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
 export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
   AmountConfigBase
 
+export type ConstAmountConfig = ConstAmountFormula & AmountConfigBase
+
 export type AmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
   | CirculatingSupplyAmountConfig
+  | ConstAmountConfig
 
 // token deployed to single chain
 export interface Token {
@@ -92,8 +101,6 @@ export interface Token {
   valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
   valueForTotal?: CalculationFormula | ValueFormula
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
   category: 'ether' | 'stablecoin' | 'other'
   source: 'canonical' | 'external' | 'native'
   isAssociated: boolean
@@ -119,13 +126,23 @@ interface CoinMarketCapPriceSource {
   coinMarketCapId: string
 }
 
-export type TvsConfig = {
+export type ProjectTvsConfig = {
   projectId: ProjectId
   tokens: Token[]
 }
 
 export type PriceConfig = {
+  id: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   priceId: string
+}
+
+export interface BlockTimestampConfig {
+  chainName: string
+  configurationId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface TokenValue {

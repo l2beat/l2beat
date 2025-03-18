@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { PercentChange } from '~/components/percent-change'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { ChevronIcon } from '~/icons/chevron'
 import { InfoIcon } from '~/icons/info'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
@@ -126,19 +126,19 @@ function SummaryThroughputBox({
     {
       label: 'Ethereum',
       value: latest.ethereum,
-      className: 'bg-[hsl(var(--chart-ethereum))]',
+      className: 'bg-chart-ethereum',
       percentage: round((latest.ethereum / total) * 100, 2),
     },
     {
       label: 'Celestia',
       value: latest.celestia,
-      className: 'bg-[hsl(var(--chart-da-celestia))]',
+      className: 'bg-chart-da-celestia',
       percentage: round((latest.celestia / total) * 100, 2),
     },
     {
       label: 'Avail',
       value: latest.avail,
-      className: 'bg-[hsl(var(--chart-emerald))]',
+      className: 'bg-chart-emerald',
       percentage: round((latest.avail / total) * 100, 2),
     },
   ]
@@ -233,7 +233,7 @@ function ValueWithChange({
         <InfoTooltip text={tooltip} />
       </div>
       <div className="flex items-end gap-0.5 md:gap-1.5">
-        <span className="text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
+        <span className="whitespace-pre text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
           {value}
         </span>
         <PercentChange

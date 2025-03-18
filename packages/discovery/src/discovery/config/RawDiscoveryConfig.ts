@@ -24,6 +24,7 @@ export const RolePermissionEntries = [
   'relay',
   'aggregatePolygon',
   'operateStarknet',
+  'operateStarkEx',
   'governStarknet',
 ] as const
 
@@ -63,16 +64,15 @@ export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
+  // NOTE(radomski): Structural configuration
   handler: z.optional(UserHandlerDefinition),
+  template: z.string().optional(),
+
+  // NOTE(radomski): Color configuration
   description: z.string().optional(),
-  severity: z.optional(ContractFieldSeverity),
   returnType: z.string().optional(),
-  target: z
-    .object({
-      template: z.string().optional(),
-      permissions: z.array(RawPermissionConfiguration).optional(),
-    })
-    .optional(),
+  severity: z.optional(ContractFieldSeverity),
+  permissions: z.array(RawPermissionConfiguration).optional(),
   type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),
 })
 
@@ -118,6 +118,7 @@ export const ManualProxyType = z.enum([
 
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
+  // NOTE(radomski): Structural configuraiton
   extends: z.optional(z.string()),
   canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
@@ -129,31 +130,43 @@ export const DiscoveryContract = z.object({
   fields: z
     .record(z.string().regex(/^\$?[a-z_][a-z\d_]*$/i), DiscoveryContractField)
     .default({}),
-  description: z.optional(z.string()),
   // TODO: in fields?
   methods: z.record(z.string(), z.string()).default({}),
-  types: z.record(z.string(), DiscoveryCustomType).default({}),
-  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   manualSourcePaths: z.record(z.string()).default({}),
-  references: z.optional(z.array(ExternalReference)),
+
+  // NOTE(radomski): Color configuration
+  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   category: z.optional(z.string()),
+  description: z.optional(z.string()),
+  references: z.optional(z.array(ExternalReference)),
+  types: z.record(z.string(), DiscoveryCustomType).default({}),
 })
 
 export type CommonDiscoveryConfig = z.infer<typeof CommonDiscoveryConfig>
 export const CommonDiscoveryConfig = z.object({
-  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
+  // NOTE(radomski): Structural configuraiton
+  import: z.optional(z.array(z.string())),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number()),
-  overrides: z.optional(z.record(z.string(), DiscoveryContract)),
+  overrides: z.optional(
+    z.record(
+      z.string().refine((key) => EthereumAddress.check(key), {
+        message: 'Invalid Ethereum address',
+      }),
+      DiscoveryContract,
+    ),
+  ),
+  sharedModules: z.optional(z.array(z.string())),
+
+  // NOTE(radomski): Color configuration
+  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   types: z.optional(z.record(z.string(), DiscoveryCustomType)),
-  import: z.optional(z.array(z.string())),
   names: z.optional(
     z.record(
       stringAs(EthereumAddress).transform((a) => a.toString()),
       z.string(),
     ),
   ),
-  sharedModules: z.optional(z.array(z.string())),
 })
 
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>

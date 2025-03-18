@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "arbitrum",
+  "name": "molten",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0x235000876bd58336C802B3546Fc0250f285fCc79", // Inbox
+    "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80" // L1OrbitERC20Gateway
+  ]
+}

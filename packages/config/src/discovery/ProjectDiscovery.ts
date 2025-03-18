@@ -1,10 +1,13 @@
-import { join } from 'path'
-import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import type {
   ContractValue,
   DiscoveryOutput,
   EntryParameters,
   ResolvedPermissionPath,
+} from '@l2beat/discovery'
+import {
+  ConfigReader,
+  RolePermissionEntries,
+  getDiscoveryPaths,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -39,16 +42,17 @@ import {
   trimTrailingDots,
 } from './utils'
 
+const paths = getDiscoveryPaths()
+
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
+
   constructor(
     public readonly projectName: string,
     public readonly chain: string = 'ethereum',
-    public readonly configReader = new ConfigReader(
-      join(process.cwd(), '../config'),
-    ),
+    public readonly configReader = new ConfigReader(paths.discovery),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
     this.discoveries = [
@@ -499,7 +503,7 @@ export class ProjectDiscovery {
       contractIdentifier,
       '$members',
     ).length
-    return `${threshold} / ${size}`
+    return `${threshold}/${size}`
   }
 
   getConstructorArg<T extends ContractValue>(
