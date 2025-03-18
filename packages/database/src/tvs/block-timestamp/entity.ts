@@ -10,23 +10,19 @@ export interface TvsBlockTimestampRecord {
 }
 
 export function toRecord(
-  entity: Selectable<TvsBlockTimestamp>,
+  row: Selectable<TvsBlockTimestamp>,
 ): TvsBlockTimestampRecord {
   return {
-    timestamp: UnixTime.fromDate(entity.timestamp),
-    configurationId: entity.configurationId,
-    chain: entity.chain,
-    blockNumber: entity.blockNumber,
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
 
 export function toRow(
-  blockTimestamp: TvsBlockTimestampRecord,
+  record: TvsBlockTimestampRecord,
 ): Insertable<TvsBlockTimestamp> {
   return {
-    timestamp: UnixTime.toDate(blockTimestamp.timestamp),
-    configurationId: blockTimestamp.configurationId,
-    chain: blockTimestamp.chain,
-    blockNumber: blockTimestamp.blockNumber,
+    ...record,
+    timestamp: UnixTime.toDate(record.timestamp),
   }
 }

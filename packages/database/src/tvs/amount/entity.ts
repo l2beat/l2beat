@@ -9,20 +9,18 @@ export interface TvsAmountRecord {
   amount: bigint
 }
 
-export function toRecord(entity: Selectable<TvsAmount>): TvsAmountRecord {
+export function toRecord(row: Selectable<TvsAmount>): TvsAmountRecord {
   return {
-    timestamp: UnixTime.fromDate(entity.timestamp),
-    configurationId: entity.configurationId,
-    project: entity.project,
-    amount: BigInt(entity.amount),
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    amount: BigInt(row.amount),
   }
 }
 
-export function toRow(amount: TvsAmountRecord): Insertable<TvsAmount> {
+export function toRow(record: TvsAmountRecord): Insertable<TvsAmount> {
   return {
-    timestamp: UnixTime.toDate(amount.timestamp),
-    configurationId: amount.configurationId,
-    project: amount.project,
-    amount: amount.amount.toString(),
+    ...record,
+    timestamp: UnixTime.toDate(record.timestamp),
+    amount: record.amount.toString(),
   }
 }

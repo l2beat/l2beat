@@ -11,18 +11,14 @@ export interface TvsPriceRecord {
 
 export function toRecord(row: Selectable<TvsPrice>): TvsPriceRecord {
   return {
+    ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
-    configurationId: row.configurationId,
-    priceId: row.priceId,
-    priceUsd: row.priceUsd,
   }
 }
 
 export function toRow(record: TvsPriceRecord): Insertable<TvsPrice> {
   return {
+    ...record,
     timestamp: UnixTime.toDate(record.timestamp),
-    configurationId: record.configurationId,
-    priceId: record.priceId,
-    priceUsd: record.priceUsd,
   }
 }

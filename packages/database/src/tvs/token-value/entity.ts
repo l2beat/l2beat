@@ -14,24 +14,14 @@ export interface TokenValueRecord {
 
 export function toRecord(row: Selectable<TokenValue>): TokenValueRecord {
   return {
+    ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
-    configurationId: row.configurationId,
-    project: row.project,
-    amount: row.amount,
-    value: row.value,
-    valueForProject: row.valueForProject,
-    valueForSummary: row.valueForSummary,
   }
 }
 
 export function toRow(record: TokenValueRecord): Insertable<TokenValue> {
   return {
+    ...record,
     timestamp: UnixTime.toDate(record.timestamp),
-    configurationId: record.configurationId,
-    project: record.project,
-    amount: record.amount,
-    value: record.value,
-    valueForProject: record.valueForProject,
-    valueForSummary: record.valueForSummary,
   }
 }
