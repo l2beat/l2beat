@@ -1,4 +1,4 @@
-import type { filterIdToLabel } from './utils/filter-id-to-label'
+import type { filterIdToLabel } from './utils/labels'
 
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined

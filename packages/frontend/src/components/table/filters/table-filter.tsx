@@ -15,7 +15,7 @@ import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
 import { TableFilterValueMenu } from './table-filter-value-menu'
 import type { FilterState } from './use-filter-state'
-import { filterIdToLabel, filterIdToValues } from './utils/filter-id-to-label'
+import { filterIdToLabel, filterIdToValues } from './utils/labels'
 
 interface Props {
   filter: FilterState[number]

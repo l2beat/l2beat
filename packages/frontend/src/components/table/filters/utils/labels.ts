@@ -1,3 +1,5 @@
+import type { FilterableValueId } from '../types'
+
 export const filterIdToLabel = {
   type: 'Type',
   stack: 'Stack',
@@ -18,4 +20,16 @@ export const filterIdToValues: Record<keyof typeof filterIdToLabel, string> = {
   daLayer: 'layers',
   raas: 'providers',
   validatedBy: 'validators',
+}
+
+export const emtpyStateLabel = (filterId: FilterableValueId | undefined) => {
+  return filterId
+    ? `No ${filterIdToValues[filterId].toLowerCase()} found.`
+    : 'No filters found.'
+}
+
+export const inputPlaceholder = (filterId: FilterableValueId | undefined) => {
+  return filterId
+    ? `Search ${filterIdToValues[filterId].toLowerCase()}...`
+    : 'Search filters...'
 }

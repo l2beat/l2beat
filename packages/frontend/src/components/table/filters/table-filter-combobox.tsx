@@ -2,7 +2,15 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
-import { CommandDialog } from '~/components/core/command'
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '~/components/core/command'
 import {
   Popover,
   PopoverContent,
@@ -14,9 +22,13 @@ import { useEventListener } from '~/hooks/use-event-listener'
 import { FilterIcon } from '~/icons/filter'
 import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
-import { TableFilterIdMenu } from './table-filter-id-menu'
-import { TableFilterValueMenu } from './table-filter-value-menu'
+import { TableFilterValueMenuItems } from './table-filter-value-menu'
 import type { FilterableEntry, FilterableValueId } from './types'
+import {
+  emtpyStateLabel,
+  filterIdToLabel,
+  inputPlaceholder,
+} from './utils/labels'
 
 export function TableFilterCombobox({
   entries,
@@ -117,26 +129,36 @@ function Content({
     .filter(notUndefined)
     .map((f) => f.id)
 
-  if (!selectedId) {
-    return (
-      <TableFilterIdMenu
-        ids={uniqFilterablesIds}
-        onSelect={(id) => setSelectedId(id)}
-      />
-    )
-  }
-
-  const values = uniq(
-    entries.flatMap(
-      (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
-    ),
-  ).filter(notUndefined)
-
   return (
-    <TableFilterValueMenu
-      filterId={selectedId}
-      values={values}
-      onSelect={onValueSelect}
-    />
+    <Command className="border border-divider">
+      <CommandInput placeholder={inputPlaceholder(selectedId)} />
+      <CommandList>
+        <CommandEmpty>{emtpyStateLabel(selectedId)}</CommandEmpty>
+        {selectedId ? (
+          <TableFilterValueMenuItems
+            filterId={selectedId}
+            values={uniq(
+              entries.map(
+                (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
+              ),
+            ).filter(notUndefined)}
+            onSelect={onValueSelect}
+          />
+        ) : (
+          <CommandGroup>
+            {uniqFilterablesIds.map((id) => (
+              <CommandItem
+                className="font-medium"
+                key={id}
+                value={id}
+                onSelect={() => setSelectedId(id)}
+              >
+                {filterIdToLabel[id]}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+      </CommandList>
+    </Command>
   )
 }
