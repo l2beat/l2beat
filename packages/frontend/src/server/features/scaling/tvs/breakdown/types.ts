@@ -31,6 +31,7 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
 
 export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
   bridgedUsing: TokenBridgedUsing
+  isLockedInEscrow?: boolean
 }
 
 export type NativeAssetBreakdownData = BaseAssetBreakdownData
