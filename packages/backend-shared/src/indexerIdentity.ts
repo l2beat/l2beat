@@ -49,6 +49,7 @@ export const INDEXER_NAMES = {
   TVS_BLOCK_TIMESTAMP: 'tvs_block_timestamp_indexer',
   TVS_CHAIN_AMOUNT: 'tvs_chain_amount_indexer',
   TVS_PRICE: 'tvs_price_indexer',
+  TVS_CIRCULATING_SUPPLY: 'tvs_circulating_supply_indexer',
 }
 
 export function getPremintedIndexerId(

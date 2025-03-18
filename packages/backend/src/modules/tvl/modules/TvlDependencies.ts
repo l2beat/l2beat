@@ -1,7 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
-import type { CirculatingSupplyProviders } from '../../../providers/CirculatingSupplyProviders'
 import type { Clients } from '../../../providers/Clients'
 import type { Providers } from '../../../providers/Providers'
 import type { Clock } from '../../../tools/Clock'
@@ -20,7 +19,6 @@ export class TvlDependencies {
   readonly valueService: ValueService
   readonly priceProvider: PriceProvider
   readonly priceService: PriceService
-  readonly circulatingSupplyProviders: CirculatingSupplyProviders
   readonly circulatingSupplyService: CirculatingSupplyService
   readonly clients: Clients
 
@@ -40,10 +38,8 @@ export class TvlDependencies {
       database,
       logger,
     })
-    this.circulatingSupplyProviders = providers.getCirculatingSupplyProviders()
     this.circulatingSupplyService = new CirculatingSupplyService({
-      circulatingSupplyProvider:
-        this.circulatingSupplyProviders.getCirculatingSupplyProvider(),
+      circulatingSupplyProvider: providers.circulatingSupply,
       database,
       logger,
     })

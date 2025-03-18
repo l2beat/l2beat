@@ -5,6 +5,7 @@ import {
   BlockProvider,
   BlockTimestampProvider,
   CelestiaDaProvider,
+  CirculatingSupplyProvider,
   CoingeckoQueryService,
   DaProvider,
   EthereumDaProvider,
@@ -15,10 +16,6 @@ import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
 import { BlobProviders } from './BlobProviders'
 import { BlockProviders } from './BlockProviders'
-import {
-  type CirculatingSupplyProviders,
-  initCirculatingSupplyProviders,
-} from './CirculatingSupplyProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
@@ -28,7 +25,7 @@ export class Providers {
   price: PriceProvider
   uops: UopsAnalyzers
   day: DayProviders
-  circulatingSupply: CirculatingSupplyProviders | undefined
+  circulatingSupply: CirculatingSupplyProvider
   blob: BlobProviders | undefined
   da: DaProvider
   clients: Clients
@@ -42,9 +39,12 @@ export class Providers {
   ) {
     this.clients = initClients(config, logger)
     this.block = new BlockProviders(this.clients.block, this.clients.indexer)
-    this.circulatingSupply = config.tvl
-      ? initCirculatingSupplyProviders(this.clients.coingecko)
-      : undefined
+    this.circulatingSupply = new CirculatingSupplyProvider(
+      new CoingeckoQueryService(
+        this.clients.coingecko,
+        logger.tag({ tag: 'circulatingSupplies' }),
+      ),
+    )
     this.price = new PriceProvider(
       new CoingeckoQueryService(
         this.clients.coingecko,
@@ -81,14 +81,6 @@ export class Providers {
   getPriceProviders() {
     assert(this.price, 'Price providers unintended access')
     return this.price
-  }
-
-  getCirculatingSupplyProviders() {
-    assert(
-      this.circulatingSupply,
-      'Circulating Supply providers unintended access',
-    )
-    return this.circulatingSupply
   }
 
   getBlobProviders() {

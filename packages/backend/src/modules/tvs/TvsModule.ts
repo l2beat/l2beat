@@ -9,6 +9,7 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { SyncOptimizer } from '../tvl/utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './indexers/BlockTimestampIndexer'
+import { CirculatingSupplyAmountIndexer } from './indexers/CirculatingSupplyAmountIndexer'
 import {
   type OnchainAmountConfig,
   OnchainAmountIndexer,
@@ -56,6 +57,25 @@ export function initTvsModule(
     })),
     serializeConfiguration: (value: PriceConfig) => JSON.stringify(value),
     priceProvider: providers.price,
+    syncOptimizer,
+    db: database,
+  })
+
+  const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer({
+    logger,
+    parents: [hourlyIndexer],
+    indexerService,
+    configurations: config.tvs.amounts
+      .filter((a) => a.type === 'circulatingSupply')
+      .map((amount) => ({
+        // configurationId has to be 12 characters long so we cannot use the priceId directly
+        id: amount.id,
+        minHeight: amount.sinceTimestamp,
+        maxHeight: amount.untilTimestamp ?? null,
+        properties: amount,
+      })),
+    serializeConfiguration: (value) => JSON.stringify(value),
+    circulatingSupplyProvider: providers.circulatingSupply,
     syncOptimizer,
     db: database,
   })
@@ -111,6 +131,7 @@ export function initTvsModule(
   const start = async () => {
     await hourlyIndexer.start()
     await priceIndexer.start()
+    await circulatingSupplyIndexer.start()
 
     for (const indexer of indexers) {
       await indexer.start()
