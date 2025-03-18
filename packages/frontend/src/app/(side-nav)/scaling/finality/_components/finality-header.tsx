@@ -1,11 +1,10 @@
 import { CustomLink } from '~/components/link/custom-link'
-import { PageDescription } from '~/components/page-description'
+import { MainPageHeader } from '~/components/main-page-header'
 import { externalLinks } from '~/consts/external-links'
 
-export function FinalityDescription() {
+export function FinalityHeader() {
   return (
-    <PageDescription
-      pageTitle="Finality"
+    <MainPageHeader
       description={
         <>
           Finality reflects the time required to achieve ordering finality,
@@ -24,6 +23,8 @@ export function FinalityDescription() {
           .
         </>
       }
-    />
+    >
+      Finality
+    </MainPageHeader>
   )
 }

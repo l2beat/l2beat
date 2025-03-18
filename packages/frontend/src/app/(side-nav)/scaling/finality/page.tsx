@@ -1,8 +1,7 @@
-import { MainPageHeader } from '~/components/main-page-header'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { FinalityDescription } from './_components/finality-description'
+import { FinalityHeader } from './_components/finality-header'
 import { ScalingFinalityTables } from './_components/scaling-finality-tables'
 
 export const metadata = getDefaultMetadata({
@@ -16,8 +15,7 @@ export default async function Page() {
 
   return (
     <>
-      <MainPageHeader withDescription>Finality</MainPageHeader>
-      <FinalityDescription />
+      <FinalityHeader />
       <ScalingFilterContextProvider>
         <ScalingFinalityTables {...entries} />
       </ScalingFilterContextProvider>
