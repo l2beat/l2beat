@@ -76,9 +76,9 @@ export function TotalCell(props: TotalCellProps) {
   const totalTvs = props.breakdown.total
 
   return (
-    <TableLink href={props.href}>
-      <Tooltip>
-        <TooltipTrigger disabledOnMobile>
+    <Tooltip>
+      <TooltipTrigger disabledOnMobile className="size-full">
+        <TableLink href={props.href}>
           <div className="flex flex-col items-end">
             <div className="flex items-center">
               {icon}
@@ -94,19 +94,19 @@ export function TotalCell(props: TotalCellProps) {
               className="h-[3px] w-[180px]"
             />
           </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <TokenBreakdownTooltipContent
-            total={props.breakdown.total}
-            associated={props.breakdown.associated}
-            ether={props.breakdown.ether}
-            stablecoin={props.breakdown.stablecoin}
-            tvsWarnings={tvsWarnings}
-            associatedTokenSymbols={props.associatedTokenSymbols}
-            gasTokens={props.gasTokens}
-          />
-        </TooltipContent>
-      </Tooltip>
-    </TableLink>
+        </TableLink>
+      </TooltipTrigger>
+      <TooltipContent>
+        <TokenBreakdownTooltipContent
+          total={props.breakdown.total}
+          associated={props.breakdown.associated}
+          ether={props.breakdown.ether}
+          stablecoin={props.breakdown.stablecoin}
+          tvsWarnings={tvsWarnings}
+          associatedTokenSymbols={props.associatedTokenSymbols}
+          gasTokens={props.gasTokens}
+        />
+      </TooltipContent>
+    </Tooltip>
   )
 }
