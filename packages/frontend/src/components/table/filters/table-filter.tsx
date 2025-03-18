@@ -36,8 +36,8 @@ export function TableFilter({ filter, possibleValues }: Props) {
         className="flex h-full items-center justify-center rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
         onClick={() => {
           dispatch({
-            type: 'setReversed',
-            payload: { id: filter.id, value: !filter.reversed },
+            type: 'setInversed',
+            payload: { id: filter.id, value: !filter.inversed },
           })
         }}
       >
@@ -97,7 +97,7 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
 }
 
 function operatorLabel(filter: FilterState[number]) {
-  if (filter.reversed) {
+  if (filter.inversed) {
     return 'is not'
   }
 

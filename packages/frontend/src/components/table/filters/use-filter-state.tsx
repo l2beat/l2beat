@@ -1,12 +1,13 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { useReducer } from 'react'
+import { useTracking } from '~/hooks/use-custom-event'
 import type { FilterableValueId } from './types'
 
 type Filter = {
   id: FilterableValueId
   values: string[]
-  reversed: boolean
+  inversed: boolean
 }
 export type FilterState = Filter[]
 
@@ -14,7 +15,7 @@ type FilterAction =
   | AddFilterAction
   | RemoveFilterAction
   | ClearFilterAction
-  | SetReversedFilterAction
+  | SetInversedFilterAction
 
 type AddFilterAction = {
   type: 'add'
@@ -36,8 +37,8 @@ type ClearFilterAction = {
   type: 'clear'
 }
 
-type SetReversedFilterAction = {
-  type: 'setReversed'
+type SetInversedFilterAction = {
+  type: 'setInversed'
   payload: {
     id: FilterableValueId
     value: boolean
@@ -67,7 +68,7 @@ function filterReducer(state: FilterState, action: FilterAction) {
         {
           id: action.payload.id,
           values: [action.payload.value],
-          reversed: false,
+          inversed: false,
         },
       ]
     case 'remove':
@@ -83,10 +84,10 @@ function filterReducer(state: FilterState, action: FilterAction) {
         return updatedState.filter((filter) => filter.values.length > 0)
       }
       return state.filter((filter) => filter.id !== action.payload.id)
-    case 'setReversed':
+    case 'setInversed':
       return state.map((filter) =>
         filter.id === action.payload.id
-          ? { ...filter, reversed: action.payload.value }
+          ? { ...filter, inversed: action.payload.value }
           : filter,
       )
     case 'clear':
@@ -97,6 +98,7 @@ function filterReducer(state: FilterState, action: FilterAction) {
 }
 
 export function useFilterState() {
+  useTracking()
   const [state, dispatch] = useReducer(filterReducer, [])
 
   return {

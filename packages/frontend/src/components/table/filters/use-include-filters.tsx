@@ -18,7 +18,7 @@ export function useIncludeFilters() {
         }
 
         const valueMatches = filter.values.includes(filterableValue.value)
-        return filter.reversed ? !valueMatches : valueMatches
+        return filter.inversed ? !valueMatches : valueMatches
       })
     },
     [state],
