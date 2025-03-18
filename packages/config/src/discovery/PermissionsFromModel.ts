@@ -12,7 +12,10 @@ import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import { BulletListBuilder } from './BulletListBuilder'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import { UltimatePermissionToPrefix } from './descriptions'
+import {
+  DirectPermissionToPrefix,
+  UltimatePermissionToPrefix,
+} from './descriptions'
 import { formatPermissionDelay, trimTrailingDots } from './utils'
 
 type ParsedTransitivePermissionFact = ReturnType<
@@ -116,7 +119,10 @@ export class PermissionsFromModel implements PermissionRegistry {
       .map((data) => EthereumAddress.from(data.address))
   }
 
-  describePermissions(contractOrEoa: EntryParameters): string[] {
+  describePermissions(
+    contractOrEoa: EntryParameters,
+    includeDirectPermissions: boolean = true,
+  ) {
     const id = this.modelIdRegistry.getModelId(
       this.projectDiscovery.chain,
       contractOrEoa.address,
@@ -124,22 +130,40 @@ export class PermissionsFromModel implements PermissionRegistry {
     const permissionFacts = this.knowledgeBase
       .getFacts('filteredTransitivePermission', [id])
       .map(parseTransitivePermissionFact)
-      .filter((fact) => fact.permission !== 'act')
+    // .filter((fact) => fact.permission !== 'act')
 
     const nonInteractDescribed = this.renderNonInteractPermission(
       permissionFacts.filter((fact) => fact.permission !== 'interact'),
+      includeDirectPermissions,
     )
     const interactDescribed = this.renderInteractPermission(
       permissionFacts.filter((fact) => fact.permission === 'interact'),
+      includeDirectPermissions,
     )
-    const result =
-      this.modelIdRegistry.replaceIdsWithNames(nonInteractDescribed).slice(2) +
-      '\n' +
-      this.modelIdRegistry.replaceIdsWithNames(interactDescribed)
+    const result = [
+      this.modelIdRegistry.replaceIdsWithNames(nonInteractDescribed),
+      this.modelIdRegistry.replaceIdsWithNames(interactDescribed),
+    ].join('\n')
     return result.trim() === '' ? [] : [result]
   }
 
-  renderNonInteractPermission(facts: ParsedTransitivePermissionFact[]): string {
+  /**
+   *  Non-interact permissions (like upgrade) are rendered as following:
+   *
+   *  Actor
+   *    * can upgrade
+   *      * with no delay
+   *        * Contract A [via]
+   *        * Contract B [via]
+   *      * with 10d delay
+   *        * Contract C [via]
+   *
+   * ...but with single subpoints merged into parent.
+   */
+  renderNonInteractPermission(
+    facts: ParsedTransitivePermissionFact[],
+    includeDirectPermissions: boolean = true,
+  ): string {
     // sort by permission, then by total delay
     facts.sort((a, b) => {
       if (a.permission !== b.permission) {
@@ -152,14 +176,19 @@ export class PermissionsFromModel implements PermissionRegistry {
     let currentDelay: number | undefined
 
     for (const fact of facts) {
+      if (!includeDirectPermissions && fact.permission === 'act') {
+        continue
+      }
       // Check if we have a new permission type
       if (fact.permission !== currentPermission) {
         currentPermission = fact.permission
         currentDelay = undefined
+        const prefixMap = fact.isFinal
+          ? UltimatePermissionToPrefix
+          : DirectPermissionToPrefix
         result.resetIndent(0)
         result.addItem(
-          UltimatePermissionToPrefix[currentPermission] ??
-            `has ${currentPermission} permission`,
+          prefixMap[currentPermission] ?? `has ${currentPermission} permission`,
         )
         result.indent()
       }
@@ -168,11 +197,11 @@ export class PermissionsFromModel implements PermissionRegistry {
       if (fact.totalDelay !== currentDelay) {
         currentDelay = fact.totalDelay
         result.resetIndent(1)
-        result.addItem(
+        const delayText =
           currentDelay === 0
-            ? 'with no delay'
-            : `**${formatPermissionDelay(currentDelay).trim()}**`,
-        )
+            ? '**with no delay**'
+            : `**${formatPermissionDelay(currentDelay).trim()}**`
+        result.addItem(delayText, `(${delayText})`) // if merging with parent, use brackets
         result.indent()
       }
 
@@ -189,7 +218,21 @@ export class PermissionsFromModel implements PermissionRegistry {
     return result.renderMd({ mergeSingleSubpoints: true })
   }
 
-  renderInteractPermission(facts: ParsedTransitivePermissionFact[]): string {
+  /**
+   *  Interact permissions are rendered as following:
+   *
+   *  Actor
+   *    * can interact with Contract A
+   *      * add transactions with XX delay [via]
+   *      * cancel transactions with XX delay [via]
+   *      * execute transactions with YY delay [via]
+   *
+   * ...but with single subpoints merged into parent.
+   */
+  renderInteractPermission(
+    facts: ParsedTransitivePermissionFact[],
+    includeDirectPermissions: boolean = true,
+  ): string {
     // sort by giver, then totalDelay
     facts.sort((a, b) => {
       if (a.giver !== b.giver) {
@@ -202,10 +245,13 @@ export class PermissionsFromModel implements PermissionRegistry {
 
     for (const fact of facts) {
       // Check if we have a new permission type
+      if (!includeDirectPermissions && fact.permission === 'act') {
+        continue
+      }
       if (fact.giver !== currentGiver) {
         currentGiver = fact.giver
         result.resetIndent(0)
-        result.addItem(`Can interact with @@${fact.giver} and`)
+        result.addItem(`Can interact with @@${fact.giver} to`)
         result.indent()
       }
 
