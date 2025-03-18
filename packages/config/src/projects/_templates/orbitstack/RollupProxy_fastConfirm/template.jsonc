@@ -19,38 +19,32 @@
       }
     },
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        }
+      ]
     },
     "validators": {
-      "target": {
-        "permissions": [
-          {
-            "type": "validate",
-            "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-          }
-        ]
-      },
+      "permissions": [
+        {
+          "type": "validate",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ],
       "handler": {
         "type": "arbitrumActors",
         "actorType": "validator"
       }
     },
     "anyTrustFastConfirmer": {
-      "target": {
-        "permissions": [
-          {
-            "type": "fastconfirm",
-            "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "fastconfirm",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        }
+      ]
     },
     "minimumAssertionPeriod": {
       "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "

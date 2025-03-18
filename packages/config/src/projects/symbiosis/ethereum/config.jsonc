@@ -17,14 +17,17 @@
     "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F": "MetaRouter"
   },
   "overrides": {
-    "Portal": {
+    "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": {
+      // Portal
       "ignoreInWatchMode": ["requestCount"],
       "ignoreRelatives": ["wrapper"]
     },
-    "Multisig": {
+    "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": {
+      // Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "BridgeV2": {
+    "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E": {
+      // BridgeV2
       "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"],
       "ignoreRelatives": ["oldMPC", "newMPC", "mpc"]
     }

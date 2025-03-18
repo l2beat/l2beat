@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x8780b02edf8fe6470ec7311784e02c8a407bb4a9
+Generated with discovered.json: 0xe3b8c868fe6dcf05dbf42c6b6b3491d433bdbb48
+
+# Diff at Tue, 18 Mar 2025 08:12:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22045237
+- current block number: 22045237
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045237 (main branch discovery), not current.
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      name:
+-        "BobMultisig"
++        "Bob Multisig 1"
+    }
+```
+
+Generated with discovered.json: 0xcccbdc6202f7b6a94aeffe532c469972031b64f7
 
 # Diff at Fri, 14 Mar 2025 12:52:53 GMT:
 

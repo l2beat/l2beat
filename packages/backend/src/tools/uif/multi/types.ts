@@ -36,14 +36,14 @@ export interface ConfigurationRange<T> {
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
   name: string
-  tags?: IndexerTags
   indexerService: IndexerService
   configurations: Configuration<T>[]
-  serializeConfiguration: (value: T) => string
-  logger: Logger
-  updateRetryStrategy?: RetryStrategy
-  /** Used for saving data in transaction */
+  serializeConfiguration?: (value: T) => string
   db: Database
+  logger: Logger
+  // Optionals
+  tags?: IndexerTags
+  updateRetryStrategy?: RetryStrategy
   /** Some indexers calculate aggregated sums
       which make configurations trimming non-trivial
       and would require re-fetching the data.

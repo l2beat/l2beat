@@ -22,14 +22,12 @@
       }
     },
     "owner": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        }
+      ]
     },
     "minimumAssertionPeriod": {
       "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "

@@ -10,14 +10,12 @@
   "ignoreRelatives": ["getAllHyperchains", "validatorTimelock"], // ignore validatorTimelock because it needs chain-specific config
   "fields": {
     "admin": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
+        }
+      ]
     }
   },
   "category": "shared"

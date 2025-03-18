@@ -6,14 +6,12 @@
     "$admin": {
       "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).",
       "severity": "HIGH",
-      "target": {
-        "permissions": [
-          {
-            "type": "upgrade",
-            "delay": "{{getUpgradeActivationDelay}}"
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{getUpgradeActivationDelay}}"
+        }
+      ]
     },
     "accessControl": {
       "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active.",
@@ -35,14 +33,12 @@
         },
         "pickRoleMembers": "GOVERNANCE_ADMIN"
       },
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "manage critical access control roles and the role that can upgrade the implementation."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        }
+      ]
     },
     "tokenAdminAC": {
       "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin.",
@@ -53,17 +49,15 @@
         },
         "pickRoleMembers": "TOKEN_ADMIN"
       },
-      "target": {
-        "permissions": [
-          // {
-          //   "type": "act" // only specific manager actions
-          // },
-          {
-            "type": "interact",
-            "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
-          }
-        ]
-      }
+      "permissions": [
+        // {
+        //   "type": "act" // only specific manager actions
+        // },
+        {
+          "type": "interact",
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+        }
+      ]
     }
   }
 }

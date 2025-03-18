@@ -12,8 +12,6 @@
   ],
   "names": {
     "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "LaunchBridge",
-    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BridgeOwner",
-    "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05": "BlastMultisig",
     "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db": "LidoYieldProvider",
     "0x0733F618118bF420b6b604c969498ecf143681a8": "DSRYieldProvider",
     "0x98078db053902644191f93988341E31289E1C8FE": "ETHYieldManager",
@@ -22,10 +20,12 @@
     "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": "WithdrawalQueueERC721"
   },
   "overrides": {
-    "L1BlastBridge": {
+    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115": {
+      // L1BlastBridge
       "description": "Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2."
     },
-    "LidoYieldProvider": {
+    "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db": {
+      // LidoYieldProvider
       "description": "Yield Provider for ETH investing ETH into stETH.",
       "ignoreRelatives": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"],
       "ignoreMethods": [
@@ -41,7 +41,8 @@
         "totalValue"
       ]
     },
-    "DSRYieldProvider": {
+    "0x0733F618118bF420b6b604c969498ecf143681a8": {
+      // DSRYieldProvider
       "description": "Yield Provider for DAI investing DAI into the MakerDAO DSR.",
       "ignoreRelatives": ["DAI", "DSR_MANAGER"],
       "ignoreMethods": [
@@ -54,7 +55,8 @@
       ]
     },
     //TODO: Read ProviderInfo
-    "USDYieldManager": {
+    "0xa230285d5683C74935aD14c446e137c8c8828438": {
+      // USDYieldManager
       "description": "Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).",
       "ignoreRelatives": ["TOKEN", "insurance"],
       "ignoreMethods": [
@@ -77,7 +79,8 @@
       }
     },
     //TODO: Read ProviderInfo
-    "ETHYieldManager": {
+    "0x98078db053902644191f93988341E31289E1C8FE": {
+      // ETHYieldManager
       "description": "Contract managing Yield Providers for ETH.",
       "ignoreRelatives": ["insurance"],
       "ignoreMethods": [
@@ -99,7 +102,8 @@
         }
       }
     },
-    "LaunchBridge": {
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": {
+      // LaunchBridge
       "ignoreMethods": ["proxiableUUID"],
       "ignoreRelatives": [
         "CURVE_3POOL",

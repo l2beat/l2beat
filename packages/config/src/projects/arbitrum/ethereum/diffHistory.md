@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x310ca169fc6e9a1cfac518c7c608ade44269736d
+Generated with discovered.json: 0xa82a7c98f5a846577150800cb5effb38da5e1ad4
 
-# Diff at Sun, 16 Mar 2025 19:57:07 GMT:
+# Diff at Tue, 18 Mar 2025 08:12:26 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@cad2e4bd2c800d482a0c2b861a0e7f2276d2a7c6 block: 22032270
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22032270
 - current block number: 22032270
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: change Multisig names.
 
 ## Config/verification related changes
 
@@ -17,45 +17,24 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22032270 (main branch discovery), not current.
 
 ```diff
-    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
-    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
-      receivedPermissions.0.description:
--        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-    }
-```
-
-```diff
-    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
-    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      directlyReceivedPermissions.3.description:
--        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-    }
-```
-
-```diff
-    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
-      issuedPermissions.1.description:
--        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-      issuedPermissions.0.description:
--        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-    }
-```
-
-```diff
-    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    contract Arbitrum Multisig 1 (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
     +++ description: None
-      receivedPermissions.0.description:
--        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
-+        "pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      name:
+-        "BatchPosterManagerMultisig"
++        "Arbitrum Multisig 1"
     }
 ```
 
-Generated with discovered.json: 0x4e6f4753085b1c670a0bf84577515c07a1defe0c
+```diff
+    contract Arbitrum Security Council (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      name:
+-        "SecurityCouncil"
++        "Arbitrum Security Council"
+    }
+```
+
+Generated with discovered.json: 0x4b94c84e06d078fd492f410f46939a0f5ea3ec0b
 
 # Diff at Wed, 12 Mar 2025 17:26:59 GMT:
 

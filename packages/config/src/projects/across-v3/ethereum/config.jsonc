@@ -37,7 +37,8 @@
     "0x3B03509645713718B78951126E0A6de6f10043f5": "AcrossConfigStore"
   },
   "overrides": {
-    "HubPool": {
+    "0xc186fA914353c44b2E33eBE05f21846F1048bEda": {
+      // HubPool
       "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
       "fields": {
         "CrossChainContracts": {
@@ -49,9 +50,7 @@
           }
         },
         "Adapters": {
-          "target": {
-            "template": "acrossv3/adapter" // this template is used to ignore common relatives (like bridged and tokens) found in adapters
-          },
+          "template": "acrossv3/adapter", // this template is used to ignore common relatives (like bridged and tokens) found in adapters
           "handler": {
             "type": "event",
             "select": "adapter",
@@ -63,7 +62,8 @@
       "ignoreRelatives": ["weth"],
       "ignoreInWatchMode": ["rootBundleProposal"]
     },
-    "BondToken": {
+    "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": {
+      // BondToken
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
         "proposers": {
@@ -82,18 +82,22 @@
         }
       }
     },
-    "ProposerV2": {
+    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": {
+      // ProposerV2
       "ignoreMethods": ["bondedProposals"],
       "ignoreInWatchMode": ["bond", "getCurrentTime"]
     },
-    "GovernorV2": {
+    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": {
+      // GovernorV2
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "ignoreMethods": ["getProposal", "proposals"]
     },
-    "EmergencyProposer": {
+    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
+      // EmergencyProposer
       "ignoreInWatchMode": ["getCurrentTime"]
     },
-    "Ethereum_SpokePool": {
+    "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": {
+      // Ethereum_SpokePool
       "ignoreMethods": ["rootBundles"],
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "fields": {
@@ -108,18 +112,22 @@
       },
       "ignoreRelatives": ["wrappedNativeToken"]
     },
-    "VotingToken": {
+    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
+      // VotingToken
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
     },
-    "OptimisticOracleV3": {
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": {
+      // OptimisticOracleV3
       "ignoreMethods": ["getCurrentTime"],
       "ignoreRelatives": ["cachedOracle", "defaultCurrency"]
     },
-    "OptimisticGovernor": {
+    "0x8692B776d1Ff0664177c90465038056Dc64f8991": {
+      // OptimisticGovernor
       "ignoreMethods": ["getCurrentTime"],
       "ignoreRelatives": ["collateral"]
     },
-    "PolygonTokenBridger": {
+    "0x48d990AbDA20afa1fD1da713AbC041B60a922c65": {
+      // PolygonTokenBridger
       "ignoreRelatives": [
         "destination",
         "l1PolygonRegistry",
@@ -128,7 +136,8 @@
         "maticToken"
       ]
     },
-    "UMAOptimisticOracle": {
+    "0xeE3Afe347D5C74317041E2618C49534dAf887c24": {
+      // UMAOptimisticOracle
       "ignoreMethods": ["getCurrentTime"]
     }
   }

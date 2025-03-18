@@ -1,12 +1,115 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SecurityCouncilManager",
+  "category": "gov",
   "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
   "ignoreMethods": ["getScheduleUpdateInnerData"],
+  // this contract cannot make arbitrary proposals to the timelock.
+  // it is restricted to security council member management
+  "canActIndependently": false,
   "fields": {
     "getBothCohorts": {
       "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
       "severity": "MEDIUM"
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "manage all access control roles."
+          }
+        ]
+      }
+    },
+    "cohortReplacerAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x1b3e51262cf8f48cf0dc9fdd7d86c0378cf467608e72e72cd4da66efe423f195": "COHORT_REPLACER"
+        },
+        "pickRoleMembers": "COHORT_REPLACER"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "schedule a proposal to replace a Security Council member cohort."
+          }
+        ]
+      }
+    },
+    "memberAdderAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x2f56750d3d98dff016e42fad39837f716b90445c26a7897ff841b45443b88baf": "MEMBER_ADDER"
+        },
+        "pickRoleMembers": "MEMBER_ADDER"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "schedule a proposal to add a new member to the Security Council."
+          }
+        ]
+      }
+    },
+    "memberReplacerAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xbc0a6794965897e766f364ebb1616218e4b9b088c2e6fa66bc81beb32118e600": "MEMBER_REPLACER"
+        },
+        "pickRoleMembers": "MEMBER_REPLACER"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "schedule a proposal to replace a Security Council member."
+          }
+        ]
+      }
+    },
+    "memberRotatorAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xa44e94d0336494999bf078b89dcb976c3a263d47c50d54108482296643cc399d": "MEMBER_ROTATOR"
+        },
+        "pickRoleMembers": "MEMBER_ROTATOR"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "schedule a proposal to rotate a Security Council member (same member, new address)."
+          }
+        ]
+      }
+    },
+    "memberRemoverAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x1f53fe8d2028e3a743c2a9f8a37ec4e6497bdeb138c332a42c6b247ed57af6bc": "MEMBER_REMOVER"
+        },
+        "pickRoleMembers": "MEMBER_REMOVER"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "interact",
+            "description": "schedule a proposal to remove a Security Council member."
+          }
+        ]
+      }
     }
   }
 }

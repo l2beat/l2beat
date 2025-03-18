@@ -15,10 +15,12 @@
     "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82": "MantleProxyAdmin"
   },
   "overrides": {
-    "zkLink": {
+    "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": {
+      // zkLink
       "extends": "zklinknova/secondaryZkLink"
     },
-    "MantleL2Gateway": {
+    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": {
+      // MantleL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }
