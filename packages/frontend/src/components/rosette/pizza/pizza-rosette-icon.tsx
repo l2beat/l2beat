@@ -11,7 +11,7 @@ interface Props {
   values: RosetteValue[]
   isUnderReview?: boolean
   className?: string
-  background?: 'header' | 'surface'
+  background?: 'header' | 'surface' | false
 }
 
 export function PizzaRosetteIcon({

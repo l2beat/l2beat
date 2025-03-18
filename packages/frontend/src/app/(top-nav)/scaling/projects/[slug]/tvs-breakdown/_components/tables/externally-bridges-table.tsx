@@ -11,6 +11,7 @@ export type ExternallyBridgedTokenEntry =
 
 interface Props {
   tokens: ExternallyBridgedTokenEntry[]
+  id: string
 }
 
 export function ExternallyBridgedTable(props: Props) {
@@ -27,7 +28,7 @@ export function ExternallyBridgedTable(props: Props) {
   return (
     <div className="flex flex-col">
       <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
-        Externally Bridged Value
+        <a href={`#${props.id}`}>Externally Bridged Value</a>
       </h2>
       <TokenTable table={table} />
       <TableSum amount={usdSum} />

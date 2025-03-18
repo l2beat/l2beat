@@ -117,8 +117,8 @@ export function ProjectScalingStats({ project, className }: Props) {
 
         return (
           <Fragment key={i}>
-            {statGroup.map((stat) => (
-              <Fragment key={stat.key}>{stat}</Fragment>
+            {statGroup.map((stat, j) => (
+              <Fragment key={`${i}-${j}`}>{stat}</Fragment>
             ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
