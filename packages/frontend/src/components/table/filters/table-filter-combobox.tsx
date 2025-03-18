@@ -110,7 +110,7 @@ function Trigger() {
       {state.length === 0 && (
         <>
           <span className="text-xs font-medium md:text-sm">Filters</span>
-          <kbd className="flex size-4 items-center justify-center rounded bg-icon-secondary text-3xs text-primary-invert max-md:hidden">
+          <kbd className="flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-mono text-3xs font-bold !leading-none text-primary-invert max-md:hidden">
             F
           </kbd>
         </>
