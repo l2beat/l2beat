@@ -1,10 +1,10 @@
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { externalLinks } from '~/consts/external-links'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesRiskTable } from './_components/table/bridges-risks-table'
 
 export const metadata = getDefaultMetadata({
@@ -18,12 +18,12 @@ export default async function Page() {
 
   return (
     <>
-      <BridgesFilterContextProvider>
+      <TableFilterContextProvider>
         <Header />
         <PrimaryCard>
           <BridgesRiskTable entries={entries} />
         </PrimaryCard>
-      </BridgesFilterContextProvider>
+      </TableFilterContextProvider>
     </>
   )
 }

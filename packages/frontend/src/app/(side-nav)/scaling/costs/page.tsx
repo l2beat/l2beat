@@ -1,8 +1,8 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
 import { CostsHeader } from './_components/costs-header'
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
@@ -28,7 +28,7 @@ export default async function Page() {
 
   return (
     <HydrateClient>
-      <ScalingFilterContextProvider>
+      <TableFilterContextProvider>
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
@@ -37,7 +37,7 @@ export default async function Page() {
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>
         </CostsTimeRangeContextProvider>
-      </ScalingFilterContextProvider>
+      </TableFilterContextProvider>
     </HydrateClient>
   )
 }

@@ -18,10 +18,11 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
+import { UopsExplorerLink } from '../../_components/uops-explorer-link'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
@@ -30,13 +31,13 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 }
 
 export function ScalingActivityTabs(props: Props) {
-  const includeFilters = useScalingFilter()
+  const filterEntries = useFilterEntries()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
 
   const entries = checked
@@ -64,14 +65,16 @@ export function ScalingActivityTabs(props: Props) {
 
   return (
     <>
-      <ScalingActivityFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
-        ]}
-        className="max-md:mt-4"
-      />
+      <div className="flex flex-col gap-2 max-md:mt-4 [@media(min-width:1000px)]:flex-row [@media(min-width:1000px)]:justify-between">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+          ]}
+        />
+        <UopsExplorerLink />
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

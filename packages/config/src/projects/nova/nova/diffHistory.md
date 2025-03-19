@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x53a88f6dcf756382d7860f882554c5c416bb66c3
+
+# Diff at Tue, 18 Mar 2025 12:20:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 81620827
+- current block number: 82818646
+
+## Description
+
+Config: assigned categories to some templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
 Generated with discovered.json: 0x93160670bb1a101f5775caa349fbaff07e83b9fd
 
 # Diff at Tue, 04 Mar 2025 10:42:16 GMT:

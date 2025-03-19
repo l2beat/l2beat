@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "gov",
+  "description": "Token governance contract for the Security Council member removals.",
+  "ignoreMethods": [
+    "getPastCirculatingSupply",
+    "proposalDeadline",
+    "proposalExpirationDeadline",
+    "proposalSnapshot",
+    "proposalVotes",
+    "quorum",
+    "state"
+  ]
+}

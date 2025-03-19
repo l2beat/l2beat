@@ -1,10 +1,10 @@
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { externalLinks } from '~/consts/external-links'
 import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesArchivedTable } from './_components/table/bridges-archived-table'
 
 export const metadata = getDefaultMetadata({
@@ -16,12 +16,12 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getBridgesArchivedEntries()
   return (
-    <BridgesFilterContextProvider>
+    <TableFilterContextProvider>
       <Header />
       <PrimaryCard>
         <BridgesArchivedTable entries={entries} />
       </PrimaryCard>
-    </BridgesFilterContextProvider>
+    </TableFilterContextProvider>
   )
 }
 
