@@ -12,10 +12,10 @@ import { flatteningHash, hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
-import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
 
 export const TEMPLATES_PATH = path.join('_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
