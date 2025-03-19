@@ -4,7 +4,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import {
   Command,
   CommandDialog,
@@ -15,8 +15,9 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/command'
-import { useTracking } from '~/hooks/use-custom-event'
+import { useGlobalShortcut } from '~/hooks/use-global-shortcut'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
+import { useTracking } from '~/hooks/use-tracking'
 import { useRouterWithProgressBar } from '../progress-bar'
 import type { SearchBarCategory } from './search-bar-categories'
 import { searchBarCategories } from './search-bar-categories'
@@ -35,17 +36,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const { open, setOpen } = useSearchBarContext()
   const router = useRouterWithProgressBar()
 
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === '/') {
-        e.preventDefault()
-        setOpen((open) => !open)
-      }
-    }
-
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [setOpen])
+  useGlobalShortcut('/', () => setOpen((open) => !open))
 
   const filteredProjects = useMemo(
     () =>
@@ -110,6 +101,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
       open={open}
       onOpenChange={setOpen}
       onEscapeKeyDown={onEscapeKeyDown}
+      fullScreenMobile
     >
       <Command shouldFilter={false} className="rounded-none">
         <CommandInput

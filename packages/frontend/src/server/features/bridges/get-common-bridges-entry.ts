@@ -1,14 +1,12 @@
 import type { Project } from '@l2beat/config'
+import type { FilterableEntry } from '~/components/table/filters/filterable-value'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
 
-export interface CommonBridgesEntry extends CommonProjectEntry {
-  filterable: {
-    type: string
-    validatedBy: string
-  }
-}
+export interface CommonBridgesEntry
+  extends CommonProjectEntry,
+    FilterableEntry {}
 
 export function getCommonBridgesEntry({
   project,
@@ -22,10 +20,16 @@ export function getCommonBridgesEntry({
     slug: project.slug,
     name: project.name,
     shortName: project.shortName,
-    filterable: {
-      type: project.bridgeInfo.category,
-      validatedBy: project.bridgeInfo.validatedBy,
-    },
+    filterable: [
+      {
+        id: 'type',
+        value: project.bridgeInfo.category,
+      },
+      {
+        id: 'validatedBy',
+        value: project.bridgeInfo.validatedBy,
+      },
+    ],
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
       verificationWarning: project.statuses.isUnverified,
