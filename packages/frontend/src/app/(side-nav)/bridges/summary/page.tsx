@@ -1,12 +1,10 @@
 import { BridgesTvsChart } from '~/components/chart/tvs/bridges-tvs-chart'
-import { CustomLink } from '~/components/link/custom-link'
-import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
-import { externalLinks } from '~/consts/external-links'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { BridgesHeader } from '../_components/bridges-header'
 import { BridgesSummaryTable } from './_components/table/bridges-summary-table'
 
 export const metadata = getDefaultMetadata({
@@ -29,7 +27,7 @@ export default async function Page() {
     <>
       <HydrateClient>
         <TableFilterContextProvider>
-          <Header />
+          <BridgesHeader>Summary</BridgesHeader>
           <PrimaryCard>
             <BridgesTvsChart />
           </PrimaryCard>
@@ -39,22 +37,5 @@ export default async function Page() {
         </TableFilterContextProvider>
       </HydrateClient>
     </>
-  )
-}
-
-function Header() {
-  return (
-    <MainPageHeader
-      warning={
-        <>
-          L2BEAT Bridges is a work in progress. You might find incomplete
-          research or inconsistent naming. Join our{' '}
-          <CustomLink href={externalLinks.discord}>Discord</CustomLink> to
-          suggest improvements!
-        </>
-      }
-    >
-      Summary
-    </MainPageHeader>
   )
 }
