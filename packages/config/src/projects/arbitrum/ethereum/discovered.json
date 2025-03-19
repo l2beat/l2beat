@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 22032270,
+  "blockNumber": 22080617,
   "configHash": "0xe01129cc1335f10c587ac15efb14bfd826bca9d761fcd086e4c1fb56be81a45e",
   "entries": [
     {
@@ -514,7 +514,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 836990,
+        "batchCount": 841494,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -523,12 +523,12 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "buffer": {
-          "bufferBlocks": 14046,
+          "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 22032217,
+          "prevBlockNumber": 22080470,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22032267
+          "prevSequencedBlockNumber": 22080523
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -549,12 +549,12 @@
           "delaySeconds": 86400,
           "futureSeconds": 768
         },
-        "postsBlobs": false,
+        "postsBlobs": true,
         "reader4844": "0x15b25E3fb8419dA4848a6f193bb9b43519D0d4ca",
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1902181,
+        "totalDelayedMessagesRead": 1908639,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -957,7 +957,7 @@
         "getValidators": [],
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x13956ad7df8a49a46cb528a8ab49d86e20049a732156a0dfa2631c11929a8f02",
+        "latestConfirmed": "0x5890dbc7752483dc3a006991a55de05c504c9b635a97be6d380c1097f4c542d8",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1519,7 +1519,7 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1902187,
+        "delayedMessageCount": 1908645,
         "inboxHistory": [
           "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -1533,8 +1533,8 @@
         ],
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 836990,
-        "sequencerReportedSubMessageCount": 292774091
+        "sequencerMessageCount": 841494,
+        "sequencerReportedSubMessageCount": 295097882
       },
       "fieldMeta": {
         "allowedOutboxList": {
