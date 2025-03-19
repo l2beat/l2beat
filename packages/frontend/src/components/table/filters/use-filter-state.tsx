@@ -20,7 +20,7 @@ type FilterAction =
   | RemoveFilterAction
   | ClearFilterAction
   | SetInversedFilterAction
-
+  | SetFiltersAction
 type AddFilterAction = {
   type: 'add'
   payload: {
@@ -39,6 +39,13 @@ type RemoveFilterAction = {
 
 type ClearFilterAction = {
   type: 'clear'
+}
+
+type SetFiltersAction = {
+  type: 'set'
+  payload: {
+    filters: FilterState
+  }
 }
 
 type SetInversedFilterAction = {
@@ -134,6 +141,10 @@ function filterReducer(
       }
     }
 
+    case 'set': {
+      return action.payload.filters
+    }
+
     case 'clear':
       return {}
 
@@ -145,13 +156,22 @@ function filterReducer(
 export function useFilterState() {
   const { track } = useTracking()
   const pathname = usePathname()
-  const filtersUrlState = useFilterUrlState()
 
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
-    filtersUrlState,
+    {},
   )
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const filters = params.get('filters')
+    if (!filters) return
+    dispatch({
+      type: 'set',
+      payload: { filters: FilterState.catch({}).parse(JSON.parse(filters)) },
+    })
+  }, [])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -167,11 +187,4 @@ export function useFilterState() {
     state,
     dispatch,
   }
-}
-
-function useFilterUrlState(): FilterState {
-  const params = new URLSearchParams(window.location.search)
-  const filters = params.get('filters')
-  if (!filters) return {}
-  return FilterState.catch({}).parse(JSON.parse(filters))
 }
