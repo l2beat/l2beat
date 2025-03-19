@@ -68,7 +68,7 @@ export function ScalingSummaryTables(props: Props) {
     <>
       <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
 
-      <div className="mt-4 flex flex-col gap-2 [@media(min-width:1400px)]:flex-row [@media(min-width:1400px)]:justify-between">
+      <div className="flex flex-col gap-2 [@media(min-width:1400px)]:flex-row [@media(min-width:1400px)]:justify-between">
         <TableFilters
           entries={[
             ...props.rollups,
