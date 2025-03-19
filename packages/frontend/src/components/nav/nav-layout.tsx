@@ -1,6 +1,5 @@
 import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
-import { featureFlags } from '~/consts/feature-flags'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
@@ -115,7 +114,7 @@ export async function NavLayout({
       icon: (
         <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
       ),
-      links: compact([
+      links: [
         {
           title: 'Summary',
           href: '/data-availability/summary',
@@ -125,12 +124,12 @@ export async function NavLayout({
           shortTitle: 'Risks',
           href: '/data-availability/risk',
         },
-        featureFlags.daThroughput && {
+        {
           title: 'Throughput',
           shortTitle: 'Throughput',
           href: '/data-availability/throughput',
         },
-      ]),
+      ],
     },
     {
       type: 'single',
