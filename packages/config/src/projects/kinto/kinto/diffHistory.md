@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x93bc9a372f00118ecee5260dfc00aad81444ff2b
+
+# Diff at Wed, 19 Mar 2025 13:06:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 769390
+- current block number: 769390
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 769390 (main branch discovery), not current.
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477) {
+    +++ description: None
+      severity:
+-        "MEDIUM"
+    }
+```
+
+```diff
+    contract undefined (0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7) {
+    +++ description: None
+      severity:
+-        "MEDIUM"
+    }
+```
+
+```diff
+    contract undefined (0x6E31039abF8d248aBed57E307C9E1b7530c269E4) {
+    +++ description: None
+      severity:
+-        "MEDIUM"
+    }
+```
+
+```diff
+    contract undefined (0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07) {
+    +++ description: None
+      severity:
+-        "MEDIUM"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xb539019776eF803E89EC062Ad54cA24D1Fdb008a) {
+    +++ description: None
+      severity:
+-        "MEDIUM"
+    }
+```
+
 Generated with discovered.json: 0x50b69d2756ef7f139a84961b247f987eef8aa556
 
 # Diff at Tue, 18 Mar 2025 10:34:03 GMT:

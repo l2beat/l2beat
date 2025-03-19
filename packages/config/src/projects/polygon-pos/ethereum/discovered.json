@@ -2709,7 +2709,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "polygonposbridge/predicate": "0x10ba74258b628b9539ea717d1230c5a402ba80428dc86cfa78d3779985d92bf5"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "polygonposbridge/predicate": "0xb77dacaa0fc6fab29ac4f30ab100ca5030665fc9a35fa65702cbee5526a7d0bc"
   }
 }

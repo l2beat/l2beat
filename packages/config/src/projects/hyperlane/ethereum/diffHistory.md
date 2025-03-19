@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x5de36f6992b9663de49dade5b19b045b10233eb6
+
+# Diff at Wed, 19 Mar 2025 13:04:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21880791
+- current block number: 21880791
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21880791 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xEa83086a62617A7228ce4206FAe2ea8b0ab23513) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x100f5c842b2d8b6ecd6182e44058e2dbed0dca9f
 
 # Diff at Tue, 04 Mar 2025 10:39:16 GMT:

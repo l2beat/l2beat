@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xf45a37aca27e4d1f9ae3821379fdae49a7f74476
+
+# Diff at Wed, 19 Mar 2025 13:06:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21829679
+- current block number: 21829679
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829679 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Zora Multisig 2 (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xc93789ff203dd6b570fdb6141ad02c502cb2202b
 
 # Diff at Tue, 18 Mar 2025 08:14:44 GMT:
