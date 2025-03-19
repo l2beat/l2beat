@@ -61,7 +61,7 @@ function MobileFilters({
     <>
       <button
         onClick={() => setOpen(true)}
-        className={cn(popoverTriggerClasses, 'h-8')}
+        className={cn(popoverTriggerClasses, 'h-8 gap-0')}
       >
         <Trigger />
       </button>
@@ -92,7 +92,7 @@ function DesktopFilters({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="flex h-8 gap-1.5">
+      <PopoverTrigger className="flex h-8 gap-0">
         <Trigger />
       </PopoverTrigger>
       <PopoverContent
@@ -115,13 +115,13 @@ function Trigger() {
       <FilterIcon />
       {state.length === 0 ? (
         <>
-          <span className="text-xs font-medium md:text-sm">Filters</span>
-          <kbd className="flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-mono text-3xs font-bold text-primary-invert max-md:hidden">
+          <span className="ml-1.5 text-xs font-medium md:text-sm">Filters</span>
+          <kbd className="ml-1.5 flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-mono text-3xs font-bold text-primary-invert max-md:hidden">
             F
           </kbd>
         </>
       ) : (
-        <PlusIcon className="size-4" />
+        <PlusIcon className="ml-0.5 size-4" />
       )}
     </>
   )
