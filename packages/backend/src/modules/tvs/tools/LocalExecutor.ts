@@ -46,7 +46,7 @@ export class LocalExecutor {
 
     await dataFormulaExecutor.execute(prices, amounts, timestamps, latestMode)
 
-    return this.valueService.calculate(config, timestamps)
+    return await this.valueService.calculate(config, timestamps)
   }
 
   private async initDataFormulaExecutor(amounts: AmountConfig[]) {
