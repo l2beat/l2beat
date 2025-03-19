@@ -1,15 +1,19 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { useReducer } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect, useReducer } from 'react'
+import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
-import type { FilterableValueId } from './filterable-value'
+import { FilterableValueId } from './filterable-value'
 
-export interface FilterValue {
-  values: string[]
-  inversed: boolean
-}
+export type FilterValue = z.infer<typeof FilterValue>
+export const FilterValue = z.object({
+  values: z.array(z.string()),
+  inversed: z.boolean().optional(),
+})
 
 export type FilterState = Partial<Record<FilterableValueId, FilterValue>>
+export const FilterState = z.record(FilterableValueId, FilterValue)
 
 type FilterAction =
   | AddFilterAction
@@ -70,8 +74,8 @@ function filterReducer(
       return {
         ...state,
         [action.payload.id]: {
+          ...existingFilter,
           values: newValues,
-          inversed: existingFilter?.inversed ?? false,
         },
       }
     }
@@ -140,14 +144,34 @@ function filterReducer(
 
 export function useFilterState() {
   const { track } = useTracking()
+  const pathname = usePathname()
+  const filtersUrlState = useFilterUrlState()
+
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
-    {},
+    filtersUrlState,
   )
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (Object.keys(state).length > 0) {
+      params.set('filters', JSON.stringify(state))
+    } else {
+      params.delete('filters')
+    }
+    window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
+  }, [pathname, state])
 
   return {
     state,
     dispatch,
   }
+}
+
+function useFilterUrlState(): FilterState {
+  const searchParams = useSearchParams()
+  const filters = searchParams.get('filters')
+  if (!filters) return {}
+  return FilterState.catch({}).parse(JSON.parse(filters))
 }
