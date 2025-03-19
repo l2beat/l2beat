@@ -9,6 +9,7 @@ import { Discover } from './Discover'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
 import { FetchFlatSources } from './FetchFlatSources'
+import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
 import { Flatten } from './Flatten'
@@ -51,6 +52,7 @@ export function getSubcommands() {
     SolFmt,
     StarknetProgramHashes,
     FetchAgglayer,
+    FetchZkStack,
     FindL2,
     Init,
     InitTemplate,
