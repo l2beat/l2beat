@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { ethers } from 'ethers'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { ethers } from 'ethers'
 
 interface RollupNamesMap {
   [key: string]: string
@@ -182,7 +182,14 @@ export class AgglayerDataFetcher {
     console.log(`Full data saved to ${this.outputFilePath}`)
 
     // Display table with selected fields
-    const headers = ['RollupID', 'Name', 'ChainID', 'ForkID', 'RollupTypeID', 'VerifierType']
+    const headers = [
+      'RollupID',
+      'Name',
+      'ChainID',
+      'ForkID',
+      'RollupTypeID',
+      'VerifierType',
+    ]
     const rows: string[][] = []
 
     rollupDataList.forEach((data) => {

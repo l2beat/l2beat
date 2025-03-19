@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { ethers } from 'ethers'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { ethers } from 'ethers'
 
 // Interface definitions
 interface TokenAddressMap {
@@ -119,11 +119,11 @@ export class ZkStackDataFetcher {
     const headers = this.tableFields.map((field) => field.header)
 
     // Create rows of data
-    const rows = data.map((item) => 
+    const rows = data.map((item) =>
       this.tableFields.map((field) => {
         const value = item[field.key]
         return value !== undefined ? String(value) : 'N/A'
-      })
+      }),
     )
 
     // Use the imported formatAsAsciiTable function
