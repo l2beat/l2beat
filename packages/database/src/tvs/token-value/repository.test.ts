@@ -112,6 +112,7 @@ function tokenValue(
     configurationId: configId.repeat(12),
     project,
     timestamp,
+    tokenId: configId,
     amount,
     value,
     valueForProject,

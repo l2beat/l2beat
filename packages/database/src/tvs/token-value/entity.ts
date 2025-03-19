@@ -6,6 +6,7 @@ export interface TokenValueRecord {
   timestamp: UnixTime
   configurationId: string
   project: string
+  tokenId: string
   amount: number
   value: number
   valueForProject: number

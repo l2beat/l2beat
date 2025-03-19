@@ -288,6 +288,7 @@ model TokenValue {
   timestamp       DateTime @db.Timestamp(6)
   configurationId String   @db.Char(12)
   project         String   @db.VarChar(255)
+  tokenId         String   @db.VarChar(255)
   amount          Float    @db.Real
   value           Float    @db.Real
   valueForProject Float    @db.Real
@@ -295,6 +296,7 @@ model TokenValue {
 
   @@id([timestamp, configurationId])
   @@index([project])
+  @@index([tokenId])
 }
 
 model ProjectValue {
