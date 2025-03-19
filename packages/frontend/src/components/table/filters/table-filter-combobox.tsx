@@ -68,6 +68,10 @@ function MobileFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
+  const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
+    undefined,
+  )
+
   return (
     <>
       <button
@@ -82,7 +86,11 @@ function MobileFilters({
         title={'Filters'}
         description={'Select filters to apply'}
       >
-        <Content entries={entries} />
+        <Content
+          entries={entries}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+        />
       </CommandDialog>
     </>
   )
@@ -97,13 +105,31 @@ function DesktopFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
+  const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
+    undefined,
+  )
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className="flex h-8 gap-1.5">
         <Trigger />
       </PopoverTrigger>
-      <PopoverContent className="p-0" align="start" side="bottom">
-        <Content entries={entries} />
+      <PopoverContent
+        className="p-0"
+        align="start"
+        side="bottom"
+        onEscapeKeyDown={(e) => {
+          if (selectedId) {
+            e.preventDefault()
+            setSelectedId(undefined)
+          }
+        }}
+      >
+        <Content
+          entries={entries}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+        />
       </PopoverContent>
     </Popover>
   )
@@ -131,13 +157,14 @@ function Trigger() {
 
 function Content({
   entries,
+  selectedId,
+  setSelectedId,
 }: {
   entries: FilterableEntry[]
+  selectedId: FilterableValueId | undefined
+  setSelectedId: Dispatch<SetStateAction<FilterableValueId | undefined>>
 }) {
   const { track } = useTracking()
-  const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
-    undefined,
-  )
   const uniqFilterablesIds = uniqBy(
     entries.flatMap((e) => e.filterable),
     'id',
