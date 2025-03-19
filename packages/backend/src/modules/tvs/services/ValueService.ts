@@ -4,7 +4,6 @@ import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
 import {
   createAmountConfig,
   createPriceConfigId,
-  extractPricesAndAmounts,
 } from '../tools/extractPricesAndAmounts'
 import type {
   AmountFormula,
@@ -23,42 +22,25 @@ export class ValueService {
   ): Promise<Map<number, TokenValue[]>> {
     const result = new Map<number, TokenValue[]>()
 
-    const { prices, amounts } = await this.getPricesAndAmounts(
-      config,
-      timestamps,
-    )
-
     for (const timestamp of timestamps) {
       const values: TokenValue[] = []
 
       for (const token of config.tokens) {
-        const amount = this.executeFormula(
-          token.amount,
-          timestamp,
-          prices,
-          amounts,
-        )
-        const value = this.executeValueFormula(
+        const amount = await this.executeFormula(token.amount, timestamp)
+        const value = await this.executeValueFormula(
           {
             amount: token.amount,
             priceId: token.priceId,
           } as ValueFormula,
           timestamp,
-          prices,
-          amounts,
         )
 
         const valueForProject = token.valueForProject
-          ? this.executeFormula(
-              token.valueForProject,
-              timestamp,
-              prices,
-              amounts,
-            )
+          ? await this.executeFormula(token.valueForProject, timestamp)
           : value
 
         const valueForTotal = token.valueForTotal
-          ? this.executeFormula(token.valueForTotal, timestamp, prices, amounts)
+          ? await this.executeFormula(token.valueForTotal, timestamp)
           : (valueForProject ?? value)
 
         values.push({
@@ -78,56 +60,32 @@ export class ValueService {
       result.set(timestamp, values)
     }
 
-    return result
+    return await Promise.resolve(result)
   }
 
-  private async getPricesAndAmounts(
-    config: ProjectTvsConfig,
-    timestamps: UnixTime[],
-  ) {
-    const { prices, amounts } = extractPricesAndAmounts(config)
-
-    const priceRecords = await this.storage.getPrices(
-      prices.map((p) => p.id),
-      timestamps,
-    )
-    const amountRecords = await this.storage.getAmounts(
-      amounts.map((a) => a.id),
-      timestamps,
-    )
-    return { prices: priceRecords, amounts: amountRecords }
-  }
-
-  private executeAmountFormula(
+  private async executeAmountFormula(
     formula: AmountFormula,
     timestamp: UnixTime,
-    amounts: Map<number, Map<string, bigint>>,
-  ): BigIntWithDecimals {
+  ): Promise<BigIntWithDecimals> {
     if (formula.type === 'const') {
       return BigIntWithDecimals(BigInt(formula.value), formula.decimals)
     }
+
     const config = createAmountConfig(formula)
-    const amount = amounts.get(timestamp)?.get(config.id)
+    const amount = await this.storage.getAmount(config.id, timestamp)
     assert(amount !== undefined, `${formula.type} ${config.id}`)
     return BigIntWithDecimals(amount, config.decimals)
   }
 
-  private executeValueFormula(
+  private async executeValueFormula(
     formula: ValueFormula,
     timestamp: UnixTime,
-    prices: Map<number, Map<string, number>>,
-    amounts: Map<number, Map<string, bigint>>,
-  ): BigIntWithDecimals {
+  ): Promise<BigIntWithDecimals> {
     const configurationId = createPriceConfigId(formula.priceId)
-    const price = prices.get(timestamp)?.get(configurationId)
+    const price = await this.storage.getPrice(configurationId, timestamp)
     assert(price !== undefined, `Price not found for ${formula.priceId}`)
 
-    const amount = this.executeFormula(
-      formula.amount,
-      timestamp,
-      prices,
-      amounts,
-    )
+    const amount = await this.executeFormula(formula.amount, timestamp)
     const value = BigIntWithDecimals.multiply(
       amount,
       BigIntWithDecimals.fromNumber(price),
@@ -135,29 +93,27 @@ export class ValueService {
     return value
   }
 
-  private executeFormula(
+  private async executeFormula(
     formula: CalculationFormula | ValueFormula | AmountFormula,
     timestamp: UnixTime,
-    prices: Map<number, Map<string, number>>,
-    amounts: Map<number, Map<string, bigint>>,
-  ): BigIntWithDecimals {
-    const executeFormulaRecursive = (
+  ): Promise<BigIntWithDecimals> {
+    const executeFormulaRecursive = async (
       formula: CalculationFormula | ValueFormula | AmountFormula,
       timestamp: UnixTime,
-    ): BigIntWithDecimals => {
+    ): Promise<BigIntWithDecimals> => {
       if (formula.type === 'value') {
-        return this.executeValueFormula(formula, timestamp, prices, amounts)
+        return await this.executeValueFormula(formula, timestamp)
       }
 
       if (formula.type === 'calculation') {
-        return formula.arguments.reduce(
-          (
-            acc: BigIntWithDecimals,
+        return await formula.arguments.reduce(
+          async (
+            acc: Promise<BigIntWithDecimals>,
             current: CalculationFormula | ValueFormula | AmountFormula,
             index: number,
           ) => {
-            const valueAcc = acc
-            const value = executeFormulaRecursive(current, timestamp)
+            const valueAcc = await acc
+            const value = await executeFormulaRecursive(current, timestamp)
 
             switch (formula.operator) {
               case 'sum':
@@ -170,13 +126,15 @@ export class ValueService {
                 return valueAcc < value ? valueAcc : value
             }
           },
-          formula.operator === 'min' ? BigIntWithDecimals.MAX : 0n,
+          Promise.resolve(
+            formula.operator === 'min' ? BigIntWithDecimals.MAX : 0n,
+          ),
         )
       }
 
-      return this.executeAmountFormula(formula, timestamp, amounts)
+      return await this.executeAmountFormula(formula, timestamp)
     }
 
-    return executeFormulaRecursive(formula, timestamp)
+    return await executeFormulaRecursive(formula, timestamp)
   }
 }

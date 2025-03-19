@@ -48,12 +48,14 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmounts: mockFn().resolvesToOnce(
-          new Map([[mockTimestamp, new Map([[amountConfigId, 10000n]])]]),
-        ),
-        getPrices: mockFn().resolvesToOnce(
-          new Map([[mockTimestamp, new Map([[priceConfigId, 200]])]]),
-        ),
+        getAmount: mockFn()
+          .given(amountConfigId, mockTimestamp)
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
       })
 
       const valueService = new ValueService(mockDataStorage)
@@ -95,7 +97,6 @@ describe(ValueService.name, () => {
         address: wBTCContractAddress,
         chain: 'bob',
         decimals: 0,
-        sinceTimestamp: 0,
       } as TotalSupplyAmountFormula
 
       const wBTCAmountConfigId = createAmountConfig(wBTCAmountFormula).id
@@ -105,7 +106,6 @@ describe(ValueService.name, () => {
         address: solvBTCContractAddress,
         chain: 'bob',
         decimals: 0,
-        sinceTimestamp: 0,
       } as TotalSupplyAmountFormula
 
       const solvBTCAmountConfigId = createAmountConfig(solvBTCAmountFormula).id
@@ -116,7 +116,6 @@ describe(ValueService.name, () => {
         chain: 'bob',
         decimals: 0,
         escrowAddress: solvBTCEscrowAddress,
-        sinceTimestamp: 0,
       } as BalanceOfEscrowAmountFormula
 
       const wBTCBalanceOfEscrowConfigId = createAmountConfig(
@@ -169,29 +168,28 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmounts: mockFn().resolvesToOnce(
-          new Map([
-            [
-              mockTimestamp,
-              new Map([
-                [wBTCAmountConfigId, 10000n],
-                [solvBTCAmountConfigId, 8000n],
-                [wBTCBalanceOfEscrowConfigId, 5000n],
-              ]),
-            ],
-          ]),
-        ),
-        getPrices: mockFn().resolvesToOnce(
-          new Map([
-            [
-              mockTimestamp,
-              new Map([
-                [wBTCPriceConfigId, 200],
-                [solvBTCPriceConfigId, 200],
-              ]),
-            ],
-          ]),
-        ),
+        getAmount: mockFn()
+          // totalSupply of WBTC
+          .given(wBTCAmountConfigId, mockTimestamp)
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n)
+          // totalSupply of solvBTC
+          .given(solvBTCAmountConfigId, mockTimestamp)
+          .resolvesToOnce(8000n)
+          .resolvesToOnce(8000n)
+          .resolvesToOnce(8000n)
+          // balanceOfEscrow of WBTC in solvBTC escrow
+          .given(wBTCBalanceOfEscrowConfigId, mockTimestamp)
+          .resolvesToOnce(5000n),
+        getPrice: mockFn()
+          // price of WBTC
+          .given(wBTCPriceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200)
+          // price of solvBTC
+          .given(solvBTCPriceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
       })
 
       const valueService = new ValueService(mockDataStorage)
@@ -237,14 +235,12 @@ describe(ValueService.name, () => {
             type: 'const',
             value: '20000',
             decimals: 0,
-            sinceTimestamp: 0,
           } as ConstAmountFormula,
           {
             type: 'totalSupply',
             address: EthereumAddress.random(),
             chain: 'chain',
             decimals: 0,
-            sinceTimestamp: 0,
           } as TotalSupplyAmountFormula,
         ],
       } as CalculationFormula
@@ -269,12 +265,14 @@ describe(ValueService.name, () => {
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
-        getAmounts: mockFn().resolvesToOnce(
-          new Map([[mockTimestamp, new Map([[amountConfigId, 10000n]])]]),
-        ),
-        getPrices: mockFn().resolvesToOnce(
-          new Map([[mockTimestamp, new Map([[priceConfigId, 200]])]]),
-        ),
+        getAmount: mockFn()
+          .given(amountConfigId, mockTimestamp)
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
       })
 
       const valueService = new ValueService(mockDataStorage)
