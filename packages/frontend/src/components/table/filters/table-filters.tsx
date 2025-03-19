@@ -3,7 +3,7 @@ import { cn } from '~/utils/cn'
 import { TableFilter } from './table-filter'
 import { useTableFilterContext } from './table-filter-context'
 import { TableFilterSelector } from './table-filter-selector'
-import type { FilterableEntry } from './types'
+import type { FilterableEntry, FilterableValueId } from './types'
 
 type Props = {
   entries: FilterableEntry[]
@@ -21,14 +21,14 @@ export function TableFilters({ entries, className }: Props) {
       )}
     >
       <TableFilterSelector entries={entries} />
-      {state.map((filter) => (
+      {Object.entries(state).map(([id, filter]) => (
         <TableFilter
-          key={filter.id}
-          filter={filter}
+          key={id}
+          filter={{ id: id as FilterableValueId, ...filter }}
           possibleValues={uniq(
             entries.flatMap((e) =>
               (e.filterable ?? [])
-                ?.filter((f) => f.id === filter.id)
+                ?.filter((f) => f.id === id)
                 .map((f) => f.value),
             ),
           )}

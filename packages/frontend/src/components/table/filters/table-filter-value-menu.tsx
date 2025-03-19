@@ -43,9 +43,7 @@ export function TableFilterValueMenuItems({ filterId, values }: Props) {
 
   const sortedValues = values.sort(filterValuesSortFn)
   const [selectedValues, notSelectedValues] = partition(sortedValues, (value) =>
-    state.some(
-      (filter) => filter.id === filterId && filter.values.includes(value),
-    ),
+    state[filterId]?.values.includes(value),
   )
 
   return (

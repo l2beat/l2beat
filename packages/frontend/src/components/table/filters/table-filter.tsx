@@ -18,11 +18,16 @@ import {
 } from './table-filter-internal-context'
 import { TableFilterValue } from './table-filter-value'
 import { TableFilterValueMenu } from './table-filter-value-menu'
-import type { FilterState } from './use-filter-state'
+import type { FilterableValueId } from './types'
+import type { FilterValue } from './use-filter-state'
 import { filterIdToLabel } from './utils/labels'
 
+interface Filter extends FilterValue {
+  id: FilterableValueId
+}
+
 interface Props {
-  filter: FilterState[number]
+  filter: Filter
   possibleValues: string[]
 }
 
@@ -111,7 +116,7 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
   )
 }
 
-function operatorLabel(filter: FilterState[number]) {
+function operatorLabel(filter: Filter) {
   if (filter.inversed) {
     return 'is not'
   }

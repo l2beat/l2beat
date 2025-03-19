@@ -46,7 +46,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const resolution = rangeToResolution(range)
 
   const filter = useMemo<CostsProjectsFilter>(() => {
-    if (filters.length === 0) {
+    if (Object.keys(filters).length === 0) {
       return {
         type: tab,
       }

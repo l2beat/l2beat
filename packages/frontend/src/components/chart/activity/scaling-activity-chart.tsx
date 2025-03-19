@@ -55,7 +55,7 @@ export function ScalingActivityChart({
   )
 
   const chartFilter: ActivityProjectFilter =
-    filters.length === 0
+    Object.keys(filters).length === 0
       ? {
           type: typeToChartFilterType(type),
         }

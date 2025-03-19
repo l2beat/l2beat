@@ -4,12 +4,12 @@ import { useReducer } from 'react'
 import { useTracking } from '~/hooks/use-tracking'
 import type { FilterableValueId } from './types'
 
-type Filter = {
-  id: FilterableValueId
+export interface FilterValue {
   values: string[]
   inversed: boolean
 }
-export type FilterState = Filter[]
+
+export type FilterState = Partial<Record<FilterableValueId, FilterValue>>
 
 type FilterAction =
   | AddFilterAction
@@ -45,98 +45,94 @@ type SetInversedFilterAction = {
   }
 }
 
-// Our reducer function that uses a switch statement to handle our actions
 function filterReducer(
   state: FilterState,
   action: FilterAction,
   track: ReturnType<typeof useTracking>['track'],
-) {
+): FilterState {
   switch (action.type) {
-    case 'add':
-      const existingFilter = state.find(
-        (filter) => filter.id === action.payload.id,
-      )
-
-      if (existingFilter) {
-        const newValues = uniq([...existingFilter.values, action.payload.value])
-        track('filterValueSelected', {
-          props: {
-            name: action.payload.id,
-            value: action.payload.value,
-            allValues: [...newValues].sort().join(','),
-            additionalFilters: state.length - 1,
-          },
-        })
-        return state.map((filter) =>
-          filter.id === action.payload.id
-            ? {
-                ...filter,
-                values: uniq([...newValues, action.payload.value]),
-              }
-            : filter,
-        )
-      }
+    case 'add': {
+      const existingFilter = state[action.payload.id]
+      const newValues = existingFilter
+        ? uniq([...existingFilter.values, action.payload.value])
+        : [action.payload.value]
 
       track('filterValueSelected', {
         props: {
           name: action.payload.id,
           value: action.payload.value,
-          additionalFilters: state.length,
+          allValues: [...newValues].sort().join(','),
+          additionalFilters:
+            Object.keys(state).length - (existingFilter ? 1 : 0),
         },
       })
-      return [
+
+      return {
         ...state,
-        {
-          id: action.payload.id,
-          values: [action.payload.value],
-          inversed: false,
+        [action.payload.id]: {
+          values: newValues,
+          inversed: existingFilter?.inversed ?? false,
         },
-      ]
-    case 'remove':
+      }
+    }
+
+    case 'remove': {
+      const newState = { ...state }
+
       if (action.payload.value) {
-        const updatedState = state.map((filter) =>
-          filter.id === action.payload.id
-            ? {
-                ...filter,
-                values: filter.values.filter((v) => v !== action.payload.value),
-              }
-            : filter,
+        const filter = state[action.payload.id]
+        if (!filter) return state
+
+        const newValues = filter.values.filter(
+          (v) => v !== action.payload.value,
         )
-        const remainingFilters = updatedState.filter(
-          (filter) => filter.values.length > 0,
-        )
-        if (remainingFilters.length === 0) {
+
+        if (newValues.length === 0) {
+          delete newState[action.payload.id]
           track('filterRemoved', {
             props: { name: action.payload.id },
           })
+        } else {
+          newState[action.payload.id] = {
+            ...filter,
+            values: newValues,
+          }
         }
-        return remainingFilters
+      } else {
+        delete newState[action.payload.id]
+        track('filterRemoved', {
+          props: { name: action.payload.id },
+        })
       }
-      track('filterRemoved', {
-        props: { name: action.payload.id },
-      })
-      return state.filter((filter) => filter.id !== action.payload.id)
-    case 'setInversed':
+
+      return newState
+    }
+
+    case 'setInversed': {
+      const filter = state[action.payload.id]
+      if (!filter) return state
+
       if (action.payload.value === true) {
         track('filterInversed', {
           props: {
             name: action.payload.id,
-            allValues: [
-              ...state.find((filter) => filter.id === action.payload.id)!
-                .values,
-            ]
-              .sort()
-              .join(','),
+            allValues: [...filter.values].sort().join(','),
           },
         })
       }
-      return state.map((filter) =>
-        filter.id === action.payload.id
-          ? { ...filter, inversed: action.payload.value }
-          : filter,
-      )
+
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...filter,
+          inversed: action.payload.value,
+        },
+      }
+    }
+
     case 'clear':
-      return []
+      return {}
+
     default:
       assertUnreachable(action)
   }
@@ -147,7 +143,7 @@ export function useFilterState() {
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
-    [],
+    {},
   )
 
   return {

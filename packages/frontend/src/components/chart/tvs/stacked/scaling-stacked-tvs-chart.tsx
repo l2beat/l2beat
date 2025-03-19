@@ -36,7 +36,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvs-unit', 'usd')
 
   const filter = useMemo<TvsProjectFilter>(() => {
-    if (filters.length === 0) {
+    if (Object.keys(filters).length === 0) {
       return {
         type: tab,
       }
