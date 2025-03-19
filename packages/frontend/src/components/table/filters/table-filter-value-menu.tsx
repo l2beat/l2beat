@@ -1,5 +1,4 @@
 import partition from 'lodash/partition'
-import type { Dispatch, SetStateAction } from 'react'
 import {
   Command,
   CommandEmpty,
@@ -10,6 +9,7 @@ import {
 } from '~/components/core/command'
 import { TableFilterCheckbox } from './table-filter-checkbox'
 import { useTableFilterContext } from './table-filter-context'
+import { useTableFilterInternalContext } from './table-filter-internal-context'
 import { TableFilterValue } from './table-filter-value'
 import type { FilterableValueId } from './types'
 import { filterValuesSortFn } from './utils/filter-values-sort-fn'
@@ -18,20 +18,17 @@ import { emptyStateLabel, inputPlaceholder } from './utils/labels'
 interface Props {
   filterId: FilterableValueId
   values: string[]
-  search?: {
-    value: string
-    setValue: Dispatch<SetStateAction<string>>
-  }
 }
 
-export function TableFilterValueMenu({ filterId, values, search }: Props) {
+export function TableFilterValueMenu({ filterId, values }: Props) {
+  const { search, setSearch } = useTableFilterInternalContext()
   return (
     <Command>
       <CommandInput
         className="h-9"
         placeholder={inputPlaceholder(filterId)}
-        value={search?.value}
-        onValueChange={search?.setValue}
+        value={search}
+        onValueChange={setSearch}
       />
       <CommandList>
         <CommandEmpty>{emptyStateLabel(filterId)}</CommandEmpty>

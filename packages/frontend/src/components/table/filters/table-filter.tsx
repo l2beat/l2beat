@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react'
 import { CommandDialog } from '~/components/core/command'
 import {
   Popover,
@@ -13,6 +12,10 @@ import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CloseIcon } from '~/icons/close'
 import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
+import {
+  TableFilterInternalContextProvider,
+  useTableFilterInternalContext,
+} from './table-filter-internal-context'
 import { TableFilterValue } from './table-filter-value'
 import { TableFilterValueMenu } from './table-filter-value-menu'
 import type { FilterState } from './use-filter-state'
@@ -49,7 +52,9 @@ export function TableFilter({ filter, possibleValues }: Props) {
         {operatorLabel(filter)}
       </button>
       <VerticalSeparator className="h-[30px]" />
-      <TableFilterValuePart filter={filter} possibleValues={possibleValues} />
+      <TableFilterInternalContextProvider>
+        <TableFilterValuePart filter={filter} possibleValues={possibleValues} />
+      </TableFilterInternalContextProvider>
       <VerticalSeparator className="h-[30px]" />
       <button
         className="h-full rounded-r-lg pl-2 pr-2.5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
@@ -64,8 +69,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
 }
 
 function TableFilterValuePart({ filter, possibleValues }: Props) {
-  const [open, setOpen] = useState(false)
-  const [search, setSearch] = useState('')
+  const { open, setOpen, onEscapeKeyDown } = useTableFilterInternalContext()
   const isMobile = useIsMobile()
 
   if (isMobile) {
@@ -99,18 +103,9 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
         align="start"
         className="p-0"
         side="bottom"
-        onEscapeKeyDown={(e) => {
-          if (search) {
-            e.preventDefault()
-            setSearch('')
-          }
-        }}
+        onEscapeKeyDown={onEscapeKeyDown}
       >
-        <TableFilterValueMenu
-          filterId={filter.id}
-          values={possibleValues}
-          search={{ value: search, setValue: setSearch }}
-        />
+        <TableFilterValueMenu filterId={filter.id} values={possibleValues} />
       </PopoverContent>
     </Popover>
   )

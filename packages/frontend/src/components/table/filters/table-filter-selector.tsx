@@ -1,7 +1,5 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
-import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
 import {
   Command,
   CommandDialog,
@@ -24,8 +22,12 @@ import { FilterIcon } from '~/icons/filter'
 import { PlusIcon } from '~/icons/plus'
 import { cn } from '~/utils/cn'
 import { useTableFilterContext } from './table-filter-context'
+import {
+  TableFilterInternalContextProvider,
+  useTableFilterInternalContext,
+} from './table-filter-internal-context'
 import { TableFilterValueMenuItems } from './table-filter-value-menu'
-import type { FilterableEntry, FilterableValueId } from './types'
+import type { FilterableEntry } from './types'
 import {
   emptyStateLabel,
   filterIdToLabel,
@@ -35,42 +37,25 @@ import {
 export function TableFilterSelector({
   entries,
 }: { entries: FilterableEntry[] }) {
-  const [open, setOpen] = useState(false)
   const isMobile = useIsMobile()
-  const { track } = useTracking()
 
-  useGlobalShortcut('f', () => {
-    if (!open) {
-      setOpen(true)
-    }
-  })
-
-  useEffect(() => {
-    if (open) {
-      track('filtersOpened')
-    }
-  }, [open, track])
-
-  if (isMobile) {
-    return <MobileFilters entries={entries} open={open} setOpen={setOpen} />
-  }
-
-  return <DesktopFilters entries={entries} open={open} setOpen={setOpen} />
+  return (
+    <TableFilterInternalContextProvider>
+      {isMobile ? (
+        <MobileFilters entries={entries} />
+      ) : (
+        <DesktopFilters entries={entries} />
+      )}
+    </TableFilterInternalContextProvider>
+  )
 }
 
 function MobileFilters({
   entries,
-  open,
-  setOpen,
 }: {
   entries: FilterableEntry[]
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const [search, setSearch] = useState('')
-  const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
-    undefined,
-  )
+  const { open, setOpen } = useTableFilterInternalContext()
 
   return (
     <>
@@ -86,13 +71,7 @@ function MobileFilters({
         title={'Filters'}
         description={'Select filters to apply'}
       >
-        <Content
-          entries={entries}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          search={search}
-          setSearch={setSearch}
-        />
+        <Content entries={entries} />
       </CommandDialog>
     </>
   )
@@ -100,17 +79,16 @@ function MobileFilters({
 
 function DesktopFilters({
   entries,
-  open,
-  setOpen,
 }: {
   entries: FilterableEntry[]
-  open: boolean
-  setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-  const [search, setSearch] = useState('')
-  const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
-    undefined,
-  )
+  const { open, setOpen, onEscapeKeyDown } = useTableFilterInternalContext()
+
+  useGlobalShortcut('f', () => {
+    if (!open) {
+      setOpen(true)
+    }
+  })
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -121,25 +99,9 @@ function DesktopFilters({
         className="p-0"
         align="start"
         side="bottom"
-        onEscapeKeyDown={(e) => {
-          if (search) {
-            e.preventDefault()
-            setSearch('')
-            return
-          }
-          if (selectedId) {
-            e.preventDefault()
-            setSelectedId(undefined)
-          }
-        }}
+        onEscapeKeyDown={onEscapeKeyDown}
       >
-        <Content
-          entries={entries}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-          search={search}
-          setSearch={setSearch}
-        />
+        <Content entries={entries} />
       </PopoverContent>
     </Popover>
   )
@@ -167,16 +129,8 @@ function Trigger() {
 
 function Content({
   entries,
-  selectedId,
-  setSelectedId,
-  search,
-  setSearch,
 }: {
   entries: FilterableEntry[]
-  selectedId: FilterableValueId | undefined
-  setSelectedId: Dispatch<SetStateAction<FilterableValueId | undefined>>
-  search: string
-  setSearch: Dispatch<SetStateAction<string>>
 }) {
   const { track } = useTracking()
   const uniqFilterablesIds = uniqBy(
@@ -185,6 +139,9 @@ function Content({
   )
     .filter(notUndefined)
     .map((f) => f.id)
+
+  const { selectedId, setSelectedId, search, setSearch } =
+    useTableFilterInternalContext()
 
   return (
     <Command>
