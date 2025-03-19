@@ -112,6 +112,9 @@ function filterReducer(
         }
         return remainingFilters
       }
+      track('filterRemoved', {
+        props: { name: action.payload.id },
+      })
       return state.filter((filter) => filter.id !== action.payload.id)
     case 'setInversed':
       if (action.payload.value === true) {
