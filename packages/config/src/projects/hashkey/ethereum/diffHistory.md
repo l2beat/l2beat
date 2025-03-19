@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe2c8d77dd9185ab720f4786435097847ae328bb9
+
+# Diff at Wed, 19 Mar 2025 11:32:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f5bee350205c5e88681b9b4f350a3ec10857ea34 block: 21680579
+- current block number: 22080639
+
+## Description
+
+Ignore.
+
+## Watched changes
+
+```diff
+    contract DelayedWETH (0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.owner:
+-        "0xa31d8CDDf0D931Dfda2C9D03E35bd8b5d3A6aEC9"
++        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
+    }
+```
+
 Generated with discovered.json: 0x3dbb999518d6cda50b090d4f6007591bbacb07fb
 
 # Diff at Tue, 18 Mar 2025 08:12:53 GMT:
