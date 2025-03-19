@@ -6,69 +6,96 @@ import { TvsAmountRepository } from './repository'
 describeDatabase(TvsAmountRepository.name, (db) => {
   const repository = db.tvsAmount
 
-  describe(TvsAmountRepository.prototype.getAmounts.name, () => {
-    it('gets amounts for given configIds and timestamps', async () => {
-      await repository.insertMany([
-        tvsAmount('a', 'project1', UnixTime(100), 1n),
-        tvsAmount('b', 'project1', UnixTime(100), 2n),
-        tvsAmount('a', 'project1', UnixTime(200), 3n),
-        tvsAmount('b', 'project1', UnixTime(200), 4n),
-        tvsAmount('c', 'project2', UnixTime(100), 5n),
-        tvsAmount('c', 'project2', UnixTime(200), 6n),
-      ])
-
-      const configIds = ['a'.repeat(12), 'b'.repeat(12)]
-      const timestamps = [UnixTime(100), UnixTime(200)]
-
-      const result = await repository.getAmounts(configIds, timestamps)
-
-      expect(result.size).toEqual(2)
-      expect(result.get(UnixTime(100))?.get('a'.repeat(12))).toEqual(1n)
-      expect(result.get(UnixTime(100))?.get('b'.repeat(12))).toEqual(2n)
-      expect(result.get(UnixTime(200))?.get('a'.repeat(12))).toEqual(3n)
-      expect(result.get(UnixTime(200))?.get('b'.repeat(12))).toEqual(4n)
-    })
-
-    it('returns empty maps for timestamps with no data', async () => {
-      await repository.insertMany([
-        tvsAmount('a', 'project1', UnixTime(100), 1n),
-      ])
-
-      const configIds = ['a'.repeat(12)]
-      const timestamps = [UnixTime(100), UnixTime(200)]
-
-      const result = await repository.getAmounts(configIds, timestamps)
-
-      expect(result.size).toEqual(2)
-      expect(result.get(UnixTime(100))?.get('a'.repeat(12))).toEqual(1n)
-      expect(result.get(UnixTime(200))?.size).toEqual(0)
-    })
-  })
-
   describe(TvsAmountRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
-        tvsAmount('a', 'project1', UnixTime(100), 111n),
-        tvsAmount('b', 'project2', UnixTime(100), 222n),
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+        tvsAmount('b', 'project2', UnixTime(100), 2n),
       ]
 
-      await repository.insertMany(records)
+      const inserted = await repository.insertMany(records)
+      expect(inserted).toEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted(records)
     })
 
     it('handles empty array', async () => {
-      await expect(repository.insertMany([])).not.toBeRejected()
+      const inserted = await repository.insertMany([])
+      expect(inserted).toEqual(0)
     })
 
     it('performs batch insert when more than 1000 records', async () => {
       const records = []
       for (let i = 0; i < 1500; i++) {
-        records.push(tvsAmount('a', 'project1', UnixTime(i), 111n))
+        records.push(tvsAmount('a', 'project1', UnixTime(i), BigInt(i)))
       }
 
-      await expect(repository.insertMany(records)).not.toBeRejected()
+      const inserted = await repository.insertMany(records)
+      expect(inserted).toEqual(1500)
+    })
+  })
+
+  describe(TvsAmountRepository.prototype.getAmountsInRange.name, () => {
+    it('gets amounts for given configIds in time range', async () => {
+      await repository.insertMany([
+        tvsAmount('a', 'project1', UnixTime(50), 0n),
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+        tvsAmount('b', 'project1', UnixTime(100), 2n),
+        tvsAmount('a', 'project1', UnixTime(200), 3n),
+        tvsAmount('b', 'project1', UnixTime(200), 4n),
+        tvsAmount('c', 'project2', UnixTime(100), 5n),
+        tvsAmount('c', 'project2', UnixTime(200), 6n),
+        tvsAmount('a', 'project1', UnixTime(300), 7n),
+      ])
+
+      const configIds = ['a'.repeat(12), 'b'.repeat(12)]
+
+      const result = await repository.getAmountsInRange(
+        configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqualUnsorted([
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+        tvsAmount('b', 'project1', UnixTime(100), 2n),
+        tvsAmount('a', 'project1', UnixTime(200), 3n),
+        tvsAmount('b', 'project1', UnixTime(200), 4n),
+      ])
+    })
+
+    it('returns empty array when no data in range', async () => {
+      await repository.insertMany([
+        tvsAmount('a', 'project1', UnixTime(50), 0n),
+        tvsAmount('a', 'project1', UnixTime(300), 7n),
+      ])
+
+      const configIds = ['a'.repeat(12)]
+
+      const result = await repository.getAmountsInRange(
+        configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when no matching configIds', async () => {
+      await repository.insertMany([
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+      ])
+
+      const configIds = ['b'.repeat(12)]
+
+      const result = await repository.getAmountsInRange(
+        configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
     })
   })
 
@@ -114,21 +141,21 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
   })
 
-  function tvsAmount(
-    configId: string,
-    project: string,
-    timestamp: UnixTime,
-    amount: bigint,
-  ) {
-    return {
-      configurationId: configId.repeat(12),
-      project,
-      timestamp,
-      amount,
-    }
-  }
-
   afterEach(async () => {
     await repository.deleteAll()
   })
 })
+
+function tvsAmount(
+  configId: string,
+  project: string,
+  timestamp: UnixTime,
+  amount: bigint,
+) {
+  return {
+    configurationId: configId.repeat(12),
+    project,
+    timestamp,
+    amount,
+  }
+}

@@ -3,7 +3,7 @@ import { BaseRepository } from '../../BaseRepository'
 import { type TvsPriceRecord, toRecord, toRow } from './entity'
 
 export class TvsPriceRepository extends BaseRepository {
-  async insertMany(records: TvsPriceRecord[]) {
+  async insertMany(records: TvsPriceRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
@@ -17,7 +17,7 @@ export class TvsPriceRepository extends BaseRepository {
     configurationIds: string[],
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ) {
+  ): Promise<TvsPriceRecord[]> {
     const rows = await this.db
       .selectFrom('TvsPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
