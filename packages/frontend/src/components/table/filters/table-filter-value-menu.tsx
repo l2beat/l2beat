@@ -12,7 +12,7 @@ import { useTableFilterContext } from './table-filter-context'
 import { TableFilterValue } from './table-filter-value'
 import type { FilterableValueId } from './types'
 import { filterValuesSortFn } from './utils/filter-values-sort-fn'
-import { emtpyStateLabel, inputPlaceholder } from './utils/labels'
+import { emptyStateLabel, inputPlaceholder } from './utils/labels'
 
 interface Props {
   filterId: FilterableValueId
@@ -24,7 +24,7 @@ export function TableFilterValueMenu({ filterId, values }: Props) {
     <Command className="border border-divider">
       <CommandInput className="h-9" placeholder={inputPlaceholder(filterId)} />
       <CommandList>
-        <CommandEmpty>{emtpyStateLabel(filterId)}</CommandEmpty>
+        <CommandEmpty>{emptyStateLabel(filterId)}</CommandEmpty>
         <TableFilterValueMenuItems filterId={filterId} values={values} />
       </CommandList>
     </Command>

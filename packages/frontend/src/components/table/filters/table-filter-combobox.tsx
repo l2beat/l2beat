@@ -27,7 +27,7 @@ import { useTableFilterContext } from './table-filter-context'
 import { TableFilterValueMenuItems } from './table-filter-value-menu'
 import type { FilterableEntry, FilterableValueId } from './types'
 import {
-  emtpyStateLabel,
+  emptyStateLabel,
   filterIdToLabel,
   inputPlaceholder,
 } from './utils/labels'
@@ -40,9 +40,9 @@ export function TableFilterCombobox({
   const { track } = useTracking()
 
   useEventListener('keydown', (e) => {
-    if (e.key.toLowerCase() === 'f') {
+    if (e.key.toLowerCase() === 'f' && !open) {
       e.preventDefault()
-      setOpen((open) => !open)
+      setOpen(true)
     }
   })
 
@@ -149,7 +149,7 @@ function Content({
     <Command className="border border-divider">
       <CommandInput placeholder={inputPlaceholder(selectedId)} />
       <CommandList>
-        <CommandEmpty>{emtpyStateLabel(selectedId)}</CommandEmpty>
+        <CommandEmpty>{emptyStateLabel(selectedId)}</CommandEmpty>
         {selectedId ? (
           <TableFilterValueMenuItems
             filterId={selectedId}
