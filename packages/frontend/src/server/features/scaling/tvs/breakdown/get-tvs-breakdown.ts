@@ -47,7 +47,7 @@ export async function getTvsBreakdown(
 
   const pricesMap = new Map(prices.prices.map((x) => [x.configId, x.priceUsd]))
 
-  const contractsMap = new Map()
+  const contractsMap = new Map<string, string>()
   for (const [chainName, contracts] of Object.entries(projectContracts ?? {})) {
     for (const contract of contracts) {
       contractsMap.set(
