@@ -1,3 +1,4 @@
+import type { Server } from 'http'
 import path, { join } from 'path'
 import {
   ConfigReader,
@@ -99,7 +100,27 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
   }
 
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(`Discovery UI live on http://localhost:${port}/ui`)
   })
+
+  attachGracefulShutdown(server)
+}
+
+function shutdown(server: Server) {
+  server.close(() => {
+    process.exit(0)
+  })
+
+  setTimeout(() => {
+    console.error(
+      'Could not close connections in time, forcefully shutting down',
+    )
+    process.exit(1)
+  }, 10000)
+}
+
+function attachGracefulShutdown(server: Server) {
+  process.on('SIGTERM', () => shutdown(server))
+  process.on('SIGINT', () => shutdown(server))
 }
