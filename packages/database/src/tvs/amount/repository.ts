@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type TvsAmountRecord, toRow } from './entity'
+import { type TvsAmountRecord, toRecord, toRow } from './entity'
 
 export class TvsAmountRepository extends BaseRepository {
   async insertMany(records: TvsAmountRecord[]): Promise<number> {
@@ -11,6 +11,32 @@ export class TvsAmountRepository extends BaseRepository {
       await this.db.insertInto('TvsAmount').values(batch).execute()
     })
     return rows.length
+  }
+
+  async getAmounts(configurationIds: string[], timestamps: UnixTime[]) {
+    const from = timestamps[0]
+    const to = timestamps[timestamps.length - 1]
+    assert(from && to, 'Timestamps should not be empty')
+
+    const rows = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'project', 'amount'])
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(from))
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .execute()
+
+    const records = rows.map(toRecord)
+
+    const result = new Map(
+      timestamps.map((t) => [t, new Map<string, bigint>()]),
+    )
+
+    for (const r of records) {
+      result.get(r.timestamp)?.set(r.configurationId, r.amount)
+    }
+
+    return result
   }
 
   async deleteByConfigInTimeRange(
@@ -24,6 +50,19 @@ export class TvsAmountRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async getAll(): Promise<TvsAmountRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'project', 'amount'])
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('TvsAmount').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
