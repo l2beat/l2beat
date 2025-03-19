@@ -101,7 +101,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
 function tokenValue(
   configId: string,
-  project: string,
+  projectId: string,
   timestamp: UnixTime,
   amount: number,
   value: number,
@@ -110,7 +110,7 @@ function tokenValue(
 ) {
   return {
     configurationId: configId.repeat(12),
-    project,
+    projectId,
     timestamp,
     tokenId: configId,
     amount,
