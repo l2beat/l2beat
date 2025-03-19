@@ -58,11 +58,12 @@ function filterReducer(
       )
 
       if (existingFilter) {
+        const newValues = uniq([...existingFilter.values, action.payload.value])
         track('filterValueSelected', {
           props: {
             name: action.payload.id,
             value: action.payload.value,
-            allValues: [...existingFilter.values].sort().join(','),
+            allValues: [...newValues].sort().join(','),
             additionalFilters: state.length - 1,
           },
         })
@@ -70,7 +71,7 @@ function filterReducer(
           filter.id === action.payload.id
             ? {
                 ...filter,
-                values: uniq([...existingFilter.values, action.payload.value]),
+                values: uniq([...newValues, action.payload.value]),
               }
             : filter,
         )
