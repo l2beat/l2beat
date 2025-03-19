@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 22080686,
+  "blockNumber": 22081896,
   "configHash": "0x3b976fc1bef115648cb51fd7951081d85155eab2c4249889eaae484640363763",
   "entries": [
     {
@@ -155,10 +155,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 77125346,
-        "latestOutputIndex": 8862,
-        "nextBlockNumber": 77127146,
-        "nextOutputIndex": 8863,
+        "latestBlockNumber": 77132546,
+        "latestOutputIndex": 8866,
+        "nextBlockNumber": 77134346,
+        "nextOutputIndex": 8867,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -608,7 +608,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638908",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638910",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -758,8 +758,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 591926,
-          "prevBlockNum": 22080372
+          "prevBoughtGas": 593078,
+          "prevBlockNum": 22081766
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",

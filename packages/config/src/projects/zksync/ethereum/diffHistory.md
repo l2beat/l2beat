@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x29ffc2ad84e676d93d05b0c69515d5c3e47af229
+
+# Diff at Wed, 19 Mar 2025 15:45:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4609d8355d7594946b66bef47876090fce6b0842 block: 21365608
+- current block number: 22081893
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.7:
++        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$members.6:
+-        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
++        "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+      values.$members.5:
+-        "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
++        "0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
+      values.$members.4:
+-        "0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
++        "0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
+      values.$members.3:
+-        "0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
++        "0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
+      values.$threshold:
+-        4
++        5
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "5 of 8 (63%)"
+    }
+```
+
 Generated with discovered.json: 0x052532493c3ea8641917f1a1b54624139777c7a0
 
 # Diff at Tue, 04 Mar 2025 10:40:19 GMT:

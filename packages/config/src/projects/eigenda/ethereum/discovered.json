@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 22080637,
+  "blockNumber": 22081891,
   "configHash": "0xeec6bbf6884af58fdfa6e6b050f8dbc996fa3f28b1891978d9685f0d54744358",
   "entries": [
     {
@@ -751,7 +751,8 @@
           "0xC9E94BF890c9b4F11685d576bC65B08e0E87556F",
           "0x4ca852BD78D9B7295874A7D223023Bff011b7EB3",
           "0x328c822874991C31DdF400CD8388027Af66270A8",
-          "0x500C4E641b5d61026f26148Ab9363EB3241C08f3"
+          "0x500C4E641b5d61026f26148Ab9363EB3241C08f3",
+          "0x05006D61cA5fE53DF316802f3aC91973d4B95F99"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -1831,7 +1832,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 86952,
+        "batchId": 86977,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1863,7 +1864,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 86952,
+        "taskNumber": 86977,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
