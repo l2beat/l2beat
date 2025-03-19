@@ -30,10 +30,8 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve()
   }
 
-  async getPrice(id: string, timestamp: UnixTime): Promise<number | undefined> {
-    const price = this.prices.get(key(id, timestamp))
-
-    return await Promise.resolve(price)
+  getPrice(id: string, timestamp: UnixTime): number | undefined {
+    return this.prices.get(key(id, timestamp))
   }
 
   async writeAmount(
@@ -46,13 +44,9 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve()
   }
 
-  async getAmount(
-    id: string,
-    timestamp: UnixTime,
-  ): Promise<bigint | undefined> {
+  getAmount(id: string, timestamp: UnixTime): bigint | undefined {
     const amount = this.amounts.get(key(id, timestamp))
-
-    return await Promise.resolve(amount ? BigInt(amount) : undefined)
+    return amount ? BigInt(amount) : undefined
   }
 
   async writeBlockNumber(
