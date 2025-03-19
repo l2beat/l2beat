@@ -7,7 +7,7 @@ import { useTable } from '~/hooks/use-table'
 import { bridgesSummaryActiveColumns } from './columns'
 
 import { TableFilters } from '~/components/table/filters/table-filters'
-import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 export interface Props {
@@ -15,11 +15,11 @@ export interface Props {
 }
 
 export function BridgesSummaryTable({ entries }: Props) {
-  const includeFilters = useIncludeFilters()
+  const filterEntries = useFilterEntries()
 
   const filteredEntries = useMemo(
-    () => entries.filter(includeFilters),
-    [entries, includeFilters],
+    () => entries.filter(filterEntries),
+    [entries, filterEntries],
   )
 
   const activeTable = useTable({

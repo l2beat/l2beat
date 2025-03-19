@@ -17,7 +17,7 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableFilters } from '~/components/table/filters/table-filters'
-import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
@@ -29,14 +29,14 @@ import { ScalingLivenessTable } from './table/scaling-liveness-table'
 type Props = TabbedScalingEntries<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
-  const includeFilters = useIncludeFilters()
+  const filterEntries = useFilterEntries()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
 
   const entries = checked

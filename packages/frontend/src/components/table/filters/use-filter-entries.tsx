@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useTableFilterContext } from './table-filter-context'
 import type { FilterableEntry, FilterableValueId } from './types'
 
-export function useIncludeFilters() {
+export function useFilterEntries() {
   const { state } = useTableFilterContext()
 
   const filter = useCallback(

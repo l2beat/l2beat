@@ -19,7 +19,7 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableFilters } from '~/components/table/filters/table-filters'
-import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { UopsExplorerLink } from '../../_components/uops-explorer-link'
@@ -31,13 +31,13 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 }
 
 export function ScalingActivityTabs(props: Props) {
-  const includeFilters = useIncludeFilters()
+  const filterEntries = useFilterEntries()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
 
   const entries = checked

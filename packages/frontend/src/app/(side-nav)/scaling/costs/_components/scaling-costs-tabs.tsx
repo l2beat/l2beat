@@ -15,7 +15,7 @@ import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableFilters } from '~/components/table/filters/table-filters'
-import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { compareCosts } from '~/server/features/scaling/costs/utils/compare-stage-and-cost'
@@ -27,14 +27,14 @@ type Props = TabbedScalingEntries<ScalingCostsEntry> & {
 }
 
 export function ScalingCostsTabs(props: Props) {
-  const includeFilters = useIncludeFilters()
+  const filterEntries = useFilterEntries()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
   const entries = checked
     ? getRecategorisedEntries(filteredEntries, compareCosts)

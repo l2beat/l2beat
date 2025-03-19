@@ -6,7 +6,7 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 
 import { TableFilters } from '~/components/table/filters/table-filters'
-import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { bridgesArchivedColumns } from './columns'
 
@@ -15,11 +15,11 @@ export interface Props {
 }
 
 export function BridgesArchivedTable({ entries }: Props) {
-  const includeFilters = useIncludeFilters()
+  const filterEntries = useFilterEntries()
 
   const filteredEntries = useMemo(
-    () => entries.filter(includeFilters),
-    [entries, includeFilters],
+    () => entries.filter(filterEntries),
+    [entries, filterEntries],
   )
 
   const activeTable = useTable({
