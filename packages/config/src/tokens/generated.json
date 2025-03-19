@@ -11967,15 +11967,15 @@
       "name": "USDC",
       "coingeckoId": "bridged-usd-coin-linea",
       "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
-      "symbol": "USDC.e",
+      "symbol": "USDC",
       "decimals": 6,
       "deploymentTimestamp": 1691084270,
       "coingeckoListingTimestamp": 1692057600,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/31270/large/USDC-icon.png?1696530094",
       "chainId": 59144,
-      "source": "canonical",
-      "supply": "zero"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "USDe",

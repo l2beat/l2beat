@@ -1,3 +1,397 @@
+Generated with discovered.json: 0x81e58bda36dc4f591e0e8785b81d218806f8a90c
+
+# Diff at Tue, 18 Mar 2025 11:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 22045960
+- current block number: 22073418
+
+## Description
+
+New pessimistic rollup type added (type 10). rollupID 14 is already using (upgraded) the new type, which only changes its programVkey.
+
+The monitoring of pessimistic proofs is up and should alert in case any proofs are submitted.
+
+Current output of `l2b fetchagg`:
+
+Rollup Data Summary:
++----------+------------------------------+------------+--------+------------------+--------------+
+| RollupID | Name                         | ChainID    | ForkID | RollupTypeID     | VerifierType |
++==========+==============================+============+========+==================+==============+
+| 1        | polygon zkEVM                | 1101       | 12     | 6 (zk rollup)    | standard     |
+| 2        | astar                        | 3776       | 9      | 4 (validiumV1)   | standard     |
+| 3        | OkX X Layer                  | 196        | 13     | 8 (okx validium) | standard     |
+| 4        | OEV network (dead)           | 4913       | 9      | 4 (validiumV1)   | standard     |
+| 5        | gptprotocol.org (dead)       | 1511670449 | 9      | 4 (validiumV1)   | standard     |
+| 6        | witnesschain (dead)          | 1702448187 | 9      | 4 (validiumV1)   | standard     |
+| 7        | lumia.org                    | 994873017  | 12     | 7 (validiumV2)   | standard     |
+| 8        | pay network (wirex)          | 31415      | 9      | 4 (validiumV1)   | standard     |
+| 9        | silicon-zk testnet           | 511252203  | 9      | 4 (validiumV1)   | standard     |
+| 10       | silicon-zk                   | 2355       | 9      | 4 (validiumV1)   | standard     |
+| 11       | haust.network testnet        | 999        | 9      | 4 (validiumV1)   | standard     |
+| 12       | haust.network                | 938        | 9      | 4 (validiumV1)   | standard     |
+| 13       | ternoa.network               | 752025     | 12     | 7 (validiumV2)   | standard     |
+| 14       | cdk-sov test (z-chain/token) | 9369       | 12     | 10 (Unknown)     | pessimistic  |
+| 15       | pentagon.games/pen-chain     | 623        | 12     | 7 (validiumV2)   | standard     |
+| 16       | pentagon games testnet?      | 3344       | 12     | 7 (validiumV2)   | standard     |
++----------+------------------------------+------------+--------+------------------+--------------+
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.6:
+-        9
++        196
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.5:
+-        1
++        8
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.4:
+-        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
++        0
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.3:
+-        9369
++        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.2:
+-        "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.1:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.10.0:
+-        12
++        13
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.6:
+-        196
++        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.5:
+-        8
++        9
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.4:
+-        0
++        4
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.3:
+-        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
++        0
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.2:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        3776
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.1:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.9.0:
+-        13
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.8.6:
+-        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
++        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.8.2:
+-        3776
++        1511670449
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.7.6:
+-        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
++        9
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.7.5:
+-        9
++        4
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.7.4:
+-        4
++        0
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.7.3:
+-        0
++        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.7.2:
+-        1511670449
++        2355
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.3:
+-        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
++        4913
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.2:
+-        2355
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.6.1:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x88AaB361f108C3c959F2928Da3cD8e47298016B5"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.5.6:
+-        9
++        1702448187
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.5.5:
+-        4
++        9
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.5.4:
+-        0
++        4
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.5.3:
+-        4913
++        0
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.5.1:
+-        "0x88AaB361f108C3c959F2928Da3cD8e47298016B5"
++        "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.6:
+-        1702448187
++        7
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.5:
+-        9
++        0
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.4:
+-        4
++        752025
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.3:
+-        0
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.1:
+-        "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.4.0:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        12
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.3.4:
+-        752025
++        "0xb1714954bBc0162A36FB44934F3216aCE81C40d7"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.3.3:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        3344
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.3.2:
+-        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.6:
+-        7
++        1
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.5:
+-        0
++        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.4:
+-        "0xb1714954bBc0162A36FB44934F3216aCE81C40d7"
++        9369
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.3:
+-        3344
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.2:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        12
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.1:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        10
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.2.0:
+-        12
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+      values.rollupTypeCount:
+-        9
++        10
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.9:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",8,0,false,"0x0000000000000000000000000000000000000000000000000000000000000000"]
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.8.5:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.8.3:
+-        8
++        7
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.8.1:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.5:
+-        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.4:
+-        false
++        9
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.3:
+-        7
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.2:
+-        0
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.1:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.2:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.1:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.4:
+-        9
++        1
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.3:
+-        0
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.2:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.1:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.0:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.4:
+-        1
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.3:
+-        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.2:
+-        "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.1:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.0:
+-        12
++        11
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.3:
+-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.2:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.0:
+-        11
++        13
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.4:
+-        0
++        1
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.3:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.2:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.1:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.0:
+-        13
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+    }
+```
+
 Generated with discovered.json: 0xa8ec986290e4a149c272cd400de0cfeaa16df3cf
 
 # Diff at Fri, 14 Mar 2025 15:19:06 GMT:
