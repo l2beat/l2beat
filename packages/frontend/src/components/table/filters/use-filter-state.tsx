@@ -1,6 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
@@ -170,8 +170,8 @@ export function useFilterState() {
 }
 
 function useFilterUrlState(): FilterState {
-  const searchParams = useSearchParams()
-  const filters = searchParams.get('filters')
+  const params = new URLSearchParams(window.location.search)
+  const filters = params.get('filters')
   if (!filters) return {}
   return FilterState.catch({}).parse(JSON.parse(filters))
 }
