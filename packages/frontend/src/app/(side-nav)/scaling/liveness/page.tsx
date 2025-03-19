@@ -1,9 +1,8 @@
-import { MainPageHeader } from '~/components/main-page-header'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { LivenessHeader } from './_components/liveness-header'
 import { LivenessTimeRangeContextProvider } from './_components/liveness-time-range-context'
-import { LivenessWarning } from './_components/liveness-warning'
 import { ScalingLivenessTables } from './_components/scaling-liveness-tables'
 
 export const metadata = getDefaultMetadata({
@@ -18,8 +17,7 @@ export default async function Page() {
   return (
     <>
       <LivenessTimeRangeContextProvider>
-        <MainPageHeader>Liveness</MainPageHeader>
-        <LivenessWarning />
+        <LivenessHeader />
         <TableFilterContextProvider>
           <ScalingLivenessTables {...entries} />
         </TableFilterContextProvider>

@@ -1,9 +1,8 @@
-import { MainPageHeader } from '~/components/main-page-header'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { FinalityHeader } from './_components/finality-header'
 import { ScalingFinalityTables } from './_components/scaling-finality-tables'
-import { FinalityWarning } from './_components/warning'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -16,8 +15,7 @@ export default async function Page() {
 
   return (
     <>
-      <MainPageHeader>Finality</MainPageHeader>
-      <FinalityWarning />
+      <FinalityHeader />
       <TableFilterContextProvider>
         <ScalingFinalityTables {...entries} />
       </TableFilterContextProvider>

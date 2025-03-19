@@ -1,9 +1,9 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { MainPageHeader } from '~/components/main-page-header'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { CostsHeader } from './_components/costs-header'
 import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
@@ -32,7 +32,7 @@ export default async function Page() {
         <CostsTimeRangeContextProvider>
           <CostsUnitContextProvider>
             <CostsMetricContextProvider>
-              <MainPageHeader>Onchain costs</MainPageHeader>
+              <CostsHeader />
               <ScalingCostsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
             </CostsMetricContextProvider>
           </CostsUnitContextProvider>

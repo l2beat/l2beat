@@ -45,7 +45,7 @@ const DrawerContent = ({
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-2xl bg-gray-100 outline-none dark:bg-zinc-700',
+        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-2xl bg-surface-primary outline-none dark:bg-surface-secondary',
         className,
       )}
       {...props}
@@ -99,7 +99,7 @@ const DrawerDescription = ({
 }: React.ComponentProps<typeof DrawerPrimitive.Description>) => (
   <DrawerPrimitive.Description
     ref={ref}
-    className={cn('text-sm', className)}
+    className={cn('text-xs', className)}
     {...props}
   />
 )
