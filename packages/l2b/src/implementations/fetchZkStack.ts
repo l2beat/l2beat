@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { ethers } from 'ethers'
+import { formatAsAsciiTable } from '@l2beat/shared-pure'
 
 // Interface definitions
 interface TokenAddressMap {
@@ -90,7 +91,7 @@ export class ZkStackDataFetcher {
     { key: 'baseTokenName', header: 'gas token' },
     { key: 'pubdataModeName', header: 'DA' },
     { key: 'protocolVersion', header: 'v' },
-    { key: 'totalBlocksExecuted', header: 'blocks executed' },
+    { key: 'totalBlocksExecuted', header: 'executed' },
   ]
 
   // ABIs - separated for easy maintenance
@@ -117,72 +118,16 @@ export class ZkStackDataFetcher {
     // Extract headers from tableFields
     const headers = this.tableFields.map((field) => field.header)
 
-    // Create table data with headers
-    const tableData: string[][] = [headers]
-
-    // Fill in rows based on configured fields
-    data.forEach((item) => {
-      const row = this.tableFields.map((field) => {
+    // Create rows of data
+    const rows = data.map((item) => 
+      this.tableFields.map((field) => {
         const value = item[field.key]
         return value !== undefined ? String(value) : 'N/A'
       })
-      tableData.push(row)
-    })
+    )
 
-    // Calculate column widths
-    const columnWidths: number[] = []
-    for (const row of tableData) {
-      for (let colIndex = 0; colIndex < row.length; colIndex++) {
-        const cellLength = row[colIndex].length
-        if (!columnWidths[colIndex] || cellLength > columnWidths[colIndex]) {
-          columnWidths[colIndex] = cellLength
-        }
-      }
-    }
-
-    // Create the table
-    let result = ''
-
-    // Helper function to create a horizontal border
-    const createBorder = (char: string): string => {
-      let border = '+'
-      for (const width of columnWidths) {
-        border += char.repeat(width + 2) + '+'
-      }
-      return border + '\n'
-    }
-
-    // Top border
-    result += createBorder('-')
-
-    // Header row
-    if (tableData.length > 0) {
-      const headerRow = tableData[0]
-      result += '| '
-      for (let i = 0; i < headerRow.length; i++) {
-        const cell = headerRow[i]
-        result += cell.padEnd(columnWidths[i]) + ' | '
-      }
-      result = result.trimEnd() + '\n'
-
-      // Header separator
-      result += createBorder('=')
-    }
-
-    // Data rows
-    for (let i = 1; i < tableData.length; i++) {
-      result += '| '
-      for (let j = 0; j < tableData[i].length; j++) {
-        const cell = tableData[i][j]
-        result += cell.padEnd(columnWidths[j]) + ' | '
-      }
-      result = result.trimEnd() + '\n'
-    }
-
-    // Bottom border
-    result += createBorder('-')
-
-    return result
+    // Use the imported formatAsAsciiTable function
+    return formatAsAsciiTable(headers, rows)
   }
 
   // Helper functions
