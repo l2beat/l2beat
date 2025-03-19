@@ -1,8 +1,8 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 21872493,
-  "configHash": "0x7ff55e8b9c31fbdb0e246f49cac59249c3939a201a030e915becdcda13ce3ce7",
+  "blockNumber": 22080686,
+  "configHash": "0x3b976fc1bef115648cb51fd7951081d85155eab2c4249889eaae484640363763",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -13,51 +13,6 @@
       "address": "0x00da2F87c56C3a19BD863613995705095F55b524",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PauserRegistry",
-      "address": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
-      ],
-      "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-          "description": "defines addresses that can pause or unpause ability to invest into strategies."
-        },
-        {
-          "permission": "interact",
-          "from": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
-          "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
-        },
-        {
-          "permission": "interact",
-          "from": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
-          "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
-        }
-      ],
-      "sinceTimestamp": 1687930847,
-      "sinceBlock": 17575800,
-      "values": {
-        "$immutable": true,
-        "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      }
-    },
-    {
-      "address": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
     },
     {
       "name": "MantleTokenProxyAdmin",
@@ -84,240 +39,9 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "name": "BLSRegistry",
-      "address": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x25c9049ce3c6e3d0fb455a5ceecf01cc2d9a92f415e869786ef2f2221e85b803"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
-          "description": "sign data commitments for the DA bridge.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        }
-      ],
-      "sinceTimestamp": 1687932047,
-      "sinceBlock": 17575899,
-      "values": {
-        "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-        "$implementation": "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T06:00:47.000Z",
-            "0x9d5d1ea782248f506d764d83e7cbf9f5f3b612481d064348e55e2b9192b6202b",
-            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
-          ],
-          [
-            "2023-06-28T06:05:35.000Z",
-            "0x43792ca3e5547575169e63a6c3d65cb80aea4d078f8b74c67e0db11a14d64012",
-            ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
-        "forceDeregister": "0x0000000000000000000000000000000000000000",
-        "getApkUpdatesLength": 11,
-        "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-        "minimumStakeFirstQuorum": 0,
-        "minimumStakeSecondQuorum": 0,
-        "NUMBER_OF_QUORUMS": 2,
-        "numOperators": 10,
-        "operatorList": [
-          "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
-          "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
-          "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
-          "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
-          "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
-          "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
-          "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
-          "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
-          "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
-          "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645"
-        ],
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "pubkeyCompendium": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-        "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-        "strategiesConsideredAndMultipliersLength": [1, 1],
-        "totalStake": ["1000000000000000000000000", 0]
-      }
-    },
-    {
       "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "description": "can register or change status of DA node operators."
-        }
-      ]
-    },
-    {
-      "name": "InvestmentManager",
-      "address": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x943049d488a42420a15934ca27ae2fc159c395727536ee64c38afdde4215c561"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-          "description": "defines addresses that can pause or unpause ability to invest into strategies.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        }
-      ],
-      "sinceTimestamp": 1687930955,
-      "sinceBlock": 17575809,
-      "values": {
-        "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-        "$implementation": "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:42:35.000Z",
-            "0xeb7dc422709447d9ec652639cd04c817fe931d17a444f63c347c26b76aa64720",
-            ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
-          ],
-          [
-            "2023-06-28T05:46:11.000Z",
-            "0xdbf4832652157cf7ac7025536a4ea46c98eb9ea0fd8aea5d9806ae0a88ec037f",
-            ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
-        "DEPOSIT_TYPEHASH": "0x0a564d4cfe5cb0d4ee082aab2ca54b8c48e129485a8f7c77766ab5ef0c3566f1",
-        "DOMAIN_SEPARATOR": "0x627966d4b435c9739b026674b0008753c43eab794919a4e448cc20b36816c5e1",
-        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-        "paused": 0,
-        "pauserRegistry": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xA937660031787C4408587D2c6A67Ec4B260630F5"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
-        }
-      ],
-      "sinceTimestamp": 1687930823,
-      "sinceBlock": 17575798,
-      "values": {
-        "$immutable": true,
-        "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      }
+      "proxyType": "EOA"
     },
     {
       "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
@@ -370,7 +94,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 111,
+        "nonce": 114,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -431,10 +155,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 75868946,
-        "latestOutputIndex": 8164,
-        "nextBlockNumber": 75870746,
-        "nextOutputIndex": 8165,
+        "latestBlockNumber": 77125346,
+        "latestOutputIndex": 8862,
+        "nextBlockNumber": 77127146,
+        "nextOutputIndex": 8863,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -569,7 +293,7 @@
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
         "scalar": 10000,
-        "sequencerInbox": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+        "sequencerInbox": "0xFFEEDDCcBbAA0000000000000000000000000000",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
         "version": "1.3.0",
@@ -584,44 +308,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "ProxyAdmin",
-      "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
-        }
-      ],
-      "sinceTimestamp": 1687931879,
-      "sinceBlock": 17575885,
-      "values": {
-        "$immutable": true,
-        "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      }
-    },
-    {
       "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -630,23 +316,6 @@
       "address": "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PauserRegistry2",
-      "address": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x8fa8f20d7c33aea934963671e5ac4fc1d3b586d40deb93cc4768d4a6ef323662"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1687931903,
-      "sinceBlock": 17575887,
-      "values": {
-        "$immutable": true,
-        "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      },
-      "derivedName": "PauserRegistry"
     },
     {
       "name": "MantleSecurityMultisig",
@@ -703,16 +372,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
         },
@@ -734,69 +393,17 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
         },
         {
           "permission": "upgrade",
-          "from": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        },
-        {
-          "permission": "upgrade",
           "from": "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
         }
       ],
       "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
-        },
-        {
-          "permission": "act",
-          "from": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
-        },
         {
           "permission": "act",
           "from": "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F",
@@ -844,153 +451,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EigenDataLayerChain",
-      "address": "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x63677738b5ca073872cd350783b51e6dcd4bf6469f02eadf4cead9aef171c781",
-        "0x5333d2d13f53d445ff99fbe5845e2658fbafd68944683fb56a2644d76e5a4f36"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": []
-        }
-      ],
-      "ignoreInWatchMode": [
-        "getL2ConfirmedBlockNumber",
-        "getL2StoredBlockNumber",
-        "l2ConfirmedBlockNumber",
-        "l2StoredBlockNumber",
-        "rollupBatchIndex"
-      ],
-      "sinceTimestamp": 1688282303,
-      "sinceBlock": 17604795,
-      "values": {
-        "$admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-        "$implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
-        "$pastUpgrades": [
-          [
-            "2023-07-02T07:18:23.000Z",
-            "0x2b2bda7f01a3baec5d0e7b369e36172365d35b9eb9137c074d3260308c838ce8",
-            ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "BLOCK_STALE_MEASURE": 500,
-        "dataManageAddress": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-        "FRAUD_STRING": "0x2d2d5468697320697320612062616420737472696e672e204e6f626f64792073617973207468697320737472696e672e2d2d",
-        "fraudProofPeriod": 3600,
-        "getL2ConfirmedBlockNumber": 61171945,
-        "getL2StoredBlockNumber": 61171945,
-        "l2ConfirmedBlockNumber": 61171945,
-        "l2StoredBlockNumber": 61171945,
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "reRollupIndex": 0,
-        "reSubmitterAddress": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
-        "rollupBatchIndex": 21045,
-        "sequencer": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
-      },
-      "derivedName": "BVM_EigenDataLayrChain"
-    },
-    {
-      "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
       "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "DataLayrServiceManager",
-      "address": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xf52658c0dbe857c858ac93c9c3dad449fff36d7e6454b67ac61a5bf3dcecca30"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "This contract is the main entry point for data availability. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        }
-      ],
-      "ignoreInWatchMode": ["dataStoresForDuration"],
-      "sinceTimestamp": 1687931975,
-      "sinceBlock": 17575893,
-      "values": {
-        "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-        "$implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:59:35.000Z",
-            "0x09367d337ef0395ea117d413b4a06a2dca0e5e7e1f4e40270716e26dfe750a35",
-            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
-          ],
-          [
-            "2023-06-28T06:04:23.000Z",
-            "0x8c0b0f089bb73496f62f5676329337f1c6df8c9678fced830fb8ae25573c04e0",
-            ["0xAB42127980a3bff124E6465e097a5fC97228827e"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "adversaryThresholdBasisPoints": 4000,
-        "BIP_MULTIPLIER": 10000,
-        "BLOCK_STALE_MEASURE": 150,
-        "collateralToken": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "confirmDataStoreTimeout": 1800,
-        "dataLayrBombVerifier": "0x0000000000000000000000000000000000000000",
-        "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
-        "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "dataStoresForDuration": {
-          "one_duration": 52546,
-          "two_duration": 0,
-          "three_duration": 0,
-          "four_duration": 0,
-          "five_duration": 0,
-          "six_duration": 0,
-          "seven_duration": 0,
-          "dataStoreId": 52547,
-          "latestTime": 1739875859
-        },
-        "DURATION_SCALE": 3600,
-        "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
-        "feePerBytePerTime": 1,
-        "feeSetter": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-        "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-        "log2NumPowersOfTau": 0,
-        "MAX_DATASTORE_DURATION": 7,
-        "MIN_DATASTORE_DURATION": 1,
-        "NUM_DS_PER_BLOCK_PER_DURATION": 20,
-        "numPowersOfTau": 0,
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "paused": 0,
-        "pauserRegistry": "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0",
-        "quorumThresholdBasisPoints": 9000,
-        "registry": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
-      }
-    },
-    {
       "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1142,7 +608,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638139",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638908",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1185,96 +651,9 @@
       "derivedName": "Lib_AddressManager"
     },
     {
-      "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "address": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
       "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "PubkeyCompendium",
-      "address": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x8ae883de7991fc1ec2291f58deabd148cec4b61384f2eafa6c703304b9a2c757"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        }
-      ],
-      "sinceTimestamp": 1687931999,
-      "sinceBlock": 17575895,
-      "values": {
-        "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-        "$implementation": "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:59:59.000Z",
-            "0x09d04d4b63ad6b712ebdfb04212905e21e2c64b5ba19cf01bfcc07d66dd652fb",
-            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
-          ],
-          [
-            "2023-06-28T06:04:47.000Z",
-            "0x50bd8f78f61dc27f5c2359db587111c67e23cc9de4703a0c8e1657b351461e53",
-            ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "IS_TEST": false,
-        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
-      },
-      "derivedName": "BLSPublicKeyCompendium"
     },
     {
       "name": "L1StandardBridge",
@@ -1317,146 +696,14 @@
       "proxyType": "EOA"
     },
     {
-      "name": "MantleSecondStrat",
-      "address": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Basic do-nothing investment strategy.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-          "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        }
-      ],
-      "sinceTimestamp": 1687931291,
-      "sinceBlock": 17575837,
-      "values": {
-        "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-        "$implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:48:11.000Z",
-            "0xfbe66fac37b117b0700dd1c6711a91362ebf626904438f6f6c336b28db471d76",
-            ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
-        "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-        "minDeposit": "10000000000000000000",
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "paused": 0,
-        "pauserRegistry": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-        "totalShares": 0,
-        "underlyingToken": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
-      },
-      "derivedName": "InvestmentStrategyBase"
-    },
-    {
       "address": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
-      "name": "RegistryPermission",
-      "address": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xc65400995a550bff2a6272beee2e54f8cf8f9369406fe8531bd5d39add1635b7"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-          "description": "can register or change status of DA node operators.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        }
-      ],
-      "sinceTimestamp": 1687930979,
-      "sinceBlock": 17575811,
-      "values": {
-        "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-        "$implementation": "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:42:59.000Z",
-            "0x2cd887c0e49e302ecc909ae1ef5987405940228e4cae643f191801919e08a235",
-            ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
-          ],
-          [
-            "2023-06-28T05:46:35.000Z",
-            "0x199dbe55b2c0f54e8fa60a1eebcac985184a17b405e277c1abde3e8bd9524436",
-            ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "dataStorePermission": [
-          "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
-          "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
-        ],
-        "deregisterOperatorPermission": [],
-        "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-        "permissionPerson": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-        "registerOperatorPermission": [
-          "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
-          "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
-          "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
-          "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
-          "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
-          "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
-          "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
-          "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
-          "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
-          "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"
-        ]
-      }
-    },
-    {
       "address": "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
     },
     {
       "address": "0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
@@ -1512,53 +759,13 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 591926,
-          "prevBlockNum": 21872105
+          "prevBlockNum": 22080372
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "name": "DataLayrChallenge",
-      "address": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xe8b1ba037124dea50d3eec5112ed3b8507e29739b723810a9f6f00976b9e2d08"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        }
-      ],
-      "sinceTimestamp": 1687932023,
-      "sinceBlock": 17575897,
-      "values": {
-        "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-        "$implementation": "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T06:00:23.000Z",
-            "0xb95bdea06d55863c8b2e41ca71ab8dbe459408d0017f2bbdfaef7e1bf30fbad1",
-            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
-          ],
-          [
-            "2023-06-28T06:05:11.000Z",
-            "0x957f5ec20d401a1a74111cb01b0f840afea478a31759b127b37ab8b7faaebb2d",
-            ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "challengeUtils": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
-        "dataLayrServiceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-        "dlRegistry": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-        "pairingGasLimit": 500000
-      }
     },
     {
       "name": "ProxyAdmin",
@@ -1603,107 +810,6 @@
       }
     },
     {
-      "name": "MantleFirstStrat",
-      "address": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x20018f70ed5942c8b643f26e7f19c6d30f27dead8e6eb6f1127d87a2f2a04589"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Basic do-nothing investment strategy.",
-      "issuedPermissions": [
-        {
-          "permission": "interact",
-          "to": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-          "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        }
-      ],
-      "sinceTimestamp": 1687931243,
-      "sinceBlock": 17575833,
-      "values": {
-        "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-        "$implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:47:23.000Z",
-            "0x4a9c5808169c5a6fabfae05048c44c24dfb04d48815357a215a5af3809123f4f",
-            ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
-        "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-        "minDeposit": "10000000000000000000",
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "paused": 0,
-        "pauserRegistry": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-        "totalShares": "1000000000000000000000000",
-        "underlyingToken": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
-      },
-      "derivedName": "InvestmentStrategyBase"
-    },
-    {
-      "name": "DataLayrChallengeUtils",
-      "address": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x9dc36b80e92cea40c02d3b9d2684d85d4141dcab44cf882b91cf3148476432ee"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb" }]
-        }
-      ],
-      "sinceTimestamp": 1687931951,
-      "sinceBlock": 17575891,
-      "values": {
-        "$admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
-        "$implementation": "0xd8d731624d97a66e012E62208cFc921d7033c564",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:59:11.000Z",
-            "0xfa65c0cef1bde23cdca16d9863bf43a83579f73cb40199ed18bda7e4853033df",
-            ["0x4b64d1Fd7cf1230468AEdF3a401cFe74cA9B366f"]
-          ],
-          [
-            "2023-06-28T06:03:47.000Z",
-            "0xdde13172352499d10a1ff109d22d19980be5b84634ac36b003b0fb25eaf54508",
-            ["0xd8d731624d97a66e012E62208cFc921d7033c564"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "getZeroPolyMerkleRoot": [
-          "0xe82cea94884b1b895ea0742840a3b19249a723810fd1b04d8564d675b0a416f1",
-          "0x4843774a80fc8385b31024f5bd18b42e62de439206ab9468d42d826796d41f67",
-          "0x4843774a80fc8385b31024f5bd18b42e62de439206ab9468d42d826796d41f67",
-          "0x092d3e5f87f5293e7ab0cc2ca6b0b5e4adb5e0011656544915f7cea34e69e5ab"
-        ]
-      }
-    },
-    {
-      "address": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
-          "description": "sign data commitments for the DA bridge."
-        }
-      ]
-    },
-    {
       "address": "0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1714,51 +820,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Delegation",
-      "address": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xa961eebaaac6cb33d38501294b0f98165b96d04af2f99311bd99b282798990be"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
-          "via": [{ "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83" }]
-        }
-      ],
-      "sinceTimestamp": 1687930907,
-      "sinceBlock": 17575805,
-      "values": {
-        "$admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
-        "$implementation": "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",
-        "$pastUpgrades": [
-          [
-            "2023-06-28T05:41:47.000Z",
-            "0xccf37452298ddc5f50e741118a64f4ee4b8ff9d1ea7c60bda84bf22a3c11a719",
-            ["0xa288E750401E6d15A62e3400C87d3ee331650a0C"]
-          ],
-          [
-            "2023-06-28T05:45:11.000Z",
-            "0x609574ecb43797c58ee51ad0c87bdf5dc9f1b6a21f72406c1679f579bb865e5d",
-            ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "DELEGATION_TYPEHASH": "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c",
-        "DOMAIN_SEPARATOR": "0xbc7bcb096dfed433b8cff98aee0d5bcc22202e4870ee9b36c93c2fb0303b87e6",
-        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
-        "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "paused": 0,
-        "pauserRegistry": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
-        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
-      },
-      "derivedName": "EigenLayrDelegation"
-    },
-    {
       "address": "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1767,78 +828,15 @@
       "address": "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xFFEEDDCcBbAA0000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x075a48633dc6845f92339741E9c96b88f1b2A86f": [
-      "constructor(address _pauser, address _unpauser)",
-      "event PauserChanged(address previousPauser, address newPauser)",
-      "event UnpauserChanged(address previousUnpauser, address newUnpauser)",
-      "function pauser() view returns (address)",
-      "function setPauser(address newPauser)",
-      "function setUnpauser(address newUnpauser)",
-      "function unpauser() view returns (address)"
-    ],
     "0x0cac2B1a172ac24012621101634DD5ABD6399ADd": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72": [
-      "constructor(address _permissionManager)",
-      "event NewPubkeyRegistration(address operator, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2)",
-      "event log(string)",
-      "event log_address(address)",
-      "event log_bytes(bytes)",
-      "event log_bytes32(bytes32)",
-      "event log_int(int256)",
-      "event log_named_address(string key, address val)",
-      "event log_named_bytes(string key, bytes val)",
-      "event log_named_bytes32(string key, bytes32 val)",
-      "event log_named_decimal_int(string key, int256 val, uint256 decimals)",
-      "event log_named_decimal_uint(string key, uint256 val, uint256 decimals)",
-      "event log_named_int(string key, int256 val)",
-      "event log_named_string(string key, string val)",
-      "event log_named_uint(string key, uint256 val)",
-      "event log_string(string)",
-      "event log_uint(uint256)",
-      "event logs(bytes)",
-      "function IS_TEST() view returns (bool)",
-      "function failed() returns (bool)",
-      "function operatorToPubkeyHash(address) view returns (bytes32)",
-      "function permissionManager() view returns (address)",
-      "function pubkeyHashToOperator(bytes32) view returns (address)",
-      "function registerBLSPublicKey(uint256 s, tuple(uint256 X, uint256 Y) rPoint, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2)"
-    ],
-    "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x23754725a49c0f003C349A6C7869fF8609a7CEfd": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1878,119 +876,8 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x47D58744D8515d9aaEAf961bc03625118bd91EBb": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0": [
-      "constructor(address _pauser, address _unpauser)",
-      "event PauserChanged(address previousPauser, address newPauser)",
-      "event UnpauserChanged(address previousUnpauser, address newUnpauser)",
-      "function pauser() view returns (address)",
-      "function setPauser(address newPauser)",
-      "function setUnpauser(address newUnpauser)",
-      "function unpauser() view returns (address)"
-    ],
     "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f": [
       "constructor(address _singleton)"
-    ],
-    "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad": [
-      "constructor(address _investmentManager, address _serviceManager, uint8 _NUMBER_OF_QUORUMS, address _pubkeyCompendium, address _permissionManager, address _forceDeregister)",
-      "event Deregistration(address operator, address swapped, tuple(uint256 X, uint256 Y) pk, bytes32 apkHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Registration(address indexed operator, bytes32 pkHash, tuple(uint256 X, uint256 Y) pk, uint32 apkHashIndex, bytes32 apkHash, string socket)",
-      "event SocketUpdate(address operator, string socket)",
-      "event StakeUpdate(address operator, uint96 firstQuorumStake, uint96 secondQuorumStake, uint32 updateBlockNumber, uint32 prevUpdateBlockNumber)",
-      "event StrategyAddedToQuorum(uint256 indexed quorumNumber, address strategy)",
-      "event StrategyRemovedFromQuorum(uint256 indexed quorumNumber, address strategy)",
-      "function NUMBER_OF_QUORUMS() view returns (uint256)",
-      "function addStrategiesConsideredAndMultipliers(uint256 quorumNumber, tuple(address strategy, uint96 multiplier)[] _newStrategiesConsideredAndMultipliers)",
-      "function apk() view returns (uint256 X, uint256 Y)",
-      "function apkHashes(uint256 index) view returns (bytes32)",
-      "function apkUpdateBlockNumbers(uint256 index) view returns (uint32)",
-      "function apkUpdates(uint256 index) view returns (tuple(bytes32 apkHash, uint32 blockNumber))",
-      "function checkOperatorActiveAtBlockNumber(address operator, uint256 blockNumber, uint256 stakeHistoryIndex) view returns (bool)",
-      "function checkOperatorInactiveAtBlockNumber(address operator, uint256 blockNumber, uint256 stakeHistoryIndex) view returns (bool)",
-      "function delegation() view returns (address)",
-      "function deregisterOperator(tuple(uint256 X, uint256 Y) pkToRemove, uint32 index) returns (bool)",
-      "function firstQuorumStakedByOperator(address operator) view returns (uint96)",
-      "function forceDeregister() view returns (address)",
-      "function forceDeregisterOperator(tuple(uint256 X, uint256 Y) pkToRemove, address operator, uint32 index) returns (bool)",
-      "function getApkUpdatesLength() view returns (uint256)",
-      "function getCorrectApkHash(uint256 index, uint32 blockNumber) view returns (bytes32)",
-      "function getFromTaskNumberForOperator(address operator) view returns (uint32)",
-      "function getLengthOfPubkeyHashIndexHistory(bytes32 pubkeyHash) view returns (uint256)",
-      "function getLengthOfPubkeyHashStakeHistory(bytes32 pubkeyHash) view returns (uint256)",
-      "function getLengthOfTotalOperatorsHistory() view returns (uint256)",
-      "function getLengthOfTotalStakeHistory() view returns (uint256)",
-      "function getMostRecentStakeByOperator(address operator) view returns (tuple(uint32 updateBlockNumber, uint32 nextUpdateBlockNumber, uint96 firstQuorumStake, uint96 secondQuorumStake))",
-      "function getOperatorIndex(address operator, uint32 blockNumber, uint32 index) view returns (uint32)",
-      "function getOperatorPubkeyHash(address operator) view returns (bytes32)",
-      "function getStakeFromPubkeyHashAndIndex(bytes32 pubkeyHash, uint256 index) view returns (tuple(uint32 updateBlockNumber, uint32 nextUpdateBlockNumber, uint96 firstQuorumStake, uint96 secondQuorumStake))",
-      "function getStakeHistoryLength(bytes32 pubkeyHash) view returns (uint256)",
-      "function getTotalOperators(uint32 blockNumber, uint32 index) view returns (uint32)",
-      "function getTotalStakeFromIndex(uint256 index) view returns (tuple(uint32 updateBlockNumber, uint32 nextUpdateBlockNumber, uint96 firstQuorumStake, uint96 secondQuorumStake))",
-      "function initialize(uint256[] _quorumBips, address initialOwner, tuple(address strategy, uint96 multiplier)[] _firstQuorumStrategiesConsideredAndMultipliers, tuple(address strategy, uint96 multiplier)[] _secondQuorumStrategiesConsideredAndMultipliers)",
-      "function investmentManager() view returns (address)",
-      "function isActiveOperator(address operator) view returns (bool)",
-      "function minimumStakeFirstQuorum() view returns (uint128)",
-      "function minimumStakeSecondQuorum() view returns (uint128)",
-      "function numOperators() view returns (uint32)",
-      "function operatorList(uint256) view returns (address)",
-      "function operatorStakes(address operator) view returns (uint96, uint96)",
-      "function owner() view returns (address)",
-      "function permissionManager() view returns (address)",
-      "function pubkeyCompendium() view returns (address)",
-      "function pubkeyHashToIndexHistory(bytes32, uint256) view returns (uint32 toBlockNumber, uint32 index)",
-      "function pubkeyHashToStakeHistory(bytes32, uint256) view returns (uint32 updateBlockNumber, uint32 nextUpdateBlockNumber, uint96 firstQuorumStake, uint96 secondQuorumStake)",
-      "function quorumBips(uint256) view returns (uint256)",
-      "function registerOperator(uint8 operatorType, tuple(uint256 X, uint256 Y) pk, string socket)",
-      "function registry(address) view returns (bytes32 pubkeyHash, uint32 fromTaskNumber, uint8 status)",
-      "function removeStrategiesConsideredAndMultipliers(uint256 quorumNumber, address[] _strategiesToRemove, uint256[] indicesToRemove)",
-      "function renounceOwnership()",
-      "function secondQuorumStakedByOperator(address operator) view returns (uint96)",
-      "function serviceManager() view returns (address)",
-      "function setForceDeregister(address _forceDeregister)",
-      "function setMinimumStakeFirstQuorum(uint128 _minimumStakeFirstQuorum)",
-      "function setMinimumStakeSecondQuorum(uint128 _minimumStakeSecondQuorum)",
-      "function strategiesConsideredAndMultipliers(uint256, uint256) view returns (address strategy, uint96 multiplier)",
-      "function strategiesConsideredAndMultipliersLength(uint256 quorumNumber) view returns (uint256)",
-      "function totalOperatorsHistory(uint256) view returns (uint32 toBlockNumber, uint32 index)",
-      "function totalStake() view returns (uint96, uint96)",
-      "function transferOwnership(address newOwner)",
-      "function updateSocket(string newSocket)",
-      "function updateStakes(address[] operators, uint256[] prevElements)",
-      "function weightOfOperator(address operator, uint256 quorumNumber) returns (uint96)"
     ],
     "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
@@ -2078,66 +965,6 @@
       "function unsafeBlockSigner() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066": [
-      "constructor(address _dataLayrServiceManager, address _dlRegistry, address _challengeUtils)",
-      "event Initialized(uint8 version)",
-      "event SuccessfulLowDegreeChallenge(bytes32 indexed headerHash, address challenger)",
-      "function challengeLowDegreenessProof(bytes header, tuple(uint256[2] X, uint256[2] Y) potElement, bytes potMerkleProof, tuple(tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata, uint8 duration, uint256 timestamp, uint32 index) dataStoreSearchData, tuple(bytes32[] nonSignerPubkeyHashes, uint256 signedStakeFirstQuorum, uint256 signedStakeSecondQuorum) signatoryRecord)",
-      "function challengeUtils() view returns (address)",
-      "function dataLayrServiceManager() view returns (address)",
-      "function dlRegistry() view returns (address)",
-      "function freezeOperatorsForLowDegreeChallenge(tuple(address signerAddress, uint32 operatorHistoryIndex)[] nonSignerExclusionProofs, uint256 nonSignerIndex, tuple(tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata, uint8 duration, uint256 timestamp, uint32 index) searchData, tuple(bytes32[] nonSignerPubkeyHashes, uint256 signedStakeFirstQuorum, uint256 signedStakeSecondQuorum) signatoryRecord)",
-      "function lowDegreeChallenges(bytes32) view returns (address challenger, uint8 status)",
-      "function pairingGasLimit() view returns (uint256)",
-      "function verifyLowDegreenessProof(bytes header, tuple(uint256[2] X, uint256[2] Y) potElement, bytes potMerkleProof, tuple(uint256 X, uint256 Y) lowDegreenessProof) view returns (bool)",
-      "function verifyZeroPaddingProof(bytes header, tuple(uint256 X, uint256 Y) paddingProof, tuple(uint256 X, uint256 Y) paddingQuotientPolyCommit) returns (bool)"
-    ],
-    "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E": [
-      "constructor(address _delegation, address _permissionManager)",
-      "event DelegatorWithdrawal(address indexed withdrawer, address[] strategies, address[] tokens, uint256[] shares)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function DEPOSIT_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function DOMAIN_TYPEHASH() view returns (bytes32)",
-      "function delegation() view returns (address)",
-      "function delegatorWithdraw(uint256[] strategyIndexes, address[] strategies, address[] tokens, uint256[] shares, bool undelegateIfPossible) returns (bool)",
-      "function delegatorWithdrawWhiteList(address) view returns (bool)",
-      "function depositIntoStrategy(address strategy, address token, uint256 amount) returns (uint256 shares)",
-      "function depositIntoStrategyOnBehalfOf(address strategy, address token, uint256 amount, address staker, uint256 expiry, bytes32 r, bytes32 vs) returns (uint256 shares)",
-      "function getDeposits(address depositor) view returns (address[], uint256[])",
-      "function initialize(address _pauserRegistry, address initialOwner)",
-      "function investorStratShares(address, address) view returns (uint256)",
-      "function investorStrats(address, uint256) view returns (address)",
-      "function investorStratsLength(address staker) view returns (uint256)",
-      "function nonces(address) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function permissionManager() view returns (address)",
-      "function renounceOwnership()",
-      "function setDelegatorCanWithdraw(address withdrawer)",
-      "function setInvestmentStrategy(address _strategy)",
-      "function strategyStorage(address) view returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function undelegate()",
-      "function unpause(uint256 newPausedStatus)"
-    ],
-    "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -2145,181 +972,6 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
-    ],
-    "0x9FEcF38689349a5CFf97526610CdB27618edc6b9": [
-      "constructor(address _investmentManager)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
-      "function explanation() pure returns (string)",
-      "function initialize(address _underlyingToken, address _pauserRegistry, address initialOwner)",
-      "function investmentManager() view returns (address)",
-      "function minDeposit() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function renounceOwnership()",
-      "function setMinDepositAmount(uint256 minDepositAmount)",
-      "function shares(address user) view returns (uint256)",
-      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
-      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
-      "function totalShares() view returns (uint256)",
-      "function transferOwnership(address newOwner)",
-      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
-      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
-      "function underlyingToken() view returns (address)",
-      "function unpause(uint256 newPausedStatus)",
-      "function userUnderlying(address user) returns (uint256)",
-      "function userUnderlyingView(address user) view returns (uint256)",
-      "function withdraw(address depositor, address token, uint256 amountShares)"
-    ],
-    "0xA937660031787C4408587D2c6A67Ec4B260630F5": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85": [
-      "constructor()",
-      "event AddDataStoreRollupPermission(address pusher, bool status)",
-      "event AddDelegatorPermission(address delegator, bool status)",
-      "event AddOperatorDeregisterPermission(address operator, bool status)",
-      "event AddOperatorRegisterPermission(address operator, bool status)",
-      "event ChangeDataStoreRollupPermission(address pusher, bool status)",
-      "event ChangeDelegatorPermission(address delegator, bool status)",
-      "event ChangeOperatorDeregisterPermission(address operator, bool status)",
-      "event ChangeOperatorRegisterPermission(address operator, bool status)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function addDataStoreRollupPermission(address pusher)",
-      "function addDelegatorPermission(address delegator)",
-      "function addOperatorDeregisterPermission(address operator)",
-      "function addOperatorRegisterPermission(address operator)",
-      "function changeDataStoreRollupPermission(address pusher, bool status)",
-      "function changeDelegatorPermission(address delegator, bool status)",
-      "function changeOperatorDeregisterPermission(address operator, bool status)",
-      "function changeOperatorRegisterPermission(address operator, bool status)",
-      "function dataStoreRollupPermission(address) view returns (bool)",
-      "function delegatorPermission(address) view returns (bool)",
-      "function getDataStoreRollupPermission(address pusher) view returns (bool)",
-      "function getDelegatorPermission(address delegator) view returns (bool)",
-      "function getOperatorDeregisterPermission(address operator) view returns (bool)",
-      "function getOperatorRegisterPermission(address operator) view returns (bool)",
-      "function initialize(address personAddress, address initialOwner)",
-      "function operatorDeregisterPermission(address) view returns (bool)",
-      "function operatorRegisterPermission(address) view returns (bool)",
-      "function owner() view returns (address)",
-      "function permissionPerson() view returns (address)",
-      "function renounceOwnership()",
-      "function setPermissionPerson(address personAddress)",
-      "function transferOwnership(address newOwner)"
-    ],
-    "0xAB42127980a3bff124E6465e097a5fC97228827e": [
-      "constructor(address _registry, address _investmentManager, address _eigenLayrDelegation, address _collateralToken, address _dataLayrChallenge, address _dataLayrBombVerifier, address _dataPermissionManager)",
-      "event AdversaryThresholdBasisPointsUpdated(uint16 adversaryThresholdBasisPoints)",
-      "event BombVerifierSet(address previousAddress, address newAddress)",
-      "event ConfirmDataStore(uint32 dataStoreId, bytes32 headerHash)",
-      "event FeePerBytePerTimeSet(uint256 previousValue, uint256 newValue)",
-      "event FeeSetterChanged(address previousAddress, address newAddress)",
-      "event InitDataStore(address feePayer, tuple(tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata, uint8 duration, uint256 timestamp, uint32 index) searchData, bytes header)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PaymentManagerSet(address previousAddress, address newAddress)",
-      "event QuorumThresholdBasisPointsUpdated(uint16 quorumTHresholdBasisPoints)",
-      "event SignatoryRecord(bytes32 msgHash, uint32 taskNumber, uint256 signedStakeFirstQuorum, uint256 signedStakeSecondQuorum, bytes32[] pubkeyHashes)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function BIP_MULTIPLIER() view returns (uint256)",
-      "function BLOCK_STALE_MEASURE() view returns (uint32)",
-      "function DURATION_SCALE() view returns (uint256)",
-      "function MAX_DATASTORE_DURATION() view returns (uint8)",
-      "function MIN_DATASTORE_DURATION() view returns (uint8)",
-      "function NUM_DS_PER_BLOCK_PER_DURATION() view returns (uint256)",
-      "function adversaryThresholdBasisPoints() view returns (uint16)",
-      "function calculateFee(uint256 totalBytes, uint256 _feePerBytePerTime, uint32 storePeriodLength) pure returns (uint256)",
-      "function checkSignatures(bytes data) returns (uint32 taskNumberToConfirm, uint32 referenceBlockNumber, bytes32 msgHash, tuple(uint256 signedStakeFirstQuorum, uint256 signedStakeSecondQuorum, uint256 totalStakeFirstQuorum, uint256 totalStakeSecondQuorum) signedTotals, bytes32 compressedSignatoryRecord)",
-      "function collateralToken() view returns (address)",
-      "function confirmDataStore(bytes data, tuple(tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata, uint8 duration, uint256 timestamp, uint32 index) searchData)",
-      "function confirmDataStoreTimeout() view returns (uint32)",
-      "function dataLayrBombVerifier() view returns (address)",
-      "function dataLayrChallenge() view returns (address)",
-      "function dataPermissionManager() view returns (address)",
-      "function dataStoreHashesForDurationAtTimestamp(uint8, uint256, uint256) view returns (bytes32)",
-      "function dataStoreIdToSignatureHash(uint32) view returns (bytes32)",
-      "function dataStoresForDuration() view returns (uint32 one_duration, uint32 two_duration, uint32 three_duration, uint32 four_duration, uint32 five_duration, uint32 six_duration, uint32 seven_duration, uint32 dataStoreId, uint32 latestTime)",
-      "function eigenLayrDelegation() view returns (address)",
-      "function feePerBytePerTime() view returns (uint256)",
-      "function feeSetter() view returns (address)",
-      "function freezeOperator(address operator)",
-      "function getDataStoreHashesForDurationAtTimestamp(uint8 duration, uint256 timestamp, uint32 index) view returns (bytes32)",
-      "function getNumDataStoresForDuration(uint8 duration) view returns (uint32)",
-      "function initDataStore(address feePayer, address confirmer, uint8 duration, uint32 referenceBlockNumber, uint32 totalOperatorsIndex, bytes header) returns (uint32 index)",
-      "function initialize(address _pauserRegistry, address initialOwner, uint16 _quorumThresholdBasisPoints, uint16 _adversaryThresholdBasisPoints, uint256 _feePerBytePerTime, address _feeSetter)",
-      "function investmentManager() view returns (address)",
-      "function latestTime() view returns (uint32)",
-      "function log2NumPowersOfTau() view returns (uint48)",
-      "function numPowersOfTau() view returns (uint48)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function quorumThresholdBasisPoints() view returns (uint16)",
-      "function registry() view returns (address)",
-      "function renounceOwnership()",
-      "function setAdversaryThresholdBasisPoints(uint16 _adversaryThresholdBasisPoints)",
-      "function setFeePerBytePerTime(uint256 _feePerBytePerTime)",
-      "function setFeeSetter(address _feeSetter)",
-      "function setQuorumThresholdBasisPoints(uint16 _quorumThresholdBasisPoints)",
-      "function taskNumber() view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function unpause(uint256 newPausedStatus)",
-      "function verifyDataStoreMetadata(uint8 duration, uint256 timestamp, uint32 index, tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata) view returns (bool)",
-      "function zeroPolynomialCommitmentMerkleRoots(uint256) view returns (bytes32)"
-    ],
-    "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba": [
-      "constructor(address _investmentManager, address _permissionManager)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function DELEGATION_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function DOMAIN_TYPEHASH() view returns (bytes32)",
-      "function decreaseDelegatedShares(address staker, address[] strategies, uint256[] shares)",
-      "function delegateTo(address operator)",
-      "function delegateToBySignature(address staker, address operator, uint256 expiry, bytes32 r, bytes32 vs)",
-      "function delegatedTo(address) view returns (address)",
-      "function getOperatorRewardAddress(address operator) view returns (address)",
-      "function increaseDelegatedShares(address staker, address strategy, uint256 shares)",
-      "function initialize(address _pauserRegistry, address initialOwner)",
-      "function investmentManager() view returns (address)",
-      "function isDelegated(address staker) view returns (bool)",
-      "function isNotDelegated(address staker) view returns (bool)",
-      "function isOperator(address operator) view returns (bool)",
-      "function nonces(address) view returns (uint256)",
-      "function operatorReceiverRewardAddress(address) view returns (address)",
-      "function operatorShares(address, address) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function permissionManager() view returns (address)",
-      "function registerAsOperator(address rewardReceiveAddress)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function undelegate(address staker)",
-      "function unpause(uint256 newPausedStatus)"
     ],
     "0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": [
       "constructor(address _messenger, address _l1mnt)",
@@ -2392,17 +1044,6 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2412,17 +1053,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xca35F8338054739D138884685e08b39EE2217794": [
       "constructor(address _owner)",
@@ -2444,17 +1074,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
-    ],
-    "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xCd368c1d80120b0Dd92447c87eB570154f8e685c": [
       "constructor()",
@@ -2505,17 +1124,6 @@
       "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0xD1230865641561653406906Fb08873F011c19080": [
       "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
       "event Initialized(uint8 version)",
@@ -2540,27 +1148,6 @@
       "function startingBlockNumber() view returns (uint256)",
       "function startingTimestamp() view returns (uint256)",
       "function version() view returns (string)"
-    ],
-    "0xd8d731624d97a66e012E62208cFc921d7033c564": [
-      "constructor()",
-      "event Initialized(uint8 version)",
-      "function batchNonInteractivePolynomialProofs(bytes header, uint32 firstChunkNumber, bytes[] polys, tuple(tuple(uint256 X, uint256 Y) interpolationPoly, tuple(uint256 X, uint256 Y) revealProof, tuple(uint256[2] X, uint256[2] Y) zeroPoly, bytes zeroPolyProof)[] multiRevealProofs, tuple(uint256[2] X, uint256[2] Y) polyEquivalenceProof) view returns (bool)",
-      "function checkExclusionFromNonSignerSet(bytes32 operatorPubkeyHash, uint256 nonSignerIndex, tuple(bytes32[] nonSignerPubkeyHashes, uint256 signedStakeFirstQuorum, uint256 signedStakeSecondQuorum) signatoryRecord) pure",
-      "function checkInclusionInNonSignerSet(bytes32 operatorPubkeyHash, uint256 nonSignerIndex, tuple(bytes32[] nonSignerPubkeyHashes, uint256 signedStakeFirstQuorum, uint256 signedStakeSecondQuorum) signatoryRecord) pure",
-      "function constructZeroPolyEval(uint256 index, uint32 chunkLenE, uint32 numNodeE, uint256 alpha) returns (uint256)",
-      "function getDataCommitmentAndMultirevealDegreeAndSymbolBreakdownFromHeader(bytes header) pure returns (tuple(tuple(uint256 X, uint256 Y) c, uint48 degree, uint32 numSys, uint32 numPar))",
-      "function getLeadingCosetIndexFromHighestRootOfUnity(uint32 i, uint32 numSys, uint32 numPar) pure returns (uint32)",
-      "function getNumSysFromHeader(bytes header) pure returns (uint32)",
-      "function getZeroPolyMerkleRoot(uint256 degree) pure returns (bytes32)",
-      "function linearPolynomialEvaluation(bytes poly, uint256 r) pure returns (uint256)",
-      "function nextPowerOf2(uint256 n) pure returns (uint256)",
-      "function nonInteractivePolynomialProof(bytes header, uint32 chunkNumber, bytes poly, tuple(tuple(uint256 X, uint256 Y) interpolationPoly, tuple(uint256 X, uint256 Y) revealProof, tuple(uint256[2] X, uint256[2] Y) zeroPoly, bytes zeroPolyProof) multiRevealProof, tuple(uint256[2] X, uint256[2] Y) polyEquivalenceProof) view returns (bool)",
-      "function openPolynomialAtPoint(tuple(uint256 X, uint256 Y) c, tuple(uint256[2] X, uint256[2] Y) pi, uint256 r, uint256 s) view returns (bool)",
-      "function reverseBits(uint32 value) pure returns (uint32)",
-      "function reverseBitsLimited(uint32 length, uint32 value) pure returns (uint32)",
-      "function validateDisclosureResponse(tuple(tuple(uint256 X, uint256 Y) c, uint48 degree, uint32 numSys, uint32 numPar) dskzgMetadata, uint32 chunkNumber, tuple(uint256 X, uint256 Y) interpolationPoly, tuple(uint256 X, uint256 Y) revealProof, tuple(uint256[2] X, uint256[2] Y) zeroPoly, bytes zeroPolyProof) view returns (bool)",
-      "function verifyBatchPolyEquivalenceProof(bytes[] polys, tuple(uint256 X, uint256 Y)[] interpolationPolys, tuple(uint256[2] X, uint256[2] Y) polyEquivalenceProof) view returns (bool)",
-      "function verifyPolyEquivalenceProof(bytes poly, tuple(uint256 X, uint256 Y) interpolationPoly, tuple(uint256[2] X, uint256[2] Y) polyEquivalenceProof) view returns (bool)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -2611,59 +1198,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a": [
-      "constructor()",
-      "event DataLayrManagerAddressUpdated(address oldDataLayrManagerAddress, address newDataLayrManagerAddress)",
-      "event FraudProofPeriodUpdated(uint256 oldFraudProofPeriod, uint256 newFraudProofPeriod)",
-      "event Initialized(uint8 version)",
-      "event L2ConfirmedBlockNumberUpdated(uint256 oldL2ConfirmedBlockNumber, uint256 newL2ConfirmedBlockNumber)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ReRollupBatchData(uint256 reRollupIndex, uint256 rollupBatchIndex, uint256 stratL2BlockNumber, uint256 endL2BlockNumber)",
-      "event ReSubmitterAddressUpdated(address oldReSubmitterAddress, address newReSubmitterAddress)",
-      "event RollupBatchIndexUpdated(uint256 oldRollupBatchIndex, uint256 newRollupBatchIndex)",
-      "event RollupStoreConfirmed(uint256 rollupBatchIndex, uint32 dataStoreId, uint256 stratL2BlockNumber, uint256 endL2BlockNumber)",
-      "event RollupStoreInitialized(uint32 dataStoreId, uint256 stratL2BlockNumber, uint256 endL2BlockNumber)",
-      "event RollupStoreReverted(uint256 rollupBatchIndex, uint32 dataStoreId, uint256 stratL2BlockNumber, uint256 endL2BlockNumber)",
-      "event SequencerAddressUpdated(address oldSequencerAddress, address newSequencerAddress)",
-      "function BLOCK_STALE_MEASURE() view returns (uint256)",
-      "function FRAUD_STRING() view returns (bytes)",
-      "function confirmData(bytes data, tuple(tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata, uint8 duration, uint256 timestamp, uint32 index) searchData, uint256 startL2Block, uint256 endL2Block, uint32 originDataStoreId, uint256 reConfirmedBatchIndex, bool isReRollup)",
-      "function dataManageAddress() view returns (address)",
-      "function dataStoreIdToL2RollUpBlock(uint32) view returns (uint256 startL2BlockNumber, uint256 endBL2BlockNumber, bool isReRollup)",
-      "function dataStoreIdToRollupStoreNumber(uint32) view returns (uint256)",
-      "function fraudProofPeriod() view returns (uint256)",
-      "function getL2ConfirmedBlockNumber() view returns (uint256)",
-      "function getL2RollUpBlockByDataStoreId(uint32 _dataStoreId) view returns (tuple(uint256 startL2BlockNumber, uint256 endBL2BlockNumber, bool isReRollup))",
-      "function getL2StoredBlockNumber() view returns (uint256)",
-      "function getRollupStoreByRollupBatchIndex(uint256 _rollupBatchIndex) view returns (tuple(uint32 originDataStoreId, uint32 dataStoreId, uint32 confirmAt, uint8 status))",
-      "function initialize(address _sequencer, address _dataManageAddress, address _reSubmitterAddress, uint256 _block_stale_measure, uint256 _fraudProofPeriod, uint256 _l2SubmittedBlockNumber)",
-      "function l2ConfirmedBlockNumber() view returns (uint256)",
-      "function l2StoredBlockNumber() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function parse(bytes[] polys, uint256 startIndex, uint256 length) pure returns (bytes provenString)",
-      "function proveFraud(uint256 fraudulentStoreNumber, uint256 startIndex, tuple(tuple(bytes32 headerHash, uint32 durationDataStoreId, uint32 globalDataStoreId, uint32 referenceBlockNumber, uint32 blockNumber, uint96 fee, address confirmer, bytes32 signatoryRecordHash) metadata, uint8 duration, uint256 timestamp, uint32 index) searchData, tuple(bytes header, uint32 firstChunkNumber, bytes[] polys, tuple(tuple(uint256 X, uint256 Y) interpolationPoly, tuple(uint256 X, uint256 Y) revealProof, tuple(uint256[2] X, uint256[2] Y) zeroPoly, bytes zeroPolyProof)[] multiRevealProofs, tuple(uint256[2] X, uint256[2] Y) polyEquivalenceProof) disclosureProofs)",
-      "function reRollupBatchIndex(uint256) view returns (uint256)",
-      "function reRollupIndex() view returns (uint256)",
-      "function reSubmitterAddress() view returns (address)",
-      "function removeFraudProofAddress(address _address)",
-      "function renounceOwnership()",
-      "function resetRollupBatchData(uint256 _rollupBatchIndex)",
-      "function rollupBatchIndex() view returns (uint256)",
-      "function rollupBatchIndexRollupStores(uint256) view returns (uint32 originDataStoreId, uint32 dataStoreId, uint32 confirmAt, uint8 status)",
-      "function sequencer() view returns (address)",
-      "function setFraudProofAddress(address _address)",
-      "function storeData(bytes header, uint8 duration, uint32 blockNumber, uint256 startL2Block, uint256 endL2Block, uint32 totalOperatorsIndex, bool isReRollup)",
-      "function submitReRollUpInfo(uint256 batchIndex)",
-      "function transferOwnership(address newOwner)",
-      "function unavailableFraudProofAddress(address _address)",
-      "function updateDataLayrManagerAddress(address _dataManageAddress)",
-      "function updateFraudProofPeriod(uint256 _fraudProofPeriod)",
-      "function updateL2ConfirmedBlockNumber(uint256 _l2ConfirmedBlockNumber)",
-      "function updateL2StoredBlockNumber(uint256 _l2StoredBlockNumber)",
-      "function updateReSubmitterAddress(address _reSubmitterAddress)",
-      "function updateRollupBatchIndex(uint256 _rollupBatchIndex)",
-      "function updateSequencerAddress(address _sequencer)"
-    ],
     "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7": [
       "constructor(address _l2Oracle, address _guardian, bool _paused, address _config, address _l1MNT)",
       "event Initialized(uint8 version)",
@@ -2691,17 +1225,6 @@
       "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
       "function unpause()",
       "function version() view returns (string)"
-    ],
-    "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
