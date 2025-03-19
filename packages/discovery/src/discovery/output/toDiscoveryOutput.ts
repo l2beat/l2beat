@@ -89,8 +89,6 @@ export function processAnalysis(
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           description: x.combinedMeta?.description,
-          types: setToSortedArray(x.combinedMeta?.types),
-          severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
           receivedPermissions,
           directlyReceivedPermissions,
@@ -149,8 +147,4 @@ export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
   ) as T
-}
-
-function setToSortedArray<T>(value: Set<T> | undefined): T[] | undefined {
-  return value && Array.from(value).sort()
 }
