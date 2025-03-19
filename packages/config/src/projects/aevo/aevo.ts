@@ -63,6 +63,7 @@ export const aevo: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
+  // we are still using this for historical data although they switched to EigenDA
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
