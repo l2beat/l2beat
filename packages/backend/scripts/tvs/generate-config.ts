@@ -8,7 +8,7 @@ import {
 } from '@l2beat/backend-tools'
 import { type Project, ProjectService } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
@@ -76,15 +76,11 @@ const cmd = command({
         const localExecutor = new LocalExecutor(ps, env, logger)
         const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
 
-        const currentTvs = tvs.get(timestamp)
-
-        assert(currentTvs, 'No data for timestamp')
-
-        const valueForProject = currentTvs.reduce((acc, token) => {
+        const valueForProject = tvs.reduce((acc, token) => {
           return acc + token.valueForProject
         }, 0)
 
-        const valueForTotal = currentTvs.reduce((acc, token) => {
+        const valueForTotal = tvs.reduce((acc, token) => {
           return acc + token.valueForTotal
         }, 0)
 
@@ -93,7 +89,7 @@ const cmd = command({
         logger.info(`TVS for project ${toDollarString(valueForProject)}`)
         logger.info(`Total TVS ${toDollarString(totalTvs)}`)
 
-        newConfig = currentTvs
+        newConfig = tvs
           .filter((token) => token.value !== 0)
           .map((token) => token.tokenConfig)
           .sort((a, b) => a.id.localeCompare(b.id))

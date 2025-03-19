@@ -1,7 +1,6 @@
 import type {
   CoingeckoId,
   EthereumAddress,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -127,7 +126,7 @@ interface CoinMarketCapPriceSource {
 }
 
 export type ProjectTvsConfig = {
-  projectId: ProjectId
+  projectId: string
   tokens: Token[]
 }
 
@@ -147,7 +146,7 @@ export interface BlockTimestampConfig {
 
 export interface TokenValue {
   tokenConfig: Token
-  projectId: ProjectId
+  projectId: string
   amount: number
   value: number
   valueForProject: number

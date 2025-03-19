@@ -7,7 +7,7 @@ import {
   getEnv,
 } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import type {
@@ -63,13 +63,10 @@ const cmd = command({
 run(cmd, process.argv.slice(2))
 
 function calculateBreakdown(
-  tvs: Map<number, TokenValue[]>,
+  tokens: TokenValue[],
   timestamp: UnixTime,
   project: string,
 ) {
-  const tokens = tvs.get(timestamp)
-  assert(tokens, 'No data for timestamp')
-
   const tvsBreakdown: TvsBreakdown = {
     tvs: 0,
     source: {

@@ -12,7 +12,6 @@ import {
   type ProjectTvsConfig,
   type Token,
   TokenId,
-  type TokenValue,
   type TotalSupplyAmountFormula,
 } from '../types'
 import { ValueService } from './ValueService'
@@ -62,23 +61,16 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual(
-        new Map<number, TokenValue[]>([
-          [
-            mockTimestamp,
-            [
-              {
-                tokenConfig: tvsConfig.tokens[0],
-                amount: 10000,
-                projectId: ProjectId('project'),
-                value: 2000000,
-                valueForProject: 2000000,
-                valueForTotal: 2000000,
-              },
-            ],
-          ],
-        ]),
-      )
+      expect(result).toEqual([
+        {
+          tokenConfig: tvsConfig.tokens[0],
+          amount: 10000,
+          projectId: ProjectId('project'),
+          value: 2000000,
+          valueForProject: 2000000,
+          valueForTotal: 2000000,
+        },
+      ])
     })
 
     it('should calculate TVS - wrapped token (solvBTC)', async () => {
@@ -196,31 +188,24 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual(
-        new Map<number, TokenValue[]>([
-          [
-            mockTimestamp,
-            [
-              {
-                tokenConfig: tvsConfig.tokens[0],
-                projectId: ProjectId('bob'),
-                amount: 10000,
-                value: 2000000,
-                valueForProject: 2000000,
-                valueForTotal: 2000000,
-              },
-              {
-                tokenConfig: tvsConfig.tokens[1],
-                projectId: ProjectId('bob'),
-                amount: 8000,
-                value: 1600000,
-                valueForProject: 600000,
-                valueForTotal: 600000,
-              },
-            ],
-          ],
-        ]),
-      )
+      expect(result).toEqual([
+        {
+          tokenConfig: tvsConfig.tokens[0],
+          projectId: ProjectId('bob'),
+          amount: 10000,
+          value: 2000000,
+          valueForProject: 2000000,
+          valueForTotal: 2000000,
+        },
+        {
+          tokenConfig: tvsConfig.tokens[1],
+          projectId: ProjectId('bob'),
+          amount: 8000,
+          value: 1600000,
+          valueForProject: 600000,
+          valueForTotal: 600000,
+        },
+      ])
     })
 
     it('should calculate TVS - amount as minimum of const and dynamic value', async () => {
@@ -279,23 +264,16 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toEqual(
-        new Map<number, TokenValue[]>([
-          [
-            mockTimestamp,
-            [
-              {
-                tokenConfig: tvsConfig.tokens[0],
-                amount: 10000,
-                projectId: ProjectId('project'),
-                value: 2000000,
-                valueForProject: 2000000,
-                valueForTotal: 2000000,
-              },
-            ],
-          ],
-        ]),
-      )
+      expect(result).toEqual([
+        {
+          tokenConfig: tvsConfig.tokens[0],
+          amount: 10000,
+          projectId: ProjectId('project'),
+          value: 2000000,
+          valueForProject: 2000000,
+          valueForTotal: 2000000,
+        },
+      ])
     })
   })
 })

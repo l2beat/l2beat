@@ -19,7 +19,7 @@ export class ValueService {
   async calculate(
     config: ProjectTvsConfig,
     timestamps: UnixTime[],
-  ): Promise<Map<number, TokenValue[]>> {
+  ): Promise<TokenValue[]> {
     const result = new Map<number, TokenValue[]>()
 
     for (const timestamp of timestamps) {
@@ -60,7 +60,7 @@ export class ValueService {
       result.set(timestamp, values)
     }
 
-    return await Promise.resolve(result)
+    return [...result.values()].flat()
   }
 
   private async executeAmountFormula(
