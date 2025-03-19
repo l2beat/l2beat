@@ -6,49 +6,6 @@ import { TvsPriceRepository } from './repository'
 describeDatabase(TvsPriceRepository.name, (db) => {
   const repository = db.tvsPrice
 
-  describe(TvsPriceRepository.prototype.getPrices.name, () => {
-    it('gets prices for given configIds and timestamps', async () => {
-      await repository.insertMany([
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
-        tvsPrice('c', 'usdc', UnixTime(100), 1.0),
-        tvsPrice('c', 'usdc', UnixTime(200), 1.0),
-      ])
-
-      const configIds = ['a'.repeat(12), 'b'.repeat(12)]
-      const timestamps = [UnixTime(100), UnixTime(200)]
-
-      const result = await repository.getPrices(configIds, timestamps)
-
-      expect(result.size).toEqual(2)
-      expect(result.get(UnixTime(100))?.get('a'.repeat(12))).toEqual(1000.5)
-      expect(result.get(UnixTime(100))?.get('b'.repeat(12))).toEqual(20000.75)
-      expect(result.get(UnixTime(200))?.get('a'.repeat(12))).toEqual(1100.25)
-      expect(result.get(UnixTime(200))?.get('b'.repeat(12))).toEqual(21000.5)
-    })
-
-    it('returns empty maps for timestamps with no data', async () => {
-      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
-
-      const configIds = ['a'.repeat(12)]
-      const timestamps = [UnixTime(100), UnixTime(200)]
-
-      const result = await repository.getPrices(configIds, timestamps)
-
-      expect(result.size).toEqual(2)
-      expect(result.get(UnixTime(100))?.get('a'.repeat(12))).toEqual(1000.5)
-      expect(result.get(UnixTime(200))?.size).toEqual(0)
-    })
-
-    it('throws error when timestamps array is empty', async () => {
-      await expect(repository.getPrices(['a'.repeat(12)], [])).toBeRejectedWith(
-        'Timestamps should not be empty',
-      )
-    })
-  })
-
   describe(TvsPriceRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const records = [
@@ -76,6 +33,91 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
       const inserted = await repository.insertMany(records)
       expect(inserted).toEqual(1500)
+    })
+  })
+
+  describe(TvsPriceRepository.prototype.getPricesInRange.name, () => {
+    it('gets prices for given configIds in time range', async () => {
+      await repository.insertMany([
+        tvsPrice('a', 'eth', UnixTime(50), 900.5),
+        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
+        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
+        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
+        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
+        tvsPrice('c', 'usdc', UnixTime(100), 1.0),
+        tvsPrice('c', 'usdc', UnixTime(200), 1.0),
+        tvsPrice('a', 'eth', UnixTime(300), 1200.0),
+      ])
+
+      const configIds = ['a'.repeat(12), 'b'.repeat(12)]
+
+      const result = await repository.getPricesInRange(
+        configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqualUnsorted([
+        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
+        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
+        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
+        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
+      ])
+    })
+
+    it('returns empty array when no data in range', async () => {
+      await repository.insertMany([
+        tvsPrice('a', 'eth', UnixTime(50), 900.5),
+        tvsPrice('a', 'eth', UnixTime(300), 1200.0),
+      ])
+
+      const configIds = ['a'.repeat(12)]
+
+      const result = await repository.getPricesInRange(
+        configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when no matching configIds', async () => {
+      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(100), 1000.5)])
+
+      const configIds = ['b'.repeat(12)]
+
+      const result = await repository.getPricesInRange(
+        configIds,
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
+  })
+
+  describe(TvsPriceRepository.prototype.getLatestPrice.name, () => {
+    it('returns the latest price for a configuration', async () => {
+      await repository.insertMany([
+        tvsPrice('a', 'eth', UnixTime(100), 1000),
+        tvsPrice('a', 'eth', UnixTime(200), 1100),
+        tvsPrice('a', 'eth', UnixTime(300), 1200),
+        tvsPrice('b', 'btc', UnixTime(100), 20000),
+        tvsPrice('b', 'btc', UnixTime(200), 21000),
+      ])
+
+      const result = await repository.getLatestPrice('a'.repeat(12))
+
+      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(300), 1200))
+    })
+
+    it('returns undefined when no prices exist for the configuration', async () => {
+      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(100), 1000)])
+
+      const result = await repository.getLatestPrice('b'.repeat(12))
+
+      expect(result).toEqual(undefined)
     })
   })
 

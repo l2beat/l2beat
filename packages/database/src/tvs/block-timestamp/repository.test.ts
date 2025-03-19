@@ -6,6 +6,35 @@ import { TvsBlockTimestampRepository } from './repository'
 describeDatabase(TvsBlockTimestampRepository.name, (db) => {
   const repository = db.tvsBlockTimestamp
 
+  describe(TvsBlockTimestampRepository.prototype.insertMany.name, () => {
+    it('adds new rows', async () => {
+      const records = [
+        blockTimestamp('a', 'ethereum', UnixTime(100), 1000),
+        blockTimestamp('b', 'arbitrum', UnixTime(200), 2000),
+      ]
+
+      await repository.insertMany(records)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted(records)
+    })
+
+    it('handles empty array', async () => {
+      const inserted = await repository.insertMany([])
+      expect(inserted).toEqual(0)
+    })
+
+    it('performs batch insert when more than 1000 records', async () => {
+      const records = []
+      for (let i = 0; i < 1500; i++) {
+        records.push(blockTimestamp('a', 'ethereum', UnixTime(i), i + 1000))
+      }
+
+      const inserted = await repository.insertMany(records)
+      expect(inserted).toEqual(1500)
+    })
+  })
+
   describe(TvsBlockTimestampRepository.prototype
     .findBlockNumberByChainAndTimestamp.name, () => {
     it('finds block number for given chain and timestamp', async () => {
@@ -34,35 +63,6 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       )
 
       expect(result).toEqual(undefined)
-    })
-  })
-
-  describe(TvsBlockTimestampRepository.prototype.insertMany.name, () => {
-    it('adds new rows', async () => {
-      const records = [
-        blockTimestamp('a', 'ethereum', UnixTime(100), 1000),
-        blockTimestamp('b', 'arbitrum', UnixTime(200), 2000),
-      ]
-
-      await repository.insertMany(records)
-
-      const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
-    })
-
-    it('handles empty array', async () => {
-      const inserted = await repository.insertMany([])
-      expect(inserted).toEqual(0)
-    })
-
-    it('performs batch insert when more than 1000 records', async () => {
-      const records = []
-      for (let i = 0; i < 1500; i++) {
-        records.push(blockTimestamp('a', 'ethereum', UnixTime(i), i + 1000))
-      }
-
-      const inserted = await repository.insertMany(records)
-      expect(inserted).toEqual(1500)
     })
   })
 

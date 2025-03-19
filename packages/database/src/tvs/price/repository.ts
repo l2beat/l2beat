@@ -1,9 +1,9 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type TvsPriceRecord, toRecord, toRow } from './entity'
 
 export class TvsPriceRepository extends BaseRepository {
-  async insertMany(records: TvsPriceRecord[]) {
+  async insertMany(records: TvsPriceRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
@@ -13,30 +13,34 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.length
   }
 
-  async getPrices(configurationIds: string[], timestamps: UnixTime[]) {
-    const from = timestamps[0]
-    const to = timestamps[timestamps.length - 1]
-    assert(from && to, 'Timestamps should not be empty')
-
+  async getPricesInRange(
+    configurationIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<TvsPriceRecord[]> {
     const rows = await this.db
       .selectFrom('TvsPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
       .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .execute()
 
-    const records = rows.map(toRecord)
+    return rows.map(toRecord)
+  }
 
-    const result = new Map(
-      timestamps.map((t) => [t, new Map<string, number>()]),
-    )
+  async getLatestPrice(
+    configurationId: string,
+  ): Promise<TvsPriceRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('configurationId', '=', configurationId)
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
 
-    for (const r of records) {
-      result.get(r.timestamp)?.set(r.configurationId, r.priceUsd)
-    }
-
-    return result
+    return row ? toRecord(row) : undefined
   }
 
   async deleteByConfigInTimeRange(
