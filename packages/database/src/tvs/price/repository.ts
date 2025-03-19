@@ -29,7 +29,9 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLatestPrice(configurationId: string): Promise<number | undefined> {
+  async getLatestPrice(
+    configurationId: string,
+  ): Promise<TvsPriceRecord | undefined> {
     const row = await this.db
       .selectFrom('TvsPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
