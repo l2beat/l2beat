@@ -1,4 +1,11 @@
-import type { FilterableValueId } from '../types'
+export interface FilterableEntry {
+  filterable: FilterableValue[] | undefined
+}
+export type FilterableValue = {
+  id: FilterableValueId
+  value: string
+}
+export type FilterableValueId = keyof typeof filterIdToLabel
 
 export const filterIdToLabel = {
   type: 'Type',
@@ -32,4 +39,11 @@ export const inputPlaceholder = (filterId: FilterableValueId | undefined) => {
   return filterId
     ? `Search ${filterIdToValues[filterId].toLowerCase()}...`
     : 'Search filters...'
+}
+
+const ALWAYS_FIRST_VALUES = ['No stack', 'Ethereum', 'NotApplicable']
+export function filterValuesSortFn(a: string, b: string) {
+  if (ALWAYS_FIRST_VALUES.includes(a)) return -1
+  if (ALWAYS_FIRST_VALUES.includes(b)) return 1
+  return a.localeCompare(b)
 }

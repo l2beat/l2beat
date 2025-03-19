@@ -21,18 +21,18 @@ import { useTracking } from '~/hooks/use-tracking'
 import { FilterIcon } from '~/icons/filter'
 import { PlusIcon } from '~/icons/plus'
 import { cn } from '~/utils/cn'
+import type { FilterableEntry } from './filterable-value'
+import {
+  emptyStateLabel,
+  filterIdToLabel,
+  inputPlaceholder,
+} from './filterable-value'
 import { useTableFilterContext } from './table-filter-context'
 import {
   TableFilterInternalContextProvider,
   useTableFilterInternalContext,
 } from './table-filter-internal-context'
 import { TableFilterValueMenuItems } from './table-filter-value-menu'
-import type { FilterableEntry } from './types'
-import {
-  emptyStateLabel,
-  filterIdToLabel,
-  inputPlaceholder,
-} from './utils/labels'
 
 export function TableFilterSelector({
   entries,

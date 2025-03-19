@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import { useTracking } from '~/hooks/use-tracking'
-import type { FilterableValueId } from './types'
+import type { FilterableValueId } from './filterable-value'
 
 type TableFilterInternalContextValue = {
   search: string

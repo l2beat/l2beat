@@ -1,9 +1,9 @@
 import { uniq } from 'lodash'
 import { cn } from '~/utils/cn'
+import type { FilterableEntry, FilterableValueId } from './filterable-value'
 import { TableFilter } from './table-filter'
 import { useTableFilterContext } from './table-filter-context'
 import { TableFilterSelector } from './table-filter-selector'
-import type { FilterableEntry, FilterableValueId } from './types'
 
 type Props = {
   entries: FilterableEntry[]

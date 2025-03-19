@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
+import type { FilterableEntry, FilterableValueId } from './filterable-value'
 import { useTableFilterContext } from './table-filter-context'
-import type { FilterableEntry, FilterableValueId } from './types'
 
 export function useFilterEntries() {
   const { state } = useTableFilterContext()
