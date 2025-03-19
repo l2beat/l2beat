@@ -17,7 +17,7 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md border border-divider bg-surface-primary primary-card:bg-surface-secondary',
+      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md border border-divider bg-surface-primary focus-visible:border-brand focus-visible:outline-none primary-card:bg-surface-secondary',
       className,
     )}
     {...props}
