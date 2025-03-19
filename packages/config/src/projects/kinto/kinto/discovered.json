@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 769390,
+  "blockNumber": 769837,
   "configHash": "0xfa9eab284b2b2c3fe373faf5f04c7785549358dc970c9e2f14b833937af7c1b6",
   "entries": [
     {
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1742294017,
+        "clock": 1742366031,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -70,7 +70,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1742294017,
+        "clock": 1742366031,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -144,7 +144,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "clock": 1742294017,
+        "clock": 1742366031,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -402,7 +402,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30966623798250620475",
+        "getDeposit": "31094420879926860475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -500,7 +500,7 @@
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -520,26 +520,12 @@
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         },
         {
-          "permission": "interact",
-          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
-        },
-        {
-          "permission": "interact",
-          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "transfer KYC NFTs to a different address."
-        },
-        {
           "permission": "upgrade",
           "from": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
         },
         {
           "permission": "upgrade",
           "from": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ],
       "ignoreInWatchMode": ["getNonce"],
@@ -722,7 +708,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4612,
+        "getNonce": 4621,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -831,7 +817,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 17715,
+        "globalMessageCount": 17758,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1593,7 +1579,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 72996
+        "totalWallets": 73023
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } }
     },
@@ -1789,6 +1775,11 @@
                   "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
                   "since": 1729791296,
                   "executionDelay": 0
+                },
+                {
+                  "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+                  "since": 1742341092,
+                  "executionDelay": 604800
                 }
               ]
             },
@@ -1815,8 +1806,8 @@
                 },
                 {
                   "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
-                  "since": 1740077455,
-                  "executionDelay": 604800
+                  "since": 1742340846,
+                  "executionDelay": 950400
                 }
               ],
               "grantDelay": 604800
@@ -1858,7 +1849,8 @@
                   "updateSystemContracts(address[])",
                   "updateReservedContracts(address[])"
                 ]
-              }
+              },
+              "adminDelay": 604800
             },
             "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
               "roleFunctions": { "UPGRADER_ROLE": ["upgradeTo(address)"] },
@@ -1888,6 +1880,12 @@
               "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
               "delay": 0,
               "since": 1729791296,
+              "newMember": true
+            },
+            {
+              "account": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+              "delay": 604800,
+              "since": 1742341092,
               "newMember": true
             }
           ],
@@ -1923,6 +1921,12 @@
               "delay": 604800,
               "since": 1740077455,
               "newMember": true
+            },
+            {
+              "account": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+              "delay": 950400,
+              "since": 1742340846,
+              "newMember": false
             }
           ],
           "14661544942390944024": [
@@ -1950,6 +1954,10 @@
           "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
             "delay": 604800,
             "since": 1739904656
+          },
+          "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+            "delay": 604800,
+            "since": 1742772894
           }
         },
         "TargetFunctionRoleUpdated": {
@@ -2165,16 +2173,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "550481673466552319434002",
-        "getUnclaimedLimit": "106108050463889900681191",
+        "getTotalLimit": "552005492808621830502623",
+        "getUnclaimedLimit": "107015908551513432838915",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0x2cb5340cc5dbf830f71e0d8951900b65c27d89a30f029f572e44dcda28884d61",
+        "root": "0x5f2f43cfde4f253c373f6b03544deb74eda5269ec372be80f489ac4f0819db29",
         "startTime": 1718690400,
-        "totalClaimed": "444373623002662418752811",
+        "totalClaimed": "444989584257108397663708",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -2241,18 +2249,6 @@
         },
         {
           "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
-          "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "description": "transfer KYC NFTs to a different address.",
-          "via": []
-        },
-        {
-          "permission": "interact",
           "to": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
@@ -2297,11 +2293,6 @@
           "permission": "interact",
           "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "via": []
         },
         {
@@ -2372,10 +2363,7 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-              "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
-            ]
+            "members": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"]
           },
           "KYC_PROVIDER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -2391,10 +2379,7 @@
           },
           "UPGRADER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-              "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
-            ]
+            "members": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"]
           },
           "0x85f3421f6b5b49c1607af3732a481b7217b224e9d9648eb16c382bac95689ab0": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -2403,7 +2388,6 @@
           "GOVERNANCE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
               "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
               "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
             ]
@@ -2414,10 +2398,7 @@
           "0xc1ad34Bd24180A15735dd7919C0F24A63e4017ff"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DEFAULT_ADMINs": [
-          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
-        ],
+        "DEFAULT_ADMINs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "domainSeparator": "0x3fe5ae163d535eda3ea38de1e41134f95111068b903f4589e3ada0b6699b1c85",
         "EXIT_WINDOW_PERIOD": 864000,
         "faucet": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
@@ -2428,7 +2409,6 @@
         ],
         "GOVERNANCE_ROLE": "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1",
         "GOVERNANCErs": [
-          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
@@ -2442,7 +2422,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1742290449,
+        "lastMonitoredAt": 1742363648,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -2845,12 +2825,9 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 73329,
+        "totalSupply": 73356,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
-        "UPGRADERs": [
-          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
-        ],
+        "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
       "fieldMeta": {
