@@ -1,6 +1,5 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { featureFlags } from '~/consts/feature-flags'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/get-da-throughput-table'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/is-throughput-synced'
 import { api } from '~/trpc/server'
@@ -8,8 +7,6 @@ import { api } from '~/trpc/server'
 export async function getDaThroughputSection(
   project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
-  if (!featureFlags.daThroughput) return undefined
-
   const throughputChart = await api.da.projectChart({
     range: 'max',
     projectId: project.id,
