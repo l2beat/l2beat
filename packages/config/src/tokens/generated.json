@@ -5602,6 +5602,20 @@
       "supply": "zero"
     },
     {
+      "name": "Token Prometeus Network",
+      "coingeckoId": "prometeus",
+      "address": "0xfc82bb4ba86045Af6F327323a46E80412b91b27d",
+      "symbol": "PROM",
+      "decimals": 18,
+      "deploymentTimestamp": 1716104945,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8825/large/Ticker.png?1696508978",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Tokenlon",
       "coingeckoId": "tokenlon",
       "address": "0x0000000000095413afC295d19EDeb1Ad7B71c952",

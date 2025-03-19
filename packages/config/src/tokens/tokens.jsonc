@@ -1459,6 +1459,11 @@
       "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70"
     },
     {
+      "symbol": "PROM",
+      "address": "0xfc82bb4ba86045Af6F327323a46E80412b91b27d",
+      "deploymentTimestamp": 1716104945
+    },
+    {
       "symbol": "PSTAKE",
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
     },
