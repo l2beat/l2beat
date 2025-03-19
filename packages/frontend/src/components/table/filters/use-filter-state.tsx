@@ -62,7 +62,7 @@ function filterReducer(
           props: {
             name: action.payload.id,
             value: action.payload.value,
-            otherValues: existingFilter.values,
+            allValues: [...existingFilter.values].sort().join(','),
             additionalFilters: state.length - 1,
           },
         })
@@ -80,7 +80,6 @@ function filterReducer(
         props: {
           name: action.payload.id,
           value: action.payload.value,
-          otherValues: [],
           additionalFilters: state.length,
         },
       })
@@ -121,8 +120,12 @@ function filterReducer(
         track('filterInversed', {
           props: {
             name: action.payload.id,
-            values: state.find((filter) => filter.id === action.payload.id)!
-              .values,
+            allValues: [
+              ...state.find((filter) => filter.id === action.payload.id)!
+                .values,
+            ]
+              .sort()
+              .join(','),
           },
         })
       }

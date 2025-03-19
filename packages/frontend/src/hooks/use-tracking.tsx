@@ -14,11 +14,11 @@ type MyEvents = {
   filterValueSelected: {
     name: string
     value: string
-    otherValues: string[]
+    allValues?: string
     additionalFilters: number
   }
   filterRemoved: { name: string }
-  filterInversed: { name: string; values: string[] }
+  filterInversed: { name: string; allValues: string }
 }
 
 export function useTracking() {
