@@ -29,6 +29,7 @@ export const prom: ScalingProject = underReviewL2({
       ],
     },
   },
+  associatedTokens: ['PROM'],
   chainConfig: {
     name: 'prom',
     chainId: 227,
