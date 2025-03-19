@@ -2,6 +2,15 @@ import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { cn } from '~/utils/cn'
 
+export const bridgeWarningContext = (
+  <>
+    L2BEAT Bridges is a work in progress. You might find incomplete research or
+    inconsistent naming. Join our{' '}
+    <CustomLink href={externalLinks.discord}>Discord</CustomLink> to suggest
+    improvements!
+  </>
+)
+
 export function BridgesMvpWarning({ className }: { className?: string }) {
   return (
     <div
@@ -10,10 +19,7 @@ export function BridgesMvpWarning({ className }: { className?: string }) {
         className,
       )}
     >
-      L2BEAT Bridges is a work in progress. You might find incomplete research
-      or inconsistent naming. Join our{' '}
-      <CustomLink href={externalLinks.discord}>Discord</CustomLink> to suggest
-      improvements!
+      {bridgeWarningContext}
     </div>
   )
 }
