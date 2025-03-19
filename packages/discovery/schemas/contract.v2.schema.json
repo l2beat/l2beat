@@ -46,8 +46,8 @@
             },
             "template": { "type": ["string", "null"] },
             "permissions": {
-                "type": "array",
-                "items": { "$ref": "#/$defs/permission" }
+              "type": "array",
+              "items": { "$ref": "#/$defs/permission" }
             },
             "handler": {
               "^.+$": {
