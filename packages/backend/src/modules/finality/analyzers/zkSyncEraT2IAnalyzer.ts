@@ -1,17 +1,28 @@
-import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import type { Database } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
+import { z } from 'zod'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
-type zkSyncEraDecoded = [
-  number,
-  [number, string, number, number, string, string, number, string],
-  [number, string, number, number, string, string, number, string][],
-  [number[], number[]],
-]
+type zkSyncEraDecoded = [number, number, number, string]
+
+const BatchRangeResponse = z.object({
+  result: z.array(z.string()).length(2),
+})
 
 export class zkSyncEraT2IAnalyzer extends BaseAnalyzer {
+  constructor(
+    provider: RpcClient,
+    db: Database,
+    projectId: ProjectId,
+    private readonly l2Provider: RpcClient,
+  ) {
+    super(provider, db, projectId)
+  }
+
   getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'proofSubmissions'
   }
@@ -24,25 +35,37 @@ export class zkSyncEraT2IAnalyzer extends BaseAnalyzer {
     const decodedInput = this.decodeInput(tx.data)
     const blocks: L2Block[] = []
 
-    // TODO(radomski): This is prevBatch, should we include it?
-    blocks.push({
-      timestamp: Number(decodedInput[1][6]),
-      blockNumber: Number(decodedInput[1][0]),
-    })
+    const batchFrom = Number(decodedInput[1])
+    const batchTo = Number(decodedInput[2])
 
-    decodedInput[2].forEach((batch) => {
-      blocks.push({
-        timestamp: Number(batch[6]),
-        blockNumber: Number(batch[0]),
+    // for now batchFrom and batchTo are always the same, but with the next upgrade they can post few batches at once
+    for (let batchNum = batchFrom; batchNum <= batchTo; batchNum++) {
+      const blockRange = await this.l2Provider.query(
+        'zks_getL1BatchBlockRange',
+        [batchNum],
+      )
+      const response = BatchRangeResponse.parse(blockRange)
+      const [from, to] = response.result
+
+      const l2Blocks = await Promise.all([
+        this.l2Provider.getBlock(Number(from), false),
+        this.l2Provider.getBlock(Number(to), false),
+      ])
+
+      l2Blocks.forEach((block) => {
+        blocks.push({
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+        })
       })
-    })
+    }
 
     return blocks
   }
 
   private decodeInput(data: string) {
     const fnSignature =
-      'proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))'
+      'proveBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)'
     const i = new utils.Interface([`function ${fnSignature}`])
     const decodedInput = i.decodeFunctionData(
       fnSignature,
