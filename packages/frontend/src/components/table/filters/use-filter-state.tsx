@@ -169,14 +169,18 @@ export function useFilterState() {
     if (!filters) return
     dispatch({
       type: 'set',
-      payload: { filters: FilterState.catch({}).parse(JSON.parse(filters)) },
+      payload: {
+        filters: FilterState.catch({}).parse(
+          JSON.parse(decodeURIComponent(filters)),
+        ),
+      },
     })
   }, [])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     if (Object.keys(state).length > 0) {
-      params.set('filters', JSON.stringify(state))
+      params.set('filters', encodeURIComponent(JSON.stringify(state)))
     } else {
       params.delete('filters')
     }
