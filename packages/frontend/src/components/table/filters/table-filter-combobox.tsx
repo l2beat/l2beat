@@ -18,7 +18,7 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/popover'
 import { useIsMobile } from '~/hooks/use-breakpoint'
-import { useEventListener } from '~/hooks/use-event-listener'
+import { useGlobalShortcut } from '~/hooks/use-global-shortcut'
 import { useTracking } from '~/hooks/use-tracking'
 import { FilterIcon } from '~/icons/filter'
 import { PlusIcon } from '~/icons/plus'
@@ -39,9 +39,8 @@ export function TableFilterCombobox({
   const isMobile = useIsMobile()
   const { track } = useTracking()
 
-  useEventListener('keydown', (e) => {
-    if (e.key.toLowerCase() === 'f' && !open) {
-      e.preventDefault()
+  useGlobalShortcut('f', () => {
+    if (!open) {
       setOpen(true)
     }
   })
@@ -68,6 +67,7 @@ function MobileFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
+  const [search, setSearch] = useState('')
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
   )
@@ -90,6 +90,8 @@ function MobileFilters({
           entries={entries}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
+          search={search}
+          setSearch={setSearch}
         />
       </CommandDialog>
     </>
@@ -105,6 +107,7 @@ function DesktopFilters({
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
+  const [search, setSearch] = useState('')
   const [selectedId, setSelectedId] = useState<FilterableValueId | undefined>(
     undefined,
   )
@@ -119,6 +122,11 @@ function DesktopFilters({
         align="start"
         side="bottom"
         onEscapeKeyDown={(e) => {
+          if (search) {
+            e.preventDefault()
+            setSearch('')
+            return
+          }
           if (selectedId) {
             e.preventDefault()
             setSelectedId(undefined)
@@ -129,6 +137,8 @@ function DesktopFilters({
           entries={entries}
           selectedId={selectedId}
           setSelectedId={setSelectedId}
+          search={search}
+          setSearch={setSearch}
         />
       </PopoverContent>
     </Popover>
@@ -159,10 +169,14 @@ function Content({
   entries,
   selectedId,
   setSelectedId,
+  search,
+  setSearch,
 }: {
   entries: FilterableEntry[]
   selectedId: FilterableValueId | undefined
   setSelectedId: Dispatch<SetStateAction<FilterableValueId | undefined>>
+  search: string
+  setSearch: Dispatch<SetStateAction<string>>
 }) {
   const { track } = useTracking()
   const uniqFilterablesIds = uniqBy(
@@ -174,7 +188,11 @@ function Content({
 
   return (
     <Command className="border border-divider">
-      <CommandInput placeholder={inputPlaceholder(selectedId)} />
+      <CommandInput
+        placeholder={inputPlaceholder(selectedId)}
+        value={search}
+        onValueChange={setSearch}
+      />
       <CommandList>
         <CommandEmpty>{emptyStateLabel(selectedId)}</CommandEmpty>
         {selectedId ? (
