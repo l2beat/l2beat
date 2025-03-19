@@ -60,7 +60,6 @@ export function ScalingArchivedTables(
           ...props.validiumsAndOptimiums,
           ...props.others,
         ]}
-        className="max-md:ml-4 max-md:mt-4"
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>
         <DirectoryTabsList>

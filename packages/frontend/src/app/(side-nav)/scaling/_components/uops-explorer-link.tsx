@@ -1,29 +1,9 @@
 'use client'
 import Link from 'next/link'
-import { TableFilters } from '~/components/table/filters/table-filters'
-import type { FilterableEntry } from '~/components/table/filters/types'
 import { useTracking } from '~/hooks/use-tracking'
 import { cn } from '~/utils/cn'
 
-interface Props {
-  entries: FilterableEntry[]
-  className?: string
-}
-export function ScalingActivityFilters({ entries, className }: Props) {
-  return (
-    <div
-      className={cn(
-        'flex flex-col gap-2 [@media(min-width:1000px)]:flex-row [@media(min-width:1000px)]:justify-between',
-        className,
-      )}
-    >
-      <TableFilters entries={entries} />
-      <ExplorerButton />
-    </div>
-  )
-}
-
-function ExplorerButton() {
+export function UopsExplorerLink() {
   const { track } = useTracking()
   return (
     <Link

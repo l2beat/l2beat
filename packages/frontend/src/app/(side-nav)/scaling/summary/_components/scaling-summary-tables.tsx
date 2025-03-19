@@ -16,11 +16,12 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
+import { ExcludeAssociatedTokensCheckbox } from '../../_components/exclude-associated-tokens-checkbox'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
@@ -66,14 +67,17 @@ export function ScalingSummaryTables(props: Props) {
   return (
     <>
       <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
-      <ScalingSummaryFilters
-        entries={[
-          ...props.rollups,
-          ...props.validiumsAndOptimiums,
-          ...props.others,
-        ]}
-        className="mt-4"
-      />
+
+      <div className="mt-4 flex flex-col gap-2 [@media(min-width:1400px)]:flex-row [@media(min-width:1400px)]:justify-between">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+          ]}
+        />
+        <ExcludeAssociatedTokensCheckbox />
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

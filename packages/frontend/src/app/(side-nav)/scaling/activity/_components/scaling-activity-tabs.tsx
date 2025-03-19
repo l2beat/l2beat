@@ -18,10 +18,11 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
 import { useIncludeFilters } from '~/components/table/filters/use-include-filters'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { ScalingActivityFilters } from '../../_components/scaling-activity-filters'
+import { UopsExplorerLink } from '../../_components/uops-explorer-link'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'
 
@@ -64,14 +65,16 @@ export function ScalingActivityTabs(props: Props) {
 
   return (
     <>
-      <ScalingActivityFilters
-        entries={[
-          ...props.rollups,
-          ...props.validiumsAndOptimiums,
-          ...props.others,
-        ]}
-        className="max-md:mt-4"
-      />
+      <div className="flex flex-col gap-2 max-md:mt-4 [@media(min-width:1000px)]:flex-row [@media(min-width:1000px)]:justify-between">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+          ]}
+        />
+        <UopsExplorerLink />
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

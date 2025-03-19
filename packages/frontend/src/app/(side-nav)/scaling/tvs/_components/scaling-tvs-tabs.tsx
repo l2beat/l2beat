@@ -70,7 +70,6 @@ export function ScalingTvsTabs(props: Props) {
           ...props.validiumsAndOptimiums,
           ...props.others,
         ]}
-        className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>

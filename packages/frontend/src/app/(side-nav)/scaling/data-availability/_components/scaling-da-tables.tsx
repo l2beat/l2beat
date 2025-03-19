@@ -64,8 +64,6 @@ export function ScalingDaTables(props: Props) {
           ...props.validiumsAndOptimiums,
           ...props.others,
         ]}
-        // TODO: are these needed?
-        // className="max-md:mt-4"
       />
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
