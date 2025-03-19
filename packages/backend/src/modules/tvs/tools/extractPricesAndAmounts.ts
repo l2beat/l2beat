@@ -17,7 +17,7 @@ import { getTimestampsRange } from './timestamps'
 
 export function extractPricesAndAmounts(
   config: ProjectTvsConfig,
-  chainConfigs: { id: string; chainConfig: ChainConfig }[],
+  chainConfigs?: { id: string; chainConfig: ChainConfig }[],
 ) {
   const amounts = new Map<string, AmountConfig>()
   const prices = new Map<string, PriceConfig>()
@@ -74,6 +74,13 @@ export function extractPricesAndAmounts(
       )
       formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
+    }
+  }
+
+  if (chainConfigs === undefined) {
+    return {
+      amounts: Array.from(amounts.values()),
+      prices: Array.from(prices.values()),
     }
   }
 
