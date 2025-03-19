@@ -12,16 +12,15 @@ export function useIncludeFilters() {
         if (filterable === undefined) {
           return true
         }
-        // You can have multiple filterable values with the same id, e.g. purpose
-        const filterableValues = filterable.filter((f) => f.id === filter.id)
-        if (filterableValues.length === 0) {
+
+        if (!filterable.some((f) => f.id === filter.id)) {
           return false
         }
 
-        const valueMatches = filterableValues.some((f) =>
-          filter.values.includes(f.value),
+        const matches = filterable.some(
+          (f) => f.id === filter.id && filter.values.includes(f.value),
         )
-        return filter.inversed ? !valueMatches : valueMatches
+        return filter.inversed ? !matches : matches
       })
     },
     [state],
