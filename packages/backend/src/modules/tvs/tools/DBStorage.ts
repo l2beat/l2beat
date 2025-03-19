@@ -1,12 +1,16 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 
 export class DBStorage implements DataStorage {
-  prices: Map<UnixTime, Map<string, number>> = new Map()
-  amounts: Map<UnixTime, Map<string, bigint>> = new Map()
+  private prices: Map<UnixTime, Map<string, number>> = new Map()
+  private amounts: Map<UnixTime, Map<string, bigint>> = new Map()
 
-  constructor(private readonly db: Database) {}
+  constructor(
+    private readonly db: Database,
+    private readonly logger: Logger,
+  ) {}
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
     this.prices = new Map(timestamps.map((t) => [t, new Map()]))
@@ -40,11 +44,34 @@ export class DBStorage implements DataStorage {
     }
   }
 
-  getPrice(id: string, timestamp: UnixTime): Promise<number | undefined> {
-    return Promise.resolve(this.prices.get(timestamp)?.get(id))
+  async getPrice(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
+    const price = this.prices.get(timestamp)?.get(configurationId)
+
+    if (price) {
+      return Promise.resolve(price)
+    }
+
+    const fallback = await this.db.tvsPrice.getLatestPrice(configurationId)
+    assert(fallback, `Price fallback failed for ${configurationId}`)
+
+    this.logger.warn(`Price fallback triggered`, {
+      configurationId,
+      timestamp,
+      fallbackTimestamp: fallback.timestamp,
+      fallbackPrice: fallback.priceUsd,
+    })
+    return fallback.priceUsd
   }
 
-  getAmount(id: string, timestamp: UnixTime): Promise<bigint | undefined> {
-    return Promise.resolve(this.amounts.get(timestamp)?.get(id))
+  async getAmount(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<bigint | undefined> {
+    return await Promise.resolve(
+      this.amounts.get(timestamp)?.get(configurationId),
+    )
   }
 }

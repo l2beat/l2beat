@@ -97,6 +97,30 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
+  describe(TvsPriceRepository.prototype.getLatestPrice.name, () => {
+    it('returns the latest price for a configuration', async () => {
+      await repository.insertMany([
+        tvsPrice('a', 'eth', UnixTime(100), 1000),
+        tvsPrice('a', 'eth', UnixTime(200), 1100),
+        tvsPrice('a', 'eth', UnixTime(300), 1200),
+        tvsPrice('b', 'btc', UnixTime(100), 20000),
+        tvsPrice('b', 'btc', UnixTime(200), 21000),
+      ])
+
+      const result = await repository.getLatestPrice('a'.repeat(12))
+
+      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(300), 1200))
+    })
+
+    it('returns undefined when no prices exist for the configuration', async () => {
+      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(100), 1000)])
+
+      const result = await repository.getLatestPrice('b'.repeat(12))
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
   describe(TvsPriceRepository.prototype.deleteByConfigInTimeRange.name, () => {
     it('deletes data in range for matching config', async () => {
       await repository.insertMany([

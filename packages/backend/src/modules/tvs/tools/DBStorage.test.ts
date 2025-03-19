@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -46,6 +47,7 @@ describe(DBStorage.name, () => {
         mockObject<Database>({
           tvsPrice,
         }),
+        Logger.SILENT,
       )
 
       await storage.preloadPrices(
@@ -59,11 +61,12 @@ describe(DBStorage.name, () => {
         timestamp2,
       )
 
-      expect(storage.prices.size).toEqual(2)
-      expect(storage.prices.get(timestamp1)?.get(configId1)).toEqual(1000)
-      expect(storage.prices.get(timestamp1)?.get(configId2)).toEqual(20000)
-      expect(storage.prices.get(timestamp2)?.get(configId1)).toEqual(1100)
-      expect(storage.prices.get(timestamp2)?.get(configId2)).toEqual(21000)
+      const prices = (storage as any).prices
+      expect(prices.size).toEqual(2)
+      expect(prices.get(timestamp1)?.get(configId1)).toEqual(1000)
+      expect(prices.get(timestamp1)?.get(configId2)).toEqual(20000)
+      expect(prices.get(timestamp2)?.get(configId1)).toEqual(1100)
+      expect(prices.get(timestamp2)?.get(configId2)).toEqual(21000)
     })
 
     it('handles empty result from database', async () => {
@@ -78,12 +81,14 @@ describe(DBStorage.name, () => {
         mockObject<Database>({
           tvsPrice,
         }),
+        Logger.SILENT,
       )
 
       await storage.preloadPrices([configId], [timestamp])
 
-      expect(storage.prices.size).toEqual(1)
-      expect(storage.prices.get(timestamp)?.size).toEqual(0)
+      const prices = (storage as any).prices
+      expect(prices.size).toEqual(1)
+      expect(prices.get(timestamp)?.size).toEqual(0)
     })
   })
 
@@ -129,6 +134,7 @@ describe(DBStorage.name, () => {
         mockObject<Database>({
           tvsAmount,
         }),
+        Logger.SILENT,
       )
 
       await storage.preloadAmounts(
@@ -142,11 +148,12 @@ describe(DBStorage.name, () => {
         timestamp2,
       )
 
-      expect(storage.amounts.size).toEqual(2)
-      expect(storage.amounts.get(timestamp1)?.get(configId1)).toEqual(100n)
-      expect(storage.amounts.get(timestamp1)?.get(configId2)).toEqual(200n)
-      expect(storage.amounts.get(timestamp2)?.get(configId1)).toEqual(300n)
-      expect(storage.amounts.get(timestamp2)?.get(configId2)).toEqual(400n)
+      const amounts = (storage as any).amounts
+      expect(amounts.size).toEqual(2)
+      expect(amounts.get(timestamp1)?.get(configId1)).toEqual(100n)
+      expect(amounts.get(timestamp1)?.get(configId2)).toEqual(200n)
+      expect(amounts.get(timestamp2)?.get(configId1)).toEqual(300n)
+      expect(amounts.get(timestamp2)?.get(configId2)).toEqual(400n)
     })
 
     it('handles empty result from database', async () => {
@@ -161,96 +168,123 @@ describe(DBStorage.name, () => {
         mockObject<Database>({
           tvsAmount,
         }),
+        Logger.SILENT,
       )
 
       await storage.preloadAmounts([configId], [timestamp])
 
-      expect(storage.amounts.size).toEqual(1)
-      expect(storage.amounts.get(timestamp)?.size).toEqual(0)
+      const amounts = (storage as any).amounts
+      expect(amounts.size).toEqual(1)
+      expect(amounts.get(timestamp)?.size).toEqual(0)
     })
   })
 
   describe(DBStorage.prototype.getPrice.name, () => {
-    it('returns price from memory', async () => {
-      const storage = new DBStorage({} as Database)
-
+    it('returns price from memory when available', async () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      storage.prices = new Map([[timestamp, new Map([[configId, 1000]])]])
+      const storage = new DBStorage({} as Database, Logger.SILENT)
+      ;(storage as any).prices = new Map([
+        [timestamp, new Map([[configId, 1000]])],
+      ])
 
       const result = await storage.getPrice(configId, timestamp)
 
       expect(result).toEqual(1000)
     })
 
-    it('returns undefined when timestamp not found', async () => {
-      const storage = new DBStorage({} as Database)
-
-      const timestamp1 = UnixTime(100)
-      const timestamp2 = UnixTime(200)
+    it('falls back to latest price when not in memory', async () => {
+      const timestamp = UnixTime(100)
+      const latestTimestamp = UnixTime(50)
       const configId = 'config1'.repeat(2)
 
-      storage.prices = new Map([[timestamp1, new Map([[configId, 1000]])]])
+      const fallbackPrice = {
+        configurationId: configId,
+        timestamp: latestTimestamp,
+        priceId: 'eth',
+        priceUsd: 900,
+      }
 
-      const result = await storage.getPrice(configId, timestamp2)
+      const tvsPrice = mockObject<Database['tvsPrice']>({
+        getLatestPrice: mockFn().resolvesTo(fallbackPrice),
+      })
 
-      expect(result).toEqual(undefined)
+      const storage = new DBStorage(
+        mockObject<Database>({
+          tvsPrice,
+        }),
+        Logger.SILENT,
+      )
+      ;(storage as any).prices = new Map([[timestamp, new Map()]])
+
+      const result = await storage.getPrice(configId, timestamp)
+
+      expect(result).toEqual(900)
+      expect(tvsPrice.getLatestPrice).toHaveBeenCalledWith(configId)
     })
 
-    it('returns undefined when config id not found', async () => {
-      const storage = new DBStorage({} as Database)
-
+    it('throws error when fallback fails', async () => {
       const timestamp = UnixTime(100)
-      const configId1 = 'config1'.repeat(2)
-      const configId2 = 'config2'.repeat(2)
+      const configId = 'config1'.repeat(2)
 
-      storage.prices = new Map([[timestamp, new Map([[configId1, 1000]])]])
+      const tvsPrice = mockObject<Database['tvsPrice']>({
+        getLatestPrice: mockFn().resolvesTo(undefined),
+      })
 
-      const result = await storage.getPrice(configId2, timestamp)
+      const storage = new DBStorage(
+        mockObject<Database>({
+          tvsPrice,
+        }),
+        Logger.SILENT,
+      )
+      ;(storage as any).prices = new Map([[timestamp, new Map()]])
 
-      expect(result).toEqual(undefined)
+      await expect(storage.getPrice(configId, timestamp)).toBeRejectedWith(
+        `Price fallback failed for ${configId}`,
+      )
+      expect(tvsPrice.getLatestPrice).toHaveBeenCalledWith(configId)
     })
   })
 
   describe(DBStorage.prototype.getAmount.name, () => {
     it('returns amount from memory', async () => {
-      const storage = new DBStorage({} as Database)
-
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      storage.amounts = new Map([[timestamp, new Map([[configId, 100n]])]])
+      const storage = new DBStorage({} as Database, Logger.SILENT)
+      ;(storage as any).amounts = new Map([
+        [timestamp, new Map([[configId, 100n]])],
+      ])
 
       const result = await storage.getAmount(configId, timestamp)
 
       expect(result).toEqual(100n)
     })
 
-    it('returns undefined when timestamp not found', async () => {
-      const storage = new DBStorage({} as Database)
-
-      const timestamp1 = UnixTime(100)
-      const timestamp2 = UnixTime(200)
+    it('returns undefined when amount not found', async () => {
+      const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      storage.amounts = new Map([[timestamp1, new Map([[configId, 100n]])]])
+      const storage = new DBStorage({} as Database, Logger.SILENT)
+      ;(storage as any).amounts = new Map([[timestamp, new Map()]])
 
-      const result = await storage.getAmount(configId, timestamp2)
+      const result = await storage.getAmount(configId, timestamp)
 
       expect(result).toEqual(undefined)
     })
 
-    it('returns undefined when config id not found', async () => {
-      const storage = new DBStorage({} as Database)
+    it('returns undefined when timestamp not found', async () => {
+      const timestamp1 = UnixTime(100)
+      const timestamp2 = UnixTime(200)
+      const configId = 'config1'.repeat(2)
 
-      const timestamp = UnixTime(100)
-      const configId1 = 'config1'.repeat(2)
-      const configId2 = 'config2'.repeat(2)
+      const storage = new DBStorage({} as Database, Logger.SILENT)
+      ;(storage as any).amounts = new Map([
+        [timestamp1, new Map([[configId, 100n]])],
+      ])
 
-      storage.amounts = new Map([[timestamp, new Map([[configId1, 100n]])]])
-
-      const result = await storage.getAmount(configId2, timestamp)
+      const result = await storage.getAmount(configId, timestamp2)
 
       expect(result).toEqual(undefined)
     })

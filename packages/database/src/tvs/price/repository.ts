@@ -29,6 +29,18 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLatestPrice(configurationId: string): Promise<number | undefined> {
+    const row = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('configurationId', '=', configurationId)
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,
