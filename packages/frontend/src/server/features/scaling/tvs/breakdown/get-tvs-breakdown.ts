@@ -1,5 +1,5 @@
 import type { ConfigMapping } from '@l2beat/backend-shared'
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectContract } from '@l2beat/config'
 import type {
   AmountConfigEntry,
   AssetId,
@@ -28,6 +28,7 @@ export async function getTvsBreakdown(
   tokenMap: Map<AssetId, Token>,
   gasTokens?: string[],
   target?: UnixTime,
+  projectContracts?: Record<string, ProjectContract[]>,
 ) {
   const chainConverter = new ChainConverter(chains)
 
@@ -45,6 +46,13 @@ export async function getTvsBreakdown(
   )
 
   const pricesMap = new Map(prices.prices.map((x) => [x.configId, x.priceUsd]))
+
+  const contractsMap = new Map(
+    Object.entries(projectContracts ?? {}).map(([chainName, contracts]) => [
+      chainName,
+      contracts,
+    ]),
+  )
 
   const breakdown: BreakdownRecord = {
     canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
@@ -83,6 +91,12 @@ export async function getTvsBreakdown(
           config.type !== 'totalSupply' && config.type !== 'circulatingSupply',
         )
 
+        const contractName = contractsMap
+          .get(config.chain)
+          ?.find(
+            (c) => c.address.toString() === config.escrowAddress.toString(),
+          )?.name
+
         const explorer = chains.find(
           (c) => c.name === config.chain,
         )?.explorerUrl
@@ -95,6 +109,7 @@ export async function getTvsBreakdown(
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             escrowAddress: config.escrowAddress,
+            name: contractName,
             ...(config.type === 'preminted' ? { isPreminted: true } : {}),
             isSharedEscrow,
           })
@@ -120,6 +135,7 @@ export async function getTvsBreakdown(
                 amount: amountAsNumber,
                 usdValue: valueAsNumber,
                 escrowAddress: config.escrowAddress,
+                name: contractName,
                 ...(config.type === 'preminted' ? { isPreminted: true } : {}),
                 isSharedEscrow,
                 url: explorer
