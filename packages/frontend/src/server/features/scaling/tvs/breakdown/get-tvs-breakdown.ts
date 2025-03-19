@@ -47,15 +47,12 @@ export async function getTvsBreakdown(
 
   const pricesMap = new Map(prices.prices.map((x) => [x.configId, x.priceUsd]))
 
-  const contractsMap = new Map<string, string>()
-  for (const [chainName, contracts] of Object.entries(projectContracts ?? {})) {
-    for (const contract of contracts) {
-      contractsMap.set(
-        `${chainName}-${contract.address.toString()}`,
-        contract.name,
-      )
-    }
-  }
+  const contractsMap = new Map(
+    Object.entries(projectContracts ?? {}).map(([chainName, contracts]) => [
+      chainName,
+      contracts,
+    ]),
+  )
 
   const breakdown: BreakdownRecord = {
     canonical: new Map<AssetId, CanonicalAssetBreakdownData>(),
@@ -94,12 +91,15 @@ export async function getTvsBreakdown(
           config.type !== 'totalSupply' && config.type !== 'circulatingSupply',
         )
 
-        const contractName = contractsMap.get(
-          `${config.chain}-${config.escrowAddress.toString()}`,
-        )
+        const contractName = contractsMap
+          .get(priceConfig.chain)
+          ?.find(
+            (c) =>
+              c.address.toLowerCase() === config.escrowAddress.toLowerCase(),
+          )?.name
 
         const explorer = chains.find(
-          (c) => c.name === config.chain,
+          (c) => c.name === priceConfig.chain,
         )?.explorerUrl
 
         const asset = breakdown.canonical.get(priceConfig.assetId)
