@@ -32,7 +32,7 @@ import {
   inputPlaceholder,
 } from './utils/labels'
 
-export function TableFilterCombobox({
+export function TableFilterSelector({
   entries,
 }: { entries: FilterableEntry[] }) {
   const [open, setOpen] = useState(false)

@@ -1,8 +1,8 @@
 import { uniq } from 'lodash'
 import { cn } from '~/utils/cn'
 import { TableFilter } from './table-filter'
-import { TableFilterCombobox } from './table-filter-combobox'
 import { useTableFilterContext } from './table-filter-context'
+import { TableFilterSelector } from './table-filter-selector'
 import type { FilterableEntry } from './types'
 
 type Props = {
@@ -20,7 +20,7 @@ export function TableFilters({ entries, className }: Props) {
         className,
       )}
     >
-      <TableFilterCombobox entries={entries} />
+      <TableFilterSelector entries={entries} />
       {state.map((filter) => (
         <TableFilter
           key={filter.id}
