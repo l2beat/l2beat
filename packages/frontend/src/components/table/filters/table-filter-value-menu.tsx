@@ -1,4 +1,5 @@
 import partition from 'lodash/partition'
+import type { Dispatch, SetStateAction } from 'react'
 import {
   Command,
   CommandEmpty,
@@ -17,12 +18,21 @@ import { emptyStateLabel, inputPlaceholder } from './utils/labels'
 interface Props {
   filterId: FilterableValueId
   values: string[]
+  search?: {
+    value: string
+    setValue: Dispatch<SetStateAction<string>>
+  }
 }
 
-export function TableFilterValueMenu({ filterId, values }: Props) {
+export function TableFilterValueMenu({ filterId, values, search }: Props) {
   return (
-    <Command className="border border-divider">
-      <CommandInput className="h-9" placeholder={inputPlaceholder(filterId)} />
+    <Command>
+      <CommandInput
+        className="h-9"
+        placeholder={inputPlaceholder(filterId)}
+        value={search?.value}
+        onValueChange={search?.setValue}
+      />
       <CommandList>
         <CommandEmpty>{emptyStateLabel(filterId)}</CommandEmpty>
         <TableFilterValueMenuItems filterId={filterId} values={values} />

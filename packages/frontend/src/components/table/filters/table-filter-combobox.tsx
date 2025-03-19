@@ -187,7 +187,7 @@ function Content({
     .map((f) => f.id)
 
   return (
-    <Command className="border border-divider">
+    <Command>
       <CommandInput
         placeholder={inputPlaceholder(selectedId)}
         value={search}

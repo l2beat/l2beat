@@ -65,6 +65,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
 
 function TableFilterValuePart({ filter, possibleValues }: Props) {
   const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
   const isMobile = useIsMobile()
 
   if (isMobile) {
@@ -89,13 +90,27 @@ function TableFilterValuePart({ filter, possibleValues }: Props) {
   }
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverAnchor className="h-full" />
       <PopoverTrigger className="flex h-full items-center justify-center rounded-none px-2 font-medium">
         <TableFilterValue values={filter.values} filterId={filter.id} />
       </PopoverTrigger>
-      <PopoverContent align="start" className="p-0" side="bottom">
-        <TableFilterValueMenu filterId={filter.id} values={possibleValues} />
+      <PopoverContent
+        align="start"
+        className="p-0"
+        side="bottom"
+        onEscapeKeyDown={(e) => {
+          if (search) {
+            e.preventDefault()
+            setSearch('')
+          }
+        }}
+      >
+        <TableFilterValueMenu
+          filterId={filter.id}
+          values={possibleValues}
+          search={{ value: search, setValue: setSearch }}
+        />
       </PopoverContent>
     </Popover>
   )
