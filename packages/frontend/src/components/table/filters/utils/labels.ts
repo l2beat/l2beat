@@ -22,7 +22,7 @@ export const filterIdToValues: Record<keyof typeof filterIdToLabel, string> = {
   validatedBy: 'validators',
 }
 
-export const emtpyStateLabel = (filterId: FilterableValueId | undefined) => {
+export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {
   return filterId
     ? `No ${filterIdToValues[filterId].toLowerCase()} found.`
     : 'No filters found.'
