@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22037103,
+  "blockNumber": 22073511,
   "configHash": "0xceabd00b2fcbf1681b543968a3cf77cf70d7acdecb3693379bae02420dc6886e",
   "entries": [
     {
@@ -362,6 +362,11 @@
             "chainId": 320,
             "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+          },
+          {
+            "chainId": 232,
+            "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0x0000000000000000000000000000000000000000"
           }
         ],
         "CronosDiamond": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
@@ -593,7 +598,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 180,
+        "nonce": 181,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1302,7 +1307,7 @@
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x0000000000000000000000000000000000000001",
         "getAllHyperchainChainIDs": [
-          324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320
+          324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232
         ],
         "getAllHyperchains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -1314,7 +1319,8 @@
           "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
           "0x89f90748A9a36C30A324481133fa198f4E16A824",
           "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
-          "0xF2704433d11842d15aa76BBF0E00407267a99C92"
+          "0xF2704433d11842d15aa76BBF0E00407267a99C92",
+          "0xc29d04A93F893700015138E3E334eB828dAC3cef"
         ],
         "getChainAdmin": [],
         "getSemverProtocolVersion": [0, 26, 0],

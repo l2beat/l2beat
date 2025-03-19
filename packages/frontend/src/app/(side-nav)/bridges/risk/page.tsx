@@ -1,8 +1,8 @@
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridges-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesRiskTable } from './_components/table/bridges-risks-table'
 
@@ -17,13 +17,13 @@ export default async function Page() {
 
   return (
     <>
-      <BridgesFilterContextProvider>
+      <TableFilterContextProvider>
         <MainPageHeader>Risk Analysis</MainPageHeader>
         <BridgesMvpWarning className="md:mb-3" sidebar />
         <PrimaryCard>
           <BridgesRiskTable entries={entries} />
         </PrimaryCard>
-      </BridgesFilterContextProvider>
+      </TableFilterContextProvider>
     </>
   )
 }

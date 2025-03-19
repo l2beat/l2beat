@@ -256,29 +256,59 @@ model FlatSources {
 
 model TvsAmount {
   timestamp       DateTime @db.Timestamp(6)
-  amount          Decimal  @db.Decimal(80, 0)
   configurationId String   @db.Char(12)
   project         String   @db.VarChar(255)
+  amount          Decimal  @db.Decimal(80, 0)
 
   @@id([timestamp, configurationId])
   @@index([project])
 }
 
 model TvsBlockTimestamp {
-  chain           String   @db.VarChar(255)
   timestamp       DateTime @db.Timestamp(6)
-  blockNumber     Int
   configurationId String   @db.Char(12)
+  chain           String   @db.VarChar(255)
+  blockNumber     Int
 
-  @@id([chain, timestamp])
+  @@id([timestamp, configurationId])
+  @@index([chain])
 }
 
 model TvsPrice {
-  configurationId String   @db.Char(12)
   timestamp       DateTime @db.Timestamp(6)
-  priceUsd        Float    @db.Real
+  configurationId String   @db.Char(12)
   priceId         String   @db.VarChar(255)
+  priceUsd        Float    @db.Real
 
-  @@id([configurationId, timestamp])
+  @@id([timestamp, configurationId])
   @@index([priceId])
+}
+
+model TokenValue {
+  timestamp       DateTime @db.Timestamp(6)
+  configurationId String   @db.Char(12)
+  project         String   @db.VarChar(255)
+  amount          Float    @db.Real
+  value           Float    @db.Real
+  valueForProject Float    @db.Real
+  valueForSummary Float    @db.Real
+
+  @@id([timestamp, configurationId])
+  @@index([project])
+}
+
+model ProjectValue {
+  timestamp  DateTime @db.Timestamp(6)
+  project    String   @db.VarChar(255)
+  type       String   @db.VarChar(255)
+  value      Float    @db.Real
+  canonical  Float    @db.Real
+  external   Float    @db.Real
+  native     Float    @db.Real
+  ether      Float    @db.Real
+  stablecoin Float    @db.Real
+  other      Float    @db.Real
+  associated Float    @db.Real
+
+  @@id([timestamp, project, type])
 }
