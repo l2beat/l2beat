@@ -4,7 +4,6 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -81,7 +80,6 @@ export async function getBridgesProjectEntry(
   ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  assert(tvsProjectStats, 'Tvs project stats not found')
 
   const changes = projectsChangeReport.getChanges(project.id)
 

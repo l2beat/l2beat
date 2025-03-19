@@ -66,6 +66,7 @@ export class AgglayerDataFetcher {
     '7': 'validiumV2',
     '8': 'okx validium',
     '9': 'pessimistic test',
+    '10': 'pessimistic 2',
   }
 
   private rollupManagerAbi = [

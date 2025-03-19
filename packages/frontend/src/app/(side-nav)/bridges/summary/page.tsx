@@ -1,10 +1,10 @@
 import { BridgesTvsChart } from '~/components/chart/tvs/bridges-tvs-chart'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesSummaryTable } from './_components/table/bridges-summary-table'
 
@@ -27,7 +27,7 @@ export default async function Page() {
   return (
     <>
       <HydrateClient>
-        <BridgesFilterContextProvider>
+        <TableFilterContextProvider>
           <MainPageHeader>Summary</MainPageHeader>
           <BridgesMvpWarning className="md:mb-3" sidebar />
           <PrimaryCard>
@@ -36,7 +36,7 @@ export default async function Page() {
           <PrimaryCard className="md:mt-6">
             <BridgesSummaryTable entries={entries} />
           </PrimaryCard>
-        </BridgesFilterContextProvider>
+        </TableFilterContextProvider>
       </HydrateClient>
     </>
   )
