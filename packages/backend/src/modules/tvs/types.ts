@@ -1,3 +1,4 @@
+import type { TokenValueRecord } from '@l2beat/database'
 import type {
   CoingeckoId,
   EthereumAddress,
@@ -144,14 +145,7 @@ export interface BlockTimestampConfig {
   untilTimestamp?: UnixTime
 }
 
-export interface TokenValue {
-  tokenConfig: Token
-  projectId: string
-  amount: number
-  value: number
-  valueForProject: number
-  valueForTotal: number
-}
+export type TokenValue = Omit<TokenValueRecord, 'configurationId'>
 
 export interface TvsBreakdown {
   tvs: number

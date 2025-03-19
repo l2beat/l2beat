@@ -63,12 +63,13 @@ describe(ValueService.name, () => {
 
       expect(result).toEqual([
         {
-          tokenConfig: tvsConfig.tokens[0],
+          timestamp: mockTimestamp,
+          tokenId: tvsConfig.tokens[0].id,
           amount: 10000,
           projectId: ProjectId('project'),
           value: 2000000,
           valueForProject: 2000000,
-          valueForTotal: 2000000,
+          valueForSummary: 2000000,
         },
       ])
     })
@@ -190,20 +191,22 @@ describe(ValueService.name, () => {
 
       expect(result).toEqual([
         {
-          tokenConfig: tvsConfig.tokens[0],
+          timestamp: mockTimestamp,
+          tokenId: tvsConfig.tokens[0].id,
           projectId: ProjectId('bob'),
           amount: 10000,
           value: 2000000,
           valueForProject: 2000000,
-          valueForTotal: 2000000,
+          valueForSummary: 2000000,
         },
         {
-          tokenConfig: tvsConfig.tokens[1],
+          timestamp: mockTimestamp,
+          tokenId: tvsConfig.tokens[1].id,
           projectId: ProjectId('bob'),
           amount: 8000,
           value: 1600000,
           valueForProject: 600000,
-          valueForTotal: 600000,
+          valueForSummary: 600000,
         },
       ])
     })
@@ -266,12 +269,13 @@ describe(ValueService.name, () => {
 
       expect(result).toEqual([
         {
-          tokenConfig: tvsConfig.tokens[0],
+          timestamp: mockTimestamp,
+          tokenId: tvsConfig.tokens[0].id,
           amount: 10000,
           projectId: ProjectId('project'),
           value: 2000000,
           valueForProject: 2000000,
-          valueForTotal: 2000000,
+          valueForSummary: 2000000,
         },
       ])
     })

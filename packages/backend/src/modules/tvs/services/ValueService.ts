@@ -44,14 +44,15 @@ export class ValueService {
           : (valueForProject ?? value)
 
         values.push({
-          tokenConfig: token,
+          tokenId: token.id,
           projectId: config.projectId,
+          timestamp,
           amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
           value: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
           valueForProject: Number(
             BigIntWithDecimals.toNumber(valueForProject).toFixed(2),
           ),
-          valueForTotal: Number(
+          valueForSummary: Number(
             BigIntWithDecimals.toNumber(valueForTotal).toFixed(2),
           ),
         })

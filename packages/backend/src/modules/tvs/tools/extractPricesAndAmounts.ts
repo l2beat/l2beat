@@ -87,7 +87,7 @@ export function extractPricesAndAmounts(
 
       return {
         chainName: c,
-        configurationId: hash([`chain_${c}`]),
+        configurationId: generateConfigurationId([`chain_${c}`]),
         sinceTimestamp: chain.chainConfig.sinceTimestamp,
         untilTimestamp: chain.chainConfig.untilTimestamp,
       }
@@ -228,7 +228,7 @@ export function createAmountConfig(
   switch (formula.type) {
     case 'balanceOfEscrow':
       return {
-        id: hash([
+        id: generateConfigurationId([
           formula.type,
           formula.address,
           formula.chain,
@@ -239,7 +239,7 @@ export function createAmountConfig(
       }
     case 'totalSupply':
       return {
-        id: hash([
+        id: generateConfigurationId([
           formula.type,
           formula.address,
           formula.chain,
@@ -249,7 +249,7 @@ export function createAmountConfig(
       }
     case 'circulatingSupply':
       return {
-        id: hash([formula.type, formula.apiId]),
+        id: generateConfigurationId([formula.type, formula.apiId]),
         ...formula,
       }
     // we need to create config to be able to deduce sync range for related price config
@@ -261,11 +261,11 @@ export function createAmountConfig(
   }
 }
 
-export function hash(input: string[]): string {
+export function generateConfigurationId(input: string[]): string {
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
 }
 
 export function createPriceConfigId(priceId: string): string {
-  return hash([`price_${priceId}`])
+  return generateConfigurationId([`price_${priceId}`])
 }

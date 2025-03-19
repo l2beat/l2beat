@@ -8,7 +8,7 @@ import {
 } from '@l2beat/backend-tools'
 import { type Project, ProjectService } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
@@ -81,7 +81,7 @@ const cmd = command({
         }, 0)
 
         const valueForTotal = tvs.reduce((acc, token) => {
-          return acc + token.valueForTotal
+          return acc + token.valueForSummary
         }, 0)
 
         totalTvs += valueForTotal
@@ -91,8 +91,13 @@ const cmd = command({
 
         newConfig = tvs
           .filter((token) => token.value !== 0)
-          .map((token) => token.tokenConfig)
-          .sort((a, b) => a.id.localeCompare(b.id))
+          .map((token) => token.tokenId)
+          .sort((a, b) => a.localeCompare(b))
+          .map((tokenId) => {
+            const tokenConfig = tvsConfig.tokens.find((t) => t.id === tokenId)
+            assert(tokenConfig, `${tokenId} config not found`)
+            return tokenConfig
+          })
       } else {
         logger.info('No tokens found')
       }
