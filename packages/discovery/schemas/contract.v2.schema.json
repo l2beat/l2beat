@@ -44,7 +44,11 @@
                 }
               ]
             },
-            "target": { "$ref": "#/$defs/targetConfig" },
+            "template": { "type": ["string", "null"] },
+            "permissions": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/permission" }
+            },
             "handler": {
               "^.+$": {
                 "type": "object",
@@ -127,27 +131,6 @@
     "stackCategory": {
       "type": ["string", "null"],
       "enum": ["Core", "Gateways&Escrows", "Upgrades&Governance"]
-    },
-    "targetConfig": {
-      "type": "object",
-      "unevaluatedProperties": false,
-      "properties": {
-        "description": { "type": ["string", "null"] },
-        "template": { "type": ["string", "null"] },
-        "category": {
-          "anyOf": [
-            { "$ref": "#/$defs/stackCategory" },
-            {
-              "type": "array",
-              "items": { "$ref": "#/$defs/stackCategory" }
-            }
-          ]
-        },
-        "permissions": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/permission" }
-        }
-      }
     }
   }
 }
