@@ -40,13 +40,13 @@ export function MainPageHeader({
         </div>
       </header>
       {(!!description || !!warning) && (
-        <div className="flex flex-col pl-0 md:flex-col-reverse md:gap-2 md:pb-4 lg:pl-2">
+        <div className="flex flex-col pl-0 md:flex-col-reverse md:gap-2 md:pb-3 lg:pl-2">
           {warning && <Warning>{warning}</Warning>}
           {description && (
             <ShowMoreText
               pageTitle={typeof children === 'string' ? children : ''}
               textClassName="text-xs font-normal text-secondary"
-              className={cn('px-4 py-3 md:p-0', !warning && 'pt-4')}
+              className={cn('px-4 pt-3 md:p-0', !warning && 'pt-4')}
             >
               {description}
             </ShowMoreText>
