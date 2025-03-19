@@ -194,8 +194,6 @@ describe(AddressAnalyzer.name, () => {
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             references: undefined,
-            severity: undefined,
-            types: undefined,
           },
         },
         relatives: {
@@ -319,8 +317,6 @@ describe(AddressAnalyzer.name, () => {
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             references: undefined,
-            severity: undefined,
-            types: undefined,
           },
         },
         relatives: {
@@ -441,8 +437,6 @@ describe(AddressAnalyzer.name, () => {
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             references: undefined,
-            severity: undefined,
-            types: undefined,
           },
         },
         relatives: {

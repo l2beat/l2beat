@@ -37,7 +37,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -80,7 +79,6 @@
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -106,7 +104,6 @@
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -734,8 +731,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "starknet/Starknet": "0xb78165b4e6a35a7583178ad3aae7e7da7d211a1e7c43422b189151df65c4f68d",
-    "starknet/StarknetERC20Bridge": "0x7249a25f388785a0277c86b45c8989a6ea7ca38acdb9296c7a78e6a9b69faf29"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "starknet/Starknet": "0x24d52302fc33da36088c2be699d5ba801d9e2af6968f4787a619ae5a80713c08",
+    "starknet/StarknetERC20Bridge": "0x02f940891cb066b5cdb2aa7169ce1b4315d63272c11797d15d7138c8d8023716"
   }
 }

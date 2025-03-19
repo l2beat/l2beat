@@ -14,7 +14,7 @@ export function getDiscoveryConfigEntries(
 //  so changing the order of them should change config hash
 const MAX_SEMANTIC_NEST_LEVEL = 2
 
-function deepSortByKeys(
+export function deepSortByKeys(
   object: Record<string, unknown>,
   nestLevel = 0,
 ): Record<string, unknown> {

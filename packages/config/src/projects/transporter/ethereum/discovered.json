@@ -19081,15 +19081,15 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "transporter/CommitStoreV1": "0x5deab37cb9de96ccf40cef52120a405c2b8ea4435ba699ebad11bae5c559ae73",
-    "transporter/ManyChainMultiSig": "0x835d8de5dbcb41e242c45df948eb743bef0716ad43fa77ff025faf39b4c0791e",
-    "transporter/OffRampV1": "0x415e962fce1929974ff000f2a7bce2ed12176c2c3a7b81d79833840106f01c81",
-    "transporter/OfframpV2": "0xc8cc9bcec92d097560d962ffdc3c221383401c3738e9d2610227ff93f1f0c79a",
-    "transporter/OnRampV1": "0xfba9653a2379557221bb77eb785fcf100b4578ccdb1167439ce46685b0788901",
-    "transporter/OnRampV3": "0x08590bdb48b325dc9ef927485ac27224e9c058a9cea4426fe7e134c616fc5dab",
-    "transporter/PriceRegistry": "0xa68de896ba56ec74841e79cff1181bf5620fa4add4849132ff47a775f2d11e13",
-    "transporter/RouterV1_0_0": "0x6cd9667676de96377e9ed23a54af7b002df2e50a3e482a424a70025f7ec65815",
-    "transporter/RouterV1_2_0": "0x293de13b626326807146ce01a64a0bbe165f7eb11a2d2a9554602435bb7b02bc"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "transporter/CommitStoreV1": "0xebe6c5883c2216ee9441b40837ca8fe51683a164c3b322555ebc0be1b4e72b56",
+    "transporter/ManyChainMultiSig": "0x7c8c225d0ec3ef221086196c488c80e41fb498ebf071e4ba58b05cf476c2caf3",
+    "transporter/OffRampV1": "0x34de07e29ae1ddb133cc7fd2b4248652225cf6b5b8c8f6f42f39be77c1c95c73",
+    "transporter/OfframpV2": "0x2b151556c2e5a84aa06aa132bc86933c57ad9ed11b328bcdd74eb6d2c19fbf56",
+    "transporter/OnRampV1": "0x37078190b3bad21157300acf16db8ee2a967e1179426a647e0d70a2d9f905e43",
+    "transporter/OnRampV3": "0x190b7c097ef500151be68daf563c828971498bbdc38568ecb4da3580e077892c",
+    "transporter/PriceRegistry": "0x61ec2571dba692b7872d33c255111d46e1adb6d2943648ce9ba3644c6c181094",
+    "transporter/RouterV1_0_0": "0x465062727002dcaf2512891237735fffca139f8d94abd320229c5f4255dd7eaa",
+    "transporter/RouterV1_2_0": "0x43ec77f8957db0f4910d75e4b5854b536d4e40135db620e991fa0cd86481ca47"
   }
 }

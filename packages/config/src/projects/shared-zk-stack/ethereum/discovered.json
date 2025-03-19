@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22073511,
+  "blockNumber": 22081910,
   "configHash": "0xceabd00b2fcbf1681b543968a3cf77cf70d7acdecb3693379bae02420dc6886e",
   "entries": [
     {
@@ -2218,15 +2218,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "shared-zk-stack/BridgeHub": "0x1082a82985b15d3ab60d47289e65d7dcc1df1773aac6a122ad35f518f14990fa",
-    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0x5fc0246dd42a6104ff1f712513ed2995eefc387725294905dd8bfecd8ecfcf66",
-    "shared-zk-stack/Guardians": "0x851e167f1e5f305d7b33e62a86f4949a7fa6a9a48a7958c36f7deba2b55ec1ad",
-    "shared-zk-stack/L1SharedBridge": "0xf665083b2b6ab25aa8830f7b480d98cd2e84f72f302e7bf4b1dd427d4a8416d4",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0x9450d1e0c166b048608acec0785bee7a01b73bade1ea15c175088cd77de03d89",
-    "shared-zk-stack/SecurityCouncil": "0x8223e8d6dab5118334b6988580dc1075eb3813d737a58bfbc15401182fdd4239",
-    "shared-zk-stack/StateTransitionManager": "0xa1be5ed4cf272ac426214a1acec35b513dc54451c55865ba7017c625015e5489"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "shared-zk-stack/BridgeHub": "0x75912557093e5acd5d1cf29247468321e9c1de4a6d05e9432f126ffe026a174d",
+    "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0x3aaf3bcd68c656fea1345a22d86dc81125503b4efbf4778d38476d1d4103f714",
+    "shared-zk-stack/Guardians": "0xa9db374eee5c5539d49661c37b377921cd849648da2f635ff2fa631715585cbc",
+    "shared-zk-stack/L1SharedBridge": "0x311b6195354f803c293572139b430c5edfc0931cce743d8eb6b5949208de0cf9",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0x8392e6d02382f82adcb3fe02af303be4e21b9fb399be0efa72f792490f36a251",
+    "shared-zk-stack/SecurityCouncil": "0x2d620c0be0c12a18cbb02aed91ed5681e263af71360d6404ff5dc03cb9f4a4cf",
+    "shared-zk-stack/StateTransitionManager": "0x9b82b8e46dd94babb05939c3e67f7b24999a707fe26281978ef211c6e90b84f0"
   }
 }

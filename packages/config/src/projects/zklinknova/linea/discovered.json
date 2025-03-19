@@ -762,7 +762,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "zklinknova/secondaryGateway": "0xae4633b0c19837b8498530c044983ef690045619ab067153aba46ce5a6df3754"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 57469400,
+  "blockNumber": 57909592,
   "configHash": "0x40414eb16c9ad2a204a03f78d303876111408eae9485567d29156efb7a36c966",
   "entries": [
     {
@@ -145,7 +145,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741679905,
+        "clock": 1742399363,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -413,7 +413,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741679905,
+        "clock": 1742399363,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -542,7 +542,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1741679905,
+        "clock": 1742399363,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -662,7 +662,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741679905,
+        "clock": 1742399363,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -680,7 +680,7 @@
         "lateQuorumVoteExtension": 259200,
         "name": "ZkProtocolGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 7,
+        "proposalQueuedCount": 8,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
@@ -796,7 +796,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741679905,
+        "clock": 1742399363,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -1217,7 +1217,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1741679905,
+        "clock": 1742399363,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -1929,9 +1929,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "shared-zk-stack/TimelockController": "0x2f2b105287184d04941460f01d174eff38c2da4938fac30d1012deb9a91cabdb",
-    "shared-zk-stack/ZkGovernor": "0x0f8a0f4fc61a2893850f1128f988717340a4ecc2f251f2d5c51ff23c0d793022",
-    "shared-zk-stack/ZkToken": "0x308f986274bf7bbc2ccfb8b4d1184200c6c7968ff8e1dfda97f60c51d323bc1d"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "shared-zk-stack/TimelockController": "0xa6f649cc1a48a327a615e93f97578742df221ebb812d4ecf8cdb58990197242f",
+    "shared-zk-stack/ZkGovernor": "0x3c4810d91ca43f7ba1c8e05c3dece23deb3b90f02aa80b3d837d8c10d3c900a2",
+    "shared-zk-stack/ZkToken": "0xf73a7a80e33d97b6359650976b4e9423b0b37a1cbfc58b0021aa743fdbcc9e43"
   }
 }

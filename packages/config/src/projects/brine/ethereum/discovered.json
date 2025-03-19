@@ -160,7 +160,6 @@
       "address": "0x303775491494a08b07365938787274F742a81F63",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -687,9 +686,9 @@
     ]
   },
   "usedTemplates": {
-    "starkex/Committee": "0xfcf85f66b03b8c054630b329591b5c81c7af04431641bbe93676b13190da7994",
-    "starkex/GpsFactRegistryAdapter": "0x5ea00881cdc267a1781e6a48d2817bec048063f94fbed27737fb198427307882",
-    "starkex/OrderRegistry": "0xed9e510302c2aedb366975ffe5238d2b2f4ac7ff9a482406d0f06f834a3b8419",
-    "starkex/StarkExchange": "0xfca558f76aa633db59487de9450f6fcad186bbb3096d62090748b4f7915299f7"
+    "starkex/Committee": "0xdd0de4efcc59e58eacde5dd5ae89cb67e8ca289b8701d2dde3cd78b38e06c4e0",
+    "starkex/GpsFactRegistryAdapter": "0xd25d19938656386c9c7d88accb6ce40d364c77e8fc0173bf9678eefbb7532a05",
+    "starkex/OrderRegistry": "0xd9645d62193dcf480291c42dcbd47fdad4779ed791d517f5512fed8f0d02e7ab",
+    "starkex/StarkExchange": "0xc96f674125c785b04101cc7151ce7b6c0b3a274c3dee0c55adab1da10ef9576e"
   }
 }

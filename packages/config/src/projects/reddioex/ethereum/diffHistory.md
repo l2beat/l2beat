@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x379933eb79d1a9ea10fd624e6125756f897f057b
+
+# Diff at Wed, 19 Mar 2025 13:05:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 19825385
+- current block number: 19825385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825385 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x6b7763b749073e892c83E674c1EC4799D6f339Ef) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x3a92b0b72fd0cdff03df7d0876cb26c8eca328a4
 
 # Diff at Tue, 11 Mar 2025 16:09:20 GMT:

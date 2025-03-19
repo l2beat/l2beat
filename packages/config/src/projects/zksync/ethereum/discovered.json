@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 21365608,
+  "blockNumber": 22081893,
   "configHash": "0x71396a2a17cf3fa11a7e793f2041b1c936bdb75ba3c0b15667617fcf6306448f",
   "entries": [
     {
@@ -133,7 +133,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 386,
+        "nonce": 407,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -259,6 +259,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -324,7 +329,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18753
+        "totalSupply": 18764
       },
       "derivedName": "ZkSyncNFTFactory"
     },
@@ -468,6 +473,7 @@
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "$members": [
+          "0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE",
           "0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
           "0x37A71E0C1A5808343D893Db40e12A74e0A387908",
           "0x890Da36c3dD697CbB88E616668BEDaFA369f3793",
@@ -476,13 +482,13 @@
           "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
         ],
-        "$threshold": 4,
+        "$threshold": 5,
         "domainSeparator": "0xcd86f82218dc46b5501da06e0b96a9cf73cd8f35153e9da3a481f79b6be5ff63",
         "getModules": [],
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
+        "multisigThreshold": "5 of 8 (63%)",
         "NAME": "Gnosis Safe",
-        "nonce": 118,
+        "nonce": 119,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -872,6 +878,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }
