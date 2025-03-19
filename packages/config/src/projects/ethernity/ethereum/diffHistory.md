@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xddc32ff250d0a4df589a10589068a64629e34413
+
+# Diff at Wed, 19 Mar 2025 13:04:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21802884
+- current block number: 21802884
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802884 (main branch discovery), not current.
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xF49212F977986347b73345D382a811e148751eED) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xaecc22c349f84e7a6d8afb1524ce729f8431248e
 
 # Diff at Tue, 18 Mar 2025 08:12:41 GMT:

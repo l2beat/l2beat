@@ -1396,20 +1396,20 @@
     ]
   },
   "usedTemplates": {
-    "opstack/Layer2/BaseFeeVault": "0x304cafa799df10ec666877e8c6f7290a8504e0a5a1513264b1b2ec48ba50aa23",
-    "opstack/Layer2/EAS": "0xb6405a7c046e371609073c5e20ac8d9731cbcc335ad83e370fc8708b13d0fe29",
-    "opstack/Layer2/GasPriceOracle": "0xcf4ea52f20e80cc0c9c546cc4d1cac62ad299ed236731c085426c61e6f049091",
-    "opstack/Layer2/L1Block": "0x44884c1d9d68870c918407df5e07399fb79bca9b121bca7572486ce9c10f85bf",
-    "opstack/Layer2/L1BlockNumber": "0xe3e7a1172e822356e1fd873a453dedc9eb610b0a47d9ccc1a89cbb9b74e5543e",
-    "opstack/Layer2/L1FeeVault": "0x81775150f8ede7a4800cf186635ab2f2fd66a5053ac1aafc5720c95ea1a17b60",
-    "opstack/Layer2/L2CrossDomainMessenger": "0x4fbb9489aa73df9dd7ee9d0c08f49d96d4643c6071ccc0b97ab0d16b56f8c1e6",
-    "opstack/Layer2/L2ERC721Bridge": "0x609f74ea64e53a47824983bf09912c56f2185ef2f72c9422c13984b6a5f90ae8",
-    "opstack/Layer2/L2ProxyAdmin": "0x2fd148ae251967fd85086d433b97658ccf3359510455207f0639fae617d8e4ac",
-    "opstack/Layer2/L2StandardBridge": "0x7a4f8ad9fc5c8651272047535a63d9ff1b003e23b4c246e11fb93ef9db421baa",
-    "opstack/Layer2/L2ToL1MessagePasser": "0x2f66cff6c90fa4f9ddd44ed01e04aa4321a82426ba1ff3df9a7686de53a4bd6e",
-    "opstack/Layer2/OptimismMintableERC20Factory": "0x9d3872a95b9778b2a6497c4126f00b1aa9d8fc85505fffd7d321f5dd060e0676",
-    "opstack/Layer2/OptimismMintableERC721Factory": "0xd2b0c67c0a9c0e463b92a616ce9fa5f9fc27cbf4e9553829977016fc60f22bc9",
-    "opstack/Layer2/SchemaRegistry": "0xda13fcbc1ed748b07a624830903209695f9c3550578abb2bc2ad5c43bcf6e0d5",
-    "opstack/Layer2/SequencerFeeVault": "0xdfa23130a6a73150f232beb59013d4dd7c3e77944a930fd80129f9a520c7280a"
+    "opstack/Layer2/BaseFeeVault": "0x8ac3d4d02e60f9d0fc5d1b3bb4d0fd144402bddf02d54e01810b634978000c62",
+    "opstack/Layer2/EAS": "0x544625cb6730381fe1dd5389cefeed7886901b154fbf10f9a3cb134e42ff2173",
+    "opstack/Layer2/GasPriceOracle": "0x98613b8b76dab2084336195d79927dfe87cab8bf2c7f92b855fdb25500c0e63f",
+    "opstack/Layer2/L1Block": "0xae883e6710bcb5f0f7074b3d7666d33f74f8adcd1ec572b0758104af1ac24246",
+    "opstack/Layer2/L1BlockNumber": "0x09a7d99039caa076ae26fc79331e2653bbefdf9a9efe083f3428ecf6df6e2220",
+    "opstack/Layer2/L1FeeVault": "0xbe152bc5a515a30943a5d439fad723b9fd4ee04d68882526043248db73c61847",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x05066a856424429898e25025458ca628bf5303d5522f22f706e1df91aa16f0b3",
+    "opstack/Layer2/L2ERC721Bridge": "0x644697262bc7ef1d94db87e01ff4b4e29d630d90b37a33b34ef22c611a333661",
+    "opstack/Layer2/L2ProxyAdmin": "0xe1da3bb7340074b7a35f28ceedc964c6860a07d9911440e5c498aaee0cdae276",
+    "opstack/Layer2/L2StandardBridge": "0xa3f1df939baca30632b5ffcdac284af5eacd42a15fc6fc8adf2a1e3ddf5c7559",
+    "opstack/Layer2/L2ToL1MessagePasser": "0xf46a7ab8a1471c982b2994a70ac0e6503118d153e19b6fd4d0cdaf4037964408",
+    "opstack/Layer2/OptimismMintableERC20Factory": "0x9d5a3f4adcea192ed605c14cd14a034f2fcb5cfd3d6620a0202dcf010499fa33",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0x051481764ef505e8cdcd9bc207d1e9374219d23ef8541bc4bc409e29d9a5b678",
+    "opstack/Layer2/SchemaRegistry": "0x2b2e5b40b1ba5e7d9d13df6e72a7803eab26ed8d0860160fc9271f33b88e0978",
+    "opstack/Layer2/SequencerFeeVault": "0x305f40bd865fb7d166ae19b5fae4b12eb9ee28180718da92aacbfe7d9c91f789"
   }
 }

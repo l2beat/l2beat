@@ -12,6 +12,7 @@ import { flatteningHash, hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -135,7 +136,7 @@ export class TemplateService {
 
   getTemplateHash(template: string): Hash256 {
     const templateJson = this.loadContractTemplate(template)
-    return hashJson(templateJson as json)
+    return hashJson(deepSortByKeys(templateJson) as json)
   }
 
   getAllShapes(): Record<string, Shape> {

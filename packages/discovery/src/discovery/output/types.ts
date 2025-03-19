@@ -64,9 +64,7 @@ export interface Meta {
   issuedPermissions?: IssuedPermission[]
   receivedPermissions?: ReceivedPermission[]
   directlyReceivedPermissions?: ReceivedPermission[]
-  types?: ContractValueType[]
   description?: string
-  severity?: ContractFieldSeverity
   references?: ExternalReference[]
   category?: ContractCategory
 }

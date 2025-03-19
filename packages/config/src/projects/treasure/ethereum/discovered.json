@@ -753,10 +753,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "shared-zk-stack/ChainAdmin": "0xbd2494285ec4c26671531e3b1f46cd49b018ea5ac246fb3ac64ddbf891eb5778",
-    "shared-zk-stack/Diamond": "0xaecca9b8c784ccd936a4dd3c3683aab317142ad6111e60c34dfc8585cd18f48c",
-    "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
-    "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
+    "shared-zk-stack/Diamond": "0x2fa90318e0fe2a65ef6b85a203ee34ce8b2b48760bff7d8054e8156dff2ebf4e",
+    "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
+    "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }
 }

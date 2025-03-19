@@ -1480,10 +1480,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "global/Timelock": "0x3fe72ab0869272db5300a19a5bfa7d22334918ab00e9d074c0869c48b3404f87",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "linea/LineaRollup": "0xcc673f509d9fc923a4147269c4fc55dbfdf25d94b8abc768c4fcd480febb4dfd",
-    "linea/TokenBridge": "0x5aa7cd9a1a400c350e9944b0acddce325b241c48d342618eda3e56e80b3e1c9b"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "global/Timelock": "0x78c0e6200d758a9209bea4e159fd18076a0a2643ec0d7227e6cab48f6a65baeb",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "linea/LineaRollup": "0xb863bae919001d7f79ad87c9b2aef4587a823cfb2d06c9e3acee0de223a68645",
+    "linea/TokenBridge": "0x52ed4d3c34c92e4856877bfdbcaa5f64bcb84329a28dea72760feb6b1ffe4a04"
   }
 }
