@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1b611db648a694ed5552389c7be622b6c9215dc0
+
+# Diff at Wed, 19 Mar 2025 13:04:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 22022296
+- current block number: 22022296
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022296 (main branch discovery), not current.
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x2892a8fc5f323c958c841449cd16773c98bc45ad
 
 # Diff at Tue, 11 Mar 2025 08:00:15 GMT:

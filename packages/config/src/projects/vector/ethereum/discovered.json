@@ -506,8 +506,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "succinct/SP1SuccinctGateway": "0x0be99df0eb5d614a64b5f73fa9c5f72f48b02271ada4fc7990cd2918f42ec7fe",
-    "succinct/SP1Vector": "0x0d9eb86a8b3f9f5ac422e597b19ce143ac2cd8643fd9167b17f9c8ae25abc16e"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "succinct/SP1SuccinctGateway": "0x2b1d17343f6cd8f25c32002ecd089a7f0e7a0d38c6c48fe7e47e2610e4ecec2e",
+    "succinct/SP1Vector": "0xd6f6f03ce238588614fc6e48f2a34cde6b782a433f41a2fe62f7419298b8dc9a"
   }
 }

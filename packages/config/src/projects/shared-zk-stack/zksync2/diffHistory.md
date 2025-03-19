@@ -1,27 +1,4 @@
-Generated with discovered.json: 0x15d4bd81dec2a58b19376c555e481c48bfd14f7f
-
-# Diff at Wed, 19 Mar 2025 12:20:21 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f5bee350205c5e88681b9b4f350a3ec10857ea34 block: 57469400
-- current block number: 57901207
-
-## Description
-
-[ZIP-8](https://www.tally.xyz/gov/zksync/proposal/98806622840077485421207653857298019081476009136539565020582912190689619102417?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) is sent to L1 and queued in the ProtocolUpgradeHandler.
-
-## Watched changes
-
-```diff
-    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
-    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
-      values.proposalQueuedCount:
--        7
-+        8
-    }
-```
-
-Generated with discovered.json: 0x07c942d0391d3d75fb00bb93ece1633ae6d0a88e
+Generated with discovered.json: 0x4d241b93e2064870d390237196943a1a0cbe198c
 
 # Diff at Tue, 11 Mar 2025 07:58:48 GMT:
 

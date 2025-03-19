@@ -115,7 +115,7 @@ const SelectContent = ({
         className={cn(
           'p-1',
           position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+            'h-[--radix-select-trigger-height] w-full min-w-[--radix-select-trigger-width]',
         )}
       >
         {children}

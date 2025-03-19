@@ -4,25 +4,23 @@ import type { TvsAmount } from '../../kysely/generated/types'
 
 export interface TvsAmountRecord {
   timestamp: UnixTime
-  amount: bigint
   configurationId: string
   project: string
+  amount: bigint
 }
 
-export function toRecord(entity: Selectable<TvsAmount>): TvsAmountRecord {
+export function toRecord(row: Selectable<TvsAmount>): TvsAmountRecord {
   return {
-    timestamp: UnixTime.fromDate(entity.timestamp),
-    amount: BigInt(entity.amount),
-    configurationId: entity.configurationId,
-    project: entity.project,
+    ...row,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    amount: BigInt(row.amount),
   }
 }
 
-export function toRow(amount: TvsAmountRecord): Insertable<TvsAmount> {
+export function toRow(record: TvsAmountRecord): Insertable<TvsAmount> {
   return {
-    timestamp: UnixTime.toDate(amount.timestamp),
-    amount: amount.amount.toString(),
-    configurationId: amount.configurationId,
-    project: amount.project,
+    ...record,
+    timestamp: UnixTime.toDate(record.timestamp),
+    amount: record.amount.toString(),
   }
 }

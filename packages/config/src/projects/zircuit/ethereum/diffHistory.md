@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xfe19f14d9860508551352fbd002722b18bf9f2c1
+
+# Diff at Wed, 19 Mar 2025 13:05:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 22029918
+- current block number: 22029918
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22029918 (main branch discovery), not current.
+
+```diff
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x8b07abbfd95be79e39621b828a3c2ab00f2bc20b
 
 # Diff at Tue, 18 Mar 2025 08:14:38 GMT:

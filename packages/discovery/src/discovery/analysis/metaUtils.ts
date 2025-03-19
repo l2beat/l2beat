@@ -4,7 +4,6 @@ import { groupBy, uniqBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
   ContractFieldSeverity,
-  ContractValueType,
   DiscoveryContractField,
   ExternalReference,
   PermissionConfiguration,
@@ -25,8 +24,6 @@ export interface ContractMeta {
   displayName?: string
   description?: string
   permissions?: PermissionConfiguration[]
-  types?: Set<ContractValueType>
-  severity?: ContractFieldSeverity
   references?: ExternalReference[]
 }
 
@@ -38,8 +35,6 @@ export function mergeContractMeta(
     displayName: a?.displayName ?? b?.displayName,
     description: a?.description ?? b?.description,
     permissions: mergePermissions(a?.permissions, b?.permissions),
-    types: mergeSets(a?.types, b?.types),
-    severity: findHighestSeverity(a?.severity, b?.severity),
     canActIndependently: mergeCanActIndependently(
       a?.canActIndependently,
       b?.canActIndependently,
@@ -141,8 +136,6 @@ export function getSelfMeta(
     description,
     references,
     permissions: undefined,
-    severity: undefined,
-    types: undefined,
   }
 
   return isEmptyObject(result) ? undefined : result
@@ -185,8 +178,6 @@ export function getTargetsMeta(
       const meta = mergeContractMeta(result[upgradeabilityAdmin.toString()], {
         displayName: undefined,
         description: undefined,
-        severity: undefined,
-        types: undefined,
         permissions: [{ type: 'upgrade', target: self, delay: 0 }],
       })
 
@@ -214,8 +205,6 @@ function targetConfigToMeta(
     permissions: field.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
-    types: toSet(field.type),
-    severity: Array.from(toSet(field.severity) ?? [])[0],
   }
   return isEmptyObject(result) ? undefined : result
 }
@@ -260,26 +249,6 @@ export function invertMeta(
     })
 
   return result
-}
-
-function toSet<T>(value: T | T[] | undefined): Set<T> | undefined {
-  if (value === undefined) {
-    return undefined
-  }
-  if (Array.isArray(value)) {
-    return new Set([...value])
-  }
-  return new Set([value])
-}
-
-function mergeSets<T>(
-  a: Set<T> | undefined,
-  b: Set<T> | undefined,
-): Set<T> | undefined {
-  if (a === undefined && b === undefined) {
-    return undefined
-  }
-  return new Set([...(a ?? []), ...(b ?? [])])
 }
 
 export function mergeReferences(

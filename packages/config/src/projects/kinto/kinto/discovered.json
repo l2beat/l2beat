@@ -54,7 +54,6 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract allowing token- and NFT based voting.",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -500,7 +499,6 @@
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
-      "severity": "MEDIUM",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -889,7 +887,6 @@
       "address": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1179,7 +1176,6 @@
       "address": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1192,7 +1188,6 @@
       "address": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1210,7 +1205,6 @@
       "address": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1714,7 +1708,6 @@
       ],
       "proxyType": "immutable",
       "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2027,7 +2020,6 @@
       "address": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3927,6 +3919,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27"
   }
 }

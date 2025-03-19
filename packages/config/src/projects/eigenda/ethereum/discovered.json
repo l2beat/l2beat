@@ -1001,8 +1001,6 @@
       "address": "0x454Ef2f69f91527856E06659f92a66f464C1ca4e",
       "type": "EOA",
       "proxyType": "EOA",
-      "types": ["RISK_PARAMETER"],
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1326,8 +1324,6 @@
       "address": "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
       "type": "EOA",
       "proxyType": "EOA",
-      "types": ["RISK_PARAMETER"],
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1943,8 +1939,6 @@
       "address": "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
       "type": "EOA",
       "proxyType": "EOA",
-      "types": ["RISK_PARAMETER"],
-      "severity": "MEDIUM",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3910,21 +3904,21 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/AVSDirectory": "0x637e9b40ccdfb2f5b99cdaec45f291052a5d0ab816d5d2476b7df75f6a224ca1",
-    "eigenlayer/BLSApkRegistry": "0x21d909ecbf50593a76a442d996482439565cbaa2debca03a27d0e03fd8a023fe",
-    "eigenlayer/DelegationManager": "0xda8c81cf3b29a6132fdc8e804ce53f45c14c31db7671448021e6d382acbe38ee",
-    "eigenlayer/EIGEN token": "0xa6cb7d80d3e8a76b9f8c47979fbb7aaaf4cffe0ba3ab95f4f1c9e027c3c952f0",
-    "eigenlayer/EigenDAServiceManager": "0x8b6bd761f0e04837a87de1c2e7f4716bda9bd7ff644b8663c48e977e60006f0e",
-    "eigenlayer/EigenPod": "0xdc07a0cafb9fc58e529278b3654b6544c7daee62f1d93ffdb10772a8eb7c4b96",
-    "eigenlayer/EigenPodManager": "0xe5f63be89f55e454051cd0207a4aa3dd39ed461894f445d62686dbe78fc499df",
-    "eigenlayer/EjectionManager": "0xd3e1021c0852372e23a07ee53338a186e999aaf12ae4832d1b7a305653efe099",
-    "eigenlayer/PauserRegistry": "0x3c9034ade599dd1994736f2cc6cfc2bead131094d371f922c17315d0a5f24a5a",
-    "eigenlayer/RegistryCoordinator": "0xab23f48536901c495720d03964b97a8640b4a8e6cc2cbe60ab6c4b0ebee83ae0",
-    "eigenlayer/StakeRegistry": "0xd3aa3fbd3802faf805e1fecbaefa0ed9c2af5e9ba05890bb67dd45dc7386462b",
-    "eigenlayer/Strategy": "0x1738060bd7e638808bd4e8783a5d6397aa01885989641ba939d83c9a2206ba6d",
-    "eigenlayer/StrategyManager": "0x9a0dd7c8051644a2122ac0653e53ee7773dc60239bea7f5a0bef1a0a392f320f",
-    "eigenlayer/TimelockControllerOwning": "0x1ddd587a1324cf30d195a9f277de56699859b7192b297c07d9ae538df25cacda",
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "eigenlayer/AVSDirectory": "0x64bb2968e22526b012e2decf5baf51792d075cf490ff570f873bb41571d1419c",
+    "eigenlayer/BLSApkRegistry": "0x9eb1145b304b8d7e443251d089d0ea7b26847544169c0a1a0496c69084785d01",
+    "eigenlayer/DelegationManager": "0xbf68134119d7ec2c2315a88d9acc166fce1c46a5944f8a0143bc865027f8cb37",
+    "eigenlayer/EIGEN token": "0x47e8d9424417c42741f398c8658e6026cd9ea74999d2a731ce8122d9dc8ef38f",
+    "eigenlayer/EigenDAServiceManager": "0x5ed490118ea7d3a485828140f85a422e05086bae6c357ffa3cf49b4ff2561c69",
+    "eigenlayer/EigenPod": "0xf1664ec978336d2388aa04d09a42a0d6cda369013ee287a07e5752866e132863",
+    "eigenlayer/EigenPodManager": "0xe3b067c4b72df8f2cd693e6f77aa9ca50ca4a4ced8e65cc957dd896402df348b",
+    "eigenlayer/EjectionManager": "0x0bd8e9c51e2cdbbc28c51bd06e83ace005b89360429127fe7a4042ba62a1cd70",
+    "eigenlayer/PauserRegistry": "0xbb7357541420bd5d75058baa8b0f31ba4519999522581aca69be708a14c2b51f",
+    "eigenlayer/RegistryCoordinator": "0x588347997ac210f7acfa214a12827eaae3a07b30562c6fd8eae8a56c2a6ca2f0",
+    "eigenlayer/StakeRegistry": "0x37d1f6d9aa87f3d97c754b39665e2ce339ec5a6b02ff50f3133901488f71b647",
+    "eigenlayer/Strategy": "0xccdbab3e2ea3619b64aec17409b7bf3e60691e7d54afd87365c4172652bc7de8",
+    "eigenlayer/StrategyManager": "0x962a1a3da7cfc4cfdbc46e7e321d555efe65353cc2b2a981f90e24cfa6f81de7",
+    "eigenlayer/TimelockControllerOwning": "0xe95940c75a4423f0389d5dc3424817e7e51f65cbe1a33c902eed04279a0e55ad",
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

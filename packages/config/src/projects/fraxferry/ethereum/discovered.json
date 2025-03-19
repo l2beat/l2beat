@@ -6252,7 +6252,7 @@
     ]
   },
   "usedTemplates": {
-    "fraxferry/Fraxferry": "0x9db47e3b63e43f7bdbe927f59aa5121d91dbf32bc28613589f1801287d312f71",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "fraxferry/Fraxferry": "0x04307b4dad5eedb928c059aa7978e30d5fd7471d65d22de4577061b731e4349d",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

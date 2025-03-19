@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x146331d62f732426d5eef37599ed849429464005
+
+# Diff at Wed, 19 Mar 2025 13:04:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21802913
+- current block number: 21802913
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802913 (main branch discovery), not current.
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xFb90465f3064fF63FC460F01A6307eC73d64bc50) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x7fb7a21bf6bea3276bfdcb0fbd5b861f6e518d4f
 
 # Diff at Tue, 04 Mar 2025 11:25:43 GMT:
