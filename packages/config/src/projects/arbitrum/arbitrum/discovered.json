@@ -183,12 +183,6 @@
         },
         {
           "permission": "interact",
-          "to": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-          "description": "propose transactions.",
-          "via": []
-        },
-        {
-          "permission": "interact",
           "to": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
           "description": "cancel queued transactions.",
           "via": []
@@ -1592,18 +1586,16 @@
           ]
         }
       ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "propose transactions."
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200
+        },
+        {
+          "permission": "interact",
+          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "description": "propose transactions."
         }
       ],
       "sinceTimestamp": 1692138965,
