@@ -107,32 +107,40 @@ function mapToPerL2UopsCost(
   },
 ) {
   return {
-    overhead: data.gas.total / uops.costs,
+    overhead: uops.costs ? data.gas.total / uops.costs : undefined,
     gas: {
-      overhead: data.gas.overhead / uops.costs,
-      calldata: data.gas.calldata / uops.costs,
-      compute: data.gas.compute / uops.costs,
+      overhead: uops.costs ? data.gas.overhead / uops.costs : undefined,
+      calldata: uops.costs ? data.gas.calldata / uops.costs : undefined,
+      compute: uops.costs ? data.gas.compute / uops.costs : undefined,
       blobs:
-        data.gas.blobs !== undefined ? data.gas.blobs / uops.costs : undefined,
-      total: data.gas.total / uops.costs,
+        data.gas.blobs !== undefined && uops.costs
+          ? data.gas.blobs / uops.costs
+          : undefined,
+      total: uops.costs ? data.gas.total / uops.costs : undefined,
     },
     eth: {
-      overhead: data.eth.overhead / uops.costs,
-      calldata: data.eth.calldata / uops.costs,
-      compute: data.eth.compute / uops.costs,
+      overhead: uops.costs ? data.eth.overhead / uops.costs : undefined,
+      calldata: uops.costs ? data.eth.calldata / uops.costs : undefined,
+      compute: uops.costs ? data.eth.compute / uops.costs : undefined,
       blobs:
-        data.eth.blobs !== undefined ? data.eth.blobs / uops.costs : undefined,
-      total: data.eth.total / uops.costs,
+        data.eth.blobs !== undefined && uops.costs
+          ? data.eth.blobs / uops.costs
+          : undefined,
+      total: uops.costs ? data.eth.total / uops.costs : undefined,
     },
     usd: {
-      overhead: data.usd.overhead / uops.costs,
-      calldata: data.usd.calldata / uops.costs,
-      compute: data.usd.compute / uops.costs,
+      overhead: uops.costs ? data.usd.overhead / uops.costs : undefined,
+      calldata: uops.costs ? data.usd.calldata / uops.costs : undefined,
+      compute: uops.costs ? data.usd.compute / uops.costs : undefined,
       blobs:
-        data.usd.blobs !== undefined ? data.usd.blobs / uops.costs : undefined,
-      total: data.usd.total / uops.costs,
+        data.usd.blobs !== undefined && uops.costs
+          ? data.usd.blobs / uops.costs
+          : undefined,
+      total: uops.costs ? data.usd.total / uops.costs : undefined,
     },
     posted:
-      data.posted !== undefined ? data.posted / uops.throughput : undefined,
+      data.posted !== undefined && uops.throughput
+        ? data.posted / uops.throughput
+        : undefined,
   }
 }
