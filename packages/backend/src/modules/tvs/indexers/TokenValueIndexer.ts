@@ -20,8 +20,8 @@ import type { Token } from '../types'
 interface TokenValueIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<Token>, 'name'> {
   syncOptimizer: SyncOptimizer
-  valueService: ValueService
   dbStorage: DBStorage
+  valueService: ValueService
   project: string
   maxTimestampsToProcessAtOnce: number
 }
@@ -82,7 +82,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
 
     const records: TokenValueRecord[] = tvs.map((t) => ({
       ...t,
-      configurationId: tokenIdToConfigurationId(t.tokenId),
+      configurationId: TokenValueIndexer.idToConfigurationId(t.tokenId),
     }))
 
     return async () => {
@@ -113,8 +113,8 @@ export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
       })
     }
   }
-}
 
-const tokenIdToConfigurationId = (tokenId: string) => {
-  return generateConfigurationId([tokenId])
+  static idToConfigurationId = (tokenId: string) => {
+    return generateConfigurationId([tokenId])
+  }
 }
