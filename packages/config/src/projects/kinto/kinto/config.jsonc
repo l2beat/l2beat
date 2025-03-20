@@ -268,9 +268,15 @@
       "ignoreMethods": [
         "proxiableUUID",
         "tokenByIndex",
-        "isSanctionsMonitored"
+        "isSanctionsMonitored",
+        "ownerOf"
       ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
+      "ignoreRelatives": [
+        "pendingSanctions",
+        "removedSanctions",
+        "confirmedSanctions"
+      ],
       "fields": {
         "pendingSanctions": {
           "description": "addresses sanctioned by any KYC_PROVIDER role.",
@@ -381,7 +387,7 @@
           ]
         },
         "getSystemContracts": {
-          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA.",
+          "description": "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`.",
           "severity": "HIGH"
         }
       }
