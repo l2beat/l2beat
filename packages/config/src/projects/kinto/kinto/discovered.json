@@ -2,18 +2,8 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 771451,
-  "configHash": "0x52a0a1fadd078529ac23efd41bec78a1d9208c791e4a9b0db42024e1ebdc5f1c",
+  "configHash": "0xf57d556a749204d292279bea9627fb488b861bf89bf18610bd353f3979359306",
   "entries": [
-    {
-      "name": "",
-      "address": "0x000000000000000000000000000000000000006E",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1702607855,
-      "sinceBlock": 0,
-      "values": { "$immutable": true }
-    },
     {
       "name": "NioGuardians",
       "address": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
@@ -53,7 +43,8 @@
         "ownerOf": [],
         "symbol": "NIO",
         "tokenURI": []
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "NioGovernor",
@@ -95,7 +86,8 @@
         "version": "1",
         "votingDelay": 259200,
         "votingPeriod": 432000
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "BridgedKinto",
@@ -257,7 +249,8 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "KintoFoundation",
@@ -379,7 +372,8 @@
         "RATE_LIMIT_THRESHOLD_TOTAL": 50,
         "userOpMaxCost": "30000000000000000",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "EntryPoint",
@@ -438,10 +432,6 @@
         {
           "permission": "upgrade",
           "from": "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10"
         }
       ],
       "ignoreInWatchMode": ["getNonce"],
@@ -649,45 +639,6 @@
       "derivedName": "KintoWallet"
     },
     {
-      "name": "L2GatewayRouter",
-      "address": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xcd4e2f54f72263d875bf008244bdc6a10c3f2a65b3ac3b476221f9fc003275df"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        }
-      ],
-      "sinceTimestamp": 1702609595,
-      "sinceBlock": 11,
-      "values": {
-        "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-        "$implementation": "0x658c50C317A4E18e62Db4efa1F37edFd315b91Fd",
-        "$pastUpgrades": [
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xd535101B2E4D65a63727AcDFa9Bb74fF3F1162d9"]
-          ],
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0x658c50C317A4E18e62Db4efa1F37edFd315b91Fd"]
-          ]
-        ],
-        "$upgradeCount": 2,
-        "counterpartGateway": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
-        "defaultGateway": "0x87799989341A07F495287B1433eea98398FD73aA",
-        "router": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
       "name": "Socket",
       "address": "0x3e9727470C66B1e77034590926CDe0242B5A3dCc",
       "type": "Contract",
@@ -695,6 +646,7 @@
         "0x0647c0b13e7b71462cd40679e9dfcfb5f26b3971447ac5457901f3a86da859d7"
       ],
       "proxyType": "immutable",
+      "description": "Central contract for bridging via the external socket bridge.",
       "ignoreInWatchMode": ["globalMessageCount"],
       "sinceTimestamp": 1715810609,
       "sinceBlock": 130639,
@@ -709,7 +661,8 @@
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "transmitManager__": "0x6332e56A423480A211E301Cb85be12814e9238Bb",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
@@ -729,34 +682,6 @@
       ]
     },
     {
-      "name": "",
-      "address": "0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1742414040,
-      "sinceBlock": 770541,
-      "values": {
-        "$admin": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-        "$implementation": "0x475703ec02cee1B666Ebe2f9e5445c493B3ed19D",
-        "$pastUpgrades": [
-          [
-            "2025-03-19T19:54:00.000Z",
-            "0x6ae736439751c84636f5a91c878e4f6ccdd7d682b22d9b26a78181baebeca77d",
-            ["0x475703ec02cee1B666Ebe2f9e5445c493B3ed19D"]
-          ]
-        ],
-        "$upgradeCount": 1
-      }
-    },
-    {
       "name": "KintoAppRegistry",
       "address": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
       "type": "Contract",
@@ -765,7 +690,7 @@
         "0xec7b652ce6b00a358ea1be503c5faf2a7bea3f40d4ff81bce6c02bf27a50a3c6"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.",
+      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -974,9 +899,10 @@
         "owner": { "severity": "HIGH" },
         "getSystemContracts": {
           "severity": "HIGH",
-          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
+          "description": "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1057,45 +983,8 @@
         "$upgradeCount": 1,
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
-    },
-    {
-      "name": "",
-      "address": "0x87799989341A07F495287B1433eea98398FD73aA",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        }
-      ],
-      "sinceTimestamp": 1702609595,
-      "sinceBlock": 11,
-      "values": {
-        "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-        "$implementation": "0xD9fca4D782a14AFBB5Ccb5fFd14Eab323Ea0Dc3C",
-        "$pastUpgrades": [
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xa8d452C64D1c6C9431F5879dc142c4A9Ab63EAA9"]
-          ],
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xF69960AD45cA929Aa32BFBf7c4CaD582a49C51f0"]
-          ],
-          [
-            "2024-04-09T08:21:59.000Z",
-            "0xd0938f65aefa7185b0b9f66b935579fb50c6bf457174afd876c67bfe2da91303",
-            ["0xD9fca4D782a14AFBB5Ccb5fFd14Eab323Ea0Dc3C"]
-          ]
-        ],
-        "$upgradeCount": 3
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "BeaconKintoWallet",
@@ -1105,6 +994,7 @@
         "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
       ],
       "proxyType": "immutable",
+      "description": "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.",
       "sinceTimestamp": 1703803644,
       "sinceBlock": 65,
       "values": {
@@ -1115,62 +1005,6 @@
       "derivedName": "UpgradeableBeacon"
     },
     {
-      "name": "",
-      "address": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x87799989341A07F495287B1433eea98398FD73aA",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
-          "via": [{ "address": "0x9eC0253E4174a14C0536261888416451A407Bf79" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x9eC0253E4174a14C0536261888416451A407Bf79"
-        }
-      ],
-      "sinceTimestamp": 1702609595,
-      "sinceBlock": 11,
-      "values": {
-        "$admin": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-        "$implementation": "0x1ef98348554d453d6bC8794E8E0BFbfA659B5D00",
-        "$pastUpgrades": [
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0xd5855b91CD6D6d482b9EB4154f1AE0F2bf445b43"]
-          ],
-          [
-            "2023-12-15T03:06:35.000Z",
-            "0x150c0395039eca95e504cce7b11c6ea9dd72f3a064e270776b52bee0231832f3",
-            ["0x1ef98348554d453d6bC8794E8E0BFbfA659B5D00"]
-          ]
-        ],
-        "$upgradeCount": 2
-      }
-    },
-    {
       "name": "KintoWalletFactory",
       "address": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
       "type": "Contract",
@@ -1179,7 +1013,7 @@
         "0x0fd765eb14dcc143d71abb3a0f1c5dea83742cbaf15dcb04703fd21fad082b15"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
+      "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1336,7 +1170,8 @@
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
         "totalWallets": 73271
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } }
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BundleBulker",
@@ -1351,7 +1186,8 @@
       "values": {
         "$immutable": true,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "KintsugiFoundation",
@@ -1359,36 +1195,6 @@
       "type": "EOA",
       "proxyType": "EOA",
       "derivedName": ""
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x9eC0253E4174a14C0536261888416451A407Bf79",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x340487b92808B84c2bd97C87B590EE81267E04a7"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x87799989341A07F495287B1433eea98398FD73aA"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
-        }
-      ],
-      "sinceTimestamp": 1702609595,
-      "sinceBlock": 11,
-      "values": {
-        "$immutable": true,
-        "owner": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"
-      }
     },
     {
       "name": "AccessManager",
@@ -1701,7 +1507,8 @@
         "RolesRevoked": {
           "description": "List of roles revoked from accounts."
         }
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "address": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
@@ -1801,12 +1608,8 @@
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      }
-    },
-    {
-      "address": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
-      "type": "EOA",
-      "proxyType": "EOA"
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "KintoID",
@@ -1817,7 +1620,7 @@
         "0xa0df8ed25313dba8d27c8b016413aa2843d038de01ddb01afe28b1d745427dbb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
+      "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2411,7 +2214,8 @@
         "KYC_PROVIDERs": { "severity": "MEDIUM" },
         "GOVERNANCErs": { "severity": "HIGH" },
         "DEFAULT_ADMINs": { "severity": "HIGH" }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
@@ -2749,12 +2553,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x340487b92808B84c2bd97C87B590EE81267E04a7": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": [
       "constructor(uint32 chainSlug_, address hasher_, address capacitorFactory_, address owner_, string version_)",
       "error ErrInSourceValidation()",
@@ -2930,26 +2728,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x658c50C317A4E18e62Db4efa1F37edFd315b91Fd": [
-      "event DefaultGatewayUpdated(address newDefaultGateway)",
-      "event GatewaySet(address indexed l1Token, address indexed gateway)",
-      "event TransferRouted(address indexed token, address indexed _userFrom, address indexed _userTo, address gateway)",
-      "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
-      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
-      "function counterpartGateway() view returns (address)",
-      "function defaultGateway() view returns (address)",
-      "function finalizeInboundTransfer(address, address, address, uint256, bytes) payable",
-      "function getGateway(address _token) view returns (address gateway)",
-      "function getOutboundCalldata(address _token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes)",
-      "function initialize(address _counterpartGateway, address _defaultGateway)",
-      "function l1TokenToGateway(address) view returns (address)",
-      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, bytes _data) payable returns (bytes)",
-      "function outboundTransfer(address _token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes)",
-      "function postUpgradeInit()",
-      "function router() view returns (address)",
-      "function setDefaultGateway(address newL2DefaultGateway)",
-      "function setGateway(address[] _l1Token, address[] _gateway)"
-    ],
     "0x6af53F698b87809d98CeAAfa848c73e192400E61": [
       "constructor()",
       "error AccessControlBadConfirmation()",
@@ -3085,12 +2863,6 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x87799989341A07F495287B1433eea98398FD73aA": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x87f0eE85bF3198654900a422832157abBba30828": [
       "constructor(address implementation_) payable",
       "function implementation() view returns (address)",
@@ -3099,12 +2871,6 @@
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": [
@@ -3121,17 +2887,6 @@
       "function inflate(bytes compressed) view returns (tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature)[] ops, address beneficiary)",
       "function inflatorToID(address) view returns (uint32)",
       "function registerInflator(uint32 inflatorId, address inflator)"
-    ],
-    "0x9eC0253E4174a14C0536261888416451A407Bf79": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x9fB9ad222C23E49478D716238754e0bFF863D367": [
       "constructor()",
@@ -3479,7 +3234,5 @@
       "function walletFactory() view returns (address)"
     ]
   },
-  "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27"
-  }
+  "usedTemplates": {}
 }

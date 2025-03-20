@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9f8633acb34ac97506cd076e355ff07410902323
+Generated with discovered.json: 0x819249e7c6f9e282bff9a2b435b22e8f4fe07070
 
-# Diff at Thu, 20 Mar 2025 08:22:33 GMT:
+# Diff at Thu, 20 Mar 2025 10:14:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 770292
@@ -83,14 +83,6 @@ todo:
 ```
 
 ```diff
-    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
-    +++ description: None
-      receivedPermissions.4:
-+        {"permission":"upgrade","from":"0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10"}
-    }
-```
-
-```diff
     contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
     +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
       values.accessControl.roles.SECURITY_COUNCIL_ROLE.members.0.since:
@@ -134,7 +126,7 @@ todo:
 
 ```diff
     contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
-    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
       issuedPermissions.10:
 -        {"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}
       issuedPermissions.9.permission:
@@ -195,12 +187,6 @@ todo:
     }
 ```
 
-```diff
-+   Status: CREATED
-    contract  (0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
@@ -215,17 +201,147 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 770292 (main branch discovery), not current.
 
 ```diff
-    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
-    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
-      values.ownerOf:
--        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0x0C1df30B4576A1A94D9528854516D4d425Cf9323","0x70E218164e6A59AE756107D0D6eC2c498110Bc2E"]
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
 ```diff
-+   Status: CREATED
-    contract  (0x000000000000000000000000000000000000006E)
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
     +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewayRouter (0x340487b92808B84c2bd97C87B590EE81267E04a7)
+    +++ description: None
+```
+
+```diff
+    contract Socket (0x3e9727470C66B1e77034590926CDe0242B5A3dCc) {
+    +++ description: Central contract for bridging via the external socket bridge.
+      description:
++        "Central contract for bridging via the external socket bridge."
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      description:
+-        "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets."
++        "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet."
+      fieldMeta.getSystemContracts.description:
+-        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
++        "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x87799989341A07F495287B1433eea98398FD73aA)
+    +++ description: None
+```
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      description:
++        "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b)
+    +++ description: None
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      description:
+-        "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic."
++        "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract BundleBulker (0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9eC0253E4174a14C0536261888416451A407Bf79)
+    +++ description: None
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      description:
+-        "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets."
++        "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check."
+      values.ownerOf:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0x0C1df30B4576A1A94D9528854516D4d425Cf9323","0x70E218164e6A59AE756107D0D6eC2c498110Bc2E"]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
 ```
 
 Generated with discovered.json: 0xc5ef443f6f124d5cf1f9731e023d2edb89bfe916
