@@ -14,7 +14,7 @@ import { getProjects } from './getProjects'
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const app = express()
-  const port = 2021
+  const port = process.env.PORT ?? 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
 

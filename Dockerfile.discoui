@@ -1,39 +1,37 @@
-ARG COREPACK_VERSION="0.31.0"
+ARG COREPACK_VERSION="^0.31.0"
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
 
 # Use explicit hash for better caching
 FROM node:22 AS pruner
-
-# Set corepack and pnpm environment first
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
-WORKDIR /src
-COPY . .
-
-# Create turbo auth in separate layer
+ARG COREPACK_VERSION
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+
+# Set corepack and pnpm environment first
+RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY . .
+# Create turbo auth in separate layer
 RUN pnpm add -g turbo
 RUN turbo prune --docker @l2beat/l2b
 
 # ---------------------------
 FROM node:22 AS builder
+ARG COREPACK_VERSION
+ARG TURBO_TEAM
+ARG TURBO_TOKEN
 
 # Configure environment
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV VITE_READONLY=true
+WORKDIR /src
 
 # Install turbo in builder stage
-RUN corepack enable && corepack prepare pnpm@latest --activate && \
-    pnpm add -g turbo@latest
-
-WORKDIR /src
+RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
     
 # Copy package files first for better caching
 COPY --from=pruner /src/out/json/ .
