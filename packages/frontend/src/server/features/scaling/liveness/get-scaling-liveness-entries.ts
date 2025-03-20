@@ -7,9 +7,7 @@ import type {
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
 import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
-import type {
-  ProjectsChangeReport
-} from '../../projects-change-report/get-projects-change-report'
+import type { ProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
