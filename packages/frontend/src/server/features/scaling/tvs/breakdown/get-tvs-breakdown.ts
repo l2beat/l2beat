@@ -1,5 +1,5 @@
 import type { ConfigMapping } from '@l2beat/backend-shared'
-import type { ChainConfig, ProjectContract } from '@l2beat/config'
+import type { ChainConfig, ProjectContracts } from '@l2beat/config'
 import type {
   AmountConfigEntry,
   AssetId,
@@ -28,7 +28,7 @@ export async function getTvsBreakdown(
   tokenMap: Map<AssetId, Token>,
   gasTokens?: string[],
   target?: UnixTime,
-  projectContracts?: Record<string, ProjectContract[]>,
+  projectContracts?: ProjectContracts['addresses'],
 ) {
   const chainConverter = new ChainConverter(chains)
 
