@@ -37,7 +37,7 @@ export async function getTvsConfig(
     }))
   }
 
-  const { amounts, prices, chains } = await getAmountsAndPrices(projects)
+  const { amounts, prices, chains } = await getAmountsAndPrices(projects, sinceTimestamp)
 
   return {
     projects,
@@ -124,9 +124,9 @@ export async function getAmountsAndPrices(
     prices: Array.from(prices.values()),
     chains: sinceTimestamp
       ? Array.from(chains.values()).map((c) => ({
-          ...c,
-          sinceTimestamp,
-        }))
+        ...c,
+        sinceTimestamp,
+      }))
       : Array.from(chains.values()),
   }
 }
