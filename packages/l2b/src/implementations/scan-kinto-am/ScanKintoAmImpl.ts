@@ -1,5 +1,5 @@
-import { ethers } from 'ethers'
 import chalk from 'chalk'
+import { ethers } from 'ethers'
 
 // -------------------------
 // CONFIGURATION
@@ -122,18 +122,33 @@ export async function runScanKintoAm(): Promise<void> {
     [roleId: string]: { [target: string]: Set<string> }
   } = {}
 
-  console.log(chalk.blue('Connecting to RPC endpoint:'), chalk.cyan(RPC_URL))
-  console.log(chalk.blue('AccessManager contract:'), chalk.cyan(ACCESS_MANAGER_ADDRESS))
+  console.log(chalk.blue('Connecting to RPC endpoint:'), chalk.gray(RPC_URL))
+  console.log(
+    chalk.blue('AccessManager contract:'),
+    chalk.gray(ACCESS_MANAGER_ADDRESS),
+  )
 
   // 1. Fetch Role-related events
   console.log(chalk.bold('\nFetching role events...'))
   console.log(chalk.magenta('- Querying RoleGranted events...'))
-  const roleGrantedEvents = await accessManager.queryFilter('RoleGranted', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleGrantedEvents.length} RoleGranted events`))
+  const roleGrantedEvents = await accessManager.queryFilter(
+    'RoleGranted',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(`- Found ${roleGrantedEvents.length} RoleGranted events`),
+  )
 
   console.log(chalk.magenta('- Querying RoleRevoked events...'))
-  const roleRevokedEvents = await accessManager.queryFilter('RoleRevoked', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleRevokedEvents.length} RoleRevoked events`))
+  const roleRevokedEvents = await accessManager.queryFilter(
+    'RoleRevoked',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(`- Found ${roleRevokedEvents.length} RoleRevoked events`),
+  )
 
   // Build a mapping: roleId -> Set(account)
   const accountsPerRole: { [role: string]: Set<string> } = {}
@@ -182,17 +197,37 @@ export async function runScanKintoAm(): Promise<void> {
       }
     }
   }
-  console.log(chalk.green(`- Found ${Object.keys(rolesByActor).length} actors with active roles`))
+  console.log(
+    chalk.green(
+      `- Found ${Object.keys(rolesByActor).length} actors with active roles`,
+    ),
+  )
 
   // 2. Fetch Target configuration events.
   console.log(chalk.bold('\nFetching target events...'))
   console.log(chalk.magenta('- Querying TargetFunctionRoleUpdated events...'))
-  const targetFuncRoleEvents = await accessManager.queryFilter('TargetFunctionRoleUpdated', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${targetFuncRoleEvents.length} TargetFunctionRoleUpdated events`))
+  const targetFuncRoleEvents = await accessManager.queryFilter(
+    'TargetFunctionRoleUpdated',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${targetFuncRoleEvents.length} TargetFunctionRoleUpdated events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying TargetAdminDelayUpdated events...'))
-  const targetAdminDelayEvents = await accessManager.queryFilter('TargetAdminDelayUpdated', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${targetAdminDelayEvents.length} TargetAdminDelayUpdated events`))
+  const targetAdminDelayEvents = await accessManager.queryFilter(
+    'TargetAdminDelayUpdated',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${targetAdminDelayEvents.length} TargetAdminDelayUpdated events`,
+    ),
+  )
 
   interface TargetData {
     adminDelay: number
@@ -241,32 +276,72 @@ export async function runScanKintoAm(): Promise<void> {
     targetData[target].pendingAdminDelayChanges.push({ newDelay, effect })
   }
 
-  console.log(chalk.magenta('- Fetching current admin delays and closures for targets...'))
+  console.log(
+    chalk.magenta(
+      '- Fetching current admin delays and closures for targets...',
+    ),
+  )
   for (const target in targetData) {
     const adminDelayBN = await accessManager.getTargetAdminDelay(target)
     targetData[target].adminDelay = bnToNumber(adminDelayBN)
     const closed = await accessManager.isTargetClosed(target)
     targetData[target].closed = closed
   }
-  console.log(chalk.green(`- Found configuration data for ${Object.keys(targetData).length} targets`))
+  console.log(
+    chalk.green(
+      `- Found configuration data for ${Object.keys(targetData).length} targets`,
+    ),
+  )
 
   // 3. Fetch queued operations and pending role delay changes.
   console.log(chalk.bold('\nFetching queued operations...'))
   console.log(chalk.magenta('- Querying OperationScheduled events...'))
-  const operationScheduledEvents = await accessManager.queryFilter('OperationScheduled', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${operationScheduledEvents.length} OperationScheduled events`))
+  const operationScheduledEvents = await accessManager.queryFilter(
+    'OperationScheduled',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${operationScheduledEvents.length} OperationScheduled events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying OperationExecuted events...'))
-  const operationExecutedEvents = await accessManager.queryFilter('OperationExecuted', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${operationExecutedEvents.length} OperationExecuted events`))
+  const operationExecutedEvents = await accessManager.queryFilter(
+    'OperationExecuted',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${operationExecutedEvents.length} OperationExecuted events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying OperationCanceled events...'))
-  const operationCanceledEvents = await accessManager.queryFilter('OperationCanceled', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${operationCanceledEvents.length} OperationCanceled events`))
+  const operationCanceledEvents = await accessManager.queryFilter(
+    'OperationCanceled',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${operationCanceledEvents.length} OperationCanceled events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying RoleGrantDelayChanged events...'))
-  const roleGrantDelayChangedEvents = await accessManager.queryFilter('RoleGrantDelayChanged', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleGrantDelayChangedEvents.length} RoleGrantDelayChanged events`))
+  const roleGrantDelayChangedEvents = await accessManager.queryFilter(
+    'RoleGrantDelayChanged',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${roleGrantDelayChangedEvents.length} RoleGrantDelayChanged events`,
+    ),
+  )
 
   const executedOrCanceled = new Set<string>()
   for (const event of operationExecutedEvents) {
@@ -321,36 +396,54 @@ export async function runScanKintoAm(): Promise<void> {
       })
     }
   }
-  console.log(chalk.green(`- Found ${pendingRoleGrantChanges.length} pending role grant delay changes`))
+  console.log(
+    chalk.green(
+      `- Found ${pendingRoleGrantChanges.length} pending role grant delay changes`,
+    ),
+  )
 
   // 4. Format and print the report.
-  console.log(chalk.bold('\n================ Current Roles Held by Actors ================'))
+  console.log(
+    chalk.bold(
+      '\n================ Current Roles Held by Actors ================',
+    ),
+  )
   if (Object.keys(rolesByActor).length === 0) {
     console.log(chalk.red('\nNo actors with active roles found.'))
   } else {
     for (const account in rolesByActor) {
       const name = actorNames[account]
-        ? `${actorNames[account]} (${account})`
-        : account
-      console.log(chalk.blue(`\n${name}:`))
+        ? `${chalk.blue(actorNames[account])} (${chalk.gray(account)})`
+        : chalk.gray(account)
+      console.log(`\n${name}:`)
       for (const roleInfo of rolesByActor[account]) {
         const roleName = roleNames[roleInfo.roleId] || roleInfo.roleId
-        const delayStr = `${roleInfo.executionDelay} (${formatDuration(roleInfo.executionDelay)})`
-        console.log(`  ${chalk.green(roleName)}: executionDelay: ${chalk.yellow(delayStr)}`)
+        const delayStr = `${chalk.green(roleInfo.executionDelay)} (${chalk.green(formatDuration(roleInfo.executionDelay))})`
+        console.log(
+          `  ${chalk.yellow(roleName)}: ${chalk.magenta('executionDelay')}: ${delayStr}`,
+        )
 
         if (roleToTargetFunctions[roleInfo.roleId]) {
-          console.log(chalk.cyan('    Callable targets and functions:'))
+          console.log('    Callable targets and functions:')
           const targets = roleToTargetFunctions[roleInfo.roleId]
           if (Object.keys(targets).length === 0) {
-            console.log(chalk.red('      No targets or functions configured for this role'))
+            console.log(
+              chalk.red(
+                '      No targets or functions configured for this role',
+              ),
+            )
           } else {
             for (const target in targets) {
-              const targetLabel = targetNames[target] ? targetNames[target] : target
-              console.log(`      Target ${chalk.green(targetLabel)}:`)
+              const targetLabel = targetNames[target]
+                ? chalk.blue(targetNames[target])
+                : chalk.gray(target)
+              console.log(`      Target ${targetLabel}:`)
               const functions = Array.from(targets[target]).map((sel) =>
-                functionSignatures[sel] ? functionSignatures[sel] : sel,
+                functionSignatures[sel]
+                  ? chalk.gray(functionSignatures[sel])
+                  : chalk.gray(sel),
               )
-              console.log(`        Functions: ${chalk.yellow(functions.join(', '))}`)
+              console.log(`        Functions: ${functions.join(', ')}`)
             }
           }
         }
@@ -358,49 +451,69 @@ export async function runScanKintoAm(): Promise<void> {
     }
   }
 
-  console.log(chalk.bold('\n================ Current Target Configurations ================'))
+  console.log(
+    chalk.bold(
+      '\n================ Current Target Configurations ================',
+    ),
+  )
   if (Object.keys(targetData).length === 0) {
     console.log(chalk.red('\nNo target configurations found.'))
   } else {
     for (const target in targetData) {
       const targetName = targetNames[target]
-        ? `${targetNames[target]} (${target})`
-        : target
-      console.log(chalk.blue(`\n${targetName}:`))
-      console.log(`  targetAdminDelay: ${chalk.yellow(targetData[target].adminDelay)} (${formatDuration(targetData[target].adminDelay)})`)
+        ? `${chalk.blue(targetNames[target])} (${chalk.gray(target)})`
+        : chalk.gray(target)
+      console.log(`\n${targetName}:`)
+      console.log(
+        `  ${chalk.magenta('targetAdminDelay')}: ${chalk.green(targetData[target].adminDelay)} (${chalk.green(formatDuration(targetData[target].adminDelay))})`,
+      )
       console.log(`  Closed: ${chalk.yellow(targetData[target].closed)}`)
       console.log('  Function Roles:')
       if (Object.keys(targetData[target].functions).length === 0) {
-        console.log(chalk.red('    No function roles configured for this target'))
+        console.log(
+          chalk.red('    No function roles configured for this target'),
+        )
       } else {
         for (const roleId in targetData[target].functions) {
           const roleName = roleNames[roleId] || roleId
           const funcs = Array.from(targetData[target].functions[roleId]).map(
-            (sel) => (functionSignatures[sel] ? functionSignatures[sel] : sel),
+            (sel) =>
+              functionSignatures[sel]
+                ? chalk.gray(functionSignatures[sel])
+                : chalk.gray(sel),
           )
-          console.log(`    ${chalk.green(roleName)}: ${chalk.yellow(funcs.join(', '))}`)
+          console.log(`    ${chalk.yellow(roleName)}: ${funcs.join(', ')}`)
         }
       }
     }
   }
 
-  console.log(chalk.bold('\n============= Queued Delay/Config Changes and Queued Actions ============='))
+  console.log(
+    chalk.bold(
+      '\n============= Queued Delay/Config Changes and Queued Actions =============',
+    ),
+  )
   let changesFound = false
 
   // Pending role execution delay changes for actors:
   for (const account in rolesByActor) {
     for (const roleInfo of rolesByActor[account]) {
-      if (roleInfo.pendingDelay > 0 && roleInfo.pendingEffect > currentTimestamp) {
+      if (
+        roleInfo.pendingDelay > 0 &&
+        roleInfo.pendingEffect > currentTimestamp
+      ) {
         changesFound = true
         const roleName = roleNames[roleInfo.roleId] || roleInfo.roleId
         const actorLabel = actorNames[account]
-          ? `${actorNames[account]} (${account})`
-          : account
-        console.log(chalk.blue(`\nActor ${actorLabel} has a scheduled change for role ${roleName}:`))
+          ? `${chalk.blue(actorNames[account])} (${chalk.gray(account)})`
+          : chalk.gray(account)
         console.log(
-          `  executionDelay change from ${chalk.yellow(roleInfo.executionDelay)} (${formatDuration(roleInfo.executionDelay)}) to ${chalk.yellow(roleInfo.pendingDelay)} (${formatDuration(
-            roleInfo.pendingDelay,
-          )}) effective at ${chalk.magenta(new Date(roleInfo.pendingEffect * 1000).toISOString())}`,
+          `\nActor ${actorLabel} has a scheduled change for role ${chalk.yellow(roleName)}:`,
+        )
+        console.log(
+          `  ${chalk.magenta('executionDelay')} change from ${chalk.green(roleInfo.executionDelay)} (${chalk.green(formatDuration(roleInfo.executionDelay))}) to ${chalk.green(roleInfo.pendingDelay)} (${chalk.green(
+            formatDuration(roleInfo.pendingDelay),
+          )}) effective at ${chalk.green(new Date(roleInfo.pendingEffect * 1000).toISOString())}`,
         )
       }
     }
@@ -415,11 +528,11 @@ export async function runScanKintoAm(): Promise<void> {
           changesFound = true
           pendingAdminDelayChangesFound = true
           const targetLabel = targetNames[target]
-            ? `${targetNames[target]} (${target})`
-            : target
-          console.log(chalk.blue(`\nTarget ${targetLabel} scheduled adminDelay change:`))
+            ? `${chalk.blue(targetNames[target])} (${chalk.gray(target)})`
+            : chalk.gray(target)
+          console.log(`\nTarget ${targetLabel} scheduled adminDelay change:`)
           console.log(
-            `  New targetAdminDelay: ${chalk.yellow(change.newDelay)} (${formatDuration(change.newDelay)}) effective at ${chalk.magenta(new Date(change.effect * 1000).toISOString())}`,
+            `  New ${chalk.magenta('targetAdminDelay')}: ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.green(new Date(change.effect * 1000).toISOString())}`,
           )
         }
       }
@@ -437,17 +550,19 @@ export async function runScanKintoAm(): Promise<void> {
       const selector = op.data.slice(0, 10) // first 4 bytes (10 hex characters with "0x")
       const funcSig = functionSignatures[selector] || selector
       const callerLabel = actorNames[op.caller]
-        ? `${actorNames[op.caller]} (${op.caller})`
-        : op.caller
+        ? `${chalk.blue(actorNames[op.caller])} (${chalk.gray(op.caller)})`
+        : chalk.gray(op.caller)
       const targetLabel = targetNames[op.target]
-        ? `${targetNames[op.target]} (${op.target})`
-        : op.target
-      console.log(chalk.blue(`\nOperation ${op.operationId}:`))
+        ? `${chalk.blue(targetNames[op.target])} (${chalk.gray(op.target)})`
+        : chalk.gray(op.target)
+      console.log(`\nOperation ${op.operationId}:`)
       console.log(`    Nonce: ${chalk.yellow(op.nonce)}`)
-      console.log(`    Scheduled at: ${chalk.magenta(new Date(op.schedule * 1000).toISOString())}`)
-      console.log(`    Caller: ${chalk.cyan(callerLabel)}`)
-      console.log(`    Target: ${chalk.cyan(targetLabel)}`)
-      console.log(`    Function: ${chalk.green(funcSig)}`)
+      console.log(
+        `    Scheduled at: ${chalk.green(new Date(op.schedule * 1000).toISOString())}`,
+      )
+      console.log(`    Caller: ${callerLabel}`)
+      console.log(`    Target: ${targetLabel}`)
+      console.log(`    Function: ${chalk.gray(funcSig)}`)
     }
   } else {
     console.log(chalk.red('No queued operations found.'))
@@ -460,7 +575,7 @@ export async function runScanKintoAm(): Promise<void> {
     for (const change of pendingRoleGrantChanges) {
       const roleName = roleNames[change.roleId] || change.roleId
       console.log(
-        `  Role ${chalk.green(roleName)} scheduled to change grant delay to ${chalk.yellow(change.newDelay)} (${formatDuration(change.newDelay)}) effective at ${chalk.magenta(new Date(change.effect * 1000).toISOString())}`,
+        `  Role ${chalk.yellow(roleName)} scheduled to change grant delay to ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.green(new Date(change.effect * 1000).toISOString())}`,
       )
     }
   } else {
