@@ -72,6 +72,14 @@ export function getCommonScalingEntry({
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',
       },
+      {
+        id: 'infrastructure',
+        value: project.scalingInfo.infrastructure ?? 'No infrastructure',
+      },
+      {
+        id: 'vm',
+        value: project.scalingInfo.vm ?? 'No VM',
+      },
     ],
     description: project.display?.description,
     badges: project.display.badges,
