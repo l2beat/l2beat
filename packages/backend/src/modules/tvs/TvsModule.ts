@@ -82,7 +82,10 @@ export function initTvsModule(
     syncOptimizer,
     db: database,
   })
-  amountIndexers.set('l2b-circulating-supply', circulatingSupplyIndexer)
+  amountIndexers.set(
+    CirculatingSupplyAmountIndexer.SOURCE,
+    circulatingSupplyIndexer,
+  )
 
   const blockTimestampIndexers: Indexer[] = []
 
@@ -133,15 +136,15 @@ export function initTvsModule(
   const tokenValueIndexers: Indexer[] = []
 
   for (const project of config.tvs.projects) {
-    const amountss = project.amountSources.map((source) => {
+    const dbStorage = new DBStorage(database, logger)
+    // TODO: add since & until support to ValueService
+    const valueService = new ValueService(dbStorage)
+
+    const amountSources = project.amountSources.map((source) => {
       const indexer = amountIndexers.get(source)
       assert(indexer, `${project.projectId} no indexer found for ${source}`)
       return indexer
     })
-
-    const dbStorage = new DBStorage(database, logger)
-    // TODO: add since & until support to ValueService
-    const valueService = new ValueService(dbStorage)
 
     const tokenValueIndexer = new TokenValueIndexer({
       syncOptimizer,
@@ -149,7 +152,7 @@ export function initTvsModule(
       dbStorage,
       project: project.projectId,
       maxTimestampsToProcessAtOnce: 500,
-      parents: [priceIndexer, ...amountss],
+      parents: [priceIndexer, ...amountSources],
       indexerService,
       configurations: project.tokens.map((t) => ({
         id: TokenValueIndexer.idToConfigurationId(t.id),

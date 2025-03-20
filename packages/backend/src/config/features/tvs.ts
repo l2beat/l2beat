@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
 import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
@@ -48,7 +49,7 @@ export async function getTvsConfig(
       .map((a) => {
         switch (a.type) {
           case 'circulatingSupply':
-            return 'l2b-circulating-supply'
+            return CirculatingSupplyAmountIndexer.SOURCE
           case 'balanceOfEscrow':
           case 'totalSupply':
             return a.chain
