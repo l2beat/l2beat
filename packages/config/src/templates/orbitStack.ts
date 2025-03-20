@@ -774,13 +774,7 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
+  const usesBlobs = templateVars.usesBlobs ?? false
 
   const batchPosters = templateVars.discovery.getContractValue<string[]>(
     'SequencerInbox',

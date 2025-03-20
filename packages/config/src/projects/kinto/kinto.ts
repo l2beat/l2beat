@@ -61,6 +61,7 @@ export const kinto: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  usesBlobs: true,
   activityConfig: {
     type: 'block',
     startBlock: 1,
