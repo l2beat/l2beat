@@ -56,7 +56,7 @@ export default async function Page(props: Props) {
   const project = await ps.getProject({
     slug: params.slug,
     select: ['tvlConfig', 'tvlInfo'],
-    optional: ['chainConfig', 'milestones'],
+    optional: ['chainConfig', 'milestones', 'contracts'],
     where: ['isScaling'],
   })
 
