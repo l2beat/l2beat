@@ -27,6 +27,8 @@ jobs:
           registry: registry.heroku.com
       - name: Build and publish containers
         uses: docker/build-push-action@v5
+        env:
+          DOCKER_BUILD_SUMMARY: false
         with:
           push: true
           file: Dockerfile.backend
