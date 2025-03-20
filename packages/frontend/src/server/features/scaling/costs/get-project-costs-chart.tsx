@@ -106,41 +106,33 @@ function mapToPerL2UopsCost(
     throughput: number
   },
 ) {
+  const divideIfValid = (value: number | undefined) =>
+    uops.costs && value !== undefined ? value / uops.costs : undefined
+
   return {
-    overhead: uops.costs ? data.gas.total / uops.costs : undefined,
+    overhead: divideIfValid(data.gas.total),
     gas: {
-      overhead: uops.costs ? data.gas.overhead / uops.costs : undefined,
-      calldata: uops.costs ? data.gas.calldata / uops.costs : undefined,
-      compute: uops.costs ? data.gas.compute / uops.costs : undefined,
-      blobs:
-        data.gas.blobs !== undefined && uops.costs
-          ? data.gas.blobs / uops.costs
-          : undefined,
-      total: uops.costs ? data.gas.total / uops.costs : undefined,
+      overhead: divideIfValid(data.gas.overhead),
+      calldata: divideIfValid(data.gas.calldata),
+      compute: divideIfValid(data.gas.compute),
+      blobs: divideIfValid(data.gas.blobs),
+      total: divideIfValid(data.gas.total),
     },
     eth: {
-      overhead: uops.costs ? data.eth.overhead / uops.costs : undefined,
-      calldata: uops.costs ? data.eth.calldata / uops.costs : undefined,
-      compute: uops.costs ? data.eth.compute / uops.costs : undefined,
-      blobs:
-        data.eth.blobs !== undefined && uops.costs
-          ? data.eth.blobs / uops.costs
-          : undefined,
-      total: uops.costs ? data.eth.total / uops.costs : undefined,
+      overhead: divideIfValid(data.eth.overhead),
+      calldata: divideIfValid(data.eth.calldata),
+      compute: divideIfValid(data.eth.compute),
+      blobs: divideIfValid(data.eth.blobs),
+      total: divideIfValid(data.eth.total),
     },
     usd: {
-      overhead: uops.costs ? data.usd.overhead / uops.costs : undefined,
-      calldata: uops.costs ? data.usd.calldata / uops.costs : undefined,
-      compute: uops.costs ? data.usd.compute / uops.costs : undefined,
-      blobs:
-        data.usd.blobs !== undefined && uops.costs
-          ? data.usd.blobs / uops.costs
-          : undefined,
-      total: uops.costs ? data.usd.total / uops.costs : undefined,
+      overhead: divideIfValid(data.usd.overhead),
+      calldata: divideIfValid(data.usd.calldata),
+      compute: divideIfValid(data.usd.compute),
+      blobs: divideIfValid(data.usd.blobs),
+      total: divideIfValid(data.usd.total),
     },
     posted:
-      data.posted !== undefined && uops.throughput
-        ? data.posted / uops.throughput
-        : undefined,
+      data.posted !== undefined ? data.posted / uops.throughput : undefined,
   }
 }
