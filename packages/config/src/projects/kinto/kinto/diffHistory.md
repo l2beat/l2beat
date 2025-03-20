@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x819249e7c6f9e282bff9a2b435b22e8f4fe07070
+Generated with discovered.json: 0x5ff247e0f927d1ef45526d0715ffec1cde6554b4
 
-# Diff at Thu, 20 Mar 2025 10:14:18 GMT:
+# Diff at Thu, 20 Mar 2025 12:47:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 770292
@@ -83,8 +83,20 @@ todo:
 ```
 
 ```diff
+    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions.1.delay:
+-        604800
++        950400
+    }
+```
+
+```diff
     contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
-    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      issuedPermissions.2.delay:
+-        604800
++        950400
       values.accessControl.roles.SECURITY_COUNCIL_ROLE.members.0.since:
 -        1739472657
 +        1742427194
@@ -98,6 +110,11 @@ todo:
 -        604800
 +        950400
       values.accessControl.targets.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7.adminDelay:
+-        604800
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScSECURITY_COUNCIL:
 -        604800
 +        950400
 +++ description: List of roles granted to accounts.
@@ -233,6 +250,51 @@ discovery. Values are for block 770292 (main branch discovery), not current.
 ```
 
 ```diff
+    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."},{"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."},{"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."}]
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","via":[]}]
+      receivedPermissions.5:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"}
+      receivedPermissions.3.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
++        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+      receivedPermissions.2.description:
++        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+      receivedPermissions.1.from:
+-        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.1.description:
+-        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      receivedPermissions.0.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.0.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+      receivedPermissions.0.delay:
++        604800
+    }
+```
+
+```diff
 -   Status: DELETED
     contract L2GatewayRouter (0x340487b92808B84c2bd97C87B590EE81267E04a7)
     +++ description: None
@@ -296,6 +358,10 @@ discovery. Values are for block 770292 (main branch discovery), not current.
       description:
 -        "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic."
 +        "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract."
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
       category:
 +        {"name":"Local Infrastructure","priority":5}
     }
@@ -317,7 +383,64 @@ discovery. Values are for block 770292 (main branch discovery), not current.
 
 ```diff
     contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
-    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      description:
+-        "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
++        "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoAdminMultisigADMIN:
++        0
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoAdminMultisigUPGRADER:
++        604800
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScADMIN:
++        604800
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScSECURITY_COUNCIL:
++        604800
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScUPGRADER:
++        950400
+      values.kintoAdminMultisigPermission:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      values.securityCouncilPermission:
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
++        0
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
++        604800
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
++        604800
+      fieldMeta.tadKintoWalletFactory:
++        {"severity":"HIGH","description":"CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."}
+      fieldMeta.tadKintoAppRegistry:
++        {"severity":"HIGH","description":"CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."}
+      fieldMeta.tadKintoID:
++        {"severity":"HIGH","description":"CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."}
+      fieldMeta.edKintoAdminMultisigUPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoAdminMultisigADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edScADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edScUPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edScSECURITY_COUNCIL:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      issuedPermissions:
++        [{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":604800,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.","via":[]}]
       category:
 +        {"name":"Governance","priority":3}
     }

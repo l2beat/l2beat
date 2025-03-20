@@ -93,8 +93,165 @@
     "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": {
       // AccessManager
       "category": "gov",
-      "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "description": "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "canActIndependently": false,
       "fields": {
+        // improvised semi-hardcoded (needs better tooling)
+        "securityCouncilPermission": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+          },
+          "permissions": [
+            // role UPGRADER
+            {
+              "type": "interact",
+              "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+              "delay": "{{edScUPGRADER}}"
+            },
+            // role SECURITY_COUNCIL
+            {
+              "type": "interact",
+              "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
+              "delay": "{{edScSECURITY_COUNCIL}}"
+            },
+            // role ADMIN
+            {
+              "type": "interact",
+              "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+              "delay": "{{edScADMIN}}"
+            }
+          ]
+        },
+        "kintoAdminMultisigPermission": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+          },
+          "permissions": [
+            // role UPGRADER
+            {
+              "type": "interact",
+              "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+              "delay": "{{edKintoAdminMultisigUPGRADER}}"
+            },
+            // role ADMIN
+            {
+              "type": "interact",
+              "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+              "delay": "{{edKintoAdminMultisigADMIN}}"
+            }
+          ]
+        },
+        "tadKintoWalletFactory": {
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
+            "args": ["0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"]
+          }
+        },
+        "tadKintoAppRegistry": {
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
+            "args": ["0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"]
+          }
+        },
+        "tadKintoID": {
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
+            "args": ["0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"]
+          }
+        },
+        "edKintoAdminMultisigUPGRADER": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+                ["=", "#roleId", "8663528507529876195"]
+              ]
+            }
+          }
+        },
+        "edKintoAdminMultisigADMIN": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+                ["=", "#roleId", 0]
+              ]
+            }
+          }
+        },
+        "edScADMIN": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
+                ["=", "#roleId", 0]
+              ]
+            }
+          }
+        },
+        "edScUPGRADER": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
+                ["=", "#roleId", "8663528507529876195"]
+              ]
+            }
+          }
+        },
+        "edScSECURITY_COUNCIL": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
+                ["=", "#roleId", "14661544942390944024"]
+              ]
+            }
+          }
+        },
+
+        // improvised semi-hardcoded END
         "accessControl": {
           "handler": {
             "type": "kintoAccessControl"
@@ -258,6 +415,7 @@
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
       // KintoWalletFactory
       "category": "core",
+      "canActIndependently": false,
       "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalWallets"],

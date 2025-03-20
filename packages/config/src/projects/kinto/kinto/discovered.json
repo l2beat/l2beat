@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 771451,
-  "configHash": "0xf57d556a749204d292279bea9627fb488b861bf89bf18610bd353f3979359306",
+  "configHash": "0x92345c7d18708ba918326bdc2d987483761f1134dc709b018dce13fea2118985",
   "entries": [
     {
       "name": "NioGuardians",
@@ -396,6 +396,26 @@
       "address": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
       "type": "EOA",
       "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 604800,
+          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+        },
+        {
+          "permission": "interact",
+          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 950400,
+          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
+        },
+        {
+          "permission": "interact",
+          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 950400,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+        }
+      ],
       "derivedName": ""
     },
     {
@@ -407,18 +427,22 @@
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "via": []
-        }
-      ],
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
           "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+        },
+        {
+          "permission": "interact",
+          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 604800,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+        },
+        {
+          "permission": "interact",
+          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
         },
         {
           "permission": "interact",
@@ -1027,7 +1051,7 @@
           "via": []
         }
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
@@ -1204,7 +1228,43 @@
         "0x0be3dfeb685554b52db3a817fb494512b185e58a93ef6932d66a7d107ffab52c"
       ],
       "proxyType": "immutable",
-      "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "description": "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+          "delay": 604800,
+          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+          "delay": 950400,
+          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+          "delay": 950400,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "delay": 604800,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1354,8 +1414,14 @@
           "SECURITY_COUNCIL_ROLE": ["14661544942390944024"]
         },
         "ADMIN_ROLE": 0,
+        "edKintoAdminMultisigADMIN": 0,
+        "edKintoAdminMultisigUPGRADER": 604800,
+        "edScADMIN": 604800,
+        "edScSECURITY_COUNCIL": 950400,
+        "edScUPGRADER": 950400,
         "expiration": 604800,
         "initialAdminRole": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "kintoAdminMultisigPermission": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "minSetback": 432000,
         "OperationScheduled": [],
         "PUBLIC_ROLE": "18446744073709551615",
@@ -1442,6 +1508,10 @@
             }
           ]
         },
+        "securityCouncilPermission": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+        "tadKintoAppRegistry": 0,
+        "tadKintoID": 604800,
+        "tadKintoWalletFactory": 604800,
         "TargetAdminDelayUpdated": {
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
             "delay": 950400,
@@ -1478,6 +1548,38 @@
         }
       },
       "fieldMeta": {
+        "tadKintoWalletFactory": {
+          "severity": "HIGH",
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."
+        },
+        "tadKintoAppRegistry": {
+          "severity": "HIGH",
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."
+        },
+        "tadKintoID": {
+          "severity": "HIGH",
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."
+        },
+        "edKintoAdminMultisigUPGRADER": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls."
+        },
+        "edKintoAdminMultisigADMIN": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls."
+        },
+        "edScADMIN": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls."
+        },
+        "edScUPGRADER": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls."
+        },
+        "edScSECURITY_COUNCIL": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls."
+        },
         "initialAdminRole": {
           "description": "From the constructor args. Has the ADMIN_ROLE (0)."
         },
