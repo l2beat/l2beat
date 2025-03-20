@@ -56,7 +56,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: Badge[]
+    badges?: (Badge & { href: string | undefined })[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory

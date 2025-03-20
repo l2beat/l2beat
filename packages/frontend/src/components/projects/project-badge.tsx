@@ -6,31 +6,37 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
+import Link from 'next/link'
+
 export function ProjectBadge({
   badge,
-  hideTooltip,
+  disableInteraction,
   className,
 }: {
-  badge: Badge
-  hideTooltip?: boolean
+  badge: Badge & { href: string | undefined }
+  disableInteraction?: boolean
   className?: ClassNameValue
 }) {
   const badgeImg = (
-    <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`/images/badges/${badge.id}.png`}
-        alt={`${badge.name} badge`}
-        className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
-      />
-    </>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/images/badges/${badge.id}.png`}
+      alt={`${badge.name} badge`}
+      className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
+    />
   )
+  const component =
+    !disableInteraction && badge.href ? (
+      <Link href={badge.href}>{badgeImg}</Link>
+    ) : (
+      badgeImg
+    )
 
-  if (hideTooltip) return badgeImg
+  if (disableInteraction) return component
 
   return (
     <Tooltip>
-      <TooltipTrigger className="shrink-0">{badgeImg}</TooltipTrigger>
+      <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
       <TooltipContent>
         <span className="mb-2 block font-medium">{badge.name}</span>
         <span className="text-xs">{badge.description}</span>
