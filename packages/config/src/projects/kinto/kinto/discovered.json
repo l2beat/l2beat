@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 771451,
-  "configHash": "0x92345c7d18708ba918326bdc2d987483761f1134dc709b018dce13fea2118985",
+  "configHash": "0xdb109a6d0f0e6297d449d90adfa2cfc4a0ffa00ac102267ce2b198a893b0af33",
   "entries": [
     {
       "name": "NioGuardians",
@@ -383,6 +383,7 @@
         "0x052509324b6377b27cdffc415a20ef12be0fb098b3612589bc014b90b2823b05"
       ],
       "proxyType": "immutable",
+      "description": "Used as entrypoint to transact using smartwallets and UserOps.",
       "sinceTimestamp": 1703803611,
       "sinceBlock": 61,
       "values": {

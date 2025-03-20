@@ -44,6 +44,10 @@
     }
   },
   "overrides": {
+    "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb":{
+      // EntryPoint
+      "description": "Used as entrypoint to transact using smartwallets and UserOps."
+    },
     // "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b":{
     //   "extends": "orbitstack/UpgradeExecutor"
     // },

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5ff247e0f927d1ef45526d0715ffec1cde6554b4
+Generated with discovered.json: 0xa036c9d1af0a435a48033729c890c7d5315cf1ce
 
-# Diff at Thu, 20 Mar 2025 12:47:29 GMT:
+# Diff at Thu, 20 Mar 2025 12:53:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 770292
@@ -246,6 +246,14 @@ discovery. Values are for block 770292 (main branch discovery), not current.
     +++ description: Paymaster used for user transactions eligible for sponsorship.
       category:
 +        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EntryPoint (0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb) {
+    +++ description: Used as entrypoint to transact using smartwallets and UserOps.
+      description:
++        "Used as entrypoint to transact using smartwallets and UserOps."
     }
 ```
 
