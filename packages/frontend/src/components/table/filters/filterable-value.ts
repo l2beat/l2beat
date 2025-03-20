@@ -49,13 +49,13 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {
   return filterId
-    ? `No ${filterIdToValues[filterId].toLowerCase()} found.`
+    ? `No ${filterIdToValues[filterId]} found.`
     : 'No filters found.'
 }
 
 export const inputPlaceholder = (filterId: FilterableValueId | undefined) => {
   return filterId
-    ? `Search ${filterIdToValues[filterId].toLowerCase()}...`
+    ? `Search ${filterIdToValues[filterId]}...`
     : 'Search filters...'
 }
 
