@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
+import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -13,6 +14,7 @@ import type { FeatureFlags } from '../FeatureFlags'
 export async function getTvsConfig(
   ps: ProjectService,
   flags: FeatureFlags,
+  sinceTimestamp?: number,
 ): Promise<TvsConfig> {
   const projectsWithTvl = await ps.getProjects({
     select: ['tvlConfig'],
@@ -24,9 +26,15 @@ export async function getTvsConfig(
   )
 
   // TODO be replaced by ProjectService
-  const projects = readConfigs(enabledProjects).filter(
-    (p) => p.tokens.length > 0,
-  )
+  let projects = readConfigs(enabledProjects).filter((p) => p.tokens.length > 0)
+
+  // sinceTimestamp override for local development
+  if (sinceTimestamp) {
+    projects = projects.map((p) => ({
+      projectId: p.projectId,
+      tokens: getEffectiveConfig(p.tokens, sinceTimestamp),
+    }))
+  }
 
   const { amounts, prices, chains } = await getAmountsAndPrices(projects)
 

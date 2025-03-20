@@ -12,16 +12,14 @@ export function getEffectiveConfig(
   const tokensInRange = []
 
   for (const token of tokens) {
-    const amountInRange = processFormulaRecursive(token.amount, timestamp)
+    const amountInRange = isInRangeRecursive(token.amount, timestamp)
 
-    // if amount formula  is not in range we skip the token
     if (!amountInRange) {
       continue
     }
 
-    // if valueForProject or valueForTotal is not in range we set it to undefined
     if (token.valueForProject) {
-      token.valueForProject = processFormulaRecursive(
+      token.valueForProject = isInRangeRecursive(
         token.valueForProject,
         timestamp,
       )
@@ -30,10 +28,7 @@ export function getEffectiveConfig(
     }
 
     if (token.valueForTotal) {
-      token.valueForTotal = processFormulaRecursive(
-        token.valueForTotal,
-        timestamp,
-      )
+      token.valueForTotal = isInRangeRecursive(token.valueForTotal, timestamp)
         ? token.valueForTotal
         : undefined
     }
@@ -44,14 +39,14 @@ export function getEffectiveConfig(
   return tokensInRange
 }
 
-function processFormulaRecursive(
+function isInRangeRecursive(
   formula: CalculationFormula | ValueFormula | AmountFormula,
   timestamp: number,
 ): boolean {
   if (formula.type === 'calculation') {
     const argumentsInRange = []
     for (const arg of formula.arguments) {
-      const inRange = processFormulaRecursive(arg, timestamp)
+      const inRange = isInRangeRecursive(arg, timestamp)
       if (inRange) {
         argumentsInRange.push(arg)
       }
@@ -64,7 +59,7 @@ function processFormulaRecursive(
       ? argumentsInRange.length >= 2
       : argumentsInRange.length >= 1
   } else if (formula.type === 'value') {
-    return processFormulaRecursive(formula.amount, timestamp)
+    return isInRangeRecursive(formula.amount, timestamp)
   } else {
     if (formula.untilTimestamp && formula.untilTimestamp < timestamp) {
       return false
