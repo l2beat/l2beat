@@ -104,7 +104,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
     return async () => {
       await this.$.db.tvsAmount.insertMany(records)
 
-      this.logger.info('Saved prices into DB', {
+      this.logger.info('Saved circulating supplies into DB', {
         from,
         to: adjustedTo,
         records: records.length,
