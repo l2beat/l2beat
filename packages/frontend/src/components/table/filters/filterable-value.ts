@@ -62,9 +62,10 @@ export const inputPlaceholder = (filterId: FilterableValueId | undefined) => {
 const ALWAYS_FIRST_VALUES = [
   'No stack',
   'Ethereum',
-  'NotApplicable',
+  'Not applicable',
   'No infrastructure',
   'No VM',
+  'No RaaS',
 ]
 export function filterValuesSortFn(a: string, b: string) {
   if (ALWAYS_FIRST_VALUES.includes(a)) return -1

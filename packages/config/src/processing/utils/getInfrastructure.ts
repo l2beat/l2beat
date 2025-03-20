@@ -5,5 +5,5 @@ export function getInfrastructure(badges: Badge[] | undefined) {
   if (!badge) {
     return undefined
   }
-  return badge.name
+  return badge.filterName
 }

@@ -159,6 +159,7 @@ export interface Badge {
   type: keyof typeof BadgeType
   name: string
   description: string
+  filterName?: string
 }
 
 export interface Milestone {

@@ -1,9 +1,9 @@
-import type { Badge } from '@l2beat/config'
 import { OverflowWrapper } from '../../core/overflow-wrapper'
 import { ProjectBadge } from '../project-badge'
+import type { BadgeWithLink } from '~/server/features/utils/get-common-project-entry'
 
 interface BadgesSectionProps {
-  badges: Badge[]
+  badges: BadgeWithLink[]
 }
 
 export function BadgesSection({ badges }: BadgesSectionProps) {

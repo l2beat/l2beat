@@ -43,6 +43,7 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
+import { getBadgeLink } from '../../utils/get-badge-link'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
@@ -169,7 +170,10 @@ export async function getScalingProjectEntry(
             },
           }
         : undefined,
-    badges: project.display.badges,
+    badges: project.display.badges.map((badge) => ({
+      ...badge,
+      href: getBadgeLink(badge),
+    })),
     gasTokens: project.chainConfig?.gasTokens,
   }
 
