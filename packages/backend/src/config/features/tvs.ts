@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
@@ -10,7 +11,6 @@ import type {
 } from '../../modules/tvs/types'
 import type { TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
-import type { UnixTime } from '@l2beat/shared-pure'
 
 export async function getTvsConfig(
   ps: ProjectService,
