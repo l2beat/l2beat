@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import {
+  type Edge,
   type Node,
   type ResolvedPermission,
   resolvePermissions,
@@ -23,16 +24,26 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
       continue
     }
 
-    graph[address.toString()] ??= {
-      address,
+    const existingNode = graph[address.toString()]
+    const edges: Edge<EthereumAddress>[] = multisigOwners.map((o) => ({
+      toNode: o,
       delay: 0,
-      threshold,
-      edges: multisigOwners.map((o) => ({
-        toNode: o,
+      permission: 'member',
+    }))
+    const canActIndependently = analysis.combinedMeta?.canActIndependently
+
+    if (existingNode) {
+      existingNode.threshold = threshold
+      existingNode.edges = [...existingNode.edges, ...edges]
+      existingNode.canActIndependently = canActIndependently
+    } else {
+      graph[address.toString()] = {
+        address,
         delay: 0,
-        permission: 'member',
-      })),
-      canActIndependently: analysis.combinedMeta?.canActIndependently,
+        threshold,
+        edges,
+        canActIndependently,
+      }
     }
     if (analysis.combinedMeta === undefined) {
       continue
@@ -47,7 +58,7 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
       graph[entryAddress.toString()] ??= {
         address: entry.target,
         delay: 0,
-        threshold,
+        threshold: 1, // we don't know the threshold
         edges: [],
         canActIndependently: undefined,
       }
