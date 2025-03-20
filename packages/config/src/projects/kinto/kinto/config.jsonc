@@ -44,7 +44,7 @@
     }
   },
   "overrides": {
-    "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb":{
+    "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": {
       // EntryPoint
       "description": "Used as entrypoint to transact using smartwallets and UserOps."
     },
