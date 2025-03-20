@@ -25,20 +25,21 @@ jobs:
           password: ${{ secrets.HEROKU_TOKEN }}
           registry: registry.heroku.com
       - name: Build and publish containers
-        uses: docker/build-push-action@v5
+        run: |
+          docker build --push \
+            --build-arg TURBO_TEAM=${TURBO_TEAM} \
+            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+            -t ${TAG_DEV} -t ${TAG_PROD} \
+            -f ${DOCKERFILE} .
         env:
-          DOCKER_BUILD_SUMMARY: false
-        with:
-          push: true
-          file: Dockerfile.backend
-          build-args: |
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
-            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-          tags: |
-            registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_DEV }}/web
-            registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_PROD }}/web
+          DOCKERFILE: Dockerfile.backend
+          TAG_DEV: registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_DEV }}/web
+          TAG_PROD: registry.heroku.com/${{ secrets.HEROKU_UPDATE_MONITOR_PROD }}/web
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       - name: Release published containers
         run: |
+          set -ex
           heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_DEV }} -v web
           heroku container:release -a ${{ secrets.HEROKU_UPDATE_MONITOR_PROD }} -v web
         env:
