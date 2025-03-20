@@ -273,6 +273,8 @@ export interface ProjectScalingInfo {
   }
   stack: ProjectScalingStack | undefined
   raas: string | undefined
+  infrastructure: string | undefined
+  vm: string | undefined
   daLayer: string
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]

@@ -31,6 +31,8 @@ import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
+import { getInfrastructure } from './utils/getInfrastructure'
+import { getVM } from './utils/getVM'
 
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
@@ -93,6 +95,8 @@ function layer2Or3ToProject(
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,
       raas: getRaas(p.badges),
+      infrastructure: getInfrastructure(p.badges),
+      vm: getVM(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
