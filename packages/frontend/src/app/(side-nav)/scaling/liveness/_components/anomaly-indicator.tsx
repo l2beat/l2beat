@@ -106,7 +106,7 @@ function AnomalyTooltipContent(props: {
               )}
               {isLive && props.hasTrackedContractsChanged && (
                 <Callout
-                  className="!mb-2 !rounded px-3 py-2 !text-[13px] leading-[130%]"
+                  className="rounded px-3 py-2 text-[13px] leading-[130%]"
                   color="yellow"
                   small
                   icon={
