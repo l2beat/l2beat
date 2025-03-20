@@ -10,6 +10,7 @@ import type {
 } from '../../modules/tvs/types'
 import type { TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 export async function getTvsConfig(
   ps: ProjectService,
@@ -71,6 +72,7 @@ export function readConfigs(
 
 export async function getAmountsAndPrices(
   projects: ProjectTvsConfig[],
+  sinceTimestamp?: UnixTime,
 ): Promise<{
   amounts: (AmountConfig & { project: string; chain?: string })[]
   prices: PriceConfig[]
@@ -120,6 +122,11 @@ export async function getAmountsAndPrices(
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
-    chains: Array.from(chains.values()),
+    chains: sinceTimestamp
+      ? Array.from(chains.values()).map((c) => ({
+          ...c,
+          sinceTimestamp,
+        }))
+      : Array.from(chains.values()),
   }
 }
