@@ -28,11 +28,11 @@ import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
 import { getHostChain } from './utils/getHostChain'
+import { getInfrastructure } from './utils/getInfrastructure'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
-import { isUnderReview } from './utils/isUnderReview'
-import { getInfrastructure } from './utils/getInfrastructure'
 import { getVM } from './utils/getVM'
+import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()

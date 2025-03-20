@@ -1,4 +1,5 @@
 import type { Badge } from '@l2beat/config'
+import Link from 'next/link'
 import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 import {
@@ -6,14 +7,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
-import Link from 'next/link'
 
 export function ProjectBadge({
   badge,
   disableInteraction,
   className,
 }: {
-  badge: Badge & { href: string | undefined }
+  badge: Badge & { href?: string | undefined }
   disableInteraction?: boolean
   className?: ClassNameValue
 }) {

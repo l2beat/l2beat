@@ -33,6 +33,7 @@ import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawal
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getBadgeLink } from '../../utils/get-badge-link'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
@@ -43,7 +44,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-import { getBadgeLink } from '../../utils/get-badge-link'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
