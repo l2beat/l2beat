@@ -9,7 +9,7 @@ import type {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BadgeId, BadgeType } from './common/badges'
+import type { badges } from './common/badges'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -153,14 +153,7 @@ export interface ProjectLinks {
   socialMedia?: string[]
   rollupCodes?: string
 }
-
-export interface Badge {
-  id: BadgeId
-  type: keyof typeof BadgeType
-  name: string
-  description: string
-  filterName?: string
-}
+export type Badge = (typeof badges)[number]
 
 export interface Milestone {
   title: string

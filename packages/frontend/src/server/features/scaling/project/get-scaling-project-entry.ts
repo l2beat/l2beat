@@ -172,7 +172,7 @@ export async function getScalingProjectEntry(
         : undefined,
     badges: project.display.badges.map((badge) => ({
       ...badge,
-      href: getBadgeLink(badge),
+      href: getBadgeLink(project, badge),
     })),
     gasTokens: project.chainConfig?.gasTokens,
   }

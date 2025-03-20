@@ -436,7 +436,13 @@ export const badges = [
     description:
       'This project has migrated from being a standalone L1 blockchain to an Ethereum L2',
   },
-] as const
+] as const satisfies {
+  id: string
+  type: keyof typeof BadgeType
+  name: string
+  description: string
+  filterName?: string
+}[]
 
 type AnyBadge = (typeof badges)[number]
 
