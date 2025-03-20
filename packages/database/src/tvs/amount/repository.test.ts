@@ -99,6 +99,46 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
   })
 
+  describe(TvsAmountRepository.prototype.getLatestAmount.name, () => {
+    it('returns the latest amount for a configuration', async () => {
+      await repository.insertMany([
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+        tvsAmount('a', 'project1', UnixTime(200), 2n),
+        tvsAmount('a', 'project1', UnixTime(50), 0n),
+        tvsAmount('b', 'project1', UnixTime(150), 3n),
+      ])
+
+      const result = await repository.getLatestAmount('a'.repeat(12))
+
+      expect(result).toEqual(tvsAmount('a', 'project1', UnixTime(200), 2n))
+    })
+
+    it('returns undefined when no amounts exist for the configuration', async () => {
+      await repository.insertMany([
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+      ])
+
+      const result = await repository.getLatestAmount('b'.repeat(12))
+
+      expect(result).toEqual(undefined)
+    })
+
+    it('returns the correct result when multiple projects exist', async () => {
+      await repository.insertMany([
+        tvsAmount('a', 'project1', UnixTime(100), 1n),
+        tvsAmount('b', 'project2', UnixTime(200), 2n),
+        tvsAmount('a', 'project1', UnixTime(300), 3n),
+        tvsAmount('b', 'project2', UnixTime(150), 4n),
+      ])
+
+      const resultA = await repository.getLatestAmount('a'.repeat(12))
+      const resultB = await repository.getLatestAmount('b'.repeat(12))
+
+      expect(resultA).toEqual(tvsAmount('a', 'project1', UnixTime(300), 3n))
+      expect(resultB).toEqual(tvsAmount('b', 'project2', UnixTime(200), 2n))
+    })
+  })
+
   describe(TvsAmountRepository.prototype.deleteByConfigInTimeRange.name, () => {
     it('deletes data in range for matching config', async () => {
       await repository.insertMany([

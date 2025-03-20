@@ -29,6 +29,20 @@ export class TvsAmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLatestAmount(
+    configurationId: string,
+  ): Promise<TvsAmountRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount', 'project'])
+      .where('configurationId', '=', configurationId)
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async deleteByConfigInTimeRange(
     configId: string,
     fromInclusive: UnixTime,
