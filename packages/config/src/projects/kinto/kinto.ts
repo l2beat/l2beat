@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('kinto')
-const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
+const l2discovery = new ProjectDiscovery('kinto', 'kinto')
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
@@ -17,7 +17,7 @@ export const kinto: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   overridingPurposes: ['KYC-ed DeFi'],
-  // additionalDiscoveries: {['kinto']: l2discovery}, // not yet ready mainly due to AccessManager not being disco-driveable
+  additionalDiscoveries: { ['kinto']: l2discovery },
   display: {
     name: 'Kinto',
     slug: 'kinto',
