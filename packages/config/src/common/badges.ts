@@ -12,6 +12,8 @@
 
 import type { Badge } from '../types'
 
+export type BadgeId = (typeof badges)[number]['id']
+
 export const BadgeType = {
   VM: 'VM',
   DA: 'DA',
@@ -400,7 +402,7 @@ export const badges = [
     description:
       'This project has migrated from being a standalone L1 blockchain to an Ethereum L2',
   },
-] as const satisfies Badge[]
+] as const
 
 type AnyBadge = (typeof badges)[number]
 
