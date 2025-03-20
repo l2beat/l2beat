@@ -106,7 +106,13 @@ export async function makeConfig(
     tvl:
       flags.isEnabled('tvl') &&
       (await getTvlConfig(ps, flags, env, chains, minTimestampOverride)),
-    tvs: flags.isEnabled('tvs') && (await getTvsConfig(ps, flags)),
+    tvs:
+      flags.isEnabled('tvs') &&
+      (await getTvsConfig(
+        ps,
+        flags,
+        env.optionalInteger('TVS_SINCE_TIMESTAMP'),
+      )),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),

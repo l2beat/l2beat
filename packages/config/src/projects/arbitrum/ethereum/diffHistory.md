@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xf4a75c1a6b8f1fe8638f8f3f91b685b7c9501d2e
+
+# Diff at Wed, 19 Mar 2025 15:44:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4609d8355d7594946b66bef47876090fce6b0842 block: 22032270
+- current block number: 22081889
+
+## Description
+
+Ignore.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x03a9fcb5382e6e3185e6736979163274770665b0
 
 # Diff at Tue, 18 Mar 2025 08:12:26 GMT:
