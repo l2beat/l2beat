@@ -367,7 +367,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toBeEmpty()
   })
 
-  it("doesn't overwrite contract data when adding permissions", () => {
+  it("doesn't miss contract data when permission appears earlier", () => {
     const contractAddress = EthereumAddress.random()
     const contractAddress2 = EthereumAddress.random()
     const input: Analysis[] = [
