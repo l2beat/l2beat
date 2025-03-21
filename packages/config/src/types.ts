@@ -152,13 +152,51 @@ export interface ProjectLinks {
   socialMedia?: string[]
   rollupCodes?: string
 }
-
-export interface Badge {
+export type Badge = {
   id: string
   type: string
   name: string
   description: string
+  action: BadgeAction | undefined
 }
+
+type BadgeAction =
+  | BadgeScalingFilterAction
+  | BadgeSelfScalingFilterAction
+  | BadgePublicDaHighlightAction
+  | BadgeSelfDaHightlightAction
+
+// Move to scaling/summary with given filterId and value
+type BadgeScalingFilterAction = {
+  type: 'scalingFilter'
+  filterId: BadgeFilterIds
+  filterValue: string
+}
+
+// Move to scaling/summary with given filterId and name of the project as a value
+type BadgeSelfScalingFilterAction = {
+  type: 'selfScalingFilter'
+  filterId: BadgeFilterIds
+}
+
+// Move to data-availability/summary and highlight project with given slug
+type BadgePublicDaHighlightAction = {
+  type: 'publicDaHighlight'
+  slug: string
+}
+
+// Move to data-availability/summary and highlight project with the same slug as the project
+type BadgeSelfDaHightlightAction = {
+  type: 'selfDaHightlight'
+}
+
+type BadgeFilterIds =
+  | 'stack'
+  | 'hostChain'
+  | 'daLayer'
+  | 'raas'
+  | 'infrastructure'
+  | 'vm'
 
 export interface Milestone {
   title: string
@@ -272,6 +310,8 @@ export interface ProjectScalingInfo {
   }
   stack: ProjectScalingStack | undefined
   raas: string | undefined
+  infrastructure: string | undefined
+  vm: string[]
   daLayer: string
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]

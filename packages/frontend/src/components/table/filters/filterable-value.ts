@@ -17,6 +17,8 @@ export const FilterableValueId = z.enum([
   'daLayer',
   'raas',
   'validatedBy',
+  'infrastructure',
+  'vm',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -28,6 +30,8 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   daLayer: 'DA Layer',
   raas: 'RaaS',
   validatedBy: 'Validated by',
+  infrastructure: 'Infrastructure',
+  vm: 'VM',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -39,21 +43,30 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   daLayer: 'layers',
   raas: 'providers',
   validatedBy: 'validators',
+  infrastructure: 'infras',
+  vm: 'VMs',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {
   return filterId
-    ? `No ${filterIdToValues[filterId].toLowerCase()} found.`
+    ? `No ${filterIdToValues[filterId]} found.`
     : 'No filters found.'
 }
 
 export const inputPlaceholder = (filterId: FilterableValueId | undefined) => {
   return filterId
-    ? `Search ${filterIdToValues[filterId].toLowerCase()}...`
+    ? `Search ${filterIdToValues[filterId]}...`
     : 'Search filters...'
 }
 
-const ALWAYS_FIRST_VALUES = ['No stack', 'Ethereum', 'NotApplicable']
+const ALWAYS_FIRST_VALUES = [
+  'No stack',
+  'Ethereum',
+  'Not applicable',
+  'No infrastructure',
+  'No VM',
+  'No RaaS',
+]
 export function filterValuesSortFn(a: string, b: string) {
   if (ALWAYS_FIRST_VALUES.includes(a)) return -1
   if (ALWAYS_FIRST_VALUES.includes(b)) return 1

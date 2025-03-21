@@ -18,7 +18,7 @@ export function mergeBadges(
     (b) => b.type === 'Other' || b.type === 'VM',
   ) // do not dedup badges of type 'Other' and 'VM' (multiVM)
   const rest = all.filter((b) => b.type !== 'Other' && b.type !== 'VM')
-  return unionBy(rest, (b) => b.type).concat(allowDuplicates)
+  return unionBy<Badge>(rest, (b) => b.type).concat(allowDuplicates)
 }
 
 export function mergePermissions(
