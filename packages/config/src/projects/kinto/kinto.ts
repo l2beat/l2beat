@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -8,6 +12,31 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('kinto')
 const l2discovery = new ProjectDiscovery('kinto', 'kinto')
+
+const l2critDelay = 11 * 24 * 60 * 60
+
+// asserts as soon as the permissions are fully in place (-->04/01)
+// const contractKeys = [
+//   'edKintoMultisig2ADMIN',
+//   'edKintoMultisig2UPGRADER',
+//   'edScADMIN',
+//   'edScUPGRADER',
+//   'edScSECURITY_COUNCIL',
+//   'tadKintoAppRegistry',
+//   'tadKintoID',
+//   'tadKintoWalletFactory',
+// ]
+// assert(
+//   contractKeys.every(
+//     (key) => l2critDelay === l2discovery.getContractValue<number>('AccessManager', key),
+//   ),
+//   '11d delay in Accessmanager changed, edit gov section',
+// )
+
+const sanctionExpirySeconds = l2discovery.getContractValue<number>(
+  'KintoID',
+  'SANCTION_EXPIRY_PERIOD',
+)
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
@@ -121,6 +150,18 @@ export const kinto: ScalingProject = orbitStackL2({
       },
     },
   ),
+  upgradesAndGovernance: `
+All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is held by the ${discovery.getMultisigStats('Kinto Security Council')} Kinto Security Council on Layer 1 and can be executed without any delay.
+On the Kinto Layer 2, critical permissions are mostly guarded by an AccessManager contract, and then given with delays to the Security Council and the ${l2discovery.getMultisigStats('Kinto Multisig 2')} Kinto Multisig 2.
+
+The Appchain designation of Kinto is mainly due to a modified L2 node, which queries a special censoring contract on L2 (called KintoAppRegistry) for a whitelist to filter transactions.
+This makes the KintoAppRegistry contract a critical system contract and any change to its configuration equivalent to an upgrade of the Layer 2 system.
+The KintoAppRegistry contract is also governed via the AccessManager by the Security Council or the Kinto Multisig 2 with a ${formatSeconds(l2critDelay)} delay.
+
+Permissioned actors with the 'KYC provider' role in the KintoID contract can 'sanction' (freeze) user smart wallets, preventing them from transacting. 
+To protect users from this role which is mostly held by EOAs, a sanction expires if not confirmed by the Security Council within ${formatSeconds(sanctionExpirySeconds)}.
+An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.
+  `,
   nonTemplateTechnology: {
     otherConsiderations: [
       {
