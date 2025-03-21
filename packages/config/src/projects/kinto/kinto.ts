@@ -158,7 +158,7 @@ Another critical contract to the Appchain is called KintoID. Permissioned actors
 To protect users from this role which is mostly held by EOAs, a sanction expires if not confirmed by the Security Council within ${formatSeconds(sanctionExpirySeconds)}.
 An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.
 
-The canonical (enforced) smartwallet for users on Kinto can be upgraded via the KintoWalletFactory, using the standard path via the AccessManager. `,
+The canonical (enforced) smartwallet for users on Kinto can be upgraded via the KintoWalletFactory, using the standard path via the AccessManager.`,
   nonTemplateTechnology: {
     otherConsiderations: [
       {
