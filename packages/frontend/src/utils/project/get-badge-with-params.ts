@@ -1,6 +1,6 @@
 import type { Badge } from '@l2beat/config'
-import { getImageParams } from './get-image-params'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
+import { getImageParams } from './get-image-params'
 
 const badgesParams: Record<string, BadgeWithParams> = {}
 

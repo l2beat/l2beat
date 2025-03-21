@@ -5,9 +5,10 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { notUndefined, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -20,6 +21,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -42,8 +44,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-import type { BadgeWithParams } from '~/components/projects/project-badge'
-import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'

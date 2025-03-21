@@ -1,10 +1,10 @@
 import type { Project } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
 import type { FilterableEntry } from '~/components/table/filters/filterable-value'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
-import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
-import { notUndefined } from '@l2beat/shared-pure'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
