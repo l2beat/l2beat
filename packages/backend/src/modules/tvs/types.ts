@@ -1,7 +1,7 @@
+import type { TokenValueRecord } from '@l2beat/database'
 import type {
   CoingeckoId,
   EthereumAddress,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -127,7 +127,7 @@ interface CoinMarketCapPriceSource {
 }
 
 export type ProjectTvsConfig = {
-  projectId: ProjectId
+  projectId: string
   tokens: Token[]
 }
 
@@ -145,14 +145,7 @@ export interface BlockTimestampConfig {
   untilTimestamp?: UnixTime
 }
 
-export interface TokenValue {
-  tokenConfig: Token
-  projectId: ProjectId
-  amount: number
-  value: number
-  valueForProject: number
-  valueForTotal: number
-}
+export type TokenValue = Omit<TokenValueRecord, 'configurationId'>
 
 export interface TvsBreakdown {
   tvs: number

@@ -36,7 +36,7 @@ export class LocalExecutor {
     config: ProjectTvsConfig,
     timestamps: UnixTime[],
     latestMode: boolean,
-  ): Promise<Map<number, TokenValue[]>> {
+  ): Promise<TokenValue[]> {
     const chainConfigs = await new ProjectService().getProjects({
       select: ['chainConfig'],
     })

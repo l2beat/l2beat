@@ -1,22 +1,26 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { useReducer } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useReducer } from 'react'
+import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
-import type { FilterableValueId } from './filterable-value'
+import { FilterableValueId } from './filterable-value'
 
-export interface FilterValue {
-  values: string[]
-  inversed: boolean
-}
+export type FilterValue = z.infer<typeof FilterValue>
+export const FilterValue = z.object({
+  values: z.array(z.string()),
+  inversed: z.boolean().optional(),
+})
 
 export type FilterState = Partial<Record<FilterableValueId, FilterValue>>
+export const FilterState = z.record(FilterableValueId, FilterValue)
 
 type FilterAction =
   | AddFilterAction
   | RemoveFilterAction
   | ClearFilterAction
   | SetInversedFilterAction
-
+  | SetFiltersAction
 type AddFilterAction = {
   type: 'add'
   payload: {
@@ -35,6 +39,13 @@ type RemoveFilterAction = {
 
 type ClearFilterAction = {
   type: 'clear'
+}
+
+type SetFiltersAction = {
+  type: 'set'
+  payload: {
+    filters: FilterState
+  }
 }
 
 type SetInversedFilterAction = {
@@ -70,8 +81,8 @@ function filterReducer(
       return {
         ...state,
         [action.payload.id]: {
+          ...existingFilter,
           values: newValues,
-          inversed: existingFilter?.inversed ?? false,
         },
       }
     }
@@ -130,6 +141,10 @@ function filterReducer(
       }
     }
 
+    case 'set': {
+      return action.payload.filters
+    }
+
     case 'clear':
       return {}
 
@@ -140,11 +155,37 @@ function filterReducer(
 
 export function useFilterState() {
   const { track } = useTracking()
+  const pathname = usePathname()
+
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
     {},
   )
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const filters = params.get('filters')
+    if (!filters) return
+    dispatch({
+      type: 'set',
+      payload: {
+        filters: FilterState.catch({}).parse(
+          JSON.parse(decodeURIComponent(filters)),
+        ),
+      },
+    })
+  }, [])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (Object.keys(state).length > 0) {
+      params.set('filters', encodeURIComponent(JSON.stringify(state)))
+    } else {
+      params.delete('filters')
+    }
+    window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
+  }, [pathname, state])
 
   return {
     state,

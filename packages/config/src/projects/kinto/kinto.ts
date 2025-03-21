@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('kinto')
-const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
+const l2discovery = new ProjectDiscovery('kinto', 'kinto')
 
 // Validators: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/kinto-validators
 // SC: https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council
@@ -17,7 +17,7 @@ export const kinto: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   overridingPurposes: ['KYC-ed DeFi'],
-  // additionalDiscoveries: {['kinto']: l2discovery}, // not yet ready mainly due to AccessManager not being disco-driveable
+  additionalDiscoveries: { ['kinto']: l2discovery },
   display: {
     name: 'Kinto',
     slug: 'kinto',
@@ -61,6 +61,7 @@ export const kinto: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  usesBlobs: true,
   activityConfig: {
     type: 'block',
     startBlock: 1,
@@ -96,7 +97,7 @@ export const kinto: ScalingProject = orbitStackL2({
       additionalConsiderations: {
         short:
           'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contract creation.',
-        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all contract calls by EOAs and new contract creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.',
+        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contract creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.',
       },
     },
   ),

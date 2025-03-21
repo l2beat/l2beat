@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
 }
@@ -5,9 +7,19 @@ export type FilterableValue = {
   id: FilterableValueId
   value: string
 }
-export type FilterableValueId = keyof typeof filterIdToLabel
+export type FilterableValueId = z.infer<typeof FilterableValueId>
+export const FilterableValueId = z.enum([
+  'type',
+  'stack',
+  'stage',
+  'purpose',
+  'hostChain',
+  'daLayer',
+  'raas',
+  'validatedBy',
+])
 
-export const filterIdToLabel = {
+export const filterIdToLabel: Record<FilterableValueId, string> = {
   type: 'Type',
   stack: 'Stack',
   stage: 'Stage',
@@ -18,7 +30,7 @@ export const filterIdToLabel = {
   validatedBy: 'Validated by',
 }
 
-export const filterIdToValues: Record<keyof typeof filterIdToLabel, string> = {
+export const filterIdToValues: Record<FilterableValueId, string> = {
   type: 'types',
   stack: 'stacks',
   stage: 'stages',
