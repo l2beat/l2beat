@@ -145,6 +145,10 @@ export interface BlockTimestampConfig {
   untilTimestamp?: UnixTime
 }
 
+export interface ProjectValueConfig {
+  project: string
+}
+
 export type TokenValue = Omit<TokenValueRecord, 'configurationId'>
 
 export interface TvsBreakdown {

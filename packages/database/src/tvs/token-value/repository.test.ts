@@ -49,6 +49,96 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.getByProject.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        tokenValue('a', 'ethereum', UnixTime(50), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000),
+        tokenValue('a', 'ethereum', UnixTime(250), 5, 5000, 4000, 2500),
+        tokenValue('b', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
+        tokenValue('b', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+      ])
+    })
+
+    it('returns records for a project within the specified time range (inclusive)', async () => {
+      const result = await repository.getByProject(
+        'ethereum',
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+      ])
+    })
+
+    it('returns empty array when no records match the time range', async () => {
+      const result = await repository.getByProject(
+        'ethereum',
+        UnixTime(300),
+        UnixTime(400),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when project does not exist', async () => {
+      const result = await repository.getByProject(
+        'non-existent',
+        UnixTime(100),
+        UnixTime(200),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('handles single-point time range (from = to)', async () => {
+      const result = await repository.getByProject(
+        'ethereum',
+        UnixTime(150),
+        UnixTime(150),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+      ])
+    })
+
+    it('returns records from multiple configurations for the same project', async () => {
+      const result = await repository.getByProject(
+        'ethereum',
+        UnixTime(150),
+        UnixTime(150),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+      ])
+    })
+
+    it('respects time boundaries exactly', async () => {
+      const result = await repository.getByProject(
+        'ethereum',
+        UnixTime(100),
+        UnixTime(150),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
+        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
+      ])
+    })
+  })
+
   describe(TokenValueRepository.prototype.deleteByConfigInTimeRange
     .name, () => {
     it('deletes data in range for matching config', async () => {

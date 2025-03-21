@@ -79,6 +79,76 @@ describeDatabase(ProjectValueRepository.name, (db) => {
     })
   })
 
+  describe(ProjectValueRepository.prototype.trimProject.name, () => {
+    beforeEach(async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'tvl', UnixTime(50), 500),
+        projectValue('ethereum', 'tvl', UnixTime(100), 1000),
+        projectValue('ethereum', 'tvl', UnixTime(150), 1500),
+        projectValue('ethereum', 'tvl', UnixTime(200), 2000),
+        projectValue('ethereum', 'tvl', UnixTime(250), 2500),
+        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
+        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+      ])
+    })
+
+    it('deletes records outside the specified time range for a project', async () => {
+      const deleted = await repository.trimProject('ethereum', 100, 200)
+
+      expect(deleted).toEqual(2)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted([
+        projectValue('ethereum', 'tvl', UnixTime(100), 1000),
+        projectValue('ethereum', 'tvl', UnixTime(150), 1500),
+        projectValue('ethereum', 'tvl', UnixTime(200), 2000),
+        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
+        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+      ])
+    })
+
+    it('only deletes records before sinceTimestamp when untilTimestamp is null', async () => {
+      const deleted = await repository.trimProject('ethereum', 150, null)
+
+      expect(deleted).toEqual(2)
+
+      const result = await repository.getAll()
+      expect(result).toEqualUnsorted([
+        projectValue('ethereum', 'tvl', UnixTime(150), 1500),
+        projectValue('ethereum', 'tvl', UnixTime(200), 2000),
+        projectValue('ethereum', 'tvl', UnixTime(250), 2500),
+        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
+        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+      ])
+    })
+
+    it('only affects the specified project', async () => {
+      await repository.trimProject('ethereum', 100, 200)
+
+      const allRecords = await repository.getAll()
+      const arbitrumRecords = allRecords.filter((r) => r.project === 'arbitrum')
+
+      expect(arbitrumRecords).toEqualUnsorted([
+        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
+        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+      ])
+    })
+
+    it('returns 0 when no records are deleted', async () => {
+      const deleted = await repository.trimProject('ethereum', 0, 300)
+      expect(deleted).toEqual(0)
+
+      const allRecords = await repository.getAll()
+      const ethereumRecords = allRecords.filter((r) => r.project === 'ethereum')
+      expect(ethereumRecords.length).toEqual(5)
+    })
+
+    it('returns 0 when project does not exist', async () => {
+      const deleted = await repository.trimProject('non-existent', 100, 200)
+      expect(deleted).toEqual(0)
+    })
+  })
+
   afterEach(async () => {
     await repository.deleteAll()
   })
