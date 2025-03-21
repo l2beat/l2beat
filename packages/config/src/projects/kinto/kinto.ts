@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -21,6 +22,7 @@ export const kinto: ScalingProject = orbitStackL2({
   display: {
     name: 'Kinto',
     slug: 'kinto',
+    architectureImage: 'kinto',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
     links: {
@@ -67,6 +69,24 @@ export const kinto: ScalingProject = orbitStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
+  scopeOfAssessment: {
+    checked: [
+      SOA.gasToken,
+      SOA.l1Contracts,
+      SOA.derivationSpec,
+      'Orbit stack L2 core contracts',
+      'KintoAppRegistry L2 contract',
+      'KintoWalletFactory L2 contract',
+      'KintoID L2 contract',
+      'AccessManager L2 contract',
+    ],
+    notChecked: [
+      SOA.nonGasTokens,
+      SOA.sequencerPolicy,
+      SOA.sourceCodeToProgramHash,
+      'Other whitelisted L2 contracts',
+    ],
+  },
   stage: getStage(
     {
       stage0: {
@@ -96,8 +116,8 @@ export const kinto: ScalingProject = orbitStackL2({
         'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
       additionalConsiderations: {
         short:
-          'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contract creation.',
-        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contract creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.',
+          'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contracts creation. The system ensures that KYC can be revoked only if the Security Council proactively agrees to it. Only whitelisted contracts can be called by users.',
+        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contracts creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails. The system ensures that KYC can be revoked only if the Security Council proactively agrees to a proposed status change by a KYC provider. The Security Council has been historically following KYC provider decisions and it is explicitly tasked to do so. Contract deployments are disabled, and only whitelisted contracts can be called by users. Contracts outside of the ones necessary to interact with the smart wallet and to withdraw the gas token are out of scope for the stage assessment and might present additional risks.',
       },
     },
   ),
@@ -115,7 +135,11 @@ export const kinto: ScalingProject = orbitStackL2({
         risks: [
           {
             category: 'Users can be censored if',
-            text: "a KYC provider changes the users' KYC status.",
+            text: "a KYC provider changes the users' KYC status and the Security Council confirms it.",
+          },
+          {
+            category: 'Funds can be lost if',
+            text: 'the user interacts with a compromised whitelisted contract.',
           },
         ],
         references: [
@@ -129,12 +153,6 @@ export const kinto: ScalingProject = orbitStackL2({
   },
   nonTemplateEscrows: [
     // source for socket superchain vaults https://github.com/KintoXYZ/socket-plugs/blob/feat/autodeploy/deployments/superbridge/prod_kinto_mainnet_addresses.json
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),
-      tokens: '*',
-      description:
-        "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
-    }),
     {
       address: EthereumAddress('0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013'),
       sinceTimestamp: UnixTime(1730655983),

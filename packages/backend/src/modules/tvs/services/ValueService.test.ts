@@ -279,5 +279,179 @@ describe(ValueService.name, () => {
         },
       ])
     })
+
+    it('should calculate TVS - fallback to 0 if amount not in range', async () => {
+      const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
+
+      const mockTimestamp = UnixTime(200)
+
+      const amountFormulaInRange = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+        sinceTimestamp: UnixTime(100),
+      } as TotalSupplyAmountFormula
+
+      const amountInRangeConfigId = createAmountConfig(amountFormulaInRange).id
+
+      const amountFormulaNotInRange = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+        sinceTimestamp: UnixTime(50),
+        untilTimestamp: UnixTime(150),
+      } as TotalSupplyAmountFormula
+
+      const amountNotInRangeConfigId = createAmountConfig(
+        amountFormulaNotInRange,
+      ).id
+
+      const tvsConfig = mockObject<ProjectTvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<Token>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: {
+              type: 'calculation',
+              operator: 'sum',
+              arguments: [amountFormulaInRange, amountFormulaNotInRange],
+            },
+            valueForProject: undefined,
+            valueForTotal: undefined,
+          }),
+        ],
+      })
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(amountInRangeConfigId, mockTimestamp)
+          .resolvesToOnce(10000n)
+          .resolvesToOnce(10000n)
+          .given(amountNotInRangeConfigId, mockTimestamp)
+          .resolvesToOnce(undefined)
+          .resolvesToOnce(undefined),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(200)
+          .resolvesToOnce(200),
+      })
+
+      const valueService = new ValueService(mockDataStorage)
+
+      const result = await valueService.calculate(tvsConfig, [mockTimestamp])
+
+      expect(result).toEqual([
+        {
+          timestamp: mockTimestamp,
+          tokenId: tvsConfig.tokens[0].id,
+          amount: 10000,
+          projectId: ProjectId('project'),
+          value: 2000000,
+          valueForProject: 2000000,
+          valueForSummary: 2000000,
+        },
+      ])
+    })
+
+    it('should throw if price not found for timestamp', async () => {
+      const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
+
+      const amountFormula = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+        sinceTimestamp: UnixTime(100),
+        untilTimestamp: UnixTime(300),
+      } as TotalSupplyAmountFormula
+
+      const amountConfigId = createAmountConfig(amountFormula).id
+
+      const tvsConfig = mockObject<ProjectTvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<Token>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: amountFormula,
+            valueForProject: undefined,
+            valueForTotal: undefined,
+          }),
+        ],
+      })
+
+      const mockTimestamp = UnixTime.now()
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(amountConfigId, mockTimestamp)
+          .resolvesToOnce(10000n),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(undefined),
+      })
+
+      const valueService = new ValueService(mockDataStorage)
+
+      await expect(
+        async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
+      ).toBeRejectedWith(
+        `Assertion Error: Price not found for ${priceId} at ${mockTimestamp}`,
+      )
+    })
+
+    it('should throw if amount not found and it is within range', async () => {
+      const priceId = 'price-ABCD'
+      const priceConfigId = createPriceConfigId(priceId)
+
+      const amountFormula = {
+        type: 'totalSupply',
+        address: EthereumAddress.random(),
+        chain: 'chain',
+        decimals: 0,
+        sinceTimestamp: UnixTime(100),
+      } as TotalSupplyAmountFormula
+
+      const amountConfigId = createAmountConfig(amountFormula).id
+
+      const tvsConfig = mockObject<ProjectTvsConfig>({
+        projectId: ProjectId('project'),
+        tokens: [
+          mockObject<Token>({
+            id: TokenId('tokenId'),
+            priceId,
+            amount: amountFormula,
+            valueForProject: undefined,
+            valueForTotal: undefined,
+          }),
+        ],
+      })
+
+      const mockTimestamp = UnixTime(200)
+
+      const mockDataStorage = mockObject<DataStorage>({
+        getAmount: mockFn()
+          .given(amountConfigId, mockTimestamp)
+          .resolvesToOnce(undefined)
+          .resolvesToOnce(undefined),
+        getPrice: mockFn()
+          .given(priceConfigId, mockTimestamp)
+          .resolvesToOnce(100)
+          .resolvesToOnce(100),
+      })
+
+      const valueService = new ValueService(mockDataStorage)
+
+      await expect(
+        async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
+      ).toBeRejectedWith(
+        `Amount not found for ${amountConfigId} within configured range (timestamp: ${mockTimestamp}, since: ${amountFormula.sinceTimestamp}, until: ${amountFormula.untilTimestamp})`,
+      )
+    })
   })
 })

@@ -24,6 +24,8 @@ import {
   createAmountConfig,
   generateConfigurationId,
 } from './tools/extractPricesAndAmounts'
+import { createAmountConfig } from './tools/extractPricesAndAmounts'
+import { getTokenSyncRange } from './tools/getTokenSyncRange'
 
 export function initTvsModule(
   config: Config,
@@ -141,7 +143,6 @@ export function initTvsModule(
 
   for (const project of config.tvs.projects) {
     const dbStorage = new DBStorage(database, logger)
-    // TODO: add since & until support to ValueService
     const valueService = new ValueService(dbStorage)
 
     const amountSources = project.amountSources.map((source) => {
@@ -158,14 +159,15 @@ export function initTvsModule(
       maxTimestampsToProcessAtOnce: 500,
       parents: [priceIndexer, ...amountSources],
       indexerService,
-      configurations: project.tokens.map((t) => ({
-        id: TokenValueIndexer.idToConfigurationId(t.id),
-        // TODO: hangle this
-        minHeight: 1742342400,
-        // TODO: hangle this
-        maxHeight: null,
-        properties: t,
-      })),
+      configurations: project.tokens.map((t) => {
+        const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
+        return {
+          id: TokenValueIndexer.idToConfigurationId(t.id),
+          minHeight: sinceTimestamp,
+          maxHeight: untilTimestamp ?? null,
+          properties: t,
+        }
+      }),
       db: database,
       logger,
     })
