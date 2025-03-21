@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x546da507bf5efb6a619d35a17750e38a8b9ce10a
+
+# Diff at Fri, 21 Mar 2025 10:24:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 22073418
+- current block number: 22094624
+
+## Description
+
+ternoa.network becomes active.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.12.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x152877675a75a063cb211bb927dada9b26d2cf3e
 
 # Diff at Tue, 18 Mar 2025 11:19:41 GMT:
