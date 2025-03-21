@@ -112,6 +112,7 @@ export const publicSystemsColumns = [
                 }
               : undefined
           }
+          href={ctx.row.original.data.largestPoster?.href}
         />
       </SyncStatusWrapper>
     ),
