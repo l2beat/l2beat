@@ -97,7 +97,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
-  describe(TvsPriceRepository.prototype.getLatestPrice.name, () => {
+  describe(TvsPriceRepository.prototype.getLatestPriceBefore.name, () => {
     it('returns the latest price for a configuration', async () => {
       await repository.insertMany([
         tvsPrice('a', 'eth', UnixTime(100), 1000),
@@ -107,15 +107,21 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         tvsPrice('b', 'btc', UnixTime(200), 21000),
       ])
 
-      const result = await repository.getLatestPrice('a'.repeat(12))
+      const result = await repository.getLatestPriceBefore(
+        'a'.repeat(12),
+        UnixTime(250),
+      )
 
-      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(300), 1200))
+      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
     })
 
     it('returns undefined when no prices exist for the configuration', async () => {
-      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(100), 1000)])
+      await repository.insertMany([tvsPrice('a', 'eth', UnixTime(200), 1000)])
 
-      const result = await repository.getLatestPrice('b'.repeat(12))
+      const result = await repository.getLatestPriceBefore(
+        'b'.repeat(12),
+        UnixTime(250),
+      )
 
       expect(result).toEqual(undefined)
     })

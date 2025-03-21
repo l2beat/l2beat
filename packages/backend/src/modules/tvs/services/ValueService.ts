@@ -74,7 +74,20 @@ export class ValueService {
 
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
-    assert(amount !== undefined, `${formula.type} ${config.id}`)
+
+    if (!amount) {
+      if (
+        timestamp < config.sinceTimestamp ||
+        (config.untilTimestamp && timestamp > config.untilTimestamp)
+      ) {
+        return BigIntWithDecimals(BigInt(0), config.decimals)
+      }
+
+      throw new Error(
+        `Amount not found for ${config.id} within configured range (timestamp: ${timestamp}, since: ${config.sinceTimestamp}, until: ${config.untilTimestamp})`,
+      )
+    }
+
     return BigIntWithDecimals(amount, config.decimals)
   }
 
@@ -84,7 +97,11 @@ export class ValueService {
   ): Promise<BigIntWithDecimals> {
     const configurationId = createPriceConfigId(formula.priceId)
     const price = await this.storage.getPrice(configurationId, timestamp)
-    assert(price !== undefined, `Price not found for ${formula.priceId}`)
+
+    assert(
+      price !== undefined,
+      `Price not found for ${formula.priceId} at ${timestamp}`,
+    )
 
     const amount = await this.executeFormula(formula.amount, timestamp)
     const value = BigIntWithDecimals.multiply(

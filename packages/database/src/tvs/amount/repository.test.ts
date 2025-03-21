@@ -99,7 +99,7 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
   })
 
-  describe(TvsAmountRepository.prototype.getLatestAmount.name, () => {
+  describe(TvsAmountRepository.prototype.getLatestAmountBefore.name, () => {
     it('returns the latest amount for a configuration', async () => {
       await repository.insertMany([
         tvsAmount('a', 'project1', UnixTime(100), 1n),
@@ -108,9 +108,12 @@ describeDatabase(TvsAmountRepository.name, (db) => {
         tvsAmount('b', 'project1', UnixTime(150), 3n),
       ])
 
-      const result = await repository.getLatestAmount('a'.repeat(12))
+      const result = await repository.getLatestAmountBefore(
+        'a'.repeat(12),
+        UnixTime(150),
+      )
 
-      expect(result).toEqual(tvsAmount('a', 'project1', UnixTime(200), 2n))
+      expect(result).toEqual(tvsAmount('a', 'project1', UnixTime(100), 1n))
     })
 
     it('returns undefined when no amounts exist for the configuration', async () => {
@@ -118,7 +121,10 @@ describeDatabase(TvsAmountRepository.name, (db) => {
         tvsAmount('a', 'project1', UnixTime(100), 1n),
       ])
 
-      const result = await repository.getLatestAmount('b'.repeat(12))
+      const result = await repository.getLatestAmountBefore(
+        'b'.repeat(12),
+        UnixTime(150),
+      )
 
       expect(result).toEqual(undefined)
     })
@@ -131,10 +137,16 @@ describeDatabase(TvsAmountRepository.name, (db) => {
         tvsAmount('b', 'project2', UnixTime(150), 4n),
       ])
 
-      const resultA = await repository.getLatestAmount('a'.repeat(12))
-      const resultB = await repository.getLatestAmount('b'.repeat(12))
+      const resultA = await repository.getLatestAmountBefore(
+        'a'.repeat(12),
+        UnixTime(150),
+      )
+      const resultB = await repository.getLatestAmountBefore(
+        'b'.repeat(12),
+        UnixTime(250),
+      )
 
-      expect(resultA).toEqual(tvsAmount('a', 'project1', UnixTime(300), 3n))
+      expect(resultA).toEqual(tvsAmount('a', 'project1', UnixTime(100), 1n))
       expect(resultB).toEqual(tvsAmount('b', 'project2', UnixTime(200), 2n))
     })
   })
