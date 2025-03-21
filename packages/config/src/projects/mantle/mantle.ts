@@ -21,9 +21,8 @@ export const mantle: ScalingProject = opStackL2({
   display: {
     name: 'Mantle',
     slug: 'mantle',
-    architectureImage: 'mantle',
     description:
-      'Mantle is an under development EVM compatible Optimium, based on the OP Stack.',
+      'Mantle is a modular general-purpose Optimium with a protocol design philosophy that aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
     links: {
       websites: ['https://mantle.xyz/'],
       apps: ['https://bridge.mantle.xyz'],
