@@ -3,6 +3,8 @@ import type { FilterableEntry } from '~/components/table/filters/filterable-valu
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
+import { notUndefined } from '@l2beat/shared-pure'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -74,7 +76,7 @@ export function getCommonScalingEntry({
       },
     ],
     description: project.display?.description,
-    badges: project.display.badges,
+    badges: project.display.badges.map(getBadgeWithParams).filter(notUndefined),
   }
 }
 

@@ -6,24 +6,31 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
+import Image from 'next/image'
+
+export interface BadgeWithParams extends Badge {
+  src: string
+  width: number
+  height: number
+}
+
 export function ProjectBadge({
   badge,
   hideTooltip,
   className,
 }: {
-  badge: Badge
+  badge: BadgeWithParams
   hideTooltip?: boolean
   className?: ClassNameValue
 }) {
   const badgeImg = (
-    <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`/images/badges/${badge.id}.png`}
-        alt={`${badge.name} badge`}
-        className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
-      />
-    </>
+    <Image
+      src={badge.src}
+      alt={`${badge.name} badge`}
+      width={badge.width}
+      height={badge.height}
+      className={cn('h-16 lg:h-[4.5rem]', className)}
+    />
   )
 
   if (hideTooltip) return badgeImg

@@ -1,7 +1,7 @@
-import type { Badge } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectCountdownsWithContext } from '../scaling/utils/get-countdowns'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
 
 export interface CommonProjectEntry {
   id: ProjectId
@@ -20,5 +20,5 @@ export interface CommonProjectEntry {
       }
     | undefined
   description?: string
-  badges?: Badge[]
+  badges?: BadgeWithParams[]
 }

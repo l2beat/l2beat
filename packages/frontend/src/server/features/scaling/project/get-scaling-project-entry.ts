@@ -1,12 +1,11 @@
 import type {
-  Badge,
   Project,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { notUndefined, ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -43,6 +42,8 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
@@ -56,7 +57,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: Badge[]
+    badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory
@@ -169,7 +170,7 @@ export async function getScalingProjectEntry(
             },
           }
         : undefined,
-    badges: project.display.badges,
+    badges: project.display.badges.map(getBadgeWithParams).filter(notUndefined),
     gasTokens: project.chainConfig?.gasTokens,
   }
 
