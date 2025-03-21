@@ -46,31 +46,33 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
   }
 
   const trigger = (
-    <TwoRowCell>
-      <TwoRowCell.First className="flex items-center gap-1">
-        <SentimentText sentiment={value.sentiment ?? 'neutral'}>
-          {value.value}
-        </SentimentText>
-        {value.warning && (
-          <RoundedWarningIcon
-            className={cn(
-              'size-3.5 md:size-4',
-              sentimentToFillColor(value.warning.sentiment),
-            )}
-          />
+    <TableLink href={href}>
+      <TwoRowCell>
+        <TwoRowCell.First className="flex items-center gap-1">
+          <SentimentText sentiment={value.sentiment ?? 'neutral'}>
+            {value.value}
+          </SentimentText>
+          {value.warning && (
+            <RoundedWarningIcon
+              className={cn(
+                'size-3.5 md:size-4',
+                sentimentToFillColor(value.warning.sentiment),
+              )}
+            />
+          )}
+        </TwoRowCell.First>
+        {value.secondLine && (
+          <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
         )}
-      </TwoRowCell.First>
-      {value.secondLine && (
-        <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
-      )}
-    </TwoRowCell>
+      </TwoRowCell>
+    </TableLink>
   )
 
   if (value.description) {
     return (
       <Tooltip>
         <TooltipTrigger disabledOnMobile className="h-full">
-          <TableLink href={href}>{trigger}</TableLink>
+          {trigger}
         </TooltipTrigger>
         <TooltipContent>
           {value.warning && (
