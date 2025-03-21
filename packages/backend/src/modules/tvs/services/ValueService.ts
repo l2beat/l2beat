@@ -75,7 +75,7 @@ export class ValueService {
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
 
-    if (!amount) {
+    if (amount === undefined) {
       if (
         timestamp < config.sinceTimestamp ||
         (config.untilTimestamp && timestamp > config.untilTimestamp)
