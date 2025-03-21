@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22045237,
+  "blockNumber": 22094600,
   "configHash": "0xb8d43454b86ef0c1e259431b17491cb7bda03f20610650a1f0eb7e6add4f4a93",
   "entries": [
     {
@@ -119,6 +119,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x3C30D693b23F77d55e14b8e0CFB6C00075ff93aB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1StandardBridge",
       "address": "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
       "type": "Contract",
@@ -184,11 +189,6 @@
       }
     },
     {
-      "address": "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
       "type": "EOA",
       "proxyType": "EOA",
@@ -242,7 +242,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 22045082
+          "prevBlockNum": 22094435
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
@@ -402,27 +402,21 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
-          "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436",
-          "0xC9D2c719d6C8Ba2876FC9B443c7d2690072F04ad",
+          "0x3C30D693b23F77d55e14b8e0CFB6C00075ff93aB",
           "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
         ],
-        "$threshold": 5,
+        "$threshold": 4,
         "domainSeparator": "0xd13aae4320fc999ac2fee9682e98cbad2d45dbfd6a0c461b85455b30b3980418",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 7,
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "address": "0xC9D2c719d6C8Ba2876FC9B443c7d2690072F04ad",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L2OutputOracle",
@@ -475,10 +469,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 14536800,
-        "latestOutputIndex": 672,
-        "nextBlockNumber": 14558400,
-        "nextOutputIndex": 673,
+        "latestBlockNumber": 14839200,
+        "latestOutputIndex": 686,
+        "nextBlockNumber": 14860800,
+        "nextOutputIndex": 687,
         "PROPOSER": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "startingBlockNumber": 0,
         "startingTimestamp": 1712861987,
@@ -526,7 +520,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292659710",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292659830",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
