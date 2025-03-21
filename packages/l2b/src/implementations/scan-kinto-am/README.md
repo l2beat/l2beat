@@ -26,3 +26,7 @@
     - Updating target admin delays.
     - Opening or closing targets.
   - **Authority Updates:** Adjusting internal authority for managed contracts (not used in the scoped contracts).
+
+## Misc
+- delays during scheduled ops **remain the same** until the op is executed
+- scheduled ops that require ADMIN_ROLE and target internal config changes in the AccessManager have a complex delay calculation in which all above delays are taken into account
