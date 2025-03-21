@@ -39,7 +39,6 @@ import { mvchain } from '../projects/mvchain/mvchain'
 import { mxc } from '../projects/mxc/mxc'
 import { nums } from '../projects/nums/nums'
 import { onchain } from '../projects/onchain/onchain'
-import { orb3 } from '../projects/orb3/orb3'
 import { oursong } from '../projects/oursong/oursong'
 import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
@@ -102,7 +101,6 @@ export const layer3s: ScalingProject[] = [
   ungaii,
   xai,
   onchain,
-  orb3,
   popapex,
   popboss,
   pmon,
