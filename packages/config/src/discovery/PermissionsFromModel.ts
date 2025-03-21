@@ -31,7 +31,7 @@ function orUndefined<V, C>(
 
 export function parseTransitivePermissionFact(fact: ClingoFact) {
   return {
-    from: String(fact.params[0]),
+    receiver: String(fact.params[0]),
     permission: String(fact.params[1]) as Permission,
     giver: String(fact.params[2]),
     delay: Number(fact.params[3]),
@@ -120,6 +120,67 @@ export class PermissionsFromModel implements PermissionRegistry {
   }
 
   describePermissions(
+    contractOrEoa: EntryParameters,
+    includeDirectPermissions: boolean = true,
+  ) {
+    const id = this.modelIdRegistry.getModelId(
+      this.projectDiscovery.chain,
+      contractOrEoa.address,
+    )
+    const permissionFacts = this.knowledgeBase
+      .getFacts('filteredTransitivePermission', [id, 'upgrade'])
+      .map(parseTransitivePermissionFact)
+
+    type ContractGroups = Record<string, ParsedTransitivePermissionFact[]>
+    type DelayVias = Record<string, ParsedTransitivePermissionVia[][]> // { [delay]: via[] }
+    interface ConfigGroupEntry {
+      contract: string
+      delayVias: DelayVias
+    }
+    type ConfigGroups = Record<string, ConfigGroupEntry[]>
+
+    // 1. Group by contract
+    const contractGroups: ContractGroups = {}
+    for (const fact of permissionFacts) {
+      if (!contractGroups[fact.receiver]) {
+        contractGroups[fact.receiver] = []
+      }
+      contractGroups[fact.receiver].push(fact)
+    }
+
+    // 2. Process each contract group
+    const configGroups: ConfigGroups = {}
+
+    for (const [contract, records] of Object.entries(contractGroups)) {
+      // Collect all delays and their vias for this contract
+      const delayVias: DelayVias = {}
+
+      for (const record of records) {
+        if (!delayVias[record.totalDelay]) {
+          delayVias[record.totalDelay] = []
+        }
+        delayVias[record.totalDelay].push(record.viaList ?? [])
+      }
+
+      // 3. Create configuration group key (sorted delays)
+      const delays = Object.keys(delayVias).sort()
+      const configKey = delays.join(',')
+
+      // Add to configuration groups
+      if (!configGroups[configKey]) {
+        configGroups[configKey] = []
+      }
+
+      configGroups[configKey].push({
+        contract,
+        delayVias,
+      })
+    }
+
+    return [JSON.stringify(configGroups, null, 2)]
+  }
+
+  describePermissions2(
     contractOrEoa: EntryParameters,
     includeDirectPermissions: boolean = true,
   ) {
