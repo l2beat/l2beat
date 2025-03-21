@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs'
+import { groupBy, mapValues, chain } from 'lodash'
 import { join } from 'path'
 import {
   type ClingoFact,
@@ -216,46 +217,31 @@ export class PermissionsFromModel implements PermissionRegistry {
     This structure allows rendering groups like in your example, showing which contracts share the same set of possible delays while maintaining their individual via paths for each delay option.
 
      */
-    type ContractGroups = Record<string, ParsedTransitivePermissionFact[]>
-    type DelayVias = Record<string, ParsedTransitivePermissionVia[][]> // { [delay]: via[] }
-    interface ConfigGroupEntry {
-      contract: string
-      delayVias: DelayVias
+
+    type GroupedRecord = {
+      giver: string
+      delays: Record<string, ParsedTransitivePermissionFact[]> // delay -> original records
     }
-    type ConfigGroups = Record<string, ConfigGroupEntry[]>
+    type Result = Record<string, GroupedRecord[]>
 
-    // 1. Group by contract
-    const contractGroups: ContractGroups = {}
-    for (const fact of permissionFacts) {
-      contractGroups[fact.receiver] ??= []
-      contractGroups[fact.receiver].push(fact)
-    }
+    const result: Result = chain(permissionFacts)
+      // 1. Group by contract
+      .groupBy('giver')
+      // 2. Create contract groups with original records
+      .mapValues(
+        (records): GroupedRecord => ({
+          giver: records[0].giver,
+          delays: groupBy(records, 'totalDelay'),
+        }),
+      )
+      // 3. Group by delay configuration
+      .values()
+      .groupBy((record) => Object.keys(record.delays).sort().join(','))
+      // 4. Map to final array format
+      .mapValues((group) => group)
+      .value()
 
-    // 2. Process each contract group
-    const configGroups: ConfigGroups = {}
-
-    for (const [contract, records] of Object.entries(contractGroups)) {
-      // Collect all delays and their vias for this contract
-      const delayVias: DelayVias = {}
-
-      for (const record of records) {
-        delayVias[record.totalDelay] ??= []
-        delayVias[record.totalDelay].push(record.viaList ?? [])
-      }
-
-      // 3. Create configuration group key (sorted delays)
-      const delays = Object.keys(delayVias).sort()
-      const configKey = delays.join(',')
-
-      // Add to configuration groups
-      configGroups[configKey] ??= []
-      configGroups[configKey].push({
-        contract,
-        delayVias,
-      })
-    }
-
-    return [JSON.stringify(configGroups, null, 2)]
+    return [JSON.stringify(result, null, 2)]
   }
 
   describePermissions2(
