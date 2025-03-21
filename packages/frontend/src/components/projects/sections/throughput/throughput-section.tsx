@@ -10,6 +10,7 @@ import {
 } from '~/utils/number-format/format-bytes'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
+import Link from 'next/link'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
   projectId: ProjectId
@@ -20,6 +21,8 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
     | {
         name: string
         percentage: number
+        totalPosted: number
+        href: string
       }
     | undefined
   totalPosted: number
@@ -80,9 +83,11 @@ export function ThroughputSection({
           label="Past day largest poster"
           isSynced={syncStatus.isSynced}
         >
-          {largestPoster
-            ? `${largestPoster.name} (${largestPoster.percentage}%)`
-            : undefined}
+          {largestPoster ? (
+            <Link href={largestPoster.href}>
+              {largestPoster.name} ({largestPoster.percentage}%)
+            </Link>
+          ) : undefined}
         </ChartStatsItem>
         <ChartStatsItem
           label="Past day total data posted"

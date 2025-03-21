@@ -7,6 +7,7 @@ import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { getScalingTab } from '../../scaling/get-common-scaling-entry'
 
 export async function getDaThroughputTable(
   ...parameters: Parameters<typeof getCachedDaThroughputTableData>
@@ -98,7 +99,7 @@ const getCachedDaThroughputTableData = cache(
                         2,
                       ),
                       totalPosted: Number(largestPoster.totalSize),
-                      href: `/scaling/projects/${largestPoster.slug}`,
+                      href: `/scaling/data-availability?tab=${largestPoster.tab}&highlight=${largestPoster.slug}`,
                     }
                   : undefined,
                 maxThroughputPerSecond,
@@ -245,6 +246,7 @@ async function getLargestPosters(
 
   const largestPostersProjects = await ps.getProjects({
     ids: Object.values(largestPosters).map((p) => ProjectId(p.projectId)),
+    select: ['scalingInfo'],
   })
 
   return Object.fromEntries(
@@ -258,6 +260,7 @@ async function getLargestPosters(
         {
           name: largestPosterProject.name,
           slug: largestPosterProject.slug,
+          tab: getScalingTab(largestPosterProject),
           ...largestPoster,
         },
       ] as const
