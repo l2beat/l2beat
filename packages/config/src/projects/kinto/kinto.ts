@@ -130,12 +130,6 @@ export const kinto: ScalingProject = orbitStackL2({
   },
   nonTemplateEscrows: [
     // source for socket superchain vaults https://github.com/KintoXYZ/socket-plugs/blob/feat/autodeploy/deployments/superbridge/prod_kinto_mainnet_addresses.json
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),
-      tokens: '*',
-      description:
-        "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
-    }),
     {
       address: EthereumAddress('0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013'),
       sinceTimestamp: UnixTime(1730655983),
