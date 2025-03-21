@@ -16,7 +16,7 @@
   "names": {
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
     "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
-    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "KintoAdminMultisig",
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "Kinto Multisig 2",
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "KintoWalletFactory",
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "SponsorPaymaster",
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
@@ -57,7 +57,7 @@
       "ignoreRelatives": ["implementation"]
     },
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": {
-      // KintoAdminMultisig
+      // Kinto Multisig 2
       "ignoreMethods": ["owners"],
       "ignoreInWatchMode": ["getNonce"]
     },
@@ -127,7 +127,7 @@
             }
           ]
         },
-        "kintoAdminMultisigPermission": {
+        "kintoMultisig2Permission": {
           "handler": {
             "type": "hardcoded",
             "value": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
@@ -137,13 +137,13 @@
             {
               "type": "interact",
               "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
-              "delay": "{{edKintoAdminMultisigUPGRADER}}"
+              "delay": "{{edKintoMultisig2UPGRADER}}"
             },
             // role ADMIN
             {
               "type": "interact",
               "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
-              "delay": "{{edKintoAdminMultisigADMIN}}"
+              "delay": "{{edKintoMultisig2ADMIN}}"
             }
           ]
         },
@@ -174,7 +174,7 @@
             "args": ["0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"]
           }
         },
-        "edKintoAdminMultisigUPGRADER": {
+        "edKintoMultisig2UPGRADER": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls.",
           "handler": {
@@ -190,7 +190,7 @@
             }
           }
         },
-        "edKintoAdminMultisigADMIN": {
+        "edKintoMultisig2ADMIN": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls.",
           "handler": {

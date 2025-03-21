@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd629b43a8777d45b4925ac5b122bbe6979df1a83
+Generated with discovered.json: 0x73da985a5e3e2d337509cc091ac5eff2fbc2b5c3
 
-# Diff at Fri, 21 Mar 2025 13:58:08 GMT:
+# Diff at Fri, 21 Mar 2025 14:11:40 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@0cd49f2bd1f57cf090a4f7b659b8eb18c9783869 block: 772987
-- current block number: 772987
+- current block number: 773151
 
 ## Description
 
@@ -13,11 +13,22 @@ Discovery rerun on the same block number with only config-related changes.
 Rediscovered to properly handle canActIndependently on AccessManager thanks
 to a source code fix.
 
+Config: rename KintoAdminMultisig
+
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 772987 (main branch discovery), not current.
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      name:
+-        "KintoAdminMultisig"
++        "Kinto Multisig 2"
+    }
+```
 
 ```diff
     contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
@@ -48,8 +59,32 @@ discovery. Values are for block 772987 (main branch discovery), not current.
     +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
       receivedPermissions:
 -        [{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"}]
+      values.edKintoAdminMultisigADMIN:
+-        950400
+      values.edKintoAdminMultisigUPGRADER:
+-        604800
+      values.kintoAdminMultisigPermission:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoMultisig2ADMIN:
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoMultisig2UPGRADER:
++        604800
+      values.kintoMultisig2Permission:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      fieldMeta.edKintoAdminMultisigUPGRADER:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoAdminMultisigADMIN:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2UPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2ADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
       directlyReceivedPermissions:
-+        [{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"}]
++        [{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"},{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}]
     }
 ```
 

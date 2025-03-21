@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 772987,
-  "configHash": "0xdb109a6d0f0e6297d449d90adfa2cfc4a0ffa00ac102267ce2b198a893b0af33",
+  "blockNumber": 773151,
+  "configHash": "0xb70d97383d0ada199ddcd7b9cccce579c8ceb1c02e170837f70c9c79c126dd45",
   "entries": [
     {
       "name": "NioGuardians",
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1742551041,
+        "clock": 1742566228,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -63,7 +63,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1742551041,
+        "clock": 1742566228,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -148,7 +148,7 @@
           ]
         ],
         "$upgradeCount": 8,
-        "clock": 1742551041,
+        "clock": 1742566228,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -363,7 +363,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "31014802901544520475",
+        "getDeposit": "30985086988556780475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -420,7 +420,7 @@
       "derivedName": ""
     },
     {
-      "name": "KintoAdminMultisig",
+      "name": "Kinto Multisig 2",
       "address": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
       "type": "Contract",
       "sourceHashes": [
@@ -681,7 +681,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 17916,
+        "globalMessageCount": 17926,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1155,7 +1155,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 73494
+        "totalWallets": 73514
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1378,14 +1378,14 @@
           "SECURITY_COUNCIL_ROLE": ["14661544942390944024"]
         },
         "ADMIN_ROLE": 0,
-        "edKintoAdminMultisigADMIN": 950400,
-        "edKintoAdminMultisigUPGRADER": 604800,
+        "edKintoMultisig2ADMIN": 950400,
+        "edKintoMultisig2UPGRADER": 604800,
         "edScADMIN": 604800,
         "edScSECURITY_COUNCIL": 950400,
         "edScUPGRADER": 950400,
         "expiration": 604800,
         "initialAdminRole": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-        "kintoAdminMultisigPermission": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "kintoMultisig2Permission": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "minSetback": 432000,
         "OperationScheduled": [
           {
@@ -1539,11 +1539,11 @@
           "severity": "HIGH",
           "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."
         },
-        "edKintoAdminMultisigUPGRADER": {
+        "edKintoMultisig2UPGRADER": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls."
         },
-        "edKintoAdminMultisigADMIN": {
+        "edKintoMultisig2ADMIN": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls."
         },
@@ -1675,8 +1675,8 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "555920312378098324556635",
-        "getUnclaimedLimit": "108791857403074559891031",
+        "getTotalLimit": "556241669952292365501440",
+        "getUnclaimedLimit": "109048459902759333267480",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
@@ -1684,7 +1684,7 @@
         "quarters": 40,
         "root": "0xeecaad8b0b3ae70c164cb704ad8187483ffbbc5c9991dc3c6e0666203660e592",
         "startTime": 1718690400,
-        "totalClaimed": "447128454975023764665604",
+        "totalClaimed": "447193210049533032233960",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1855,7 +1855,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1742550489,
+        "lastMonitoredAt": 1742565132,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -2253,7 +2253,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 73818,
+        "totalSupply": 73838,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
