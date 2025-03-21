@@ -148,15 +148,17 @@ export const kinto: ScalingProject = orbitStackL2({
   ),
   upgradesAndGovernance: `
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is held by the ${discovery.getMultisigStats('Kinto Security Council')} Kinto Security Council on Layer 1 and can be executed without any delay.
-On the Kinto Layer 2, critical permissions are mostly guarded by an AccessManager contract, and then given with delays to the Security Council and the ${l2discovery.getMultisigStats('Kinto Multisig 2')} Kinto Multisig 2.
+On the Kinto Layer 2, critical permissions are mostly guarded by an AccessManager contract, and then passed down with configurable delays to the Security Council and the ${l2discovery.getMultisigStats('Kinto Multisig 2')} Kinto Multisig 2.
 
 The Appchain designation of Kinto is mainly due to a modified L2 node, which queries a special censoring contract on L2 (called KintoAppRegistry) for a whitelist to filter transactions.
 This makes the KintoAppRegistry contract a critical system contract and any change to its configuration equivalent to an upgrade of the Layer 2 system.
 The KintoAppRegistry contract is also governed via the AccessManager by the Security Council or the Kinto Multisig 2 with a ${formatSeconds(l2critDelay)} delay.
 
-Permissioned actors with the 'KYC provider' role in the KintoID contract can 'sanction' (freeze) user smart wallets, preventing them from transacting. 
+Another critical contract to the Appchain is called KintoID. Permissioned actors with the 'KYC provider' role in the KintoID contract can 'sanction' (freeze) user smart wallets, preventing them from transacting. 
 To protect users from this role which is mostly held by EOAs, a sanction expires if not confirmed by the Security Council within ${formatSeconds(sanctionExpirySeconds)}.
-An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.`,
+An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.
+
+The canonical (enforced) smartwallet for users on Kinto can be upgraded via the KintoWalletFactory, using the standard path via the AccessManager. `,
   nonTemplateTechnology: {
     otherConsiderations: [
       {
