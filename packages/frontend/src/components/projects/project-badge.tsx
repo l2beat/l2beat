@@ -24,7 +24,7 @@ export function ProjectBadge({ badge, disableInteraction, className }: Props) {
       alt={`${badge.name} badge`}
       className={cn(
         'h-16 w-auto lg:h-[4.5rem]',
-        !disableInteraction && 'transition-all hover:scale-110',
+        !disableInteraction && 'transition-all hover:scale-[1.08]',
         className,
       )}
     />
