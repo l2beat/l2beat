@@ -1,4 +1,11 @@
-# Quick Reference: Delays & ADMIN_ROLE Functions
+# Quick Reference: `l2b scankintoam`
+
+## what
+this script decodes the AccessManager config and all scheduled OPs that change it. it does NOT assess whether the config is stage 1 (appchain) compliant. a rule of thumb is that 
+- 11d executionDelay on all roles that target the 3 core contracts (+ ADMIN_ROLE) and 
+- 11d targetAdminDelay on KintoID, KintoWalletFactory and KintoAppRegistry
+
+should be safe.
 
 ## `executionDelay` vs. `targetAdminDelay`
 - **executionDelay:**  
