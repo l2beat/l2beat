@@ -7,7 +7,7 @@ describe(KnowledgeBase.name, () => {
     const knowledgeBase = new KnowledgeBase(
       ClingoFactFile.parse(factsFile).facts,
     )
-    const result = knowledgeBase.getFacts('contract', [
+    let result = knowledgeBase.getFacts('contract', [
       undefined,
       'arbitrum',
       undefined,
@@ -16,6 +16,24 @@ describe(KnowledgeBase.name, () => {
     expect(result).toEqual([
       contract_0x1d62ffeb72e4c360ccbbacf7c965153b00260417,
       contract_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d,
+    ])
+
+    result = knowledgeBase.getFacts(
+      'contract',
+      [undefined, 'arbitrum', undefined, undefined],
+      [undefined, undefined, undefined, 'ConstitutionHash'],
+    )
+    expect(result).toEqual([
+      contract_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d,
+    ])
+
+    result = knowledgeBase.getFacts(
+      'contract',
+      [undefined, 'arbitrum', undefined, undefined],
+      [undefined, undefined, undefined, 'L2SurplusFee'],
+    )
+    expect(result).toEqual([
+      contract_0x1d62ffeb72e4c360ccbbacf7c965153b00260417,
     ])
   })
 
@@ -66,12 +84,12 @@ describe(KnowledgeBase.name, () => {
       expect(() =>
         knowledgeBase.getFactOrUndefined('fact', [undefined, 'can', 'eat']),
       ).toThrow(
-        'Found multiple facts with "fact" id and params: [null,"can","eat"]',
+        'Found multiple facts with "fact" id matching: [null,"can","eat"] excluding: []',
       )
       expect(() =>
         knowledgeBase.getFact('fact', [undefined, 'can', 'eat']),
       ).toThrow(
-        'Found multiple facts with "fact" id and params: [null,"can","eat"]',
+        'Found multiple facts with "fact" id matching: [null,"can","eat"] excluding: []',
       )
     })
   })
@@ -82,7 +100,7 @@ describe(KnowledgeBase.name, () => {
         ClingoFactFile.parse(factsFile).facts,
       )
       expect(() => knowledgeBase.getFact('contract', ['abc', 'def'])).toThrow(
-        'No fact found with id "contract" and params: ["abc","def"]',
+        'No fact found with id "contract" matching: ["abc","def"] excluding: []',
       )
     })
   })
