@@ -1,20 +1,18 @@
 import type { IndexerConfigurationRecord } from '@l2beat/database'
-import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { range } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getRange } from '~/utils/range/range'
-import { generateTimestamps } from '../../utils/generate-timestamps'
 import { calculate30DayRollingStats } from './utils/calculate-30day-rolling-stats'
 import { calculateIntervals } from './utils/calculate-intervals'
-import { LivenessProjectTimeRange, rangeToResolution } from './utils/range'
 
 export const LivenessProjectChartParams = z.object({
-  range: LivenessProjectTimeRange,
   projectId: z.string(),
+  subtype: TrackedTxsConfigSubtype,
 })
 export type LivenessProjectChartParams = z.infer<
   typeof LivenessProjectChartParams
@@ -28,7 +26,7 @@ export function getLivenessProjectChart(
   ...parameters: Parameters<typeof getCachedLivenessProjectChartData>
 ) {
   if (env.MOCK) {
-    return getMockLivenessProjectChartData(...parameters)
+    return getMockLivenessProjectChartData()
   }
   return getCachedLivenessProjectChartData(...parameters)
 }
@@ -38,7 +36,7 @@ export type LivenessProjectChartData = Awaited<
 >
 
 export const getCachedLivenessProjectChartData = cache(
-  async ({ projectId }: LivenessProjectChartParams) => {
+  async ({ projectId, subtype }: LivenessProjectChartParams) => {
     const db = getDb()
     const [project] = await ps.getProjects({
       ids: [ProjectId(projectId)],
@@ -60,10 +58,13 @@ export const getCachedLivenessProjectChartData = cache(
     const relevantConfigs = getRelevantConfigs(
       configurationIds,
       projectId,
-      'batchSubmissions',
+      subtype,
       from - 30 * UnixTime.DAY,
       to,
     )
+    if (relevantConfigs.length === 0) {
+      return []
+    }
 
     const records = await db.liveness.getByConfigurationIdWithinTimeRange(
       relevantConfigs.map((c) => c.id),
@@ -75,8 +76,6 @@ export const getCachedLivenessProjectChartData = cache(
     const lastIndex = intervals.findIndex(
       (interval) => interval.timestamp <= from,
     )
-    console.log('lastIndex', lastIndex)
-    console.log('intervals', intervals.length)
 
     const { means, stdDeviations } = calculate30DayRollingStats(
       intervals,
@@ -116,15 +115,8 @@ export const getCachedLivenessProjectChartData = cache(
   },
 )
 
-function getMockLivenessProjectChartData({
-  range: timeRange,
-}: LivenessProjectChartParams): LivenessProjectChartData {
-  const resolution = rangeToResolution(timeRange)
-  const range = getRange(timeRange === 'max' ? '1y' : timeRange, resolution)
-
-  const timestamps = generateTimestamps(range, resolution)
-
-  return timestamps.map(
+function getMockLivenessProjectChartData(): LivenessProjectChartData {
+  return range(7).map(
     (timestamp) =>
       [
         timestamp,

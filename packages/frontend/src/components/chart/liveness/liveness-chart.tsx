@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, Scatter } from 'recharts'
+import { Area, ComposedChart, Scatter } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -11,6 +11,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { PinkStrokeGradientDef } from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
@@ -23,22 +24,22 @@ import { formatTimestamp } from '~/utils/dates'
 const chartMeta = {
   interval: {
     label: 'Submission interval',
-    color: 'hsl(var(--chart-stacked-blue))',
+    color: 'hsl(var(--chart-stacked-pink))',
     indicatorType: { shape: 'square' },
   },
   mean: {
-    label: 'Mean',
-    color: 'hsl(var(--chart-stacked-yellow))',
+    label: 'Average interval',
+    color: 'hsl(187deg 92.8% 49.2%)',
     indicatorType: { shape: 'square' },
   },
   zScoreBoundary: {
     label: 'Z-score boundary',
-    color: 'hsl(var(--chart-stacked-pink))',
-    indicatorType: { shape: 'square' },
+    color: 'hsl(25.4deg 100% 60.6%)',
+    indicatorType: { shape: 'line', strokeDasharray: '9 3' },
   },
   anomaly: {
     label: 'Anomaly',
-    color: 'hsl(var(--chart-stacked-purple))',
+    color: 'hsl(10.7deg 94.7% 55.9%)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
@@ -58,6 +59,7 @@ interface Props {
   milestones: Milestone[]
   range: LivenessProjectTimeRange
   className?: string
+  showZScore: boolean
 }
 
 export function LivenessChart({
@@ -67,6 +69,7 @@ export function LivenessChart({
   milestones,
   className,
   range,
+  showZScore,
 }: Props) {
   const resolution = rangeToResolution(range)
 
@@ -78,13 +81,13 @@ export function LivenessChart({
       milestones={milestones}
       className={className}
     >
-      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <ComposedChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
           isAnimationActive={false}
           strokeWidth={2}
           dataKey="interval"
-          stroke={chartMeta.interval.color}
+          stroke="url(#interval)"
           fill="none"
         />
         <Area
@@ -94,17 +97,23 @@ export function LivenessChart({
           stroke={chartMeta.mean.color}
           fill="none"
         />
-        <Area
-          isAnimationActive={false}
-          strokeWidth={2}
-          dataKey="zScoreBoundary"
-          stroke={chartMeta.zScoreBoundary.color}
-          fill="none"
-        />
+        {showZScore && (
+          <Area
+            isAnimationActive={false}
+            strokeWidth={2}
+            dataKey="zScoreBoundary"
+            stroke={chartMeta.zScoreBoundary.color}
+            fill="none"
+            strokeDasharray={
+              chartMeta.zScoreBoundary?.indicatorType.strokeDasharray
+            }
+          />
+        )}
         <Scatter
           dataKey="anomaly"
           fill={chartMeta.zScoreBoundary.color}
           shape="circle"
+          isAnimationActive={false}
         />
         {getCommonChartComponents({
           data,
@@ -120,7 +129,10 @@ export function LivenessChart({
         <ChartTooltip
           content={<CustomTooltip subtype={subtype} resolution={resolution} />}
         />
-      </AreaChart>
+        <defs>
+          <PinkStrokeGradientDef id="interval" />
+        </defs>
+      </ComposedChart>
     </ChartContainer>
   )
 }

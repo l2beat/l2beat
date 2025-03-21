@@ -5,6 +5,7 @@ import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { LivenessSubtype } from '~/server/features/scaling/liveness/types'
@@ -19,13 +20,14 @@ interface Props {
 }
 
 export function ProjectLivenessChart({ milestones, projectId }: Props) {
-  const [range, setRange] = useState<LivenessProjectTimeRange>('1y')
+  const [range, setRange] = useState<LivenessProjectTimeRange>('7d')
   const [subtype, setSubtype] =
     useState<TrackedTxsConfigSubtype>('batchSubmissions')
+  const [showZScore, setShowZScore] = useState(true)
 
   const { data, isLoading } = api.liveness.projectChart.useQuery({
-    range,
     projectId,
+    subtype,
   })
 
   const chartData = useMemo(() => {
@@ -49,11 +51,17 @@ export function ProjectLivenessChart({ milestones, projectId }: Props) {
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
-          <SubtypeControls
-            subtype={subtype}
-            setSubtype={setSubtype}
-            isLoading={isLoading}
-          />
+          <div className="flex flex-col gap-1 md:flex-row">
+            <SubtypeControls
+              subtype={subtype}
+              setSubtype={setSubtype}
+              isLoading={isLoading}
+            />
+            <ZScoreCheckbox
+              showZScore={showZScore}
+              setShowZScore={setShowZScore}
+            />
+          </div>
           <LivenessChartTimeRangeControls
             projectSection
             timeRange={range}
@@ -68,6 +76,7 @@ export function ProjectLivenessChart({ milestones, projectId }: Props) {
         milestones={milestones}
         range={range}
         className="mb-2 mt-4"
+        showZScore={showZScore}
       />
     </div>
   )
@@ -104,5 +113,24 @@ function SubtypeControls({
         </RadioGroup>
       )}
     </div>
+  )
+}
+
+function ZScoreCheckbox({
+  showZScore,
+  setShowZScore,
+}: {
+  showZScore: boolean
+  setShowZScore: (value: boolean) => void
+}) {
+  return (
+    <Checkbox
+      name="zScoreBoundary"
+      checked={showZScore}
+      onCheckedChange={(state) => setShowZScore(!!state)}
+      labelTitle={undefined}
+    >
+      Show z-score boundary
+    </Checkbox>
   )
 }
