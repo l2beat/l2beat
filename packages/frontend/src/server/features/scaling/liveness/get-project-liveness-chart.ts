@@ -38,7 +38,7 @@ export type LivenessProjectChartData = Awaited<
 >
 
 export const getCachedLivenessProjectChartData = cache(
-  async ({ range: projectId }: LivenessProjectChartParams) => {
+  async ({ projectId }: LivenessProjectChartParams) => {
     const db = getDb()
     const [project] = await ps.getProjects({
       ids: [ProjectId(projectId)],
@@ -55,7 +55,7 @@ export const getCachedLivenessProjectChartData = cache(
     )
 
     const to = UnixTime.toStartOf(UnixTime.now(), 'hour')
-    const from = to - 30 * UnixTime.DAY
+    const from = to - 7 * UnixTime.DAY
 
     const relevantConfigs = getRelevantConfigs(
       configurationIds,
