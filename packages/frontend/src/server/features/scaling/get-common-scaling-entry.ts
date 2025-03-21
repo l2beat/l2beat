@@ -77,12 +77,10 @@ export function getCommonScalingEntry({
         id: 'infrastructure',
         value: project.scalingInfo.infrastructure ?? 'No infrastructure',
       },
-      ...(project.scalingInfo.vm && project.scalingInfo.vm.length !== 0
-        ? project.scalingInfo.vm.map((vm) => ({
-            id: 'vm' as const,
-            value: vm,
-          }))
-        : []),
+      ...project.scalingInfo.vm.map((vm) => ({
+        id: 'vm' as const,
+        value: vm,
+      })),
     ],
     description: project.display?.description,
     badges: project.display.badges,
