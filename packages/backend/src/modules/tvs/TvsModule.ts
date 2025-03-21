@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import type { Config } from '../../config'
 import type { Providers } from '../../providers/Providers'
@@ -24,7 +24,6 @@ import {
   createAmountConfig,
   generateConfigurationId,
 } from './tools/extractPricesAndAmounts'
-import { createAmountConfig } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
 
 export function initTvsModule(
@@ -46,6 +45,11 @@ export function initTvsModule(
     prices: config.tvs.prices.length,
     amounts: config.tvs.amounts.length,
     chains: config.tvs.chains.length,
+    maxSources: config.tvs.projects.reduce(
+      (prev, curr) =>
+        prev < curr.amountSources.length ? curr.amountSources.length : prev,
+      0,
+    ),
   })
 
   const syncOptimizer = new SyncOptimizer(clock)
@@ -151,6 +155,16 @@ export function initTvsModule(
       return indexer
     })
 
+    const tokensWithRanges = project.tokens.map((t) => {
+      const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
+
+      return {
+        ...t,
+        sinceTimestamp,
+        untilTimestamp,
+      }
+    })
+
     const tokenValueIndexer = new TokenValueIndexer({
       syncOptimizer,
       valueService,
@@ -159,12 +173,11 @@ export function initTvsModule(
       maxTimestampsToProcessAtOnce: 500,
       parents: [priceIndexer, ...amountSources],
       indexerService,
-      configurations: project.tokens.map((t) => {
-        const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
+      configurations: tokensWithRanges.map((t) => {
         return {
           id: TokenValueIndexer.idToConfigurationId(t.id),
-          minHeight: sinceTimestamp,
-          maxHeight: untilTimestamp ?? null,
+          minHeight: t.sinceTimestamp,
+          maxHeight: t.untilTimestamp ?? null,
           properties: t,
         }
       }),
@@ -174,6 +187,32 @@ export function initTvsModule(
 
     valueIndexers.push(tokenValueIndexer)
 
+    const since = tokensWithRanges.reduce(
+      (prev, curr) => (prev > curr.sinceTimestamp ? curr.sinceTimestamp : prev),
+      Infinity,
+    )
+
+    const hasUndefinedTimestamp = tokensWithRanges.some(
+      (token) => token.untilTimestamp === undefined,
+    )
+
+    const until = hasUndefinedTimestamp
+      ? null
+      : tokensWithRanges
+          .map((t) => t.untilTimestamp)
+          .filter(notUndefined)
+          .reduce((prev, curr) => (prev < curr ? curr : prev), UnixTime(0))
+
+    const id = generateConfigurationId(
+      [...tokensWithRanges]
+        .sort((a, b) => a.id.localeCompare(b.id))
+        .flatMap((t) => [
+          t.id,
+          t.sinceTimestamp.toString(),
+          t.untilTimestamp?.toString() ?? 'undefined',
+        ]),
+    )
+
     const projectValueIndexer = new ProjectValueIndexer({
       syncOptimizer,
       tokens: new Map(project.tokens.map((t) => [t.id, t])),
@@ -182,15 +221,9 @@ export function initTvsModule(
       indexerService,
       configurations: [
         {
-          // TODO: add since and until, sort by id
-          id: generateConfigurationId([
-            'value',
-            ...project.tokens.flatMap((t) => [t.id]),
-          ]),
-          // TODO: hangle this
-          minHeight: 1742342400,
-          // TODO: hangle this
-          maxHeight: null,
+          id,
+          minHeight: since,
+          maxHeight: until,
           properties: { project: project.projectId },
         },
       ],
