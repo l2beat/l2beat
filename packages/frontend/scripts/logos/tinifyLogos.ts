@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import tinify from 'tinify'
 import { z } from 'zod'
+import { getImageDimensions } from '~/utils/project/get-image-params'
 
 const TinifiedLogos = z.record(z.string(), z.string())
 
@@ -58,8 +59,13 @@ async function tinifyLogo(fileName: string) {
 
   const source = tinify.fromFile(logoPath)
 
-  const width = sourceBuffer.readUInt32BE(16)
-  const height = sourceBuffer.readUInt32BE(20)
+  const dimensions = getImageDimensions(sourceBuffer)
+  if (!dimensions) {
+    console.error(`Skipping ${fileName} because it is not a valid image`)
+    return 0
+  }
+  const { width, height } = dimensions
+
   if (width !== height) {
     console.error(
       `Skipping ${fileName} because it is not square, provide square logo`,
