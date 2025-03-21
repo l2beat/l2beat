@@ -131,6 +131,91 @@ export class PermissionsFromModel implements PermissionRegistry {
       .getFacts('filteredTransitivePermission', [id, 'upgrade'])
       .map(parseTransitivePermissionFact)
 
+    /**
+    1. **Group by Contract:**
+      ```python
+      contract_groups = defaultdict(list)
+      for record in permissions:
+          contract_groups[record.contract_name].append(record)
+      ```
+
+    2. **For Each Contract Group:**
+      - Collect all unique total delays
+      - For each delay, collect all via paths that lead to it
+      ```python
+      contract_delays = defaultdict(list)
+      for record in contract_group:
+          contract_delays[record.total_delay].append(record.via)
+      ```
+
+    3. **Create Delay Configuration Groups:**
+      Group contracts by their *set* of possible delays (sorted for consistency):
+      ```python
+      config_groups = defaultdict(list)
+      for contract, delays in contract_delays.items():
+          # Convert to sorted tuple for hashability
+          delay_config = tuple(sorted(delays.keys())) 
+          config_groups[delay_config].append({
+              'contract': contract,
+              'delay_vias': delays
+          })
+      ```
+
+    **Example Transformation:**
+
+    Given initial records:
+    ```
+    [
+        {contract: "FoochainPortal", delay: "7d", via: "via1"},
+        {contract: "FoochainPortal", delay: "0d", via: "via2"},
+        {contract: "L1StandardBridge", delay: "7d", via: "via3"},
+        {contract: "L1StandardBridge", delay: "0d", via: "via4"},
+        {contract: "L1ERC721Bridge", delay: "7d", via: "via5"},
+        {contract: "SystemConfig", delay: "0d", via: "via6"}
+    ]
+    ```
+
+    The algorithm would produce:
+    ```python
+    {
+        # Group 1: Contracts supporting both 7d and 0d delays
+        ("0d", "7d"): [
+            {
+                "contract": "FoochainPortal",
+                "delay_vias": {
+                    "7d": ["via1"],
+                    "0d": ["via2"]
+                }
+            },
+            {
+                "contract": "L1StandardBridge",
+                "delay_vias": {
+                    "7d": ["via3"],
+                    "0d": ["via4"]
+                }
+            }
+        ],
+        
+        # Group 2: Contracts supporting single delay
+        ("7d",): [
+            {"contract": "L1ERC721Bridge", "delay_vias": {"7d": ["via5"]}}
+        ],
+        
+        ("0d",): [
+            {"contract": "SystemConfig", "delay_vias": {"0d": ["via6"]}}
+        ]
+    }
+    ```
+
+    **Key Insights:**
+    1. The first grouping level is by contract to collect all its possible delays
+    2. The second grouping is by the *set* of delays a contract supports
+    3. Via paths are preserved per delay per contract
+    4. Delays are sorted to ensure consistent grouping (7d+0d vs 0d+7d)
+
+    This structure allows rendering groups like in your example, showing which contracts share the same set of possible delays while maintaining their individual via paths for each delay option.
+
+     */
     type ContractGroups = Record<string, ParsedTransitivePermissionFact[]>
     type DelayVias = Record<string, ParsedTransitivePermissionVia[][]> // { [delay]: via[] }
     interface ConfigGroupEntry {
@@ -142,9 +227,7 @@ export class PermissionsFromModel implements PermissionRegistry {
     // 1. Group by contract
     const contractGroups: ContractGroups = {}
     for (const fact of permissionFacts) {
-      if (!contractGroups[fact.receiver]) {
-        contractGroups[fact.receiver] = []
-      }
+      contractGroups[fact.receiver] ??= []
       contractGroups[fact.receiver].push(fact)
     }
 
@@ -156,9 +239,7 @@ export class PermissionsFromModel implements PermissionRegistry {
       const delayVias: DelayVias = {}
 
       for (const record of records) {
-        if (!delayVias[record.totalDelay]) {
-          delayVias[record.totalDelay] = []
-        }
+        delayVias[record.totalDelay] ??= []
         delayVias[record.totalDelay].push(record.viaList ?? [])
       }
 
@@ -167,10 +248,7 @@ export class PermissionsFromModel implements PermissionRegistry {
       const configKey = delays.join(',')
 
       // Add to configuration groups
-      if (!configGroups[configKey]) {
-        configGroups[configKey] = []
-      }
-
+      configGroups[configKey] ??= []
       configGroups[configKey].push({
         contract,
         delayVias,
