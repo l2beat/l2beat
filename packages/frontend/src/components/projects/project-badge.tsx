@@ -22,7 +22,11 @@ export function ProjectBadge({
     <img
       src={`/images/badges/${badge.id}.png`}
       alt={`${badge.name} badge`}
-      className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
+      className={cn(
+        'h-16 w-auto lg:h-[4.5rem]',
+        !disableInteraction && 'transition-all hover:scale-110',
+        className,
+      )}
     />
   )
   const component =
@@ -35,7 +39,7 @@ export function ProjectBadge({
   if (disableInteraction) return component
 
   return (
-    <Tooltip>
+    <Tooltip delayDuration={0}>
       <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
       <TooltipContent>
         <span className="mb-2 block font-medium">{badge.name}</span>
