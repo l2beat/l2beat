@@ -29,7 +29,7 @@ export function ProjectBadge({
       alt={`${badge.name} badge`}
       width={badge.width}
       height={badge.height}
-      className={cn('h-16 lg:h-[4.5rem]', className)}
+      className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
     />
   )
 
