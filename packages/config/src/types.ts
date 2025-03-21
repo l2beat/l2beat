@@ -157,14 +157,33 @@ export type Badge = {
   type: string
   name: string
   description: string
-  action:
-    | {
-        scalingFilter?: [id: BadgeFilterIds, value: string]
-        selfScalingFilter?: BadgeFilterIds
-        publicDaHighlight?: string
-        selfDaHightlight?: boolean
-      }
-    | undefined
+  action: BadgeAction | undefined
+}
+
+type BadgeAction =
+  | BadgeScalingFilterAction
+  | BadgeSelfScalingFilterAction
+  | BadgePublicDaHighlightAction
+  | BadgeSelfDaHightlightAction
+
+// Move to scaling/summary with given filterId and value
+type BadgeScalingFilterAction = {
+  scalingFilter: [id: BadgeFilterIds, value: string]
+}
+
+// Move to scaling/summary with given filterId and name of the project as a value
+type BadgeSelfScalingFilterAction = {
+  selfScalingFilter: BadgeFilterIds
+}
+
+// Move to data-availability/summary and highlight project with given slug
+type BadgePublicDaHighlightAction = {
+  publicDaHighlight: string
+}
+
+// Move to data-availability/summary and highlight project with the same slug as the project
+type BadgeSelfDaHightlightAction = {
+  selfDaHightlight: boolean
 }
 
 type BadgeFilterIds =
