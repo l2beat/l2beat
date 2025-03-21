@@ -1,5 +1,4 @@
 import type {
-  Badge,
   Project,
   ProjectScalingCategory,
   ProjectScalingStage,
@@ -44,6 +43,7 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
+import type { BadgeWithLink } from '~/components/projects/project-badge'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
@@ -57,7 +57,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: (Badge & { href: string | undefined })[]
+    badges?: BadgeWithLink[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory
@@ -119,14 +119,11 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsStats, daLayers] =
+  const [projectsChangeReport, activityProjectStats, tvsStats] =
     await Promise.all([
       getProjectsChangeReport(),
       getActivityProjectStats(project.id),
       get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-      ps.getProjects({
-        select: ['daLayer'],
-      }),
     ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
@@ -175,7 +172,7 @@ export async function getScalingProjectEntry(
         : undefined,
     badges: project.display.badges.map((badge) => ({
       ...badge,
-      href: getBadgeLink(badge, project, daLayers),
+      href: getBadgeLink(badge, project),
     })),
     gasTokens: project.chainConfig?.gasTokens,
   }

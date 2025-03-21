@@ -8,15 +8,15 @@ import {
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
 
-export function ProjectBadge({
-  badge,
-  disableInteraction,
-  className,
-}: {
-  badge: Badge & { href?: string | undefined }
+export type BadgeWithLink = Badge & { href?: string }
+
+interface Props {
+  badge: BadgeWithLink
   disableInteraction?: boolean
   className?: ClassNameValue
-}) {
+}
+
+export function ProjectBadge({ badge, disableInteraction, className }: Props) {
   const badgeImg = (
     // eslint-disable-next-line @next/next/no-img-element
     <img

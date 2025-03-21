@@ -5,5 +5,5 @@ export function getVM(badges: Badge[] | undefined) {
   if (!vmBadges || vmBadges.length === 0) {
     return []
   }
-  return vmBadges.map((b) => b.filterValue)
+  return vmBadges.map((b) => b.action.scalingFilter[1])
 }
