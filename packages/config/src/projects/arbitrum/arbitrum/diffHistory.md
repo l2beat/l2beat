@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xe0420c1308fb50b71c2763a7b28beebd8e7729c3
+
+# Diff at Thu, 20 Mar 2025 16:31:42 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@2783d2ac352634f1b31c1da67316be8c3bcdecc9 block: 316974509
+- current block number: 316974509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+Due to a fix in permissions solver, canActIndependently on SecurityCouncilManager
+flag got processed correctly, moving it to the contracts section and a permission
+it received got removed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 316974509 (main branch discovery), not current.
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.7:
+-        {"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.6.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.5.to:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.5.delay:
+-        691200
+      issuedPermissions.5.description:
+-        "manage all access control roles and change the minimum delay."
+      issuedPermissions.5.via.1:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.5.via.0.address:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.4.to:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.4.description:
+-        "propose transactions."
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.4.via.0:
++        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.4.delay:
++        691200
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}
+      directlyReceivedPermissions.0.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.0.delay:
+-        691200
+      directlyReceivedPermissions.0.description:
++        "propose transactions."
+    }
+```
+
 Generated with discovered.json: 0x4f362ae5a39bf826880ca3a4f855492857d6632d
 
 # Diff at Tue, 18 Mar 2025 15:06:13 GMT:
