@@ -74,7 +74,7 @@ export const kinto: ScalingProject = orbitStackL2({
       SOA.gasToken,
       SOA.l1Contracts,
       SOA.derivationSpec,
-      'L2 core Orbit contracts',
+      'Orbit stack L2 core contracts',
       'KintoAppRegistry L2 contract',
       'KintoWalletFactory L2 contract',
       'KintoID L2 contract',
