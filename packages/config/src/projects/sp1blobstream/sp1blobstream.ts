@@ -22,6 +22,11 @@ export const sp1blobstream: BaseProject = {
     isUnderReview: false,
     isUnverified: false,
   },
+  display: {
+    description: 'Celestia ZK light client implementation.',
+    links: {},
+    badges: [],
+  },
   proofVerification: {
     shortDescription: 'Celestia ZK light client implementation.',
     aggregation: true,
