@@ -375,6 +375,24 @@
     },
     {
       "mode": "auto",
+      "id": "taiko-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+        "decimals": 18,
+        "sinceTimestamp": 1714550603
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "taiko-WETH",
       "priceId": "weth",
       "symbol": "WETH",

@@ -4,6 +4,24 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "unichain-BAL",
+      "priceId": "balancer",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-COMP",
       "priceId": "compound-governance-token",
       "symbol": "COMP",

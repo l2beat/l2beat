@@ -1693,6 +1693,36 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-FFM",
+      "priceId": "florence-finance-medici",
+      "symbol": "FFM",
+      "name": "Florence Finance Medici",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "florence-finance-medici",
+            "decimals": 18,
+            "sinceTimestamp": 1704758400
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1704758400
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-FFM.ext",
       "priceId": "florence-finance-medici",
       "symbol": "FFM.ext",
@@ -3614,6 +3644,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-PROM",
+      "priceId": "prometeus",
+      "symbol": "PROM",
+      "name": "Token Prometeus Network",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xfc82bb4ba86045Af6F327323a46E80412b91b27d",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1716104945
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PSP",
       "priceId": "paraswap",
       "symbol": "PSP",
@@ -3717,25 +3765,6 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-rDPX.ext",
-      "priceId": "dopex-rebate-token",
-      "symbol": "rDPX.ext",
-      "displaySymbol": "rDPX",
-      "name": "Dopex Rebate Token",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11",
-        "chain": "ethereum",
-        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-        "decimals": 18,
-        "sinceTimestamp": 1624579200
-      },
-      "category": "other",
-      "source": "external",
       "isAssociated": false
     },
     {
@@ -5329,6 +5358,36 @@
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
         "sinceTimestamp": 1623784100
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-YBR",
+      "priceId": "yieldbricks",
+      "symbol": "YBR",
+      "name": "YieldBricks",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "yieldbricks",
+            "decimals": 18,
+            "sinceTimestamp": 1731369600
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
+            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1731369600
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
