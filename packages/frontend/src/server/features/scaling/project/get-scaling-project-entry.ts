@@ -8,6 +8,7 @@ import type {
 import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithLink } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -43,7 +44,6 @@ import { isProjectOther } from '../utils/is-project-other'
 import { getScalingDaSolution } from './get-scaling-da-solution'
 import type { ScalingRosette } from './get-scaling-rosette-values'
 import { getScalingRosette } from './get-scaling-rosette-values'
-import type { BadgeWithLink } from '~/components/projects/project-badge'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
