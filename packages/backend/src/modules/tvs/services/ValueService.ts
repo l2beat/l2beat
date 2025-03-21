@@ -67,7 +67,7 @@ export class ValueService {
   private async executeAmountFormula(
     formula: AmountFormula,
     timestamp: UnixTime,
-  ): Promise<BigIntWithDecimals> {
+  ): Promise<BigIntWithDecimals | undefined> {
     if (formula.type === 'const') {
       return BigIntWithDecimals(BigInt(formula.value), formula.decimals)
     }
@@ -80,7 +80,7 @@ export class ValueService {
         timestamp < config.sinceTimestamp ||
         (config.untilTimestamp && timestamp > config.untilTimestamp)
       ) {
-        return BigIntWithDecimals(BigInt(0), config.decimals)
+        return undefined
       }
 
       throw new Error(
@@ -135,13 +135,13 @@ export class ValueService {
 
             switch (formula.operator) {
               case 'sum':
-                return valueAcc + value
+                return valueAcc + (value ?? 0n)
               case 'diff':
-                return index === 0 ? value : valueAcc - value
+                return index === 0 ? value : valueAcc - (value ?? 0n)
               case 'max':
-                return valueAcc > value ? valueAcc : value
+                return value ? (valueAcc > value ? valueAcc : value) : valueAcc
               case 'min':
-                return valueAcc < value ? valueAcc : value
+                return value ? (valueAcc < value ? valueAcc : value) : valueAcc
             }
           },
           Promise.resolve(
@@ -150,7 +150,7 @@ export class ValueService {
         )
       }
 
-      return await this.executeAmountFormula(formula, timestamp)
+      return (await this.executeAmountFormula(formula, timestamp)) ?? 0n
     }
 
     return await executeFormulaRecursive(formula, timestamp)

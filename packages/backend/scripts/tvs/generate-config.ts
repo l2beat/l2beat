@@ -29,6 +29,7 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
+    const localExecutor = new LocalExecutor(ps, env, logger)
 
     let projects: Project<'tvlConfig', 'chainConfig'>[] | undefined
 
@@ -62,18 +63,12 @@ const cmd = command({
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     for (const project of projects) {
-      if (!args.project) {
-        logger.info(`Skipping project ${project.id}`)
-        continue
-      }
-
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
 
       let newConfig: Token[] = []
       if (tvsConfig.tokens.length > 0) {
         logger.info('Executing TVS to exclude zero-valued tokens')
-        const localExecutor = new LocalExecutor(ps, env, logger)
         const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
 
         const valueForProject = tvs.reduce((acc, token) => {
