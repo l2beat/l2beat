@@ -15,11 +15,15 @@ import {
   type OnchainAmountConfig,
   OnchainAmountIndexer,
 } from './indexers/OnchainAmountIndexer'
+import { ProjectValueIndexer } from './indexers/ProjectValueIndexer'
 import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
-import { createAmountConfig } from './tools/extractPricesAndAmounts'
+import {
+  createAmountConfig,
+  generateConfigurationId,
+} from './tools/extractPricesAndAmounts'
 
 export function initTvsModule(
   config: Config,
@@ -133,7 +137,7 @@ export function initTvsModule(
     amountIndexers.set(chain.chainName, amountIndexer)
   }
 
-  const tokenValueIndexers: Indexer[] = []
+  const valueIndexers: Indexer[] = []
 
   for (const project of config.tvs.projects) {
     const dbStorage = new DBStorage(database, logger)
@@ -166,7 +170,33 @@ export function initTvsModule(
       logger,
     })
 
-    tokenValueIndexers.push(tokenValueIndexer)
+    valueIndexers.push(tokenValueIndexer)
+
+    const projectValueIndexer = new ProjectValueIndexer({
+      syncOptimizer,
+      tokens: new Map(project.tokens.map((t) => [t.id, t])),
+      maxTimestampsToProcessAtOnce: 500,
+      parents: [tokenValueIndexer],
+      indexerService,
+      configurations: [
+        {
+          // TODO: add since and until, sort by id
+          id: generateConfigurationId([
+            'value',
+            ...project.tokens.flatMap((t) => [t.id]),
+          ]),
+          // TODO: hangle this
+          minHeight: 1742342400,
+          // TODO: hangle this
+          maxHeight: null,
+          properties: { project: project.projectId },
+        },
+      ],
+      db: database,
+      logger,
+    })
+
+    valueIndexers.push(projectValueIndexer)
   }
 
   const start = async () => {
@@ -181,7 +211,7 @@ export function initTvsModule(
       await indexer.start()
     }
 
-    for (const indexer of tokenValueIndexers) {
+    for (const indexer of valueIndexers) {
       await indexer.start()
     }
   }
