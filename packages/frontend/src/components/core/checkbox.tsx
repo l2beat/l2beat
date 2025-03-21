@@ -3,7 +3,7 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import * as React from 'react'
 import { useId } from 'react'
-import { useTracking } from '~/hooks/use-custom-event'
+import { useTracking } from '~/hooks/use-tracking'
 import { CheckIcon } from '~/icons/check'
 import { cn } from '~/utils/cn'
 

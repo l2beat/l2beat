@@ -1,11 +1,13 @@
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
+import { Callout } from '~/components/callout'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -16,9 +18,14 @@ const SHOWN_ANOMALIES = 4
 interface Props {
   anomalies: LivenessAnomaly[]
   showComingSoon?: boolean
+  hasTrackedContractsChanged: boolean
 }
 
-export function AnomalyIndicator({ anomalies, showComingSoon }: Props) {
+export function AnomalyIndicator({
+  anomalies,
+  showComingSoon,
+  hasTrackedContractsChanged,
+}: Props) {
   if (showComingSoon) {
     return (
       <div
@@ -55,14 +62,20 @@ export function AnomalyIndicator({ anomalies, showComingSoon }: Props) {
           ))}
         </div>
       </TooltipTrigger>
-      <TooltipContent fitContent>
-        <AnomalyTooltipContent anomalies={anomalies} />
+      <TooltipContent>
+        <AnomalyTooltipContent
+          anomalies={anomalies}
+          hasTrackedContractsChanged={hasTrackedContractsChanged}
+        />
       </TooltipContent>
     </Tooltip>
   )
 }
 
-function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
+function AnomalyTooltipContent(props: {
+  anomalies: LivenessAnomaly[]
+  hasTrackedContractsChanged: boolean
+}) {
   const anomalies = props.anomalies.reverse()
 
   if (anomalies.length === 0) {
@@ -83,13 +96,31 @@ function AnomalyTooltipContent(props: { anomalies: LivenessAnomaly[] }) {
               key={anomaly.timestamp}
             >
               {isLive && (
-                <div className="mb-1 flex items-center justify-center gap-2 rounded bg-red-500/10 py-0.5 text-red-500">
+                <div className="mb-1 flex items-center justify-center gap-2 rounded bg-red-500/10 py-1 text-red-500">
                   <span className="relative flex size-2">
                     <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75"></span>
                     <span className="relative inline-flex size-2 rounded-full bg-red-500"></span>
                   </span>
                   <span className="font-medium">Ongoing anomaly</span>
                 </div>
+              )}
+              {isLive && props.hasTrackedContractsChanged && (
+                <Callout
+                  className="rounded px-3 py-2 text-[13px] leading-[130%]"
+                  color="yellow"
+                  small
+                  icon={
+                    <RoundedWarningIcon
+                      className="size-4"
+                      sentiment="warning"
+                    />
+                  }
+                  body={
+                    <>
+                      There are implementation changes, data might be incorrect.
+                    </>
+                  }
+                />
               )}
               <div className="flex justify-between gap-2">
                 Start:

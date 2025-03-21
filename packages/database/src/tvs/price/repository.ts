@@ -3,14 +3,46 @@ import { BaseRepository } from '../../BaseRepository'
 import { type TvsPriceRecord, toRecord, toRow } from './entity'
 
 export class TvsPriceRepository extends BaseRepository {
-  async insertMany(records: TvsPriceRecord[]) {
+  async insertMany(records: TvsPriceRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    await this.batch(rows, 1_000, async (batch) => {
       await this.db.insertInto('TvsPrice').values(batch).execute()
     })
     return rows.length
+  }
+
+  async getPricesInRange(
+    configurationIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<TvsPriceRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getLatestPriceBefore(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsPriceRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '<', UnixTime.toDate(timestamp))
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async deleteByConfigInTimeRange(

@@ -1183,12 +1183,12 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "orbitstack/layer2/L2ERC20Gateway": "0xee9b49621a188bc6396c7ae566d02857498bc2f84c6df7cdb208470d60488760",
-    "orbitstack/layer2/L2GatewayRouter": "0x50668f2bdd694e6879b8f361ab9a75ea31cba7fdd32382b5008974bd612c2e29",
-    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x82a0c1a1dc89f4b74d9468a660ce45f8ba5cb73dbea35d1af3b062722be6f700",
-    "orbitstack/layer2/L2SurplusFee": "0xfbb5a7e8b8f6169f98883c454a11a4d39a1b801c57f49fed8b9a6a5524c44227",
-    "orbitstack/layer2/L2WethGateway": "0xe77b21156bba4dd952ebb9ee761c95428d848b786646c6390abd113aa72938e1",
-    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "orbitstack/layer2/L2ERC20Gateway": "0x1cee9e90c8980af1a7c50bc87b2ba48d645ce595958e4fd5ba406bc66ab8ef55",
+    "orbitstack/layer2/L2GatewayRouter": "0x1d4f249082baa0e166cb5506766722ee490240305c822505eb17ea016d317f96",
+    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x525c2c86f5126236f2eb6eaef248d1569882bf6fdacb69a5ec8fa1c87233c531",
+    "orbitstack/layer2/L2SurplusFee": "0xd62429d6d88fd69a980d6741ad6dbfa1d27404910cbff7e876485a6ff5e7b483",
+    "orbitstack/layer2/L2WethGateway": "0xd122e07fbe8e90b6c800672254eb9291f42c187b77050cd6d607243eac92b608",
+    "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19"
   }
 }

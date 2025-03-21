@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x7404a4abf39d47214e5619ff9b2fcbe83c994140
+
+# Diff at Wed, 19 Mar 2025 13:05:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21973410
+- current block number: 21973410
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973410 (main branch discovery), not current.
+
+```diff
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x76bf46b305667b7de93bd56407aaae4371e57bcb
 
 # Diff at Tue, 18 Mar 2025 08:14:16 GMT:

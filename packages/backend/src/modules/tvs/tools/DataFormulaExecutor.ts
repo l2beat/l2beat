@@ -12,11 +12,11 @@ import type {
   PriceConfig,
   TotalSupplyAmountConfig,
 } from '../types'
-import type { DataStorage } from './DataStorage'
+import type { LocalStorage } from './LocalStorage'
 
 export class DataFormulaExecutor {
   constructor(
-    private storage: DataStorage,
+    private storage: LocalStorage,
     private priceProvider: PriceProvider,
     private circulatingSupplyProvider: CirculatingSupplyProvider,
     private blockProviders: Map<string, BlockProvider>,

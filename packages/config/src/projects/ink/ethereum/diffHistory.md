@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x0898420bfd138ebbd6ac1e2b70756ec0e62733f3
+
+# Diff at Tue, 18 Mar 2025 10:45:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 21829669
+- current block number: 22073248
+
+## Description
+
+Migrate to new FaultDisputeGame (v1.3.1), which is the same as the one used by op mainnet and unichain.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract DisputeGameFactory (0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD"
++        "0x8D9faaEb46cBCf487baf2182E438Ac3D0847F637"
+      values.gameImpls.0:
+-        "0x0A780bE3eB21117b1bBCD74cf5D7624A3a482963"
++        "0x7e87B471e96b96955044328242456427A0D49694"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.7.from:
+-        "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
++        "0xc4986627A41cdCf6fa33543D96f00F475bCE42f5"
+      receivedPermissions.6.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xf6b1554F483C391414d3830927E3600c105AaE6E"
+      receivedPermissions.6.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
+      receivedPermissions.5.from:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.5.via.0.address:
+-        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.4.from:
+-        "0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      receivedPermissions.4.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.3.from:
+-        "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD"
++        "0xA8B389A82e088b164cD03230e900980CcED34d29"
+      receivedPermissions.2.from:
+-        "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38"
++        "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x6A8eFcba5642EB15D743CBB29545BdC44D5Ad8cD)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract ProxyAdmin (0xd56045E68956FCe2576E680c95a4750cf8241f79) {
+    +++ description: None
+      directlyReceivedPermissions.6.from:
+-        "0x3Beaca17eaE5643FB1479AA5f4B1fF75cc4b9B50"
++        "0xc4986627A41cdCf6fa33543D96f00F475bCE42f5"
+      directlyReceivedPermissions.5.from:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "0xf6b1554F483C391414d3830927E3600c105AaE6E"
+      directlyReceivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.4.from:
+-        "0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      directlyReceivedPermissions.4.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.3.from:
+-        "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD"
++        "0xA8B389A82e088b164cD03230e900980CcED34d29"
+      directlyReceivedPermissions.2.from:
+-        "0x14773a8040Ff22e3DcBb0C83eC8e33Be7D920D38"
++        "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x7e87B471e96b96955044328242456427A0D49694)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x8D9faaEb46cBCf487baf2182E438Ac3D0847F637)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xc4986627A41cdCf6fa33543D96f00F475bCE42f5)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xf6b1554F483C391414d3830927E3600c105AaE6E)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH.sol                                |   0
+ .../Proxy.p.sol                                    |   0
+ .../DelayedWETH.sol                                |   0
+ .../Proxy.p.sol                                    |   0
+ .../{.flat@21829669 => .flat}/FaultDisputeGame.sol | 386 ++++++++----------
+ .../ethereum/{.flat@21829669 => .flat}/MIPS.sol    | 444 +++++++++++++++------
+ .../PermissionedDisputeGame.sol                    | 408 +++++++++----------
+ 7 files changed, 681 insertions(+), 557 deletions(-)
+```
+
 Generated with discovered.json: 0x4574f6cec9b03eb0df294d808daf3b189b83eb09
 
 # Diff at Tue, 18 Mar 2025 08:12:59 GMT:

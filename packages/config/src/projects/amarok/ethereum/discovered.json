@@ -3861,8 +3861,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x4abb285cff2bca205292f0470fe80007ce1fc62ecb8049d1347145deb2394b4c",
-    "amarok/RelayerProxyHub": "0x4e86b082d1daa02b9ac2c6868e33e37a1f13de0f6f89107d86849e61a4c41d20",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "amarok/Relayer": "0x2e1de0bd5e66100a21bb99c944222818a507084747c6cd8508cb4f9c82d72f50",
+    "amarok/RelayerProxyHub": "0xb39f11377aa3c325a9ed116aaab55ff76bac6f6a69bef647bd3425cabb652eaa",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

@@ -1340,9 +1340,9 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond_v26": "0x96ca6345e559f5aea25045fad5d4da926ada865bc15973eb6f5f1558344d2732",
-    "shared-zk-stack/RollupL1DAValidator": "0x747b42383d5be9c7ab5ba95b27b68256f2ded258af3e5f4fe0ea84bc335b8041",
-    "shared-zk-stack/ValidatorTimelock": "0xaf849ac9e8ad6fc0f066c7c9d7a908acce47be1d07050d57ccbc0a552bd3085a",
-    "shared-zk-stack/Verifier": "0xda1c82e78670178218dae2b3f723d96aa77f794d50107ab147f32d214f44ad50"
+    "shared-zk-stack/Diamond_v26": "0x5f6579ff4d790a38918f1167eadfb789b3a3b0af9b787633feb9b72e06ed8797",
+    "shared-zk-stack/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
+    "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
+    "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }
 }

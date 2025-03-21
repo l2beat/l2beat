@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import type { Config } from '../../config'
 import type { Providers } from '../../providers/Providers'
@@ -14,8 +15,12 @@ import {
   type OnchainAmountConfig,
   OnchainAmountIndexer,
 } from './indexers/OnchainAmountIndexer'
+import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
+import { ValueService } from './services/ValueService'
+import { DBStorage } from './tools/DBStorage'
 import { createAmountConfig } from './tools/extractPricesAndAmounts'
+import { getTokenSyncRange } from './tools/getTokenSyncRange'
 
 export function initTvsModule(
   config: Config,
@@ -59,6 +64,8 @@ export function initTvsModule(
     db: database,
   })
 
+  const amountIndexers = new Map<string, Indexer>()
+
   const circulatingSupplyIndexer = new CirculatingSupplyAmountIndexer({
     logger,
     parents: [hourlyIndexer],
@@ -76,8 +83,12 @@ export function initTvsModule(
     syncOptimizer,
     db: database,
   })
+  amountIndexers.set(
+    CirculatingSupplyAmountIndexer.SOURCE,
+    circulatingSupplyIndexer,
+  )
 
-  const indexers: Indexer[] = []
+  const blockTimestampIndexers: Indexer[] = []
 
   for (const chain of config.tvs.chains) {
     const blockTimestampIndexer = new BlockTimestampIndexer({
@@ -96,7 +107,7 @@ export function initTvsModule(
       db: database,
       logger,
     })
-    indexers.push(blockTimestampIndexer)
+    blockTimestampIndexers.push(blockTimestampIndexer)
 
     const configurations = config.tvs.amounts.filter(
       (a) =>
@@ -120,15 +131,58 @@ export function initTvsModule(
       db: database,
       logger,
     })
-    indexers.push(amountIndexer)
+    amountIndexers.set(chain.chainName, amountIndexer)
+  }
+
+  const tokenValueIndexers: Indexer[] = []
+
+  for (const project of config.tvs.projects) {
+    const dbStorage = new DBStorage(database, logger)
+    const valueService = new ValueService(dbStorage)
+
+    const amountSources = project.amountSources.map((source) => {
+      const indexer = amountIndexers.get(source)
+      assert(indexer, `${project.projectId} no indexer found for ${source}`)
+      return indexer
+    })
+
+    const tokenValueIndexer = new TokenValueIndexer({
+      syncOptimizer,
+      valueService,
+      dbStorage,
+      project: project.projectId,
+      maxTimestampsToProcessAtOnce: 500,
+      parents: [priceIndexer, ...amountSources],
+      indexerService,
+      configurations: project.tokens.map((t) => {
+        const { sinceTimestamp, untilTimestamp } = getTokenSyncRange(t)
+        return {
+          id: TokenValueIndexer.idToConfigurationId(t.id),
+          minHeight: sinceTimestamp,
+          maxHeight: untilTimestamp ?? null,
+          properties: t,
+        }
+      }),
+      db: database,
+      logger,
+    })
+
+    tokenValueIndexers.push(tokenValueIndexer)
   }
 
   const start = async () => {
     await hourlyIndexer.start()
     await priceIndexer.start()
-    await circulatingSupplyIndexer.start()
 
-    for (const indexer of indexers) {
+    for (const indexer of blockTimestampIndexers) {
+      await indexer.start()
+    }
+
+    for (const indexer of Array.from(amountIndexers.values())) {
+      await indexer.start()
+    }
+
+    for (const indexer of tokenValueIndexers) {
       await indexer.start()
     }
   }

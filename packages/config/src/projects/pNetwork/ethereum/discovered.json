@@ -1064,8 +1064,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "tokens/Lido/EVMScriptRegistry": "0xc2ab4645bf784bbbfba61261e18cf70d0f4e86b7109fd5676d1c6a4ee4f5cf17",
-    "tokens/Lido/MiniMeToken": "0x1d5ac726979b81b11d64a8be120aa4648a888807c945f1f87c0ebba72c7b34ce"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "tokens/Lido/EVMScriptRegistry": "0xf15bea0ce9ca2fce59f1d42d128e15a18b05a3c54aeebc6bb4bcceb2986f3fc9",
+    "tokens/Lido/MiniMeToken": "0xe6377d7d81dcc6db240e3c8d3c229509e5d86c3f075135c8f21ddae7920d27ef"
   }
 }

@@ -32,7 +32,6 @@ import { hyperliquid } from '../projects/hyperliquid/hyperliquid'
 import { inevm } from '../projects/inevm/inevm'
 import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
-import { meliora } from '../projects/meliora/meliora'
 import { mindchain } from '../projects/mindchain/mindchain'
 import { molten } from '../projects/molten/molten'
 import { muster } from '../projects/muster/muster'
@@ -112,7 +111,6 @@ export const layer3s: ScalingProject[] = [
   skynet,
   slingshot,
   syndicateframe,
-  meliora,
   mindchain,
   molten,
   muster,

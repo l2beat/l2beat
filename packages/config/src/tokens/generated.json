@@ -5602,6 +5602,20 @@
       "supply": "zero"
     },
     {
+      "name": "Token Prometeus Network",
+      "coingeckoId": "prometeus",
+      "address": "0xfc82bb4ba86045Af6F327323a46E80412b91b27d",
+      "symbol": "PROM",
+      "decimals": 18,
+      "deploymentTimestamp": 1716104945,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8825/large/Ticker.png?1696508978",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Tokenlon",
       "coingeckoId": "tokenlon",
       "address": "0x0000000000095413afC295d19EDeb1Ad7B71c952",
@@ -11967,15 +11981,15 @@
       "name": "USDC",
       "coingeckoId": "bridged-usd-coin-linea",
       "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
-      "symbol": "USDC.e",
+      "symbol": "USDC",
       "decimals": 6,
       "deploymentTimestamp": 1691084270,
       "coingeckoListingTimestamp": 1692057600,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/31270/large/USDC-icon.png?1696530094",
       "chainId": 59144,
-      "source": "canonical",
-      "supply": "zero"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "USDe",

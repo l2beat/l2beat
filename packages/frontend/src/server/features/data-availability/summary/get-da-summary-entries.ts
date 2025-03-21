@@ -241,7 +241,9 @@ function getEthereumEntry(
         tvs: getTvs(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
         risks: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
         dacInfo: undefined,
-        usedIn: bridge.daBridge.usedIn,
+        usedIn: bridge.daBridge.usedIn.sort(
+          (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
+        ),
       },
     ],
     challengeMechanism: undefined,

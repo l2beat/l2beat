@@ -45,7 +45,6 @@
       "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -63,7 +62,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -199,7 +197,6 @@
       "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -897,7 +894,6 @@
       "address": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -909,7 +905,6 @@
       "address": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -1453,9 +1448,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "hyperlane/HypERC20Collateral": "0x57fca843c9a1a4567135c9180f6b8aaf2984875782d63269f693af7e19fc141e",
-    "hyperlane/StaticAggregationIsm": "0x9846d94207bd830864d9fd05ea5934e441cf867200f46d47c3cece380cc8de90"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "hyperlane/HypERC20Collateral": "0x46c58559ac8d2fc451fbbab33cf64336a6aaa4dc5b502f4086228c68f1f24409",
+    "hyperlane/StaticAggregationIsm": "0x4f2401354384aa0c656d98aad03631095cf0348fc2c01470e09a403572e126aa"
   }
 }

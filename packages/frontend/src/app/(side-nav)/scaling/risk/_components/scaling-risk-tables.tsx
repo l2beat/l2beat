@@ -15,24 +15,24 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingRiskTable } from './table/scaling-risk-table'
 
 type Props = TabbedScalingEntries<ScalingRiskEntry>
 
 export function ScalingRiskTables(props: Props) {
-  const includeFilters = useScalingFilter()
+  const filterEntries = useFilterEntries()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
   const entries = checked
     ? getRecategorisedEntries(props, compareStageAndTvs)
@@ -58,15 +58,14 @@ export function ScalingRiskTables(props: Props) {
 
   return (
     <>
-      <ScalingFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+      <TableFilters
+        entries={[
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
-        className="max-md:mt-4"
-        showHostChainFilter
       />
+
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

@@ -1,6 +1,9 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
+import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
+import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
   AmountConfig,
   BlockTimestampConfig,
@@ -13,6 +16,7 @@ import type { FeatureFlags } from '../FeatureFlags'
 export async function getTvsConfig(
   ps: ProjectService,
   flags: FeatureFlags,
+  sinceTimestamp?: number,
 ): Promise<TvsConfig> {
   const projectsWithTvl = await ps.getProjects({
     select: ['tvlConfig'],
@@ -24,14 +28,42 @@ export async function getTvsConfig(
   )
 
   // TODO be replaced by ProjectService
-  const projects = readConfigs(enabledProjects).filter(
-    (p) => p.tokens.length > 0,
+  let projects = readConfigs(enabledProjects).filter((p) => p.tokens.length > 0)
+
+  // sinceTimestamp override for local development
+  if (sinceTimestamp) {
+    projects = projects.map((p) => ({
+      projectId: p.projectId,
+      tokens: getEffectiveConfig(p.tokens, sinceTimestamp),
+    }))
+  }
+
+  const { amounts, prices, chains } = await getAmountsAndPrices(
+    projects,
+    sinceTimestamp,
   )
 
-  const { amounts, prices, chains } = await getAmountsAndPrices(projects)
+  const projectsWithSources = projects.map((p) => {
+    const amountChains = amounts
+      .filter((a) => a.project === p.projectId)
+      .map((a) => {
+        switch (a.type) {
+          case 'circulatingSupply':
+            return CirculatingSupplyAmountIndexer.SOURCE
+          case 'balanceOfEscrow':
+          case 'totalSupply':
+            return a.chain
+          case 'const':
+            return undefined
+        }
+      })
+      .filter(notUndefined)
+
+    return { ...p, amountSources: Array.from(new Set(amountChains).values()) }
+  })
 
   return {
-    projects,
+    projects: projectsWithSources,
     amounts,
     prices,
     chains,
@@ -63,6 +95,7 @@ export function readConfigs(
 
 export async function getAmountsAndPrices(
   projects: ProjectTvsConfig[],
+  sinceTimestamp?: UnixTime,
 ): Promise<{
   amounts: (AmountConfig & { project: string; chain?: string })[]
   prices: PriceConfig[]
@@ -104,6 +137,7 @@ export async function getAmountsAndPrices(
       prices.set(price.priceId, price)
     }
 
+    assert(projectChains)
     for (const chain of projectChains) {
       chains.set(chain.chainName, chain)
     }
@@ -112,6 +146,11 @@ export async function getAmountsAndPrices(
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
-    chains: Array.from(chains.values()),
+    chains: sinceTimestamp
+      ? Array.from(chains.values()).map((c) => ({
+          ...c,
+          sinceTimestamp,
+        }))
+      : Array.from(chains.values()),
   }
 }

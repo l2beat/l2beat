@@ -724,8 +724,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "polygon-cdk/PolygonZkEVM": "0x56cf02df517a3e3f6c85d0da12f7f4740428295dd7bdd6a18fd1a12fd48aa527",
-    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "polygon-cdk/PolygonZkEVM": "0xa5e14ba8c6f4f08fbf0a0563e2b3a245b53f98592b0f5c183ed637422e7aeed9",
+    "polygon-cdk/Verifier": "0x156dd18408212b6f9819278c83e38b5262986c093c695670634cfe4daeb25053"
   }
 }

@@ -35,8 +35,6 @@ describe('metaUtils', () => {
             target: EthereumAddress.from('0x5678'),
           },
         ],
-        types: new Set(['CODE_CHANGE', 'EXTERNAL']),
-        severity: 'LOW',
         references: [
           { text: 'Source Code', href: 'link1' },
           { text: 'Source Code', href: 'link2' },
@@ -58,8 +56,6 @@ describe('metaUtils', () => {
           },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
-        types: new Set(['PERMISSION', 'L2', 'EXTERNAL']),
-        severity: 'MEDIUM',
         references: [
           { text: 'Some docs', href: 'link1' },
           { text: 'Source Code', href: 'link2' },
@@ -90,8 +86,6 @@ describe('metaUtils', () => {
           },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
-        types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2', 'PERMISSION']),
-        severity: 'MEDIUM',
         references: [
           { text: 'Source Code', href: 'link1' },
           { text: 'Source Code', href: 'link2' },
@@ -312,7 +306,6 @@ describe('metaUtils', () => {
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
           permissions: [{ type: 'interact', delay: 0 }],
-          severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         owner: {
@@ -324,7 +317,6 @@ describe('metaUtils', () => {
                 'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
             },
           ],
-          severity: 'LOW',
           type: 'CODE_CHANGE',
         },
         resourceConfig: {
@@ -343,12 +335,10 @@ describe('metaUtils', () => {
                 'configuring the {{ $.address }} contract allows freeze funds',
             },
           ],
-          severity: 'HIGH',
           type: ['L2', 'EXTERNAL'],
         },
         scalar: {
           permissions: [{ type: 'interact', delay: 0 }],
-          severity: 'LOW',
           type: 'CODE_CHANGE',
         },
       }
@@ -383,8 +373,6 @@ describe('metaUtils', () => {
             },
             { type: 'upgrade', delay: 0, target: selfAddress },
           ],
-          severity: 'LOW',
-          types: new Set(['CODE_CHANGE']),
           references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
@@ -409,8 +397,6 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
             },
           ],
-          severity: 'HIGH',
-          types: new Set(['EXTERNAL', 'L2']),
           references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
@@ -435,8 +421,6 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
             },
           ],
-          severity: 'HIGH',
-          types: new Set(['EXTERNAL', 'L2']),
           references: undefined,
         },
       })
@@ -466,7 +450,6 @@ describe('metaUtils', () => {
               description: 'Existing configured upgrade permission',
             },
           ],
-          severity: 'HIGH',
           type: 'CODE_CHANGE',
         },
       }
@@ -498,8 +481,6 @@ describe('metaUtils', () => {
           },
         ],
         references: undefined,
-        severity: 'HIGH',
-        types: new Set(['CODE_CHANGE']),
       })
     })
   })
@@ -531,8 +512,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0x1234'),
               },
             ],
-            severity: 'LOW',
-            types: new Set(['CODE_CHANGE']),
           },
           '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
             displayName: undefined,
@@ -549,8 +528,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0x1234'),
               },
             ],
-            severity: 'HIGH',
-            types: new Set(['EXTERNAL', 'L2']),
           },
         },
         {
@@ -565,8 +542,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0xbeef'),
               },
             ],
-            severity: 'MEDIUM',
-            types: new Set(['EXTERNAL', 'L2']),
           },
           '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
             displayName: undefined,
@@ -583,8 +558,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0xbeef'),
               },
             ],
-            severity: 'HIGH',
-            types: new Set(['EXTERNAL', 'L2']),
           },
         },
       ]
@@ -609,8 +582,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0xbeef'),
             },
           ],
-          types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
-          severity: 'MEDIUM',
           references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
@@ -629,8 +600,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0x1234'),
             },
           ],
-          types: new Set(['EXTERNAL', 'L2']),
-          severity: 'HIGH',
           references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
@@ -649,8 +618,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0xbeef'),
             },
           ],
-          types: new Set(['EXTERNAL', 'L2']),
-          severity: 'HIGH',
           references: undefined,
         },
       })

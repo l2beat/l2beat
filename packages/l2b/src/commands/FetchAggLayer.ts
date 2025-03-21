@@ -1,6 +1,7 @@
+import path from 'path'
 import { command, option } from 'cmd-ts'
 import { AgglayerDataFetcher } from '../implementations/fetchAgglayer'
-import { HttpUrl } from './types'
+import { File, HttpUrl } from './types'
 
 export const FetchAgglayer = command({
   name: 'fetchagg',
@@ -16,15 +17,20 @@ export const FetchAgglayer = command({
       defaultValueIsSerializable: true,
     }),
     outputPath: option({
-      type: HttpUrl,
+      type: File,
       long: 'output-path',
       short: 'o',
-      defaultValue: () => './fetchAgglayer_output.json',
+      defaultValue: () =>
+        '../config/src/projects/shared-polygon-cdk/ethereum/l2b-fetchagg_output.json',
       defaultValueIsSerializable: true,
     }),
   },
   handler: async (args) => {
-    const fetcher = new AgglayerDataFetcher(args.rpcUrl, args.outputPath)
+    // Resolve the output path relative to the project root
+    const projectRoot = process.cwd() // This will be the directory where the command is run
+    const resolvedOutputPath = path.resolve(projectRoot, args.outputPath)
+
+    const fetcher = new AgglayerDataFetcher(args.rpcUrl, resolvedOutputPath)
     await fetcher.fetchAndDisplayRollupData()
   },
 })
