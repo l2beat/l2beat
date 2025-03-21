@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 771451,
+  "blockNumber": 772987,
   "configHash": "0xdb109a6d0f0e6297d449d90adfa2cfc4a0ffa00ac102267ce2b198a893b0af33",
   "entries": [
     {
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1742456107,
+        "clock": 1742551041,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -63,7 +63,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1742456107,
+        "clock": 1742551041,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -148,7 +148,7 @@
           ]
         ],
         "$upgradeCount": 8,
-        "clock": 1742456107,
+        "clock": 1742551041,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -363,7 +363,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "31057158094646080475",
+        "getDeposit": "31014802901544520475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -443,6 +443,7 @@
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 950400,
           "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
         },
         {
@@ -639,7 +640,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4635,
+        "getNonce": 4652,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -680,7 +681,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 17820,
+        "globalMessageCount": 17916,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1193,7 +1194,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 73271
+        "totalWallets": 73494
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1262,6 +1263,7 @@
         {
           "permission": "interact",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "delay": 950400,
           "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
           "via": []
         }
@@ -1324,8 +1326,8 @@
               "members": [
                 {
                   "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-                  "since": 1729791296,
-                  "executionDelay": 0
+                  "since": 1742514140,
+                  "executionDelay": 950400
                 },
                 {
                   "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
@@ -1415,7 +1417,7 @@
           "SECURITY_COUNCIL_ROLE": ["14661544942390944024"]
         },
         "ADMIN_ROLE": 0,
-        "edKintoAdminMultisigADMIN": 0,
+        "edKintoAdminMultisigADMIN": 950400,
         "edKintoAdminMultisigUPGRADER": 604800,
         "edScADMIN": 604800,
         "edScSECURITY_COUNCIL": 950400,
@@ -1424,7 +1426,16 @@
         "initialAdminRole": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "kintoAdminMultisigPermission": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "minSetback": 432000,
-        "OperationScheduled": [],
+        "OperationScheduled": [
+          {
+            "operationId": "0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8",
+            "nonce": 1,
+            "schedule": 1743464541,
+            "caller": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+            "target": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+            "data": "0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"
+          }
+        ],
         "PUBLIC_ROLE": "18446744073709551615",
         "RoleAdminChanged": {},
         "RoleGrantDelayChanged": {
@@ -1444,6 +1455,12 @@
               "delay": 604800,
               "since": 1742341092,
               "newMember": true
+            },
+            {
+              "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+              "delay": 950400,
+              "since": 1742514140,
+              "newMember": false
             }
           ],
           "1635978423191113331": [
@@ -1697,16 +1714,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "553911504848728660827520",
-        "getUnclaimedLimit": "107341828065168238105221",
+        "getTotalLimit": "555920312378098324556635",
+        "getUnclaimedLimit": "108791857403074559891031",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0xfcc797e63de1451255f7770b59c6b2bc2a2238da29d25ca4ef783047d35c9908",
+        "root": "0xeecaad8b0b3ae70c164cb704ad8187483ffbbc5c9991dc3c6e0666203660e592",
         "startTime": 1718690400,
-        "totalClaimed": "446569676783560422722299",
+        "totalClaimed": "447128454975023764665604",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1900,7 +1917,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1742455090,
+        "lastMonitoredAt": 1742550489,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -2298,7 +2315,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 73598,
+        "totalSupply": 73818,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
