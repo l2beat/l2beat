@@ -8,7 +8,7 @@ import {
 } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { command, positional, run, string } from 'cmd-ts'
+import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import type {
   ProjectTvsConfig,
@@ -19,7 +19,7 @@ import type {
 
 const args = {
   project: positional({
-    type: string,
+    type: optional(string),
     displayName: 'projectId',
     description: 'Project for which tvs will be executed',
   }),
@@ -31,35 +31,79 @@ const cmd = command({
   handler: async (args) => {
     const env = getEnv()
     const logger = initLogger(env)
-
     const ps = new ProjectService()
     const localExecutor = new LocalExecutor(ps, env, logger)
 
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
-    const tokens = readConfig(args.project, logger)
-    const config = {
-      projectId: ProjectId(args.project),
-      tokens,
+    if (!args.project) {
+      const projects = await ps.getProjects({
+        select: ['tvlConfig'],
+        optional: ['chainConfig'],
+      })
+
+      if (!projects) {
+        logger.error('No TVS projects found')
+        process.exit(1)
+      }
+
+      let totalTvs = 0
+      for (const project of projects) {
+        logger.info(`Executing TVS config for project ${project.id}`)
+
+        const config = readConfig(project.id, logger)
+
+        if (config.tokens.length === 0) {
+          continue
+        }
+
+        const tvs = await localExecutor.run(config, [timestamp], false)
+
+        const valueForProject = tvs.reduce((acc, token) => {
+          return acc + token.valueForProject
+        }, 0)
+
+        const valueForTotal = tvs.reduce((acc, token) => {
+          return acc + token.valueForSummary
+        }, 0)
+
+        totalTvs += valueForTotal
+
+        logger.info(`TVS for project ${toDollarString(valueForProject)}`)
+        logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+      }
+    } else {
+      const project = await ps.getProject({
+        id: ProjectId(args.project),
+        select: ['tvlConfig'],
+        optional: ['chainConfig'],
+      })
+
+      if (!project) {
+        logger.error(`Project '${args.project}' not found`)
+        process.exit(1)
+      }
+
+      const config = readConfig(args.project, logger)
+
+      const tvs = await localExecutor.run(config, [timestamp], false)
+
+      const tvsBreakdown = calculateBreakdown(
+        config,
+        tvs,
+        timestamp,
+        args.project,
+      )
+
+      logger.info(`TVS: ${tvsBreakdown.tvs}`)
+      logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
+
+      fs.writeFileSync(
+        './scripts/tvs/breakdown.json',
+        JSON.stringify(tvsBreakdown, null, 2),
+      )
     }
-
-    const tvs = await localExecutor.run(config, [timestamp], false)
-
-    const tvsBreakdown = calculateBreakdown(
-      config,
-      tvs,
-      timestamp,
-      args.project,
-    )
-
-    logger.info(`TVS: ${tvsBreakdown.tvs}`)
-    logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
-
-    fs.writeFileSync(
-      './scripts/tvs/breakdown.json',
-      JSON.stringify(tvsBreakdown, null, 2),
-    )
 
     process.exit(0)
   },
@@ -258,12 +302,25 @@ function toDollarString(value: number) {
   }
 }
 
-function readConfig(project: string, logger: Logger) {
-  const filePath = `./src/modules/tvs/config/${project}.json`
-  logger.info(`reading config from file: ${filePath}`)
+function readConfig(project: string, logger: Logger): ProjectTvsConfig {
+  const filePath = `./src/modules/tvs/config/${project.replace('=', '').replace(';', '')}.json`
+
+  if (!fs.existsSync(filePath)) {
+    logger.info(`No TVS config found for ${project}`)
+    return {
+      projectId: ProjectId(project),
+      tokens: [],
+    }
+  }
+
+  logger.info(`Reading config from file: ${filePath}`)
 
   const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
-  return json.tokens as Token[]
+
+  return {
+    projectId: ProjectId(project),
+    tokens: json.tokens as Token[],
+  }
 }
 
 export function formatNumberWithCommas(value: number, precision = 2): string {

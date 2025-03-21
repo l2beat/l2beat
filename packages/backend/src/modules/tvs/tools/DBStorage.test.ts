@@ -207,7 +207,7 @@ describe(DBStorage.name, () => {
       }
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getLatestPrice: mockFn().resolvesTo(fallbackPrice),
+        getLatestPriceBefore: mockFn().resolvesTo(fallbackPrice),
       })
 
       const storage = new DBStorage(
@@ -221,7 +221,10 @@ describe(DBStorage.name, () => {
       const result = await storage.getPrice(configId, timestamp)
 
       expect(result).toEqual(900)
-      expect(tvsPrice.getLatestPrice).toHaveBeenCalledWith(configId)
+      expect(tvsPrice.getLatestPriceBefore).toHaveBeenCalledWith(
+        configId,
+        timestamp,
+      )
     })
 
     it('throws error when fallback fails', async () => {
@@ -229,7 +232,7 @@ describe(DBStorage.name, () => {
       const configId = 'config1'.repeat(2)
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getLatestPrice: mockFn().resolvesTo(undefined),
+        getLatestPriceBefore: mockFn().resolvesTo(undefined),
       })
 
       const storage = new DBStorage(
@@ -243,7 +246,10 @@ describe(DBStorage.name, () => {
       await expect(storage.getPrice(configId, timestamp)).toBeRejectedWith(
         `Price fallback failed for ${configId} for ${timestamp}`,
       )
-      expect(tvsPrice.getLatestPrice).toHaveBeenCalledWith(configId)
+      expect(tvsPrice.getLatestPriceBefore).toHaveBeenCalledWith(
+        configId,
+        timestamp,
+      )
     })
   })
 
@@ -275,7 +281,7 @@ describe(DBStorage.name, () => {
       }
 
       const tvsAmount = mockObject<Database['tvsAmount']>({
-        getLatestAmount: mockFn().resolvesTo(fallbackAmount),
+        getLatestAmountBefore: mockFn().resolvesTo(fallbackAmount),
       })
 
       const storage = new DBStorage(
@@ -289,7 +295,10 @@ describe(DBStorage.name, () => {
       const result = await storage.getAmount(configId, timestamp)
 
       expect(result).toEqual(200n)
-      expect(tvsAmount.getLatestAmount).toHaveBeenCalledWith(configId)
+      expect(tvsAmount.getLatestAmountBefore).toHaveBeenCalledWith(
+        configId,
+        timestamp,
+      )
     })
 
     it('throws error when fallback fails', async () => {
@@ -297,7 +306,7 @@ describe(DBStorage.name, () => {
       const configId = 'config1'.repeat(2)
 
       const tvsAmount = mockObject<Database['tvsAmount']>({
-        getLatestAmount: mockFn().resolvesTo(undefined),
+        getLatestAmountBefore: mockFn().resolvesTo(undefined),
       })
 
       const storage = new DBStorage(
@@ -311,7 +320,10 @@ describe(DBStorage.name, () => {
       await expect(storage.getAmount(configId, timestamp)).toBeRejectedWith(
         `Amount fallback failed for ${configId}`,
       )
-      expect(tvsAmount.getLatestAmount).toHaveBeenCalledWith(configId)
+      expect(tvsAmount.getLatestAmountBefore).toHaveBeenCalledWith(
+        configId,
+        timestamp,
+      )
     })
   })
 })

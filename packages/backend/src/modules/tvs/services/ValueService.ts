@@ -67,14 +67,27 @@ export class ValueService {
   private async executeAmountFormula(
     formula: AmountFormula,
     timestamp: UnixTime,
-  ): Promise<BigIntWithDecimals> {
+  ): Promise<BigIntWithDecimals | undefined> {
     if (formula.type === 'const') {
       return BigIntWithDecimals(BigInt(formula.value), formula.decimals)
     }
 
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
-    assert(amount !== undefined, `${formula.type} ${config.id}`)
+
+    if (amount === undefined) {
+      if (
+        timestamp < config.sinceTimestamp ||
+        (config.untilTimestamp && timestamp > config.untilTimestamp)
+      ) {
+        return undefined
+      }
+
+      throw new Error(
+        `Amount not found for ${config.id} within configured range (timestamp: ${timestamp}, since: ${config.sinceTimestamp}, until: ${config.untilTimestamp})`,
+      )
+    }
+
     return BigIntWithDecimals(amount, config.decimals)
   }
 
@@ -84,7 +97,11 @@ export class ValueService {
   ): Promise<BigIntWithDecimals> {
     const configurationId = createPriceConfigId(formula.priceId)
     const price = await this.storage.getPrice(configurationId, timestamp)
-    assert(price !== undefined, `Price not found for ${formula.priceId}`)
+
+    assert(
+      price !== undefined,
+      `Price not found for ${formula.priceId} at ${timestamp}`,
+    )
 
     const amount = await this.executeFormula(formula.amount, timestamp)
     const value = BigIntWithDecimals.multiply(
@@ -118,13 +135,13 @@ export class ValueService {
 
             switch (formula.operator) {
               case 'sum':
-                return valueAcc + value
+                return valueAcc + (value ?? 0n)
               case 'diff':
-                return index === 0 ? value : valueAcc - value
+                return index === 0 ? value : valueAcc - (value ?? 0n)
               case 'max':
-                return valueAcc > value ? valueAcc : value
+                return value ? (valueAcc > value ? valueAcc : value) : valueAcc
               case 'min':
-                return valueAcc < value ? valueAcc : value
+                return value ? (valueAcc < value ? valueAcc : value) : valueAcc
             }
           },
           Promise.resolve(
@@ -133,7 +150,7 @@ export class ValueService {
         )
       }
 
-      return await this.executeAmountFormula(formula, timestamp)
+      return (await this.executeAmountFormula(formula, timestamp)) ?? 0n
     }
 
     return await executeFormulaRecursive(formula, timestamp)
