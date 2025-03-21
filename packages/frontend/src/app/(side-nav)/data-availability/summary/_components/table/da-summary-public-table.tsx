@@ -106,7 +106,7 @@ function BridgeCells({
                 <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
               </TooltipTrigger>
               <TooltipContent>
-                This project contains unverified contracts.
+                This bridge contains unverified contracts.
               </TooltipContent>
             </Tooltip>
           )}
