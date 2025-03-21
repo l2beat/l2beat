@@ -21,6 +21,7 @@ export const kinto: ScalingProject = orbitStackL2({
   display: {
     name: 'Kinto',
     slug: 'kinto',
+    architectureImage: 'kinto',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
     links: {
