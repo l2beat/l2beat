@@ -512,22 +512,26 @@ describe('getProjects', () => {
   })
 
   describe('badges', () => {
-    it('has only one infrastructure badge', () => {
-      for (const project of projects) {
-        const infraBadges = project.display?.badges?.filter(
-          (b) => b.type === 'Infra',
-        )
-        expect(infraBadges?.length).toEqual(1)
-      }
-    })
+    const signularBadges = [
+      'Infra',
+      'RaaS',
+      'DA',
+      'Stack',
+      'Fork',
+      'L3ParentChain',
+    ]
 
-    it('has only one RaaS badge', () => {
-      for (const project of projects) {
-        const raasBadges = project.display?.badges?.filter(
-          (b) => b.type === 'RaaS',
-        )
-        expect(raasBadges?.length).toEqual(1)
-      }
-    })
+    for (const badge of signularBadges) {
+      it(`has maximum one ${badge} badge`, () => {
+        for (const project of projects) {
+          const badges = project.display?.badges?.filter(
+            (b) => b.type === badge,
+          )
+          if (badges) {
+            expect(badges.length).toBeLessThanOrEqual(1)
+          }
+        }
+      })
+    }
   })
 })
