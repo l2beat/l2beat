@@ -135,7 +135,11 @@ export const kinto: ScalingProject = orbitStackL2({
         risks: [
           {
             category: 'Users can be censored if',
-            text: "a KYC provider changes the users' KYC status.",
+            text: "a KYC provider changes the users' KYC status and the Security Council confirms it.",
+          },
+          {
+            category: 'Funds can be lost if',
+            text: 'the user interacts with a compromised whitelisted contract.',
           },
         ],
         references: [
