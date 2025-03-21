@@ -32,7 +32,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider AltLayer',
     action: {
-      scalingFilter: ['raas', 'AltLayer'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'AltLayer',
     },
   },
   {
@@ -42,7 +44,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Gateway',
     action: {
-      scalingFilter: ['raas', 'Gateway'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Gateway',
     },
   },
   {
@@ -52,7 +56,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Conduit',
     action: {
-      scalingFilter: ['raas', 'Conduit'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Conduit',
     },
   },
   {
@@ -62,7 +68,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Gelato',
     action: {
-      scalingFilter: ['raas', 'Gelato'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Gelato',
     },
   },
   {
@@ -72,7 +80,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Karnot',
     action: {
-      scalingFilter: ['raas', 'Karnot'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Karnot',
     },
   },
   {
@@ -82,7 +92,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Caldera',
     action: {
-      scalingFilter: ['raas', 'Caldera'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Caldera',
     },
   },
   {
@@ -92,7 +104,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Syndicate',
     action: {
-      scalingFilter: ['raas', 'Syndicate'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Syndicate',
     },
   },
   {
@@ -102,7 +116,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Quicknode',
     action: {
-      scalingFilter: ['raas', 'Quicknode'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Quicknode',
     },
   },
   {
@@ -112,7 +128,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Alchemy',
     action: {
-      scalingFilter: ['raas', 'Alchemy'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Alchemy',
     },
   },
   {
@@ -122,7 +140,9 @@ export const badges = [
     description:
       'This project was deployed via the rollup-as-a-service provider Zeeve',
     action: {
-      scalingFilter: ['raas', 'Zeeve'],
+      type: 'scalingFilter',
+      filterId: 'raas',
+      filterValue: 'Zeeve',
     },
   },
   // DA
@@ -132,7 +152,8 @@ export const badges = [
     name: 'Avail',
     description: 'This project is posting its data to Avail',
     action: {
-      publicDaHighlight: 'Avail',
+      type: 'publicDaHighlight',
+      slug: 'avail',
     },
   },
   {
@@ -141,7 +162,8 @@ export const badges = [
     name: 'Celestia',
     description: 'This project is posting its data to Celestia',
     action: {
-      publicDaHighlight: 'Celestia',
+      type: 'publicDaHighlight',
+      slug: 'celestia',
     },
   },
   {
@@ -151,7 +173,8 @@ export const badges = [
     description:
       'This project utilizes Celestia and has Blobstream enabled, facilitating the bridging of data availability commitments between Celestia and Ethereum.',
     action: {
-      publicDaHighlight: 'Celestia',
+      type: 'publicDaHighlight',
+      slug: 'celestia',
     },
   },
   {
@@ -160,7 +183,8 @@ export const badges = [
     name: 'EigenDA',
     description: 'This project is posting its data to EigenDA',
     action: {
-      publicDaHighlight: 'EigenDA',
+      type: 'publicDaHighlight',
+      slug: 'eigenda',
     },
   },
   {
@@ -169,7 +193,8 @@ export const badges = [
     name: 'NearDA',
     description: 'This project is posting its data to NearDA',
     action: {
-      publicDaHighlight: 'NearDA',
+      type: 'publicDaHighlight',
+      slug: 'near',
     },
   },
   {
@@ -178,7 +203,8 @@ export const badges = [
     name: 'Ethereum with blobs',
     description: 'This project is posting its data to Ethereum as blobs',
     action: {
-      publicDaHighlight: 'Ethereum',
+      type: 'publicDaHighlight',
+      slug: 'ethereum',
     },
   },
   {
@@ -187,7 +213,8 @@ export const badges = [
     name: 'Ethereum with calldata',
     description: 'This project is posting its data to Ethereum as calldata',
     action: {
-      publicDaHighlight: 'Ethereum',
+      type: 'publicDaHighlight',
+      slug: 'ethereum',
     },
   },
   {
@@ -196,7 +223,7 @@ export const badges = [
     name: 'Custom DA solution',
     description: 'This project is using a custom DA solution',
     action: {
-      selfDaHightlight: true,
+      type: 'selfDaHightlight',
     },
   },
   {
@@ -206,7 +233,7 @@ export const badges = [
     description:
       'There is a Data Availability Committee that provides/attests to data availability',
     action: {
-      selfDaHightlight: true,
+      type: 'selfDaHightlight',
     },
   },
   // VM
@@ -217,7 +244,9 @@ export const badges = [
     description:
       'This project uses the Ethereum Virtual Machine to run its smart contracts and supports the Solidity programming language',
     action: {
-      scalingFilter: ['vm', 'EVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'EVM',
     },
   },
   {
@@ -227,7 +256,9 @@ export const badges = [
     description:
       'This project uses the Ethereum Virtual Machine variation to run its smart contracts and supports the Solidity programming language',
     action: {
-      scalingFilter: ['vm', 'EVM-like'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'EVM-like',
     },
   },
   {
@@ -237,7 +268,9 @@ export const badges = [
     description:
       'This project uses the Cairo Virtual Machine to run its smart contracts and supports the Cairo programming language',
     action: {
-      scalingFilter: ['vm', 'CairoVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'CairoVM',
     },
   },
   {
@@ -247,7 +280,9 @@ export const badges = [
     description:
       'This project uses the Cartesi Machine to run its smart contracts and supports any programming language that can be ported to RISC-V architecture',
     action: {
-      scalingFilter: ['vm', 'CartesiVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'CartesiVM',
     },
   },
   {
@@ -257,7 +292,9 @@ export const badges = [
     description:
       'This project uses the Fuel Virtual Machine to run its smart contracts and supports the Sway programming language',
     action: {
-      scalingFilter: ['vm', 'FuelVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'FuelVM',
     },
   },
   {
@@ -267,7 +304,9 @@ export const badges = [
     description:
       'This project uses the Aztec Virtual Machine to run its smart contracts and supports the Noir programming language',
     action: {
-      scalingFilter: ['vm', 'AztecVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'AztecVM',
     },
   },
   {
@@ -277,7 +316,9 @@ export const badges = [
     description:
       'This project uses the Move Virtual Machine to run its smart contracts and supports the Move programming language',
     action: {
-      scalingFilter: ['vm', 'MoveVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'MoveVM',
     },
   },
   {
@@ -287,7 +328,9 @@ export const badges = [
     description:
       'This project uses the Solana Virtual Machine to run its smart contracts',
     action: {
-      scalingFilter: ['vm', 'SolanaVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'SolanaVM',
     },
   },
   {
@@ -297,7 +340,9 @@ export const badges = [
     description:
       'This project uses a WebAssembly Virtual Machine to run its smart contracts',
     action: {
-      scalingFilter: ['vm', 'WasmVM'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'WasmVM',
     },
   },
   {
@@ -306,7 +351,9 @@ export const badges = [
     name: 'Application-specific chain',
     description: 'This project is built to operate a specific application',
     action: {
-      scalingFilter: ['vm', 'AppChain'],
+      type: 'scalingFilter',
+      filterId: 'vm',
+      filterValue: 'AppChain',
     },
   },
   //Infra
@@ -317,7 +364,9 @@ export const badges = [
     description:
       "The project is part of the Superchain, meaning it's included in the Superchain registry or uses the Superchain config",
     action: {
-      scalingFilter: ['infrastructure', 'Superchain'],
+      type: 'scalingFilter',
+      filterId: 'infrastructure',
+      filterValue: 'Superchain',
     },
   },
   {
@@ -326,7 +375,9 @@ export const badges = [
     name: 'Uses SHARP',
     description: 'The project uses a shared prover contract - SHARP',
     action: {
-      scalingFilter: ['infrastructure', 'SHARP'],
+      type: 'scalingFilter',
+      filterId: 'infrastructure',
+      filterValue: 'SHARP',
     },
   },
   {
@@ -335,7 +386,9 @@ export const badges = [
     name: 'Part of the AggLayer',
     description: 'The project is part of the AggLayer',
     action: {
-      scalingFilter: ['infrastructure', 'AggLayer'],
+      type: 'scalingFilter',
+      filterId: 'infrastructure',
+      filterValue: 'AggLayer',
     },
   },
   {
@@ -345,7 +398,9 @@ export const badges = [
     description:
       "The project is part of the Elastic Chain, meaning it's based on the ZK stack and uses the shared contracts",
     action: {
-      scalingFilter: ['infrastructure', 'Elastic Chain'],
+      type: 'scalingFilter',
+      filterId: 'infrastructure',
+      filterValue: 'Elastic Chain',
     },
   },
   // Stack/forks
@@ -355,7 +410,9 @@ export const badges = [
     name: 'Built on OP Stack',
     description: 'The project is built on the OP Stack',
     action: {
-      scalingFilter: ['stack', 'OP Stack'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'OP Stack',
     },
   },
   {
@@ -364,7 +421,9 @@ export const badges = [
     name: 'Built on Arbitrum Orbit',
     description: 'The project is built on Arbitrum Orbit',
     action: {
-      scalingFilter: ['stack', 'Arbitrum'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'Arbitrum',
     },
   },
   {
@@ -373,7 +432,9 @@ export const badges = [
     name: 'Built on Arbitrum Nitro',
     description: 'The project is built on Arbitrum Nitro',
     action: {
-      scalingFilter: ['stack', 'Arbitrum'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'Arbitrum',
     },
   },
   {
@@ -383,7 +444,9 @@ export const badges = [
     description:
       'This project was deployed utilizing the StarkEx technology from StarkWare',
     action: {
-      scalingFilter: ['stack', 'StarkEx'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'StarkEx',
     },
   },
   {
@@ -392,7 +455,9 @@ export const badges = [
     name: 'Built on the ZK Stack',
     description: 'The project is built on the ZK Stack',
     action: {
-      scalingFilter: ['stack', 'ZK Stack'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'ZK Stack',
     },
   },
   {
@@ -401,7 +466,9 @@ export const badges = [
     name: 'Built on the Polygon CDK stack',
     description: 'The project is built on the Polygon CDK stack',
     action: {
-      scalingFilter: ['stack', 'Polygon'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'Polygon',
     },
   },
   {
@@ -410,7 +477,9 @@ export const badges = [
     name: 'Built on the Cartesi stack',
     description: 'The project is built on the Cartesi stack',
     action: {
-      scalingFilter: ['stack', 'Cartesi'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'Cartesi',
     },
   },
   {
@@ -419,7 +488,9 @@ export const badges = [
     name: 'Built on the SN Stack',
     description: 'The project is built on the SN Stack',
     action: {
-      scalingFilter: ['stack', 'SN Stack'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'SN Stack',
     },
   },
   {
@@ -428,7 +499,9 @@ export const badges = [
     name: 'Fork of Loopring',
     description: 'The project is fork of Loopring',
     action: {
-      scalingFilter: ['stack', 'Loopring'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'Loopring',
     },
   },
   {
@@ -437,7 +510,9 @@ export const badges = [
     name: 'Fork of OVM',
     description: 'The project is fork of the Optimistic Virtual Machine',
     action: {
-      scalingFilter: ['stack', 'OVM'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'OVM',
     },
   },
   {
@@ -446,7 +521,9 @@ export const badges = [
     name: 'Fork of ZKsync Lite',
     description: 'The project is fork of ZKsync Lite',
     action: {
-      scalingFilter: ['stack', 'ZKsync Lite'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'ZKsync Lite',
     },
   },
   {
@@ -455,7 +532,9 @@ export const badges = [
     name: 'Fork of Taiko',
     description: 'The project is fork of Taiko',
     action: {
-      scalingFilter: ['stack', 'Taiko'],
+      type: 'scalingFilter',
+      filterId: 'stack',
+      filterValue: 'Taiko',
     },
   },
   //L3 host chains
@@ -465,7 +544,9 @@ export const badges = [
     name: 'Built on top of Arbitrum',
     description: 'The project has Arbitrum as its host chain',
     action: {
-      scalingFilter: ['hostChain', 'Arbitrum'],
+      type: 'scalingFilter',
+      filterId: 'hostChain',
+      filterValue: 'Arbitrum',
     },
   },
   {
@@ -474,7 +555,9 @@ export const badges = [
     name: 'Built on top of Base',
     description: 'The project has Base as its host chain',
     action: {
-      scalingFilter: ['hostChain', 'Base'],
+      type: 'scalingFilter',
+      filterId: 'hostChain',
+      filterValue: 'Base',
     },
   },
   {
@@ -483,7 +566,9 @@ export const badges = [
     name: 'Built on top of Linea',
     description: 'The project has Linea as its host chain',
     action: {
-      scalingFilter: ['hostChain', 'Linea'],
+      type: 'scalingFilter',
+      filterId: 'hostChain',
+      filterValue: 'Linea',
     },
   },
   {
@@ -492,7 +577,9 @@ export const badges = [
     name: 'Built on top of Arbitrum Nova',
     description: 'The project has Arbitrum Nova as its host chain',
     action: {
-      scalingFilter: ['hostChain', 'Arbitrum Nova'],
+      type: 'scalingFilter',
+      filterId: 'hostChain',
+      filterValue: 'Arbitrum Nova',
     },
   },
   {
@@ -501,7 +588,9 @@ export const badges = [
     name: 'Built on top of OP Mainnet',
     description: 'The project has OP Mainnet as its host chain',
     action: {
-      scalingFilter: ['hostChain', 'OP Mainnet'],
+      type: 'scalingFilter',
+      filterId: 'hostChain',
+      filterValue: 'OP Mainnet',
     },
   },
   // Other
@@ -525,7 +614,8 @@ export const badges = [
     name: 'L3 Host Chain',
     description: 'This project serves as a host chain for L3s',
     action: {
-      selfScalingFilter: 'hostChain',
+      type: 'selfScalingFilter',
+      filterId: 'hostChain',
     },
   },
   {

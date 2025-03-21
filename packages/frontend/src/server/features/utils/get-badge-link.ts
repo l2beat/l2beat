@@ -6,28 +6,27 @@ export function getBadgeLink(
   project: Project,
 ): string | undefined {
   if (!badge.action) return undefined
-  if (badge.action.scalingFilter) {
-    const [id, value] = badge.action.scalingFilter
+  if (badge.action.type === 'scalingFilter') {
     return `/scaling/summary?filters=${getFilterSearchParams({
-      [id]: {
-        values: [value],
+      [badge.action.filterId]: {
+        values: [badge.action.filterValue],
       },
     })}`
   }
 
-  if (badge.action.selfScalingFilter) {
+  if (badge.action.type === 'selfScalingFilter') {
     return `/scaling/summary?filters=${getFilterSearchParams({
-      [badge.action.selfScalingFilter]: {
+      [badge.action.filterId]: {
         values: [project.name],
       },
     })}`
   }
 
-  if (badge.action.publicDaHighlight) {
-    return `/data-availability/summary?highlight=${badge.action.publicDaHighlight}`
+  if (badge.action.type === 'publicDaHighlight') {
+    return `/data-availability/summary?highlight=${badge.action.slug}`
   }
 
-  if (badge.action.selfDaHightlight) {
+  if (badge.action.type === 'selfDaHightlight') {
     return `/data-availability/summary?tab=custom&highlight=${project.slug}`
   }
 }

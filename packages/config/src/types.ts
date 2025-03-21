@@ -168,22 +168,26 @@ type BadgeAction =
 
 // Move to scaling/summary with given filterId and value
 type BadgeScalingFilterAction = {
-  scalingFilter: [id: BadgeFilterIds, value: string]
+  type: 'scalingFilter'
+  filterId: BadgeFilterIds
+  filterValue: string
 }
 
 // Move to scaling/summary with given filterId and name of the project as a value
 type BadgeSelfScalingFilterAction = {
-  selfScalingFilter: BadgeFilterIds
+  type: 'selfScalingFilter'
+  filterId: BadgeFilterIds
 }
 
 // Move to data-availability/summary and highlight project with given slug
 type BadgePublicDaHighlightAction = {
-  publicDaHighlight: string
+  type: 'publicDaHighlight'
+  slug: string
 }
 
 // Move to data-availability/summary and highlight project with the same slug as the project
 type BadgeSelfDaHightlightAction = {
-  selfDaHightlight: boolean
+  type: 'selfDaHightlight'
 }
 
 type BadgeFilterIds =
