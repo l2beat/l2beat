@@ -8,11 +8,7 @@ import {
   parseExportedFacts,
 } from '@l2beat/discovery'
 import { groupFacts } from '@l2beat/discovery/dist/discovery/modelling/KnowledgeBase'
-import {
-  EthereumAddress,
-  formatSeconds,
-  isDefined,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, isDefined } from '@l2beat/shared-pure'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
 import {
@@ -131,7 +127,7 @@ export class PermissionsFromModel implements PermissionRegistry {
         : DirectPermissionToPrefix
 
     if (status === 'isInactive') {
-      result.push('[Currently inactive]')
+      result.push('**[Currently inactive]**')
     }
 
     result.push(

@@ -1,5 +1,157 @@
 Generated with discovered.json: 0x17398243c9413b2433cd0f12f26f0727c40ba1d7
 
+# Diff at Fri, 21 Mar 2025 12:18:47 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@85fdbdcae7b9ee3e14eed906c581832da9c4310b block: 21829679
+- current block number: 21829679
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829679 (main branch discovery), not current.
+
+```diff
+    contract SuperchainGuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "Optimism Guardian Multisig"
++        "SuperchainGuardianMultisig"
+    }
+```
+
+```diff
+    contract undefined (0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd) {
+    +++ description: None
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      name:
+-        "Optimism Security Council"
++        "SecurityCouncilMultisig"
+    }
+```
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      name:
+-        "Zora Multisig 1"
++        "ZoraMultisig"
+    }
+```
+
+```diff
+    contract ZoraMultisig2 (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      name:
+-        "Zora Multisig 2"
++        "ZoraMultisig2"
+      severity:
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xf45a37aca27e4d1f9ae3821379fdae49a7f74476
+
+# Diff at Wed, 19 Mar 2025 13:06:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21829679
+- current block number: 21829679
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829679 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract Zora Multisig 2 (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xc93789ff203dd6b570fdb6141ad02c502cb2202b
+
+# Diff at Tue, 18 Mar 2025 08:14:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21829679
+- current block number: 21829679
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829679 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "SuperchainGuardianMultisig"
++        "Optimism Guardian Multisig"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      name:
+-        "SecurityCouncilMultisig"
++        "Optimism Security Council"
+    }
+```
+
+```diff
+    contract Zora Multisig 1 (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      name:
+-        "ZoraMultisig"
++        "Zora Multisig 1"
+    }
+```
+
+```diff
+    contract Zora Multisig 2 (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      name:
+-        "ZoraMultisig2"
++        "Zora Multisig 2"
+    }
+```
+
+Generated with discovered.json: 0xfe24866a40bf460fcb0578bd5f8f42c6fce47252
+
 # Diff at Tue, 04 Mar 2025 11:26:56 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)

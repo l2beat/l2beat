@@ -1,0 +1,1932 @@
+{
+  "facts": [
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "livenessGuard_ethereum_0x24424336f04440b1c28685a38303ac33c9d14a25"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "gnosisSafe_ethereum_0x42d27eea1ad6e22af6284f609847cb3cd56b9c64"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "zoraMultisig_ethereum_0xc72ae5c7cc9a332699305e29f68be66c73b60542"
+      ]
+    },
+    {
+      "atom": "showContractInPermissionsSection",
+      "params": [
+        "zoraMultisig2_ethereum_0xca4571b1ecbec86ea2e660d242c1c29fcb55dc72"
+      ]
+    },
+    {
+      "atom": "showEoaInPermissionsSection",
+      "params": [
+        "eoa_ethereum_0x48247032092e7b0ecf5def611ad89eaf3fc888dd"
+      ]
+    },
+    {
+      "atom": "showEoaInPermissionsSection",
+      "params": [
+        "eoa_ethereum_0x625726c858dbf78c0125436c943bf4b4be9d9033"
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "l1StandardBridge_ethereum_0x3e2ea9b92b7e48a52296fd261dc26fd995284631",
+        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "l1ERC721Bridge_ethereum_0x83a4521a3573ca87f3a971b169c5a0e1d34481c3",
+        "Used to bridge ERC-721 tokens from host chain to this chain."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "optimismMintableERC20Factory_ethereum_0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff",
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "l1CrossDomainMessenger_ethereum_0xdc40a14d9abd6f410226f1e6de71ae03441ca506",
+        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "addressManager_ethereum_0xde1fcfb0851916ca5101820a69b13a4e276bd81f",
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ]
+    },
+    {
+      "atom": "addressDescription",
+      "params": [
+        "addressManager_ethereum_0xef8115f2733fb2033a7c756402fc1deaa56550ef",
+        "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts."
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        "LivenessModule"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        "SuperchainGuardianMultisig"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        "OptimismPortal"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "livenessGuard_ethereum_0x24424336f04440b1c28685a38303ac33c9d14a25",
+        "LivenessGuard"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "l1StandardBridge_ethereum_0x3e2ea9b92b7e48a52296fd261dc26fd995284631",
+        "L1StandardBridge"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "gnosisSafe_ethereum_0x42d27eea1ad6e22af6284f609847cb3cd56b9c64",
+        "GnosisSafe"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+        "SuperchainProxyAdmin"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "SuperchainProxyAdminOwner"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "l1ERC721Bridge_ethereum_0x83a4521a3573ca87f3a971b169c5a0e1d34481c3",
+        "L1ERC721Bridge"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "OpFoundationUpgradeSafe"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        "SuperchainConfig"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+        "OpFoundationOperationsSafe"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        "L2OutputOracle"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        "SystemConfig"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+        "SecurityCouncilMultisig"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "optimismMintableERC20Factory_ethereum_0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff",
+        "OptimismMintableERC20Factory"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+        "DeputyGuardianModule"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "zoraMultisig_ethereum_0xc72ae5c7cc9a332699305e29f68be66c73b60542",
+        "ZoraMultisig"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "zoraMultisig2_ethereum_0xca4571b1ecbec86ea2e660d242c1c29fcb55dc72",
+        "ZoraMultisig2"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "ProxyAdmin"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "l1CrossDomainMessenger_ethereum_0xdc40a14d9abd6f410226f1e6de71ae03441ca506",
+        "L1CrossDomainMessenger"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "addressManager_ethereum_0xde1fcfb0851916ca5101820a69b13a4e276bd81f",
+        "AddressManager"
+      ]
+    },
+    {
+      "atom": "addressName",
+      "params": [
+        "addressManager_ethereum_0xef8115f2733fb2033a7c756402fc1deaa56550ef",
+        "AddressManager"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x000000000000000000000000000000000000dead",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x07dc0893cafbf810e3e72505041f2865726fd073",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x0aa384eb2fedd2741277a0f72909a0d7275575d7",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x1822b35b09f5ce1c78ecbc06ac0a4e17885b925e",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "livenessGuard_ethereum_0x24424336f04440b1c28685a38303ac33c9d14a25",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x3041ba32f451f5850c147805f5521ac206421623",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x3840f487a17a41100dd1bf0946c34f132a57fd5f",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x3dc8dfd0709c835cad15a6a27e089ff4cf4c9228",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "l1StandardBridge_ethereum_0x3e2ea9b92b7e48a52296fd261dc26fd995284631",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "gnosisSafe_ethereum_0x42d27eea1ad6e22af6284f609847cb3cd56b9c64",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x4665374939642965efd8357d4568d2a77f677429",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x48247032092e7b0ecf5def611ad89eaf3fc888dd",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x4a7322258c9e690e4cb8cea6e5251443e956e61e",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x4d014f3c5f33aa9cd1dc29ce29618d07ae666d15",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x4d8007a0e9f293e62e2b0f43c6cf4c4b9e135bae",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x51acb8e1205de850d1b512584fee9c29c3813dda",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x5553a23a71bc7985c8e58ca08072d2fa9d1d1f4c",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x625726c858dbf78c0125436c943bf4b4be9d9033",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x6323ef2b80030f3fbc508bfc321fc71fdb95c865",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x652bc529e171847e2ffddcea13567643c84ccb5f",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x6f54ca6f6ede96662024ffd61bfd18f3f4e34dff",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x7cb07fe039a92b3d784f284d919503a381bec54f",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x7ed8d9af9eaa194d1a75c67c1475579e42289e39",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "l1ERC721Bridge_ethereum_0x83a4521a3573ca87f3a971b169c5a0e1d34481c3",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x92827223f6b397ce9f208ee352baca710765cacb",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x9bbfb9919062c29a5ee15acd93c9d7c3b14d31aa",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0x9eb11a55132c851b9991f148b3af791ca498fd7a",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xa0737fea60f0601a192e3d2c98865a883ab0bda2",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xa4000bdd2bb92ce6750b31f1eeda47bd1cb8e6e4",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xb23794fd6ba1cead01cf54d772b8341f2f0197a5",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xbf93d4d727f7ba1f753e1124c3e532dcb04ea2c8",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xbfa046b0bc5cea1596be62b8b3f79f9f41f1e0d9",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xc08c1b8fd69a22a448fc014bee4a700d70726da7",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "optimismMintableERC20Factory_ethereum_0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "zoraMultisig_ethereum_0xc72ae5c7cc9a332699305e29f68be66c73b60542",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "zoraMultisig2_ethereum_0xca4571b1ecbec86ea2e660d242c1c29fcb55dc72",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xd05e9ab3b6a7f10ec1374bc352854aba51643e81",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xd5b735b676a043a53946c3b6f6be28c1ece6ac90",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "l1CrossDomainMessenger_ethereum_0xdc40a14d9abd6f410226f1e6de71ae03441ca506",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "addressManager_ethereum_0xde1fcfb0851916ca5101820a69b13a4e276bd81f",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xe7d71aea6fb8248d4fd4d5d5098d201674b531db",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xe7dea1306d9f829ba469d1904c50903b46ebd02e",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "addressManager_ethereum_0xef8115f2733fb2033a7c756402fc1deaa56550ef",
+        "contract"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xef9a98511939eee6ec69af62082e3f2ff606877c",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xf2989961bf987bdd6c86cd6b845b6faca194a8e4",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "addressType",
+      "params": [
+        "eoa_ethereum_0xf3313c48bd8e17b823d5498d62f37019dfea647d",
+        "eoa"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x000000000000000000000000000000000000dead",
+        "ethereum",
+        "0x000000000000000000000000000000000000dead"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        "ethereum",
+        "0x0454092516c9a4d636d3cafa1e82161376c8a748"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x07dc0893cafbf810e3e72505041f2865726fd073",
+        "ethereum",
+        "0x07dc0893cafbf810e3e72505041f2865726fd073"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        "ethereum",
+        "0x09f7150d8c019bef34450d6920f6b3608cefdaf2"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x0aa384eb2fedd2741277a0f72909a0d7275575d7",
+        "ethereum",
+        "0x0aa384eb2fedd2741277a0f72909a0d7275575d7"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x1822b35b09f5ce1c78ecbc06ac0a4e17885b925e",
+        "ethereum",
+        "0x1822b35b09f5ce1c78ecbc06ac0a4e17885b925e"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        "ethereum",
+        "0x1a0ad011913a150f69f6a19df447a0cfd9551054"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "livenessGuard_ethereum_0x24424336f04440b1c28685a38303ac33c9d14a25",
+        "ethereum",
+        "0x24424336f04440b1c28685a38303ac33c9d14a25"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x3041ba32f451f5850c147805f5521ac206421623",
+        "ethereum",
+        "0x3041ba32f451f5850c147805f5521ac206421623"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x3840f487a17a41100dd1bf0946c34f132a57fd5f",
+        "ethereum",
+        "0x3840f487a17a41100dd1bf0946c34f132a57fd5f"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x3dc8dfd0709c835cad15a6a27e089ff4cf4c9228",
+        "ethereum",
+        "0x3dc8dfd0709c835cad15a6a27e089ff4cf4c9228"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "l1StandardBridge_ethereum_0x3e2ea9b92b7e48a52296fd261dc26fd995284631",
+        "ethereum",
+        "0x3e2ea9b92b7e48a52296fd261dc26fd995284631"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "gnosisSafe_ethereum_0x42d27eea1ad6e22af6284f609847cb3cd56b9c64",
+        "ethereum",
+        "0x42d27eea1ad6e22af6284f609847cb3cd56b9c64"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x4665374939642965efd8357d4568d2a77f677429",
+        "ethereum",
+        "0x4665374939642965efd8357d4568d2a77f677429"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x48247032092e7b0ecf5def611ad89eaf3fc888dd",
+        "ethereum",
+        "0x48247032092e7b0ecf5def611ad89eaf3fc888dd"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x4a7322258c9e690e4cb8cea6e5251443e956e61e",
+        "ethereum",
+        "0x4a7322258c9e690e4cb8cea6e5251443e956e61e"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x4d014f3c5f33aa9cd1dc29ce29618d07ae666d15",
+        "ethereum",
+        "0x4d014f3c5f33aa9cd1dc29ce29618d07ae666d15"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x4d8007a0e9f293e62e2b0f43c6cf4c4b9e135bae",
+        "ethereum",
+        "0x4d8007a0e9f293e62e2b0f43c6cf4c4b9e135bae"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x51acb8e1205de850d1b512584fee9c29c3813dda",
+        "ethereum",
+        "0x51acb8e1205de850d1b512584fee9c29c3813dda"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+        "ethereum",
+        "0x543ba4aadbab8f9025686bd03993043599c6fb04"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x5553a23a71bc7985c8e58ca08072d2fa9d1d1f4c",
+        "ethereum",
+        "0x5553a23a71bc7985c8e58ca08072d2fa9d1d1f4c"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "ethereum",
+        "0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x625726c858dbf78c0125436c943bf4b4be9d9033",
+        "ethereum",
+        "0x625726c858dbf78c0125436c943bf4b4be9d9033"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x6323ef2b80030f3fbc508bfc321fc71fdb95c865",
+        "ethereum",
+        "0x6323ef2b80030f3fbc508bfc321fc71fdb95c865"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x652bc529e171847e2ffddcea13567643c84ccb5f",
+        "ethereum",
+        "0x652bc529e171847e2ffddcea13567643c84ccb5f"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x6f54ca6f6ede96662024ffd61bfd18f3f4e34dff",
+        "ethereum",
+        "0x6f54ca6f6ede96662024ffd61bfd18f3f4e34dff"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x7cb07fe039a92b3d784f284d919503a381bec54f",
+        "ethereum",
+        "0x7cb07fe039a92b3d784f284d919503a381bec54f"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x7ed8d9af9eaa194d1a75c67c1475579e42289e39",
+        "ethereum",
+        "0x7ed8d9af9eaa194d1a75c67c1475579e42289e39"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "l1ERC721Bridge_ethereum_0x83a4521a3573ca87f3a971b169c5a0e1d34481c3",
+        "ethereum",
+        "0x83a4521a3573ca87f3a971b169c5a0e1d34481c3"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "ethereum",
+        "0x847b5c174615b1b7fdf770882256e2d3e95b9d92"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x92827223f6b397ce9f208ee352baca710765cacb",
+        "ethereum",
+        "0x92827223f6b397ce9f208ee352baca710765cacb"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        "ethereum",
+        "0x95703e0982140d16f8eba6d158fccede42f04a4c"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+        "ethereum",
+        "0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x9bbfb9919062c29a5ee15acd93c9d7c3b14d31aa",
+        "ethereum",
+        "0x9bbfb9919062c29a5ee15acd93c9d7c3b14d31aa"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        "ethereum",
+        "0x9e6204f750cd866b299594e2ac9ea824e2e5f95c"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0x9eb11a55132c851b9991f148b3af791ca498fd7a",
+        "ethereum",
+        "0x9eb11a55132c851b9991f148b3af791ca498fd7a"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xa0737fea60f0601a192e3d2c98865a883ab0bda2",
+        "ethereum",
+        "0xa0737fea60f0601a192e3d2c98865a883ab0bda2"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        "ethereum",
+        "0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xa4000bdd2bb92ce6750b31f1eeda47bd1cb8e6e4",
+        "ethereum",
+        "0xa4000bdd2bb92ce6750b31f1eeda47bd1cb8e6e4"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xb23794fd6ba1cead01cf54d772b8341f2f0197a5",
+        "ethereum",
+        "0xb23794fd6ba1cead01cf54d772b8341f2f0197a5"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xbf93d4d727f7ba1f753e1124c3e532dcb04ea2c8",
+        "ethereum",
+        "0xbf93d4d727f7ba1f753e1124c3e532dcb04ea2c8"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xbfa046b0bc5cea1596be62b8b3f79f9f41f1e0d9",
+        "ethereum",
+        "0xbfa046b0bc5cea1596be62b8b3f79f9f41f1e0d9"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xc08c1b8fd69a22a448fc014bee4a700d70726da7",
+        "ethereum",
+        "0xc08c1b8fd69a22a448fc014bee4a700d70726da7"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+        "ethereum",
+        "0xc2819dc788505aac350142a7a707bf9d03e3bd03"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "optimismMintableERC20Factory_ethereum_0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff",
+        "ethereum",
+        "0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+        "ethereum",
+        "0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "zoraMultisig_ethereum_0xc72ae5c7cc9a332699305e29f68be66c73b60542",
+        "ethereum",
+        "0xc72ae5c7cc9a332699305e29f68be66c73b60542"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "zoraMultisig2_ethereum_0xca4571b1ecbec86ea2e660d242c1c29fcb55dc72",
+        "ethereum",
+        "0xca4571b1ecbec86ea2e660d242c1c29fcb55dc72"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xd05e9ab3b6a7f10ec1374bc352854aba51643e81",
+        "ethereum",
+        "0xd05e9ab3b6a7f10ec1374bc352854aba51643e81"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "ethereum",
+        "0xd4ef175b9e72caee9f1fe7660a6ec19009903b49"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xd5b735b676a043a53946c3b6f6be28c1ece6ac90",
+        "ethereum",
+        "0xd5b735b676a043a53946c3b6f6be28c1ece6ac90"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "l1CrossDomainMessenger_ethereum_0xdc40a14d9abd6f410226f1e6de71ae03441ca506",
+        "ethereum",
+        "0xdc40a14d9abd6f410226f1e6de71ae03441ca506"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "addressManager_ethereum_0xde1fcfb0851916ca5101820a69b13a4e276bd81f",
+        "ethereum",
+        "0xde1fcfb0851916ca5101820a69b13a4e276bd81f"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xe7d71aea6fb8248d4fd4d5d5098d201674b531db",
+        "ethereum",
+        "0xe7d71aea6fb8248d4fd4d5d5098d201674b531db"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xe7dea1306d9f829ba469d1904c50903b46ebd02e",
+        "ethereum",
+        "0xe7dea1306d9f829ba469d1904c50903b46ebd02e"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "addressManager_ethereum_0xef8115f2733fb2033a7c756402fc1deaa56550ef",
+        "ethereum",
+        "0xef8115f2733fb2033a7c756402fc1deaa56550ef"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xef9a98511939eee6ec69af62082e3f2ff606877c",
+        "ethereum",
+        "0xef9a98511939eee6ec69af62082e3f2ff606877c"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xf2989961bf987bdd6c86cd6b845b6faca194a8e4",
+        "ethereum",
+        "0xf2989961bf987bdd6c86cd6b845b6faca194a8e4"
+      ]
+    },
+    {
+      "atom": "address",
+      "params": [
+        "eoa_ethereum_0xf3313c48bd8e17b823d5498d62f37019dfea647d",
+        "ethereum",
+        "0xf3313c48bd8e17b823d5498d62f37019dfea647d"
+      ]
+    },
+    {
+      "atom": "permissionIsInactive",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "act",
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "livenessGuard_ethereum_0x24424336f04440b1c28685a38303ac33c9d14a25",
+        "interact",
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        0,
+        "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "eoa_ethereum_0x48247032092e7b0ecf5def611ad89eaf3fc888dd",
+        "propose",
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        0,
+        null,
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "act",
+        "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+        0,
+        null,
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "act",
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        0,
+        null,
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "eoa_ethereum_0x625726c858dbf78c0125436c943bf4b4be9d9033",
+        "sequence",
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        0,
+        null,
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "zoraMultisig_ethereum_0xc72ae5c7cc9a332699305e29f68be66c73b60542",
+        "interact",
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        0,
+        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "zoraMultisig2_ethereum_0xca4571b1ecbec86ea2e660d242c1c29fcb55dc72",
+        "challenge",
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        0,
+        null,
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "act",
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        0,
+        "takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        0,
+        null,
+        "isFinal",
+        "isInactive",
+        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+        "act",
+        "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+        0,
+        null,
+        0,
+        null,
+        "isFinal",
+        "isActive",
+        "not revoked by the Security Council"
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "optimismMintableERC20Factory_ethereum_0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "l1ERC721Bridge_ethereum_0x83a4521a3573ca87f3a971b169c5a0e1d34481c3",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "l1StandardBridge_ethereum_0x3e2ea9b92b7e48a52296fd261dc26fd995284631",
+        0,
+        "upgrading the bridge implementation can give access to all funds escrowed therein.",
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "interact",
+        "addressManager_ethereum_0xef8115f2733fb2033a7c756402fc1deaa56550ef",
+        0,
+        "set and change address mappings.",
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "upgrade",
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a",
+        "interact",
+        "addressManager_ethereum_0xde1fcfb0851916ca5101820a69b13a4e276bd81f",
+        0,
+        "set and change address mappings.",
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+        "guard",
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+              "act",
+              0,
+              "not revoked by the Security Council"
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "opFoundationOperationsSafe_ethereum_0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+        "guard",
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+              "act",
+              0,
+              "not revoked by the Security Council"
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "guard",
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+              "act",
+              0,
+              "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+              "act",
+              0,
+              null
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isInactive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "opFoundationUpgradeSafe_ethereum_0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+        "guard",
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        0,
+        null,
+        0,
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+              "act",
+              0,
+              "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+              "act",
+              0,
+              null
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+              "act",
+              0,
+              null
+            ]
+          }
+        ],
+        "isFinal",
+        "isInactive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "livenessModule_ethereum_0x0454092516c9a4d636d3cafa1e82161376c8a748",
+        "act",
+        "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        "guard",
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        "guard",
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+        "interact",
+        "addressManager_ethereum_0xde1fcfb0851916ca5101820a69b13a4e276bd81f",
+        0,
+        "set and change address mappings.",
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "superchainProxyAdmin_ethereum_0x543ba4aadbab8f9025686bd03993043599c6fb04",
+        "upgrade",
+        "superchainConfig_ethereum_0x95703e0982140d16f8eba6d158fccede42f04a4c",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "deputyGuardianModule_ethereum_0xc6901f65369fc59fc1b4d6d6be7a2318ff38db5b",
+        "act",
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "interact",
+        "addressManager_ethereum_0xef8115f2733fb2033a7c756402fc1deaa56550ef",
+        0,
+        "set and change address mappings.",
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "upgrade",
+        "optimismPortal_ethereum_0x1a0ad011913a150f69f6a19df447a0cfd9551054",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "upgrade",
+        "l1StandardBridge_ethereum_0x3e2ea9b92b7e48a52296fd261dc26fd995284631",
+        0,
+        "upgrading the bridge implementation can give access to all funds escrowed therein.",
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "upgrade",
+        "l1ERC721Bridge_ethereum_0x83a4521a3573ca87f3a971b169c5a0e1d34481c3",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "upgrade",
+        "l2OutputOracle_ethereum_0x9e6204f750cd866b299594e2ac9ea824e2e5f95c",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "upgrade",
+        "systemConfig_ethereum_0xa3cab0126d5f504b071b81a3e8a2bbbf17930d86",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "proxyAdmin_ethereum_0xd4ef175b9e72caee9f1fe7660a6ec19009903b49",
+        "upgrade",
+        "optimismMintableERC20Factory_ethereum_0xc52bc7344e24e39df1bf026fe05c4e6e23cfbcff",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    },
+    {
+      "atom": "filteredTransitivePermission",
+      "params": [
+        "securityCouncilMultisig_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03",
+        "act",
+        "superchainGuardianMultisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2",
+        0,
+        null,
+        0,
+        null,
+        "nonFinal",
+        "isActive",
+        null
+      ]
+    }
+  ]
+}
