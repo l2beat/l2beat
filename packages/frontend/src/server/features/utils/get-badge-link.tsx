@@ -3,8 +3,9 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { getFilterSearchParams } from '~/components/table/filters/utils/get-filter-search-params'
 
 export function getBadgeLink(
-  project: Project<never, 'scalingDa' | 'customDa'>,
   badge: Badge,
+  project: Project<never, 'scalingDa' | 'customDa'>,
+  daLayers: Project<'daLayer'>[],
 ): string | undefined {
   if (badge.type === 'Other' && badge.id === 'L3HostChain') {
     return `/scaling/summary?filters=${getFilterSearchParams({
@@ -17,36 +18,41 @@ export function getBadgeLink(
       return `/data-availability/summary?tab=custom&highlight=${project.slug}`
     }
     if (project.scalingDa && project.scalingDa.layer.projectId) {
-      return `/data-availability/summary?highlight=${project.scalingDa.layer.projectId}`
+      const daLayer = daLayers.find(
+        (layer) => layer.id === project.scalingDa?.layer.projectId,
+      )
+      if (!daLayer) {
+        return undefined
+      }
+      return `/data-availability/summary?highlight=${daLayer.slug}`
     }
   }
 
-  const filterName = 'filterName' in badge ? badge.filterName : undefined
-  if (!filterName) return undefined
+  const filterValue = badge.filterValue
+  if (!filterValue) return undefined
 
   switch (badge.type) {
     case 'RaaS':
       return `/scaling/summary?filters=${getFilterSearchParams({
-        raas: { values: [filterName] },
+        raas: { values: [filterValue] },
       })}`
     case 'Stack':
       return `/scaling/summary?filters=${getFilterSearchParams({
-        stack: { values: [filterName] },
+        stack: { values: [filterValue] },
       })}`
     case 'Infra':
       return `/scaling/summary?filters=${getFilterSearchParams({
-        infrastructure: { values: [filterName] },
+        infrastructure: { values: [filterValue] },
       })}`
     case 'VM':
       return `/scaling/summary?filters=${getFilterSearchParams({
-        vm: { values: [filterName] },
+        vm: { values: [filterValue] },
       })}`
     case 'L3ParentChain':
       return `/scaling/summary?filters=${getFilterSearchParams({
-        hostChain: { values: [filterName] },
+        hostChain: { values: [filterValue] },
       })}`
     case 'DA':
-    case 'Other':
     case 'Fork':
       return undefined
     default:

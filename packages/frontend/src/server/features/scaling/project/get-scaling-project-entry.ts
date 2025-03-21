@@ -119,11 +119,14 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsStats] =
+  const [projectsChangeReport, activityProjectStats, tvsStats, daLayers] =
     await Promise.all([
       getProjectsChangeReport(),
       getActivityProjectStats(project.id),
       get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
+      ps.getProjects({
+        select: ['daLayer'],
+      }),
     ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
@@ -172,7 +175,7 @@ export async function getScalingProjectEntry(
         : undefined,
     badges: project.display.badges.map((badge) => ({
       ...badge,
-      href: getBadgeLink(project, badge),
+      href: getBadgeLink(badge, project, daLayers),
     })),
     gasTokens: project.chainConfig?.gasTokens,
   }
