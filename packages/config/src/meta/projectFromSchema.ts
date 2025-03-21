@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES, badges, badgesCompareFn } from '../common/badges'
-import type * as Schema from '../meta/schema'
+import type * as Schema from './schema'
 import type * as Types from '../types'
 
 export function projectFromSchema(

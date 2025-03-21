@@ -110,6 +110,52 @@ export const ChainConfig = z.object({
   apis: z.array(ChainApiConfig),
 })
 
+export const ChecklistValue = z.union([
+  z.boolean(),
+  z.literal('UnderReview'),
+  z.null(),
+  z.object({
+    satisfied: z.union([z.boolean(), z.literal('UnderReview')]),
+    message: z.string(),
+    mode: z.enum(['append', 'replace']),
+  }),
+])
+
+export type StageChecklist = z.infer<typeof StageChecklist>
+export const StageChecklist = z.object({
+  stage0: z.object({
+    callsItselfRollup: ChecklistValue,
+    stateRootsPostedToL1: ChecklistValue,
+    dataAvailabilityOnL1: ChecklistValue,
+    rollupNodeSourceAvailable: ChecklistValue,
+  }),
+  stage1: z.object({
+    principle: ChecklistValue,
+    stateVerificationOnL1: ChecklistValue,
+    fraudProofSystemAtLeast5Outsiders: ChecklistValue,
+    usersCanExitWithoutCooperation: ChecklistValue,
+    usersHave7DaysToExit: ChecklistValue,
+    securityCouncilProperlySetUp: ChecklistValue,
+  }),
+  stage2: z.object({
+    fraudProofSystemIsPermissionless: ChecklistValue,
+    delayWith30DExitWindow: ChecklistValue,
+    proofSystemOverriddenOnlyInCaseOfABug: ChecklistValue,
+  }),
+})
+
+export type StageOptions = z.infer<typeof StageOptions>
+export const StageOptions = z.object({
+  rollupNodeLink: z.string().optional(),
+  securityCouncilReference: z.string().optional(),
+  additionalConsiderations: z
+    .object({
+      short: z.string(),
+      long: z.string(),
+    })
+    .optional(),
+})
+
 export type Scaling = z.infer<typeof Scaling>
 export const Scaling = z.object({
   hostChain: z
@@ -173,6 +219,15 @@ export const Scaling = z.object({
       'Restaking',
     ]),
   ),
+  stage: z.union([
+    z.object({
+      checklist: StageChecklist,
+      options: StageOptions.optional(),
+    }),
+    z.null(),
+    z.literal('UnderReview'),
+    z.literal('auto'),
+  ]),
 })
 
 export type Project = z.infer<typeof Project>
@@ -207,6 +262,7 @@ export const schema = zodToJsonSchema(Project, {
     Badge,
     ChainApiConfig,
     ChainConfig,
+    ChecklistValue,
     DateYYYYMMDD,
     Display,
     EthereumAddress,
@@ -215,6 +271,8 @@ export const schema = zodToJsonSchema(Project, {
     MulticallContractConfig,
     Project,
     Scaling,
+    StageChecklist,
+    StageOptions,
     Statuses,
     UnixTime,
   },

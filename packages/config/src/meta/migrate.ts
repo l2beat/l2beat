@@ -3,11 +3,11 @@ import { getProjects } from '../processing/getProjects'
 import type { BaseProject } from '../types'
 import type { Project } from './schema'
 
-const IDS_TO_MIGRATE = ['aiechain', 'align']
+const IGNORED = ['payy-zk-catalog', 'near-da']
 
 const projects = getProjects()
 for (const project of projects) {
-  if (!IDS_TO_MIGRATE.includes(project.id)) {
+  if (IGNORED.includes(project.id)) {
     continue
   }
 
@@ -19,7 +19,7 @@ for (const project of projects) {
 
 function toSchema(project: BaseProject): Project {
   if (!project.display) {
-    throw new Error('Missing display')
+    throw new Error(`Missing display: ${project.id}`)
   }
 
   return {
