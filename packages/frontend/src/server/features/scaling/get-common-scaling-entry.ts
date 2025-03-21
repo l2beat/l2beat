@@ -21,6 +21,9 @@ export function getCommonScalingEntry({
   changes: ProjectChanges | undefined
   syncWarning?: string
 }): CommonScalingEntry {
+  const isRollup =
+    project.scalingInfo.type === 'Optimistic Rollup' ||
+    project.scalingInfo.type === 'ZK Rollup'
   return {
     id: project.id,
     slug: project.slug,
@@ -43,7 +46,11 @@ export function getCommonScalingEntry({
         otherMigration: project.statuses.otherMigration,
       },
     },
-    tab: getScalingTab(project),
+    tab: project.scalingInfo.isOther
+      ? 'others'
+      : isRollup
+        ? 'rollups'
+        : 'validiumsAndOptimiums',
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
@@ -79,17 +86,4 @@ function getStageOrder(stage: string | undefined): number {
     return 1
   }
   return 0
-}
-
-export function getScalingTab(
-  project: Project<'scalingInfo'>,
-): 'rollups' | 'validiumsAndOptimiums' | 'others' {
-  const isRollup =
-    project.scalingInfo.type === 'Optimistic Rollup' ||
-    project.scalingInfo.type === 'ZK Rollup'
-  return project.scalingInfo.isOther
-    ? 'others'
-    : isRollup
-      ? 'rollups'
-      : 'validiumsAndOptimiums'
 }
