@@ -13,22 +13,22 @@ const roleNames: { [role: string]: string } = {
   '0': 'ADMIN_ROLE',
   '8663528507529876195': 'UPGRADER_ROLE',
   '14661544942390944024': 'SECURITY_COUNCIL_ROLE',
-  // PUBLIC_ROLE is available too if needed
+  '1635978423191113331': 'NIO_GOVERNOR_ROLE',
+  '18446744073709551615': 'PUBLIC_ROLE',
 }
 
-// Known actor names
-const actorNames: { [address: string]: string } = {
+// Unified address mapping
+const addressNames: { [address: string]: string } = {
+  // Actors
   '0x2e2b1c42e38f5af81771e65d87729e57abd1337a': 'KintoAdminMultisig',
-  '0x28fc10e12a78f986c78f973fc70ed88072b34c8e': 'SC-L2Alias',
-  // ... other actors
-}
-
-// Known target names
-const targetNames: { [address: string]: string } = {
+  '0x28fc10e12a78f986c78f973fc70ed88072b34c8e': 'SecurityCouncil-L2a',
+  '0x010600ff5f36c8ef3b6aaf2a88c2de85c798594a': 'NioGovernor',
+  // Targets
   '0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75': 'KintoWalletFactory',
   '0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b': 'KintoAppRegistry',
   '0xf369f78e3a0492cc4e96a90dae0728a38498e9c7': 'KintoID',
-  // ... add more if needed
+  '0x793500709506652fcc61f0d2d0fda605638d4293': 'Treasury',
+  '0xacc000818e5bbd911d5d449aa81cb5ca24024739': 'AccessManager',
 }
 
 // -------------------------
@@ -48,7 +48,19 @@ function getSelector(signature: string): string {
   )
 }
 
+function formatAddress(address: string): string {
+  address = address.toLowerCase()
+  const name = addressNames[address]
+  if (name) {
+    return `${chalk.blue(name)} (${chalk.gray(address)})`
+  }
+  return chalk.gray(address)
+}
+
+// Function selector mapping
 const functionSignatures: { [selector: string]: string } = {}
+
+// Add function signatures for existing functions
 functionSignatures[getSelector('upgradeAllWalletImplementations(address)')] =
   'upgradeAllWalletImplementations(address)'
 functionSignatures[getSelector('upgradeTo(address)')] = 'upgradeTo(address)'
@@ -58,6 +70,98 @@ functionSignatures[getSelector('updateSystemContracts(address[])')] =
   'updateSystemContracts(address[])'
 functionSignatures[getSelector('updateReservedContracts(address[])')] =
   'updateReservedContracts(address[])'
+
+// Add new function signatures
+functionSignatures['0xd6bb62c6'] = 'cancel(address,address,bytes)'
+functionSignatures['0x94c7d7ee'] = 'consumeScheduledOp(address,bytes)'
+functionSignatures['0x1cff79cd'] = 'execute(address,bytes)'
+functionSignatures['0x25c471a0'] = 'grantRole(uint64,address,uint32)'
+functionSignatures['0x853551b8'] = 'labelRole(uint64,string)'
+functionSignatures['0xac9650d8'] = 'multicall(bytes[])'
+functionSignatures['0xfe0776f5'] = 'renounceRole(uint64,address)'
+functionSignatures['0xb7d2b162'] = 'revokeRole(uint64,address)'
+functionSignatures['0xf801a698'] = 'schedule(address,bytes,uint48)'
+functionSignatures['0xa64d95ce'] = 'setGrantDelay(uint64,uint32)'
+functionSignatures['0x30cae187'] = 'setRoleAdmin(uint64,uint64)'
+functionSignatures['0x52962952'] = 'setRoleGuardian(uint64,uint64)'
+functionSignatures['0xd22b5989'] = 'setTargetAdminDelay(address,uint32)'
+functionSignatures['0x167bd395'] = 'setTargetClosed(address,bool)'
+functionSignatures['0x08d6122d'] =
+  'setTargetFunctionRole(address,bytes4[],uint64)'
+functionSignatures['0x18ff183c'] = 'updateAuthority(address,address)'
+functionSignatures['0x8522d1b2'] = '0x8522d1b2'
+functionSignatures['0xc664c714'] = '0xc664c714'
+functionSignatures['0x9089e8ae'] = '0x9089e8ae'
+
+// Function to decode operation data for known function selectors
+function decodeOperationData(selector: string, data: string): string {
+  try {
+    const abiCoder = new ethers.utils.AbiCoder()
+
+    // Remove the selector to get just the parameters data
+    const paramsData = '0x' + data.slice(10)
+
+    // Decode based on function selector
+    switch (selector) {
+      // grantRole(uint64 roleId, address account, uint32 executionDelay)
+      case '0x25c471a0': {
+        const [roleId, account, executionDelay] = abiCoder.decode(
+          ['uint64', 'address', 'uint32'],
+          paramsData,
+        )
+
+        const roleName = roleNames[roleId.toString()] || roleId.toString()
+        const accountNameFormatted = formatAddress(account)
+
+        return `grantRole(${chalk.yellow(roleName)}, ${accountNameFormatted}, ${chalk.green(executionDelay)} (${chalk.green(formatDuration(executionDelay))}))`
+      }
+
+      // revokeRole(uint64 roleId, address account)
+      case '0xb7d2b162': {
+        const [roleId, account] = abiCoder.decode(
+          ['uint64', 'address'],
+          paramsData,
+        )
+
+        const roleName = roleNames[roleId.toString()] || roleId.toString()
+        const accountNameFormatted = formatAddress(account)
+
+        return `revokeRole(${chalk.yellow(roleName)}, ${accountNameFormatted})`
+      }
+
+      // setTargetAdminDelay(address target, uint32 newDelay)
+      case '0xd22b5989': {
+        const [target, newDelay] = abiCoder.decode(
+          ['address', 'uint32'],
+          paramsData,
+        )
+
+        const targetNameFormatted = formatAddress(target)
+
+        return `setTargetAdminDelay(${targetNameFormatted}, ${chalk.green(newDelay)} (${chalk.green(formatDuration(newDelay))}))`
+      }
+
+      // setTargetClosed(address target, bool closed)
+      case '0x167bd395': {
+        const [target, closed] = abiCoder.decode(
+          ['address', 'bool'],
+          paramsData,
+        )
+
+        const targetNameFormatted = formatAddress(target)
+
+        return `setTargetClosed(${targetNameFormatted}, ${chalk.yellow(closed)})`
+      }
+
+      // For other functions, just return the function name
+      default:
+        return functionSignatures[selector] || selector
+    }
+  } catch (error) {
+    // If decoding fails, just return the function signature
+    return functionSignatures[selector] || selector
+  }
+}
 
 function formatDuration(seconds: number): string {
   if (seconds >= 86400 && seconds % 86400 === 0) {
@@ -412,10 +516,7 @@ export async function runScanKintoAm(): Promise<void> {
     console.log(chalk.red('\nNo actors with active roles found.'))
   } else {
     for (const account in rolesByActor) {
-      const name = actorNames[account]
-        ? `${chalk.blue(actorNames[account])} (${chalk.gray(account)})`
-        : chalk.gray(account)
-      console.log(`\n${name}:`)
+      console.log(`\n${formatAddress(account)}:`)
       for (const roleInfo of rolesByActor[account]) {
         const roleName = roleNames[roleInfo.roleId] || roleInfo.roleId
         const delayStr = `${chalk.green(roleInfo.executionDelay)} (${chalk.green(formatDuration(roleInfo.executionDelay))})`
@@ -434,10 +535,7 @@ export async function runScanKintoAm(): Promise<void> {
             )
           } else {
             for (const target in targets) {
-              const targetLabel = targetNames[target]
-                ? chalk.blue(targetNames[target])
-                : chalk.gray(target)
-              console.log(`      Target ${targetLabel}:`)
+              console.log(`      Target ${formatAddress(target)}:`)
               const functions = Array.from(targets[target]).map((sel) =>
                 functionSignatures[sel]
                   ? chalk.gray(functionSignatures[sel])
@@ -460,10 +558,7 @@ export async function runScanKintoAm(): Promise<void> {
     console.log(chalk.red('\nNo target configurations found.'))
   } else {
     for (const target in targetData) {
-      const targetName = targetNames[target]
-        ? `${chalk.blue(targetNames[target])} (${chalk.gray(target)})`
-        : chalk.gray(target)
-      console.log(`\n${targetName}:`)
+      console.log(`\n${formatAddress(target)}:`)
       console.log(
         `  ${chalk.magenta('targetAdminDelay')}: ${chalk.green(targetData[target].adminDelay)} (${chalk.green(formatDuration(targetData[target].adminDelay))})`,
       )
@@ -504,11 +599,8 @@ export async function runScanKintoAm(): Promise<void> {
       ) {
         changesFound = true
         const roleName = roleNames[roleInfo.roleId] || roleInfo.roleId
-        const actorLabel = actorNames[account]
-          ? `${chalk.blue(actorNames[account])} (${chalk.gray(account)})`
-          : chalk.gray(account)
         console.log(
-          `\nActor ${actorLabel} has a scheduled change for role ${chalk.yellow(roleName)}:`,
+          `\nActor ${formatAddress(account)} has a scheduled change for role ${chalk.yellow(roleName)}:`,
         )
         console.log(
           `  ${chalk.magenta('executionDelay')} change from ${chalk.green(roleInfo.executionDelay)} (${chalk.green(formatDuration(roleInfo.executionDelay))}) to ${chalk.green(roleInfo.pendingDelay)} (${chalk.green(
@@ -527,10 +619,9 @@ export async function runScanKintoAm(): Promise<void> {
         if (change.effect > currentTimestamp) {
           changesFound = true
           pendingAdminDelayChangesFound = true
-          const targetLabel = targetNames[target]
-            ? `${chalk.blue(targetNames[target])} (${chalk.gray(target)})`
-            : chalk.gray(target)
-          console.log(`\nTarget ${targetLabel} scheduled adminDelay change:`)
+          console.log(
+            `\nTarget ${formatAddress(target)} scheduled adminDelay change:`,
+          )
           console.log(
             `  New ${chalk.magenta('targetAdminDelay')}: ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.green(new Date(change.effect * 1000).toISOString())}`,
           )
@@ -548,21 +639,16 @@ export async function runScanKintoAm(): Promise<void> {
     console.log(chalk.bold('\nQueued Operations:'))
     for (const op of scheduledOps) {
       const selector = op.data.slice(0, 10) // first 4 bytes (10 hex characters with "0x")
-      const funcSig = functionSignatures[selector] || selector
-      const callerLabel = actorNames[op.caller]
-        ? `${chalk.blue(actorNames[op.caller])} (${chalk.gray(op.caller)})`
-        : chalk.gray(op.caller)
-      const targetLabel = targetNames[op.target]
-        ? `${chalk.blue(targetNames[op.target])} (${chalk.gray(op.target)})`
-        : chalk.gray(op.target)
-      console.log(`\nOperation ${op.operationId}:`)
+      const decodedFunction = decodeOperationData(selector, op.data)
+
+      console.log(`\nOperation ${chalk.cyan(op.operationId)}:`)
       console.log(`    Nonce: ${chalk.yellow(op.nonce)}`)
       console.log(
-        `    Scheduled at: ${chalk.green(new Date(op.schedule * 1000).toISOString())}`,
+        `    Scheduled for: ${chalk.green(new Date(op.schedule * 1000).toISOString())}`,
       )
-      console.log(`    Caller: ${callerLabel}`)
-      console.log(`    Target: ${targetLabel}`)
-      console.log(`    Function: ${chalk.gray(funcSig)}`)
+      console.log(`    Caller: ${formatAddress(op.caller)}`)
+      console.log(`    Target: ${formatAddress(op.target)}`)
+      console.log(`    Function: ${chalk.gray(decodedFunction)}`)
     }
   } else {
     console.log(chalk.red('No queued operations found.'))
