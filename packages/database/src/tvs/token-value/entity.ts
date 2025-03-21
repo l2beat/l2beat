@@ -5,7 +5,8 @@ import type { TokenValue } from '../../kysely/generated/types'
 export interface TokenValueRecord {
   timestamp: UnixTime
   configurationId: string
-  project: string
+  projectId: string
+  tokenId: string
   amount: number
   value: number
   valueForProject: number

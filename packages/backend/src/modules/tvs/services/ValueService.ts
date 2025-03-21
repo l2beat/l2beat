@@ -19,7 +19,7 @@ export class ValueService {
   async calculate(
     config: ProjectTvsConfig,
     timestamps: UnixTime[],
-  ): Promise<Map<number, TokenValue[]>> {
+  ): Promise<TokenValue[]> {
     const result = new Map<number, TokenValue[]>()
 
     for (const timestamp of timestamps) {
@@ -44,14 +44,15 @@ export class ValueService {
           : (valueForProject ?? value)
 
         values.push({
-          tokenConfig: token,
+          tokenId: token.id,
           projectId: config.projectId,
+          timestamp,
           amount: Number(BigIntWithDecimals.toNumber(amount).toFixed(2)),
           value: Number(BigIntWithDecimals.toNumber(value).toFixed(2)),
           valueForProject: Number(
             BigIntWithDecimals.toNumber(valueForProject).toFixed(2),
           ),
-          valueForTotal: Number(
+          valueForSummary: Number(
             BigIntWithDecimals.toNumber(valueForTotal).toFixed(2),
           ),
         })
@@ -60,7 +61,7 @@ export class ValueService {
       result.set(timestamp, values)
     }
 
-    return await Promise.resolve(result)
+    return [...result.values()].flat()
   }
 
   private async executeAmountFormula(
