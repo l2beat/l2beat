@@ -23,6 +23,11 @@ export const payy: BaseProject = {
     isUnderReview: false,
     isUnverified: false,
   },
+  display: {
+    description: 'A privacy-preserving payment system.',
+    links: {},
+    badges: [],
+  },
   proofVerification: {
     shortDescription: 'A privacy-preserving payment system.',
     aggregation: true,
