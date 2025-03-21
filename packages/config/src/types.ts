@@ -9,7 +9,6 @@ import type {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { badges } from './common/badges'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -153,7 +152,28 @@ export interface ProjectLinks {
   socialMedia?: string[]
   rollupCodes?: string
 }
-export type Badge = (typeof badges)[number]
+export type Badge = {
+  id: string
+  type: string
+  name: string
+  description: string
+  action:
+    | {
+        scalingFilter?: [id: BadgeFilterIds, value: string]
+        selfScalingFilter?: BadgeFilterIds
+        publicDaHighlight?: string
+        selfDaHightlight?: boolean
+      }
+    | undefined
+}
+
+type BadgeFilterIds =
+  | 'stack'
+  | 'hostChain'
+  | 'daLayer'
+  | 'raas'
+  | 'infrastructure'
+  | 'vm'
 
 export interface Milestone {
   title: string

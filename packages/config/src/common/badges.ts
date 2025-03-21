@@ -552,28 +552,7 @@ export const badges = [
       'This project has migrated from being a standalone L1 blockchain to an Ethereum L2',
     action: undefined,
   },
-] as const satisfies {
-  id: string
-  type: keyof typeof BadgeType
-  name: string
-  description: string
-  action:
-    | {
-        scalingFilter?: [id: BadgeFilterIds, value: string]
-        selfScalingFilter?: BadgeFilterIds
-        publicDaHighlight?: string
-        selfDaHightlight?: boolean
-      }
-    | undefined
-}[]
-
-type BadgeFilterIds =
-  | 'stack'
-  | 'hostChain'
-  | 'daLayer'
-  | 'raas'
-  | 'infrastructure'
-  | 'vm'
+] as const satisfies Badge[]
 
 type AnyBadge = (typeof badges)[number]
 

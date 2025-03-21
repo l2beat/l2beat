@@ -1,3 +1,4 @@
+import { notUndefined } from '@l2beat/shared-pure'
 import type { Badge } from '../../types'
 
 export function getVM(badges: Badge[] | undefined) {
@@ -5,5 +6,5 @@ export function getVM(badges: Badge[] | undefined) {
   if (!vmBadges || vmBadges.length === 0) {
     return []
   }
-  return vmBadges.map((b) => b.action.scalingFilter[1])
+  return vmBadges.map((b) => b.action?.scalingFilter?.[1]).filter(notUndefined)
 }
