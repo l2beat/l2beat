@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x73da985a5e3e2d337509cc091ac5eff2fbc2b5c3
+Generated with discovered.json: 0x433020c537dbdf2e53a26994bff8c280032ed795
 
-# Diff at Fri, 21 Mar 2025 14:11:40 GMT:
+# Diff at Fri, 21 Mar 2025 14:35:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@0cd49f2bd1f57cf090a4f7b659b8eb18c9783869 block: 772987
@@ -13,7 +13,7 @@ Discovery rerun on the same block number with only config-related changes.
 Rediscovered to properly handle canActIndependently on AccessManager thanks
 to a source code fix.
 
-Config: rename KintoAdminMultisig
+Config: rename KintoAdminMultisig, edit config to treat it natively as a MS
 
 ## Config/verification related changes
 
@@ -27,6 +27,18 @@ discovery. Values are for block 772987 (main branch discovery), not current.
       name:
 -        "KintoAdminMultisig"
 +        "Kinto Multisig 2"
+      values.getOwners:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x94561e98DD5E55271f91A103e4979aa6C493745E"]
+      values.$members:
++        ["0x94561e98DD5E55271f91A103e4979aa6C493745E","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"]
++++ description: Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes.
++++ severity: HIGH
+      values.$threshold:
++        2
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"1":1,"2":1,"3":1,"4":2}}]
     }
 ```
 

@@ -33,15 +33,24 @@
   },
   "maxAddresses": 200, // bumped from default 100 mainly due to the sanctioned to the eoas
   "types": {
-    "RoleName": {
+    "SignerPolicyToThreshold": {
       "typeCaster": "Mapping",
       "arg": {
-        "0": "ADMIN_ROLE",
-        "18446744073709551615": "PUBLIC_ROLE",
-        "1635978423191113331": "NIO_GOVERNOR_ROLE",
-        "8663528507529876195": "UPGRADER_ROLE"
+        "1": 1,
+        "4": 2,
+        "2": 1, // not accurate, using worst case (MINUS_ONE_SIGNER)
+        "3": 1 // not accurate, using worst case (ALL_SIGNERS)
       }
     }
+    // "RoleName": {
+    //   "typeCaster": "Mapping",
+    //   "arg": {
+    //     "0": "ADMIN_ROLE",
+    //     "18446744073709551615": "PUBLIC_ROLE",
+    //     "1635978423191113331": "NIO_GOVERNOR_ROLE",
+    //     "8663528507529876195": "UPGRADER_ROLE"
+    //   }
+    // }
   },
   "overrides": {
     "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": {
@@ -58,8 +67,27 @@
     },
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": {
       // Kinto Multisig 2
-      "ignoreMethods": ["owners"],
-      "ignoreInWatchMode": ["getNonce"]
+      "ignoreMethods": ["owners", "getOwners"],
+      "ignoreInWatchMode": ["getNonce"],
+      "fields": {
+        "$members": {
+          "handler": {
+            "type": "call",
+            "method": "getOwners",
+            "args": []
+          }
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes.",
+          "handler": {
+            "type": "call",
+            "method": "signerPolicy",
+            "args": []
+          },
+          "returnType": "(SignerPolicyToThreshold)"
+        }
+      }
     },
     "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": {
       // NioGovernor
