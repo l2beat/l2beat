@@ -6,6 +6,7 @@ import type { DetailedDescriptionSectionProps } from './detailed-description-sec
 import type { GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
 import type { GroupSectionProps } from './group-section'
 import type { L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
+import type { LivenessSectionProps } from './liveness/liveness-section'
 import type { MarkdownSectionProps } from './markdown-section'
 import type { MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
 import type { PermissionsSectionProps } from './permissions/permissions-section'
@@ -40,6 +41,7 @@ type SectionId =
   | 'contracts'
   | 'sequencing'
   | 'throughput'
+  | 'liveness'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -60,6 +62,11 @@ interface ProjectDetailsChartSection {
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
   props: ProjectDetailsProps<CostsSectionProps>
+}
+
+interface ProjectDetailsLivenessSection {
+  type: 'LivenessSection'
+  props: ProjectDetailsProps<LivenessSectionProps>
 }
 
 interface ProjectDetailsThroughputSection {
@@ -158,6 +165,7 @@ export type ProjectDetailsSection = {
 } & (
   | ProjectDetailsChartSection
   | ProjectDetailsCostsSection
+  | ProjectDetailsLivenessSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection

@@ -8,6 +8,7 @@ import { DetailedDescriptionSection } from './sections/detailed-description-sect
 import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
 import { GroupSection } from './sections/group-section'
 import { L3RiskAnalysisSection } from './sections/l3-risk-analysis-section'
+import { LivenessSection } from './sections/liveness/liveness-section'
 import { MarkdownSection } from './sections/markdown-section'
 import { MilestonesAndIncidentsSection } from './sections/milestones-and-incidents-section'
 import { PermissionsSection } from './sections/permissions/permissions-section'
@@ -50,6 +51,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'CostsSection':
             return (
               <CostsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'LivenessSection':
+            return (
+              <LivenessSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

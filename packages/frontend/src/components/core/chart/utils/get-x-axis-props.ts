@@ -18,8 +18,16 @@ export function getXAxisProps<T extends { timestamp: number }>(
     }
   }
   const timestamps = data.map((point) => point.timestamp)
-  const minTimestamp = UnixTime(Math.min(...timestamps))
-  const maxTimestamp = UnixTime(Math.max(...timestamps))
+  let minTimestamp = Infinity
+  let maxTimestamp = -Infinity
+  for (const timestamp of timestamps) {
+    if (timestamp < minTimestamp) {
+      minTimestamp = timestamp
+    }
+    if (timestamp > maxTimestamp) {
+      maxTimestamp = timestamp
+    }
+  }
 
   const actualRangeInDays =
     (UnixTime.toStartOf(maxTimestamp, 'day') -

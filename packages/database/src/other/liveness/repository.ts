@@ -1,5 +1,5 @@
 import type { TrackedTxId } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'
@@ -46,21 +46,25 @@ export class LivenessRepository extends BaseRepository {
 
   async getByConfigurationIdWithinTimeRange(
     configurationIds: string[],
-    from: UnixTime,
+    from: UnixTime | null,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
     if (configurationIds.length === 0) return []
 
-    assert(from < to, 'From must be less than to')
-    const rows = await this.db
+    let query = this.db
       .selectFrom('Liveness')
       .select(selectLiveness)
       .where('configurationId', 'in', configurationIds)
-      .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
       .distinctOn(['timestamp', 'configurationId'])
       .orderBy('timestamp', 'desc')
-      .execute()
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+
     return rows.map(toRecord)
   }
 

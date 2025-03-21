@@ -312,7 +312,19 @@ export async function getScalingProjectEntry(
         trackedTransactions,
       },
     })
+
+    sections.push({
+      type: 'LivenessSection',
+      props: {
+        id: 'liveness',
+        title: 'Liveness',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        trackedTransactions,
+      },
+    })
   }
+  
 
   if (
     !project.isUpcoming &&

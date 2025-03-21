@@ -1,6 +1,9 @@
 import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import z from 'zod'
 
+export const LivenessSubtype = z.enum(['batchSubmissions', 'stateUpdates', 'proofSubmissions'])
+export type LivenessSubtype = z.infer<typeof LivenessSubtype>
+
 export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])
 export type LivenessTimeRange = z.infer<typeof LivenessTimeRange>
 
