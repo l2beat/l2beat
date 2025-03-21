@@ -62,10 +62,13 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
     const records: ProjectValueRecord[] = []
 
     for (const timestamp of timestamps) {
-      const record = {
+      const tokensForTimestamp = tokens.filter((t) => t.timestamp === timestamp)
+      const project = configurations[0].properties.project
+
+      const createBaseRecord = (type: string) => ({
         timestamp,
-        project: configurations[0].properties.project,
-        type: 'SUMMARY',
+        project,
+        type,
         value: 0,
         canonical: 0,
         external: 0,
@@ -74,42 +77,46 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
         stablecoin: 0,
         other: 0,
         associated: 0,
-      }
+      })
 
-      const tokensForTimestamp = tokens.filter((t) => t.timestamp === timestamp)
+      const summaryRecord = createBaseRecord('SUMMARY')
+      const fullRecord = createBaseRecord('FULL')
+      const excludingAssociatedRecord = createBaseRecord(
+        'SUMMARY_EXCLUDING_ASSOCIATED',
+      )
 
       for (const token of tokensForTimestamp) {
         const config = this.$.tokens.get(token.tokenId)
         assert(config)
-        record.value += token.valueForSummary
-        switch (config.source) {
-          case 'canonical':
-            record.canonical += token.valueForSummary
-            break
-          case 'external':
-            record.external += token.valueForSummary
-            break
-          case 'native':
-            record.native += token.valueForSummary
-            break
+
+        summaryRecord.value += token.valueForSummary
+        fullRecord.value += token.valueForProject
+        if (config.isAssociated === false) {
+          excludingAssociatedRecord.value += token.valueForSummary
         }
-        switch (config.category) {
-          case 'ether':
-            record.ether += token.valueForSummary
-            break
-          case 'stablecoin':
-            record.stablecoin += token.valueForSummary
-            break
-          case 'other':
-            record.other += token.valueForSummary
-            break
+
+        const sourceField = config.source // canonical, external, or native
+        summaryRecord[sourceField] += token.valueForSummary
+        fullRecord[sourceField] += token.valueForProject
+        if (config.isAssociated === false) {
+          excludingAssociatedRecord[sourceField] += token.valueForSummary
         }
+
+        const categoryField = config.category // ether, stablecoin, or other
+        summaryRecord[categoryField] += token.valueForSummary
+        fullRecord[categoryField] += token.valueForProject
+        if (config.isAssociated === false) {
+          excludingAssociatedRecord[categoryField] += token.valueForSummary
+        }
+
         if (config.isAssociated) {
-          record.associated += token.valueForSummary
+          summaryRecord.associated += token.valueForSummary
+          fullRecord.associated += token.valueForProject
+          excludingAssociatedRecord.associated += token.valueForSummary
         }
       }
 
-      records.push(record)
+      records.push(summaryRecord, fullRecord, excludingAssociatedRecord)
     }
 
     return async () => {
