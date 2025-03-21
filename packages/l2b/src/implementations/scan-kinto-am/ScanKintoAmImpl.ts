@@ -157,7 +157,7 @@ function decodeOperationData(selector: string, data: string): string {
       default:
         return functionSignatures[selector] || selector
     }
-  } catch (error) {
+  } catch (_error) {
     // If decoding fails, just return the function signature
     return functionSignatures[selector] || selector
   }
@@ -620,7 +620,7 @@ export async function runScanKintoAm(): Promise<void> {
           changesFound = true
           pendingAdminDelayChangesFound = true
           console.log(
-            `\nTarget ${formatAddress(target)} scheduled adminDelay change:`,
+            `\nTarget ${formatAddress(target)} scheduled targetAdminDelay change:`,
           )
           console.log(
             `  New ${chalk.magenta('targetAdminDelay')}: ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.green(new Date(change.effect * 1000).toISOString())}`,
