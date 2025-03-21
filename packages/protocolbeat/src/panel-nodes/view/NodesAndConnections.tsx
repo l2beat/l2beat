@@ -12,7 +12,9 @@ export function NodesAndConnections() {
     <>
       {visible.map((node) =>
         node.fields.map((field, i) => {
-          const shouldHide = hidden.find((id) => id === field.target)
+          const shouldHide =
+            hidden.find((id) => id === field.target) ||
+            node.hiddenFields.includes(field.name)
 
           if (shouldHide) {
             return null
