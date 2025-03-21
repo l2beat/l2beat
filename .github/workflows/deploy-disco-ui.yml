@@ -25,17 +25,18 @@ jobs:
           username: "_"
           password: ${{ secrets.HEROKU_TOKEN }}
           registry: registry.heroku.com
-      - name: Build and publish containers
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          file: Dockerfile.discoui
-          build-args: |
-            TURBO_TEAM=${{ vars.TURBO_TEAM }}
-            TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
-          tags: |
-            registry.heroku.com/${{ secrets.HEROKU_DISCOVERY_UI }}/web
-      - name: Release published containers
+      - name: Build and publish container
+        run: |
+          docker build --push \
+            --build-arg TURBO_TEAM=${TURBO_TEAM} \
+            --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
+            -t ${TAG} -f ${DOCKERFILE} .
+        env:
+          DOCKERFILE: Dockerfile.discoui
+          TAG: registry.heroku.com/${{ secrets.HEROKU_DISCOVERY_UI }}/web
+          TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      - name: Release published container
         run: |
           heroku container:release -a ${{ secrets.HEROKU_DISCOVERY_UI }} -v web
         env:
