@@ -21,8 +21,8 @@ The recommended way is through docker using the commands below.
 
 ```
 docker run -d --name=l2beat_postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:14
-docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_local'
-docker exec -it l2beat_postgres psql -U postgres -c 'CREATE DATABASE l2beat_test'
+docker exec -it l2beat_postgres psql -U postgres -d postgres -c 'CREATE DATABASE l2beat_local'
+docker exec -it l2beat_postgres psql -U postgres -d postgres -c 'CREATE DATABASE l2beat_test'
 ```
 
 If you restart your system running `docker start l2beat_postgres` will bring the database back
@@ -30,17 +30,17 @@ online.
 
 Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
 
-To update database schema to the latest version run `pnpm dev:migrate`. That way you will have the
-lastest schema in your local database.
+To update database schema to the latest version run `pnpm db:migrate`. That way you will have the
+latest schema in your local database.
 
 ### Third party services
 
-You should also obtain an api key for the following services:
+You should also obtain an API key for the following services:
 
 - Alchemy: <https://alchemy.com>
 - Etherscan: <https://etherscan.io/apis>
 
-Optionally if you want to speed up the price collection obtain an api key from:
+Optionally if you want to speed up the price collection obtain an API key from:
 
 - Coingecko: <https://www.coingecko.com/en/api/pricing>
 
