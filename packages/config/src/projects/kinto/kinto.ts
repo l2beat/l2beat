@@ -110,13 +110,14 @@ export const kinto: ScalingProject = orbitStackL2({
       SOA.derivationSpec,
       'Upgradability of standard Orbit stack L1 and L2 core contracts',
       'Upgradability of Kinto-specific L2 contracts: KintoAppRegistry, KintoWalletFactory, KintoID, AccessManager, KintoWallet, EntryPoint',
+      'Signer policies and recovery process for the KintoWallet',
       'Forced transaction mechanism via L1 through the EntryPoint and the KintoWallet',
     ],
     notInScope: [
       SOA.nonGasTokens,
       SOA.sourceCodeToProgramHash,
       'Upgradability of other whitelisted L2 contracts, including Socket bridge infrastructure',
-      '',
+      'Crosschain DeFi applications',
     ],
   },
   stage: getStage(
