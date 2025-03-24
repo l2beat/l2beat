@@ -6,10 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
-import { getStage } from '../../common/stages/getStage'
 
 const discovery = new ProjectDiscovery('kinto')
 const l2discovery = new ProjectDiscovery('kinto', 'kinto')
