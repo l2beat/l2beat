@@ -19,7 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useBreakpoint, useIsMobile } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 
@@ -31,7 +31,6 @@ type SidebarContextProps = {
   setOpen: (open: boolean) => void
   openMobile: boolean
   setOpenMobile: (open: boolean) => void
-  isMobile: boolean
   toggleSidebar: () => void
 }
 
@@ -101,20 +100,11 @@ const SidebarProvider = React.forwardRef<
         state,
         open,
         setOpen,
-        isMobile,
         openMobile,
         setOpenMobile,
         toggleSidebar,
       }),
-      [
-        state,
-        open,
-        setOpen,
-        isMobile,
-        openMobile,
-        setOpenMobile,
-        toggleSidebar,
-      ],
+      [state, open, setOpen, openMobile, setOpenMobile, toggleSidebar],
     )
 
     return (
@@ -149,9 +139,10 @@ const Sidebar = React.forwardRef<
     side?: 'left' | 'right'
   }
 >(({ side = 'left', className, children, ...props }, ref) => {
-  const { isMobile, openMobile, setOpenMobile } = useSidebar()
+  const breakpoint = useBreakpoint()
+  const { openMobile, setOpenMobile } = useSidebar()
 
-  if (isMobile) {
+  if (breakpoint !== 'desktop') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
@@ -487,7 +478,7 @@ const SidebarMenuButton = React.forwardRef<
     ref,
   ) => {
     const Comp = asChild ? Slot : 'button'
-    const { isMobile } = useSidebar()
+    const breakpoint = useBreakpoint()
 
     const button = (
       <Comp
@@ -516,7 +507,7 @@ const SidebarMenuButton = React.forwardRef<
         <TooltipContent
           side="right"
           align="center"
-          hidden={isMobile}
+          hidden={breakpoint !== 'desktop'}
           {...tooltip}
         />
       </Tooltip>

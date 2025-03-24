@@ -36,10 +36,9 @@ import { HorizontalSeparator } from '../core/horizontal-separator'
 interface Props {
   groups: NavGroup[]
   logoLink: string
-  topNavbar: boolean
 }
 
-export function NavSidebar({ groups, logoLink, topNavbar }: Props) {
+export function NavSidebar({ groups, logoLink }: Props) {
   const pathname = usePathname()
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
