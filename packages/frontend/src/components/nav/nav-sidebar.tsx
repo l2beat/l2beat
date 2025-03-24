@@ -1,16 +1,32 @@
-import Link from 'next/link'
-import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
-import { HiringBadge } from '../badge/hiring-badge'
+import type { NavGroup } from './types'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+} from '../core/sidebar'
+import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { DarkThemeToggle } from '../dark-theme-toggle'
+import Link from 'next/link'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
-import { MobileNavTriggerClose } from './mobile-nav-trigger'
-import { NavLinkGroup } from './nav-link-group'
-import { NavSideBarWrapper } from './nav-sidebar-wrapper'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../core/collapsible'
+import { cn } from '~/utils/cn'
+import { ChevronIcon } from '~/icons/chevron'
+import { externalLinks } from '~/consts/external-links'
+import { HiringBadge } from '../badge/hiring-badge'
 import { NavSmallLink } from './nav-small-link'
 import { NavSmallLinkGroup } from './nav-small-link-group'
-import type { NavGroup } from './types'
 
 interface Props {
   groups: NavGroup[]
@@ -21,24 +37,70 @@ interface Props {
 export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
-    <NavSideBarWrapper topNavbar={topNavbar}>
-      <div className="flex h-[38px] flex-row items-center justify-between">
-        <Link href={logoLink}>
-          <Logo className="block h-8 w-auto" />
-        </Link>
-        <div className="flex flex-row items-center gap-4">
-          <DarkThemeToggle />
-          <div className="size-6 lg:hidden">
-            <MobileNavTriggerClose />
+    <Sidebar>
+      <SidebarHeader>
+        <div className="flex h-[38px] flex-row items-center justify-between">
+          <Link href={logoLink}>
+            <Logo className="block h-8 w-auto" />
+          </Link>
+          <div className="flex flex-row items-center gap-4">
+            <DarkThemeToggle />
+            <div className="size-6 lg:hidden">
+              <MobileNavTriggerClose />
+            </div>
           </div>
         </div>
-      </div>
-      <nav className="flex flex-1 flex-col gap-1">
+      </SidebarHeader>
+      <SidebarContent>
         {groups.map((group) => (
-          <NavLinkGroup key={group.title} group={group} />
+          <SidebarGroup key={group.title}>
+            {group.type === 'multiple' && (
+              <Collapsible key={group.title}>
+                <CollapsibleTrigger>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      {group.icon}
+                      <span className="ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 group-data-[active=true]:text-brand">
+                        {group.title}
+                      </span>
+                      <ChevronIcon className="size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]/collapsible:rotate-0 group-data-[active=true]:fill-brand" />
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  {group.links.map((item) => (
+                    <SidebarMenuSub key={item.title}>
+                      <SidebarMenuSubButton asChild>
+                        <Link href={item.href}>
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSub>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+            {group.type === 'single' && (
+              <SidebarMenuItem key={group.title}>
+                <SidebarMenuButton asChild>
+                  <Link href={group.href}>
+                    {group.icon}
+                    <span
+                      className={cn(
+                        'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
+                        // isActive && 'text-brand',
+                      )}
+                    >
+                      {group.title}
+                    </span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
+          </SidebarGroup>
         ))}
-      </nav>
-      <div>
+      </SidebarContent>
+      <SidebarFooter>
         <NavSmallLinkGroup className="mt-5">
           <NavSmallLink title="About Us" href="/about-us" />
           <NavSmallLink title="Forum" href={externalLinks.forum} />
@@ -59,10 +121,10 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
           />
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
-        <ul className="mb-10 mt-8 flex gap-2 text-2xl lg:justify-between">
+        <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
-        </ul>
-      </div>
-    </NavSideBarWrapper>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
   )
 }

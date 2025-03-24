@@ -5,14 +5,14 @@ import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
-import { useMobileNav } from './mobile-nav-context'
+import { useSidebar } from '../core/sidebar'
 
 export const NavSideBarWrapper = ({
   children,
   topNavbar,
 }: { children: React.ReactNode; topNavbar?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { open, setOpen } = useMobileNav()
+  const { open, setOpen } = useSidebar()
   const timeout = useRef<ReturnType<typeof setTimeout>>(undefined)
   const [resizing, setResizing] = useState(false)
 

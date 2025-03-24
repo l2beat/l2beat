@@ -5,11 +5,11 @@ import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
-import { MobileNavProvider } from './mobile-nav-context'
-import { MobileNavbar } from './mobile-navbar'
 import { NavSidebar } from './nav-sidebar'
 import { TopNavbar } from './top-navbar'
 import type { NavGroup } from './types'
+import { SidebarProvider } from '../core/sidebar'
+import { MobileNavbar } from './mobile-navbar'
 
 interface Props {
   children: ReactNode
@@ -143,10 +143,10 @@ export async function NavLayout({
   ])
 
   return (
-    <MobileNavProvider>
+    <SidebarProvider>
       <div
         className={cn(
-          'relative flex flex-col overflow-x-clip lg:flex-row',
+          'relative flex flex-col lg:flex-row',
           topNavbar && 'lg:flex-col',
           className,
         )}
@@ -170,13 +170,13 @@ export async function NavLayout({
           groups={groups}
           topNavbar={!!topNavbar}
         />
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 lg:ml-3">
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
           {children}
         </div>
       </div>
-    </MobileNavProvider>
+    </SidebarProvider>
   )
 }

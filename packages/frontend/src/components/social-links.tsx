@@ -46,17 +46,15 @@ export function SocialLinks({ variant }: Props) {
     },
   ]
   return links.map(({ href, title, icon: Icon }) => (
-    <li key={title}>
-      <a rel="noopener noreferrer" href={href} target="_blank">
-        <Icon
-          aria-label={title}
-          className={cn(
-            'size-6',
-            variant === 'gray' &&
-              'fill-zinc-500 transition-colors hover:fill-zinc-400 dark:fill-n-zinc-300 dark:hover:fill-zinc-400',
-          )}
-        />
-      </a>
-    </li>
+    <a key={title} rel="noopener noreferrer" href={href} target="_blank">
+      <Icon
+        aria-label={title}
+        className={cn(
+          'size-6',
+          variant === 'gray' &&
+            'fill-secondary transition-colors hover:fill-primary',
+        )}
+      />
+    </a>
   ))
 }
