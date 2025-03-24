@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useBreakpoint, useIsMobile } from '~/hooks/use-breakpoint'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 
@@ -64,7 +64,7 @@ const SidebarProvider = React.forwardRef<
     },
     ref,
   ) => {
-    const isMobile = useIsMobile()
+    const breakpoint = useBreakpoint()
     const [openMobile, setOpenMobile] = React.useState(false)
 
     // This is the internal state of the sidebar.
@@ -85,25 +85,20 @@ const SidebarProvider = React.forwardRef<
 
     // Helper to toggle the sidebar.
     const toggleSidebar = React.useCallback(() => {
-      return isMobile
+      return breakpoint === 'mobile' || breakpoint === 'tablet'
         ? setOpenMobile((open) => !open)
         : setOpen((open) => !open)
-    }, [isMobile, setOpen, setOpenMobile])
-
-    // We add a state so that we can do data-state="expanded" or "collapsed".
-    // This makes it easier to style the sidebar with Tailwind classes.
-    const state = open ? 'expanded' : 'collapsed'
+    }, [breakpoint, setOpen, setOpenMobile])
 
     const contextValue = React.useMemo<SidebarContextProps>(
       () => ({
-        state,
         open,
         setOpen,
         openMobile,
         setOpenMobile,
         toggleSidebar,
       }),
-      [state, open, setOpen, openMobile, setOpenMobile, toggleSidebar],
+      [open, setOpen, openMobile, setOpenMobile, toggleSidebar],
     )
 
     return (
