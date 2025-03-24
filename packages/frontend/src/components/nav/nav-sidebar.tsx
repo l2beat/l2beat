@@ -1,6 +1,17 @@
 'use client'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
-import type { NavGroup } from './types'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
+import { HiringBadge } from '../badge/hiring-badge'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../core/collapsible'
+import { HorizontalSeparator } from '../core/horizontal-separator'
 import {
   Sidebar,
   SidebarContent,
@@ -14,24 +25,13 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
 } from '../core/sidebar'
-import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { DarkThemeToggle } from '../dark-theme-toggle'
-import Link from 'next/link'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '../core/collapsible'
-import { ChevronIcon } from '~/icons/chevron'
-import { externalLinks } from '~/consts/external-links'
-import { HiringBadge } from '../badge/hiring-badge'
+import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavSmallLink } from './nav-small-link'
 import { NavSmallLinkGroup } from './nav-small-link-group'
-import { usePathname } from 'next/navigation'
-import { cn } from '~/utils/cn'
-import { HorizontalSeparator } from '../core/horizontal-separator'
+import type { NavGroup } from './types'
 
 interface Props {
   groups: NavGroup[]

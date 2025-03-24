@@ -5,11 +5,11 @@ import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
+import { SidebarProvider } from '../core/sidebar'
+import { MobileNavbar } from './mobile-navbar'
 import { NavSidebar } from './nav-sidebar'
 import { TopNavbar } from './top-navbar'
 import type { NavGroup } from './types'
-import { SidebarProvider } from '../core/sidebar'
-import { MobileNavbar } from './mobile-navbar'
 
 interface Props {
   children: ReactNode
@@ -165,11 +165,7 @@ export async function NavLayout({
           logoLink={logoLink}
           className={cn(!topNavbar && 'md:mb-5')}
         />
-        <NavSidebar
-          logoLink={logoLink}
-          groups={groups}
-          topNavbar={!!topNavbar}
-        />
+        <NavSidebar logoLink={logoLink} groups={groups} />
         <div className="min-w-0 flex-1 lg:ml-3">
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
