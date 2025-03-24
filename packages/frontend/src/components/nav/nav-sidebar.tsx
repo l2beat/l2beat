@@ -95,20 +95,21 @@ export function NavSidebar({ groups, logoLink }: Props) {
                                 <span>{item.title}</span>
                               </SidebarMenuSubButton>
                             ))}
-                            {group.secondaryLinks?.length !== 0 && (
-                              <>
-                                <HorizontalSeparator />
-                                {group.secondaryLinks?.map((item) => (
-                                  <SidebarMenuSubButton
-                                    href={item.href}
-                                    key={item.title}
-                                    isActive={isActive(item.href, pathname)}
-                                  >
-                                    <span>{item.title}</span>
-                                  </SidebarMenuSubButton>
-                                ))}
-                              </>
-                            )}
+                            {group.secondaryLinks &&
+                              group.secondaryLinks.length > 0 && (
+                                <>
+                                  <HorizontalSeparator />
+                                  {group.secondaryLinks.map((item) => (
+                                    <SidebarMenuSubButton
+                                      href={item.href}
+                                      key={item.title}
+                                      isActive={isActive(item.href, pathname)}
+                                    >
+                                      <span>{item.title}</span>
+                                    </SidebarMenuSubButton>
+                                  ))}
+                                </>
+                              )}
                           </SidebarMenuSub>
                         </CollapsibleContent>
                       </SidebarMenuItem>
