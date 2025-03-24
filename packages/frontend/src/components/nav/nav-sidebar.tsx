@@ -1,3 +1,4 @@
+'use client'
 import { env } from '~/env'
 import type { NavGroup } from './types'
 import {
@@ -23,12 +24,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '../core/collapsible'
-import { cn } from '~/utils/cn'
 import { ChevronIcon } from '~/icons/chevron'
 import { externalLinks } from '~/consts/external-links'
 import { HiringBadge } from '../badge/hiring-badge'
 import { NavSmallLink } from './nav-small-link'
 import { NavSmallLinkGroup } from './nav-small-link-group'
+import { usePathname } from 'next/navigation'
+import { cn } from '~/utils/cn'
 
 interface Props {
   groups: NavGroup[]
@@ -36,7 +38,8 @@ interface Props {
   topNavbar: boolean
 }
 
-export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
+export function NavSidebar({ groups, logoLink, topNavbar }: Props) {
+  const pathname = usePathname()
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <Sidebar>
@@ -54,55 +57,61 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {groups.map((group) => (
-          <SidebarGroup key={group.title}>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.type === 'multiple' && (
-                  <Collapsible>
-                    <SidebarMenuItem>
-                      <CollapsibleTrigger className="flex cursor-pointer items-center gap-1.5 p-1.5">
-                        {group.icon}
-                        <span className="ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 group-data-[active=true]:text-brand">
-                          {group.title}
-                        </span>
-                        <ChevronIcon className="size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]/collapsible:rotate-0 group-data-[active=true]:fill-brand" />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <SidebarMenuSub>
-                          {group.links.map((item) => (
-                            <SidebarMenuSubButton asChild key={item.title}>
-                              <Link href={item.href}>
-                                <span>{item.title}</span>
-                              </Link>
-                            </SidebarMenuSubButton>
-                          ))}
-                        </SidebarMenuSub>
-                      </CollapsibleContent>
-                    </SidebarMenuItem>
-                  </Collapsible>
-                )}
-                {group.type === 'single' && (
-                  <SidebarMenuItem key={group.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={group.href}>
-                        {group.icon}
-                        <span
+        {groups.map((group) => {
+          return (
+            <SidebarGroup key={group.title}>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {group.type === 'multiple' && (
+                    <Collapsible>
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger
+                          data-active={group.links.some((link) =>
+                            isActive(link.href, pathname),
+                          )}
                           className={cn(
-                            'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
-                            // isActive && 'text-brand',
+                            'group flex cursor-pointer items-center gap-2 p-2 text-base',
+                            'data-[active=true]:text-brand',
                           )}
                         >
-                          {group.title}
-                        </span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+                          {group.icon}
+                          <span>{group.title}</span>
+                          <ChevronIcon className="size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]/collapsible:rotate-0 group-data-[active=true]:fill-brand" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {group.links.map((item) => (
+                              <SidebarMenuSubButton
+                                href={item.href}
+                                key={item.title}
+                                isActive={isActive(item.href, pathname)}
+                              >
+                                <span>{item.title}</span>
+                              </SidebarMenuSubButton>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  )}
+                  {group.type === 'single' && (
+                    <SidebarMenuItem key={group.title}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive(group.href, pathname)}
+                      >
+                        <Link href={group.href}>
+                          {group.icon}
+                          <span>{group.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )
+        })}
       </SidebarContent>
       <SidebarFooter>
         <NavSmallLinkGroup className="mt-5">
@@ -131,4 +140,20 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
       </SidebarFooter>
     </Sidebar>
   )
+}
+
+function isActive(
+  href: string,
+  pathname: string,
+  activeBehavior: { type: 'exact' } | { type: 'prefix'; prefix?: string } = {
+    type: 'exact',
+  },
+) {
+  const active =
+    activeBehavior.type === 'exact'
+      ? pathname === href
+      : activeBehavior.type === 'prefix'
+        ? pathname.startsWith(activeBehavior.prefix ?? href)
+        : false
+  return active
 }
