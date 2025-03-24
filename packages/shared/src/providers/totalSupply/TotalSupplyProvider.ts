@@ -29,7 +29,6 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: calls.length })
           return Promise.all(
             calls.map(async (c) =>
               BigInt((await client.call(c, blockNumber)).toString()),
