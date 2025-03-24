@@ -109,24 +109,6 @@
     },
     {
       "mode": "auto",
-      "id": "real-UKRE",
-      "priceId": "uk-real-estate",
-      "symbol": "UKRE",
-      "name": "UK Real Estate",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x835d3E1C0aA079C6164AAd21DCb23E60eb71AF48",
-        "chain": "real",
-        "decimals": 18,
-        "sinceTimestamp": 1720483200,
-        "untilTimestamp": 1736409600
-      },
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "real-USDC",
       "priceId": "bridged-usdc-re-al",
       "symbol": "USDC",
