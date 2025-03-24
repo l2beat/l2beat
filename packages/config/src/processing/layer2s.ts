@@ -3,6 +3,7 @@ import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
 import { aevo } from '../projects/aevo/aevo'
 import { aiechain } from '../projects/aiechain/aiechain'
+import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
 import { align } from '../projects/align/align'
@@ -219,6 +220,7 @@ export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,
+  airas,
   alephzero,
   alienx,
   align,
