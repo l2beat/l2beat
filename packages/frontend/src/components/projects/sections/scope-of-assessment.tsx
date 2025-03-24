@@ -54,7 +54,7 @@ function Section({
           checked ? 'text-positive' : 'text-negative',
         )}
       >
-        {checked ? 'Things we checked' : 'Things we did not check'}
+        {checked ? 'Things in scope' : 'Things not in scope'}
       </span>
       <div
         className={cn(
