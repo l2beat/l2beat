@@ -132,28 +132,30 @@ export function NavSidebar({ groups, logoLink }: Props) {
             </SidebarGroup>
           )
         })}
+        <SidebarGroup className="-top-px mt-auto">
+          <NavSmallLinkGroup className="mt-6">
+            <NavSmallLink title="About Us" href="/about-us" />
+            <NavSmallLink title="Forum" href={externalLinks.forum} />
+            <NavSmallLink title="Donate" href="/donate" />
+            <NavSmallLink
+              title="Governance"
+              href="/governance"
+              activeBehavior={{ type: 'prefix', prefix: '/governance' }}
+            />
+            <NavSmallLink title="Glossary" href="/glossary" />
+            <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
+              Jobs
+              {hiringBadge && <HiringBadge />}
+            </NavSmallLink>
+            <NavSmallLink
+              title="Brand Kit"
+              href="https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b"
+            />
+            <NavSmallLink title="FAQ" href="/faq" />
+          </NavSmallLinkGroup>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavSmallLinkGroup className="mt-5">
-          <NavSmallLink title="About Us" href="/about-us" />
-          <NavSmallLink title="Forum" href={externalLinks.forum} />
-          <NavSmallLink title="Donate" href="/donate" />
-          <NavSmallLink
-            title="Governance"
-            href="/governance"
-            activeBehavior={{ type: 'prefix', prefix: '/governance' }}
-          />
-          <NavSmallLink title="Glossary" href="/glossary" />
-          <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
-            Jobs
-            {hiringBadge && <HiringBadge />}
-          </NavSmallLink>
-          <NavSmallLink
-            title="Brand Kit"
-            href="https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b"
-          />
-          <NavSmallLink title="FAQ" href="/faq" />
-        </NavSmallLinkGroup>
         <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
         </div>

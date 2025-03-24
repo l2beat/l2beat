@@ -1,8 +1,8 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { NavDivider } from './nav-divider'
 import type { NavGroup } from './types'
+import { VerticalSeparator } from '../core/vertical-separator'
 
 export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()
@@ -16,7 +16,7 @@ export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
 
   return (
     <>
-      <NavDivider orientation="vertical" className="h-10" />
+      <VerticalSeparator className="h-10" />
       <span className="text-base font-bold">{selectedGroup.title}</span>
     </>
   )
