@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
@@ -122,40 +121,43 @@ export const kinto: ScalingProject = orbitStackL2({
       'Other whitelisted L2 contracts',
     ],
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
-      securityCouncilReference:
-        'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
-      additionalConsiderations: {
-        short:
-          'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contracts creation. The system ensures that KYC can be revoked only if the Security Council proactively agrees to it. Only whitelisted contracts can be called by users.',
-        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contracts creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails. The system ensures that KYC can be revoked only if the Security Council proactively agrees to a proposed status change by a KYC provider. The Security Council has been historically following KYC provider decisions and it is explicitly tasked to do so. Contract deployments are disabled, and only whitelisted contracts can be called by users. Contracts outside of the ones necessary to interact with the smart wallet and to withdraw the gas token are out of scope for the stage assessment and might present additional risks.',
-      },
-    },
-  ),
+  stage: {
+    stage: 'UnderReview',
+  },
+  // getStage(
+  //   {
+  //     stage0: {
+  //       callsItselfRollup: true,
+  //       stateRootsPostedToL1: true,
+  //       dataAvailabilityOnL1: true,
+  //       rollupNodeSourceAvailable: true,
+  //     },
+  //     stage1: {
+  //       principle: false,
+  //       stateVerificationOnL1: true,
+  //       fraudProofSystemAtLeast5Outsiders: true,
+  //       usersHave7DaysToExit: false,
+  //       usersCanExitWithoutCooperation: true,
+  //       securityCouncilProperlySetUp: true,
+  //     },
+  //     stage2: {
+  //       proofSystemOverriddenOnlyInCaseOfABug: false,
+  //       fraudProofSystemIsPermissionless: false,
+  //       delayWith30DExitWindow: false,
+  //     },
+  //   },
+  //   {
+  //     rollupNodeLink:
+  //       'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
+  //     securityCouncilReference:
+  //       'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
+  //     additionalConsiderations: {
+  //       short:
+  //         'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contracts creation. The system ensures that KYC can be revoked only if the Security Council proactively agrees to it. Only whitelisted contracts can be called by users.',
+  //       long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contracts creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails. The system ensures that KYC can be revoked only if the Security Council proactively agrees to a proposed status change by a KYC provider. The Security Council has been historically following KYC provider decisions and it is explicitly tasked to do so. Contract deployments are disabled, and only whitelisted contracts can be called by users. Contracts outside of the ones necessary to interact with the smart wallet and to withdraw the gas token are out of scope for the stage assessment and might present additional risks.',
+  //     },
+  //   },
+  // ),
   upgradesAndGovernance: `
 All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is held by the ${discovery.getMultisigStats('Kinto Security Council')} Kinto Security Council on Layer 1 and can be executed without any delay.
 On the Kinto Layer 2, critical permissions are mostly guarded by an AccessManager contract, and then passed down with configurable delays to both the Security Council and the ${l2discovery.getMultisigStats('Kinto Multisig 2')} Kinto Multisig 2.

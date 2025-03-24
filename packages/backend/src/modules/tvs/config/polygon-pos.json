@@ -484,6 +484,54 @@
     },
     {
       "mode": "auto",
+      "id": "polygon-pos-ANT",
+      "priceId": "aragon",
+      "symbol": "ANT",
+      "name": "Aragon Network Token",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1602761920
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1602761920
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1613100777
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polygon-pos-ANY",
       "priceId": "anyswap",
       "symbol": "ANY",
