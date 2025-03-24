@@ -19,7 +19,7 @@ export const pay: ScalingProject = upcomingL2({
     links: {
       websites: ['https://wirexpaychain.com/'],
       documentation: [],
-      explorers: [''],
+      explorers: [],
       socialMedia: ['https://x.com/wirexpaychain'],
     },
   },
