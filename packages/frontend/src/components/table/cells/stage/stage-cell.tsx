@@ -38,11 +38,10 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
               <CircleQuestionMarkIcon
                 className={cn(
                   '-mt-px size-5 fill-current md:mt-px',
-                  getQuestionMarkClassName(stageConfig.stage),
+                  getCircleQuestionMarkClassName(stageConfig.stage),
                 )}
                 questionMarkClassName={getQuestionMarkClassName(
                   stageConfig.stage,
-                  true,
                 )}
               />
             )}
@@ -63,15 +62,29 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
 
 function getQuestionMarkClassName(
   stage: Stage | 'UnderReview' | 'NotApplicable',
-  questionMark?: boolean,
 ): string {
   switch (stage) {
     case 'Stage 2':
-      return questionMark ? 'fill-white' : 'fill-green-900'
+      return 'fill-white'
     case 'Stage 1':
-      return questionMark ? 'fill-yellow-900' : 'fill-[#FFC61B]'
+      return 'fill-yellow-900'
     case 'Stage 0':
-      return questionMark ? 'text-white' : 'fill-orange-600 dark:fill-[#E03109]'
+      return 'text-white'
+    default:
+      return ''
+  }
+}
+
+function getCircleQuestionMarkClassName(
+  stage: Stage | 'UnderReview' | 'NotApplicable',
+): string {
+  switch (stage) {
+    case 'Stage 2':
+      return 'fill-green-900'
+    case 'Stage 1':
+      return 'fill-[#FFC61B]'
+    case 'Stage 0':
+      return 'fill-orange-600 dark:fill-[#E03109]'
     default:
       return ''
   }
