@@ -8,11 +8,11 @@ import { useCallback, useMemo, useState } from 'react'
  * @param name search param name
  * @returns array containing the current value and a function to update it
  */
-export function useSearchParamState<T extends string | undefined = string>(
+export function useSearchParamState<T extends string = string>(
   key: string,
-  defaultValue: T,
+  defaultValue?: T,
   options: { shallow: boolean } = { shallow: false },
-): [string | undefined, (value: T) => void] {
+) {
   const router = useRouter()
   const pathname = usePathname()
   const params = useMemo(() => new URLSearchParams(window.location.search), [])
@@ -30,7 +30,7 @@ export function useSearchParamState<T extends string | undefined = string>(
   )
 
   const setValue = useCallback(
-    (newValue: T) => {
+    (newValue: T | undefined) => {
       const search = new URLSearchParams(params)
 
       if (newValue !== defaultValue && newValue !== undefined) {
@@ -52,5 +52,5 @@ export function useSearchParamState<T extends string | undefined = string>(
     [defaultValue, key, pathname, replaceRoute, params],
   )
 
-  return [value, setValue]
+  return [value, setValue] as const
 }
