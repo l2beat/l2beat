@@ -179,6 +179,9 @@ export function useFilterState() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
+    if (params.size === 0) {
+      return
+    }
     if (Object.keys(state).length > 0) {
       params.set('filters', encodeURIComponent(JSON.stringify(state)))
     } else {
