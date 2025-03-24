@@ -1,8 +1,4 @@
-import {
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
