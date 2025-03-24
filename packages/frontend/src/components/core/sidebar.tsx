@@ -142,7 +142,7 @@ const Sidebar = React.forwardRef<
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
-  if (breakpoint !== 'desktop') {
+  if (breakpoint === 'mobile' || breakpoint === 'tablet') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
@@ -507,7 +507,7 @@ const SidebarMenuButton = React.forwardRef<
         <TooltipContent
           side="right"
           align="center"
-          hidden={breakpoint !== 'desktop'}
+          hidden={breakpoint === 'mobile' || breakpoint === 'tablet'}
           {...tooltip}
         />
       </Tooltip>
