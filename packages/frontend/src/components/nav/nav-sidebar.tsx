@@ -31,6 +31,7 @@ import { NavSmallLink } from './nav-small-link'
 import { NavSmallLinkGroup } from './nav-small-link-group'
 import { usePathname } from 'next/navigation'
 import { cn } from '~/utils/cn'
+import { HorizontalSeparator } from '../core/horizontal-separator'
 
 interface Props {
   groups: NavGroup[]
@@ -63,12 +64,18 @@ export function NavSidebar({ groups, logoLink, topNavbar }: Props) {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {group.type === 'multiple' && (
-                    <Collapsible>
+                    <Collapsible
+                      defaultOpen={[
+                        ...group.links,
+                        ...(group.secondaryLinks ?? []),
+                      ].some((link) => isActive(link.href, pathname))}
+                    >
                       <SidebarMenuItem>
                         <CollapsibleTrigger
-                          data-active={group.links.some((link) =>
-                            isActive(link.href, pathname),
-                          )}
+                          data-active={[
+                            ...group.links,
+                            ...(group.secondaryLinks ?? []),
+                          ].some((link) => isActive(link.href, pathname))}
                           className={cn(
                             'group flex cursor-pointer items-center gap-2 p-2 text-base',
                             'data-[active=true]:text-brand',
@@ -89,6 +96,20 @@ export function NavSidebar({ groups, logoLink, topNavbar }: Props) {
                                 <span>{item.title}</span>
                               </SidebarMenuSubButton>
                             ))}
+                            {group.secondaryLinks?.length !== 0 && (
+                              <>
+                                <HorizontalSeparator />
+                                {group.secondaryLinks?.map((item) => (
+                                  <SidebarMenuSubButton
+                                    href={item.href}
+                                    key={item.title}
+                                    isActive={isActive(item.href, pathname)}
+                                  >
+                                    <span>{item.title}</span>
+                                  </SidebarMenuSubButton>
+                                ))}
+                              </>
+                            )}
                           </SidebarMenuSub>
                         </CollapsibleContent>
                       </SidebarMenuItem>
