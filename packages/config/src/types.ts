@@ -152,7 +152,7 @@ export interface ProjectLinks {
   socialMedia?: string[]
   rollupCodes?: string
 }
-export type Badge = {
+export interface Badge {
   id: string
   type: string
   name: string
@@ -160,37 +160,37 @@ export type Badge = {
   action: BadgeAction | undefined
 }
 
-type BadgeAction =
+export type BadgeAction =
   | BadgeScalingFilterAction
   | BadgeSelfScalingFilterAction
   | BadgePublicDaHighlightAction
   | BadgeSelfDaHightlightAction
 
 // Move to scaling/summary with given filterId and value
-type BadgeScalingFilterAction = {
+export type BadgeScalingFilterAction = {
   type: 'scalingFilter'
-  filterId: BadgeFilterIds
-  filterValue: string
+  id: BadgeFilterId
+  value: string
 }
 
 // Move to scaling/summary with given filterId and name of the project as a value
-type BadgeSelfScalingFilterAction = {
+export type BadgeSelfScalingFilterAction = {
   type: 'selfScalingFilter'
-  filterId: BadgeFilterIds
+  id: BadgeFilterId
 }
 
 // Move to data-availability/summary and highlight project with given slug
-type BadgePublicDaHighlightAction = {
+export type BadgePublicDaHighlightAction = {
   type: 'publicDaHighlight'
   slug: string
 }
 
 // Move to data-availability/summary and highlight project with the same slug as the project
-type BadgeSelfDaHightlightAction = {
+export type BadgeSelfDaHightlightAction = {
   type: 'selfDaHightlight'
 }
 
-type BadgeFilterIds =
+export type BadgeFilterId =
   | 'stack'
   | 'hostChain'
   | 'daLayer'

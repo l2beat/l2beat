@@ -8,7 +8,7 @@ export function getVM(badges: Badge[] | undefined) {
   }
   return vmBadges
     .map((b) =>
-      b.action?.type === 'scalingFilter' ? b.action?.filterValue : undefined,
+      b.action?.type === 'scalingFilter' ? b.action?.value : undefined,
     )
     .filter(notUndefined)
 }
