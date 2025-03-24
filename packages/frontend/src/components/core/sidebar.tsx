@@ -5,7 +5,6 @@ import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import * as React from 'react'
 
-import type { Button } from '~/components/core/button'
 import {
   Sheet,
   SheetContent,
@@ -24,7 +23,7 @@ import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 
 const SIDEBAR_WIDTH = '15rem'
-const SIDEBAR_WIDTH_MOBILE = '18rem'
+const SIDEBAR_WIDTH_MOBILE = '100%'
 
 type SidebarContextProps = {
   open: boolean
@@ -133,109 +132,67 @@ const SidebarProvider = React.forwardRef<
 )
 SidebarProvider.displayName = 'SidebarProvider'
 
-const Sidebar = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & {
-    side?: 'left' | 'right'
-  }
->(({ side = 'left', className, children, ...props }, ref) => {
-  const breakpoint = useBreakpoint()
-  const { openMobile, setOpenMobile } = useSidebar()
+const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'>>(
+  ({ className, children, ...props }, ref) => {
+    const breakpoint = useBreakpoint()
+    const { openMobile, setOpenMobile } = useSidebar()
 
-  if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+    if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+      return (
+        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+          <SheetContent
+            data-sidebar="sidebar"
+            data-mobile="true"
+            className="w-[--sidebar-width] border-none bg-background p-0 text-primary [&>button]:hidden"
+            style={
+              {
+                '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+              } as React.CSSProperties
+            }
+            side="right"
+          >
+            <SheetHeader className="sr-only">
+              <SheetTitle>Sidebar</SheetTitle>
+              <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            </SheetHeader>
+            <div className="flex size-full flex-col gap-4">{children}</div>
+          </SheetContent>
+        </Sheet>
+      )
+    }
+
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        <SheetContent
-          data-sidebar="sidebar"
-          data-mobile="true"
-          className="w-[--sidebar-width] bg-background p-0 text-primary [&>button]:hidden"
-          style={
-            {
-              '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
-          side={side}
-        >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-          </SheetHeader>
-          <div className="flex size-full flex-col">{children}</div>
-        </SheetContent>
-      </Sheet>
-    )
-  }
-
-  return (
-    <div
-      ref={ref}
-      className="group peer hidden text-primary md:block"
-      data-side={side}
-    >
-      {/* This is what handles the sidebar gap on desktop */}
       <div
-        className={cn(
-          'relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear',
-          'group-data-[side=right]:rotate-180',
-        )}
-      />
-      <div
-        className={cn(
-          'fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex',
-          'px-5 py-[18px] *:list-none',
-          side === 'left' ? 'left-0' : 'right-0',
-          className,
-        )}
-        {...props}
+        ref={ref}
+        className="group peer hidden text-primary md:block"
+        data-side="left"
       >
+        {/* This is what handles the sidebar gap on desktop */}
         <div
-          data-sidebar="sidebar"
-          className="flex size-full flex-col gap-6 bg-background"
+          className={cn(
+            'relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear',
+            'group-data-[side=right]:rotate-180',
+          )}
+        />
+        <div
+          className={cn(
+            'fixed inset-y-0 left-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear *:list-none md:flex',
+            className,
+          )}
+          {...props}
         >
-          {children}
+          <div
+            data-sidebar="sidebar"
+            className="flex size-full flex-col gap-6 bg-background"
+          >
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  )
-})
+    )
+  },
+)
 Sidebar.displayName = 'Sidebar'
-
-function SidebarTrigger({
-  className,
-  onClick,
-  ...props
-}: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar()
-
-  return (
-    <button
-      data-sidebar="trigger"
-      className={cn('size-7', className)}
-      onClick={(event) => {
-        onClick?.(event)
-        toggleSidebar()
-      }}
-      {...props}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <rect width="18" height="18" x="3" y="3" rx="2" />
-        <path d="M9 3v18" />
-      </svg>
-      <span className="sr-only">Toggle Sidebar</span>
-    </button>
-  )
-}
-SidebarTrigger.displayName = 'SidebarTrigger'
 
 const SidebarRail = React.forwardRef<
   HTMLButtonElement,
@@ -287,7 +244,7 @@ const SidebarHeader = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="header"
-      className={cn('flex flex-col gap-2', className)}
+      className={cn('flex flex-col gap-2 px-5 pt-[23px]', className)}
       {...props}
     />
   )
@@ -302,7 +259,7 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="footer"
-      className={cn('flex flex-col gap-4', className)}
+      className={cn('flex flex-col gap-4 px-5 pb-5', className)}
       {...props}
     />
   )
@@ -349,7 +306,7 @@ const SidebarGroup = React.forwardRef<
     <div
       ref={ref}
       data-sidebar="group"
-      className={cn('relative flex w-full min-w-0 flex-col', className)}
+      className={cn('relative flex w-full min-w-0 flex-col px-5', className)}
       {...props}
     />
   )
@@ -640,6 +597,5 @@ export {
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
-  SidebarTrigger,
   useSidebar,
 }
