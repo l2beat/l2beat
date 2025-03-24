@@ -27,11 +27,11 @@ export function ScopeOfAssessment({
         <ChevronIcon className="size-4 transition-transform duration-300 group-data-[state=open]:-rotate-180" />
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-4 px-4 pb-6 md:px-6">
-        {scopeOfAssessment.checked && (
-          <Section checked items={scopeOfAssessment.checked} />
+        {scopeOfAssessment.inScope && (
+          <Section checked items={scopeOfAssessment.inScope} />
         )}
-        {scopeOfAssessment.notChecked && (
-          <Section checked={false} items={scopeOfAssessment.notChecked} />
+        {scopeOfAssessment.notInScope && (
+          <Section checked={false} items={scopeOfAssessment.notInScope} />
         )}
       </CollapsibleContent>
     </Collapsible>
