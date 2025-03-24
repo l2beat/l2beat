@@ -1,6 +1,6 @@
 ---
   title: "Governance Review #44"
-  description: "This week has been relative active across most DAOs."
+  description: "Most DAOs have been relatively active this week."
   publishedOn: "2025-03-24"
   authorId: anastassis-oikonomopoulos
 ---
