@@ -17,7 +17,7 @@ export const pay: ScalingProject = upcomingL2({
     category: 'ZK Rollup',
     stack: 'Polygon',
     links: {
-      websites: ['https://www.wirexpaychain.com/'],
+      websites: ['https://wirexpaychain.com/'],
       documentation: [],
       explorers: [''],
       socialMedia: ['https://x.com/wirexpaychain'],
