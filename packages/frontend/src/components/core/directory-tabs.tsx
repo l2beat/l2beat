@@ -1,8 +1,8 @@
 'use client'
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import { usePathname } from 'next/navigation'
 import * as React from 'react'
+import { useSearchParamState } from '~/hooks/use-search-param-state'
 import { useTracking } from '~/hooks/use-tracking'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './overflow-wrapper'
@@ -17,21 +17,7 @@ const DirectoryTabs = ({
   onValueChange,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) => {
-  const [selectedTab, setSelectedTab] = React.useState(defaultValue)
-  const pathname = usePathname()
-  React.useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const tab = params.get('tab')
-    if (tab) {
-      setSelectedTab(tab)
-    }
-  }, [])
-
-  const setParams = (tab: string) => {
-    const params = new URLSearchParams(window.location.search)
-    params.set('tab', tab)
-    window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
-  }
+  const [selectedTab, setSelectedTab] = useSearchParamState('tab', defaultValue)
 
   const { track } = useTracking()
   return (
@@ -39,7 +25,6 @@ const DirectoryTabs = ({
       ref={ref}
       value={selectedTab}
       onValueChange={(value) => {
-        setParams(value)
         onValueChange?.(value)
         setSelectedTab(value)
         track('directoryTabsChanged', {
