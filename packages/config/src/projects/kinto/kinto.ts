@@ -105,21 +105,18 @@ export const kinto: ScalingProject = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   scopeOfAssessment: {
-    checked: [
-      SOA.gasToken,
-      SOA.l1Contracts,
+    inScope: [
+      'Ability to deposit, spend, and withdraw the gas token (ETH)',
       SOA.derivationSpec,
-      'Orbit stack L2 core contracts',
-      'KintoAppRegistry L2 contract',
-      'KintoWalletFactory L2 contract',
-      'KintoID L2 contract',
-      'AccessManager L2 contract',
+      'Upgradability of standard Orbit stack L1 and L2 core contracts',
+      'Upgradability of Kinto-specific L2 contracts: KintoAppRegistry, KintoWalletFactory, KintoID, AccessManager, KintoWallet, EntryPoint',
+      'Forced transaction mechanism via L1 through the EntryPoint and the KintoWallet',
     ],
-    notChecked: [
+    notInScope: [
       SOA.nonGasTokens,
-      SOA.sequencerPolicy,
       SOA.sourceCodeToProgramHash,
-      'Other whitelisted L2 contracts',
+      'Upgradability of other whitelisted L2 contracts, including Socket bridge infrastructure',
+      '',
     ],
   },
   stage: getStage(
