@@ -5,7 +5,9 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupContent,
   SidebarHeader,
+  SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -54,49 +56,51 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
       <SidebarContent>
         {groups.map((group) => (
           <SidebarGroup key={group.title}>
-            {group.type === 'multiple' && (
-              <Collapsible key={group.title}>
-                <CollapsibleTrigger>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton>
-                      {group.icon}
-                      <span className="ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 group-data-[active=true]:text-brand">
-                        {group.title}
-                      </span>
-                      <ChevronIcon className="size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]/collapsible:rotate-0 group-data-[active=true]:fill-brand" />
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.type === 'multiple' && (
+                  <Collapsible>
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger className="flex cursor-pointer items-center gap-1.5 p-1.5">
+                        {group.icon}
+                        <span className="ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 group-data-[active=true]:text-brand">
+                          {group.title}
+                        </span>
+                        <ChevronIcon className="size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]/collapsible:rotate-0 group-data-[active=true]:fill-brand" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <SidebarMenuSub>
+                          {group.links.map((item) => (
+                            <SidebarMenuSubButton asChild key={item.title}>
+                              <Link href={item.href}>
+                                <span>{item.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          ))}
+                        </SidebarMenuSub>
+                      </CollapsibleContent>
+                    </SidebarMenuItem>
+                  </Collapsible>
+                )}
+                {group.type === 'single' && (
+                  <SidebarMenuItem key={group.title}>
+                    <SidebarMenuButton asChild>
+                      <Link href={group.href}>
+                        {group.icon}
+                        <span
+                          className={cn(
+                            'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
+                            // isActive && 'text-brand',
+                          )}
+                        >
+                          {group.title}
+                        </span>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  {group.links.map((item) => (
-                    <SidebarMenuSub key={item.title}>
-                      <SidebarMenuSubButton asChild>
-                        <Link href={item.href}>
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSub>
-                  ))}
-                </CollapsibleContent>
-              </Collapsible>
-            )}
-            {group.type === 'single' && (
-              <SidebarMenuItem key={group.title}>
-                <SidebarMenuButton asChild>
-                  <Link href={group.href}>
-                    {group.icon}
-                    <span
-                      className={cn(
-                        'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300',
-                        // isActive && 'text-brand',
-                      )}
-                    >
-                      {group.title}
-                    </span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )}
+                )}
+              </SidebarMenu>
+            </SidebarGroupContent>
           </SidebarGroup>
         ))}
       </SidebarContent>
