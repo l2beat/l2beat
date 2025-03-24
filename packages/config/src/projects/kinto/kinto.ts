@@ -150,7 +150,17 @@ export const kinto: ScalingProject = orbitStackL2({
       additionalConsiderations: {
         short:
           'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contracts creation. The system ensures that KYC can be revoked only if the Security Council proactively agrees to it. Only whitelisted contracts can be called by users.',
-        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contracts creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails. The system ensures that KYC can be revoked only if the Security Council proactively agrees to a proposed status change by a KYC provider. The Security Council has been historically following KYC provider decisions and it is explicitly tasked to do so. Contracts outside of the ones necessary to interact with the smart wallet and to withdraw the gas token are out of scope for the stage assessment and might present additional risks.',
+        long: `
+Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all transactions by EOAs and new contracts creation, unless specifically whitelisted.
+This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted.
+The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.
+The system ensures that KYC can be revoked only if the Security Council proactively agrees to a proposed status change by a KYC provider. The Security Council has been historically following KYC provider decisions and it is explicitly tasked to do so.
+
+The KintoWallet implementation supports different signer thresholds with a maximum of 4 signers. The first signer for each users smart wallet though is enforced to be held by Turnkey in a TEE.
+Users can make transactions using this first signer only through Kinto's frontend. Authenticated by a passkey, the Turnkey TEE then signs the transaction for them and submits it to the L2.
+The user can still choose to not trust Turnkey by adding 2 EOA signers to their wallet and setting their signer policy to 2/3 during wallet creation.
+
+Contracts outside of the ones necessary to interact with the smart wallet and to withdraw the gas token are out of scope for the stage assessment and might present additional risks.`,
       },
     },
   ),
@@ -167,6 +177,8 @@ To protect users from this role which is mostly held by EOAs, a sanction expires
 An expired sanction guarantees the user a ${formatSeconds(l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD') - sanctionExpirySeconds)} cooldown window during which they cannot be sanctioned again.
 
 The canonical (enforced) smartwallet for users on Kinto can be upgraded via the KintoWalletFactory, using the same path via the AccessManager.
+Additionally, each smart wallet must use a recoverer address custodied by Turnkey. This allows users to reset the wallet signers via their email in case they lose their passkey.
+It also necessitates a recovery delay to prevent turnkey from maliciously using their recoverer permission. During this period of ${formatSeconds(l2discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'))}, the user can cancel the recovery process with any transaction in their smart wallet.
 
 The permissioned sanctions logic by KYC providers necessitates at least an ${formatSeconds(l2critDelay)} delay on all upgrades that aren't executed by the Security Council, allowing the user at least 7d to exit.`,
   nonTemplateTechnology: {
@@ -175,8 +187,8 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
         name: 'Enforced smart wallets and KYC',
         description: `
       The Kinto L2 node is a fork of Arbitrum's geth implementation with notable changes to the state transition function. 
-      A valid state transition in Kinto [disallows all contract calls by EOAs](https://github.com/KintoXYZ/kinto-go-ethereum/blob/7aba9b812a82d9339d29a2345946c3d7030a0377/core/kinto_hardfork_7.go#L58) and new contract creation, unless specifically whitelisted. 
-      The current whitelist is sourced directly from the KintoAppRegistry smart contract on Kinto L2, and can be modified by its Owner without delay. 
+      A valid state transition in Kinto [disallows all transactions by EOAs](https://github.com/KintoXYZ/kinto-go-ethereum/blob/7aba9b812a82d9339d29a2345946c3d7030a0377/core/kinto_hardfork_7.go#L58) and new contract creation, unless specifically whitelisted. 
+      The current whitelist is sourced directly from the KintoAppRegistry smart contract on Kinto L2, and can be modified by the L2 governance.
       This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted.
         
       The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.`,
