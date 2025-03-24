@@ -16,8 +16,30 @@
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {
+    "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+      // local override over the template to fetch the validators from the shared contract
+      "displayName": "ValidatorTimelock",
+      "fields": {
+        "validatorsVTL": {
+          "handler": {
+            "type": "event",
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 325]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 325]
+            }
+          },
+          "permissions": [{ "type": "validateZkStack" }]
+        }
+      }
+    },
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
       // local override over the template to fetch the validators from the shared contract
+      "displayName": "ValidatorTimelock2",
       "fields": {
         "validatorsVTL": {
           "handler": {
