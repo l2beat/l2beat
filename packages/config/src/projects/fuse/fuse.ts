@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
-import { BADGES } from '../../common/badges'
 
 export const fuse: ScalingProject = upcomingL2({
   id: 'fuse',
