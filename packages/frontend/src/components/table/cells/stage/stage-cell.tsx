@@ -1,9 +1,6 @@
-import type { ProjectScalingStage } from '@l2beat/config'
+import type { ProjectScalingStage, Stage } from '@l2beat/config'
 
-import {
-  StageBadge,
-  getStageTextClassname,
-} from '~/components/badge/stage-badge'
+import { StageBadge } from '~/components/badge/stage-badge'
 import {
   Tooltip,
   TooltipContent,
@@ -41,7 +38,11 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
               <CircleQuestionMarkIcon
                 className={cn(
                   '-mt-px size-5 fill-current md:mt-px',
-                  getStageTextClassname(stageConfig.stage),
+                  getQuestionMarkClassName(stageConfig.stage),
+                )}
+                questionMarkClassName={getQuestionMarkClassName(
+                  stageConfig.stage,
+                  true,
                 )}
               />
             )}
@@ -58,4 +59,20 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
       </TooltipContent>
     </Tooltip>
   )
+}
+
+function getQuestionMarkClassName(
+  stage: Stage | 'UnderReview' | 'NotApplicable',
+  questionMark?: boolean,
+): string {
+  switch (stage) {
+    case 'Stage 2':
+      return questionMark ? 'fill-white' : 'fill-green-900'
+    case 'Stage 1':
+      return questionMark ? 'fill-yellow-900' : 'fill-[#FFC61B]'
+    case 'Stage 0':
+      return questionMark ? 'text-white' : 'fill-orange-600 dark:fill-[#E03109]'
+    default:
+      return ''
+  }
 }
