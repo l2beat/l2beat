@@ -18,21 +18,6 @@ import {
 import { UserHandlerDefinition } from '../src/discovery/handlers/user'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 
-const definitions = {
-  UserHandlerDefinition,
-  Permission,
-  RawPermissionConfiguration,
-  ContractValueType,
-  ContractFieldSeverity,
-  DiscoveryContractField,
-  DiscoveryCustomType,
-  ExternalReference,
-  DiscoveryCategory,
-  ManualProxyType,
-  DiscoveryContract,
-  CommonDiscoveryConfig,
-} as const
-
 async function generateAndSaveSchema(
   // biome-ignore lint/suspicious/noExplicitAny: it's fine
   baseSchema: z.ZodObject<any>,
@@ -41,7 +26,22 @@ async function generateAndSaveSchema(
   const schemaWithMeta = z
     .object({ $schema: z.string().optional() })
     .merge(baseSchema)
-  const schema = zodToJsonSchema(schemaWithMeta, { definitions })
+  const schema = zodToJsonSchema(schemaWithMeta, {
+    definitions: {
+      UserHandlerDefinition,
+      Permission,
+      RawPermissionConfiguration,
+      ContractValueType,
+      ContractFieldSeverity,
+      DiscoveryContractField,
+      DiscoveryCustomType,
+      ExternalReference,
+      DiscoveryCategory,
+      ManualProxyType,
+      DiscoveryContract,
+      CommonDiscoveryConfig,
+    } as const,
+  })
   writeFileSync(filename, await toPrettyJson(schema))
 }
 
