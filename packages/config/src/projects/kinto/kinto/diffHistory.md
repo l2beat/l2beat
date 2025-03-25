@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x9d96d94bc54a83fd13065208aba78b5e527853df
+
+# Diff at Tue, 25 Mar 2025 11:49:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 773151
+- current block number: 778850
+
+## Description
+
+BridgedKinto upgrade.
+
+Current state of permissions in the AccessManager is unchanged.
+
+waiting for:
+queue operations for 12d values for:
+- executionDelays for all non-SC actors for the roles UPGRADER_ROLE, ADMIN_ROLE and SECURITY_COUNCIL role
+- targetAdminDelays for the 3 targets: KintoAppRegistry, KintoID, KintoWalletFactory
+- KintoWallet.RECOVERY_TIME
+- KintoID.EXIT_WINDOW_PERIOD
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x8afd4a6a4dce2fedf29d5a78d35edbb8101e74ea5e923aebda93db04b4f44121"
++        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
+      values.$implementation:
+-        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
++        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
+      values.$pastUpgrades.8:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$pastUpgrades.7.2:
+-        "2025-02-21T21:13:41.000Z"
++        "2024-06-29T15:10:34.000Z"
+      values.$pastUpgrades.7.1.0:
+-        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
++        "0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"
+      values.$pastUpgrades.7.0:
+-        "0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb"
++        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
+      values.$pastUpgrades.6.2:
+-        "2024-06-29T15:10:34.000Z"
++        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
+      values.$pastUpgrades.6.1:
+-        ["0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"]
++        "2025-03-19T21:51:53.000Z"
+      values.$pastUpgrades.6.0:
+-        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
++        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
+      values.$pastUpgrades.5.2:
+-        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
++        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
+      values.$pastUpgrades.5.1:
+-        "2025-03-19T21:51:53.000Z"
++        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
+      values.$pastUpgrades.5.0:
+-        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
++        "2024-12-18T00:08:48.000Z"
+      values.$pastUpgrades.4.2:
+-        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
++        ["0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"]
+      values.$pastUpgrades.4.1:
+-        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
++        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
+      values.$pastUpgrades.4.0:
+-        "2024-12-18T00:08:48.000Z"
++        "2024-06-20T23:33:48.000Z"
+      values.$pastUpgrades.3.2.0:
+-        "0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"
++        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
+      values.$pastUpgrades.3.1:
+-        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
++        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
+      values.$pastUpgrades.3.0:
+-        "2024-06-20T23:33:48.000Z"
++        "2025-03-20T00:39:13.000Z"
+      values.$pastUpgrades.2.2:
+-        ["0x6af53F698b87809d98CeAAfa848c73e192400E61"]
++        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
+      values.$pastUpgrades.2.1:
+-        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
++        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
+      values.$pastUpgrades.2.0:
+-        "2025-03-20T00:39:13.000Z"
++        "2024-07-10T20:17:25.000Z"
+      values.$pastUpgrades.1.2:
+-        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
++        "2025-03-25T01:46:55.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
++        "0x4c3e223697c1a08b1539359340534964303bba7cbc4519e70044c74ad19fd784"
+      values.$pastUpgrades.1.0:
+-        "2024-07-10T20:17:25.000Z"
++        ["0xF22F907b74CAB91864B7bEEcAdf762F464a96140"]
+      values.$upgradeCount:
+-        8
++        9
+      values.VAULT:
++        "0x3De040ef2Fbf9158BADF559C5606d7706ca72309"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl.roles.UPGRADER_ROLE.members.1:
+-        {"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1733181166,"executionDelay":604800}
++++ description: List of roles revoked from accounts.
+      values.RolesRevoked.8663528507529876195:
++        [{"roleId":"8663528507529876195","account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
+-        0
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
+-        604800
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
+-        604800
++        950400
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@773151 => .flat}/BridgedKinto/BridgedKinto.sol     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x433020c537dbdf2e53a26994bff8c280032ed795
 
 # Diff at Fri, 21 Mar 2025 14:35:20 GMT:
