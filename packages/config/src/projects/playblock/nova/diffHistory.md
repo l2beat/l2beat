@@ -10,7 +10,7 @@ Generated with discovered.json: 0x96792a7ac6ef7b7b663c943c78f0fe6856c86f01
 
 Minor upgrade of Bridge, Inbox and SequencerInbox:
 - logic for tokens with custom decimals
-- 7702 adjustments
+- 7702 adjustments 
 - SequencerInbox upgraded to known implementation
 
 ## Watched changes
