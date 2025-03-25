@@ -2,6 +2,7 @@ import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
+import { PizzaIcon } from '~/icons/pages/pizza'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
@@ -27,6 +28,18 @@ export async function NavLayout({
   topChildren,
 }: Props) {
   const groups = compact<NavGroup>([
+    {
+      type: 'multiple',
+      title: 'Dominos x L2BEAT',
+      match: 'dominos',
+      icon: <PizzaIcon className="transition-colors duration-300" />,
+      links: [
+        {
+          title: 'Dominos',
+          href: '/dominos/order',
+        },
+      ],
+    },
     {
       type: 'multiple',
       title: 'Scaling',

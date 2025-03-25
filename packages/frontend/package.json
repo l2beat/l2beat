@@ -20,6 +20,7 @@
     "tinify-logos": "tsx scripts/logos/tinifyLogos.ts"
   },
   "dependencies": {
+    "@hookform/resolvers": "^4.1.3",
     "@l2beat/backend-shared": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -64,6 +65,7 @@
     "pg": "^8.8.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-hook-form": "^7.54.2",
     "recharts": "^2.15.1",
     "rimraf": "^5.0.0",
     "sharp": "^0.33.5",
