@@ -1,8 +1,8 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import type { NavGroup } from './types'
 import { VerticalSeparator } from '../core/vertical-separator'
+import type { NavGroup } from './types'
 
 export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()
