@@ -130,7 +130,7 @@ function Controls({ entries }: { entries: ScalingLivenessEntry[] }) {
   const { timeRange, setTimeRange } = useLivenessTimeRangeContext()
 
   return (
-    <div className="flex flex-col justify-between gap-2 md:flex-row">
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
       <TableFilters entries={entries} />
       <LivenessTimeRangeControls
         timeRange={timeRange}
