@@ -1,0 +1,8 @@
+{
+  "extends": "@l2beat/typescript-config/react",
+  "compilerOptions": {
+    "paths": {
+      "react": ["./node_modules/@types/react"]
+    }
+  }
+}
