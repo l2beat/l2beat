@@ -120,6 +120,7 @@ import { nal } from '../projects/nal/nal'
 import { network3 } from '../projects/network3/network3'
 import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
+import { nodle } from '../projects/nodle/nodle'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { ola } from '../projects/ola/ola'
@@ -336,6 +337,7 @@ export const layer2s: ScalingProject[] = [
   network3,
   neva,
   nil,
+  nodle,
   nova,
   oevnetwork,
   ola,
