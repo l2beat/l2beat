@@ -26,11 +26,10 @@ if (!isProduction) {
   })
   app.use(vite.middlewares)
 } else {
-  // TODO: production?
-  // const compression = (await import('compression')).default
-  // const sirv = (await import('sirv')).default
-  // app.use(compression())
-  // app.use(base, sirv('./dist/client', { extensions: [] }))
+  const compression = (await import('compression')).default
+  const sirv = (await import('sirv')).default
+  app.use(compression())
+  app.use(base, sirv('./dist/client', { extensions: [] }))
 }
 
 // Serve HTML
@@ -47,7 +46,7 @@ app.use('*all', async (req, res) => {
       render = (await vite.ssrLoadModule('/src/entry.server.tsx')).render
     } else {
       template = templateHtml
-      const SERVER_ENTRY = './dist/server/entry.server.js'
+      const SERVER_ENTRY = '../dist/server/entry.server.js'
       render = (await import(SERVER_ENTRY)).render
     }
 
