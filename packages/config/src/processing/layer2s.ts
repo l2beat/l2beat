@@ -134,6 +134,7 @@ import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
 import { patex } from '../projects/patex/patex'
+import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
@@ -349,6 +350,7 @@ export const layer2s: ScalingProject[] = [
   paradex,
   parallel,
   patex,
+  pay,
   payy,
   penchain,
   pepeunchained,

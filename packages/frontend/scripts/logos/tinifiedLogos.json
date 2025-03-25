@@ -63,7 +63,7 @@
   "mint.png": "953d72108516a154146542107a2c7635",
   "mode.png": "410dd2e0efed90e5b6c1a7ea61aa3a25",
   "molten.png": "8a452c0d1f4be470f8ab030272a54f13",
-  "morph.png": "0cb4a35d3e242d6356ff28cd8b6f9fcc",
+  "morph.png": "ad62c8d9cc9c7b181809314140683587",
   "multichain.png": "6852bc0daa6578173f06144e44047d14",
   "myria.png": "459dd156994faaba49fe29d5eb26cd83",
   "near.png": "d747c529ca4793e20bc02500e3612430",
@@ -80,7 +80,7 @@
   "orbit.png": "ec0a3d11cf3e9e89450d6ffdffb07d3d",
   "orbiter.png": "beb784b78e76d1143bd6761087cec914",
   "palm.png": "dea264c80e7c7541889092a9751ddbea",
-  "paradex.png": "9b6fa62cc6d85bf5ca282c24b60f97fd",
+  "paradex.png": "d5549333ae3078c9680d4b8fc132c2fa",
   "parallel.png": "0216b938c509a86660bddb20030a0455",
   "pnetwork.png": "597f7b4d74a2545d3a89404054f4fd1e",
   "polygon-miden.png": "6ede3407d160d18e022f6f6ac322029c",
@@ -362,5 +362,6 @@
   "prom.png": "fc0e00395f4bd0e2e1d89f0888c5b8e0",
   "hyperagi.png": "ffda8302c715c6469a220a3b4dce7819",
   "everclearbridge.png": "c41808f0cb52e241c2ced9b56c016e5e",
-  "airas.png": "d868564f310819ce61aa43f0119645b4"
+  "airas.png": "d868564f310819ce61aa43f0119645b4",
+  "pay.png": "048b4ee73b1c73a2677b7b9f5707052b"
 }
