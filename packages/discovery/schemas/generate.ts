@@ -33,31 +33,27 @@ const definitions = {
   CommonDiscoveryConfig,
 } as const
 
-async function saveConfigSchema() {
-  const RawDiscoveryConfigWithSchema = z
-    .object({
-      $schema: z.string().optional(),
-    })
-    .merge(RawDiscoveryConfig)
-
-  const schema = zodToJsonSchema(RawDiscoveryConfigWithSchema, { definitions })
-  writeFileSync('schemas/config.v2.schema.json', await toPrettyJson(schema))
-}
-
-async function saveTemplateSchema() {
-  const DiscoveryContractWithSchema = z
-    .object({
-      $schema: z.string().optional(),
-    })
-    .merge(DiscoveryContract)
-
-  const schema = zodToJsonSchema(DiscoveryContractWithSchema, { definitions })
-  writeFileSync('schemas/contract.v2.schema.json', await toPrettyJson(schema))
+async function generateAndSaveSchema(
+  // biome-ignore lint/suspicious/noExplicitAny: it's fine
+  baseSchema: z.ZodObject<any>,
+  filename: string,
+) {
+  const schemaWithMeta = z
+    .object({ $schema: z.string().optional() })
+    .merge(baseSchema)
+  const schema = zodToJsonSchema(schemaWithMeta, { definitions })
+  writeFileSync(filename, await toPrettyJson(schema))
 }
 
 async function main() {
-  await saveConfigSchema()
-  await saveTemplateSchema()
+  await generateAndSaveSchema(
+    RawDiscoveryConfig,
+    'schemas/config.v2.schema.json',
+  )
+  await generateAndSaveSchema(
+    DiscoveryContract,
+    'schemas/contract.v2.schema.json',
+  )
 }
 
 main().catch(console.error)
