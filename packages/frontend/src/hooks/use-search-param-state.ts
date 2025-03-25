@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 /**
  * Use state that is persisted in a search param.
@@ -17,18 +17,9 @@ export function useSearchParamState<T extends string = string>(
   const pathname = usePathname()
 
   const [value, setStateValue] = useState<string | undefined>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search)
-      return params.get(key) ?? defaultValue
-    }
-    return defaultValue
-  })
-
-  useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const initialValue = params.get(key) ?? defaultValue
-    setStateValue(initialValue)
-  }, [key, defaultValue])
+    return params.get(key) ?? defaultValue
+  })
 
   const replaceRoute = useCallback(
     (pathname: string) =>
@@ -42,7 +33,7 @@ export function useSearchParamState<T extends string = string>(
     (newValue: T | undefined) => {
       const search = new URLSearchParams(window.location.search)
 
-      if (newValue !== defaultValue && newValue !== undefined) {
+      if (newValue !== undefined) {
         search.set(key, newValue)
       } else {
         search.delete(key)
@@ -58,7 +49,7 @@ export function useSearchParamState<T extends string = string>(
 
       setStateValue(newValue)
     },
-    [defaultValue, key, pathname, replaceRoute],
+    [key, pathname, replaceRoute],
   )
 
   return [value, setValue] as const
