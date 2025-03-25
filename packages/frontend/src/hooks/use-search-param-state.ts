@@ -16,7 +16,13 @@ export function useSearchParamState<T extends string = string>(
   const router = useRouter()
   const pathname = usePathname()
 
-  const [value, setStateValue] = useState<string | undefined>(defaultValue)
+  const [value, setStateValue] = useState<string | undefined>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      return params.get(key) ?? defaultValue
+    }
+    return defaultValue
+  })
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
