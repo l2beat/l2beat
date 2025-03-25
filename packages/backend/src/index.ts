@@ -12,6 +12,7 @@ import {
 
 import { Application } from './Application'
 import { getConfig } from './config'
+import 'elastic-apm-node/start.js'
 
 main().catch(() => {
   process.exit(1)
