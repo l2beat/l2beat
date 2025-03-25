@@ -1,20 +1,20 @@
 import { writeFileSync } from 'fs'
+import { z } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import {
-  Permission,
-  RawPermissionConfiguration,
-  ContractValueType,
+  CommonDiscoveryConfig,
   ContractFieldSeverity,
+  ContractValueType,
+  DiscoveryCategory,
+  DiscoveryContract,
   DiscoveryContractField,
   DiscoveryCustomType,
   ExternalReference,
-  DiscoveryCategory,
   ManualProxyType,
-  DiscoveryContract,
-  CommonDiscoveryConfig,
+  Permission,
   RawDiscoveryConfig,
+  RawPermissionConfiguration,
 } from '../src/discovery/config/RawDiscoveryConfig'
-import { z } from 'zod'
 import { UserHandlerDefinition } from '../src/discovery/handlers/user'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 
