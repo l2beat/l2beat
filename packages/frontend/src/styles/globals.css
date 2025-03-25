@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--divider)) transparent;
+}
+
 @layer base {
   :root {
     --primary: 260deg 7.69% 7.65%;
@@ -219,25 +224,5 @@
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-gray-200;
-  }
-
-  .dark .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-zinc-800;
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-50;
-  }
-
-  .dark .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-zinc-500;
   }
 }
