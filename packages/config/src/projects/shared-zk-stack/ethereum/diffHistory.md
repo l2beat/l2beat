@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x26cc9225957519dc471fe5f75f53ef1a89cc2075
+
+# Diff at Tue, 25 Mar 2025 10:34:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 22081910
+- current block number: 22123258
+
+## Description
+
+Added discovery for currently unused contracts (L1AssetRouter, L1NativeTokenVault). Category in the template is "spam" until these contracts are used (in ~1 week).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081910 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56"}
+      directlyReceivedPermissions.2.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.1.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      receivedPermissions.3.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.2.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      receivedPermissions.2.via.1.address:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+      receivedPermissions.1.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      receivedPermissions.1.via.1.address:
+-        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+```
+
+```diff
++   Status: CREATED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+```
+
 Generated with discovered.json: 0x9a13288795e7cf6d1f8dd42fd7d112a5e25e39e4
 
 # Diff at Tue, 18 Mar 2025 11:38:01 GMT:

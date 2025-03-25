@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf4a323131544dc1e0606afbe5b72b9b2ed4075ff
+Generated with discovered.json: 0x035e59f1ada594ec2af21e037afce1244600adba
 
-# Diff at Mon, 24 Mar 2025 09:42:02 GMT:
+# Diff at Tue, 25 Mar 2025 10:35:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@eb1102fa3d2037ec171cfaf1ddf9a4412f205db7 block: 22022296
-- current block number: 22115934
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 22022296
+- current block number: 22122838
 
 ## Description
 
@@ -19,21 +19,16 @@ Upgrade diamond to protocol v26.
 ```
 
 ```diff
+    contract undefined (0x0b114d4675Cb79507e68F2616c93e124122c6ef0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
+    }
+```
+
+```diff
     contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
     +++ description: None
-      issuedPermissions.5:
-+        {"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}
-      issuedPermissions.4.permission:
--        "upgrade"
-+        "interact"
-      issuedPermissions.4.to:
--        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
-+        "0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
-      issuedPermissions.4.description:
-+        "address is part of the GRVTTransactionFilterer whitelist."
-      issuedPermissions.3.to:
--        "0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
-+        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
       values.accessControl.L2_TX_SENDER_ROLE.members.4:
 +        "0xE17aeD2fC55f4A876315376ffA49FE6358113a65"
       values.accessControl.L2_TX_SENDER_ROLE.members.3:
@@ -56,6 +51,14 @@ Upgrade diamond to protocol v26.
       values.whitelistedSender.1:
 -        "0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
 +        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+    }
+```
+
+```diff
+    contract undefined (0x58D14960E0a2be353eDdE61ad719196A2b816522) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validateZkStack","from":"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"}
     }
 ```
 
@@ -163,15 +166,6 @@ Upgrade diamond to protocol v26.
       values.getL2DefaultAccountBytecodeHash:
 -        "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30"
 +        "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0"
-      values.getL2SystemContractsUpgradeBatchNumber:
--        0
-+        1479
-      values.getL2SystemContractsUpgradeBlockNumber:
--        0
-+        1479
-      values.getL2SystemContractsUpgradeTxHash:
--        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0x90ad0eda97ff912115760297113eeee7db980d892d46d454e13f97e1b732da50"
 +++ description: Protocol version, increments with each protocol upgrade.
 +++ severity: HIGH
       values.getProtocolVersion:
@@ -226,44 +220,8 @@ Upgrade diamond to protocol v26.
 
 ```diff
 +   Status: CREATED
-    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-```
-
-```diff
-+   Status: CREATED
-    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract UpgradeableBeacon (0xb3618AbcbA795588C43eA602dD0Cd6E952A85a6A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
-    +++ description: None
 ```
 
 ```diff
@@ -272,33 +230,31 @@ Upgrade diamond to protocol v26.
     +++ description: Implements the ZK proof verification logic.
 ```
 
-```diff
-+   Status: CREATED
-    contract BridgedStandardERC20 (0xEA3c8d61A4B5476310975C13964a6Da6eF1dED49)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
-.../grvt/ethereum/.flat/BridgedStandardERC20.sol   | 2735 ++++++++++++++++++++
- .../GrvtZkEvm/AdminFacet.1.sol                     | 1442 ++++++++++-
- .../GrvtZkEvm/ExecutorFacet.4.sol                  | 2016 +++++++++++----
- .../GrvtZkEvm/GettersFacet.2.sol                   | 1153 ++++++++-
- .../GrvtZkEvm/MailboxFacet.3.sol                   | 2195 +++++++++++-----
- .../ethereum/.flat/L1AssetRouter/L1AssetRouter.sol | 2359 +++++++++++++++++
- .../TransparentUpgradeableProxy.p.sol              |  729 ++++++
- .../ethereum/.flat/L1ERC20Bridge/L1ERC20Bridge.sol |  832 ++++++
- .../TransparentUpgradeableProxy.p.sol              |  653 +++++
- .../L1NativeTokenVault/L1NativeTokenVault.sol      | 2202 ++++++++++++++++
- .../TransparentUpgradeableProxy.p.sol              |  729 ++++++
- .../grvt/ethereum/.flat/UpgradeableBeacon.sol      |  378 +++
- ...0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E.sol} |    0
- ...-0x8c0Bfc04AdA21fd496c55B8C50331f904306F564.sol |  504 ++++
- .../grvt/ethereum/.flat/ValidiumL1DAValidator.sol  |   57 +
+.../GrvtZkEvm/AdminFacet.1.sol                     | 1442 ++++++++++++-
+ .../GrvtZkEvm/ExecutorFacet.4.sol                  | 2016 ++++++++++++++----
+ .../GrvtZkEvm/GettersFacet.2.sol                   | 1153 +++++++++-
+ .../GrvtZkEvm/MailboxFacet.3.sol                   | 2195 ++++++++++++++------
+ .../grvt/ethereum/.flat/ValidatorTimelock.sol      |  504 +++++
  .../{.flat@22022296 => .flat}/Verifier.sol         |   41 +-
- .../src/projects/grvt/ethereum/.flat/WETH9.sol     |   63 +
- 17 files changed, 16918 insertions(+), 1170 deletions(-)
+ 6 files changed, 6181 insertions(+), 1170 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022296 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      name:
+-        "ValidatorTimelock"
++        "ValidatorTimelock2"
+    }
 ```
 
 Generated with discovered.json: 0x1b611db648a694ed5552389c7be622b6c9215dc0
