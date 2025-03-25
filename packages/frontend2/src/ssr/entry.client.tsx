@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import { App, type SsrData } from './App'
+import { App, type SsrData } from '../app/App'
 
 declare global {
   interface Window {

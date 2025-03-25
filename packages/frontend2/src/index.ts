@@ -1,13 +1,12 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import type { ViteDevServer } from 'vite'
-import { getData } from './data'
-import type { SsrData } from './App'
+import type { SsrData } from './app/App'
+import { AppRouter } from './app/AppRouter'
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
-const base = process.env.BASE || '/'
 
 // Cached production assets
 const templateHtml = isProduction
@@ -24,58 +23,65 @@ if (!isProduction) {
   vite = await createServer({
     server: { middlewareMode: true },
     appType: 'custom',
-    base,
+    base: '/',
   })
   app.use(vite.middlewares)
 } else {
   const compression = (await import('compression')).default
   const sirv = (await import('sirv')).default
   app.use(compression())
-  app.use(base, sirv('./dist/client', { extensions: [] }))
+  app.use(sirv('./dist/client', { extensions: [] }))
 }
 
-// Serve HTML
-app.use('*all', async (req, res) => {
-  try {
-    const url = req.originalUrl.replace(base, '')
+AppRouter(app, render)
 
-    let template: string
-    let render: (data: SsrData) => { html?: string; head?: string }
-    if (!isProduction && vite) {
-      // Always read fresh template in development
-      template = await fs.readFile('./index.html', 'utf-8')
-      template = await vite.transformIndexHtml(url, template)
-      render = (await vite.ssrLoadModule('/src/entry.server.tsx')).render
-    } else {
-      template = templateHtml
-      const SERVER_ENTRY = '../dist/server/entry.server.js'
-      render = (await import(SERVER_ENTRY)).render
+app.use(
+  (
+    err: unknown,
+    _req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    if (res.headersSent) {
+      return next(err)
     }
-
-    const ssrData = getData(url)
-    const rendered = render(ssrData)
-
-    const html = template
-      .replace(`<!--app-head-->`, rendered.head ?? '')
-      .replace(`<!--app-html-->`, rendered.html ?? '')
-      .replace(
-        `<!--ssr-data-->`,
-        `window.__SSR_DATA__=${JSON.stringify(ssrData)}`,
-      )
-
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
-  } catch (e) {
-    if (e instanceof Error) {
-      vite?.ssrFixStacktrace(e)
-      console.log(e.stack)
-      res.status(500).end(e.stack)
+    if (err instanceof Error) {
+      vite?.ssrFixStacktrace(err)
+      console.log(err.stack)
+      res.status(500).end(err.stack)
     } else {
-      res.status(500).end(`${e}`)
+      res.status(500).end(`${err}`)
     }
-  }
-})
+  },
+)
 
 // Start http server
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
+
+async function render(url: string, ssrData: SsrData) {
+  let template: string
+  let render: (data: SsrData) => { html?: string; head?: string }
+  if (!isProduction && vite) {
+    // Always read fresh template in development
+    template = await fs.readFile('./index.html', 'utf-8')
+    template = await vite.transformIndexHtml(url, template)
+    render = (await vite.ssrLoadModule('/src/ssr/entry.server.tsx')).render
+  } else {
+    template = templateHtml
+    const SERVER_ENTRY = '../dist/server/entry.server.js'
+    render = (await import(SERVER_ENTRY)).render
+  }
+
+  const rendered = render(ssrData)
+
+  const html = template
+    .replace(`<!--app-head-->`, rendered.head ?? '')
+    .replace(`<!--app-html-->`, rendered.html ?? '')
+    .replace(
+      `<!--ssr-data-->`,
+      `window.__SSR_DATA__=${JSON.stringify(ssrData)}`,
+    )
+  return html
+}

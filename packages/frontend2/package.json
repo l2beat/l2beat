@@ -9,7 +9,7 @@
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client",
     "preview": "NODE_ENV=production tsx src/index.ts",
-    "build:server": "vite build --ssr src/entry.server.tsx --outDir dist/server",
+    "build:server": "vite build --ssr src/ssr/entry.server.tsx --outDir dist/server",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",

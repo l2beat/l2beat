@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
-import { App, type SsrData } from './App'
+import { App, type SsrData } from '../app/App'
 
 export function render(ssrData: SsrData) {
   const html = renderToString(
