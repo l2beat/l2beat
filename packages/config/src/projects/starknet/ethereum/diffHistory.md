@@ -8,8 +8,12 @@ Generated with discovered.json: 0x19865007b4fd35cd41089c4114d5592fc108fcd8
 
 ## Description
 
+Starknet upgrade v0.13.4
+
 Minor upgrade on L1 that introduces a fee collector address.
 For L2 it changes the programHashes for Starknet OS and the Aggregator.
+
+"Offchain" there are many changes, as seen [in the release-notes here](https://community.starknet.io/t/starknet-v0-13-4-pre-release-notes/115257).
 
 ## Watched changes
 
