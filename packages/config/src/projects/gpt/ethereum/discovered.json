@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21744154,
-  "configHash": "0x3c44821977623c954fc0de1f953d9d9a6154cf903056110a291e0c2ac621fcd0",
+  "configHash": "0xb58054aa2303272217ca39f3aab08360c9e7f5ee5d361fb7dd901fe3854d958f",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -41,7 +41,6 @@
       "address": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -424,9 +423,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "polygon-cdk/PolygonDataCommittee": "0x94ff847d4abbe9deb28dd2529a1549d9b5b2144a2d61677e595d5bb40f193bda",
-    "polygon-cdk/PolygonZkEVM": "0xa3db9cd4750e048e231aadcba1dd439bc7ca32cfc261f65c34038f8df919df94",
-    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "polygon-cdk/PolygonDataCommittee": "0xfdd0edf47a38318651165ce286364aef1d10e081bd028bd87b1d37e369f74913",
+    "polygon-cdk/PolygonZkEVM": "0xa5e14ba8c6f4f08fbf0a0563e2b3a245b53f98592b0f5c183ed637422e7aeed9",
+    "polygon-cdk/Verifier": "0x156dd18408212b6f9819278c83e38b5262986c093c695670634cfe4daeb25053"
   }
 }

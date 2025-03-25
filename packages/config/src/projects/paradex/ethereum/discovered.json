@@ -2,7 +2,7 @@
   "name": "paradex",
   "chain": "ethereum",
   "blockNumber": 21979760,
-  "configHash": "0xfd12425177bb22eef1444448ad1b41750c59fe9c7a02cf958b5ef00c75705650",
+  "configHash": "0x17b0b15542e9af60098cd0a30fdae521d9c879c8f896518a09da57f7bb63a7df",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "ParadexAdminMultisig",
+      "name": "Paradex Multisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -37,7 +37,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -80,7 +79,6 @@
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -106,7 +104,6 @@
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -734,8 +731,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starknet/Starknet": "0xebe5ae41eaeb1d93c4e851cda25f1a4d64b70f6622f4de1aa5d92f744e813262",
-    "starknet/StarknetERC20Bridge": "0x44547f029ed96803504a04745eecd15111d42373717f3f6b7e16bf251255ec25"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "starknet/Starknet": "0x24d52302fc33da36088c2be699d5ba801d9e2af6968f4787a619ae5a80713c08",
+    "starknet/StarknetERC20Bridge": "0x02f940891cb066b5cdb2aa7169ce1b4315d63272c11797d15d7138c8d8023716"
   }
 }

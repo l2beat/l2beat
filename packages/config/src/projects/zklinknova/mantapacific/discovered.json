@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "blockNumber": 4745686,
-  "configHash": "0x5d9037796eb2e0a83c2da9a5e26d221f8808ca6c8ff0bd511b308ef853179393",
+  "configHash": "0xdad65d722f1d0e321e9752f6c55e37fbe71132503efbf072c0d6bf1e5775c5ad",
   "entries": [
     {
       "name": "MantaProxyAdmin",
@@ -453,8 +453,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076",
-    "zklinknova/secondaryZkLink": "0xdbd6b1ed71a07098ec5947baced2c9b3f0ac9fc11b1f3b9e9dce0ef3116a752e"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a",
+    "zklinknova/secondaryZkLink": "0xdd6ae208e600e8a58e2bfc5a099e81722045a5388ba31c4c5cf94bea5e027113"
   }
 }

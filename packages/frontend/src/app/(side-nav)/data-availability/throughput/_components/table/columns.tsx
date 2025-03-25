@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
+import { TableLink } from '~/components/table/table-link'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import {
@@ -13,14 +14,21 @@ export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
 
 const columnHelper = createColumnHelper<DaThroughputTableData>()
 
-export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
+export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
+  columnHelper,
+  (row) => `${row.href}#throughput`,
+)
 
 export const publicSystemsColumns = [
   indexColumn,
   logoColumn,
   columnHelper.accessor('name', {
     header: 'DA Layer',
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    cell: (ctx) => (
+      <TableLink href={`${ctx.row.original.href}#throughput`}>
+        <ProjectNameCell project={ctx.row.original} />
+      </TableLink>
+    ),
     meta: {
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is posted.',
@@ -104,6 +112,7 @@ export const publicSystemsColumns = [
                 }
               : undefined
           }
+          href={ctx.row.original.data.largestPoster?.href}
         />
       </SyncStatusWrapper>
     ),

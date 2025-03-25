@@ -16,7 +16,8 @@
   },
   "overrides": {
     // deprecated
-    "SuccinctGateway": {
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": {
+      // SuccinctGateway
       "fields": {
         "headerRangeVerifier": {
           "handler": {

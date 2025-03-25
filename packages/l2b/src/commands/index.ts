@@ -9,6 +9,7 @@ import { Discover } from './Discover'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
 import { FetchFlatSources } from './FetchFlatSources'
+import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
 import { Flatten } from './Flatten'
@@ -21,6 +22,7 @@ import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
+import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
@@ -48,9 +50,11 @@ export function getSubcommands() {
     OPConfigs,
     Powerdiff,
     RefreshDiscovery,
+    ScanKintoAm,
     SolFmt,
     StarknetProgramHashes,
     FetchAgglayer,
+    FetchZkStack,
     FindL2,
     Init,
     InitTemplate,

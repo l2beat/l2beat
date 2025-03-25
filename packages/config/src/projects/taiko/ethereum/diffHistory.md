@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x13dd4fecce245de18bde2cd96afe1d5584868d34
+Generated with discovered.json: 0xe27218371bd3f431d42f3af64cbd926fd14d458f
+
+# Diff at Tue, 18 Mar 2025 08:14:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21973872
+- current block number: 21973872
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973872 (main branch discovery), not current.
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      name:
+-        "TaikoAdmin"
++        "Taiko Multisig"
+    }
+```
+
+Generated with discovered.json: 0xd34a164de618a60754f0228d212eafe99bfe82d9
 
 # Diff at Tue, 04 Mar 2025 13:38:38 GMT:
 

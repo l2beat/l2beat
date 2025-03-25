@@ -11,24 +11,20 @@
   "ignoreMethods": ["previewRequestEther"],
   "fields": {
     "timelockAddress": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
+        }
+      ]
     },
     "operatorAddress": {
-      "target": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
-          }
-        ]
-      }
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
+        }
+      ]
     }
   }
 }

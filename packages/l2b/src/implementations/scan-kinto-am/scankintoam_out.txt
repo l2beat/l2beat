@@ -1,0 +1,148 @@
+
+Starting ScanKintoAm...
+
+Connecting to RPC endpoint: https://rpc.kinto-rpc.com
+AccessManager contract: 0xacC000818e5Bbd911D5d449aA81CB5cA24024739
+
+Fetching role events...
+- Querying RoleGranted events...
+- Found 11 RoleGranted events
+- Querying RoleRevoked events...
+- Found 2 RoleRevoked events
+- Querying RoleAdminChanged events...
+- Found 0 RoleAdminChanged events
+- Querying RoleGuardianChanged events...
+- Found 0 RoleGuardianChanged events
+- Querying RoleGrantDelayChanged events...
+- Found 1 RoleGrantDelayChanged events
+- Fetching current role data for actors...
+- Fetching current grant delays for all roles...
+- Found 3 actors with active roles
+- Found 4 distinct roles
+
+Fetching target events...
+- Querying TargetFunctionRoleUpdated events...
+- Found 10 TargetFunctionRoleUpdated events
+- Querying TargetAdminDelayUpdated events...
+- Found 6 TargetAdminDelayUpdated events
+- Fetching current admin delays and closures for targets...
+- Found configuration data for 4 targets
+
+Fetching queued operations...
+- Querying OperationScheduled events...
+- Found 1 OperationScheduled events
+- Querying OperationExecuted events...
+- Found 0 OperationExecuted events
+- Querying OperationCanceled events...
+- Found 0 OperationCanceled events
+- Filtering pending operations...
+- Found 1 pending operations
+- Filtering pending role grant delay changes...
+- Found 0 pending role grant delay changes
+
+================ Roles Overview ================
+
+ADMIN_ROLE (ID: 0):
+  roleGrantDelay: 0 (0s)
+  members (2):
+    Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a): executionDelay: 950400 (11d)
+    SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e): executionDelay: 604800 (7d)
+
+NIO_GOVERNOR_ROLE (ID: 1635978423191113331):
+  roleGrantDelay: 0 (0s)
+  members (2):
+    NioGovernor (0x010600ff5f36c8ef3b6aaf2a88c2de85c798594a): executionDelay: 259200 (3d)
+    Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a): executionDelay: 0 (0s)
+
+UPGRADER_ROLE (ID: 8663528507529876195):
+  roleGrantDelay: 604800 (7d)
+  members (1):
+    SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e): executionDelay: 950400 (11d)
+
+SECURITY_COUNCIL_ROLE (ID: 14661544942390944024):
+  roleGrantDelay: 0 (0s)
+  members (1):
+    SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e): executionDelay: 950400 (11d)
+
+================ Actors ================
+
+Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a):
+  ADMIN_ROLE: executionDelay: 950400 (11d)
+  NIO_GOVERNOR_ROLE: executionDelay: 0 (0s)
+    Callable targets and functions:
+      Target Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
+        Functions: 0x8522d1b2, 0xc664c714, 0x9089e8ae
+
+SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e):
+  ADMIN_ROLE: executionDelay: 604800 (7d)
+  UPGRADER_ROLE: executionDelay: 950400 (11d)
+    Callable targets and functions:
+      Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75):
+        Functions: upgradeAllWalletImplementations(address), upgradeTo(address)
+      Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
+        Functions: upgradeTo(address)
+      Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7):
+        Functions: upgradeTo(address)
+  SECURITY_COUNCIL_ROLE: executionDelay: 950400 (11d)
+    Callable targets and functions:
+      Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
+        Functions: updateSystemApps(address[]), updateSystemContracts(address[]), updateReservedContracts(address[])
+
+NioGovernor (0x010600ff5f36c8ef3b6aaf2a88c2de85c798594a):
+  NIO_GOVERNOR_ROLE: executionDelay: 259200 (3d)
+    Callable targets and functions:
+      Target Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
+        Functions: 0x8522d1b2, 0xc664c714, 0x9089e8ae
+
+================ Targets ================
+
+Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
+  targetAdminDelay: 0 (0s)
+  Closed: false
+  Function Roles:
+    NIO_GOVERNOR_ROLE: 0x8522d1b2, 0xc664c714, 0x9089e8ae
+
+KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75):
+  targetAdminDelay: 604800 (7d)
+  Closed: false
+  Function Roles:
+    UPGRADER_ROLE: upgradeAllWalletImplementations(address), upgradeTo(address)
+
+KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
+  targetAdminDelay: 0 (0s)
+  Closed: false
+  Function Roles:
+    UPGRADER_ROLE: upgradeTo(address)
+    SECURITY_COUNCIL_ROLE: updateSystemApps(address[]), updateSystemContracts(address[]), updateReservedContracts(address[])
+
+KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7):
+  targetAdminDelay: 604800 (7d)
+  Closed: false
+  Function Roles:
+    UPGRADER_ROLE: upgradeTo(address)
+
+============= Queued Delay/Config Changes and Queued Actions =============
+
+Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:14.000Z
+
+Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
+  New targetAdminDelay: 604800 (7d) effective at 2025-03-23T23:34:54.000Z
+
+Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:13.000Z
+
+Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:12.000Z
+
+Queued Operations:
+
+Operation 0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8:
+    Nonce: 1
+    Scheduled for: 2025-03-31T23:42:21.000Z
+    Caller: Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: grantRole(UPGRADER_ROLE, Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a), 950400 (11d))
+
+Pending Role Grant Delay Changes:
+  No pending role grant delay changes found.

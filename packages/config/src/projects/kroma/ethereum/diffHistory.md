@@ -1,4 +1,121 @@
-Generated with discovered.json: 0xe98ba44a7f3a95bbb8f87e62e3496a0ddb951d1e
+Generated with discovered.json: 0x8d696901f4aa0ce130c1916afd216844d34178d0
+
+# Diff at Fri, 21 Mar 2025 10:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 22022417
+- current block number: 22094602
+
+## Description
+
+SC signer change.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      issuedPermissions.10.to:
+-        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
++        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+      issuedPermissions.9.to:
+-        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+      issuedPermissions.8.to:
+-        "0x16876e5c608cec36968517A9Eb345269D308D94a"
++        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      issuedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.7.to:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.7.description:
+-        "one of the signers of the KromaSecurityCouncil."
+      issuedPermissions.7.via.2:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.7.via.1:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.7.via.0:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.6.to:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
+      issuedPermissions.6.via.2:
+-        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.6.via.1:
+-        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.6.via.0:
+-        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.6.description:
++        "one of the signers of the KromaSecurityCouncil."
+      values.tokenOwners.3:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
+      values.tokenOwners.2:
+-        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
++        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.tokenOwners.1:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
+      values.tokenOwners.0:
+-        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
++        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+      values.tokens.8:
+-        8
++        7
+      values.tokens.7:
+-        7
++        4
+      values.tokens.6:
+-        4
++        0
+      values.tokens.5:
+-        0
++        15
+    }
+```
+
+Generated with discovered.json: 0xeeff826e815f0d55b4d3b54943a618c4baa3edff
+
+# Diff at Tue, 18 Mar 2025 08:13:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22022417
+- current block number: 22022417
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022417 (main branch discovery), not current.
+
+```diff
+    contract Succinct Multisig 1 (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SuccinctGatewaySP1Multisig"
++        "Succinct Multisig 1"
+    }
+```
+
+```diff
+    contract Kroma Multisig (0xe57E217d8ed498992452791622711B866403E950) {
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+      name:
+-        "KromaRewardVaultMultisig"
++        "Kroma Multisig"
+    }
+```
+
+Generated with discovered.json: 0x4bdc424d5bcdc6382dc5f5d21461e09e88cc2201
 
 # Diff at Thu, 06 Mar 2025 15:18:45 GMT:
 

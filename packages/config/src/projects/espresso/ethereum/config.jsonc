@@ -9,7 +9,8 @@
     "0x34F5af5158171Ffd2475d21dB5fc3B311F221982": "EspressoMultisig"
   },
   "overrides": {
-    "HotShotLightClient": {
+    "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": {
+      // HotShotLightClient
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "ignoreMethods": [
         "proxiableUUID",
@@ -23,24 +24,20 @@
       ],
       "fields": {
         "permissionedProver": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "can call newFinalizedState() to prove the latest HotShot state."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can call newFinalizedState() to prove the latest HotShot state."
+            }
+          ]
         },
         "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
+            }
+          ]
         }
       }
     }

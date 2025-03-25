@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21723798,
-  "configHash": "0x5f75cfc74caac0001420c6271b8f6829448b4d07cfbc8686533d35d5e5dcd17b",
+  "configHash": "0x0a3bf9aa4aa9ac237821b27271542ce640fcf462e444209360150b2f26ea2c5b",
   "entries": [
     {
       "name": "Factory",
@@ -3024,6 +3024,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

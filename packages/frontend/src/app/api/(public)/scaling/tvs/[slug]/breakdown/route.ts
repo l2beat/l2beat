@@ -19,7 +19,7 @@ const getCachedResponse = cache(
     const project = await ps.getProject({
       slug,
       select: ['tvlConfig'],
-      optional: ['chainConfig'],
+      optional: ['chainConfig', 'contracts'],
     })
 
     if (!project) {

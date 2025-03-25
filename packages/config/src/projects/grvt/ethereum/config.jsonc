@@ -32,33 +32,27 @@
               "where": ["=", "#chainId", 325]
             }
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "validateZkStack"
-              }
-            ]
-          }
+          "permissions": [{ "type": "validateZkStack" }]
         }
       }
     },
-    "GRVTBridgeProxy": {
+    "0xE17aeD2fC55f4A876315376ffA49FE6358113a65": {
+      // GRVTBridgeProxy
       "description": "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
       "ignoreRelatives": ["baseToken"],
       "fields": {
         "depositApprover": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "approve deposits to GRVT via the GRVTBridgeProxy."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "approve deposits to GRVT via the GRVTBridgeProxy."
+            }
+          ]
         }
       }
     },
-    "GRVTTransactionFilterer": {
+    "0x3Cd52B238Ac856600b22756133eEb31ECb25109a": {
+      // GRVTTransactionFilterer
       "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
       "fields": {
         "accessControl": {
@@ -77,28 +71,24 @@
             },
             "pickRoleMembers": "L2_TX_SENDER_ROLE"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "address is part of the GRVTTransactionFilterer whitelist."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "address is part of the GRVTTransactionFilterer whitelist."
+            }
+          ]
         },
         "acAdmin": {
           "handler": {
             "type": "accessControl",
             "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
           },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "manage the whitelist of addresses."
-              }
-            ]
-          }
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "manage the whitelist of addresses."
+            }
+          ]
         }
       }
     }

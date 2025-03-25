@@ -8,7 +8,10 @@ export interface ValueSecuredCellProps {
 
 export function ValueSecuredCell(data: ValueSecuredCellProps) {
   return (
-    <ValueWithPercentageChange change={data.change}>
+    <ValueWithPercentageChange
+      change={data.change}
+      containerClassName="inline-flex"
+    >
       {formatDollarValueNumber(data.value)}
     </ValueWithPercentageChange>
   )

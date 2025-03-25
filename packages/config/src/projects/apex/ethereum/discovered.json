@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21981180,
-  "configHash": "0x786a867107e5e0ebf0b235e922c67f755398e4f59526f0aa9cb4206bf93959f5",
+  "configHash": "0xf0b76fbf69833e4a782088eff53eecf6c993a9cb2556c78a0b7ae36d8ab713de",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -118,7 +118,6 @@
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -487,7 +486,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -737,7 +735,6 @@
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "governStarknet",
@@ -1406,9 +1403,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "starkex/Committee": "0x90ae5e5cc0dffb33fc7c639d0761991e36387df71ff12cb5bfdda74d3398533e",
-    "starkex/GpsFactRegistryAdapter": "0xc60e8d2a607d6e461e47bf15f6cb9e5cba1f13a2933a2aa8afa93c3b801a45f3",
-    "starkex/StarkPerpetual": "0xe998db8c55554f0f3a92f3f836f8061f83462b953268e25532cf07be72f4f937"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "starkex/Committee": "0xdd0de4efcc59e58eacde5dd5ae89cb67e8ca289b8701d2dde3cd78b38e06c4e0",
+    "starkex/GpsFactRegistryAdapter": "0xd25d19938656386c9c7d88accb6ce40d364c77e8fc0173bf9678eefbb7532a05",
+    "starkex/StarkPerpetual": "0xec008458974524ba3d784412d30c35c09a39d7cb6bebf364f574c53205f5ad16"
   }
 }

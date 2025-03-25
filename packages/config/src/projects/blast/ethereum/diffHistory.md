@@ -1,4 +1,74 @@
-Generated with discovered.json: 0xe6d5bf85ea7b0d9f06c90013d93838e7362051af
+Generated with discovered.json: 0x2a9eec6a5e1c44d53287f9c6411168cdc279f5b8
+
+# Diff at Wed, 19 Mar 2025 13:04:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x082b616Ec99167B2FEdee053F07db6795D4dA821) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x37d91059705772d4f5a34498f54b9e0749bfa46a
+
+# Diff at Tue, 18 Mar 2025 08:12:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      name:
+-        "BlastMultisig"
++        "BlastMultisig 1"
+    }
+```
+
+```diff
+    contract BlastMultisig 2 (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) {
+    +++ description: None
+      name:
+-        "BridgeOwner"
++        "BlastMultisig 2"
+    }
+```
+
+Generated with discovered.json: 0xb7f233cae118451506efc6bc50c5b9828843d6d6
 
 # Diff at Tue, 04 Mar 2025 11:25:29 GMT:
 

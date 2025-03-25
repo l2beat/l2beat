@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 interface RollupNamesMap {
@@ -65,6 +66,7 @@ export class AgglayerDataFetcher {
     '7': 'validiumV2',
     '8': 'okx validium',
     '9': 'pessimistic test',
+    '10': 'pessimistic 2',
   }
 
   private rollupManagerAbi = [
@@ -74,63 +76,6 @@ export class AgglayerDataFetcher {
   constructor(providerUrl: string, outputFilePath: string) {
     this.provider = new ethers.providers.JsonRpcProvider(providerUrl)
     this.outputFilePath = outputFilePath
-  }
-
-  // Function to create a formatted console table
-  private createConsoleTable(data: string[][]): string {
-    const columnWidths: number[] = []
-    for (const row of data) {
-      for (let colIndex = 0; colIndex < row.length; colIndex++) {
-        const cellLength = row[colIndex].length
-        if (!columnWidths[colIndex] || cellLength > columnWidths[colIndex]) {
-          columnWidths[colIndex] = cellLength
-        }
-      }
-    }
-
-    // Create the table
-    let result = ''
-
-    // Helper function to create a horizontal border
-    const createBorder = (char: string): string => {
-      let border = '+'
-      for (const width of columnWidths) {
-        border += char.repeat(width + 2) + '+'
-      }
-      return border + '\n'
-    }
-
-    // Top border
-    result += createBorder('-')
-
-    // Header row
-    if (data.length > 0) {
-      const headerRow = data[0]
-      result += '| '
-      for (let i = 0; i < headerRow.length; i++) {
-        const cell = headerRow[i]
-        result += cell.padEnd(columnWidths[i]) + ' | '
-      }
-      result = result.trimEnd() + '\n'
-
-      // Header separator
-      result += createBorder('=')
-    }
-
-    // Data rows
-    for (let i = 1; i < data.length; i++) {
-      result += '| '
-      for (let j = 0; j < data[i].length; j++) {
-        const cell = data[i][j]
-        result += cell.padEnd(columnWidths[j]) + ' | '
-      }
-      result = result.trimEnd() + '\n'
-    }
-
-    // Bottom border
-    result += createBorder('-')
-
-    return result
   }
 
   // Helper function to safely access string map with fallback
@@ -237,9 +182,15 @@ export class AgglayerDataFetcher {
     console.log(`Full data saved to ${this.outputFilePath}`)
 
     // Display table with selected fields
-    const tableData: string[][] = [
-      ['RollupID', 'Name', 'ChainID', 'ForkID', 'RollupTypeID', 'VerifierType'],
+    const headers = [
+      'RollupID',
+      'Name',
+      'ChainID',
+      'ForkID',
+      'RollupTypeID',
+      'VerifierType',
     ]
+    const rows: string[][] = []
 
     rollupDataList.forEach((data) => {
       const verifierTypeString =
@@ -252,7 +203,7 @@ export class AgglayerDataFetcher {
       )
       const rollupTypeString = `${rollupTypeID} (${rollupTypeName})`
 
-      tableData.push([
+      rows.push([
         data.rollupID.toString(),
         data.name,
         data.chainID.toString(),
@@ -263,6 +214,6 @@ export class AgglayerDataFetcher {
     })
 
     console.log('Rollup Data Summary:')
-    console.log(this.createConsoleTable(tableData))
+    console.log(formatAsAsciiTable(headers, rows))
   }
 }

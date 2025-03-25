@@ -110,6 +110,7 @@ function initializeConfigurations(
                 ethereumClient,
                 database,
                 configuration.projectId,
+                providers.clients.getRpcClient(configuration.projectId),
               ),
             },
             minTimestamp: configuration.minTimestamp,

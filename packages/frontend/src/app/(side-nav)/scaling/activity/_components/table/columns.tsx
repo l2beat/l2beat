@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PrimaryValueCell } from '~/components/table/cells/primary-value-cell'
@@ -33,7 +34,14 @@ export const getScalingActivityColumns = (
   metric: ActivityMetric,
   opts?: CommonProjectColumnsOptions,
 ) => [
-  ...getScalingCommonProjectColumns(columnHelper, opts),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) =>
+      row.id === ProjectId.ETHEREUM
+        ? undefined
+        : `/scaling/projects/${row.slug}#activity`,
+    opts,
+  ),
   columnHelper.accessor('data.pastDayCount', {
     header: `Past day ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
     cell: (ctx) => {

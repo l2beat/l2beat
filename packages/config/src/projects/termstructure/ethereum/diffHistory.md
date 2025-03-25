@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x24c3430742800f4bd3d50e7a42903ab0f904e562
+Generated with discovered.json: 0xee5b7d9ac24b9066bedd60766e3814f91e4eaf26
+
+# Diff at Tue, 18 Mar 2025 08:14:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 20469346
+- current block number: 20469346
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract TermStructure Multisig 2 (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      name:
+-        "VaultMultisig"
++        "TermStructure Multisig 2"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 3 (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      name:
+-        "InsuranceMultisig"
++        "TermStructure Multisig 3"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 1 (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      name:
+-        "TermStructureMultisig"
++        "TermStructure Multisig 1"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 4 (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      name:
+-        "TreasuryMultisig"
++        "TermStructure Multisig 4"
+    }
+```
+
+Generated with discovered.json: 0x18942c3aa28fa54379ec75a970ef4395c5358a5f
 
 # Diff at Tue, 04 Mar 2025 10:40:07 GMT:
 

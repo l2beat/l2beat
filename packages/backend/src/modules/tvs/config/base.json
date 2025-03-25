@@ -302,6 +302,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-cbBTC.ethereum",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC.ethereum",
+      "name": "Coinbase Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 8,
+        "sinceTimestamp": 1726099200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "displaySymbol": "cbBTC"
+    },
+    {
+      "mode": "auto",
       "id": "base-cbETH",
       "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",

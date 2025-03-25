@@ -13,7 +13,8 @@
     "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": "RoninAdminMultisig"
   },
   "overrides": {
-    "RoninManagerMultiSig": {
+    "0x2DA02aC5f19Ae362a4121718d990e655eB628D96": {
+      // RoninManagerMultiSig
       "ignoreMethods": [
         "getConfirmationCount",
         "getConfirmations",
@@ -36,7 +37,8 @@
         }
       }
     },
-    "MainchainGateway": {
+    "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": {
+      // MainchainGateway
       "ignoreMethods": [
         "checkHighTierVoteWeightThreshold",
         "checkThreshold",
@@ -52,7 +54,8 @@
         }
       }
     },
-    "MainchainBridgeManager": {
+    "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": {
+      // MainchainBridgeManager
       "ignoreMethods": [
         "checkThreshold",
         "globalProposalRelayed",
@@ -67,7 +70,8 @@
         }
       }
     },
-    "PauseEnforcer": {
+    "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4": {
+      // PauseEnforcer
       "fields": {
         "accessControl": {
           "handler": {
@@ -76,7 +80,8 @@
         }
       }
     },
-    "WETH9": {
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+      // WETH9
       "ignoreInWatchMode": ["totalSupply"]
     }
   }

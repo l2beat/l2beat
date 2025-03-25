@@ -12,7 +12,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -41,14 +40,14 @@ const timelockDelayString = formatSeconds(timelockDelay)
 const upgradesTimelock = {
   upgradableBy: [
     {
-      name: 'LineaAdminMultisig',
+      name: 'Linea Multisig',
       delay: timelockDelay === 0 ? 'no' : timelockDelayString,
     },
   ],
 }
 
 const upgrades = {
-  upgradableBy: [{ name: 'LineaAdminMultisig', delay: 'no' }],
+  upgradableBy: [{ name: 'Linea Multisig', delay: 'no' }],
 }
 
 const zodiacRoles = discovery.getContractValue<{
@@ -148,12 +147,6 @@ export const linea: ScalingProject = {
         address: EthereumAddress('0xd19d4B5d358258f05D7B411E21A1460D11B0876F'),
         sinceTimestamp: UnixTime(1689159923),
         tokens: ['ETH'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x504A330327A089d8364C4ab3811Ee26976d388ce'),
-        sinceTimestamp: UnixTime(1691079071),
-        ...ESCROW.CANONICAL_EXTERNAL,
-        tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319'),
@@ -515,7 +508,7 @@ export const linea: ScalingProject = {
     [discovery.chain]: {
       actors: [
         discovery.getMultisigPermission(
-          'LineaAdminMultisig',
+          'Linea Multisig',
           'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
         ),
         discovery.getPermissionDetails(
@@ -530,11 +523,6 @@ export const linea: ScalingProject = {
             'OPERATOR_ROLE',
           ),
           'The operators are allowed to prove blocks and post the corresponding transaction data.',
-        ),
-        discovery.getPermissionDetails(
-          'Pauser',
-          zodiacPausers,
-          'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
         ),
       ],
     },
@@ -553,10 +541,9 @@ export const linea: ScalingProject = {
             ).members
             assert(addresses.length === 1)
             assert(
-              addresses[0] ===
-                discovery.getContract('LineaAdminMultisig').address,
+              addresses[0] === discovery.getContract('Linea Multisig').address,
             )
-            return { pausableBy: ['LineaAdminMultisig'], paused: isPaused }
+            return { pausableBy: ['Linea Multisig'], paused: isPaused }
           })(),
           references: [
             {
@@ -580,8 +567,13 @@ export const linea: ScalingProject = {
           ...upgrades,
         }),
         discovery.getContractDetails('USDCBridge', {
-          description: 'Contract used to bridge USDC tokens.',
+          description:
+            'Contract used to bridge USDC tokens. Migrating to native USDC on L2 between march 16th and 26th 2025.',
           ...upgrades,
+          pausable: {
+            paused: discovery.getContractValue<boolean>('USDCBridge', 'paused'),
+            pausableBy: ['Pauser'],
+          },
         }),
         discovery.getContractDetails('CallForwardingProxy', {
           description:

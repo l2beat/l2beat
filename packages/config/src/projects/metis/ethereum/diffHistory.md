@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1c07bd6dea8c7beb1b4369f7541a9f0e11fad554
+
+# Diff at Mon, 17 Mar 2025 15:28:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@83c6f5a675a7a6512e7a8af5c777ef32d60dc946 block: 21242106
+- current block number: 21242106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242106 (main branch discovery), not current.
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: Escrows staking rewards for Sequencers.
+      description:
++        "Escrows staking rewards for Sequencers."
+    }
+```
+
 Generated with discovered.json: 0x658b2df4853dee3fe7249bc00711864742231a05
 
 # Diff at Tue, 04 Mar 2025 10:39:26 GMT:

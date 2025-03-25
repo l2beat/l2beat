@@ -3,6 +3,7 @@ import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
 import { aevo } from '../projects/aevo/aevo'
 import { aiechain } from '../projects/aiechain/aiechain'
+import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
 import { align } from '../projects/align/align'
@@ -134,6 +135,7 @@ import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
 import { patex } from '../projects/patex/patex'
+import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
@@ -144,6 +146,7 @@ import { polygonmiden } from '../projects/polygonmiden/polygonmiden'
 import { polygonpos2 } from '../projects/polygonpos2/polygonpos2'
 import { polygonzkevm } from '../projects/polygonzkevm/polygonzkevm'
 import { polynomial } from '../projects/polynomial/polynomial'
+import { prom } from '../projects/prom/prom'
 import { publicgoodsnetwork } from '../projects/publicgoodsnetwork/publicgoodsnetwork'
 import { puffer } from '../projects/puffer/puffer'
 import { quarkchain } from '../projects/quarkchain/quarkchain'
@@ -165,7 +168,6 @@ import { silicon } from '../projects/silicon/silicon'
 import { singularityfinance } from '../projects/singularityfinance/singularityfinance'
 import { skatechain } from '../projects/skatechain/skatechain'
 import { snaxchain } from '../projects/snaxchain/snaxchain'
-import { socialnetwork } from '../projects/socialnetwork/socialnetwork'
 import { solo } from '../projects/solo/solo'
 import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
@@ -220,6 +222,7 @@ export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,
+  airas,
   alephzero,
   alienx,
   align,
@@ -349,6 +352,7 @@ export const layer2s: ScalingProject[] = [
   paradex,
   parallel,
   patex,
+  pay,
   payy,
   penchain,
   pepeunchained,
@@ -359,6 +363,7 @@ export const layer2s: ScalingProject[] = [
   polygonpos2,
   polygonzkevm,
   polynomial,
+  prom,
   publicgoodsnetwork,
   puffer,
   quarkchain,
@@ -381,7 +386,6 @@ export const layer2s: ScalingProject[] = [
   singularityfinance,
   skatechain,
   snaxchain,
-  socialnetwork,
   solo,
   soneium,
   soon,

@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 21973872,
-  "configHash": "0xc1ba8b0922010f664c0ac256fa52c6bf70ec02711b8fcfc65e669025ff9a931f",
+  "configHash": "0xb1164605ff4d855a6d735f3e3c41e9d0f06a059dd960b13121311da49cd8b4c2",
   "entries": [
     {
       "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
@@ -1052,7 +1052,7 @@
       "derivedName": "MainnetERC20Vault"
     },
     {
-      "name": "TaikoAdmin",
+      "name": "Taiko Multisig",
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2536,6 +2536,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

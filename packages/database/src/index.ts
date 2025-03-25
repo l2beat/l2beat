@@ -33,3 +33,4 @@ export type { IndexerConfigurationRecord } from './uif/indexer-configuration/ent
 export type { IndexerStateRecord } from './uif/indexer-state/entity'
 export type { DataAvailabilityRecord } from './da-beat/data-availability/entity'
 export { DataAvailabilityRepository } from './da-beat/data-availability/repository'
+export type { TokenValueRecord } from './tvs/token-value/entity'

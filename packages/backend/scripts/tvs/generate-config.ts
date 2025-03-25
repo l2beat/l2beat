@@ -29,6 +29,7 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
+    const localExecutor = new LocalExecutor(ps, env, logger)
 
     let projects: Project<'tvlConfig', 'chainConfig'>[] | undefined
 
@@ -62,30 +63,20 @@ const cmd = command({
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     for (const project of projects) {
-      if (!args.project) {
-        logger.info(`Skipping project ${project.id}`)
-        continue
-      }
-
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
 
       let newConfig: Token[] = []
       if (tvsConfig.tokens.length > 0) {
         logger.info('Executing TVS to exclude zero-valued tokens')
-        const localExecutor = new LocalExecutor(ps, env, logger)
         const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
 
-        const currentTvs = tvs.get(timestamp)
-
-        assert(currentTvs, 'No data for timestamp')
-
-        const valueForProject = currentTvs.reduce((acc, token) => {
+        const valueForProject = tvs.reduce((acc, token) => {
           return acc + token.valueForProject
         }, 0)
 
-        const valueForTotal = currentTvs.reduce((acc, token) => {
-          return acc + token.valueForTotal
+        const valueForTotal = tvs.reduce((acc, token) => {
+          return acc + token.valueForSummary
         }, 0)
 
         totalTvs += valueForTotal
@@ -93,10 +84,15 @@ const cmd = command({
         logger.info(`TVS for project ${toDollarString(valueForProject)}`)
         logger.info(`Total TVS ${toDollarString(totalTvs)}`)
 
-        newConfig = currentTvs
+        newConfig = tvs
           .filter((token) => token.value !== 0)
-          .map((token) => token.tokenConfig)
-          .sort((a, b) => a.id.localeCompare(b.id))
+          .map((token) => token.tokenId)
+          .sort((a, b) => a.localeCompare(b))
+          .map((tokenId) => {
+            const tokenConfig = tvsConfig.tokens.find((t) => t.id === tokenId)
+            assert(tokenConfig, `${tokenId} config not found`)
+            return tokenConfig
+          })
       } else {
         logger.info('No tokens found')
       }

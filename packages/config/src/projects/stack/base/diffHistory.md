@@ -1,4 +1,83 @@
-Generated with discovered.json: 0x4e1924720435231db34e9c55e134678645b69ca9
+Generated with discovered.json: 0xc0fa3b0a6f682659d4e151e58250a91058b257a7
+
+# Diff at Tue, 18 Mar 2025 11:52:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 25121106
+- current block number: 27754702
+
+## Description
+
+Conduit MS signer change.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.8:
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.7:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.6:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.5:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.4:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.3:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.2:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.$members.1:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.0:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "4 of 9 (44%)"
+    }
+```
+
+Generated with discovered.json: 0xb5aa2f5f1c0bb37ec23efb9a1d4d76cba8a7c51f
+
+# Diff at Tue, 18 Mar 2025 08:15:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 25121106
+- current block number: 25121106
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25121106 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      name:
+-        "ConduitMultisig3"
++        "Conduit Multisig 3"
+    }
+```
+
+Generated with discovered.json: 0xc77ab921ec0496331f8cfa01b36ba6570e7a367f
 
 # Diff at Tue, 04 Mar 2025 11:27:14 GMT:
 

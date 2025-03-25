@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22017795,
-  "configHash": "0xf88703ec362520746136ff6938f548d69071d9411e7d8a15d680db69b67f7ecf",
+  "configHash": "0xdd1b54a7822ca95f3c33b38e1727a7dfc63218f2669578621a97e9226c00ce4d",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -220,7 +220,7 @@
       }
     },
     {
-      "name": "LidoDaoAgent",
+      "name": "Lido Dao Agent",
       "address": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
       "type": "Contract",
       "sourceHashes": [
@@ -4391,27 +4391,27 @@
     ]
   },
   "usedTemplates": {
-    "global/DepositContract": "0x573e1490f14bfaf2203c38c2cfe140bfaef43b24bd5ba2bb6e7a6e9dfc1fbc17",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "tokens/Lido/AccountingOracle": "0x55d0a017300c840c4781cec8cab1f4d31dee8f6fe90b54845e491c54acd4540b",
-    "tokens/Lido/Burner": "0x24191894f147a57078f4b8bf0d36d9aa12c163aed560552738e4251ee0f700d3",
-    "tokens/Lido/CSAccounting": "0x12b45b187af69a048c6a8ec5c1de388f4ae55b67d799541c8072242a5d315b2b",
-    "tokens/Lido/CSFeeDistributor": "0x953f4cd77e147eb11be66349b552f27981f64f2db3557d3346c7e7913d3475c2",
-    "tokens/Lido/CSModule": "0x4fd59f5e9c9f7aff732de0312605bb0262d47399e5244569946a9e7f9cad1b21",
-    "tokens/Lido/DepositSecurityModule": "0x3eb2f218e308491c42aff43a3ad353e6ecbb44c29664dd0db0782d54a84214e4",
-    "tokens/Lido/EVMScriptRegistry": "0x8228a3c805da8d57d6a0e3b2616cb2c7bf14dcc41d58d0d3db37347af278de24",
-    "tokens/Lido/HashConsensus": "0xd334fd536336c2843f60dc623eed97fc88de65a02cbb2c3fa62b01169968b562",
-    "tokens/Lido/LegacyOracle": "0x0d7ce7d9229dd8981d5d354c8bd3c4cf2d5fd8317d8a072fdfb9bad232813edf",
-    "tokens/Lido/MiniMeToken": "0x1b2cc52391bb51e1adb2b3daeffcdbe04cc5fc42c5c2bcc152b81e725421370d",
-    "tokens/Lido/NodeOperatorsRegistry": "0xe905d09afe625604922c0ae4732cf2e791952b626eee4a807b0dcc53a23745d6",
-    "tokens/Lido/OpStackTokenRatePusher": "0x4e0dd81872da6ced3d2c80336b2cbcf266a9ae4c700c93635277fa916b45abb4",
-    "tokens/Lido/OracleReportSanityChecker": "0xabdc58516438222479327170665454c3893c31894db0a63323aca1d1ba078027",
-    "tokens/Lido/StakingRouter": "0x29587d12b1e102ee8c7e0de613c6017cae8eead251533692dc09c93274b2c4d9",
-    "tokens/Lido/stETH": "0xe98c5c7c859c9c4177354424f49a6c93f3e35dc0d52d899a39ebc06be4a7b524",
-    "tokens/Lido/ValidatorsExitBusOracle": "0x32d2cee1f96616c3886fd690e3c275dc13079300459d59422508ecdd6963ccb3",
-    "tokens/Lido/Voting": "0x430cde9032a8680c4252fdaa05bbfa08abb7a046e28797a1b1c7842345a18d2e",
-    "tokens/Lido/WithdrawalQueueERC721": "0x1e29855fc4cb345f57d6f567f76145ebb673225a5ffacbed80ed1d484b1b6e3b",
-    "tokens/Lido/wstETH": "0x5f142e416b84ca6cfedca100a12381166a10c276b2da0243072b9d8c8ae5355d",
-    "tokens/STRK": "0x7b396f231087ff93f21ac8e47aa9bb39fea630764aafeab108cbe8775ab73b9a"
+    "global/DepositContract": "0x74f98d2c211abb83ac695985cd424b66b11c3fdeda53bc790011ff098e2bf275",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "tokens/Lido/AccountingOracle": "0x05eb1631b597de0541997edeb6ddec00ed7d4e5b1d810db702a43b13f2772bc6",
+    "tokens/Lido/Burner": "0x04541e06e014804cdbeb6ab9cddc504048ab02934949ac0ed3d185c869744fd3",
+    "tokens/Lido/CSAccounting": "0x7ef2c17aa44be0cba84cbcd3fe70e91b56f81d737c09c39a868e01926a91ad2d",
+    "tokens/Lido/CSFeeDistributor": "0x6445405f1900ccf59e5a4c710b99714006afa764b32745636c5903dcb27a0b39",
+    "tokens/Lido/CSModule": "0xa2eb70ea3994afe7f5ace725606a4e286834206ad240fa4d066636140a9941f4",
+    "tokens/Lido/DepositSecurityModule": "0xe228432e4fedd34456e287bfb764855619cbf836517f809c4145b92f33f6efc3",
+    "tokens/Lido/EVMScriptRegistry": "0xf15bea0ce9ca2fce59f1d42d128e15a18b05a3c54aeebc6bb4bcceb2986f3fc9",
+    "tokens/Lido/HashConsensus": "0xa066acb5f93d61ac46b1d39e5edbcde6b98d1ed53a0324521aae49bcaa293557",
+    "tokens/Lido/LegacyOracle": "0x5e2ae64ed604b14953736e36f937becf91213e1a176a73a3de29e47811fc85c7",
+    "tokens/Lido/MiniMeToken": "0xe6377d7d81dcc6db240e3c8d3c229509e5d86c3f075135c8f21ddae7920d27ef",
+    "tokens/Lido/NodeOperatorsRegistry": "0xd2130daa7f650c42d30b09ee66b917ccd7f2129ddcd1a518de98b74edc62f89c",
+    "tokens/Lido/OpStackTokenRatePusher": "0xefff21c23e5dd49f43f808c28b7346d52d851530291912c60d9cc1978892c50c",
+    "tokens/Lido/OracleReportSanityChecker": "0xebe38c9da81c7d665c71450c47a75c4a32c0ad49667200f44aa187bc7b416b48",
+    "tokens/Lido/StakingRouter": "0x779457ef00dd8bdd9b4cbd3b672e06feacbe9217acf14e75a9621041043ba756",
+    "tokens/Lido/stETH": "0xbe9467634d21b12ef3fcc47e6df4335e72f91eeccb287d4b9e1fbc958fd3ef36",
+    "tokens/Lido/ValidatorsExitBusOracle": "0xf3c2039febb74bb9b2f3a19620ae20f67610758d896617255019047b87b7458e",
+    "tokens/Lido/Voting": "0x73581a69fb42677fef41992eea168c9879536dcbbcb2abc44fc82db7e2c5239c",
+    "tokens/Lido/WithdrawalQueueERC721": "0x0e3a509fe49369fdc3a98481638e1e2e8eb3370b563b58e901ec94b4414e6eb3",
+    "tokens/Lido/wstETH": "0xe22a81217483e7f124d26c1ad934aa5da472804081273dd9bd2e2233ee6ca77b",
+    "tokens/STRK": "0x9748f6ccf62e97e342ebfcf67c2055e688bf103f6cd5bcecc8f721726e432479"
   }
 }

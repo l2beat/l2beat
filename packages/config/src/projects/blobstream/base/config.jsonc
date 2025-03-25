@@ -7,16 +7,15 @@
   "names": {
     "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "Blobstream",
     "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway", // deprecated, SP1 now used
-    "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "SuccinctGatewayMultisig",
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
     "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": "BlobstreamMultisig",
     "0xF2415C44F47983F7dD22003B46A034B1F1d04e44": "HeaderRangeVerifier",
     "0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6": "NextHeaderVerifier"
   },
   "overrides": {
     // deprecated
-    "SuccinctGateway": {
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": {
+      // SuccinctGateway
       "fields": {
         "headerRangeVerifier": {
           "handler": {

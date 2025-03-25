@@ -2,7 +2,7 @@ import { isArray } from 'lodash'
 import type { Metadata } from 'next'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Markdown } from '~/components/markdown/markdown'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { FaqSideNav } from './_components/faq-side-nav'
@@ -39,7 +39,11 @@ export default async function Page() {
               ? item.answer.join('\n\n')
               : item.answer
             return (
-              <section className="mt-6 first:mt-0" id={item.id} key={item.id}>
+              <section
+                className="mt-6 scroll-mt-6 first:mt-0"
+                id={item.id}
+                key={item.id}
+              >
                 <a
                   href={`#${item.id}`}
                   className="mb-4 block text-2xl font-bold leading-[115%] text-primary no-underline"

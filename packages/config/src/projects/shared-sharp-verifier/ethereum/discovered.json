@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 21973570,
-  "configHash": "0x37d0ef91e725903fe6ee2d4e37c083012e6f88f7502079507ef7003dd56010e0",
+  "configHash": "0x165f5369a979b77ecefc5f5e6fc4cea9f32daecb4dfb0d239459082ddd3f18d9",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",
@@ -182,7 +182,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "SHARPVerifierAdminMultisig",
+      "name": "SHARP Multisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -191,7 +191,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -2076,12 +2075,12 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-sharp-verifier/CairoBootloaderProgram": "0xe1ac1234f16fd1598f20d38a9433e8627cf917b39d28b52ac7647868464f9480",
-    "shared-sharp-verifier/CpuFrilessVerifier": "0xc8624f6f33db895b137eba47cbdb099fc810f11a06eebc23dfd177b5dbab9aed",
-    "shared-sharp-verifier/ignoreComputeSpam": "0xecb94252fa2be4a8b16408d03a6b85c6aefdefdd0e666e6b28daf712c0fee784",
-    "shared-sharp-verifier/MemoryPageFactRegistry": "0x9d20c368762ce440ae399894b7a294136feccea1ff9eb6939dc2887cca6835d9",
-    "shared-sharp-verifier/SHARPVerifier": "0x366ae49ce433ac3b07c115b8ccca3c5460dbc1e7a318d03b37eb4460212fa263",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xca41b5fe7499e8e0abd7d0bcbb7e80170c3920e6123c572b2fe49864fbf3949f"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "shared-sharp-verifier/CairoBootloaderProgram": "0x297b13fa028d44d752d6d2e714a8aa1af656a391c3908d030942e99640d465c1",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0x9743f45aa5e3e4b7a70ebd8da1df45c344111bb438fb3541e48beb706bd1963e",
+    "shared-sharp-verifier/ignoreComputeSpam": "0xb6d0251f6417a2cf19ef641f784d6f71a0577e534ea30ee39cceeb7a2fbd6217",
+    "shared-sharp-verifier/MemoryPageFactRegistry": "0xfef666a0338bbc0e5cfd6b39579578c0fbe06ac069d7808574d8278a15b5fe41",
+    "shared-sharp-verifier/SHARPVerifier": "0x5326cec0022941eb20d3c6611dd5310a7918f4c1f4beb6d43cb0c489e375e242",
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x345f8f82fc7212a66c1e5b2beb152daa26f1010581a0286fd5cff8c05be8de3a"
   }
 }

@@ -2,7 +2,7 @@
   "name": "xai",
   "chain": "arbitrum",
   "blockNumber": 299816283,
-  "configHash": "0xe0d9701642a3259bf80737e83622946e719b75d8dd6ac17398f1c12cbba8a5e1",
+  "configHash": "0xe56820a589db489da74932840f5b3b0ff9e88497f25bcf0e3ef1b7499d24f877",
   "entries": [
     {
       "name": "XaiMultisig2",
@@ -2797,23 +2797,23 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x0b2f6aaee0d37439d4612a312fa7007a4f1506adbc01f6bf6dfe198697ef7dec",
-    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
-    "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
-    "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
-    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
-    "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
-    "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
-    "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
-    "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
-    "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
-    "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x86750d31c07dad4ea3988e492ea19743ec134b0bfabd26c0e43c71b880a922ba",
-    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
-    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
-    "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "orbitstack/Bridge": "0x845301f405250de17dac319b98e789faa82ba4b2112fa393bc9e5543309f6fdb",
+    "orbitstack/ChallengeManager": "0xfc9631d764c7dfe78bf9aff4ff330c0778db49f425f53bc05fe3563a3a8b1818",
+    "orbitstack/ERC20Gateway": "0x0a19e884fa4cd71162ba43d74e0f5a69a7743ec8e8fe632654c32b9c44ab3f24",
+    "orbitstack/GatewayRouter": "0x4ffc754ff04b3640c99118d12b09b5ca5762dceb37509e5fdff23a8f43bb1180",
+    "orbitstack/Inbox": "0xd0dac54a5086572ce3617a54758925dc0549cddf5901e35abeabc6a82c8e4125",
+    "orbitstack/OneStepProofEntry": "0x074184951191630feeaa1da3328d97eb4b6b01fcab82d65b95edbab72a8f3f24",
+    "orbitstack/OneStepProver0": "0x559f6ee495bd31dc9c44eb080b7465809cc4be6b4320e9eaaa57688d40e5393f",
+    "orbitstack/OneStepProverHostIo": "0x005f15de59af5ea5756cd602e399228055af398efab35e1838bc380b50b40d9c",
+    "orbitstack/OneStepProverMath": "0x9b4bb3e22278824fe310f080640053b421ec7571e8b89875e70c6a428073c9e4",
+    "orbitstack/OneStepProverMemory": "0xe7c75f6dbf6da1c4532a8bdc920a2159d59c38ad05c35e4c49405d5e2939ecb9",
+    "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
+    "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
+    "orbitstack/RollupProxy_fastConfirm": "0x2670543ebadf16810332337e6ead9b8949e04cacabf18b672794b471aa443db3",
+    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
+    "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19",
+    "orbitstack/ValidatorUtils": "0x6da1a099d095b1ed59b7e8c0ae9c2494104c73fb1d73560be6733faacdb84f6f"
   }
 }

@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x99ebcf0ad52a4b2262f7f7a3c78012109623925e
+Generated with discovered.json: 0x6e59aa55a7d04d2b53da0a167d3aeeb07eee8568
+
+# Diff at Tue, 18 Mar 2025 08:13:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21988484
+- current block number: 21988484
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21988484 (main branch discovery), not current.
+
+```diff
+    contract Kinto Security Council (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      name:
+-        "Kinto SecurityCouncil"
++        "Kinto Security Council"
+    }
+```
+
+```diff
+    contract Turnkey Multisig (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1) {
+    +++ description: None
+      name:
+-        "TurnkeyMultisig"
++        "Turnkey Multisig"
+    }
+```
+
+```diff
+    contract Kinto Multisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      name:
+-        "BridgerOwnerMultisig"
++        "Kinto Multisig"
+    }
+```
+
+Generated with discovered.json: 0xa7d9f420fdf8f9437f47c882c08bbe88c2fdadb3
 
 # Diff at Mon, 10 Mar 2025 16:53:34 GMT:
 

@@ -1,5 +1,5 @@
 import type { Env, Logger } from '@l2beat/backend-tools'
-import type { ChainConfig, ProjectService } from '@l2beat/config'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
 import {
   BlockProvider,
   CoingeckoClient,
@@ -36,8 +36,11 @@ export class LocalExecutor {
     config: ProjectTvsConfig,
     timestamps: UnixTime[],
     latestMode: boolean,
-  ): Promise<Map<number, TokenValue[]>> {
-    const { prices, amounts } = extractPricesAndAmounts(config)
+  ): Promise<TokenValue[]> {
+    const chainConfigs = await new ProjectService().getProjects({
+      select: ['chainConfig'],
+    })
+    const { prices, amounts } = extractPricesAndAmounts(config, chainConfigs)
 
     const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
 

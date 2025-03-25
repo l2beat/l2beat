@@ -14,13 +14,13 @@
     // from some fields of other contracts.
     "0x7122985656e38BDC0302Db86685bb972b145bD3C", // STONE escrow
     "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6", // STG escrow
-    "0x92cc36d66e9d739d50673d1f27929a371fb83a67", // WAGMI escrow
-    "0x4fa745fccc04555f2afa8874cd23961636cdf982", // EURA escrow
-    "0xee381e476b4335b8584a2026f3e845edac2c69de", // LINK escrow
+    "0x92CC36D66e9d739D50673d1f27929a371FB83a67", // WAGMI escrow
+    "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982", // EURA escrow
+    "0xEe381e476b4335B8584A2026f3E845edaC2c69de", // LINK escrow
     "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E", // USDC escrow
     "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55", // BOBA escrow
-    "0xb0003eb166654f7e57c0463f8d1a438eb238c490", // BOBA escrow
-    "0x6f537839714761388b6d7ed61bc09579d5da2f41" // BOBA escrow
+    "0xB0003eB166654f7e57c0463F8D1a438eB238c490", // BOBA escrow
+    "0x6F537839714761388B6d7ED61Bc09579d5dA2F41" // BOBA escrow
   ],
   "names": {
     "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
@@ -34,45 +34,59 @@
     "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed",
 
     "0x7122985656e38BDC0302Db86685bb972b145bD3C": "StoneEscrow",
-    "0x92cc36d66e9d739d50673d1f27929a371fb83a67": "WagmiEscrow",
-    "0x4fa745fccc04555f2afa8874cd23961636cdf982": "EuraEscrow",
-    "0xee381e476b4335b8584a2026f3e845edac2c69de": "LinkEscrow",
+    "0x92CC36D66e9d739D50673d1f27929a371FB83a67": "WagmiEscrow",
+    "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982": "EuraEscrow",
+    "0xEe381e476b4335B8584A2026f3E845edaC2c69de": "LinkEscrow",
     "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E": "UsdcEscrow",
     "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55": "BobaEscrow1",
-    "0xb0003eb166654f7e57c0463f8d1a438eb238c490": "BobaEscrow2",
-    "0x6f537839714761388b6d7ed61bc09579d5da2f41": "BobaEscrow3"
+    "0xB0003eB166654f7e57c0463F8D1a438eB238c490": "BobaEscrow2",
+    "0x6F537839714761388B6d7ED61Bc09579d5dA2F41": "BobaEscrow3"
   },
   "overrides": {
-    "StoneEscrow": {
+    "0x7122985656e38BDC0302Db86685bb972b145bD3C": {
+      // StoneEscrow
       "ignoreRelatives": ["token", "minter"],
       "ignoreMethods": ["quota"],
       "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"]
     },
-    "WagmiEscrow": {
+    "0x92CC36D66e9d739D50673d1f27929a371FB83a67": {
+      // WagmiEscrow
       "ignoreInWatchMode": ["circulatingSupply", "totalSupply"],
       "ignoreRelatives": ["token"]
     },
-    "LinkEscrow": {
+    "0xEe381e476b4335B8584A2026f3E845edaC2c69de": {
+      // LinkEscrow
       "ignoreInWatchMode": ["circulatingSupply"],
       "ignoreRelatives": ["token"]
     },
-    "UsdcEscrow": {
+    "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E": {
+      // UsdcEscrow
       "ignoreInWatchMode": ["circulatingSupply"],
       "ignoreRelatives": ["token"]
     },
-    "BobaEscrow1": { "ignoreRelatives": ["token"] },
-    "BobaEscrow2": { "ignoreRelatives": ["token"] },
-    "BobaEscrow3": { "ignoreRelatives": ["token"] },
-    "EuraEscrow": {
+    "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55": {
+      "ignoreRelatives": ["token"]
+    }, // BobaEscrow1
+    "0xB0003eB166654f7e57c0463F8D1a438eB238c490": {
+      "ignoreRelatives": ["token"]
+    }, // BobaEscrow2
+    "0x6F537839714761388B6d7ED61Bc09579d5dA2F41": {
+      "ignoreRelatives": ["token"]
+    }, // BobaEscrow3
+    "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982": {
+      // EuraEscrow
       "ignoreRelatives": ["treasury", "canonicalToken"]
     },
-    "PriceFeed": {
+    "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": {
+      // PriceFeed
       "ignoreDiscovery": true
     },
-    "Stargate Bridge": {
+    "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97": {
+      // Stargate Bridge
       "ignoreDiscovery": true
     },
-    "Endpoint": {
+    "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": {
+      // Endpoint
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "fields": {
         "libraryLookup": {
@@ -87,10 +101,12 @@
         }
       }
     },
-    "LayerZero Multisig": {
+    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
+      // LayerZero Multisig
       "ignoreInWatchMode": ["nonce"]
     },
-    "UltraLightNodeV2": {
+    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": {
+      // UltraLightNodeV2
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",

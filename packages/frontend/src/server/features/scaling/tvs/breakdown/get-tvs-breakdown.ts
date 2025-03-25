@@ -1,5 +1,5 @@
 import type { ConfigMapping } from '@l2beat/backend-shared'
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectContracts } from '@l2beat/config'
 import type {
   AmountConfigEntry,
   AssetId,
@@ -28,6 +28,7 @@ export async function getTvsBreakdown(
   tokenMap: Map<AssetId, Token>,
   gasTokens?: string[],
   target?: UnixTime,
+  projectContracts?: ProjectContracts['addresses'],
 ) {
   const chainConverter = new ChainConverter(chains)
 
@@ -83,8 +84,12 @@ export async function getTvsBreakdown(
           config.type !== 'totalSupply' && config.type !== 'circulatingSupply',
         )
 
+        const contractName = projectContracts?.[priceConfig.chain]?.find(
+          (c) => c.address.toLowerCase() === config.escrowAddress.toLowerCase(),
+        )?.name
+
         const explorer = chains.find(
-          (c) => c.name === config.chain,
+          (c) => c.name === priceConfig.chain,
         )?.explorerUrl
 
         const asset = breakdown.canonical.get(priceConfig.assetId)
@@ -95,6 +100,7 @@ export async function getTvsBreakdown(
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             escrowAddress: config.escrowAddress,
+            name: contractName,
             ...(config.type === 'preminted' ? { isPreminted: true } : {}),
             isSharedEscrow,
           })
@@ -120,6 +126,7 @@ export async function getTvsBreakdown(
                 amount: amountAsNumber,
                 usdValue: valueAsNumber,
                 escrowAddress: config.escrowAddress,
+                name: contractName,
                 ...(config.type === 'preminted' ? { isPreminted: true } : {}),
                 isSharedEscrow,
                 url: explorer
@@ -141,6 +148,7 @@ export async function getTvsBreakdown(
             name: priceConfig.chain,
             id: ChainId(chainConverter.toChainId(priceConfig.chain)),
           },
+          isLockedInEscrow: config.type === 'escrow',
           amount: amountAsNumber,
           usdValue: valueAsNumber,
           usdPrice: price.toString(),

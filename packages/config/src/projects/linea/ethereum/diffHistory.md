@@ -1,4 +1,81 @@
-Generated with discovered.json: 0xb20abb3200b9a4c07f68c9579ea8797dd43be3d0
+Generated with discovered.json: 0xf165fcacb773dcb6dff66fe8daf7c4cafb2e31b6
+
+# Diff at Tue, 18 Mar 2025 10:53:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 21434844
+- current block number: 22073290
+
+## Description
+
+Linea USDC bridge paused [in preparation for the USDC bridged->native migration](https://www.circle.com/blog/linea-to-become-the-first-bridged-usdc-standard-blockchain-to-upgrade-to-native-usdc).
+
+## Watched changes
+
+```diff
+    contract USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x27a9694e3bfad3a6ec23be7f15d8e6093b4d3a12eba4d10de0d9c660f5a47d30"
++        "0xf678573abd85e88b327027262fe80c5008f18138d6f2a4b3558ccf78d535c94f"
+      values.$implementation:
+-        "0x0eC393209674090368C592A591B25811e490BF36"
++        "0x66CFD1562d6Aa4629e9e4142662c1A403528Df00"
+      values.$pastUpgrades.2:
++        ["2023-09-01T20:25:47.000Z","0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d",["0x0eC393209674090368C592A591B25811e490BF36"]]
+      values.$pastUpgrades.1.2:
+-        "0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d"
++        ["0x66CFD1562d6Aa4629e9e4142662c1A403528Df00"]
+      values.$pastUpgrades.1.1:
+-        "2023-09-01T20:25:47.000Z"
++        "0xd61b29009aa7f628ff1b04138e30ebd39805e40a2e3e4a3e43050fd8b0f75548"
+      values.$pastUpgrades.1.0:
+-        ["0x0eC393209674090368C592A591B25811e490BF36"]
++        "2025-03-16T19:57:11.000Z"
+      values.$upgradeCount:
+-        2
++        3
+      values.paused:
+-        false
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../USDCBridge/L1USDCBridge.sol                    | 42 +++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x237fef947af146f2431caf0e74ab78bdf6433e57
+
+# Diff at Tue, 18 Mar 2025 08:13:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract Linea Multisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "LineaAdminMultisig"
++        "Linea Multisig"
+    }
+```
+
+Generated with discovered.json: 0x7d6da8f43ad842769a200f337ac45b02302c4bba
 
 # Diff at Thu, 06 Mar 2025 15:18:48 GMT:
 

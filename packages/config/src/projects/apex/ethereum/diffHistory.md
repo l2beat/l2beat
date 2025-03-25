@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x8846183834460efea98f88f83e68c7c5e23344c1
+Generated with discovered.json: 0xc3b8574674135ed1a9316443b5ba5af3e8a45f53
+
+# Diff at Wed, 19 Mar 2025 13:04:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21981180
+- current block number: 21981180
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981180 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x53c6Ec9640761c669B800088F097E01A8207Ac8b) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract ApexAdminMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xef75e1199B0599BA823b7770AcE8eb34864a1D55) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xd32c0eb3a14a2b79c30e03ac4bfe0d791bbbf667
 
 # Diff at Thu, 06 Mar 2025 15:18:04 GMT:
 

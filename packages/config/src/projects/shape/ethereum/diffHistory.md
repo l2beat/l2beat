@@ -1,4 +1,120 @@
-Generated with discovered.json: 0x6fb890e0b657939468a5d1840901b10cbe415b3b
+Generated with discovered.json: 0xca73bb0d6801ae63864bf745e376d27c5bd350d0
+
+# Diff at Tue, 18 Mar 2025 11:17:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 21895001
+- current block number: 22073412
+
+## Description
+
+Upgrade to standard SystemConfig v2.3.0.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "0xF56D96B2535B932656d3c04Ebf51baBff241D886"
++        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.4:
++        ["2025-02-04T20:28:23.000Z","0x2f29cb5a59d7e7d132eb7afe57d9bf12df3db311db4ef5c5079f9043660635df",["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]]
+      values.$pastUpgrades.3:
++        ["2025-03-17T16:24:35.000Z","0xae6ce7a33b18c6ecd39e5c2435a1b9e629b193e97fbf5aaa74e20d7475e50c02",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.2.1:
+-        ["0xF56D96B2535B932656d3c04Ebf51baBff241D886"]
++        "0x2f29cb5a59d7e7d132eb7afe57d9bf12df3db311db4ef5c5079f9043660635df"
+      values.$pastUpgrades.2.0:
+-        "0x2f29cb5a59d7e7d132eb7afe57d9bf12df3db311db4ef5c5079f9043660635df"
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.1.2:
+-        "2025-02-04T20:28:23.000Z"
++        "0xae6ce7a33b18c6ecd39e5c2435a1b9e629b193e97fbf5aaa74e20d7475e50c02"
+      values.$pastUpgrades.1.1:
+-        "0x2f29cb5a59d7e7d132eb7afe57d9bf12df3db311db4ef5c5079f9043660635df"
++        "2025-03-17T16:24:35.000Z"
+      values.$upgradeCount:
+-        3
++        5
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.basefeeScalar:
++        10200
+      values.blobbasefeeScalar:
++        906223
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1458 +++++++++++++++++++-
+ 1 file changed, 1436 insertions(+), 22 deletions(-)
+```
+
+Generated with discovered.json: 0xafdc4aa2856f236716c4cf69d01c753aa42f9726
+
+# Diff at Tue, 18 Mar 2025 08:13:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21895001
+- current block number: 21895001
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21895001 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      name:
+-        "SuperchainGuardianMultisig"
++        "Optimism Guardian Multisig"
+    }
+```
+
+```diff
+    contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      name:
+-        "AlchemyMultisig1"
++        "Alchemy Multisig 1"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      name:
+-        "SecurityCouncilMultisig"
++        "Optimism Security Council"
+    }
+```
+
+Generated with discovered.json: 0x67d73bc8cef26647fd5391403ccccbbf492dbb1d
 
 # Diff at Tue, 04 Mar 2025 11:26:17 GMT:
 

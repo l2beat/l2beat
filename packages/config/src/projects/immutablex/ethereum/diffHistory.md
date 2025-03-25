@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x3cd2700fd6a41993b5728b1766a1e928eed465cf
+Generated with discovered.json: 0xd5983a118fac99e7bb9b85a86ac9b63ca8654de7
+
+# Diff at Wed, 19 Mar 2025 13:04:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21995398
+- current block number: 21995398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995398 (main branch discovery), not current.
+
+```diff
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xf5d6bc4000049be43e561287fe6e95a7879c9907
 
 # Diff at Tue, 11 Mar 2025 16:09:19 GMT:
 

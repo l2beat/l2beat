@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22029702,
-  "configHash": "0x0b4e5d0f4004416fedd20c951950a9d87db15b0f2a2d2c542a8d77c769f1bdb7",
+  "configHash": "0x9569e25516bc0bb36f559226e0df135b8f50b8ee2f9d38a8448432db28d4a9a7",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -242,7 +242,7 @@
       }
     },
     {
-      "name": "SecurityCouncil",
+      "name": "Scroll Security Council",
       "address": "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -288,7 +288,7 @@
       ]
     },
     {
-      "name": "ScrollExecutorMultisig",
+      "name": "Scroll Multisig 1",
       "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1416,7 +1416,7 @@
       }
     },
     {
-      "name": "ScrollFeeVaultMultisig",
+      "name": "Scroll Multisig 4",
       "address": "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1765,7 +1765,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ScrollEmergencyMultisig",
+      "name": "Scroll Multisig 2",
       "address": "0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2037,7 +2037,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ScrollOpsMultisig",
+      "name": "Scroll Multisig 3",
       "address": "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -3381,7 +3381,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

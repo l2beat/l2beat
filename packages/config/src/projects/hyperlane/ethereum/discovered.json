@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21880791,
-  "configHash": "0xe88c99914d9c1b7739c238757ad584240afe41790ed1a25ff845c3d9d5bef4ee",
+  "configHash": "0x98b76cea200246be8de6ded3af124f899a377d3909e0fbfa0b1ab7eeb4f5c3aa",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -45,7 +45,6 @@
       "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -63,7 +62,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -199,7 +197,6 @@
       "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -897,7 +894,6 @@
       "address": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -909,7 +905,6 @@
       "address": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
@@ -1453,9 +1448,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "hyperlane/HypERC20Collateral": "0x332944d78565b908da038de8d8c95d061d9ab73a01adcda6322fca11dcc68abe",
-    "hyperlane/StaticAggregationIsm": "0x9c35cfb84439778cbdee15c7611d8be531c050c6403740f69e8492b58c6519c3"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "hyperlane/HypERC20Collateral": "0x46c58559ac8d2fc451fbbab33cf64336a6aaa4dc5b502f4086228c68f1f24409",
+    "hyperlane/StaticAggregationIsm": "0x4f2401354384aa0c656d98aad03631095cf0348fc2c01470e09a403572e126aa"
   }
 }

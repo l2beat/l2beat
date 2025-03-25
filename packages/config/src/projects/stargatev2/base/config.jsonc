@@ -8,7 +8,8 @@
     "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47": "TokenMessaging"
   },
   "overrides": {
-    "TokenMessaging": {
+    "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47": {
+      // TokenMessaging
       "ignoreRelatives": ["endpoint", "oApp", "owner"],
       "fields": {
         "maxAssetId": {

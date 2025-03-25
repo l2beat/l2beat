@@ -15,7 +15,8 @@
     "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19": "BlastProxyAdmin"
   },
   "overrides": {
-    "BlastL2Gateway": {
+    "0x3f64e2e09732969813904a8473074CFADeE66AF1": {
+      // BlastL2Gateway
       "extends": "zklinknova/secondaryGateway"
     }
   }

@@ -14,7 +14,7 @@ import { getTvsBreakdown } from './get-tvs-breakdown'
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 
 export async function getTvsBreakdownForProject(
-  project: Project<'tvlConfig', 'chainConfig'>,
+  project: Project<'tvlConfig', 'chainConfig' | 'contracts'>,
 ) {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData()
@@ -26,7 +26,7 @@ type TvsBreakdownForProject = Awaited<
   ReturnType<typeof getCachedTvsBreakdownForProjectData>
 >
 export const getCachedTvsBreakdownForProjectData = cache(
-  async (project: Project<'tvlConfig', 'chainConfig'>) => {
+  async (project: Project<'tvlConfig', 'chainConfig' | 'contracts'>) => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
@@ -40,6 +40,8 @@ export const getCachedTvsBreakdownForProjectData = cache(
       project.id,
       tokenMap,
       project.chainConfig?.gasTokens,
+      undefined,
+      project.contracts?.addresses,
     )
   },
   ['getCachedTvsBreakdownForProject'],

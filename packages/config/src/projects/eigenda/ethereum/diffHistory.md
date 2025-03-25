@@ -1,4 +1,92 @@
-Generated with discovered.json: 0xb0935b01ccd8435bde977d70818e0cfb09e79d10
+Generated with discovered.json: 0x175284b5b339d07c5778b54e18aeeca436dd8076
+
+# Diff at Wed, 19 Mar 2025 15:44:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4609d8355d7594946b66bef47876090fce6b0842 block: 22045239
+- current block number: 22081891
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.5:
+-        "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.$members.4:
+-        "0xaBd099133278ACF0415186c88F34e01b05D116f6"
++        "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.$members.3:
+-        "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
++        "0x55688D9211bC00BA573A1e0672e5de050818a360"
+      values.$members.2:
+-        "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
++        "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
+      values.$members.1:
+-        "0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
++        "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
+      values.$members.0:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x757f551be5301d2afaecde64dd768a3e8ee9cb3d
+
+# Diff at Wed, 19 Mar 2025 13:04:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 22045239
+- current block number: 22045239
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22045239 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x454Ef2f69f91527856E06659f92a66f464C1ca4e) {
+    +++ description: None
+      types:
+-        ["RISK_PARAMETER"]
+      severity:
+-        "MEDIUM"
+    }
+```
+
+```diff
+    contract undefined (0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED) {
+    +++ description: None
+      types:
+-        ["RISK_PARAMETER"]
+      severity:
+-        "MEDIUM"
+    }
+```
+
+```diff
+    contract undefined (0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8) {
+    +++ description: None
+      types:
+-        ["RISK_PARAMETER"]
+      severity:
+-        "MEDIUM"
+    }
+```
+
+Generated with discovered.json: 0xbff570f28830806075253acaf776c2dcce5a7039
 
 # Diff at Fri, 14 Mar 2025 12:53:14 GMT:
 

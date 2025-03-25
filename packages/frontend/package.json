@@ -49,6 +49,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "d3-scale": "^4.0.2",
     "dotenv": "^16.4.5",
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",
@@ -75,6 +76,7 @@
   "devDependencies": {
     "@l2beat/eslint-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
+    "@types/d3-scale": "^4.0.9",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",
     "@types/markdown-it": "^14.1.2",

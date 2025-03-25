@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "linea",
-  "blockNumber": 16804518,
-  "configHash": "0x0fa5063b11a74071797c4f47931ee100d73efca58416ef49d5944334b9d9a58b",
+  "blockNumber": 17195680,
+  "configHash": "0xf71fd806c1d06f30311621501748a103281e769de9f311f218f47f97a430ee7f",
   "entries": [
     {
       "name": "LineaOwner",
@@ -119,7 +119,6 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1709218085,
@@ -292,7 +291,7 @@
           }
         ],
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "getFirstUnprocessedPriorityTx": 268868,
+        "getFirstUnprocessedPriorityTx": 268898,
         "getGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "getL2BootloaderBytecodeHash": "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d",
@@ -301,16 +300,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 21,
+        "getPriorityQueueSize": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
-        "getTotalBatchesCommitted": 51868,
-        "getTotalBatchesExecuted": 51023,
-        "getTotalBatchesVerified": 51764,
-        "getTotalBlocksCommitted": 51868,
-        "getTotalBlocksExecuted": 51023,
-        "getTotalBlocksVerified": 51764,
-        "getTotalPriorityTxs": 268889,
+        "getTotalBatchesCommitted": 53296,
+        "getTotalBatchesExecuted": 53293,
+        "getTotalBatchesVerified": 53293,
+        "getTotalBlocksCommitted": 53296,
+        "getTotalBlocksExecuted": 53293,
+        "getTotalBlocksVerified": 53293,
+        "getTotalPriorityTxs": 268898,
         "getVerifier": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -318,11 +317,6 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xae9dbf8d6dc4a22e706e655fc53f9cb7c1324b7f124908bf95dcf09537f21203",
-          "expirationTimestamp": 1741169427,
-          "layer2Tip": 0
-        },
         "validators": [
           "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
           "0x509ff56c152315EdeE91A2e0f059195519507e01"
@@ -762,7 +756,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "zklinknova/secondaryGateway": "0xe90dd49561e729f40cc97d07f20962ab215d3c45c171b64910d4742fe2fed076"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a"
   }
 }

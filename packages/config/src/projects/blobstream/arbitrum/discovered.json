@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 305996466,
-  "configHash": "0x1077f2200ce5e0792e344f89e0d20e68a0758e8abd5d27047eee23b0e0dd36ec",
+  "configHash": "0x2a00fb16ecaaf02ef949395382c9e8b0d0e1b04af996c9b30e8ab4f799f06206",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -383,7 +383,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SuccinctGatewaySP1Multisig",
+      "name": "Succinct Multisig 1",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -794,9 +794,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "succinct/SP1Blobstream": "0x594e33b67e9567cb684ee6e5145bf328d6a21adde6d56019482a7de9241c460b",
-    "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151",
-    "succinct/SuccinctGateway": "0xee3e679e5e4af6a88d7c2bf61aa7e3b2d955ef5e35994c84d082522365c545db"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "succinct/SP1Blobstream": "0xd2e9c450b6a1df6124154e5479e5be75cb9c1d1475676d8cf7431f1c380997c5",
+    "succinct/SP1SuccinctGateway": "0x2b1d17343f6cd8f25c32002ecd089a7f0e7a0d38c6c48fe7e47e2610e4ecec2e",
+    "succinct/SuccinctGateway": "0x9f2d33e7f882b1fbac298f2e27f5cd512161593c05d11a56f700b7d72c3fa8a0"
   }
 }

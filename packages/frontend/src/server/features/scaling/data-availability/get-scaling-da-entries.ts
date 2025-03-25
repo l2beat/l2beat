@@ -4,7 +4,7 @@ import type {
   ProjectScalingDa,
   ProjectScalingStack,
 } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -70,6 +70,7 @@ export async function getScalingDaEntries() {
       return getScalingDaEntry(
         project,
         risks,
+        daLayers,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
       )
@@ -86,6 +87,12 @@ export interface ScalingDaEntry extends CommonScalingEntry {
   stack: ProjectScalingStack | undefined
   tvsOrder: number
   risks: EntryRisks | undefined
+  daHref:
+    | {
+        summary: string
+        risk: string | undefined
+      }
+    | undefined
 }
 
 function getScalingDaEntry(
@@ -94,6 +101,7 @@ function getScalingDaEntry(
     'customDa'
   >,
   risks: EntryRisks | undefined,
+  daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingDaEntry {
@@ -101,6 +109,7 @@ function getScalingDaEntry(
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
+    daHref: getDaHref(project, daLayers),
     stack: project.scalingInfo.stack,
     risks,
     tvsOrder: tvs ?? -1,
@@ -153,5 +162,36 @@ function getRisks(
     daBridge: daBridgeProject
       ? mapBridgeRisksToRosetteValues(daBridgeProject.daBridge.risks)
       : mapBridgeRisksToRosetteValues({ isNoBridge: true }),
+  }
+}
+
+function getDaHref(
+  project: Project<
+    'scalingInfo' | 'statuses' | 'scalingDa' | 'display',
+    'customDa'
+  >,
+  daLayers: Project<'daLayer'>[],
+) {
+  if (project.customDa) {
+    return {
+      summary: `/data-availability/summary?tab=custom&highlight=${project.slug}`,
+      risk: `/data-availability/risk?tab=custom&highlight=${project.slug}`,
+    }
+  }
+
+  const daLayer = daLayers.find(
+    (l) => l.id === project.scalingDa.layer.projectId,
+  )
+
+  if (!daLayer) {
+    return undefined
+  }
+
+  return {
+    summary: `/data-availability/summary?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
+    risk:
+      daLayer.id === ProjectId.ETHEREUM
+        ? undefined
+        : `/data-availability/risk?tab=${daLayer.daLayer.systemCategory}&highlight=${daLayer.slug}`,
   }
 }

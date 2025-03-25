@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 132493968,
-  "configHash": "0x2b33dce623308f02a45bacfc71bea5627ad9f1adad5ab57ce369910b19486fd7",
+  "configHash": "0xfa87b336ad1255af7fef79bf1e50399e12e5881a288134a0f8a83ff1079ce422",
   "entries": [
     {
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -1373,21 +1373,21 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/Layer2/BaseFeeVault": "0x1712bddec7a5a95490382076ea6e3905b665cf7fcc8f544f9cbb322addd03493",
-    "opstack/Layer2/EAS": "0x68be5841f0d2d1500f01a43fad5ac0f19dd143482ec7d0522bed2d792f5d516a",
-    "opstack/Layer2/GasPriceOracle": "0xec3a63ae5e374c9d60b093148e973b9b3a0e80d7cfc6117de71ed560e5541da2",
-    "opstack/Layer2/L1Block": "0x0efaa9627630398f5f36d8d15f901df9f53e82e1276b922d7d5edb9ddad03c1c",
-    "opstack/Layer2/L1BlockNumber": "0x9e117ac1aa13ebca691fa34c4efdc181225a9046c45703a17b79f434ddae7a63",
-    "opstack/Layer2/L1FeeVault": "0x3dd95b3e371ecdf10c6aeb5578ae0c1fe4da8c5d23a30884231f93c54f01d3c0",
-    "opstack/Layer2/L2CrossDomainMessenger": "0x2322423e0cc39c40cfc8896d9b4a89235c68a48facfc0748dddece5bb0643ea2",
-    "opstack/Layer2/L2ERC721Bridge": "0xf26bb3478909d44da27de601dc17eb79cee6333bbf34c3d2d9005f80a1377024",
-    "opstack/Layer2/L2StandardBridge": "0x968a64fb492d6b57cf8c9ddaca9605f5495f12a80b3548cc9f3a33db6a9722aa",
-    "opstack/Layer2/L2ToL1MessagePasser": "0xdd61530f54cee5e5ec7646388307ca74647ec91aa19a183cf85d8cb4f0f57bfb",
-    "opstack/Layer2/OptimismMintableERC20Factory": "0xc7a314ca7624e6056853eded40254a42e8bf2d9d96a9c4124e323664caa3fa8d",
-    "opstack/Layer2/OptimismMintableERC721Factory": "0x83b5082a5b1a255037e5cb39b93e34b4c45e63df2351d035770153fc55f9a836",
-    "opstack/Layer2/SchemaRegistry": "0x6de6cfeea7afca40224334935b2576943882fada7f44852e0614d88e6f3d4796",
-    "opstack/Layer2/SequencerFeeVault": "0xf57290e1817879f70342718a01eb26c384e447018d7710156fb2930625c70e0f"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "opstack/Layer2/BaseFeeVault": "0x8ac3d4d02e60f9d0fc5d1b3bb4d0fd144402bddf02d54e01810b634978000c62",
+    "opstack/Layer2/EAS": "0x544625cb6730381fe1dd5389cefeed7886901b154fbf10f9a3cb134e42ff2173",
+    "opstack/Layer2/GasPriceOracle": "0x98613b8b76dab2084336195d79927dfe87cab8bf2c7f92b855fdb25500c0e63f",
+    "opstack/Layer2/L1Block": "0xae883e6710bcb5f0f7074b3d7666d33f74f8adcd1ec572b0758104af1ac24246",
+    "opstack/Layer2/L1BlockNumber": "0x09a7d99039caa076ae26fc79331e2653bbefdf9a9efe083f3428ecf6df6e2220",
+    "opstack/Layer2/L1FeeVault": "0xbe152bc5a515a30943a5d439fad723b9fd4ee04d68882526043248db73c61847",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x05066a856424429898e25025458ca628bf5303d5522f22f706e1df91aa16f0b3",
+    "opstack/Layer2/L2ERC721Bridge": "0x644697262bc7ef1d94db87e01ff4b4e29d630d90b37a33b34ef22c611a333661",
+    "opstack/Layer2/L2StandardBridge": "0xa3f1df939baca30632b5ffcdac284af5eacd42a15fc6fc8adf2a1e3ddf5c7559",
+    "opstack/Layer2/L2ToL1MessagePasser": "0xf46a7ab8a1471c982b2994a70ac0e6503118d153e19b6fd4d0cdaf4037964408",
+    "opstack/Layer2/OptimismMintableERC20Factory": "0x9d5a3f4adcea192ed605c14cd14a034f2fcb5cfd3d6620a0202dcf010499fa33",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0x051481764ef505e8cdcd9bc207d1e9374219d23ef8541bc4bc409e29d9a5b678",
+    "opstack/Layer2/SchemaRegistry": "0x2b2e5b40b1ba5e7d9d13df6e72a7803eab26ed8d0860160fc9271f33b88e0978",
+    "opstack/Layer2/SequencerFeeVault": "0x305f40bd865fb7d166ae19b5fae4b12eb9ee28180718da92aacbfe7d9c91f789"
   }
 }

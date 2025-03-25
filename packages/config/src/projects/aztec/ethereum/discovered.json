@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 21387141,
-  "configHash": "0x5dd9f9717b7ac4d269a4a7d5941a6b84d47fac182ff0d70a3ae65444c616ebf0",
+  "configHash": "0x3fc287bf61216f633edb2a8262ad120b3254dfe6b4bc36e2f0c5b90901ec51e7",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -344,9 +344,9 @@
     ]
   },
   "usedTemplates": {
-    "aztecv1/AztecFeeDistributor": "0x01f53879c0e821cfd23ca1dd9ab70280e0bf590a849a9d55a9305270f986589b",
-    "aztecv1/RollupProcessor": "0xc77e2de47fc3b202656442e652a83c1f7618dbd9edf3a50987d0fee75363d14b",
-    "aztecv1/TurboVerifier": "0x6d4830e9542801453fb3d14200361e7f81cf5ee9290adb09d13a68c164d95e9d",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "aztecv1/AztecFeeDistributor": "0xa904f2241689e0965a8f1a8b9135c7d3b3d38313eebace4b49a3c1820a218dc0",
+    "aztecv1/RollupProcessor": "0x4e25acb2e851319de924e6ab8126373fc9119f9d4499c411bdf51ba11eb8b8ba",
+    "aztecv1/TurboVerifier": "0xfe97797d7e2719945d9118838249ad738e97e5fcb3a292431d97b76dc6479ecb",
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
   }
 }

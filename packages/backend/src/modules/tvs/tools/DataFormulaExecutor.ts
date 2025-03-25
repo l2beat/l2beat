@@ -12,11 +12,11 @@ import type {
   PriceConfig,
   TotalSupplyAmountConfig,
 } from '../types'
-import type { DataStorage } from './DataStorage'
+import type { LocalStorage } from './LocalStorage'
 
 export class DataFormulaExecutor {
   constructor(
-    private storage: DataStorage,
+    private storage: LocalStorage,
     private priceProvider: PriceProvider,
     private circulatingSupplyProvider: CirculatingSupplyProvider,
     private blockProviders: Map<string, BlockProvider>,
@@ -69,6 +69,11 @@ export class DataFormulaExecutor {
   ) {
     return amounts
       .filter((a) => a.type !== 'circulatingSupply' && a.type !== 'const')
+      .filter(
+        (a) =>
+          timestamp > a.sinceTimestamp &&
+          (!a.untilTimestamp || timestamp < a.untilTimestamp),
+      )
       .map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
@@ -101,21 +106,26 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
     isLatestMode: boolean,
   ) {
+    const filteredAmounts = amounts
+      .filter((a) => a.type === 'circulatingSupply')
+      .filter(
+        (a) =>
+          timestamp > a.sinceTimestamp &&
+          (!a.untilTimestamp || timestamp < a.untilTimestamp),
+      )
+
     if (isLatestMode) {
       return [
         (async () => {
-          const circulatingSupplies = amounts.filter(
-            (a) => a.type === 'circulatingSupply',
-          )
           const latestCirculatingSupplies =
             await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
-              circulatingSupplies.map((p) => ({
+              filteredAmounts.map((p) => ({
                 priceId: p.apiId,
                 decimals: p.decimals,
               })),
             )
 
-          for (const c of circulatingSupplies) {
+          for (const c of filteredAmounts) {
             const latest = latestCirculatingSupplies.get(c.apiId)
             assert(
               latest !== undefined,
@@ -127,18 +137,16 @@ export class DataFormulaExecutor {
         })(),
       ]
     } else {
-      return amounts
-        .filter((a) => a.type === 'circulatingSupply')
-        .map(async (amount) => {
-          const cachedValue = await this.storage.getAmount(amount.id, timestamp)
-          if (cachedValue !== undefined) {
-            this.logger.debug(`Cached value found for ${amount.id}`)
-            return
-          }
+      return filteredAmounts.map(async (amount) => {
+        const cachedValue = await this.storage.getAmount(amount.id, timestamp)
+        if (cachedValue !== undefined) {
+          this.logger.debug(`Cached value found for ${amount.id}`)
+          return
+        }
 
-          const value = await this.fetchCirculatingSupply(amount, timestamp)
-          await this.storage.writeAmount(amount.id, timestamp, value)
-        })
+        const value = await this.fetchCirculatingSupply(amount, timestamp)
+        await this.storage.writeAmount(amount.id, timestamp, value)
+      })
     }
   }
 
@@ -191,8 +199,8 @@ export class DataFormulaExecutor {
         timestamp,
       )
     } catch {
-      this.logger.error(
-        `Error fetching circulating supply for ${config.apiId}. Assuming 0`,
+      this.logger.warn(
+        `Couldn't fetch circulating supply for ${config.apiId}. Assuming 0`,
       )
       return 0n
     }
@@ -238,13 +246,18 @@ export class DataFormulaExecutor {
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
     try {
+      if (
+        timestamp < config.sinceTimestamp ||
+        (config.untilTimestamp && timestamp > config.untilTimestamp)
+      ) {
+        return 0
+      }
+
       // TODO think about getting prices from STAGING DB
       this.logger.debug(`Fetching price for ${config.priceId}`)
       return await this.priceProvider.getPrice(config.priceId, timestamp)
     } catch {
-      this.logger.error(
-        `Error fetching price for ${config.priceId}. Assuming 0`,
-      )
+      this.logger.warn(`Couldn't fetch price for ${config.priceId}. Assuming 0`)
       return 0
     }
   }

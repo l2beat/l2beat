@@ -1,4 +1,72 @@
-Generated with discovered.json: 0x0c7b5fa920c41816288afd2af9ad58b16487b463
+Generated with discovered.json: 0xfd2dac7d2adf162080383f808321c9f5f5d70d1a
+
+# Diff at Wed, 19 Mar 2025 15:45:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4609d8355d7594946b66bef47876090fce6b0842 block: 21680579
+- current block number: 22081892
+
+## Description
+
+Ignore.
+
+## Watched changes
+
+```diff
+    contract DelayedWETH (0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.owner:
+-        "0xa31d8CDDf0D931Dfda2C9D03E35bd8b5d3A6aEC9"
++        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
+    }
+```
+
+Generated with discovered.json: 0xd6c97df3b74fc191d918c81da667c8887e79245a
+
+# Diff at Tue, 18 Mar 2025 08:12:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21680579
+- current block number: 21680579
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680579 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 3 (0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3) {
+    +++ description: None
+      name:
+-        "HashkeyOpsMultisig"
++        "Hashkey Multisig 3"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      name:
+-        "HashkeyUpgradeMultisig"
++        "Hashkey Multisig 1"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 2 (0xC7fCbE26c1Db751d63869F72F782a56710f6be5A) {
+    +++ description: None
+      name:
+-        "HashkeyGuardianMultisig"
++        "Hashkey Multisig 2"
+    }
+```
+
+Generated with discovered.json: 0x7ac57517f8403e7b8c906f7b419ec3e32048218f
 
 # Diff at Tue, 04 Mar 2025 11:25:46 GMT:
 

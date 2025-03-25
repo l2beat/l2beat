@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xe928b996f13f54d4bb1b6388f7faa40375c7e411
+Generated with discovered.json: 0x27635eb9783eb4a9c5300308f942b5c2cb296ef1
+
+# Diff at Wed, 19 Mar 2025 13:04:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x392fa278680196b9d905ef7476892676cfd8e2f6
 
 # Diff at Tue, 04 Mar 2025 10:38:57 GMT:
 

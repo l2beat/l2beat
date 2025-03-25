@@ -10,12 +10,10 @@
       "description": "Minimum deposit value."
     },
     "guardian": {
-      "target": {
-        "permissions": [
-          { "type": "guard" },
-          { "type": "interact", "description": "freeze specific withdrawals." }
-        ]
-      }
+      "permissions": [
+        { "type": "guard" },
+        { "type": "interact", "description": "freeze specific withdrawals." }
+      ]
     },
     "frozenWithdrawals": {
       "description": "Lists all frozen withdrawals.",

@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x1efef28730c7c3c0e0442fe553c24ab9ce8cba9a
+Generated with discovered.json: 0xb11fce21896c6574ae0ce438eb299f53a41f2567
+
+# Diff at Tue, 18 Mar 2025 08:14:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22022298
+- current block number: 22022298
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022298 (main branch discovery), not current.
+
+```diff
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      name:
+-        "ZeroNetworkChainAdminMultisig"
++        "Zeronetwork Multisig"
+    }
+```
+
+Generated with discovered.json: 0xee5a8630d1865f0572a9a8c0e41fa5ead72eb987
 
 # Diff at Tue, 11 Mar 2025 08:00:32 GMT:
 

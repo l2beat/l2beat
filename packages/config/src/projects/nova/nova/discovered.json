@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 81620827,
-  "configHash": "0x587a8a8bfb98fbdbe322a281e1530a4fe194f1ab25670cef685dfac07426a3b6",
+  "blockNumber": 82818646,
+  "configHash": "0xf6e68858da784e8e4197330b796dec4bb0dfcd3785238d30db8fc86b6568bea1",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -61,7 +61,8 @@
         "counterpartGateway": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "defaultGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
         "router": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "EmilianoBonassi-Conduit",
@@ -225,7 +226,8 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2Weth": "0x722E8BdD2ce80A4422E880164f2079488e115365",
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "JohnMorrow-Gauntlet",
@@ -483,7 +485,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2374,
+        "exitNum": 2377,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -635,9 +637,10 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 878,
+        "exitNum": 900,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "UpgradeableBeacon",
@@ -821,7 +824,7 @@
         "l2Gateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "221776137865927120728272"
+        "totalSupply": "221751729861181297118468"
       },
       "derivedName": "L2CustomGatewayToken"
     }
@@ -1180,12 +1183,12 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
-    "orbitstack/layer2/L2GatewayRouter": "0xde7841cda710dd016b3815e3e941932d9ac3e1cbb99e687910642079e927d33f",
-    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
-    "orbitstack/layer2/L2SurplusFee": "0xc5ab7cd559b6a2c80f92fafb398291abf7be7ffd34761502080874871399f87d",
-    "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
-    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757"
+    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
+    "orbitstack/layer2/L2ERC20Gateway": "0x1cee9e90c8980af1a7c50bc87b2ba48d645ce595958e4fd5ba406bc66ab8ef55",
+    "orbitstack/layer2/L2GatewayRouter": "0x1d4f249082baa0e166cb5506766722ee490240305c822505eb17ea016d317f96",
+    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x525c2c86f5126236f2eb6eaef248d1569882bf6fdacb69a5ec8fa1c87233c531",
+    "orbitstack/layer2/L2SurplusFee": "0xd62429d6d88fd69a980d6741ad6dbfa1d27404910cbff7e876485a6ff5e7b483",
+    "orbitstack/layer2/L2WethGateway": "0xd122e07fbe8e90b6c800672254eb9291f42c187b77050cd6d607243eac92b608",
+    "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19"
   }
 }
