@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises'
 import express from 'express'
 import type { ViteDevServer } from 'vite'
+import { getData } from './data'
+import type { SsrData } from './App'
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -38,7 +40,7 @@ app.use('*all', async (req, res) => {
     const url = req.originalUrl.replace(base, '')
 
     let template: string
-    let render: (url: string) => { html?: string; head?: string }
+    let render: (data: SsrData) => { html?: string; head?: string }
     if (!isProduction && vite) {
       // Always read fresh template in development
       template = await fs.readFile('./index.html', 'utf-8')
@@ -50,11 +52,16 @@ app.use('*all', async (req, res) => {
       render = (await import(SERVER_ENTRY)).render
     }
 
-    const rendered = render(url)
+    const ssrData = getData(url)
+    const rendered = render(ssrData)
 
     const html = template
       .replace(`<!--app-head-->`, rendered.head ?? '')
       .replace(`<!--app-html-->`, rendered.html ?? '')
+      .replace(
+        `<!--ssr-data-->`,
+        `window.__SSR_DATA__=${JSON.stringify(ssrData)}`,
+      )
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {
