@@ -29,11 +29,15 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: calls.length })
           return Promise.all(
-            calls.map(async (c) =>
-              BigInt((await client.call(c, blockNumber)).toString()),
-            ),
+            calls.map(async (c) => {
+              const res = await client.call(c, blockNumber)
+              if (res.toString() === '0x') {
+                return 0n
+              } else {
+                return BigInt(res.toString())
+              }
+            }),
           )
         }
       } catch (error) {

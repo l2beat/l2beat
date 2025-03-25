@@ -37,8 +37,6 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: queries.length })
-
           return Promise.all(
             queries.map(async ({ token, holder }) => {
               if (token === 'native') {
