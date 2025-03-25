@@ -1,0 +1,525 @@
+{
+  "$ref": "#/definitions/Project",
+  "definitions": {
+    "Badge": {
+      "type": "string",
+      "enum": [
+        "DA.Avail",
+        "DA.Celestia",
+        "DA.CelestiaBlobstream",
+        "DA.CustomDA",
+        "DA.DAC",
+        "DA.EigenDA",
+        "DA.EthereumBlobs",
+        "DA.EthereumCalldata",
+        "DA.NearDA",
+        "Fork.LoopringFork",
+        "Fork.OVM",
+        "Fork.StarknetFork",
+        "Fork.TaikoFork",
+        "Fork.ZKsyncLiteFork",
+        "Infra.AggLayer",
+        "Infra.ElasticChain",
+        "Infra.SHARP",
+        "Infra.Superchain",
+        "L3ParentChain.Arbitrum",
+        "L3ParentChain.Base",
+        "L3ParentChain.Linea",
+        "L3ParentChain.Nova",
+        "L3ParentChain.OpMainnet",
+        "Other.AccountAbstraction",
+        "Other.BasedSequencing",
+        "Other.EspressoPreconfs",
+        "Other.Governance",
+        "Other.L3HostChain",
+        "Other.MigratedFromL1",
+        "RaaS.Alchemy",
+        "RaaS.AltLayer",
+        "RaaS.Caldera",
+        "RaaS.Conduit",
+        "RaaS.Gateway",
+        "RaaS.Gelato",
+        "RaaS.Karnot",
+        "RaaS.Quicknode",
+        "RaaS.Syndicate",
+        "RaaS.Zeeve",
+        "Stack.Cartesi",
+        "Stack.Nitro",
+        "Stack.OPStack",
+        "Stack.Orbit",
+        "Stack.PolygonCDK",
+        "Stack.SNStack",
+        "Stack.StarkEx",
+        "Stack.ZKStack",
+        "VM.AppChain",
+        "VM.AztecVM",
+        "VM.CairoVM",
+        "VM.CartesiVM",
+        "VM.EVM",
+        "VM.EVMLike",
+        "VM.FuelVM",
+        "VM.MoveVM",
+        "VM.SolanaVM",
+        "VM.WasmVM"
+      ]
+    },
+    "ChainApiConfig": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "rpc",
+                "starknet",
+                "zksync",
+                "loopring",
+                "degate3",
+                "fuel"
+              ]
+            },
+            "url": {
+              "$ref": "#/definitions/HttpsUrl"
+            },
+            "callsPerMinute": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type",
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "etherscan",
+                "blockscout",
+                "blockscoutV2"
+              ]
+            },
+            "url": {
+              "$ref": "#/definitions/HttpsUrl"
+            },
+            "contractCreationUnsupported": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "starkex"
+              ]
+            },
+            "product": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "product"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ChainConfig": {
+      "type": "object",
+      "properties": {
+        "chainId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "explorerUrl": {
+          "type": "string"
+        },
+        "gasTokens": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "multicallContracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MulticallContractConfig"
+          }
+        },
+        "coingeckoPlatform": {
+          "type": "string"
+        },
+        "sinceTimestamp": {
+          "$ref": "#/definitions/UnixTime"
+        },
+        "untilTimestamp": {
+          "$ref": "#/definitions/UnixTime"
+        },
+        "apis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChainApiConfig"
+          }
+        }
+      },
+      "required": [
+        "chainId",
+        "apis"
+      ],
+      "additionalProperties": false
+    },
+    "DateYYYYMMDD": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "Display": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "links": {
+          "type": "object",
+          "properties": {
+            "websites": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "apps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "documentation": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "explorers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "repositories": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "socialMedia": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rollupCodes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "badges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Badge"
+          }
+        }
+      },
+      "required": [
+        "description",
+        "links"
+      ],
+      "additionalProperties": false
+    },
+    "EthereumAddress": {
+      "type": "string",
+      "pattern": "^0x[\\da-f]{40}$"
+    },
+    "HttpsUrl": {
+      "type": "string",
+      "pattern": "^https:\\/\\/"
+    },
+    "Milestone": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "general",
+            "incident"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "date": {
+          "$ref": "#/definitions/DateYYYYMMDD"
+        },
+        "url": {
+          "$ref": "#/definitions/HttpsUrl"
+        }
+      },
+      "required": [
+        "type",
+        "title",
+        "date",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "MulticallContractConfig": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/EthereumAddress"
+        },
+        "sinceBlock": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "batchSize": {
+          "type": "integer"
+        },
+        "version": {
+          "type": "string",
+          "enum": [
+            "1",
+            "2",
+            "3",
+            "optimism"
+          ]
+        },
+        "isNativeBalanceSupported": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "address",
+        "sinceBlock",
+        "batchSize",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "Project": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "description": "DO NOT EDIT! The backend infrastructure relies on the immutability of ids."
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z\\-\\d]+$",
+          "description": "A unique but changeable identifier used in the frontend."
+        },
+        "name": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string",
+          "description": "Used by the frontend in situations where the name is too long."
+        },
+        "addedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "When was the project added to L2BEAT?"
+        },
+        "isUpcoming": {
+          "type": "boolean"
+        },
+        "isArchived": {
+          "type": "boolean"
+        },
+        "statuses": {
+          "$ref": "#/definitions/Statuses"
+        },
+        "display": {
+          "$ref": "#/definitions/Display"
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Milestone"
+          }
+        },
+        "chainConfig": {
+          "$ref": "#/definitions/ChainConfig"
+        },
+        "scaling": {
+          "$ref": "#/definitions/Scaling"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "addedAt",
+        "display"
+      ],
+      "additionalProperties": false
+    },
+    "Scaling": {
+      "type": "object",
+      "properties": {
+        "hostChain": {
+          "type": "string",
+          "description": "Host chain project id. Only for L3s."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Optimistic Rollup",
+            "ZK Rollup",
+            "Plasma",
+            "Validium",
+            "Optimium",
+            "Other"
+          ]
+        },
+        "capability": {
+          "type": "string",
+          "enum": [
+            "universal",
+            "appchain"
+          ]
+        },
+        "stack": {
+          "type": "string",
+          "enum": [
+            "Arbitrum",
+            "Cartesi Rollups",
+            "Loopring",
+            "OP Stack",
+            "OVM",
+            "Polygon",
+            "SN Stack",
+            "StarkEx",
+            "Taiko",
+            "ZK Stack",
+            "ZKsync Lite"
+          ]
+        },
+        "raas": {
+          "type": "string",
+          "enum": [
+            "AltLayer",
+            "Gateway",
+            "Conduit",
+            "Gelato",
+            "Karnot",
+            "Caldera",
+            "Syndicate",
+            "Quicknode",
+            "Alchemy",
+            "Zeeve"
+          ]
+        },
+        "purposes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "AI",
+              "Auctions",
+              "Betting",
+              "Bitcoin DApps",
+              "Bug bounty",
+              "Exchange",
+              "Gaming",
+              "Identity",
+              "Information",
+              "Interoperability",
+              "KYC-ed DeFi",
+              "Launchpad",
+              "Lending",
+              "Music",
+              "NFT",
+              "Oracles",
+              "Payments",
+              "Privacy",
+              "Universal",
+              "Social",
+              "Storage",
+              "RWA",
+              "IoT",
+              "Restaking"
+            ]
+          }
+        }
+      },
+      "required": [
+        "type",
+        "capability",
+        "purposes"
+      ],
+      "additionalProperties": false
+    },
+    "Statuses": {
+      "type": "object",
+      "properties": {
+        "yellowWarning": {
+          "type": "string"
+        },
+        "redWarning": {
+          "type": "string"
+        },
+        "isUnderReview": {
+          "type": "boolean"
+        },
+        "isUnverified": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UnixTime": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 946684800,
+          "maximum": 4102444800
+        },
+        {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}Z)?$"
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
