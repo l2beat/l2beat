@@ -141,6 +141,7 @@ interface OpStackConfigCommon {
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
+  nonTemplateContractRisks?: ProjectRisk
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -241,12 +242,13 @@ function opStackCommon(
   }
 
   const nativeContractRisks: ProjectRisk[] = [
-    partOfSuperchain
-      ? ({
-          category: 'Funds can be stolen if',
-          text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
-        } satisfies ProjectRisk)
-      : CONTRACTS.UPGRADE_NO_DELAY_RISK,
+    templateVars.nonTemplateContractRisks ??
+      (partOfSuperchain
+        ? ({
+            category: 'Funds can be stolen if',
+            text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
+          } satisfies ProjectRisk)
+        : CONTRACTS.UPGRADE_NO_DELAY_RISK),
   ]
 
   const allDiscoveries = [

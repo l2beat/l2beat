@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -13,7 +13,7 @@ export const celo: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.DA.EigenDA],
   daProvider: EIGENDA_DA_PROVIDER,
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
@@ -66,6 +66,7 @@ export const celo: ScalingProject = opStackL2({
       },
     ],
   },
+  nonTemplateContractRisks: CONTRACTS.UPGRADE_NO_DELAY_RISK,
   isNodeAvailable: 'UnderReview',
   discovery,
   genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200
