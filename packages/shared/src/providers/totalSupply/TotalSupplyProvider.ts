@@ -29,16 +29,22 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          return Promise.all(
-            calls.map(async (c) => {
-              const res = await client.call(c, blockNumber)
-              if (res.toString() === '0x') {
-                return 0n
-              } else {
-                return BigInt(res.toString())
-              }
-            }),
-          )
+          const results = []
+          for (const c of calls) {
+            const start = Date.now()
+            const res = await client.call(c, blockNumber)
+            this.logger.tag({ chain }).info('Call duration', {
+              callDuration: (Date.now() - start) / 1000,
+              type: 'totalSupply',
+            })
+
+            if (res.toString() === '0x') {
+              results.push(0n)
+            } else {
+              results.push(BigInt(res.toString()))
+            }
+          }
+          return results
         }
       } catch (error) {
         if (i === this.rpcs.length - 1) throw error
