@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x03ad79047afa61aa2e12e668f87fe89f5cda0e9b
+Generated with discovered.json: 0x2625d035ca1786db41ac0eda73420449a1b1b5c4
 
-# Diff at Wed, 26 Mar 2025 08:38:14 GMT:
+# Diff at Wed, 26 Mar 2025 09:40:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22129863
 
 ## Description
 
-Initial discovery
+Initial discovery: Standard OptiPortal2 opstack chain with new SuperchainConfig setup (local with global override).
 
 ## Initial discovery
 
@@ -26,7 +26,7 @@ Initial discovery
 ```diff
 +   Status: CREATED
     contract L1CrossDomainMessenger (0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95)
-    +++ description: None
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
 ```
 
 ```diff
@@ -37,8 +37,14 @@ Initial discovery
 
 ```diff
 +   Status: CREATED
+    contract PermissionedDisputeGame (0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
     contract L1ERC721Bridge (0x3C519816C5BdC0a0199147594F83feD4F5847f13)
-    +++ description: None
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
 ```
 
 ```diff
@@ -74,13 +80,7 @@ Initial discovery
 ```diff
 +   Status: CREATED
     contract OptimismMintableERC20Factory (0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract PermissionedDisputeGame (0x705959Aadfec98C3718973B8A8A3d21632d31bB7)
-    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
 ```
 
 ```diff
@@ -93,6 +93,12 @@ Initial discovery
 +   Status: CREATED
     contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
@@ -122,13 +128,13 @@ Initial discovery
 ```diff
 +   Status: CREATED
     contract DelayedWETH (0x9c314E8057025F2982aa4B3923Abd741A8e8DE91)
-    +++ description: None
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
 ```
 
 ```diff
 +   Status: CREATED
     contract L1StandardBridge (0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe)
-    +++ description: None
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
 ```
 
 ```diff
@@ -140,7 +146,13 @@ Initial discovery
 ```diff
 +   Status: CREATED
     contract AnchorStateRegistry (0xa24Bf5Bc02997f63da4e2C7F802067e05a102504)
-    +++ description: None
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
 ```
 
 ```diff
@@ -181,12 +193,6 @@ Initial discovery
 
 ```diff
 +   Status: CREATED
-    contract PermissionedDisputeGame (0xd70143f2535C1aFc82322c2384b233Dc7847CE3c)
-    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
-```
-
-```diff
-+   Status: CREATED
     contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
 ```
@@ -194,11 +200,11 @@ Initial discovery
 ```diff
 +   Status: CREATED
     contract PreimageOracle (0xfaB0F466955D87e596Ca87E20c505bB6470D0DC4)
-    +++ description: None
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
 +   Status: CREATED
     contract DisputeGameFactory (0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683)
-    +++ description: None
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
 ```

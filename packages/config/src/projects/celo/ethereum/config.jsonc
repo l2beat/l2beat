@@ -4,10 +4,8 @@
   "name": "celo",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
-    "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe", //
+    "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe" //
   ],
-  "names": {
-  },
-  "overrides": {
-  }
+  "names": {},
+  "overrides": {}
 }
