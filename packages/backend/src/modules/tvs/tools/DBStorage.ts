@@ -50,14 +50,17 @@ export class DBStorage implements DataStorage {
   ): Promise<number | undefined> {
     const price = this.prices.get(timestamp)?.get(configurationId)
 
-    if (price) {
+    if (price !== undefined) {
       return Promise.resolve(price)
     }
 
     // Fallback is needed due to the way PriceIndexer works.
     // If CoingeckoClient returns empty response we will not save anything to DB
-    // and skip this timestamp altogether, effectively creaging a hole in data.
-    const fallback = await this.db.tvsPrice.getLatestPrice(configurationId)
+    // and skip this timestamp altogether, effectively creating a gap in data.
+    const fallback = await this.db.tvsPrice.getLatestPriceBefore(
+      configurationId,
+      timestamp,
+    )
     assert(
       fallback,
       `Price fallback failed for ${configurationId} for ${timestamp}`,
@@ -80,13 +83,16 @@ export class DBStorage implements DataStorage {
       this.amounts.get(timestamp)?.get(configurationId),
     )
 
-    if (amount) {
+    if (amount !== undefined) {
       return Promise.resolve(amount)
     }
 
     // Fallback is needed for circulating supplies.
     // For the same reasons as in prices, CoingeckoClient can return empty response.
-    const fallback = await this.db.tvsAmount.getLatestAmount(configurationId)
+    const fallback = await this.db.tvsAmount.getLatestAmountBefore(
+      configurationId,
+      timestamp,
+    )
     assert(
       fallback,
       `Amount fallback failed for ${configurationId} for ${timestamp}`,

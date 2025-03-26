@@ -184,6 +184,8 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const batches = this.$.multicallClient.encodeBatches(calls)
 
+    this.$.logger.debug(`Multicall`, { batches: batches.length })
+
     const batchedResults = await Promise.all(
       batches.map(async (batch) => {
         assert(this.$.multicallClient)

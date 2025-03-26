@@ -47,16 +47,17 @@ export function TotalCell(props: TotalCellProps) {
       }
     />
   ) : null
-  if (props.breakdown?.total === undefined) {
+
+  if (props.breakdown?.total === undefined && tvsWarnings.length > 0) {
     return (
       <Tooltip>
-        <TooltipTrigger className="flex items-center">
+        <TooltipTrigger className="inline-flex items-center">
           {icon}
           <NoDataBadge />
         </TooltipTrigger>
         <TooltipContent className="space-y-2">
           <span>Data is not available for this project.</span>
-          {tvsWarnings?.map((warning, i) => (
+          {tvsWarnings.map((warning, i) => (
             <WarningBar
               key={`tvs-warning-${i}`}
               icon={RoundedWarningIcon}
@@ -71,6 +72,10 @@ export function TotalCell(props: TotalCellProps) {
         </TooltipContent>
       </Tooltip>
     )
+  }
+
+  if (props.breakdown?.total === undefined) {
+    return <NoDataBadge />
   }
 
   const totalTvs = props.breakdown.total

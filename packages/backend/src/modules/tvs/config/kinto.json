@@ -117,26 +117,12 @@
       "symbol": "ETH",
       "name": "Ether",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-            "decimals": 18,
-            "sinceTimestamp": 1702607855
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-            "decimals": 18,
-            "sinceTimestamp": 1710248135
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "decimals": 18,
+        "sinceTimestamp": 1702607855
       },
       "category": "ether",
       "source": "canonical",
@@ -230,24 +216,6 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "kinto-sDAI",
-      "priceId": "savings-dai",
-      "symbol": "sDAI",
-      "name": "Savings Dai",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "chain": "ethereum",
-        "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-        "decimals": 18,
-        "sinceTimestamp": 1710248135
-      },
-      "category": "stablecoin",
-      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -482,24 +450,6 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "kinto-WETH",
-      "priceId": "weth",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "chain": "ethereum",
-        "escrowAddress": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
-        "decimals": 18,
-        "sinceTimestamp": 1710248135
-      },
-      "category": "ether",
-      "source": "canonical",
       "isAssociated": false
     },
     {

@@ -1,4 +1,5 @@
 node_modules
+.pnpm-store
 yarn-error.log
 .DS_Store
 .turbo

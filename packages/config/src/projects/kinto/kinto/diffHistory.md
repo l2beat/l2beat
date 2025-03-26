@@ -1,19 +1,316 @@
-Generated with discovered.json: 0xa036c9d1af0a435a48033729c890c7d5315cf1ce
+Generated with discovered.json: 0x9d96d94bc54a83fd13065208aba78b5e527853df
 
-# Diff at Thu, 20 Mar 2025 12:53:10 GMT:
+# Diff at Tue, 25 Mar 2025 11:49:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 773151
+- current block number: 778850
+
+## Description
+
+BridgedKinto upgrade.
+
+Current state of permissions in the AccessManager is unchanged.
+
+waiting for:
+queue operations for 12d values for:
+- executionDelays for all non-SC actors for the roles UPGRADER_ROLE, ADMIN_ROLE and SECURITY_COUNCIL role
+- targetAdminDelays for the 3 targets: KintoAppRegistry, KintoID, KintoWalletFactory
+- KintoWallet.RECOVERY_TIME
+- KintoID.EXIT_WINDOW_PERIOD
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x8afd4a6a4dce2fedf29d5a78d35edbb8101e74ea5e923aebda93db04b4f44121"
++        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
+      values.$implementation:
+-        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
++        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
+      values.$pastUpgrades.8:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$pastUpgrades.7.2:
+-        "2025-02-21T21:13:41.000Z"
++        "2024-06-29T15:10:34.000Z"
+      values.$pastUpgrades.7.1.0:
+-        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
++        "0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"
+      values.$pastUpgrades.7.0:
+-        "0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb"
++        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
+      values.$pastUpgrades.6.2:
+-        "2024-06-29T15:10:34.000Z"
++        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
+      values.$pastUpgrades.6.1:
+-        ["0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"]
++        "2025-03-19T21:51:53.000Z"
+      values.$pastUpgrades.6.0:
+-        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
++        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
+      values.$pastUpgrades.5.2:
+-        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
++        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
+      values.$pastUpgrades.5.1:
+-        "2025-03-19T21:51:53.000Z"
++        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
+      values.$pastUpgrades.5.0:
+-        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
++        "2024-12-18T00:08:48.000Z"
+      values.$pastUpgrades.4.2:
+-        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
++        ["0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"]
+      values.$pastUpgrades.4.1:
+-        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
++        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
+      values.$pastUpgrades.4.0:
+-        "2024-12-18T00:08:48.000Z"
++        "2024-06-20T23:33:48.000Z"
+      values.$pastUpgrades.3.2.0:
+-        "0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"
++        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
+      values.$pastUpgrades.3.1:
+-        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
++        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
+      values.$pastUpgrades.3.0:
+-        "2024-06-20T23:33:48.000Z"
++        "2025-03-20T00:39:13.000Z"
+      values.$pastUpgrades.2.2:
+-        ["0x6af53F698b87809d98CeAAfa848c73e192400E61"]
++        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
+      values.$pastUpgrades.2.1:
+-        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
++        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
+      values.$pastUpgrades.2.0:
+-        "2025-03-20T00:39:13.000Z"
++        "2024-07-10T20:17:25.000Z"
+      values.$pastUpgrades.1.2:
+-        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
++        "2025-03-25T01:46:55.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
++        "0x4c3e223697c1a08b1539359340534964303bba7cbc4519e70044c74ad19fd784"
+      values.$pastUpgrades.1.0:
+-        "2024-07-10T20:17:25.000Z"
++        ["0xF22F907b74CAB91864B7bEEcAdf762F464a96140"]
+      values.$upgradeCount:
+-        8
++        9
+      values.VAULT:
++        "0x3De040ef2Fbf9158BADF559C5606d7706ca72309"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl.roles.UPGRADER_ROLE.members.1:
+-        {"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1733181166,"executionDelay":604800}
++++ description: List of roles revoked from accounts.
+      values.RolesRevoked.8663528507529876195:
++        [{"roleId":"8663528507529876195","account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
+-        0
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
+-        604800
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
+-        604800
++        950400
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@773151 => .flat}/BridgedKinto/BridgedKinto.sol     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x433020c537dbdf2e53a26994bff8c280032ed795
+
+# Diff at Fri, 21 Mar 2025 14:35:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0cd49f2bd1f57cf090a4f7b659b8eb18c9783869 block: 772987
+- current block number: 773151
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+Rediscovered to properly handle canActIndependently on AccessManager thanks
+to a source code fix.
+
+Config: rename KintoAdminMultisig, edit config to treat it natively as a MS
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 772987 (main branch discovery), not current.
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      name:
+-        "KintoAdminMultisig"
++        "Kinto Multisig 2"
+      values.getOwners:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x94561e98DD5E55271f91A103e4979aa6C493745E"]
+      values.$members:
++        ["0x94561e98DD5E55271f91A103e4979aa6C493745E","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"]
++++ description: Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes.
++++ severity: HIGH
+      values.$threshold:
++        2
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"1":1,"2":1,"3":1,"4":2}}]
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"send tokens and ETH from the Treasury to any address without delay.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"}]
+      values.edKintoAdminMultisigADMIN:
+-        950400
+      values.edKintoAdminMultisigUPGRADER:
+-        604800
+      values.kintoAdminMultisigPermission:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoMultisig2ADMIN:
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoMultisig2UPGRADER:
++        604800
+      values.kintoMultisig2Permission:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      fieldMeta.edKintoAdminMultisigUPGRADER:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoAdminMultisigADMIN:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2UPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2ADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"},{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}]
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      issuedPermissions.9:
+-        {"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}
+      issuedPermissions.8:
+-        {"permission":"interact","to":"0x6E31039abF8d248aBed57E307C9E1b7530c269E4","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.7:
+-        {"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.6:
+-        {"permission":"interact","to":"0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.5.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
+      issuedPermissions.5.description:
+-        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.4.to:
+-        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
++        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+      issuedPermissions.3.to:
+-        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
++        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+      issuedPermissions.2.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+      issuedPermissions.2.description:
+-        "transfer KYC NFTs to a different address."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+    }
+```
+
+Generated with discovered.json: 0x9c243f55a75514f7155771dc44fcfece48096fca
+
+# Diff at Fri, 21 Mar 2025 09:58:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 770292
-- current block number: 771451
+- current block number: 772987
 
 ## Description
 
 KINTO token upgrade (staking) and gov changes:
 - KintoID.GOVERNANCE_ROLE removed from NioGovernor
-- AccessManager execution delays and target delays increased to 11d
+- AccessManager execution delays and target delays increased to 11d (SCHEDULED)
+- remove/change KintoAdminMultisig permissions (SCHEDULED)
 
-todo:
-- remove/change KintoAdminMultisig permissions
+the l2 gov system will be ready for full stage 1 review on 2025-03-31T23:42. the config, when including the scheduled ops, is complete.
+
+```
+============= Queued Delay/Config Changes and Queued Actions =============
+
+Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:14.000Z
+
+Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
+  New targetAdminDelay: 604800 (7d) effective at 2025-03-23T23:34:54.000Z
+
+Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:13.000Z
+
+Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:12.000Z
+
+Queued Operations:
+
+Operation 0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8:
+    Nonce: 1
+    Scheduled for: 2025-03-31T23:42:21.000Z
+    Caller: KintoAdminMultisig (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: grantRole(UPGRADER_ROLE, KintoAdminMultisig (0x2e2b1c42e38f5af81771e65d87729e57abd1337a), 950400 (11d))
+```
 
 ## Watched changes
 
@@ -92,9 +389,53 @@ todo:
 ```
 
 ```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.5.description:
+-        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.4.delay:
++        950400
+      receivedPermissions.4.description:
++        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+    }
+```
+
+```diff
     contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
     +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      issuedPermissions.4.delay:
++        950400
       issuedPermissions.2.delay:
+-        604800
++        950400
+      values.accessControl.roles.ADMIN_ROLE.members.1.member:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      values.accessControl.roles.ADMIN_ROLE.members.1.since:
+-        1729791296
++        1742341092
+      values.accessControl.roles.ADMIN_ROLE.members.1.executionDelay:
+-        0
++        604800
+      values.accessControl.roles.ADMIN_ROLE.members.0.member:
+-        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      values.accessControl.roles.ADMIN_ROLE.members.0.since:
+-        1742341092
++        1742514140
+      values.accessControl.roles.ADMIN_ROLE.members.0.executionDelay:
 -        604800
 +        950400
       values.accessControl.roles.SECURITY_COUNCIL_ROLE.members.0.since:
@@ -114,9 +455,30 @@ todo:
 +        950400
 +++ description: Current execution delay for target calls.
 +++ severity: HIGH
+      values.edKintoAdminMultisigADMIN:
+-        0
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
       values.edScSECURITY_COUNCIL:
 -        604800
 +        950400
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.0:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of roles granted to accounts.
+      values.RolesGranted.0.2:
++        {"account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":0,"since":1729791296,"newMember":true}
+      values.RolesGranted.0.1.delay:
+-        0
++        950400
+      values.RolesGranted.0.1.since:
+-        1729791296
++        1742514140
+      values.RolesGranted.0.1.newMember:
+-        true
++        false
 +++ description: List of roles granted to accounts.
       values.RolesGranted.14661544942390944024.1:
 +        {"account":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"since":1742427194,"newMember":false}
