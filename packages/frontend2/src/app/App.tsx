@@ -3,7 +3,11 @@ import { ProductPage } from './product/ProductPage'
 
 type Pages = typeof pages
 export type SsrData = {
-  [K in keyof Pages]: { page: K; props: Parameters<Pages[K]>[0] }
+  [K in keyof Pages]: {
+    page: K
+    props: Parameters<Pages[K]>[0]
+    manifest: Record<string, string>
+  }
 }[keyof Pages]
 
 const pages = {

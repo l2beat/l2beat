@@ -3,7 +3,7 @@ import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
 import type { SsrData } from './app/App'
-import { AppRouter } from './app/AppRouter'
+import { PageRouter } from './app/PageRouter'
 import { render as ssrRender } from './ssr/entry.server'
 
 const isProduction = true // process.env.NODE_ENV === 'production'
@@ -17,14 +17,13 @@ const app = express()
 if (isProduction) {
   app.use(compression())
   // TODO: immutable cache
-  app.use('static', sirv('./dist/static', { extensions: [] }))
+  app.use('/static', sirv('./dist/static', { extensions: [] }))
 } else {
-  // app.use('static', express.static('./static'))
+  app.use('/static', express.static('./static'))
 }
 
-AppRouter(app, render)
+PageRouter(app, manifest, render)
 
-// Start http server
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
