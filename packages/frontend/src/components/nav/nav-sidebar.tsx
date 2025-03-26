@@ -28,6 +28,8 @@ import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import type { NavGroup, NavLink } from './types'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
+import { useEffect, useState } from 'react'
 
 interface Props {
   groups: NavGroup[]
@@ -59,63 +61,15 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {group.type === 'multiple' && (
-                    <Collapsible
-                      defaultOpen={[
-                        ...group.links,
-                        ...(group.secondaryLinks ?? []),
-                      ].some((link) => isActive(link.href, pathname))}
-                    >
-                      <SidebarMenuItem>
-                        <CollapsibleTrigger
-                          data-active={[
-                            ...group.links,
-                            ...(group.secondaryLinks ?? []),
-                          ].some((link) => isActive(link.href, pathname))}
-                          className={cn(
-                            'group flex cursor-pointer items-center gap-2 p-2 text-base',
-                            'data-[active=true]:text-brand',
-                          )}
-                        >
-                          {group.icon}
-                          <span>{group.title}</span>
-                          <ChevronIcon className="size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]/collapsible:rotate-0 group-data-[active=true]:fill-brand" />
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          <SidebarMenuSub>
-                            {group.links.map((item) => (
-                              <SidebarMenuSubButton
-                                href={item.href}
-                                key={item.title}
-                                isActive={isActive(item.href, pathname)}
-                              >
-                                <span>{item.title}</span>
-                              </SidebarMenuSubButton>
-                            ))}
-                            {group.secondaryLinks &&
-                              group.secondaryLinks.length > 0 && (
-                                <>
-                                  <HorizontalSeparator />
-                                  {group.secondaryLinks.map((item) => (
-                                    <SidebarMenuSubButton
-                                      href={item.href}
-                                      key={item.title}
-                                      isActive={isActive(item.href, pathname)}
-                                    >
-                                      <span>{item.title}</span>
-                                    </SidebarMenuSubButton>
-                                  ))}
-                                </>
-                              )}
-                          </SidebarMenuSub>
-                        </CollapsibleContent>
-                      </SidebarMenuItem>
-                    </Collapsible>
+                    <SidebarMenuItem>
+                      <CollapsibleItem group={group} />
+                    </SidebarMenuItem>
                   )}
                   {group.type === 'single' && (
                     <SidebarMenuItem key={group.title}>
                       <SidebarMenuLink
                         href={group.href}
-                        isActive={isActive(group.href, pathname)}
+                        isActive={getIsActive(group.href, pathname)}
                       >
                         {group.icon}
                         <span>{group.title}</span>
@@ -133,7 +87,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
               <SidebarMenuItem key={link.title}>
                 <SidebarMenuSmallLink
                   href={link.href}
-                  isActive={isActive(link.href, pathname)}
+                  isActive={getIsActive(link.href, pathname)}
                 >
                   {link.title}
                   {link.accessory}
@@ -152,18 +106,108 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   )
 }
 
-function isActive(
-  href: string,
-  pathname: string,
-  activeBehavior: { type: 'exact' } | { type: 'prefix'; prefix?: string } = {
-    type: 'exact',
-  },
-) {
-  const active =
-    activeBehavior.type === 'exact'
-      ? pathname === href
-      : activeBehavior.type === 'prefix'
-        ? pathname.startsWith(activeBehavior.prefix ?? href)
-        : false
-  return active
+function CollapsibleItem({
+  group,
+}: { group: Extract<NavGroup, { type: 'multiple' }> }) {
+  const pathname = usePathname()
+  const isActive = group.links.some((link) => getIsActive(link.href, pathname))
+  const breakpoint = useBreakpoint()
+
+  const [open, setOpen] = useState(isActive)
+
+  useEffect(() => {
+    const isActive = group.links.some((link) =>
+      getIsActive(link.href, pathname),
+    )
+    setOpen(isActive)
+  }, [group, pathname])
+
+  return (
+    <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
+      {breakpoint === 'mobile' || breakpoint === 'tablet' ? (
+        <CollapsibleTrigger
+          className="group flex cursor-pointer items-center gap-1.5 p-1.5"
+          data-active={isActive}
+        >
+          <div className="flex items-center gap-2" data-active={isActive}>
+            <div>{group.icon}</div>
+            <span
+              className={cn(
+                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                isActive && 'text-brand',
+              )}
+            >
+              {group.title}
+            </span>
+          </div>
+          <ChevronIcon
+            className={cn(
+              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
+              isActive && 'fill-brand',
+            )}
+          />
+        </CollapsibleTrigger>
+      ) : (
+        <div
+          className="group flex cursor-pointer items-center p-1.5"
+          data-active={isActive}
+        >
+          <Link
+            href={group.links[0]!.href}
+            className="flex items-center gap-2"
+            data-active={isActive}
+          >
+            <div>{group.icon}</div>
+            <span
+              className={cn(
+                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                isActive && 'text-brand',
+              )}
+            >
+              {group.title}
+            </span>
+          </Link>
+          <CollapsibleTrigger className="group size-6">
+            <ChevronIcon
+              className={cn(
+                'm-auto size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
+                isActive && 'fill-brand',
+              )}
+            />
+          </CollapsibleTrigger>
+        </div>
+      )}
+      <CollapsibleContent>
+        <SidebarMenuSub>
+          {group.links.map((item) => (
+            <SidebarMenuSubButton
+              href={item.href}
+              key={item.title}
+              isActive={getIsActive(item.href, pathname)}
+            >
+              <span>{item.title}</span>
+            </SidebarMenuSubButton>
+          ))}
+          {group.secondaryLinks && group.secondaryLinks.length > 0 && (
+            <>
+              <HorizontalSeparator />
+              {group.secondaryLinks.map((item) => (
+                <SidebarMenuSubButton
+                  href={item.href}
+                  key={item.title}
+                  isActive={getIsActive(item.href, pathname)}
+                >
+                  <span>{item.title}</span>
+                </SidebarMenuSubButton>
+              ))}
+            </>
+          )}
+        </SidebarMenuSub>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+function getIsActive(href: string, pathname: string) {
+  return pathname === href
 }
