@@ -2,7 +2,7 @@
   "name": "celo",
   "chain": "ethereum",
   "blockNumber": 22130439,
-  "configHash": "0xcfe2c5ee2ebd23657b2d94f712a3acabdbbd1ea99e3a579a4839ce7ca5af4c0f",
+  "configHash": "0x51741a7533c4e69e0e4b27fe3d28b59d4e4b4f77e75b8246bcd1d308e582e94d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -472,6 +472,11 @@
         "nonce": 58,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "address": "0x4665374939642965EfD8357D4568D2A77f677429",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x48139512241D32047760E7481eBf0b6BF3390f8F",
@@ -1427,6 +1432,11 @@
     },
     {
       "address": "0xA6F1c6c24De8b112dd3867dB907d187d490e6ddF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
       "type": "EOA",
       "proxyType": "EOA"
     },

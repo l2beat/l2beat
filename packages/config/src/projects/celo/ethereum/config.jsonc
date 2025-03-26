@@ -3,6 +3,7 @@
   "chain": "ethereum",
   "name": "celo",
   "import": ["../../ethereumConfig.jsonc"],
+  "maxDepth": 10,
   "initialAddresses": [
     "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe" // L1StandardBridge
   ],
