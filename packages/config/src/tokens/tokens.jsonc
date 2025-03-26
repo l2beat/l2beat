@@ -6271,13 +6271,13 @@
       "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
       "category": "stablecoin",
       "source": "native",
-      "supply": "circulatingSupply" // OVERCOUNT by ~300M
+      "supply": "totalSupply"
     },
     {
       "symbol": "USDC",
       "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "WETH",
