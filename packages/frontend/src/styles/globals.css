@@ -7,7 +7,7 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--divider)) transparent;
+  scrollbar-color: hsl(var(--scrollbar)) transparent;
 }
 
 @layer base {
@@ -31,6 +31,7 @@
     --divider: 223deg 15.9% 82.7%;
     --link-stroke: 212deg 100% 86.5%;
     --link: 223deg 69% 50.6%;
+    --scrollbar: 221deg 8.84% 57.8%;
 
     --row-highlight: 284deg 86.6% 67.8% / 0.4;
     --row-highlight-no-opacity: 284deg 80.3% 86.1%;
@@ -91,6 +92,7 @@
     --divider: 226deg 14.3% 28.8%;
     --link-stroke: 217deg 56.3% 18.8%;
     --link: 212deg 100% 66.3%;
+    --scrollbar: 225deg 13.7% 28.6%;
 
     --row-highlight: 284deg 70.5% 43.9% / 0.4;
     --row-highlight-no-opacity: 281deg 51.6% 25.1%;
