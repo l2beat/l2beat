@@ -1,11 +1,11 @@
 import type { Application } from 'express'
-import type { SsrData } from '../App'
 import type { Render } from '../../ssr/types'
+import type { SsrData } from '../App'
 
 export function HomeRouter(app: Application, render: Render) {
-  app.get('/', async (req, res) => {
+  app.get('/', (_req, res) => {
     const ssrData = getHomeProps()
-    const html = await render(req.originalUrl, ssrData)
+    const html = render(ssrData)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }

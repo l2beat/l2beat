@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "sideEffects": false,
-  "type": "module",
   "scripts": {
-    "dev": "tsx src/index.ts",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "vite build --outDir dist/client",
-    "preview": "NODE_ENV=production tsx src/index.ts",
-    "build:server": "vite build --ssr src/ssr/entry.server.tsx --outDir dist/server",
+    "dev": "./scripts/dev.sh",
+    "build": "./scripts/build.sh",
+    "start": "node ./dist/server/index.js",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -30,11 +27,9 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@vitejs/plugin-react-swc": "^3.7.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
-    "tsx": "^4.9.3",
-    "vite": "^5.4.10"
+    "tsx": "^4.9.3"
   }
 }
