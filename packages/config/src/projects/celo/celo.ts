@@ -78,4 +78,9 @@ export const celo: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
+  activityConfig: {
+    type: 'block',
+    startBlock: 31060842,
+    adjustCount: { type: 'SubtractOne' },
+  },
 })
