@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x721a1967bcae80eb04f5dc5efa1df85f99a65b91
+Generated with discovered.json: 0x03ad79047afa61aa2e12e668f87fe89f5cda0e9b
 
-# Diff at Wed, 26 Mar 2025 08:25:24 GMT:
+# Diff at Wed, 26 Mar 2025 08:38:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22129863
@@ -164,7 +164,7 @@ Initial discovery
 ```diff
 +   Status: CREATED
     contract OptimismPortal2 (0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC)
-    +++ description: None
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
 ```
 
 ```diff

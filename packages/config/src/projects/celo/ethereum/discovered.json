@@ -1381,11 +1381,13 @@
       "name": "OptimismPortal2",
       "address": "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
       "type": "Contract",
+      "template": "opstack/OptimismPortal2",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3428a8cdf5cc8628eb5234317ac9c44a21c8171ebfea260dfae5ad3c629b9e3b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1393,6 +1395,7 @@
           "via": [{ "address": "0x783A434532Ee94667979213af1711505E8bFE374" }]
         }
       ],
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1741879559,
       "sinceBlock": 22038831,
       "values": {
@@ -1423,12 +1426,26 @@
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
+        "RespectedGameString": "PermissionedDisputeGame",
         "respectedGameType": 1,
         "respectedGameTypeUpdatedAt": 1741879583,
         "superchainConfig": "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33",
         "systemConfig": "0x89E31965D844a309231B1f17759Ccaf1b7c09861",
         "version": "3.11.0-beta.6"
-      }
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DeputyGuardianModule",
@@ -2662,6 +2679,7 @@
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
     "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
     "opstack/MIPS": "0x35b078559035a7f0d1a0b572ee90e86975d972a54e54e063ec43689711b90b24",
+    "opstack/OptimismPortal2": "0x765a88a0b62cb0291f85d5f300102de3b4e8fec9e2c026f6d3912c499d03e056",
     "opstack/PermissionedDisputeGame": "0x8cd96f8de5cf042b7416ad54aebeee74fa507bac86b2c612ffdb15f13588a9d2",
     "opstack/SuperchainConfig": "0xe9ed91e5df551d67902341d4abcc2662a5637682f18b2606eb518c434c0f9c26",
     "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
