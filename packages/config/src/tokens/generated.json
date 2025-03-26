@@ -11464,7 +11464,8 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply",
+      "premint": "323024420080000"
     },
     {
       "name": "USDC",
@@ -11478,7 +11479,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Wrapped Ether",
