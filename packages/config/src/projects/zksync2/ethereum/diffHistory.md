@@ -8,7 +8,7 @@ Generated with discovered.json: 0x411407973882e3ce73580f76b916499ff1f63815
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config related: ignore prepareChainCommitment.
 
 ## Config/verification related changes
 
