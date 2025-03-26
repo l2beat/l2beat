@@ -1,11 +1,8 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { externalLinks } from '~/consts/external-links'
-import { env } from '~/env'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
-import { HiringBadge } from '../badge/hiring-badge'
 import {
   Collapsible,
   CollapsibleContent,
@@ -20,27 +17,26 @@ import {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
+  SidebarMenuLink,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
+  SidebarMenuSmallLink,
 } from '../core/sidebar'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
-import { NavSmallLink } from './nav-small-link'
-import { NavSmallLinkGroup } from './nav-small-link-group'
-import type { NavGroup } from './types'
+import type { NavGroup, NavLink } from './types'
 
 interface Props {
   groups: NavGroup[]
   logoLink: string
+  sideLinks: NavLink[]
 }
 
-export function NavSidebar({ groups, logoLink }: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   const pathname = usePathname()
-  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <Sidebar>
       <SidebarHeader>
@@ -117,15 +113,13 @@ export function NavSidebar({ groups, logoLink }: Props) {
                   )}
                   {group.type === 'single' && (
                     <SidebarMenuItem key={group.title}>
-                      <SidebarMenuButton
-                        asChild
+                      <SidebarMenuLink
+                        href={group.href}
                         isActive={isActive(group.href, pathname)}
                       >
-                        <Link href={group.href}>
-                          {group.icon}
-                          <span>{group.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
+                        {group.icon}
+                        <span>{group.title}</span>
+                      </SidebarMenuLink>
                     </SidebarMenuItem>
                   )}
                 </SidebarMenu>
@@ -134,26 +128,19 @@ export function NavSidebar({ groups, logoLink }: Props) {
           )
         })}
         <SidebarGroup className="-top-px mt-auto">
-          <NavSmallLinkGroup className="mt-6">
-            <NavSmallLink title="About Us" href="/about-us" />
-            <NavSmallLink title="Forum" href={externalLinks.forum} />
-            <NavSmallLink title="Donate" href="/donate" />
-            <NavSmallLink
-              title="Governance"
-              href="/governance"
-              activeBehavior={{ type: 'prefix', prefix: '/governance' }}
-            />
-            <NavSmallLink title="Glossary" href="/glossary" />
-            <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
-              Jobs
-              {hiringBadge && <HiringBadge />}
-            </NavSmallLink>
-            <NavSmallLink
-              title="Brand Kit"
-              href="https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b"
-            />
-            <NavSmallLink title="FAQ" href="/faq" />
-          </NavSmallLinkGroup>
+          <SidebarMenu className="mt-1">
+            {sideLinks.map((link) => (
+              <SidebarMenuItem key={link.title}>
+                <SidebarMenuSmallLink
+                  href={link.href}
+                  isActive={isActive(link.href, pathname)}
+                >
+                  {link.title}
+                  {link.accessory}
+                </SidebarMenuSmallLink>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>

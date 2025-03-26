@@ -1,8 +1,6 @@
 'use client'
 
 import { Slot } from '@radix-ui/react-slot'
-import type { VariantProps } from 'class-variance-authority'
-import { cva } from 'class-variance-authority'
 import * as React from 'react'
 
 import {
@@ -12,15 +10,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from '~/components/core/sheet'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '~/components/core/tooltip/tooltip'
+import { TooltipProvider } from '~/components/core/tooltip/tooltip'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
+import Link from 'next/link'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
@@ -136,7 +130,6 @@ const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'>>(
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
           <SheetContent
-            data-sidebar="sidebar"
             data-mobile="true"
             className="w-[--sidebar-width] border-none bg-background p-0 text-primary [&>button]:hidden"
             style={
@@ -176,10 +169,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'>>(
           )}
           {...props}
         >
-          <div
-            data-sidebar="sidebar"
-            className="flex size-full flex-col gap-6 bg-background"
-          >
+          <div className="flex size-full flex-col gap-6 bg-background">
             {children}
           </div>
         </div>
@@ -196,7 +186,6 @@ const SidebarHeader = React.forwardRef<
   return (
     <div
       ref={ref}
-      data-sidebar="header"
       className={cn('flex flex-col gap-2 px-5 pt-[23px]', className)}
       {...props}
     />
@@ -211,7 +200,6 @@ const SidebarFooter = React.forwardRef<
   return (
     <div
       ref={ref}
-      data-sidebar="footer"
       className={cn('flex flex-col gap-4 px-5 pb-5', className)}
       {...props}
     />
@@ -223,13 +211,7 @@ function SidebarSeparator({
   className,
   ...props
 }: React.ComponentProps<typeof HorizontalSeparator>) {
-  return (
-    <HorizontalSeparator
-      data-sidebar="separator"
-      className={cn('mx-2', className)}
-      {...props}
-    />
-  )
+  return <HorizontalSeparator className={cn('mx-2', className)} {...props} />
 }
 SidebarSeparator.displayName = 'SidebarSeparator'
 
@@ -240,7 +222,6 @@ const SidebarContent = React.forwardRef<
   return (
     <div
       ref={ref}
-      data-sidebar="content"
       className={cn(
         'flex min-h-0 flex-1 flex-col gap-1 overflow-auto',
         className,
@@ -258,7 +239,6 @@ const SidebarGroup = React.forwardRef<
   return (
     <div
       ref={ref}
-      data-sidebar="group"
       className={cn('relative flex w-full min-w-0 flex-col px-5', className)}
       {...props}
     />
@@ -270,12 +250,7 @@ const SidebarGroupContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<'div'>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    data-sidebar="group-content"
-    className={cn('w-full text-sm', className)}
-    {...props}
-  />
+  <div ref={ref} className={cn('w-full text-sm', className)} {...props} />
 ))
 SidebarGroupContent.displayName = 'SidebarGroupContent'
 
@@ -285,7 +260,6 @@ const SidebarMenu = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ul
     ref={ref}
-    data-sidebar="menu"
     className={cn('flex w-full min-w-0 flex-col gap-1', className)}
     {...props}
   />
@@ -295,94 +269,60 @@ SidebarMenu.displayName = 'SidebarMenu'
 function SidebarMenuItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
     <li
-      data-sidebar="menu-item"
-      className={cn('group/menu-item relative font-medium', className)}
+      className={cn(
+        'group/menu-item relative font-medium leading-none',
+        className,
+      )}
       {...props}
     />
   )
 }
 SidebarMenuItem.displayName = 'SidebarMenuItem'
 
-const sidebarMenuButtonVariants = cva(
-  'peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-base outline-none ring-brand transition-[width,height,padding] hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 active:bg-surface-tertiary active:text-primary disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:text-brand [&>span:last-child]:truncate [&>svg]:shrink-0',
-  {
-    variants: {
-      variant: {
-        default: 'hover:bg-surface-tertiary hover:text-primary',
-        outline:
-          'bg-background shadow-[0_0_0_1px_hsl(var(--divider))] hover:bg-surface-tertiary hover:text-primary hover:shadow-[0_0_0_1px_hsl(var(--brand))]',
-      },
-      size: {
-        default: 'h-8 text-base',
-        sm: 'h-7 text-xs',
-        lg: 'h-12 text-sm',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
-    },
-  },
-)
+function SidebarMenuLink({
+  isActive = false,
+  className,
+  ...props
+}: React.ComponentProps<typeof Link> & {
+  isActive?: boolean
+}) {
+  return (
+    <Link
+      data-active={isActive}
+      className={cn(
+        'peer/menu-link flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-base outline-none ring-brand transition-[width,height,padding] focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+SidebarMenuLink.displayName = 'SidebarMenuLink'
 
-const SidebarMenuButton = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<'button'> & {
-    asChild?: boolean
-    isActive?: boolean
-    tooltip?: string | React.ComponentProps<typeof TooltipContent>
-  } & VariantProps<typeof sidebarMenuButtonVariants>
->(
-  (
-    {
-      asChild = false,
-      isActive = false,
-      variant = 'default',
-      size = 'default',
-      tooltip,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const Comp = asChild ? Slot : 'button'
-    const breakpoint = useBreakpoint()
+function SidebarMenuSmallLink({
+  isActive = false,
+  className,
+  ...props
+}: React.ComponentProps<typeof Link> & {
+  href: string
+  isActive?: boolean
+}) {
+  const isInternalLink = props.href.startsWith('/')
+  const Comp = isInternalLink ? Link : 'a'
 
-    const button = (
-      <Comp
-        ref={ref}
-        data-sidebar="menu-button"
-        data-size={size}
-        data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-        {...props}
-      />
-    )
-
-    if (!tooltip) {
-      return button
-    }
-
-    if (typeof tooltip === 'string') {
-      tooltip = {
-        children: tooltip,
-      }
-    }
-
-    return (
-      <Tooltip>
-        <TooltipTrigger asChild>{button}</TooltipTrigger>
-        <TooltipContent
-          side="right"
-          align="center"
-          hidden={breakpoint === 'mobile' || breakpoint === 'tablet'}
-          {...tooltip}
-        />
-      </Tooltip>
-    )
-  },
-)
-SidebarMenuButton.displayName = 'SidebarMenuButton'
+  return (
+    <Comp
+      target={isInternalLink ? undefined : '_blank'}
+      className={cn(
+        'text-xs leading-none text-secondary transition-colors hover:text-primary',
+        isActive && 'text-brand hover:text-brand',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+SidebarMenuLink.displayName = 'SidebarMenuLink'
 
 const SidebarMenuSub = React.forwardRef<
   HTMLUListElement,
@@ -390,7 +330,6 @@ const SidebarMenuSub = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ul
     ref={ref}
-    data-sidebar="menu-sub"
     className={cn(
       'mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-divider px-2.5 py-0.5',
       className,
@@ -421,7 +360,6 @@ function SidebarMenuSubButton({
 
   return (
     <Comp
-      data-sidebar="menu-sub-button"
       data-size={size}
       data-active={isActive}
       className={cn(
@@ -445,7 +383,8 @@ export {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
+  SidebarMenuLink,
+  SidebarMenuSmallLink,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
