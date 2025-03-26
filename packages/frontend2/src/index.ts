@@ -35,26 +35,6 @@ if (!isProduction) {
 
 AppRouter(app, render)
 
-app.use(
-  (
-    err: unknown,
-    _req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ) => {
-    if (res.headersSent) {
-      return next(err)
-    }
-    if (err instanceof Error) {
-      vite?.ssrFixStacktrace(err)
-      console.log(err.stack)
-      res.status(500).end(err.stack)
-    } else {
-      res.status(500).end(`${err}`)
-    }
-  },
-)
-
 // Start http server
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
@@ -67,7 +47,11 @@ async function render(url: string, ssrData: SsrData) {
     // Always read fresh template in development
     template = await fs.readFile('./index.html', 'utf-8')
     template = await vite.transformIndexHtml(url, template)
-    render = (await vite.ssrLoadModule('/src/ssr/entry.server.tsx')).render
+    render = (
+      await vite.ssrLoadModule('/src/ssr/entry.server.tsx', {
+        fixStacktrace: true,
+      })
+    ).render
   } else {
     template = templateHtml
     const SERVER_ENTRY = '../dist/server/entry.server.js'
