@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "spam",
+  "description": "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).",
+  "ignoreRelatives": ["L1_WETH_TOKEN", "legacyBridge"],
+  "ignoreMethods": ["l2BridgeAddress", "l2BridgeAddress"]
+}

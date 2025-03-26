@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 21981875,
+  "blockNumber": 22123489,
   "configHash": "0xafc6045f6960832d9e79b96c1f052c45d682f2a9e50aa9db56a87246d9fe3726",
   "entries": [
     {
@@ -275,7 +275,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       }
     },
@@ -459,7 +459,7 @@
         "adapters": ["0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"],
         "AdaptersFromStorage": "0x0000000000000000000000000000000000000000",
         "deployedAtBlock": 0,
-        "expectedAdaptersHash": "0x0a74748a93656acd952c12f9e5b2b6a3eead25ba1c94ffa6ddb26f454a179cae",
+        "expectedAdaptersHash": "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a",
         "expectedThreshold": 1,
         "implementation": "0x159B36Ed5BA327fd269Fb93c75918257DCfe686d",
         "isInitialized": true,

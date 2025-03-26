@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x05588e4e3be6a6d7c9633746792deafe14d6e6cd
+
+# Diff at Tue, 25 Mar 2025 08:22:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 21993982
+- current block number: 22122647
+
+## Description
+
+Minor upgrade of Bridge, Inbox and SequencerInbox:
+- logic for tokens with custom decimals
+- 7702 adjustments
+- SequencerInbox upgraded to known implementation
+
+## Watched changes
+
+```diff
+    contract Bridge (0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
+      values.$implementation:
+-        "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"
++        "0xEfA1De858293593732a09c9dAA238BEC49595751"
+      values.$pastUpgrades.1:
++        ["2025-03-24T11:51:11.000Z","0x5837fef008eaaa8871086f7e53f38a95b768926562e2e82cae17ddc7ab61b070",["0xEfA1De858293593732a09c9dAA238BEC49595751"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.nativeTokenDecimals:
++        18
+    }
+```
+
+```diff
+    contract Inbox (0x56D8EC76a421063e1907503aDd3794c395256AEb) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.0:
+-        "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"
++        "0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4"
+      values.$pastUpgrades.1:
++        ["2024-07-29T13:18:23.000Z","0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9",["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]]
+      values.$pastUpgrades.0.2:
+-        "2024-07-29T13:18:23.000Z"
++        ["0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4"]
+      values.$pastUpgrades.0.1:
+-        ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
++        "2025-03-24T16:55:11.000Z"
+      values.$pastUpgrades.0.0:
+-        "0x16528bf78b7d2110129529a7a0435a35b5443e3638f89fb2f917a7c92ef587b9"
++        "0x2ecdabc185a5e5350c23c45cfbf746bd874b272e363729adcf975533d38790b8"
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract SequencerInbox (0xF75206c49c1694594E3e69252E519434f1579876) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
++        "0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"
+      values.$pastUpgrades.1:
++        ["2025-03-24T16:55:11.000Z","0x2ecdabc185a5e5350c23c45cfbf746bd874b272e363729adcf975533d38790b8",["0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.reader4844:
+-        "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576"
++        "0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol                         | 54 +++++++++++++
+ .../{.flat@21993982 => .flat}/Inbox/ERC20Inbox.sol | 92 +++++++++++++++++++---
+ .../SequencerInbox/SequencerInbox.sol              | 24 ++++--
+ 3 files changed, 152 insertions(+), 18 deletions(-)
+```
+
 Generated with discovered.json: 0xa7e76e98ce24a6fefd54eb7b53d2101fe5e0c90d
 
 # Diff at Tue, 18 Mar 2025 08:12:18 GMT:
