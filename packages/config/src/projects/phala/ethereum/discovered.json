@@ -54,6 +54,7 @@
         "systemConfig": "0xeBf5859b7646ca9cf8A981613569bF28394F2571",
         "version": "2.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -108,7 +109,8 @@
         "addressManager": "0x51D5C516c818dcf63E67B28cB2516166D8578c06",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
@@ -179,7 +181,8 @@
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
-      }
+      },
+      "derivedName": "SP1VerifierGateway"
     },
     {
       "name": "GnosisSafe",
@@ -208,7 +211,8 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 58,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x4665374939642965EfD8357D4568D2A77f677429",
@@ -351,7 +355,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0x5A2a0698355D06cd5c4e3872D2Bc6B9f6a89d39B",
@@ -394,6 +399,7 @@
         "systemConfig": "0xeBf5859b7646ca9cf8A981613569bF28394F2571",
         "version": "2.2.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -466,6 +472,7 @@
         "systemConfig": "0xeBf5859b7646ca9cf8A981613569bF28394F2571",
         "version": "2.8.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -569,6 +576,7 @@
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -664,7 +672,8 @@
         "submissionInterval": 4320,
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "v1.0.0-rc2"
-      }
+      },
+      "derivedName": "OPSuccinctL2OutputOracle"
     },
     {
       "address": "0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE",
@@ -733,7 +742,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
         "VERSION": "v3.0.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "SP1Verifier",
@@ -756,7 +766,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
         "VERSION": "v4.0.0-rc.3"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -861,6 +872,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -905,6 +917,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -971,7 +984,8 @@
         "bridge": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
         "BRIDGE": "0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     }
   ],
   "abis": {

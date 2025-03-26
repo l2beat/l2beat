@@ -115,7 +115,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1688036723,
       "sinceBlock": 17584544,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "SemaphoreVerifier"
     },
     {
       "address": "0xE2DA046340e00264C4F0443243a0565007AE08AC",

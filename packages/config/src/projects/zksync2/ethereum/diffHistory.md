@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xccbce25a8f33625567a45581653ae26bbb1393e6
+
+# Diff at Tue, 25 Mar 2025 10:35:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 22044942
+- current block number: 22123358
+
+## Description
+
+Config related: ignore prepareChainCommitment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22044942 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.prepareChainCommitment:
+-        {"totalBatchesExecuted":497870,"totalBatchesVerified":497872,"totalBatchesCommitted":497874,"l2SystemContractsUpgradeTxHash":"0x0000000000000000000000000000000000000000000000000000000000000000","l2SystemContractsUpgradeBatchNumber":0,"batchHashes":["0x7c68f5c5ae85dac45341cfdc87aeb5e492641fcf7bc4aee3a61c94f8154291c2","0x749e1edf9074f1bf9767c9cac19f20a457c73207fd88cf4ebe0f6a7a68cf2fcc","0xa4daba9a6e4af05110f8f6560424208bc2d87aa56e013c68a3237827dfc0112d","0x4682fa1ce3ac5765db668c5a3cd7775a0f119351b7ca6938a4b1cfecfc7d36f8","0x170603927e9309ec4e6e17cd2c850161ed0ec167bc3ca5d56971a68b0e7a963e"],"priorityTree":{"nextLeafIndex":80,"startIndex":3270719,"unprocessedIndex":73,"sides":["0x07a258c2a4dc53e855a5b8b67bf4087da9e7bcf89f85c1781cb6ed5bf9d5e220","0xc067215f20d4f2d1646e700bb1dbcc479efcf4f03b90e82b7201ac49051abd55","0x07b9611ca8b372fd1473ca5487fe0d7368c12deb26362afdb119874a1e3f908d","0x9f0b35143e17929f615affdf1899907c80b9a458d0fb1ce6070a767256f975fd","0xa7f7767838fe0fb08c390783d69add3b0c73e9a01f914761d4e035b23edd7417","0xc5b1e324c83773f5769fba7edbf5512ab2daace12d7ae13a3bfb7a35816ae586","0x183451e7453218c629d33a77620ca05816e307c0e77a3960efcd37d636aa08c2","0x095621117fb1332a0c4d362c69fe286c0781e27f5418d079e77a294c3c8da311"]},"isPermanentRollup":true}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
 Generated with discovered.json: 0xeb0d8fa1f52c2749f923d33c1c6186d457bfad72
 
 # Diff at Fri, 14 Mar 2025 12:01:34 GMT:

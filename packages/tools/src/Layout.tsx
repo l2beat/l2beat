@@ -101,7 +101,7 @@ export function Layout() {
           )}
         </ul>
       </div>
-      <div className="h-full flex-1 overflow-scroll">
+      <div className="h-full flex-1">
         <Outlet />
       </div>
     </div>

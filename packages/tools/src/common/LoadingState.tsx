@@ -49,7 +49,7 @@ export function LoadingState() {
   const loadingBarWidth = 44 // Match the width of the ASCII art
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center font-mono text-orange-500">
+    <div className="flex h-screen w-full items-center justify-center font-mono text-orange-500">
       <div className="whitespace-pre-wrap">
         <pre className="mb-4">{l2beatAsciiArt}</pre>
         <div className="mb-2">

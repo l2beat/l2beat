@@ -89,7 +89,8 @@
         "$immutable": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
-      }
+      },
+      "derivedName": "OrderRegistry"
     },
     {
       "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
@@ -339,6 +340,7 @@
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
         "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
       },
+      "derivedName": "GpsFactRegistryAdapter",
       "usedTypes": [
         {
           "typeCaster": "Mapping",

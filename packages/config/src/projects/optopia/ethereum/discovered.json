@@ -32,7 +32,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -78,6 +79,7 @@
         "superchainConfig": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -132,7 +134,8 @@
         "addressManager": "0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C",
         "isUpgrading": false,
         "owner": "0x2C73A1610EE822a8C2C21eddd455e725A3334c8C"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1StandardBridge",
@@ -169,6 +172,7 @@
         "superchainConfig": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -336,6 +340,7 @@
         "systemConfig": "0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9",
         "version": "2.5.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -391,6 +396,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -488,6 +494,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -529,6 +536,7 @@
         "superchainConfig": "0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -673,6 +681,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

@@ -84,6 +84,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -122,7 +123,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413171,
       "sinceBlock": 19432744,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "RollupEventInbox",
@@ -160,7 +162,8 @@
         "$upgradeCount": 1,
         "bridge": "0x73CF739b0233027cd516998e177d473D0a45E037",
         "rollup": "0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90"
-      }
+      },
+      "derivedName": "RollupEventInbox"
     },
     {
       "name": "ValidatorUtils",
@@ -174,7 +177,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
       "sinceBlock": 18736154,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
@@ -225,7 +229,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Conduit Multisig 1",
@@ -368,7 +373,8 @@
         "proverHostIo": "0x17e7F68ce50A77e55C7834ddF31AEf86403B8010",
         "proverMath": "0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38",
         "proverMem": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "OneStepProver0",
@@ -382,7 +388,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413135,
       "sinceBlock": 19432741,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "Bridge",
@@ -458,6 +465,7 @@
           "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
+      "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -477,7 +485,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413147,
       "sinceBlock": 19432742,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "OneStepProverMath",
@@ -491,7 +500,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710413159,
       "sinceBlock": 19432743,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -622,6 +632,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -721,6 +732,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -764,6 +776,7 @@
         "paused": false,
         "sequencerInbox": "0x0D51c6664A773873971336850C51A5caE8e63e89"
       },
+      "derivedName": "Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -820,6 +833,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90"
       },
+      "derivedName": "Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -867,6 +881,7 @@
         "sequencerInbox": "0x0D51c6664A773873971336850C51A5caE8e63e89",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],

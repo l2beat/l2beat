@@ -125,7 +125,8 @@
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
         "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
-      }
+      },
+      "derivedName": "TokenBridge"
     },
     {
       "address": "0x1111111111111111111111111111111111111111",
@@ -161,7 +162,8 @@
       "values": {
         "$immutable": true,
         "target": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
-      }
+      },
+      "derivedName": "CallForwardingProxy"
     },
     {
       "name": "BridgedToken",
@@ -191,7 +193,8 @@
         "name": "",
         "symbol": "",
         "totalSupply": 0
-      }
+      },
+      "derivedName": "BridgedToken"
     },
     {
       "name": "USDCBridgeProxyAdmin",
@@ -419,7 +422,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1621955912,
       "sinceBlock": 12504265,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "MultiSend"
     },
     {
       "address": "0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
@@ -694,7 +698,8 @@
         "verifiers": {
           "description": "Mapping of proof type to ZK Plonk Verifier contract"
         }
-      }
+      },
+      "derivedName": "LineaRollup"
     },
     {
       "name": "Timelock",
@@ -934,7 +939,8 @@
         "ZodiacModule_guard": "0x0000000000000000000000000000000000000000",
         "ZodiacModule_modules": ["0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"],
         "ZodiacModule_target": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
-      }
+      },
+      "derivedName": "Roles"
     },
     {
       "name": "ProxyAdmin",
@@ -960,7 +966,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xd6B95c960779c72B8C6752119849318E5d550574"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

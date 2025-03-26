@@ -21,6 +21,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -319,6 +320,7 @@
           "0x11805594be0229EF08429D775AF0c55f7c4535dE"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -404,6 +406,7 @@
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
       },
+      "derivedName": "ChainAdmin",
       "category": { "name": "Governance", "priority": 3 }
     },
     {

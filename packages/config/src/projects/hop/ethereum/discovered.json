@@ -77,7 +77,8 @@
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 86400,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Timelock"
     },
     {
       "name": "USDC Bridge",

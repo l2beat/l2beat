@@ -8,7 +8,15 @@ import {
 } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { command, optional, positional, run, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import type {
   ProjectTvsConfig,
@@ -22,6 +30,12 @@ const args = {
     type: optional(string),
     displayName: 'projectId',
     description: 'Project for which tvs will be executed',
+  }),
+  includeBridges: flag({
+    type: boolean,
+    long: 'include-bridges',
+    short: 'ib',
+    description: 'Include bridges in the TVS calculation',
   }),
 }
 
@@ -41,12 +55,15 @@ const cmd = command({
       const projects = await ps.getProjects({
         select: ['tvlConfig'],
         optional: ['chainConfig'],
+        ...(args.includeBridges ? {} : { whereNot: ['isBridge'] }),
       })
 
       if (!projects) {
         logger.error('No TVS projects found')
         process.exit(1)
       }
+
+      logger.info(`Found ${projects.length} TVS projects`)
 
       let totalTvs = 0
       for (const project of projects) {

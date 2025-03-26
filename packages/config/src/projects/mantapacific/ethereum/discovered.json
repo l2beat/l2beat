@@ -83,14 +83,14 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x35Aee2b2aa6ACB13C3a38a58AEb069C163734FaD",
@@ -120,7 +120,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xa2DCa85BB892De55D8B262d1806114733106e8D1"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "L1StandardBridge",
@@ -154,6 +155,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -291,6 +293,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -378,6 +381,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -429,6 +433,7 @@
         "SYSTEM_CONFIG": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -476,7 +481,8 @@
         "addressManager": "0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05",
         "isUpgrading": false,
         "owner": "0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",

@@ -148,7 +148,8 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   if (!active || !payload || typeof label !== 'number') return null
-  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const validPayload = payload.filter((p) => p.type !== 'none')
+  const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex !w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60">

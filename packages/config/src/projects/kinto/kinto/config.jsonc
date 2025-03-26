@@ -419,7 +419,7 @@
       "description": "KINTO token contract.",
       "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply", "clock"],
-      "ignoreRelatives": ["miningContract", "SALE"]
+      "ignoreRelatives": ["miningContract", "SALE", "VAULT"]
     },
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
       // RewardsDistributor

@@ -7,10 +7,10 @@
     "storedBlockHash",
     "storedBatchHash",
     "l2LogsRootHash",
-    "getName"
+    "getName",
+    "prepareChainCommitment" // ex reverted
   ],
   "ignoreInWatchMode": [
-    "prepareChainCommitment",
     "getTotalPriorityTxs",
     "getTotalBlocksCommitted",
     "getTotalBlocksExecuted",

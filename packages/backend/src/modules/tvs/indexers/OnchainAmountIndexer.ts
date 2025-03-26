@@ -169,12 +169,14 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
           UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted amounts for configuration', {
-        id: configuration.id,
-        from: configuration.from,
-        to: configuration.to,
-        deletedRecords,
-      })
+      if (deletedRecords) {
+        this.logger.info('Deleted records for configuration', {
+          id: configuration.id,
+          from: configuration.from,
+          to: configuration.to,
+          deletedRecords,
+        })
+      }
     }
   }
 }

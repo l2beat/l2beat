@@ -105,6 +105,7 @@
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -159,7 +160,8 @@
         "addressManager": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
         "isUpgrading": false,
         "owner": "0xe0d7755252873c4eF5788f7f45764E0e17610508"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
@@ -266,6 +268,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -303,6 +306,7 @@
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -415,7 +419,8 @@
         "primaryWithdrawFromAmoAddr": "0xEcb9bBb97BD3C23e8f176075EDB3c68B9a1869Ae",
         "redemptionQueue": "0xfDC69e6BE352BD5644C438302DE4E311AAD5565b",
         "timelockAddress": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
-      }
+      },
+      "derivedName": "EtherRouter"
     },
     {
       "name": "frxETH Token",
@@ -536,6 +541,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -627,6 +633,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -800,7 +807,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0x8da4E997e051605878c9C0B793c496556EACC2C0",
@@ -856,6 +864,7 @@
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -891,7 +900,8 @@
         "symbol": "sfrxETH",
         "totalAssets": "104200370016776283449414",
         "totalSupply": "93603354625166337676954"
-      }
+      },
+      "derivedName": "sfrxETH"
     },
     {
       "name": "FraxtalTimelockMultisig",

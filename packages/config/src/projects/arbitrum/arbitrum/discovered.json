@@ -18,8 +18,7 @@
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2ERC20Gateway",
@@ -85,6 +84,7 @@
         "exitNum": 31195,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
+      "derivedName": "L2ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -153,8 +153,7 @@
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2Timelock",
@@ -301,7 +300,8 @@
         "name": "",
         "symbol": "",
         "totalSupply": 0
-      }
+      },
+      "derivedName": "StandardArbERC20"
     },
     {
       "name": "BeaconProxyFactory",
@@ -317,7 +317,8 @@
         "$immutable": true,
         "beacon": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d"
-      }
+      },
+      "derivedName": "BeaconProxyFactory"
     },
     {
       "name": "L2SecurityCouncilEmergency",
@@ -496,8 +497,7 @@
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2DAIGateway",
@@ -586,14 +586,14 @@
         "votingDelay": 0,
         "votingPeriod": 151200
       },
+      "derivedName": "SecurityCouncilMemberElectionGovernor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2GatewayRouter",
@@ -651,28 +651,26 @@
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L2GatewayRouter",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676",
@@ -746,6 +744,7 @@
         "l2Weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
+      "derivedName": "L2WethGateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -770,6 +769,7 @@
         "l2Router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
         "paused": false
       },
+      "derivedName": "L2LPTGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -840,6 +840,7 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "derivedName": "SecurityCouncilMemberRemovalGovernor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -861,7 +862,8 @@
         "l1TimelockAddr": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
-      }
+      },
+      "derivedName": "UpgradeExecRouteBuilder"
     },
     {
       "name": "TreasuryGovernor",
@@ -936,15 +938,13 @@
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "SecurityCouncilNomineeElectionGovernor",
@@ -1021,6 +1021,7 @@
         "votingDelay": 50400,
         "votingPeriod": 50400
       },
+      "derivedName": "SecurityCouncilNomineeElectionGovernor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1083,21 +1084,20 @@
           "description": "The percentage of the total supply that can be minted by the owner once per year."
         }
       },
+      "derivedName": "L2ArbitrumToken",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GoncaloMagalhaes-Immunefi",
       "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "SecurityCouncilMemberSyncAction",
@@ -1116,7 +1116,8 @@
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
         "store": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
-      }
+      },
+      "derivedName": "SecurityCouncilMemberSyncAction"
     },
     {
       "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
@@ -1361,7 +1362,8 @@
         "multisigThreshold": "3 of 6 (50%)",
         "nonce": 6,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "L2ARBGateway",
@@ -1692,6 +1694,7 @@
           "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
         }
       },
+      "derivedName": "SecurityCouncilManager",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1804,8 +1807,7 @@
       "name": "gzeon-OffchainLabs",
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
@@ -1826,7 +1828,8 @@
         "$immutable": true,
         "implementation": "0x3f770Ac673856F105b586bb393d122721265aD46",
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
-      }
+      },
+      "derivedName": "UpgradeableBeacon"
     },
     {
       "name": "CoreGovernor",
@@ -2053,8 +2056,7 @@
           "permission": "act",
           "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
         }
-      ],
-      "derivedName": ""
+      ]
     }
   ],
   "abis": {

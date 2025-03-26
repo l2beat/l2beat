@@ -41,6 +41,7 @@ export interface ApiProjectChain {
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]
+  blockNumber: number
 }
 
 export type ApiAddressType =
