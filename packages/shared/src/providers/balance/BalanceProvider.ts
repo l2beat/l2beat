@@ -10,10 +10,13 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
+  logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    _logger: Logger,
+  ) {
+    this.logger = _logger.for(this)
+  }
 
   async getBalances(
     queries: BalanceQuery[],
