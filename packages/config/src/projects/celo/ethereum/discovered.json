@@ -2,7 +2,7 @@
   "name": "celo",
   "chain": "ethereum",
   "blockNumber": 22130439,
-  "configHash": "0xbbbb389cf41084328fe43a80d9b61b876be3499f16c0bc8e564b5b61961bfd6e",
+  "configHash": "0x85a3068b9a7ec02c247e3c9f44088b210298a2cb6a23041aac786a3ba5d93426",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1684,7 +1684,8 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 1,
         "VERSION": "1.4.1"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",

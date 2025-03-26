@@ -11,5 +11,10 @@
     "0x4092A77bAF58fef0309452cEaCb09221e556E112": "CeloProxyAdminOwner",
     "0xC03172263409584f7860C25B6eB4985f0f6F4636": "Celo Multisig 1",
     "0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": "Celo Multisig 2"
+  },
+  "overrides": {
+    "0xD1C635987B6Aa287361d08C6461491Fa9df087f2": {
+      "category": "spam"
+    }
   }
 }
