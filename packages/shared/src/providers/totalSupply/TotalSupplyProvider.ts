@@ -35,7 +35,12 @@ export class TotalSupplyProvider {
           this.logger.tag({ chain }).warn(`Multicall not deployed`)
           return Promise.all(
             calls.map(async (c) => {
+              const start = Date.now()
               const res = await client.call(c, blockNumber)
+              this.logger.tag({ chain }).info('Call duration', {
+                callDuration: (Date.now() - start) / 1000,
+                type: 'totalSupply',
+              })
               if (res.toString() === '0x') {
                 return 0n
               } else {

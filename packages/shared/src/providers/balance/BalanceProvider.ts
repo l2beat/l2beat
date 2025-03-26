@@ -44,12 +44,23 @@ export class BalanceProvider {
           return Promise.all(
             queries.map(async ({ token, holder }) => {
               if (token === 'native') {
-                return client.getBalance(holder, blockNumber)
+                const start = Date.now()
+                const balance = await client.getBalance(holder, blockNumber)
+                this.logger.tag({ chain }).info('Call duration', {
+                  callDuration: (Date.now() - start) / 1000,
+                  type: 'native',
+                })
+                return balance
               } else {
+                const start = Date.now()
                 const res = await client.call(
                   encodeErc20Balance(token, holder),
                   blockNumber,
                 )
+                this.logger.tag({ chain }).info('Call duration', {
+                  callDuration: (Date.now() - start) / 1000,
+                  type: 'erc20',
+                })
 
                 return res.toString() === '0x' ? 0n : BigInt(res.toString())
               }
