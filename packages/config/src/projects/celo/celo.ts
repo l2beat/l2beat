@@ -35,9 +35,7 @@ export const celo: ScalingProject = opStackL2({
       ],
     },
   },
-  nonTemplateOptimismPortalEscrowTokens: ['CELO'],
   associatedTokens: ['CELO'],
-  optimismPortalPremintedTokens: ['CELO'],
   chainConfig: {
     gasTokens: ['CELO'],
     name: 'celo',
