@@ -39,6 +39,7 @@ export const celo: ScalingProject = opStackL2({
   associatedTokens: ['CELO'],
   optimismPortalPremintedTokens: ['CELO'],
   chainConfig: {
+    gasTokens: ['CELO'],
     name: 'celo',
     chainId: 42220,
     explorerUrl: 'https://celoscan.io',
