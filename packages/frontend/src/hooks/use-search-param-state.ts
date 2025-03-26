@@ -17,6 +17,7 @@ export function useSearchParamState<T extends string = string>(
   const pathname = usePathname()
 
   const [value, setStateValue] = useState<string | undefined>(() => {
+    if (typeof window === 'undefined') return defaultValue
     const params = new URLSearchParams(window.location.search)
     return params.get(key) ?? defaultValue
   })
