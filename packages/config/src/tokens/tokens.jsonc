@@ -6258,13 +6258,13 @@
       "symbol": "cREAL",
       "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "cKES",
       "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "USDT",
@@ -6292,6 +6292,32 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "ETHIX",
+      "address": "0x9995cc8F20Db5896943Afc8eE0ba463259c931ed",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "UBE",
+      "address": "0x71e26d0E519D14591b9dE9a0fE9513A398101490",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PLASTIK",
+      "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ]
 }
