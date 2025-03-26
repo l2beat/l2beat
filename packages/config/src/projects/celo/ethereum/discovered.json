@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "chain": "ethereum",
-  "blockNumber": 22129863,
+  "blockNumber": 22130403,
   "configHash": "0xcfe2c5ee2ebd23657b2d94f712a3acabdbbd1ea99e3a579a4839ce7ca5af4c0f",
   "entries": [
     {
@@ -152,7 +152,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619777",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619778",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1553,7 +1553,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 492334,
-          "prevBlockNum": 22129159
+          "prevBlockNum": 22129970
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1751,7 +1751,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2,
+        "gameCount": 3,
         "gameImpls": [
           "0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC",
           "0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755",
@@ -1761,7 +1761,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "permissionedGamesTotal": 2,
+        "permissionedGamesTotal": 3,
         "version": "1.0.1-beta.3"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
