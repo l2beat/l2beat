@@ -4,6 +4,7 @@
 
 # build system cache
 node_modules
+.pnpm-store
 .turbo
 
 # IDEs
