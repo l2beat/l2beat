@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 778850,
-  "configHash": "0x85d3a18e6e52e63adbab7562a43e7a37291969313404d84e23f9fb1f94ee1cc2",
+  "configHash": "0x3ffb8adb31ea5e956c3e68c8afcc3d8dfdb1c6fd1feb1afc7bcf70b0344371a9",
   "entries": [
     {
       "name": "NioGuardians",
@@ -44,6 +44,7 @@
         "symbol": "NIO",
         "tokenURI": []
       },
+      "derivedName": "NioGuardians",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -87,6 +88,7 @@
         "votingDelay": 259200,
         "votingPeriod": 432000
       },
+      "derivedName": "NioGovernor",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -178,7 +180,8 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "VAULT": "0x3De040ef2Fbf9158BADF559C5606d7706ca72309"
-      }
+      },
+      "derivedName": "BridgedKinto"
     },
     {
       "name": "Faucet",
@@ -256,14 +259,14 @@
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
+      "derivedName": "Faucet",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "KintoFoundation",
       "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "SponsorPaymaster",
@@ -379,6 +382,7 @@
         "userOpMaxCost": "30000000000000000",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
+      "derivedName": "SponsorPaymaster",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -396,7 +400,8 @@
         "$immutable": true,
         "SIG_VALIDATION_FAILED": 1,
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
-      }
+      },
+      "derivedName": "EntryPoint"
     },
     {
       "name": "KintoSecurityCouncil_L2Alias",
@@ -422,8 +427,7 @@
           "delay": 950400,
           "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
         }
-      ],
-      "derivedName": ""
+      ]
     },
     {
       "name": "Kinto Multisig 2",
@@ -704,6 +708,7 @@
         "transmitManager__": "0x6332e56A423480A211E301Cb85be12814e9238Bb",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
       },
+      "derivedName": "Socket",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -931,6 +936,7 @@
           "description": "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`."
         }
       },
+      "derivedName": "KintoAppRegistry",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1000,6 +1006,7 @@
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "derivedName": "Treasury",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1174,6 +1181,7 @@
         "totalWallets": 73828
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "derivedName": "KintoWalletFactory",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1190,14 +1198,14 @@
         "$immutable": true,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb"
       },
+      "derivedName": "BundleBulker",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "KintsugiFoundation",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "AccessManager",
@@ -1606,6 +1614,7 @@
           "description": "List of roles revoked from accounts."
         }
       },
+      "derivedName": "AccessManager",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1624,8 +1633,7 @@
       "name": "MamoriLabs",
       "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "RewardsDistributor",
@@ -1707,6 +1715,7 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
+      "derivedName": "RewardsDistributor",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -2290,6 +2299,7 @@
         "GOVERNANCErs": { "severity": "HIGH" },
         "DEFAULT_ADMINs": { "severity": "HIGH" }
       },
+      "derivedName": "KintoID",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],

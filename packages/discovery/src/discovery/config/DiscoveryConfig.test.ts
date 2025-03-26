@@ -42,14 +42,6 @@ describe(DiscoveryConfig.name, () => {
       expect(result.name).toEqual('B')
       expect(result.address).toEqual(ADDRESS_B)
     })
-    it('gets override for given name', () => {
-      const result = CONFIG.for('A')
-      expect(result.name).toEqual('A')
-      expect(result.address).toEqual(ADDRESS_A)
-    })
-    it('throws if override is not found', () => {
-      expect(() => CONFIG.for('C')).toThrow()
-    })
   })
 
   describe('hash', () => {

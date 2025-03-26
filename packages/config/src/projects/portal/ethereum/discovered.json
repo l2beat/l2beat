@@ -38,7 +38,8 @@
         "owner": "0x0000000000000000000000000000000000000000",
         "symbol": "",
         "totalSupply": 0
-      }
+      },
+      "derivedName": "TokenImplementation"
     },
     {
       "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB",
@@ -98,7 +99,8 @@
         ],
         "$upgradeCount": 3,
         "getDefaultDeliveryProvider": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
-      }
+      },
+      "derivedName": "WormholeRelayer"
     },
     {
       "name": "TokenBridge",
@@ -327,7 +329,8 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "pricingWallet": "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD",
         "rewardAddress": "0x53207E216540125e322CdA8A693b0b89576DEb46"
-      }
+      },
+      "derivedName": "DeliveryProviderImplementation"
     },
     {
       "address": "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf",
@@ -491,7 +494,8 @@
         "ownerOf": [],
         "symbol": "",
         "tokenURI": []
-      }
+      },
+      "derivedName": "NFTImplementation"
     },
     {
       "address": "0xf93124b7c738843CBB89E864c862c38cddCccF95",

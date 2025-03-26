@@ -236,6 +236,7 @@
         "programHash": "16830627573509542901909952446321116535677491650708854009406762893086223513",
         "programHashMapped": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)"
       },
+      "derivedName": "GpsFactRegistryAdapter",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -280,7 +281,8 @@
         "$immutable": true,
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"
-      }
+      },
+      "derivedName": "OrderRegistry"
     },
     {
       "address": "0x86ED881374a81efcc1Aa9f82cA9740B40F0FCbfe",

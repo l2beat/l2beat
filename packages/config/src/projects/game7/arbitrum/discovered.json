@@ -16,7 +16,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049087,
       "sinceBlock": 248391505,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "ValidatorUtils",
@@ -30,7 +31,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1725049139,
       "sinceBlock": 248391713,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "GnosisSafeL2",
@@ -68,7 +70,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 582,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "Bridge",
@@ -167,7 +170,8 @@
         "proverHostIo": "0x0446E34D1cC4eBA5F336627BaAe82332c8607043",
         "proverMath": "0x461bDAfaaba542C6eCcEa882BdF85542Ed7158C5",
         "proverMem": "0x4012CF2dce28079c8F7f92CecB2E494F4AcB9351"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "address": "0x36921bAAD215c5f3c5dffa89B1C2A5CF4BDAdC77",
@@ -196,7 +200,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049070,
       "sinceBlock": 248391437,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "ProxyAdmin",
@@ -218,7 +223,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1OrbitUSDCGateway",
@@ -260,7 +266,8 @@
         "l2USDC": "0x401eCb1D350407f13ba348573E5630B83638E30D",
         "owner": "0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",
         "router": "0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7"
-      }
+      },
+      "derivedName": "L1OrbitUSDCGateway"
     },
     {
       "name": "RollupEventInbox",
@@ -313,7 +320,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049080,
       "sinceBlock": 248391475,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "name": "SequencerInbox",
@@ -395,6 +403,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -537,6 +546,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -786,6 +796,7 @@
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -861,6 +872,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -875,7 +887,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725049060,
       "sinceBlock": 248391392,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "address": "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0",
@@ -1012,7 +1025,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",

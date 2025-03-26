@@ -203,6 +203,7 @@
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC",
         "requiredAmountOfSignatures": 1
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -225,7 +226,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

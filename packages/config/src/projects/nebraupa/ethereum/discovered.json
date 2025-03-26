@@ -78,7 +78,8 @@
         "verifiedSubmissionIdxForAllocatedFee": 0,
         "version": 10201,
         "worker": "0x7545b173780F07BF9EFA7e1561bb35B52907974D"
-      }
+      },
+      "derivedName": "UpaVerifier"
     },
     {
       "address": "0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7",
@@ -164,7 +165,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1723652291,
       "sinceBlock": 20528013,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     }
   ],
   "abis": {

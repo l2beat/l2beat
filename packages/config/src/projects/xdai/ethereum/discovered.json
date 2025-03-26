@@ -199,7 +199,8 @@
         "multisigThreshold": "2 of 3 (67%)",
         "nonce": 18,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
@@ -354,7 +355,8 @@
           "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
         ],
         "version": 2
-      }
+      },
+      "derivedName": "BridgeValidators"
     },
     {
       "name": "DaiForeignBridge",

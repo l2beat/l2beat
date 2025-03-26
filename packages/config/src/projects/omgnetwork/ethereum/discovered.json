@@ -22,7 +22,8 @@
         ],
         "getEffectiveDepositVerifier": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
         "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968"
-      }
+      },
+      "derivedName": "Erc20Vault"
     },
     {
       "name": "PlasmaFramework",
@@ -48,7 +49,8 @@
         "nextDeposit": 1,
         "nextDepositBlock": 5281001,
         "version": "1.0.4+a69c763"
-      }
+      },
+      "derivedName": "PlasmaFramework"
     },
     {
       "address": "0x22405c1782913fb676bc74Ef54a60727B0e1026F",
@@ -79,7 +81,8 @@
         "getEffectiveDepositVerifier": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
         "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
         "safeGasStipend": 2300
-      }
+      },
+      "derivedName": "EthVault"
     },
     {
       "name": "PaymentExitGame",
@@ -101,7 +104,8 @@
         "piggybackBondSize": "28000000000000000",
         "startIFEBondSize": "37000000000000000",
         "startStandardExitBondSize": "14000000000000000"
-      }
+      },
+      "derivedName": "PaymentExitGame"
     },
     {
       "name": "ETHDepositVerifier",
