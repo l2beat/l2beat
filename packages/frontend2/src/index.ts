@@ -6,7 +6,7 @@ import type { SsrData } from './app/App'
 import { PageRouter } from './app/PageRouter'
 import { render as ssrRender } from './ssr/entry.server'
 
-const isProduction = true // process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
 
 const manifest = getManifest()
