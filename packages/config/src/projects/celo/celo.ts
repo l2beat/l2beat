@@ -1,17 +1,18 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
+import { opStackL2 } from '../../templates/opStack'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
-export const celo: ScalingProject = upcomingL2({
-  id: 'celo',
+const discovery = new ProjectDiscovery('celo')
+
+export const celo: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
   display: {
     name: 'Celo',
     slug: 'celo',
-    description:
-      'Celo announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
-    purposes: ['Universal'],
+    description: 'Celo announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
     category: 'Optimium',
     stack: 'OP Stack',
     links: {
@@ -36,10 +37,17 @@ export const celo: ScalingProject = upcomingL2({
     ],
     apis: [
       {
+        type: 'rpc',
+        url: 'https://celo.chainvibes.nl',
+        callsPerMinute: 1500,
+      },
+      {
         type: 'etherscan',
         url: 'https://api.celoscan.io/api',
         contractCreationUnsupported: true,
       },
     ],
   },
+  discovery,
+  genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200
 })
