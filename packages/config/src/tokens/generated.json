@@ -11068,7 +11068,6 @@
       "chainId": 42161,
       "source": "external",
       "supply": "totalSupply",
-      "premint": "1407820307671513",
       "bridgedUsing": {
         "bridges": [
           {
