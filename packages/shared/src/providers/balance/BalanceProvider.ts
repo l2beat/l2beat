@@ -10,10 +10,13 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
+  logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    _logger: Logger,
+  ) {
+    this.logger = _logger.for(this)
+  }
 
   async getBalances(
     queries: BalanceQuery[],
@@ -37,26 +40,27 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          const results = []
-          for (const { token, holder } of queries) {
-            if (token === 'native') {
-              const start = Date.now()
-              const balance = await client.getBalance(holder, blockNumber)
-              this.logger.tag({ chain }).info('Call duration', {
-                callDuration: (Date.now() - start) / 1000,
-                type: 'native',
-              })
-              results.push(balance)
-            } else {
-              const start = Date.now()
-              const res = await client.call(
-                encodeErc20Balance(token, holder),
-                blockNumber,
-              )
-              this.logger.tag({ chain }).info('Call duration', {
-                callDuration: (Date.now() - start) / 1000,
-                type: 'erc20',
-              })
+          this.logger.tag({ chain }).warn(`Multicall not deployed`)
+          return Promise.all(
+            queries.map(async ({ token, holder }) => {
+              if (token === 'native') {
+                const start = Date.now()
+                const balance = await client.getBalance(holder, blockNumber)
+                this.logger.tag({ chain }).info('Call duration', {
+                  callDuration: (Date.now() - start) / 1000,
+                  type: 'native',
+                })
+                return balance
+              } else {
+                const start = Date.now()
+                const res = await client.call(
+                  encodeErc20Balance(token, holder),
+                  blockNumber,
+                )
+                this.logger.tag({ chain }).info('Call duration', {
+                  callDuration: (Date.now() - start) / 1000,
+                  type: 'erc20',
+                })
 
               results.push(
                 res.toString() === '0x' ? 0n : BigInt(res.toString()),
