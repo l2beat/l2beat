@@ -222,8 +222,7 @@
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -375,6 +374,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -500,6 +500,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -599,6 +600,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -618,7 +620,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "Caldera Multisig 1",
@@ -775,7 +778,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1733061785,
       "sinceBlock": 280243096,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "ChallengeManager",
@@ -827,6 +831,7 @@
         "sequencerInbox": "0x51a68C63669109BED585347B847c23DcA1cF9713",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -900,7 +905,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1733061786,
       "sinceBlock": 280243103,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9",
@@ -919,7 +925,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1733061788,
       "sinceBlock": 280243109,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "name": "ProxyAdmin",
@@ -977,7 +984,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x65e556838D665e04737Be37816d12Fae633c7d83"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "GatewayRouter",
@@ -1041,7 +1049,8 @@
         "proverHostIo": "0xFe95b1f7cf7D7D14E9e38dEE0EFE1c9D3AaA3e69",
         "proverMath": "0xd87B426d53B17BeEe316D262aA81cdDBaA96C826",
         "proverMem": "0xC0FCF2284a31f051253a4db86213EAaDC09f3791"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "OneStepProverHostIo",
@@ -1055,7 +1064,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1733061790,
       "sinceBlock": 280243116,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     }
   ],
   "abis": {

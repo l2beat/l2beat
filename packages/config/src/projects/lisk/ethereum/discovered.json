@@ -107,6 +107,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -207,6 +208,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -247,6 +249,7 @@
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -304,6 +307,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -362,6 +366,7 @@
         "systemConfig": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
         "version": "2.5.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -395,7 +400,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -441,6 +447,7 @@
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -490,6 +497,7 @@
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -698,7 +706,8 @@
         "bridge": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "BRIDGE": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "L1OpUSDCBridgeAdapter",
@@ -742,7 +751,8 @@
         "owner": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "L1OpUSDCBridgeAdapter"
     },
     {
       "name": "ProxyAdmin",
@@ -796,7 +806,8 @@
         "addressManager": "0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
         "isUpgrading": false,
         "owner": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Lisk Multisig",

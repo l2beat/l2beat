@@ -16,6 +16,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
+      "derivedName": "EcdsaPointsXColumn",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -30,6 +31,7 @@
       "sinceTimestamp": 1721829143,
       "sinceBlock": 20376819,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey1Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -49,6 +51,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
+      "derivedName": "PedersenHashPointsXColumn",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -63,6 +66,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -100,6 +104,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -114,6 +119,7 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -128,6 +134,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey1Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -165,6 +172,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -179,6 +187,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
+      "derivedName": "PedersenHashPointsYColumn",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -254,6 +263,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -268,6 +278,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
+      "derivedName": "FriStatementContract",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -282,6 +293,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true, "hasRegisteredFact": true },
+      "derivedName": "MerkleStatementContract",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -296,6 +308,7 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -333,6 +346,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -373,6 +387,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -471,6 +486,7 @@
       "sinceTimestamp": 1721829155,
       "sinceBlock": 20376820,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -485,6 +501,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey2Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -499,6 +516,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -513,6 +531,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -527,6 +546,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey0Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -541,6 +561,7 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1354,6 +1375,7 @@
           "2345108766317314046"
         ]
       },
+      "derivedName": "CairoBootloaderProgram",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1396,6 +1418,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1410,6 +1433,7 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1424,6 +1448,7 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1443,6 +1468,7 @@
       "sinceTimestamp": 1721829131,
       "sinceBlock": 20376818,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey1Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1501,6 +1527,7 @@
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1515,6 +1542,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1550,6 +1578,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1564,6 +1593,7 @@
       "sinceTimestamp": 1721828735,
       "sinceBlock": 20376785,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1578,6 +1608,7 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1592,6 +1623,7 @@
       "sinceTimestamp": 1721829143,
       "sinceBlock": 20376819,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey0Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1606,6 +1638,7 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1620,6 +1653,7 @@
       "sinceTimestamp": 1721829107,
       "sinceBlock": 20376816,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey0Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1634,6 +1668,7 @@
       "sinceTimestamp": 1721828723,
       "sinceBlock": 20376784,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1648,6 +1683,7 @@
       "sinceTimestamp": 1721828699,
       "sinceBlock": 20376782,
       "values": { "$immutable": true },
+      "derivedName": "CpuOods",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1662,6 +1698,7 @@
       "sinceTimestamp": 1721829131,
       "sinceBlock": 20376818,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey2Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1704,6 +1741,7 @@
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
       },
+      "derivedName": "CpuFrilessVerifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1718,6 +1756,7 @@
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
       "values": { "$immutable": true },
+      "derivedName": "EcdsaPointsYColumn",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1732,7 +1771,8 @@
       "description": "Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
-      "values": { "$immutable": true, "hasRegisteredFact": true }
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "derivedName": "MemoryPageFactRegistry"
     },
     {
       "address": "0xebc8416179fE90854fe8B3f774801165572cfD7F",
@@ -1751,6 +1791,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey0Column",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1765,6 +1806,7 @@
       "sinceTimestamp": 1721840015,
       "sinceBlock": 20377720,
       "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey1Column",
       "category": { "name": "Spam", "priority": -1 }
     }
   ],

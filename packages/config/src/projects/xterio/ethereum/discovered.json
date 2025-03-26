@@ -56,6 +56,7 @@
         "variableResolutionCostPrecision": 1000,
         "version": "1.0.0"
       },
+      "derivedName": "DataAvailabilityChallenge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -97,6 +98,7 @@
         "superchainConfig": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -134,6 +136,7 @@
         "superchainConfig": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -170,7 +173,8 @@
         "bridge": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
         "BRIDGE": "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "L2OutputOracle",
@@ -246,6 +250,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -338,6 +343,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -384,6 +390,7 @@
         "superchainConfig": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -469,7 +476,8 @@
         "addressManager": "0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a",
         "isUpgrading": false,
         "owner": "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
@@ -539,6 +547,7 @@
         "systemConfig": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C",
         "version": "2.5.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -564,7 +573,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E",
@@ -613,6 +623,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {

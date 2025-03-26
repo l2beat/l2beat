@@ -83,6 +83,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -133,7 +134,8 @@
         "addressManager": "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
         "isUpgrading": false,
         "owner": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x282DB123D1cbf5437c295EA0df0137E5FaDbD117",
@@ -336,6 +338,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -391,6 +394,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.4.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -444,6 +448,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.7.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -484,6 +489,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000010",
         "version": "1.4.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -543,6 +549,7 @@
         "systemConfig": "0x622333688CC1878C7ff4205c89bDe051798788A7",
         "version": "1.10.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -579,7 +586,8 @@
         "bridge": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
         "BRIDGE": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
         "version": "1.6.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "AddressManager",
@@ -604,7 +612,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0xff00000000000000000000000000000000002410",

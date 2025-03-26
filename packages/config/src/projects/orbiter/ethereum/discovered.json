@@ -34,7 +34,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1649661119,
       "sinceBlock": 14563000,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OBSource"
     }
   ],
   "abis": {

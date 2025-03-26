@@ -60,14 +60,14 @@
           "severity": "LOW",
           "description": "Fee charged for verifying transaction"
         }
-      }
+      },
+      "derivedName": "PolygonL1Switchboard"
     },
     {
       "name": "KintoFoundation",
       "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "sdeUSD Vault Reya",
@@ -164,7 +164,8 @@
         "minAllowedPacketLength": 1,
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
-      }
+      },
+      "derivedName": "CapacitorFactory"
     },
     {
       "name": "DAI Vault Kinto",
@@ -220,7 +221,8 @@
           "severity": "LOW",
           "description": "Fee charged for verifying transaction"
         }
-      }
+      },
+      "derivedName": "OptimismSwitchboard"
     },
     {
       "name": "USDT Vault Zora",
@@ -546,7 +548,8 @@
         "$immutable": true,
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
-      }
+      },
+      "derivedName": "Hasher"
     },
     {
       "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
@@ -996,14 +999,14 @@
           "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
           "type": "CODE_CHANGE"
         }
-      }
+      },
+      "derivedName": "Socket"
     },
     {
       "name": "KintsugiFoundation",
       "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "ETHFI Vault Kinto",
@@ -1149,8 +1152,7 @@
       "name": "MamoriLabs",
       "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC",
@@ -1304,7 +1306,8 @@
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
         "timeoutInSeconds": 7200
-      }
+      },
+      "derivedName": "FastSwitchboard"
     },
     {
       "address": "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369",
@@ -1420,7 +1423,8 @@
           "severity": "LOW",
           "description": "Fee charged for verifying transaction"
         }
-      }
+      },
+      "derivedName": "ArbitrumL1Switchboard"
     },
     {
       "name": "USD0++ Vault Polynomial",
@@ -1534,7 +1538,8 @@
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
-      }
+      },
+      "derivedName": "TransmitManager"
     },
     {
       "name": "",
@@ -1551,7 +1556,8 @@
         "$threshold": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)"
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "KintoMultisig",
@@ -1600,7 +1606,8 @@
         "$immutable": true,
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
-      }
+      },
+      "derivedName": "SignatureVerifier"
     }
   ],
   "abis": {

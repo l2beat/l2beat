@@ -16,7 +16,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148899,
       "sinceBlock": 20569170,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "address": "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -86,7 +87,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148875,
       "sinceBlock": 20569168,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "address": "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A",
@@ -122,7 +124,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
       "sinceBlock": 18736154,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "OneStepProver0",
@@ -136,7 +139,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148863,
       "sinceBlock": 20569167,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "address": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c",
@@ -222,6 +226,7 @@
         "sequencerInbox": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -372,7 +377,8 @@
         "twapDuration": 3600,
         "v3SwapRouter": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
         "WETH9": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "SwapManager"
     },
     {
       "name": "RollupEventInbox",
@@ -534,6 +540,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -576,7 +583,8 @@
           "strategiesValue": ["246687829197986082466"]
         },
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
-      }
+      },
+      "derivedName": "StrategyManager"
     },
     {
       "name": "Minter",
@@ -594,7 +602,8 @@
         "getTokenPrice": "1026779748147319377",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
-      }
+      },
+      "derivedName": "Minter"
     },
     {
       "name": "LidoStEthStrategy",
@@ -626,7 +635,8 @@
         "swapManager": "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335",
         "WETH9": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
-      }
+      },
+      "derivedName": "LidoStEthStrategy"
     },
     {
       "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
@@ -738,7 +748,8 @@
         "proverHostIo": "0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
         "proverMath": "0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD",
         "proverMem": "0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "ProxyAdmin",
@@ -792,7 +803,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
@@ -966,7 +978,8 @@
         "owner": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "Bridger"
     },
     {
       "name": "Real",
@@ -987,7 +1000,8 @@
         "symbol": "reETH",
         "tokenPrice": "1026779748147319377",
         "totalSupply": "242145865631498095533"
-      }
+      },
+      "derivedName": "Real"
     },
     {
       "address": "0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e",
@@ -1167,6 +1181,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1222,7 +1237,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148887,
       "sinceBlock": 20569169,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "address": "0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E",
@@ -1348,6 +1364,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1471,7 +1488,8 @@
         "getBalance": "1918321993704130620",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
-      }
+      },
+      "derivedName": "AssetsVault"
     },
     {
       "address": "0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A",
@@ -1532,7 +1550,8 @@
         "withdrawFeeRate": 0,
         "withdrawingSharesInPast": "1891975113010747144",
         "withdrawingSharesInRound": 0
-      }
+      },
+      "derivedName": "RealVault"
     },
     {
       "name": "ERC20Gateway",

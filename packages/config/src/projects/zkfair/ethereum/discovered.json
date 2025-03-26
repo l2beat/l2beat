@@ -259,7 +259,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1702879247,
       "sinceBlock": 18810958,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "FflonkVerifier"
     },
     {
       "name": "ZKFairOwner",
@@ -454,7 +455,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "BridgeAdminMultiSig",

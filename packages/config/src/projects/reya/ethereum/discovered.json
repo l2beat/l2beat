@@ -16,7 +16,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148899,
       "sinceBlock": 20569170,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -91,6 +92,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -105,7 +107,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148875,
       "sinceBlock": 20569168,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c",
@@ -136,7 +139,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1701973151,
       "sinceBlock": 18736154,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "OneStepProver0",
@@ -150,7 +154,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148863,
       "sinceBlock": 20569167,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "address": "0x349f3839012DB2271e1BeC68F1668471D175Adb9",
@@ -231,6 +236,7 @@
           "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
+      "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -277,6 +283,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
       },
+      "derivedName": "Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -402,6 +409,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -489,6 +497,7 @@
         "paused": false,
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
       },
+      "derivedName": "Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -587,6 +596,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -639,6 +649,7 @@
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -685,7 +696,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
@@ -710,7 +722,8 @@
         "proverHostIo": "0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
         "proverMath": "0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD",
         "proverMem": "0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
@@ -864,7 +877,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148887,
       "sinceBlock": 20569169,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "name": "SocketVault_Reya",
@@ -925,7 +939,8 @@
         "$upgradeCount": 1,
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
-      }
+      },
+      "derivedName": "RollupEventInbox"
     }
   ],
   "abis": {

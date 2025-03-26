@@ -63,6 +63,7 @@
         "superchainConfig": "0xadE916De67511E5C24af4174Be67143d0dA94959",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -139,6 +140,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -180,6 +182,7 @@
         "superchainConfig": "0xadE916De67511E5C24af4174Be67143d0dA94959",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -301,6 +304,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -326,7 +330,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "Swan Network Multisig",
@@ -452,6 +457,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -523,6 +529,7 @@
         "systemConfig": "0x504D56cf68f791B45E3A2e895B0e1562f3431328",
         "version": "2.5.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -577,7 +584,8 @@
         "addressManager": "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f",
         "isUpgrading": false,
         "owner": "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xde794bEc196832474f2F218135bFd0f7cA7fb038",
@@ -624,7 +632,8 @@
         "bridge": "0xed7525946A09056C6AaE29941b8323017382050e",
         "BRIDGE": "0xed7525946A09056C6AaE29941b8323017382050e",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "L1StandardBridge",
@@ -661,6 +670,7 @@
         "superchainConfig": "0xadE916De67511E5C24af4174Be67143d0dA94959",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {

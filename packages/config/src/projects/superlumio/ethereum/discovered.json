@@ -181,6 +181,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -225,6 +226,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.1.2"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -276,6 +278,7 @@
         "SYSTEM_CONFIG": "0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -301,7 +304,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -371,7 +375,8 @@
         "addressManager": "0x9cF613c19371eFf26c94c0d4F62197d2C0ab60bc",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xb6E2Eee22b684f6AAb2083097F7E874994bA930e",
@@ -417,7 +422,8 @@
         "$upgradeCount": 1,
         "BRIDGE": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
         "version": "1.1.1"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "L1StandardBridge",
@@ -451,6 +457,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -542,6 +549,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -613,6 +621,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],

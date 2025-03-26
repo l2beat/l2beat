@@ -8,8 +8,7 @@
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x07D4692291B9E30E326fd31706f686f83f331B82",
@@ -322,6 +321,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       },
+      "derivedName": "Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -421,6 +421,7 @@
         "implementation": "0xc4940069140142236D4065b866018f7b2BeC77fD",
         "owner": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
+      "derivedName": "UpgradeableBeacon",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -563,6 +564,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -574,8 +576,7 @@
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -589,7 +590,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397379,
       "sinceBlock": 21418842,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
@@ -706,6 +708,7 @@
           "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -728,7 +731,8 @@
         "minGasPrice": 100000000,
         "NATIVE_CURRENCY": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "parentChainGatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
-      }
+      },
+      "derivedName": "ParentToChildRewardRouter"
     },
     {
       "name": "OneStepProofEntry",
@@ -748,21 +752,20 @@
         "proverHostIo": "0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
         "proverMath": "0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921",
         "proverMem": "0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
@@ -868,6 +871,7 @@
         "paused": false,
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
       },
+      "derivedName": "Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -991,6 +995,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1163,28 +1168,26 @@
         "$upgradeCount": 2,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
-      }
+      },
+      "derivedName": "RollupEventInbox"
     },
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7",
@@ -1427,8 +1430,7 @@
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
@@ -1554,28 +1556,26 @@
           "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
+      "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GoncaloMagalhaes-Immunefi",
       "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GatewaysAdmin",
@@ -1622,7 +1622,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397775,
       "sinceBlock": 21418875,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "L1Escrow",
@@ -1635,6 +1636,7 @@
       "sinceTimestamp": 1632133470,
       "sinceBlock": 13262081,
       "values": { "$immutable": true },
+      "derivedName": "L1Escrow",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1721,6 +1723,7 @@
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
+      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1782,6 +1785,7 @@
         "stakeAmounts": [0, "555000000000000000000", "79000000000000000000"],
         "stakeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "derivedName": "EdgeChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1801,7 +1805,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397631,
       "sinceBlock": 21418863,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
@@ -1836,6 +1841,7 @@
         "numRemaining": 0,
         "root": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
+      "derivedName": "OutboxEntry",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1926,6 +1932,7 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
+      "derivedName": "L1CustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1992,6 +1999,7 @@
         "l2Counterpart": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
         "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
       },
+      "derivedName": "L1DaiGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -2006,14 +2014,14 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397511,
       "sinceBlock": 21418853,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "gzeon-OffchainLabs",
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L1Timelock",

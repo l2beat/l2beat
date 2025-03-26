@@ -59,7 +59,8 @@
         "proxy__getIsOssified": false,
         "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
         "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
-      }
+      },
+      "derivedName": "L1ERC20TokenBridge"
     },
     {
       "name": "ProxyAdmin",
@@ -101,7 +102,8 @@
         "addressManager": "0xF2dc77c697e892542cC53336178a78Bb313DFDC7",
         "isUpgrading": false,
         "owner": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
@@ -155,6 +157,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -186,7 +189,8 @@
         "owner": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
         "paused": false,
         "version": "2.1.0"
-      }
+      },
+      "derivedName": "L1UsdcBridge"
     },
     {
       "address": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
@@ -248,6 +252,7 @@
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -329,6 +334,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -487,6 +493,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -534,6 +541,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -574,7 +582,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",

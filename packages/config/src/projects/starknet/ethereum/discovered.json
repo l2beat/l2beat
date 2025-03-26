@@ -485,6 +485,7 @@
           "description": "This role is actually the proxy upgrade admin role, but we already resolve it to $admin."
         }
       },
+      "derivedName": "StarkgateManager",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -557,6 +558,7 @@
           "description": "This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation."
         }
       },
+      "derivedName": "StarkgateRegistry",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1866,6 +1868,7 @@
           "type": "CODE_CHANGE"
         }
       },
+      "derivedName": "Starknet",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1924,6 +1927,7 @@
         "executionExpiration": 4838400,
         "owner": "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
       },
+      "derivedName": "DelayedExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
