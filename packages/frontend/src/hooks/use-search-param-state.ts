@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 /**
  * Use state that is persisted in a search param.
@@ -15,12 +15,13 @@ export function useSearchParamState<T extends string = string>(
 ) {
   const router = useRouter()
   const pathname = usePathname()
+  const [value, setStateValue] = useState<string | undefined>(undefined)
 
-  const [value, setStateValue] = useState<string | undefined>(() => {
-    if (typeof window === 'undefined') return defaultValue
+  useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    return params.get(key) ?? defaultValue
-  })
+    const value = params.get(key) ?? defaultValue
+    setStateValue(value)
+  }, [key, defaultValue])
 
   const replaceRoute = useCallback(
     (pathname: string) =>

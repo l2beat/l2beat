@@ -181,9 +181,11 @@ export function useFilterState() {
     if (Object.keys(state).length > 0) {
       setFilters(encodeURIComponent(JSON.stringify(state)))
     } else {
-      setFilters(undefined)
+      if (filters) {
+        setFilters(undefined)
+      }
     }
-  }, [pathname, setFilters, state])
+  }, [pathname, setFilters, state, filters])
 
   return {
     state,
