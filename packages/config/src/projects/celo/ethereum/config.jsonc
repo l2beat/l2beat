@@ -7,6 +7,9 @@
   "initialAddresses": [
     "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe" // L1StandardBridge
   ],
-  "names": {},
-  "overrides": {}
+  "names": {
+    "0x4092A77bAF58fef0309452cEaCb09221e556E112": "CeloProxyAdminOwner",
+    "0xC03172263409584f7860C25B6eB4985f0f6F4636": "Celo Multisig 1",
+    "0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d": "Celo Multisig 2"
+  }
 }

@@ -2,7 +2,7 @@
   "name": "celo",
   "chain": "ethereum",
   "blockNumber": 22130439,
-  "configHash": "0x51741a7533c4e69e0e4b27fe3d28b59d4e4b4f77e75b8246bcd1d308e582e94d",
+  "configHash": "0xbbbb389cf41084328fe43a80d9b61b876be3499f16c0bc8e564b5b61961bfd6e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -346,7 +346,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "GnosisSafe",
+      "name": "CeloProxyAdminOwner",
       "address": "0x4092A77bAF58fef0309452cEaCb09221e556E112",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -442,7 +442,8 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 22,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "GnosisSafe",
@@ -1263,7 +1264,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Celo Multisig 2",
       "address": "0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1295,7 +1296,8 @@
         "multisigThreshold": "6 of 8 (75%)",
         "nonce": 19,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "AnchorStateRegistry",
@@ -1461,7 +1463,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Celo Multisig 1",
       "address": "0xC03172263409584f7860C25B6eB4985f0f6F4636",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1493,7 +1495,8 @@
         "multisigThreshold": "6 of 8 (75%)",
         "nonce": 21,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "Optimism Security Council",

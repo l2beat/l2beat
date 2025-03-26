@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6a83ed529728aafce7e9943d0209fd8a6031863c
+Generated with discovered.json: 0xe429cc8f5a15b744840487081181a6f2d91c35ed
 
-# Diff at Wed, 26 Mar 2025 10:37:15 GMT:
+# Diff at Wed, 26 Mar 2025 10:43:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22130439
@@ -49,7 +49,7 @@ Initial discovery: Standard OptiPortal2 opstack chain with new SuperchainConfig 
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x4092A77bAF58fef0309452cEaCb09221e556E112)
+    contract CeloProxyAdminOwner (0x4092A77bAF58fef0309452cEaCb09221e556E112)
     +++ description: None
 ```
 
@@ -139,7 +139,7 @@ Initial discovery: Standard OptiPortal2 opstack chain with new SuperchainConfig 
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d)
+    contract Celo Multisig 2 (0x9Eb44Da23433b5cAA1c87e35594D15FcEb08D34d)
     +++ description: None
 ```
 
@@ -163,7 +163,7 @@ Initial discovery: Standard OptiPortal2 opstack chain with new SuperchainConfig 
 
 ```diff
 +   Status: CREATED
-    contract Safe (0xC03172263409584f7860C25B6eB4985f0f6F4636)
+    contract Celo Multisig 1 (0xC03172263409584f7860C25B6eB4985f0f6F4636)
     +++ description: None
 ```
 
