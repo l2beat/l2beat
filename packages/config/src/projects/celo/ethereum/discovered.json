@@ -626,7 +626,13 @@
     {
       "address": "0x6E226fa22e5F19363d231D3FA048aaBa73CC1f47",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
+        }
+      ]
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -1066,6 +1072,14 @@
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         }
       ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33",
+          "description": "act as an override that pauses the SuperchainConfigLocal.",
+          "condition": "the (global) 0x95703e0982140D16f8ebA6d158FccEde42f04a4C is paused."
+        }
+      ],
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
       "values": {
@@ -1357,15 +1371,29 @@
       }
     },
     {
-      "name": "CeloSuperchainConfig",
+      "name": "SuperchainConfigLocal",
       "address": "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33",
       "type": "Contract",
+      "template": "opstack/SuperchainConfigChild",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x5878c16afef31b4e412ce5caa14cd12c8d09fc38c614c9f93f417700e844dbae"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A local contract acting as source of truth for the paused status and the guardian role for the local chain.",
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "to": "0x6E226fa22e5F19363d231D3FA048aaBa73CC1f47",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "description": "act as an override that pauses the SuperchainConfigLocal.",
+          "condition": "the (global) 0x95703e0982140D16f8ebA6d158FccEde42f04a4C is paused.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x4092A77bAF58fef0309452cEaCb09221e556E112",
@@ -1393,7 +1421,9 @@
         "SUPERCHAIN_CONFIG_SLOT": "0x57bd4505d034c48af4dca8c605cfe8a4e522364a0126bc874be225072431d635",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "1.0.0-beta.1"
-      }
+      },
+      "derivedName": "CeloSuperchainConfig",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0xA6F1c6c24De8b112dd3867dB907d187d490e6ddF",
@@ -2734,6 +2764,7 @@
     "opstack/PermissionedDisputeGame": "0x8cd96f8de5cf042b7416ad54aebeee74fa507bac86b2c612ffdb15f13588a9d2",
     "opstack/PreimageOracle": "0x388cadeb94c1575458e295e7eab36ef23f4727ca238524e5a7d9e72d1861eee4",
     "opstack/SuperchainConfig": "0xe9ed91e5df551d67902341d4abcc2662a5637682f18b2606eb518c434c0f9c26",
+    "opstack/SuperchainConfigChild": "0x6018610e2f72ee486a3a2af46c6ccf84735eebb9e7f7f751758fb4eab77c8b0e",
     "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
   }
 }

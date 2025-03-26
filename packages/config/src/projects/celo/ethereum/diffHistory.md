@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8226a893426ab670ca537f4fa19bcab4cb6a7434
+Generated with discovered.json: 0xbf0e78f4a779800fbef6651d00e2ff0ae7da3ae7
 
-# Diff at Wed, 26 Mar 2025 10:20:51 GMT:
+# Diff at Wed, 26 Mar 2025 10:24:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22130439
@@ -157,8 +157,8 @@ Initial discovery: Standard OptiPortal2 opstack chain with new SuperchainConfig 
 
 ```diff
 +   Status: CREATED
-    contract CeloSuperchainConfig (0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33)
-    +++ description: None
+    contract SuperchainConfigLocal (0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33)
+    +++ description: A local contract acting as source of truth for the paused status and the guardian role for the local chain.
 ```
 
 ```diff
