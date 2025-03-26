@@ -1,11 +1,13 @@
 import crypto from 'crypto'
-import fs from 'fs'
+import fs, { mkdirSync } from 'fs'
 import path from 'path'
 
 addHashes({
   prefix: '/static',
-  contentDir: 'dist/static',
+  inputDir: 'static',
+  outputDir: 'dist/static',
   manifest: 'dist/manifest.json',
+  ignore: ['.gitignore'],
 })
 
 /*
@@ -16,21 +18,32 @@ const HASH_LENGTH = 8
 
 async function addHashes(options: {
   prefix: string
-  contentDir: string
+  inputDir: string
+  outputDir: string
   manifest: string
+  ignore: string[]
 }) {
-  const files = await getFileList(path.resolve(options.contentDir))
+  const fullInputDir = path.resolve(options.inputDir)
+  const fullOutputDir = path.resolve(options.outputDir)
+
+  const files = getFileList(fullInputDir)
+    .map((x) => path.relative(fullInputDir, x))
+    .filter((x) => !options.ignore.includes(x))
   const manifest: Record<string, string> = {}
 
   for (const file of files) {
-    const hash = (await sha256(file)).slice(0, HASH_LENGTH)
-    const { name, ext, dir } = path.parse(file)
-    const base = path.dirname(file.slice(dir.length))
-    const itemWithHash = `${name}.${hash}${ext}`
-    await fs.promises.rename(file, path.join(dir, itemWithHash))
+    const full = path.join(fullInputDir, file)
 
-    const oldName = path.join(options.prefix, base, `${name}${ext}`)
-    const newName = path.join(options.prefix, base, itemWithHash)
+    const hash = (await sha256(full)).slice(0, HASH_LENGTH)
+    const { name, ext, dir } = path.parse(file)
+    const itemWithHash = `${name}.${hash}${ext}`
+
+    const output = path.join(fullOutputDir, dir, itemWithHash)
+    mkdirSync(path.dirname(output), { recursive: true })
+    fs.copyFileSync(full, output)
+
+    const oldName = path.join(options.prefix, dir, `${name}${ext}`)
+    const newName = path.join(options.prefix, dir, itemWithHash)
 
     manifest[oldName] = newName
   }
@@ -38,13 +51,14 @@ async function addHashes(options: {
   fs.writeFileSync(options.manifest, JSON.stringify(manifest, null, 2))
 }
 
-async function getFileList(dir: string): Promise<string[]> {
+function getFileList(dir: string): string[] {
   const result = []
-  const items = await fs.promises.readdir(dir)
+  const items = fs.readdirSync(dir)
+
   for (const item of items) {
     const fullName = path.join(dir, item)
     if (fs.statSync(fullName).isDirectory()) {
-      result.push(...(await getFileList(fullName)))
+      result.push(...getFileList(fullName))
     } else {
       result.push(fullName)
     }

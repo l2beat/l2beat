@@ -12,8 +12,6 @@ const port = process.env.PORT || 5173
 const manifest = getManifest()
 const template = getTemplate(manifest)
 
-console.log(template)
-
 const app = express()
 
 if (isProduction) {
@@ -53,7 +51,6 @@ function getManifest(): Record<string, string> {
 function getTemplate(manifest: Record<string, string>) {
   let template = readFileSync('index.html', 'utf-8')
   for (const [key, value] of Object.entries(manifest)) {
-    console.log({ key, value })
     template = template.replace(key, value)
   }
   return template
