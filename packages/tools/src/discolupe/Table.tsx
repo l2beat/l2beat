@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import React from 'react'
 import { ColumnSelector } from './ColumnSelector'
 import { FilterButton } from './FilterButton'
 import { SortingArrowIcon } from './icons/SortingArrowIcon'
@@ -14,7 +15,7 @@ import {
   deserializeFilter,
   serializeFilter,
 } from './src/filtering'
-import { toMatrix, toVisibleRows } from './src/matrix'
+import { type Row, toMatrix, toVisibleRows } from './src/matrix'
 import type { DiscoLupeProject } from './src/model'
 import {
   type SortConfig,
@@ -55,6 +56,7 @@ export function Table({ projects }: TableProps) {
     serializeSort,
     deserializeSort,
   )
+  const [isCopied, setIsCopied] = React.useState(false)
 
   const matrix = toMatrix(projects, selectedColumns)
   const visibleRows = toVisibleRows(matrix, sort, filter)
@@ -68,12 +70,29 @@ export function Table({ projects }: TableProps) {
           setSelectedColumns(newSelection)
         }
       />
-      <div className="py-4">
+      <div className="flex items-center gap-4 py-4">
+        <div className="rounded bg-zinc-700 px-4 py-2">{`${visibleRows.length} / ${matrix.rowCount}`}</div>
         <button
           onClick={() => setFilter(defaultFilterState)}
           className="rounded bg-zinc-700 px-4 py-2 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
         >
           Reset all filters
+        </button>
+        <button
+          onClick={async () => {
+            if (
+              await copyAsCSV(
+                visibleRows,
+                selectedColumns.map((c) => c.header),
+              )
+            ) {
+              setIsCopied(true)
+              setTimeout(() => setIsCopied(false), 750)
+            }
+          }}
+          className="min-w-[8rem] rounded bg-zinc-700 px-4 py-2 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
+        >
+          {isCopied ? 'Copied!' : 'Copy as CSV'}
         </button>
       </div>
       <table className="table-auto border-collapse">
@@ -168,4 +187,26 @@ function getSortIcon(column: string, sortBy: string, direction: SortDirection) {
   ) : (
     <SortingArrowIcon className="rotate-180" />
   )
+}
+
+async function copyAsCSV(
+  rows: Row[],
+  selectedHeaders: string[],
+): Promise<boolean> {
+  if (rows.length === 0) {
+    return false
+  }
+
+  const csvString = [
+    selectedHeaders.join(','),
+    ...rows.map((row) => row.columns.join(',')),
+  ].join('\n')
+
+  try {
+    await navigator.clipboard.writeText(csvString)
+    return true
+  } catch (error) {
+    console.error('Failed to generate CSV:', error)
+    return false
+  }
 }
