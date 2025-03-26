@@ -39,7 +39,7 @@ export const celo: ScalingProject = opStackL2({
       {
         type: 'rpc',
         url: 'https://celo.chainvibes.nl',
-        callsPerMinute: 1500,
+        callsPerMinute: 4000,
       },
       {
         type: 'etherscan',
