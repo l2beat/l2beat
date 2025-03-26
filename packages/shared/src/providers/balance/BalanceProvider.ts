@@ -10,10 +10,13 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
+  logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    _logger: Logger,
+  ) {
+    this.logger = _logger.for(this)
+  }
 
   async getBalances(
     queries: BalanceQuery[],
@@ -37,6 +40,7 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         } else {
+          this.logger.tag({ chain }).warn(`Multicall not deployed`)
           return Promise.all(
             queries.map(async ({ token, holder }) => {
               if (token === 'native') {
