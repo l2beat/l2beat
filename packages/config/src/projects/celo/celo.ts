@@ -1,13 +1,21 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('celo')
 
 export const celo: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1718876598), // '2024-06-20T09:43:18Z'
+  additionalBadges: [BADGES.Other.MigratedFromL1, BADGES.DA.EigenDA],
+  daProvider: EIGENDA_DA_PROVIDER,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Celo',
     slug: 'celo',
@@ -28,11 +36,14 @@ export const celo: ScalingProject = opStackL2({
     },
   },
   nonTemplateOptimismPortalEscrowTokens: ['CELO'],
+  associatedTokens: ['CELO'],
+  optimismPortalPremintedTokens: ['CELO'],
   chainConfig: {
     name: 'celo',
     chainId: 42220,
     explorerUrl: 'https://celoscan.io',
     coingeckoPlatform: 'celo',
+    sinceTimestamp: UnixTime(1742960663),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -57,4 +68,14 @@ export const celo: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   discovery,
   genesisTimestamp: UnixTime(1742960663), // ts of first batch posted, block 0 from the rpc: 1587571200
+  milestones: [
+    {
+      title: 'Celo becomes an Ethereum L2',
+      url: 'https://blog.celo.org/celo-l2-is-now-live-a-note-from-our-founders-c585bd57b5fa',
+      date: '2025-03-26T00:00:00.00Z',
+      description:
+        'Celo migrates from an L1 to an L2 architecture on Ethereum and EigenDA.',
+      type: 'general',
+    },
+  ],
 })

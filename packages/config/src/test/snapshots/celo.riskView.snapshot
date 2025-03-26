@@ -2,10 +2,9 @@
 
 {
   dataAvailability: {
-    description: "All of the data needed for proof construction is published on Ethereum L1."
-    orderHint: Infinity
-    sentiment: "good"
-    value: "Onchain"
+    description: "Proof construction and state derivation fully rely on data that is posted on EigenDA. Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain."
+    sentiment: "bad"
+    value: "External"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."

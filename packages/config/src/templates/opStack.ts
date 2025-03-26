@@ -126,6 +126,7 @@ interface OpStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
+  optimismPortalPremintedTokens?: string[]
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
   finality?: ProjectFinalityConfig
@@ -299,6 +300,7 @@ function opStackCommon(
           includeInTotal: type === 'layer2',
           address: portal.address,
           tokens: optimismPortalTokens,
+          premintedTokens: templateVars.optimismPortalPremintedTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(
             ', ',
           )}.`,

@@ -913,6 +913,20 @@
       "supply": "zero"
     },
     {
+      "name": "Celo native asset",
+      "coingeckoId": "celo",
+      "address": "0x057898f3C43F129a17517B9056D23851F124b19f",
+      "symbol": "CELO",
+      "decimals": 18,
+      "deploymentTimestamp": 1741879583,
+      "coingeckoListingTimestamp": 1590105600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11090/large/InjXBNx9_400x400.jpg?1696511031",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Celsius",
       "coingeckoId": "celsius-degree-token",
       "address": "0xaaAEBE6Fe48E54f431b0C390CfaF0b017d09D42d",

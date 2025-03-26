@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "CELO",
+      "address": "0x057898f3C43F129a17517B9056D23851F124b19f",
+      "coingeckoId": "celo"
+    },
+    {
       "symbol": "CLEAR",
       "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8"
     },
