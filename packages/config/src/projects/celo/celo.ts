@@ -23,10 +23,12 @@ export const celo: ScalingProject = opStackL2({
       socialMedia: ['https://x.com/Celo', 'https://discord.com/invite/celo'],
     },
   },
+  nonTemplateOptimismPortalEscrowTokens: ['CELO'],
   chainConfig: {
     name: 'celo',
     chainId: 42220,
     explorerUrl: 'https://celoscan.io',
+    coingeckoPlatform: 'celo',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
