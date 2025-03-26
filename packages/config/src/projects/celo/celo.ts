@@ -12,15 +12,19 @@ export const celo: ScalingProject = opStackL2({
     name: 'Celo',
     slug: 'celo',
     description:
-      'Celo announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
+      'Celo is an Ethereum Optimium based on the OP stack, scaling real-world solutions & leading a thriving new digital economy for all.',
     category: 'Optimium',
     stack: 'OP Stack',
     links: {
       websites: ['https://celo.org/'],
       documentation: ['https://docs.celo.org/'],
-      explorers: ['https://explorer.celo.org/mainnet/'],
+      explorers: ['https://explorer.celo.org/mainnet/', 'https://celoscan.io'],
       repositories: ['https://github.com/celo-org'],
-      socialMedia: ['https://x.com/Celo', 'https://discord.com/invite/celo'],
+      socialMedia: [
+        'https://x.com/Celo',
+        'https://discord.com/invite/celo',
+        'https://blog.celo.org/',
+      ],
     },
   },
   nonTemplateOptimismPortalEscrowTokens: ['CELO'],
