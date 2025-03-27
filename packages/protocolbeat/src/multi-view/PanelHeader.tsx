@@ -37,6 +37,7 @@ export function PanelHeader(props: { id: PanelId }) {
         }
       />
       <div className="hidden gap-1 group-hover:flex">
+        <button className="w-4">c</button>
         <button className="w-4" onClick={() => toggleFullScreen(props.id)}>
           {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
         </button>
