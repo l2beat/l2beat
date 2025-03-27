@@ -22,7 +22,7 @@ export function RealPizzaRosetteIcon({
   values,
   className,
   // To pass to the elements
-  isUnderReview,
+  isUnderReview: _,
   background = 'header',
 }: Props) {
   console.dir({ values }, { depth: null })
@@ -32,7 +32,7 @@ export function RealPizzaRosetteIcon({
   const [first, second, third, fourth, fifth] = values
   const setSelectedRisk = context?.setSelectedRisk
   // To pass to the elements
-  const selectedRisk = context?.selectedRisk
+  // const selectedRisk = context?.selectedRisk
 
   useOnClickOutside(svgRef, () => setSelectedRisk?.(undefined))
   useEventListener('scroll', () => setSelectedRisk?.(undefined))

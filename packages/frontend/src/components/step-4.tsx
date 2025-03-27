@@ -12,6 +12,7 @@ export function Step4(props: Props) {
     setTimeout(() => {
       props.onFinish()
     }, 3000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onFinish])
 
   return (

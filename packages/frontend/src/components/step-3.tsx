@@ -36,6 +36,7 @@ export function Step3Custom(props: Props) {
 
   const send = useCallback(() => {
     props.onClick(selections)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onClick, selections])
 
   return (
