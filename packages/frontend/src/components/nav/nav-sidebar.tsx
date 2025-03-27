@@ -4,7 +4,9 @@ import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
+import { PizzaIcon } from '../main-page-header'
 import { SocialLinks } from '../social-links'
+import { PizzaButton } from '../step-1'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavLinkGroup } from './nav-link-group'
 import { NavSideBarWrapper } from './nav-sidebar-wrapper'
@@ -38,6 +40,9 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
           <NavLinkGroup key={group.title} group={group} />
         ))}
       </nav>
+      <PizzaButton className="w-full">
+        Make a Pizza <PizzaIcon />
+      </PizzaButton>
       <div>
         <NavSmallLinkGroup className="mt-5">
           <NavSmallLink title="About Us" href="/about-us" />

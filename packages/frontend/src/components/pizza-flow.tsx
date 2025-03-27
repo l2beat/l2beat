@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { Step1 } from './step-1'
 import { Step2, type Step2Payload } from './step-2'
