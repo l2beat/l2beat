@@ -400,6 +400,12 @@ export const badges = [
     description:
       'This project has migrated from being a standalone L1 blockchain to an Ethereum L2',
   },
+  {
+    id: 'SharedBridge',
+    type: BadgeType.Other,
+    name: 'Shared Bridge',
+    description: 'This project uses a shared bridge contract',
+  },
 ] as const satisfies Badge[]
 
 type AnyBadge = (typeof badges)[number]

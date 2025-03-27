@@ -26,8 +26,13 @@ export class ValueService {
       const values: TokenValue[] = []
 
       for (const token of config.tokens) {
-        const amount = await this.executeFormula(token.amount, timestamp)
+        const amount = await this.executeFormula(
+          token.id,
+          token.amount,
+          timestamp,
+        )
         const value = await this.executeValueFormula(
+          token.id,
           {
             amount: token.amount,
             priceId: token.priceId,
@@ -36,11 +41,15 @@ export class ValueService {
         )
 
         const valueForProject = token.valueForProject
-          ? await this.executeFormula(token.valueForProject, timestamp)
+          ? await this.executeFormula(
+              token.id,
+              token.valueForProject,
+              timestamp,
+            )
           : value
 
         const valueForTotal = token.valueForTotal
-          ? await this.executeFormula(token.valueForTotal, timestamp)
+          ? await this.executeFormula(token.id, token.valueForTotal, timestamp)
           : (valueForProject ?? value)
 
         values.push({
@@ -65,6 +74,7 @@ export class ValueService {
   }
 
   private async executeAmountFormula(
+    tokenId: string,
     formula: AmountFormula,
     timestamp: UnixTime,
   ): Promise<BigIntWithDecimals | undefined> {
@@ -84,7 +94,7 @@ export class ValueService {
       }
 
       throw new Error(
-        `Amount not found for ${config.id} within configured range (timestamp: ${timestamp}, since: ${config.sinceTimestamp}, until: ${config.untilTimestamp})`,
+        `${tokenId}: Amount not found for ${config.id} within configured range (timestamp: ${timestamp}, since: ${config.sinceTimestamp}, until: ${config.untilTimestamp})`,
       )
     }
 
@@ -92,6 +102,7 @@ export class ValueService {
   }
 
   private async executeValueFormula(
+    tokenId: string,
     formula: ValueFormula,
     timestamp: UnixTime,
   ): Promise<BigIntWithDecimals> {
@@ -100,10 +111,10 @@ export class ValueService {
 
     assert(
       price !== undefined,
-      `Price not found for ${formula.priceId} at ${timestamp}`,
+      `${tokenId}: Price not found for ${formula.priceId} at ${timestamp}`,
     )
 
-    const amount = await this.executeFormula(formula.amount, timestamp)
+    const amount = await this.executeFormula(tokenId, formula.amount, timestamp)
     const value = BigIntWithDecimals.multiply(
       amount,
       BigIntWithDecimals.fromNumber(price),
@@ -112,15 +123,17 @@ export class ValueService {
   }
 
   private async executeFormula(
+    tokenId: string,
     formula: CalculationFormula | ValueFormula | AmountFormula,
     timestamp: UnixTime,
   ): Promise<BigIntWithDecimals> {
     const executeFormulaRecursive = async (
+      tokenId: string,
       formula: CalculationFormula | ValueFormula | AmountFormula,
       timestamp: UnixTime,
     ): Promise<BigIntWithDecimals> => {
       if (formula.type === 'value') {
-        return await this.executeValueFormula(formula, timestamp)
+        return await this.executeValueFormula(tokenId, formula, timestamp)
       }
 
       if (formula.type === 'calculation') {
@@ -131,7 +144,11 @@ export class ValueService {
             index: number,
           ) => {
             const valueAcc = await acc
-            const value = await executeFormulaRecursive(current, timestamp)
+            const value = await executeFormulaRecursive(
+              tokenId,
+              current,
+              timestamp,
+            )
 
             switch (formula.operator) {
               case 'sum':
@@ -150,9 +167,11 @@ export class ValueService {
         )
       }
 
-      return (await this.executeAmountFormula(formula, timestamp)) ?? 0n
+      return (
+        (await this.executeAmountFormula(tokenId, formula, timestamp)) ?? 0n
+      )
     }
 
-    return await executeFormulaRecursive(formula, timestamp)
+    return await executeFormulaRecursive(tokenId, formula, timestamp)
   }
 }

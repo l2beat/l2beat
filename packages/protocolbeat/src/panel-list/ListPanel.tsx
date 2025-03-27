@@ -47,14 +47,19 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
 
   return (
     <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
-      <button
-        onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase hover:bg-autumn-600"
-      >
-        {open && <IconChevronDown />}
-        {!open && <IconChevronRight />}
-        {`${props.entry.project} on ${props.entry.chain}`}
-      </button>
+      <div className="group flex h-[22px] items-center justify-between pr-1 hover:bg-autumn-600">
+        <button
+          onClick={() => setOpen((open) => !open)}
+          className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+        >
+          {open && <IconChevronDown />}
+          {!open && <IconChevronRight />}
+          {`${props.entry.project} on ${props.entry.chain}`}
+        </button>
+        <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
+          @ {props.entry.blockNumber}
+        </span>
+      </div>
       {open && (
         <>
           <ListItemContracts

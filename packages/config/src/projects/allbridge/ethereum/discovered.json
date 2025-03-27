@@ -23,7 +23,8 @@
         "$immutable": true,
         "chainId": 1,
         "owner": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622"
-      }
+      },
+      "derivedName": "GasOracle"
     },
     {
       "name": "AllbridgeMessenger",
@@ -146,7 +147,8 @@
         "tokenBalance": 2164979954,
         "totalSupply": 4228996248,
         "vUsdBalance": 2064802206
-      }
+      },
+      "derivedName": "Pool"
     },
     {
       "name": "WormholeMessenger",
@@ -163,7 +165,8 @@
         "chainId": 1,
         "otherChainIds": "0x0000010001010100010101010001000000000000000000000000000000000000",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
-      }
+      },
+      "derivedName": "WormholeMessenger"
     },
     {
       "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
@@ -253,7 +256,8 @@
         "tokenBalance": 3335746174,
         "totalSupply": 6528249557,
         "vUsdBalance": 3193634544
-      }
+      },
+      "derivedName": "Pool"
     },
     {
       "address": "0xb7C522Adb3429e2C7474df324c7a3744A5803414",
@@ -330,7 +334,8 @@
         "chainId": 1,
         "getDomainByChainId": [5],
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
-      }
+      },
+      "derivedName": "CctpBridge"
     },
     {
       "name": "OldWormholeMessenger",

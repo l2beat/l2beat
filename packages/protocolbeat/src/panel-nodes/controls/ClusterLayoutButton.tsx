@@ -26,20 +26,22 @@ interface SimulationNode extends SimulationNodeDatum {
 
 export function ClusterLayoutButton() {
   const nodes = useStore((state) => state.nodes)
+  const hiddenNodes = useStore((state) => state.hidden)
+  const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
   const layout = useStore((state) => state.layout)
   const [updatingLayout, setUpdatingLayout] = useState<boolean>(false)
 
   const draw = () => {
     if (!updatingLayout) return
 
-    const simNodes: SimulationNode[] = nodes.map((node) => ({
+    const simNodes: SimulationNode[] = visibleNodes.map((node) => ({
       id: node.id,
       x: node.box.x / SIM_SCALE,
       y: node.box.y / SIM_SCALE,
       node,
     }))
 
-    const links = nodes
+    const links = visibleNodes
       .flatMap((node) =>
         node.fields.map((field) => ({
           source: node.id,

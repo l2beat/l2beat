@@ -60,7 +60,7 @@ export function initActivityModule(
           logger,
           projectId: project.id,
           batchSize: project.batchSize,
-          minHeight: 1,
+          minHeight: project.activityConfig.startBlock ?? 1,
           parents: [blockTargetIndexer],
           txsCountService,
           indexerService,

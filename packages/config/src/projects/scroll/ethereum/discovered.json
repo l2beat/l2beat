@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22029702,
+  "blockNumber": 22123508,
   "configHash": "0x9569e25516bc0bb36f559226e0df135b8f50b8ee2f9d38a8448432db28d4a9a7",
   "entries": [
     {
@@ -139,13 +139,13 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "gasOracle": "0x987e300fDfb06093859358522a79098848C33852",
-        "l2BaseFee": 40534634,
+        "l2BaseFee": 39323435,
         "maxGasLimit": 10000000,
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 952210,
-        "nextUnfinalizedQueueIndex": 952207,
+        "nextCrossDomainMessageIndex": 952652,
+        "nextUnfinalizedQueueIndex": 952648,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
-        "pendingQueueIndex": 952209,
+        "pendingQueueIndex": 952652,
         "scrollChain": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "whitelistChecker": "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
       },
@@ -237,9 +237,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 12 (17%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "Scroll Security Council",
@@ -276,7 +277,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe",
@@ -314,7 +315,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -357,7 +358,8 @@
         "$immutable": true,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "whitelisted": ["0x3a2855ea96b2eb965568eA5d738B8DE185C717f4"]
-      }
+      },
+      "derivedName": "Whitelist"
     },
     {
       "address": "0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5",
@@ -378,7 +380,8 @@
         "$immutable": true,
         "plonkVerifier": "0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9",
         "verifierDigest": "0x30513ba1873ce1b9598c4faf101dccd32498e93c39e1f31a423390cbb1f81f7a"
-      }
+      },
+      "derivedName": "ZkEvmVerifierV2"
     },
     {
       "address": "0x30315233090F675520eef5CBd7A6cf7d185af443",
@@ -394,8 +397,7 @@
       "name": "L2USDCGatewayFallback",
       "address": "0x33B60d5Dd260d453cAC3782b0bDC01ce84672142",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x383C148ba96956F985F6141B2D119add1C34e3B7",
@@ -479,7 +481,8 @@
       "values": {
         "$immutable": true,
         "plonkVerifier": "0x2293cd12e8564e8219d314b075867c2f66ac6941"
-      }
+      },
+      "derivedName": "ZkEvmVerifierV1"
     },
     {
       "name": "PlonkVerifierV0",
@@ -538,7 +541,8 @@
         "legacyVerifiersLength": [0, 0, 0, 0, 0],
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "verifierVersions": [0, 1, 2, 3, 4]
-      }
+      },
+      "derivedName": "MultipleVersionRollupVerifier"
     },
     {
       "address": "0x5300000000000000000000000000000000000004",
@@ -565,8 +569,7 @@
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L1BatchBridgeGateway",
@@ -609,7 +612,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "queue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      }
+      },
+      "derivedName": "L1BatchBridgeGateway"
     },
     {
       "name": "L2ERC1155GatewayFallback",
@@ -665,7 +669,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "L1ERC721Gateway"
     },
     {
       "name": "ZkEvmVerifierV1-1",
@@ -838,7 +843,8 @@
         "paused": false,
         "rollup": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "xDomainMessageSender": "0x0000000000000000000000000000000000000001"
-      }
+      },
+      "derivedName": "L1ScrollMessenger"
     },
     {
       "address": "0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3",
@@ -873,7 +879,8 @@
         "multisigThreshold": "1 of 3 (33%)",
         "nonce": 2,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "L2ETHGatewayFallback",
@@ -971,7 +978,8 @@
           "severity": "HIGH",
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
         }
-      }
+      },
+      "derivedName": "EnforcedTxGateway"
     },
     {
       "address": "0x74b286304576625557629C47E9E8702383D9eF92",
@@ -1099,10 +1107,7 @@
           "roles": {
             "DEFAULT_ADMIN_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
-              "members": [
-                "0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-                "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
-              ]
+              "members": ["0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"]
             },
             "SECURITY_COUNCIL_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1192,7 +1197,8 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "ScrollOwner"
     },
     {
       "name": "L1WETHGateway",
@@ -1233,7 +1239,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      }
+      },
+      "derivedName": "L1WETHGateway"
     },
     {
       "name": "L2ERC721GatewayFallback",
@@ -1289,7 +1296,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      }
+      },
+      "derivedName": "L1ETHGateway"
     },
     {
       "name": "TimelockEmergency",
@@ -1411,9 +1419,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "Scroll Multisig 4",
@@ -1489,7 +1498,8 @@
         "multisigThreshold": "1 of 2 (50%)",
         "nonce": 1,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "OLD_L2GasPriceOracle",
@@ -1627,7 +1637,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "lastFinalizedBatchIndex": 356430,
+        "lastFinalizedBatchIndex": 356908,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
@@ -1652,7 +1662,8 @@
           "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
         ],
         "verifier": "0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
-      }
+      },
+      "derivedName": "ScrollChain"
     },
     {
       "address": "0xa1a12158bE6269D7580C63eC5E609Cdc0ddD82bC",
@@ -1712,7 +1723,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      }
+      },
+      "derivedName": "L1CustomERC20Gateway"
     },
     {
       "address": "0xb3dd2CA3F575FCDd79F5Cd45c5a6c9db860F3E4d",
@@ -1757,7 +1769,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "L1ERC1155Gateway"
     },
     {
       "address": "0xbB2491beFBd46CF26F7e9B9Dec16E0c31f9c5ae3",
@@ -1823,9 +1836,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "L2TokenImplementationFallback",
@@ -1905,7 +1919,8 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
-      }
+      },
+      "derivedName": "L1StandardERC20Gateway"
     },
     {
       "address": "0xDD659911EcBD4458db07Ee7cDdeC79bf8F859AbC",
@@ -2024,7 +2039,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xEbbeeAA424AE904508465a41c927Be594C43Dc68",
@@ -2111,9 +2127,10 @@
         "messenger": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 18231081410272,
+        "totalBridgedUSDC": 17657501918144,
         "withdrawPaused": false
-      }
+      },
+      "derivedName": "L1USDCGateway"
     },
     {
       "name": "L1GatewayRouter",
@@ -2148,7 +2165,8 @@
         "ethGateway": "0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
         "gatewayInContext": "0x0000000000000000000000000000000000000000",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6"
-      }
+      },
+      "derivedName": "L1GatewayRouter"
     },
     {
       "address": "0xF9062b8a30e0d7722960e305049FA50b86ba6253",

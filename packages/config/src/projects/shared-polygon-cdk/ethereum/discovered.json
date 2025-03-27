@@ -783,6 +783,7 @@
           "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
+      "derivedName": "PolygonRollupManager",
       "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }],
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
