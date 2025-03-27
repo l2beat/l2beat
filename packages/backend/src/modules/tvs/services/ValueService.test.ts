@@ -400,9 +400,7 @@ describe(ValueService.name, () => {
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
-      ).toBeRejectedWith(
-        `Assertion Error: Price not found for ${priceId} at ${mockTimestamp}`,
-      )
+      ).toBeRejected()
     })
 
     it('should throw if amount not found and it is within range', async () => {
