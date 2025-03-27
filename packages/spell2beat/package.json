@@ -1,0 +1,20 @@
+{
+  "name": "spell2beat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "spell2beat": "node -r esbuild-register src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
+    "@openrouter/ai-sdk-provider": "^0.4.4",
+    "agent-twitter-client": "^0.0.18",
+    "ai": "^4.2.6"
+  }
+}
