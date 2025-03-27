@@ -86,7 +86,7 @@ const functionSignatures: Record<string, string> = {
   '0x08d6122d': 'setTargetFunctionRole(address,bytes4[],uint64)',
   '0x18ff183c': 'updateAuthority(address,address)',
 
-  // External Delays
+  // delays in non-AM contracts
   '0xd00bb535': 'EXIT_WINDOW_PERIOD()', // KintoID
   '0x8b1b3b45': 'RECOVERY_TIME()', // KintoWallet
 }
@@ -180,7 +180,7 @@ interface ScheduledOperation {
 }
 
 interface ComplianceIssue {
-  type: string // e.g., 'Actor Execution Delay', 'Target Admin Delay', 'External Delay'
+  type: string // e.g., 'Actor Execution Delay', 'Target Admin Delay', 'Non-AM Delay'
   item: string // e.g., 'Kinto Multisig 2 (ADMIN_ROLE)', 'KintoWalletFactory', 'KintoID.EXIT_WINDOW_PERIOD'
   currentValue: number
   requiredValue: number
@@ -829,7 +829,7 @@ async function fetchExternalDelays(
   kintoIdExitWindow: number | null
   kintoWalletRecoveryTime: number | null
 }> {
-  console.log(chalk.bold('\nFetching external delay values...'))
+  console.log(chalk.bold('\nFetching non-AM delay values...'))
   let kintoIdExitWindow: number | null = null
   let kintoWalletRecoveryTime: number | null = null
 
@@ -922,7 +922,7 @@ function checkCompliance(
   if (externalDelays.kintoIdExitWindow !== null) {
     if (externalDelays.kintoIdExitWindow < MIN_DELAY_SECONDS) {
       issues.push({
-        type: 'External Delay',
+        type: 'Non-AM Delay',
         item: 'KintoID.EXIT_WINDOW_PERIOD',
         currentValue: externalDelays.kintoIdExitWindow,
         requiredValue: MIN_DELAY_SECONDS,
@@ -930,7 +930,7 @@ function checkCompliance(
     }
   } else {
     issues.push({
-      type: 'External Delay',
+      type: 'Non-AM Delay',
       item: 'KintoID.EXIT_WINDOW_PERIOD',
       currentValue: -1,
       requiredValue: MIN_DELAY_SECONDS,
@@ -942,7 +942,7 @@ function checkCompliance(
   if (externalDelays.kintoWalletRecoveryTime !== null) {
     if (externalDelays.kintoWalletRecoveryTime < MIN_DELAY_SECONDS) {
       issues.push({
-        type: 'External Delay',
+        type: 'Non-AM Delay',
         item: `KintoWallet.RECOVERY_TIME (from ${formatAddress(KINTO_WALLET_EXAMPLE_ADDRESS)})`,
         currentValue: externalDelays.kintoWalletRecoveryTime,
         requiredValue: MIN_DELAY_SECONDS,
@@ -950,7 +950,7 @@ function checkCompliance(
     }
   } else {
     issues.push({
-      type: 'External Delay',
+      type: 'Non-AM Delay',
       item: `KintoWallet.RECOVERY_TIME (from ${formatAddress(KINTO_WALLET_EXAMPLE_ADDRESS)})`,
       currentValue: -1,
       requiredValue: MIN_DELAY_SECONDS,
