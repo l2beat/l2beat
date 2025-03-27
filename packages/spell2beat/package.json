@@ -19,6 +19,7 @@
     "better-sqlite3": "^11.9.1"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.12"
+    "@types/better-sqlite3": "^7.6.12",
+    "@l2beat/typescript-config": "workspace:*"
   }
 }

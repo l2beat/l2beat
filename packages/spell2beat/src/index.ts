@@ -20,6 +20,9 @@ async function checkTweets() {
     )
 
     for (const tweet of filteredTweets) {
+      if (!tweet.text || !tweet.id) {
+        continue
+      }
       const response = await generateResponse(tweet.text)
       await scraper.sendTweet(response, tweet.id)
       insertTweet(tweet.id)
