@@ -8,7 +8,7 @@ import { render } from './ssr/entry.server'
 import type { RenderData } from './ssr/types'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const port = process.env.PORT || 5173
+const port = process.env.PORT || 3000
 
 const manifest = getManifest(isProduction, process.cwd())
 const template = getTemplate(manifest)
