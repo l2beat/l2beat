@@ -1,5 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { Scraper, SearchMode } from 'agent-twitter-client'
+import { insertTweet } from './utils/db'
 import { filterTweets } from './utils/filterTweets'
 import { generateResponse } from './utils/generateResponse'
 
@@ -19,6 +20,7 @@ async function main() {
   for (const tweet of filteredTweets) {
     const response = await generateResponse(tweet.text)
     await scraper.sendTweet(response, tweet.id)
+    insertTweet(tweet.id)
   }
 }
 

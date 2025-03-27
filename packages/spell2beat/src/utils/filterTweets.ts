@@ -1,7 +1,12 @@
 import type { Tweet } from 'agent-twitter-client'
+import { getTweetsInDb } from './db'
 
 export function filterTweets(tweets: Tweet[]) {
+  const tweetsInDb = getTweetsInDb(tweets.map((tweet) => tweet.id))
+
   return tweets.filter((tweet) => {
+    if (tweetsInDb.includes(tweet.id)) return false
+
     let processedText = tweet.text
 
     processedText = processedText.replace(
