@@ -32,6 +32,7 @@ esbuild \
   rewrite/src/ssr/client.tsx \
   --bundle \
   --watch=forever \
+  --tsconfig=rewrite/tsconfig.json \
   --outfile=rewrite/static/index.js &
 pids+=($!)
 
