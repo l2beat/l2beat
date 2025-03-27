@@ -10,7 +10,7 @@ import { getManifest, type Manifest } from './common/Manifest'
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
 
-const manifest = getManifest(isProduction)
+const manifest = getManifest(isProduction, process.cwd())
 const template = getTemplate(manifest)
 
 const app = express()

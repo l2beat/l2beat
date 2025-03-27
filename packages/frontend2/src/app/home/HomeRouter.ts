@@ -1,5 +1,5 @@
 import type { Router } from 'express'
-import { getImage, type Manifest } from '../../common/Manifest'
+import type { Manifest } from '../../common/Manifest'
 import type { Render } from '../../ssr/types'
 import type { SsrData } from '../App'
 
@@ -15,7 +15,7 @@ function getHomeProps(manifest: Manifest): SsrData {
   return {
     page: 'HomePage',
     props: {
-      logoImg: getImage(manifest, '/static/logo.png'),
+      logoImg: manifest.getImage('/static/logo.png'),
       city: 'Warsaw',
       letter: 'A',
       products: [1, 2, 3],

@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { imageSize } from 'image-size'
+import path from 'path'
 
 export interface ManifestJson {
   names: Record<string, string>
@@ -11,7 +12,7 @@ export interface Manifest {
   getImage(url: string): { src: string; width: number; height: number }
 }
 
-export function getManifest(isProduction: boolean) {
+export function getManifest(isProduction: boolean, rootDir: string) {
   if (isProduction) {
     const content = fs.readFileSync('dist/manifest.json', 'utf-8')
     const json = JSON.parse(content) as ManifestJson
@@ -37,7 +38,7 @@ export function getManifest(isProduction: boolean) {
         return url
       },
       getImage(url: string) {
-        const content = fs.readFileSync(url)
+        const content = fs.readFileSync(path.join(rootDir, url))
         const dimensions = imageSize(content)
         return {
           src: url,
