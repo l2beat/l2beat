@@ -93,17 +93,13 @@ export class DBStorage implements DataStorage {
       configurationId,
       timestamp,
     )
-    assert(
-      fallback,
-      `Amount fallback failed for ${configurationId} for ${timestamp}`,
-    )
 
     this.logger.warn(`Amount fallback triggered`, {
       configurationId,
       timestamp,
-      fallbackTimestamp: fallback.timestamp,
-      fallbackAmount: fallback.amount,
+      fallbackTimestamp: fallback?.timestamp,
+      fallbackAmount: fallback?.amount,
     })
-    return fallback.amount
+    return fallback?.amount
   }
 }
