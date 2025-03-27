@@ -135,7 +135,7 @@ function bnToNumber(value: ethers.BigNumber | number): number {
   // Handle potential overflow for large BigNumbers if necessary, though delays should fit in JS number
   try {
     return value.toNumber()
-  } catch (e) {
+  } catch (_e) {
     console.warn(
       chalk.yellow(
         `Warning: BigNumber ${value.toString()} too large for JS number, returning as string.`,
@@ -246,7 +246,7 @@ function decodeOperationData(selector: string, data: string): string {
 
     // Fallback for other functions if direct decoding fails or is not specific enough
     return functionName
-  } catch (error) {
+  } catch (_error) {
     // If decoding fails, just return the function signature or selector
     // console.warn(`Decoding failed for selector ${selector}:`, error);
     return functionSignatures[selector] || selector
@@ -516,7 +516,7 @@ async function fetchRoleData(
         members: new Map(),
       })
     }
-    const roleData = rolesData.get(roleId)! // We know it exists now
+    const roleData = rolesData.get(roleId)!
 
     // Get current delay from contract to be sure
     try {
@@ -545,7 +545,7 @@ async function fetchRoleData(
       }
     } else {
       // Ensure no stale pending delay if the latest change is already effective
-      delete roleData.pendingGrantDelay
+      roleData.pendingGrantDelay = undefined
     }
   }
 
@@ -613,11 +613,12 @@ async function fetchRoleData(
           }
         }
       } catch (error) {
+        const errour = error as Error
         console.error(
           chalk.red(
             `- Error fetching role data for ${formatAddress(account)} and role ${roleNames[roleId] || roleId}:`,
           ),
-          error.message,
+          errour.message,
         )
       }
     }
@@ -636,15 +637,16 @@ async function fetchRoleData(
           roleData.pendingGrantDelay &&
           roleData.pendingGrantDelay.effect <= currentTimestamp
         ) {
-          delete roleData.pendingGrantDelay
+          roleData.pendingGrantDelay = undefined
         }
       }
     } catch (error) {
+      const errour = error as Error
       console.error(
         chalk.red(
           `- Error fetching grant delay for role ${roleNames[roleId] || roleId}:`,
         ),
-        error.message,
+        errour.message,
       )
     }
   }
@@ -811,21 +813,22 @@ async function fetchTargetData(
               c.newDelay === latestChange.delay,
           )
         ) {
-          targetData[target].pendingAdminDelayChanges!.push({
+          targetData[target].pendingAdminDelayChanges?.push({
             newDelay: latestChange.delay,
             effect: latestChange.since,
           })
         }
       } else if (latestChange && latestChange.since <= currentTimestamp) {
         // If the latest change is effective, ensure no pending change is recorded from older events
-        delete targetData[target].pendingAdminDelayChanges
+        targetData[target].pendingAdminDelayChanges = undefined
       }
     } catch (error) {
+      const errour = error as Error
       console.error(
         chalk.red(
           `- Error fetching config for target ${formatAddress(target)}:`,
         ),
-        error.message,
+        errour.message,
       )
       // Assign default/event-based values if contract call fails
       const latestChange = latestAdminDelayChanges[target]
@@ -1470,11 +1473,12 @@ export async function runScanKintoAm(): Promise<void> {
         ),
       )
     } catch (e) {
+      const error = e as Error
       console.error(
         chalk.red(
           `- Error fetching KintoID.EXIT_WINDOW_PERIOD from ${KINTO_ID_ADDRESS}:`,
         ),
-        e.message,
+        error.message,
       )
     }
     try {
@@ -1486,11 +1490,12 @@ export async function runScanKintoAm(): Promise<void> {
         ),
       )
     } catch (e) {
+      const error = e as Error
       console.error(
         chalk.red(
           `- Error fetching KintoWallet_Example.RECOVERY_TIME from ${KINTO_WALLET_EXAMPLE_ADDRESS}:`,
         ),
-        e.message,
+        error.message,
       )
     }
 
