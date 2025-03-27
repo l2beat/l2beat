@@ -27,7 +27,7 @@ export abstract class ClientCore {
   metricsBuffer: { duration: number; size: number }[] = []
 
   constructor(private readonly deps: ClientCoreDependencies) {
-    this.logger = deps.logger.tag({ source: deps.sourceName })
+    this.logger = deps.logger.for(this).tag({ source: deps.sourceName })
     this.retryHandler = RetryHandler.create(
       deps.retryStrategy,
       this.logger.tag({ tag: deps.sourceName, source: deps.sourceName }),
@@ -124,6 +124,6 @@ export abstract class ClientCore {
     //clear buffer
     this.metricsBuffer.splice(0)
 
-    this.deps.logger.info('Http metrics', { ...metrics })
+    this.logger.info('Http metrics', { ...metrics })
   }
 }
