@@ -19,6 +19,26 @@ export class HttpClient {
     return res.json()
   }
 
+  async fetchEx(url: string, init: RequestInit) {
+    const res = await fetch(url, {
+      ...init,
+      timeout: init.timeout ?? 10_000,
+    })
+
+    if (!res.ok) {
+      throw new Error(`HTTP error: ${res.status} ${res.statusText}`)
+    }
+
+    const text = await res.text()
+    const size = Buffer.byteLength(text, 'utf8')
+    const json = JSON.parse(text)
+
+    return {
+      json,
+      size,
+    }
+  }
+
   async fetchRaw(url: string, init: RequestInit & { timeout?: number }) {
     return await fetch(url, {
       ...init,
