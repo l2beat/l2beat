@@ -780,6 +780,14 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
   ],
   milestones: [
     {
+      title: 'Appchain Stage 1',
+      url: 'https://medium.com/mamori-finance/kinto-is-now-a-stage1-appchain-2cf3c81546ea',
+      date: '2025-03-27T00:00:00Z',
+      description:
+        'Users can exit the L2 in case of unwanted upgrades by actors other than the Security Council.',
+      type: 'general',
+    },
+    {
       title: 'Security Council Governance',
       url: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
       date: '2024-11-03T00:00:00Z',
