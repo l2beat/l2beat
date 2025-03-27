@@ -38,7 +38,8 @@
           "severity": "LOW",
           "description": "Tip that gets added to a gas reimbursement for processing the rollup."
         }
-      }
+      },
+      "derivedName": "AztecFeeDistributor"
     },
     {
       "name": "TurboVerifier",
@@ -52,7 +53,8 @@
       "description": "Turbo Plonk ZK verifier.",
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "TurboVerifier"
     },
     {
       "name": "RollupProcessor",
@@ -156,7 +158,8 @@
           "description": "Address of the ZK verifier.",
           "type": "PERMISSION"
         }
-      }
+      },
+      "derivedName": "RollupProcessor"
     },
     {
       "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
@@ -197,8 +200,7 @@
       "name": "FirstAnvilAddress",
       "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",

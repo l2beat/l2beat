@@ -207,7 +207,7 @@ describe(DBStorage.name, () => {
       }
 
       const tvsPrice = mockObject<Database['tvsPrice']>({
-        getLatestPrice: mockFn().resolvesTo(fallbackPrice),
+        getLatestPriceBefore: mockFn().resolvesTo(fallbackPrice),
       })
 
       const storage = new DBStorage(
@@ -221,34 +221,15 @@ describe(DBStorage.name, () => {
       const result = await storage.getPrice(configId, timestamp)
 
       expect(result).toEqual(900)
-      expect(tvsPrice.getLatestPrice).toHaveBeenCalledWith(configId)
-    })
-
-    it('throws error when fallback fails', async () => {
-      const timestamp = UnixTime(100)
-      const configId = 'config1'.repeat(2)
-
-      const tvsPrice = mockObject<Database['tvsPrice']>({
-        getLatestPrice: mockFn().resolvesTo(undefined),
-      })
-
-      const storage = new DBStorage(
-        mockObject<Database>({
-          tvsPrice,
-        }),
-        Logger.SILENT,
+      expect(tvsPrice.getLatestPriceBefore).toHaveBeenCalledWith(
+        configId,
+        timestamp,
       )
-      ;(storage as any).prices = new Map([[timestamp, new Map()]])
-
-      await expect(storage.getPrice(configId, timestamp)).toBeRejectedWith(
-        `Price fallback failed for ${configId}`,
-      )
-      expect(tvsPrice.getLatestPrice).toHaveBeenCalledWith(configId)
     })
   })
 
   describe(DBStorage.prototype.getAmount.name, () => {
-    it('returns amount from memory', async () => {
+    it('returns amount from memory when available', async () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
@@ -262,31 +243,37 @@ describe(DBStorage.name, () => {
       expect(result).toEqual(100n)
     })
 
-    it('returns undefined when amount not found', async () => {
+    it('falls back to latest amount when not in memory', async () => {
       const timestamp = UnixTime(100)
+      const latestTimestamp = UnixTime(50)
       const configId = 'config1'.repeat(2)
 
-      const storage = new DBStorage({} as Database, Logger.SILENT)
+      const fallbackAmount = {
+        configurationId: configId,
+        timestamp: latestTimestamp,
+        project: 'project1',
+        amount: 200n,
+      }
+
+      const tvsAmount = mockObject<Database['tvsAmount']>({
+        getLatestAmountBefore: mockFn().resolvesTo(fallbackAmount),
+      })
+
+      const storage = new DBStorage(
+        mockObject<Database>({
+          tvsAmount,
+        }),
+        Logger.SILENT,
+      )
       ;(storage as any).amounts = new Map([[timestamp, new Map()]])
 
       const result = await storage.getAmount(configId, timestamp)
 
-      expect(result).toEqual(undefined)
-    })
-
-    it('returns undefined when timestamp not found', async () => {
-      const timestamp1 = UnixTime(100)
-      const timestamp2 = UnixTime(200)
-      const configId = 'config1'.repeat(2)
-
-      const storage = new DBStorage({} as Database, Logger.SILENT)
-      ;(storage as any).amounts = new Map([
-        [timestamp1, new Map([[configId, 100n]])],
-      ])
-
-      const result = await storage.getAmount(configId, timestamp2)
-
-      expect(result).toEqual(undefined)
+      expect(result).toEqual(200n)
+      expect(tvsAmount.getLatestAmountBefore).toHaveBeenCalledWith(
+        configId,
+        timestamp,
+      )
     })
   })
 })

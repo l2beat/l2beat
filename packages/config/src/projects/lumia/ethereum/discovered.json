@@ -96,6 +96,7 @@
         "owner": "0x258862dec9a77db57b398c441390783293E2a7A1",
         "requiredAmountOfSignatures": 1
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -221,7 +222,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",

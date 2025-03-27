@@ -98,6 +98,7 @@ const getCachedDaThroughputTableData = cache(
                         2,
                       ),
                       totalPosted: Number(largestPoster.totalSize),
+                      href: `/scaling/projects/${largestPoster.slug}`,
                     }
                   : undefined,
                 maxThroughputPerSecond,
@@ -142,6 +143,7 @@ function getMockDaThroughputTableData(
                 name: 'Base',
                 percentage: 12,
                 totalPosted: 123123,
+                href: '/scaling/projects/base',
               },
               pastDayAvgCapacityUtilization: 24,
               totalPosted: 10312412,
@@ -168,6 +170,7 @@ function getMockDaThroughputTableData(
                 name: 'Base',
                 percentage: 40,
                 totalPosted: 123123,
+                href: '/scaling/projects/base',
               },
               pastDayAvgCapacityUtilization: 48,
               totalPosted: 20312412,
@@ -242,6 +245,7 @@ async function getLargestPosters(
 
   const largestPostersProjects = await ps.getProjects({
     ids: Object.values(largestPosters).map((p) => ProjectId(p.projectId)),
+    select: ['scalingInfo'],
   })
 
   return Object.fromEntries(
@@ -254,6 +258,7 @@ async function getLargestPosters(
         daLayer,
         {
           name: largestPosterProject.name,
+          slug: largestPosterProject.slug,
           ...largestPoster,
         },
       ] as const

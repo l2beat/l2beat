@@ -100,6 +100,7 @@
         "owner": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
         "requiredAmountOfSignatures": 2
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -122,7 +123,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Validium",

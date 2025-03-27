@@ -123,12 +123,18 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
           UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted records', {
-        from: configuration.from,
-        to: configuration.to,
-        id: configuration.id,
-        deletedRecords,
-      })
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted records for configuration', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          deletedRecords,
+        })
+      }
     }
+  }
+
+  static SOURCE() {
+    return 'l2b-circulating-supply'
   }
 }

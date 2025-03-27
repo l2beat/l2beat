@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "spam",
+  "description": "Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.",
+  "ignoreRelatives": ["WETH_TOKEN", "bridgedTokenBeacon"]
+}

@@ -59,7 +59,7 @@ export const grvt: ScalingProject = zkStackL2({
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
+          url: 'https://etherscan.io/address//0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800#code#F1#L46',
         },
       ],
     },
@@ -95,7 +95,7 @@ export const grvt: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
+          url: 'https://etherscan.io/address//0x36b026c39125964D99596CE302866B5A59E4dE27#code#F1#L441',
         },
         {
           title: 'TransactionFilterer',

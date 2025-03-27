@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
@@ -42,8 +43,27 @@ export async function getTvsConfig(
     sinceTimestamp,
   )
 
+  const projectsWithSources = projects.map((p) => {
+    const amountChains = amounts
+      .filter((a) => a.project === p.projectId)
+      .map((a) => {
+        switch (a.type) {
+          case 'circulatingSupply':
+            return CirculatingSupplyAmountIndexer.SOURCE()
+          case 'balanceOfEscrow':
+          case 'totalSupply':
+            return a.chain
+          case 'const':
+            return undefined
+        }
+      })
+      .filter(notUndefined)
+
+    return { ...p, amountSources: Array.from(new Set(amountChains).values()) }
+  })
+
   return {
-    projects,
+    projects: projectsWithSources,
     amounts,
     prices,
     chains,
@@ -117,6 +137,7 @@ export async function getAmountsAndPrices(
       prices.set(price.priceId, price)
     }
 
+    assert(projectChains)
     for (const chain of projectChains) {
       chains.set(chain.chainName, chain)
     }

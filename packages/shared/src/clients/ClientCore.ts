@@ -18,7 +18,10 @@ export abstract class ClientCore {
 
   constructor(private readonly deps: ClientCoreDependencies) {
     const logger = deps.logger.tag({ source: deps.sourceName })
-    this.retryHandler = RetryHandler.create(deps.retryStrategy, logger)
+    this.retryHandler = RetryHandler.create(
+      deps.retryStrategy,
+      logger.tag({ tag: deps.sourceName, source: deps.sourceName }),
+    )
     this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
   }
 

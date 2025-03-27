@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb76cddf4e61d3b9ca3c59e10a2aa4afd10184fad
+
+# Diff at Fri, 21 Mar 2025 10:19:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 22045242
+- current block number: 22094603
+
+## Description
+
+Owner change for random token adapter.
+
+## Watched changes
+
+```diff
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052) {
+    +++ description: None
+      values.owner:
+-        "0x7884f7F04F994da14302a16Cf15E597e31eebECf"
++        "0x455DB34c99A866489F3ac63fa2F068c726BC286b"
+    }
+```
+
 Generated with discovered.json: 0x5d4301e07fa70e8853b02d925cae2853bcc70efa
 
 # Diff at Fri, 14 Mar 2025 12:53:54 GMT:

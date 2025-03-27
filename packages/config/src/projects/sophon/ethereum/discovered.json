@@ -245,6 +245,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -318,6 +319,7 @@
           "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -485,6 +487,7 @@
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1USDCBridge",
       "category": { "name": "External Bridges", "priority": 1 }
     }
   ],

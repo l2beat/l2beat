@@ -1,136 +1,676 @@
 {
-  "$id": "https://l2beat.com/contract.schema.json",
-  "title": "Discovery contract config",
-  "description": "Specific configuration for single contract discovery",
   "type": "object",
-  "unevaluatedProperties": false,
   "properties": {
-    "$schema": {
-      "type": "string"
+    "$schema": { "type": "string" },
+    "extends": { "$ref": "#/definitions/DiscoveryContract/properties/extends" },
+    "canActIndependently": {
+      "$ref": "#/definitions/DiscoveryContract/properties/canActIndependently"
     },
-    "extends": { "type": "string" },
-    "canActIndependently": { "type": "boolean" },
-    "ignoreDiscovery": { "type": "boolean" },
-    "proxyType": { "type": "string" },
+    "ignoreDiscovery": {
+      "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
+    },
+    "proxyType": {
+      "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
+    },
+    "displayName": {
+      "$ref": "#/definitions/DiscoveryContract/properties/displayName"
+    },
     "ignoreInWatchMode": {
-      "type": "array",
-      "items": { "type": "string" }
+      "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
     },
     "ignoreMethods": {
-      "type": "array",
-      "items": { "type": "string" }
+      "$ref": "#/definitions/DiscoveryContract/properties/ignoreMethods"
     },
     "ignoreRelatives": {
-      "type": "array",
-      "items": { "type": "string" }
+      "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
     },
-    "fields": {
-      "type": "object",
-      "unevaluatedProperties": false,
-      "patternProperties": {
-        "^.+$": {
+    "fields": { "$ref": "#/definitions/DiscoveryContract/properties/fields" },
+    "methods": { "$ref": "#/definitions/DiscoveryContract/properties/methods" },
+    "manualSourcePaths": {
+      "$ref": "#/definitions/DiscoveryContract/properties/manualSourcePaths"
+    },
+    "categories": {
+      "$ref": "#/definitions/DiscoveryContract/properties/categories"
+    },
+    "category": {
+      "$ref": "#/definitions/DiscoveryContract/properties/category"
+    },
+    "description": {
+      "$ref": "#/definitions/DiscoveryContract/properties/description"
+    },
+    "references": {
+      "$ref": "#/definitions/DiscoveryContract/properties/references"
+    },
+    "types": { "$ref": "#/definitions/DiscoveryContract/properties/types" }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "UserHandlerDefinition": {
+      "anyOf": [
+        {
           "type": "object",
-          "unevaluatedProperties": false,
           "properties": {
-            "description": { "type": ["string", "null"] },
-            "returnType": { "type": ["string", "null"] },
-            "severity": { "$ref": "severity.schema.json" },
-            "type": {
+            "type": { "type": "string", "const": "storage" },
+            "slot": {
               "anyOf": [
-                { "$ref": "#/$defs/valueType" },
+                {
+                  "anyOf": [
+                    { "type": "integer", "minimum": 0 },
+                    { "type": "string", "pattern": "^(0x)?[a-f\\d]*$" },
+                    { "type": "string", "pattern": "^([1-9]\\d*|0)$" },
+                    {
+                      "type": "string",
+                      "pattern": "^\\{\\{\\s*[$a-z_][$.a-z\\d_]*\\s*\\}\\}$"
+                    }
+                  ]
+                },
                 {
                   "type": "array",
-                  "items": { "$ref": "#/$defs/valueType" }
+                  "items": {
+                    "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0"
+                  },
+                  "minItems": 1
                 }
               ]
             },
-            "template": { "type": ["string", "null"] },
-            "permissions": {
-              "type": "array",
-              "items": { "$ref": "#/$defs/permission" }
-            },
-            "handler": {
-              "^.+$": {
-                "type": "object",
-                "required": ["type"],
-                "properties": {
-                  "type": { "type": "string" }
+            "offset": {
+              "anyOf": [
+                { "type": "integer", "minimum": 0 },
+                {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/2"
+                },
+                {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/3"
                 }
-              }
+              ]
+            },
+            "returnType": {
+              "type": "string",
+              "enum": ["address", "bytes", "number", "uint8"]
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type", "slot"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "dynamicArray" },
+            "slot": {
+              "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0"
+            },
+            "returnType": { "type": "string", "enum": ["address"] },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type", "slot"],
+          "additionalProperties": false
+        },
+        { "$ref": "#/definitions/UserHandlerDefinition/anyOf/1" },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "array" },
+            "indices": {
+              "anyOf": [
+                { "type": "array", "items": { "type": "number" } },
+                { "type": "string" }
+              ]
+            },
+            "method": { "type": "string" },
+            "length": {
+              "anyOf": [
+                { "type": "integer", "minimum": 0 },
+                {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/3"
+                }
+              ]
+            },
+            "maxLength": { "type": "integer", "minimum": 0 },
+            "startIndex": { "type": "integer", "minimum": 0 },
+            "pickFields": { "type": "array", "items": { "type": "string" } },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "call" },
+            "method": { "type": "string" },
+            "args": {
+              "type": "array",
+              "items": { "type": ["string", "number"] }
+            },
+            "ignoreRelative": { "type": "boolean" },
+            "pickFields": { "type": "array", "items": { "type": "string" } },
+            "expectRevert": { "type": "boolean" },
+            "address": { "type": "string" }
+          },
+          "required": ["type", "args"],
+          "additionalProperties": false
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "event" },
+                "select": {
+                  "anyOf": [
+                    { "type": "string" },
+                    { "type": "array", "items": { "type": "string" } }
+                  ]
+                },
+                "groupBy": { "type": "string" },
+                "ignoreRelative": { "type": "boolean" },
+                "set": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "event": {
+                          "anyOf": [
+                            { "type": "string" },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0/properties/event/anyOf/0"
+                              }
+                            }
+                          ]
+                        },
+                        "where": {}
+                      },
+                      "required": ["event"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      }
+                    }
+                  ]
+                },
+                "add": { "not": {} },
+                "remove": { "not": {} }
+              },
+              "required": ["type", "set"],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/type"
+                },
+                "select": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/select"
+                },
+                "groupBy": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/groupBy"
+                },
+                "ignoreRelative": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/ignoreRelative"
+                },
+                "set": { "not": {} },
+                "add": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      }
+                    }
+                  ]
+                },
+                "remove": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": ["type", "add"],
+              "additionalProperties": false
             }
-          }
-        }
-      }
-    },
-    "description": {
-      "description": "Description for the contract",
-      "type": "string"
-    },
-    "displayName": {
-      "description": "Name that will be displayed instead of the derived smart contract name",
-      "type": "string"
-    },
-    "methods": {
-      "type": "object",
-      "description": "Key-Value store for description <Method>: <Description>",
-      "unevaluatedProperties": false,
-      "patternProperties": {
-        "^.+$": {
-          "type": "string"
-        }
-      }
-    }
-  },
-  "$defs": {
-    "valueType": {
-      "type": ["string", "null"],
-      "enum": [
-        "CODE_CHANGE",
-        "L2",
-        "EXTERNAL",
-        "RISK_PARAMETER",
-        "PERMISSION",
-        null
-      ]
-    },
-    "permission": {
-      "type": "object",
-      "unevaluatedProperties": false,
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "propose",
-            "challenge",
-            "validate",
-            "operateLinea",
-            "validateZkStack",
-            "validateBridge",
-            "validateBridge2",
-            "relay",
-            "sequence",
-            "guard",
-            "fastconfirm",
-            "interact",
-            "upgrade",
-            "act",
-            "aggregatePolygon",
-            "operateStarknet",
-            "operateStarkEx",
-            "governStarknet"
           ]
         },
-        "delay": {
-          "type": "integer",
-          "minimum": 0
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "starkWareNamedStorage" },
+            "tag": { "type": "string" },
+            "returnType": {
+              "type": "string",
+              "enum": ["address", "bytes", "number"]
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type", "tag"],
+          "additionalProperties": false
         },
-        "description": { "type:": ["string", "null"] },
-        "condition": { "type:": ["string", "null"] }
-      }
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "accessControl" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
+            },
+            "pickRoleMembers": { "type": "string" },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "scrollAccessControl" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "kintoAccessControl" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]*$" }
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "lineaRolesModule" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "constructorArgs" },
+            "nameArgs": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "eventCount" },
+            "topics": {
+              "type": "array",
+              "items": { "type": ["string", "null"] }
+            }
+          },
+          "required": ["type", "topics"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "hardcoded" },
+            "value": {}
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "starkWareGovernance" },
+            "filterBy": { "type": "string" }
+          },
+          "required": ["type", "filterBy"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "layerZeroMultisig" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "arbitrumActors" },
+            "actorType": {
+              "type": "string",
+              "enum": ["validator", "batchPoster"]
+            }
+          },
+          "required": ["type", "actorType"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "arbitrumScheduledTransactions"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "opStackDA" },
+            "sequencerAddress": { "type": "string" }
+          },
+          "required": ["type", "sequencerAddress"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "opStackSequencerInbox" },
+            "sequencerAddress": { "type": "string" }
+          },
+          "required": ["type", "sequencerAddress"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "arbitrumSequencerVersion" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "arbitrumDACKeyset" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "eip2535Facets" },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "zksynceraScheduledTransactions"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "zksynceraValidators" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "orbitPostsBlobs" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "polygoncdkScheduledTransactions"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        }
+      ]
     },
-    "stackCategory": {
-      "type": ["string", "null"],
-      "enum": ["Core", "Gateways&Escrows", "Upgrades&Governance"]
+    "Permission": {
+      "type": "string",
+      "enum": [
+        "challenge",
+        "guard",
+        "propose",
+        "sequence",
+        "validate",
+        "operateLinea",
+        "fastconfirm",
+        "validateZkStack",
+        "validateBridge",
+        "validateBridge2",
+        "relay",
+        "aggregatePolygon",
+        "operateStarknet",
+        "operateStarkEx",
+        "governStarknet",
+        "member",
+        "act",
+        "interact",
+        "upgrade"
+      ]
+    },
+    "RawPermissionConfiguration": {
+      "type": "object",
+      "properties": {
+        "type": { "$ref": "#/definitions/Permission" },
+        "delay": { "type": ["number", "string"], "default": 0 },
+        "description": { "type": "string" },
+        "condition": { "type": "string" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "ContractValueType": {
+      "type": "string",
+      "enum": ["CODE_CHANGE", "L2", "EXTERNAL", "RISK_PARAMETER", "PERMISSION"]
+    },
+    "ContractFieldSeverity": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"]
+    },
+    "DiscoveryContractField": {
+      "type": "object",
+      "properties": {
+        "handler": { "$ref": "#/definitions/UserHandlerDefinition" },
+        "template": { "type": "string" },
+        "description": { "type": "string" },
+        "returnType": { "type": "string" },
+        "severity": { "$ref": "#/definitions/ContractFieldSeverity" },
+        "permissions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
+        },
+        "type": {
+          "anyOf": [
+            { "$ref": "#/definitions/ContractValueType" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ContractValueType" }
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DiscoveryCustomType": {
+      "type": "object",
+      "properties": {
+        "typeCaster": { "type": "string" },
+        "arg": {
+          "type": "object",
+          "additionalProperties": { "type": ["string", "number"] }
+        },
+        "description": { "type": "string" },
+        "severity": { "$ref": "#/definitions/ContractFieldSeverity" }
+      },
+      "additionalProperties": false
+    },
+    "ExternalReference": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "href": { "type": "string" }
+      },
+      "required": ["text", "href"],
+      "additionalProperties": false
+    },
+    "DiscoveryCategory": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "priority": { "type": "number" }
+      },
+      "required": ["name", "priority"],
+      "additionalProperties": false
+    },
+    "ManualProxyType": {
+      "type": "string",
+      "enum": [
+        "new Arbitrum proxy",
+        "call implementation proxy",
+        "zkSync Lite proxy",
+        "zkSpace proxy",
+        "Eternal Storage proxy",
+        "Polygon Extension proxy",
+        "Optics Beacon proxy",
+        "Axelar proxy",
+        "LightLink proxy",
+        "Everclear proxy",
+        "immutable"
+      ]
+    },
+    "DiscoveryContract": {
+      "type": "object",
+      "properties": {
+        "extends": { "type": "string" },
+        "canActIndependently": { "type": "boolean" },
+        "ignoreDiscovery": { "type": "boolean", "default": false },
+        "proxyType": { "$ref": "#/definitions/ManualProxyType" },
+        "displayName": { "type": "string" },
+        "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
+        "ignoreMethods": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "ignoreRelatives": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DiscoveryContractField"
+          },
+          "propertyNames": { "pattern": "^\\$?[a-z_][a-z\\d_]*$" },
+          "default": {}
+        },
+        "methods": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "default": {}
+        },
+        "manualSourcePaths": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "default": {}
+        },
+        "categories": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
+        },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "references": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ExternalReference" }
+        },
+        "types": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DiscoveryCustomType"
+          },
+          "default": {}
+        }
+      },
+      "additionalProperties": false
+    },
+    "CommonDiscoveryConfig": {
+      "type": "object",
+      "properties": {
+        "import": { "type": "array", "items": { "type": "string" } },
+        "maxAddresses": { "type": "number", "exclusiveMinimum": 0 },
+        "maxDepth": { "type": "number" },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/DiscoveryContract" }
+        },
+        "sharedModules": { "type": "array", "items": { "type": "string" } },
+        "categories": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
+        },
+        "types": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DiscoveryCustomType"
+          }
+        },
+        "names": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
     }
-  }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

@@ -22,7 +22,8 @@
         "proverHostIo": "0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F",
         "proverMath": "0xDf6C4562e853C4F775285710B467e2EE4Ca8D22c",
         "proverMem": "0x173FCB92df1854c3B78dC8696C23B1c88437b892"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "OneStepProverMemory",
@@ -36,7 +37,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148715,
       "sinceBlock": 18679684,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "Inbox",
@@ -94,7 +96,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1709320645,
       "sinceBlock": 11265649,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
@@ -113,7 +116,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148731,
       "sinceBlock": 18679692,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
@@ -131,8 +135,7 @@
           "from": "0xDb8E759859058952c34953c8469f464109826e52",
           "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
         }
-      ],
-      "derivedName": ""
+      ]
     },
     {
       "address": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
@@ -286,6 +289,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -338,6 +342,7 @@
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -511,7 +516,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148707,
       "sinceBlock": 18679680,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "UpgradeExecutor",
@@ -581,6 +587,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x871e290d5447b958131F6d44f915F10032436ee6"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -777,6 +784,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -843,7 +851,8 @@
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6,
         "token": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed"
-      }
+      },
+      "derivedName": "OrbitERC20OFTAdapter"
     },
     {
       "name": "OneStepProverMath",
@@ -857,7 +866,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148725,
       "sinceBlock": 18679689,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "name": "Outbox",
@@ -996,8 +1006,7 @@
       "name": "Relay Bridge",
       "address": "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -1043,7 +1052,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

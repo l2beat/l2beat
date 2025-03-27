@@ -22,6 +22,7 @@ import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
+import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
@@ -49,6 +50,7 @@ export function getSubcommands() {
     OPConfigs,
     Powerdiff,
     RefreshDiscovery,
+    ScanKintoAm,
     SolFmt,
     StarknetProgramHashes,
     FetchAgglayer,

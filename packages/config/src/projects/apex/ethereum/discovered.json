@@ -464,7 +464,8 @@
         "$immutable": true,
         "hasRegisteredFact": false,
         "identify": "StarkWare_PerpetualEscapeVerifier_2021_2"
-      }
+      },
+      "derivedName": "PerpetualEscapeVerifier"
     },
     {
       "address": "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",

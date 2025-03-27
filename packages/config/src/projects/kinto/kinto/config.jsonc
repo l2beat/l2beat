@@ -16,7 +16,7 @@
   "names": {
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
     "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
-    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "KintoAdminMultisig",
+    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "Kinto Multisig 2",
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "KintoWalletFactory",
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "SponsorPaymaster",
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
@@ -33,31 +33,65 @@
   },
   "maxAddresses": 200, // bumped from default 100 mainly due to the sanctioned to the eoas
   "types": {
-    "RoleName": {
+    "SignerPolicyToThreshold": {
       "typeCaster": "Mapping",
       "arg": {
-        "0": "ADMIN_ROLE",
-        "18446744073709551615": "PUBLIC_ROLE",
-        "1635978423191113331": "NIO_GOVERNOR_ROLE",
-        "8663528507529876195": "UPGRADER_ROLE"
+        "1": 1,
+        "4": 2,
+        "2": 1, // not accurate, using worst case (MINUS_ONE_SIGNER)
+        "3": 1 // not accurate, using worst case (ALL_SIGNERS)
       }
     }
+    // "RoleName": {
+    //   "typeCaster": "Mapping",
+    //   "arg": {
+    //     "0": "ADMIN_ROLE",
+    //     "18446744073709551615": "PUBLIC_ROLE",
+    //     "1635978423191113331": "NIO_GOVERNOR_ROLE",
+    //     "8663528507529876195": "UPGRADER_ROLE"
+    //   }
+    // }
   },
   "overrides": {
+    "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": {
+      // EntryPoint
+      "description": "Used as entrypoint to transact using smartwallets and UserOps."
+    },
     // "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b":{
     //   "extends": "orbitstack/UpgradeExecutor"
     // },
     "0x87f0eE85bF3198654900a422832157abBba30828": {
+      "description": "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.",
       // BeaconKintoWallet
       "ignoreRelatives": ["implementation"]
     },
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": {
-      // KintoAdminMultisig
-      "ignoreMethods": ["owners"],
-      "ignoreInWatchMode": ["getNonce"]
+      // Kinto Multisig 2
+      "ignoreMethods": ["owners", "getOwners"],
+      "ignoreInWatchMode": ["getNonce"],
+      "fields": {
+        "$members": {
+          "handler": {
+            "type": "call",
+            "method": "getOwners",
+            "args": []
+          }
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes.",
+          "handler": {
+            "type": "call",
+            "method": "signerPolicy",
+            "args": []
+          },
+          "returnType": "(SignerPolicyToThreshold)"
+        }
+      }
     },
     "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": {
       // NioGovernor
+      "category": "spam", // treasury related
       "description": "Governance contract allowing token- and NFT based voting.",
       "ignoreMethods": [
         "proposalDeadline",
@@ -73,6 +107,7 @@
     },
     "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": {
       // NioGuardians
+      "category": "spam", // treasury related
       "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
       "ignoreMethods": ["exists", "getPastTotalSupply"],
       "ignoreInWatchMode": ["clock"],
@@ -89,8 +124,166 @@
     },
     "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": {
       // AccessManager
-      "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "category": "gov",
+      "description": "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
+      "canActIndependently": false,
       "fields": {
+        // improvised semi-hardcoded (needs better tooling)
+        "securityCouncilPermission": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+          },
+          "permissions": [
+            // role UPGRADER
+            {
+              "type": "interact",
+              "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+              "delay": "{{edScUPGRADER}}"
+            },
+            // role SECURITY_COUNCIL
+            {
+              "type": "interact",
+              "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
+              "delay": "{{edScSECURITY_COUNCIL}}"
+            },
+            // role ADMIN
+            {
+              "type": "interact",
+              "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+              "delay": "{{edScADMIN}}"
+            }
+          ]
+        },
+        "kintoMultisig2Permission": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+          },
+          "permissions": [
+            // role UPGRADER
+            {
+              "type": "interact",
+              "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+              "delay": "{{edKintoMultisig2UPGRADER}}"
+            },
+            // role ADMIN
+            {
+              "type": "interact",
+              "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+              "delay": "{{edKintoMultisig2ADMIN}}"
+            }
+          ]
+        },
+        "tadKintoWalletFactory": {
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
+            "args": ["0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"]
+          }
+        },
+        "tadKintoAppRegistry": {
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
+            "args": ["0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"]
+          }
+        },
+        "tadKintoID": {
+          "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "function getTargetAdminDelay(address target) view returns (uint32)",
+            "args": ["0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"]
+          }
+        },
+        "edKintoMultisig2UPGRADER": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+                ["=", "#roleId", "8663528507529876195"]
+              ]
+            }
+          }
+        },
+        "edKintoMultisig2ADMIN": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+                ["=", "#roleId", 0]
+              ]
+            }
+          }
+        },
+        "edScADMIN": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
+                ["=", "#roleId", 0]
+              ]
+            }
+          }
+        },
+        "edScUPGRADER": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
+                ["=", "#roleId", "8663528507529876195"]
+              ]
+            }
+          }
+        },
+        "edScSECURITY_COUNCIL": {
+          "severity": "HIGH",
+          "description": "Current execution delay for target calls.",
+          "handler": {
+            "type": "event",
+            "select": ["delay"],
+            "set": {
+              "event": "RoleGranted",
+              "where": [
+                "and",
+                ["=", "#account", "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"],
+                ["=", "#roleId", "14661544942390944024"]
+              ]
+            }
+          }
+        },
+
+        // improvised semi-hardcoded END
         "accessControl": {
           "handler": {
             "type": "kintoAccessControl"
@@ -194,7 +387,9 @@
       }
     },
     "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": {
+      "description": "Central contract for bridging via the external socket bridge.",
       // Socket
+      "category": "bridge-external",
       "ignoreInWatchMode": ["globalMessageCount"],
       "ignoreRelatives": [
         "capacitorFactory__",
@@ -205,6 +400,7 @@
     },
     "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
       // Treasury
+      "category": "spam", // treasury related
       "description": "Kinto Treasury.",
       "ignoreMethods": ["proxiableUUID"],
       "fields": {
@@ -223,10 +419,11 @@
       "description": "KINTO token contract.",
       "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply", "clock"],
-      "ignoreRelatives": ["miningContract", "SALE"]
+      "ignoreRelatives": ["miningContract", "SALE", "VAULT"]
     },
     "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
       // RewardsDistributor
+      "category": "spam",
       "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
       "ignoreInWatchMode": [
         "getTotalLimit",
@@ -237,17 +434,21 @@
     },
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": {
       // Faucet
+      "category": "spam",
       "ignoreMethods": ["proxiableUUID"]
     },
     "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": {
       // SponsorPaymaster
+      "category": "spam",
       "description": "Paymaster used for user transactions eligible for sponsorship.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["getDeposit"]
     },
     "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
       // KintoWalletFactory
-      "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
+      "category": "core",
+      "canActIndependently": false,
+      "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalWallets"],
       "fields": {
@@ -264,13 +465,20 @@
     },
     "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
       // KintoID
-      "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
+      "category": "core",
+      "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.",
       "ignoreMethods": [
         "proxiableUUID",
         "tokenByIndex",
-        "isSanctionsMonitored"
+        "isSanctionsMonitored",
+        "ownerOf"
       ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
+      "ignoreRelatives": [
+        "pendingSanctions",
+        "removedSanctions",
+        "confirmedSanctions"
+      ],
       "fields": {
         "pendingSanctions": {
           "description": "addresses sanctioned by any KYC_PROVIDER role.",
@@ -359,7 +567,8 @@
     },
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
       // KintoAppRegistry
-      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.",
+      "category": "core",
+      "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.",
       "ignoreMethods": [
         "proxiableUUID",
         "reservedContracts",
@@ -381,10 +590,23 @@
           ]
         },
         "getSystemContracts": {
-          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA.",
+          "description": "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`.",
           "severity": "HIGH"
         }
       }
+    },
+    "0x340487b92808B84c2bd97C87B590EE81267E04a7": {
+      // L2GatewayRouter
+      "ignoreDiscovery": true // erc-20 withdrawals are not in scope rn
+    },
+    "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d": {
+      // bundleBulker
+      "category": "spam"
+    },
+    "0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10": {
+      // staking
+      "ignoreDiscovery": true, // unverified
+      "category": "spam"
     }
   }
 }
