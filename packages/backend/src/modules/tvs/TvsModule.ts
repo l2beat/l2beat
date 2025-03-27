@@ -93,7 +93,7 @@ export function initTvsModule(
     db: database,
   })
   amountIndexers.set(
-    CirculatingSupplyAmountIndexer.SOURCE,
+    CirculatingSupplyAmountIndexer.SOURCE(),
     circulatingSupplyIndexer,
   )
 
