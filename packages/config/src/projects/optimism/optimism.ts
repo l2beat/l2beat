@@ -323,14 +323,14 @@ export const optimism: ScalingProject = {
     ],
   },
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
