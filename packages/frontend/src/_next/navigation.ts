@@ -7,8 +7,8 @@ export function usePathname(): string {
 
 export function useRouter() {
   return {
-    push: () => undefined,
-    replace: () => undefined,
+    push: (href: string) => (window.location.href = href),
+    replace: (href: string) => (window.location.href = href),
   }
 }
 

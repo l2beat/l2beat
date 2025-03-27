@@ -9,7 +9,6 @@ rm -rf rewrite/dist
 esbuild \
   rewrite/src/ssr/client.tsx \
   --bundle \
-  --minify \
   --tsconfig=rewrite/tsconfig.json \
   --outfile=rewrite/static/index.js
 tailwindcss \

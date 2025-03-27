@@ -8,7 +8,9 @@
     "outDir": "dist",
     "paths": {
       "~/*": ["./src/*"],
-      "next/navigation": ["./src/_next/navigation"]
+      "next/navigation": ["./src/_next/navigation"],
+      "next/image": ["./src/_next/image"],
+      "next/link": ["./src/_next/link"]
     }
   },
   "exclude": ["dist", "static"]
