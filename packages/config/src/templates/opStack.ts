@@ -153,7 +153,7 @@ interface OpStackConfigCommon {
   additionalBadges?: Badge[]
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
-  riskView?: ProjectScalingRiskView
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
@@ -334,7 +334,7 @@ function opStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
-    riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider),
     stage:
       templateVars.stage ??
       computedStage(templateVars, postsToEthereum(templateVars)),
@@ -663,15 +663,21 @@ function getRiskView(
   daProvider: DAProvider | undefined,
 ): ProjectScalingRiskView {
   return {
-    stateValidation: getRiskViewStateValidation(templateVars),
-    exitWindow: getRiskViewExitWindow(templateVars),
-    proposerFailure: getRiskViewProposerFailure(templateVars),
-    dataAvailability: {
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      getRiskViewStateValidation(templateVars),
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      getRiskViewExitWindow(templateVars),
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      getRiskViewProposerFailure(templateVars),
+    dataAvailability: templateVars.nonTemplateRiskView?.dataAvailability ?? {
       ...(daProvider === undefined
         ? RISK_VIEW.DATA_ON_CHAIN
         : daProvider.riskView),
     },
-    sequencerFailure: {
+    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       // the value is inside the node config, but we have no reference to it
       // so we assume it to be the same value as in other op stack chains
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
