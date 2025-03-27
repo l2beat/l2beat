@@ -6,6 +6,8 @@ import { type Manifest, getManifest } from './common/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
 import { type RenderData, render } from './ssr/server'
 
+process.chdir('rewrite')
+
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 3000
 

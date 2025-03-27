@@ -4,15 +4,15 @@ set -e
 export PATH="$(pwd)/node_modules/.bin:$PATH"
 export PATH="$(pwd)/../../node_modules/.bin:$PATH"
 
-rm -rf dist
+rm -rf rewrite/dist
 
 esbuild \
-  src/ssr/client.tsx \
+  rewrite/src/ssr/client.tsx \
   --bundle \
   --minify \
-  --outfile=static/index.js
+  --outfile=rewrite/static/index.js
 tailwindcss \
-  -i src/styles/globals.css \
-  -o ./static/index.css
-tsx ./scripts/hashFiles.ts
-tsc -p tsconfig.build.json
+  -i rewrite/src/styles/globals.css \
+  -o ./rewrite/static/index.css
+tsx ./rewrite/scripts/hashFiles.ts
+tsc -p rewrite/tsconfig.build.json

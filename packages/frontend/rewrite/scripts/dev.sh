@@ -29,19 +29,21 @@ trap cleanup SIGINT SIGTERM
 
 # Start processes and capture their PIDs
 esbuild \
-  src/ssr/client.tsx \
+  rewrite/src/ssr/client.tsx \
   --bundle \
   --watch=forever \
-  --outfile=static/index.js &
+  --outfile=rewrite/static/index.js &
 pids+=($!)
 
 tailwindcss \
-  -i src/styles/globals.css \
-  -o ./static/index.css \
+  -i rewrite/src/styles/globals.css \
+  -o ./rewrite/static/index.css \
   --watch < /dev/tty &
 pids+=($!)
 
-tsx --watch src/index.ts &
+tsx \
+  --tsconfig ./rewrite/tsconfig.json \
+  --watch rewrite/src/index.ts &
 pids+=($!)
 
 echo "All processes started. Press Ctrl+C to exit."
