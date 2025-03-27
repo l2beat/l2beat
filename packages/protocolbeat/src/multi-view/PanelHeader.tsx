@@ -46,6 +46,7 @@ export function PanelHeader(props: { id: PanelId }) {
         <button
           onClick={() => toClipboard(props.id, project, selectedAddress)}
           className="w-4"
+          hidden={!['code', 'values'].includes(props.id)}
         >
           cc
         </button>
