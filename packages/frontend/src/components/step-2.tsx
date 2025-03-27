@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import { useState } from 'react'
-import { Button } from './core/button'
+import { cn } from '~/utils/cn'
 import { PizzaCheckTile } from './pizza-check-tile'
+import { PizzaButton } from './step-1'
 
 type Props = {
   onClick: (payload: Step2Payload) => void
@@ -49,16 +49,13 @@ export function Step2(props: Props) {
           checked={selected?.type === 'custom'}
         />
       </div>
-      <Button
+      <PizzaButton
         disabled={!selected}
         onClick={() => selected && props.onClick(selected)}
-        className={clsx(
-          'mt-5 bg-pink-900 px-8 py-4 text-white',
-          !selected && 'opacity-50',
-        )}
+        className={cn('mt-5', !selected && 'opacity-50')}
       >
         Let&apos;s get that pizza party rolling.
-      </Button>
+      </PizzaButton>
     </div>
   )
 }
@@ -72,7 +69,7 @@ function Veggies() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_60_10387)">
+      <g clipPath="url(#clip0_60_10387)">
         <path
           d="M39.6632 35.1863L35.8894 33.9302C34.9461 33.6908 34.8666 32.4781 35.7786 32.2398L38.2048 31.6072L37.6158 28.26C37.3979 27.575 38.2397 27.0838 38.8498 27.5395L41.3781 29.099L42.6941 26.7776C43.3408 26.0654 44.2588 26.7041 44.3842 27.6427C44.5282 28.7223 44.3588 31.6666 44.3588 31.6666L39.6632 35.1863Z"
           fill="url(#paint0_radial_60_10387)"
@@ -117,7 +114,7 @@ function Veggies() {
           fill="#367019"
         />
       </g>
-      <g clip-path="url(#clip1_60_10387)">
+      <g clipPath="url(#clip1_60_10387)">
         <path
           d="M155.957 55.3341C156.731 49.5115 152.869 48.698 151.286 38.8135C150.423 33.4283 146.029 30.7664 142.537 29.6792C138.809 28.5197 134.119 28.256 130.349 32.2022C123.427 39.4457 121.532 37.4187 117.924 41.7034C113.618 46.8149 118.03 52.5693 115.677 57.041C112.945 62.2294 115.949 65.1181 117.046 68.0109C118.947 73.0225 114.736 71.6769 118.79 77.3743C121.308 80.9102 121.731 86.3122 121.731 86.3122L124.884 86.4076L127.331 88.6103C127.331 88.6103 131.73 84.7388 135.809 83.2568C142.38 80.8676 139.605 77.4466 144.098 74.3164C146.691 72.5087 148.91 72.3875 149.622 66.5137C150.236 61.4486 155.153 61.3767 155.957 55.3341Z"
           fill="url(#paint2_radial_60_10387)"
@@ -179,9 +176,9 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(34.1803 31.1327) rotate(-125.041) scale(14.1254 8.07535)"
         >
-          <stop offset="0.189" stop-color="#EFE32A" />
-          <stop offset="0.512" stop-color="#F1CB27" />
-          <stop offset="1" stop-color="#F59F22" />
+          <stop offset="0.189" stopColor="#EFE32A" />
+          <stop offset="0.512" stopColor="#F1CB27" />
+          <stop offset="1" stopColor="#F59F22" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_60_10387"
@@ -191,13 +188,13 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(41.4682 67.3075) rotate(-108.828) scale(61.34 35.4282)"
         >
-          <stop stop-color="#C2ED3B" />
-          <stop offset="0.156" stop-color="#B6E135" />
-          <stop offset="0.442" stop-color="#95C125" />
-          <stop offset="0.469" stop-color="#91BD23" />
-          <stop offset="0.602" stop-color="#6B9A1B" />
-          <stop offset="0.87" stop-color="#23570D" />
-          <stop offset="0.994" stop-color="#063D07" />
+          <stop stopColor="#C2ED3B" />
+          <stop offset="0.156" stopColor="#B6E135" />
+          <stop offset="0.442" stopColor="#95C125" />
+          <stop offset="0.469" stopColor="#91BD23" />
+          <stop offset="0.602" stopColor="#6B9A1B" />
+          <stop offset="0.87" stopColor="#23570D" />
+          <stop offset="0.994" stopColor="#063D07" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_60_10387"
@@ -207,10 +204,10 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(119.83 56.5221) rotate(-74.4923) scale(66.5109 20.7249)"
         >
-          <stop offset="0.59" stop-color="#9BCC00" />
-          <stop offset="0.736" stop-color="#7CA706" />
-          <stop offset="0.909" stop-color="#5B810D" />
-          <stop offset="1" stop-color="#4F730F" />
+          <stop offset="0.59" stopColor="#9BCC00" />
+          <stop offset="0.736" stopColor="#7CA706" />
+          <stop offset="0.909" stopColor="#5B810D" />
+          <stop offset="1" stopColor="#4F730F" />
         </radialGradient>
         <radialGradient
           id="paint3_radial_60_10387"
@@ -220,9 +217,9 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(130.513 57.9911) rotate(98.9182) scale(42.6057 14.7081)"
         >
-          <stop offset="0.562" stop-color="#E3F4BE" />
-          <stop offset="0.852534" stop-color="#C3D79A" />
-          <stop offset="1" stop-color="#859E55" />
+          <stop offset="0.562" stopColor="#E3F4BE" />
+          <stop offset="0.852534" stopColor="#C3D79A" />
+          <stop offset="1" stopColor="#859E55" />
         </radialGradient>
         <radialGradient
           id="paint4_radial_60_10387"
@@ -232,12 +229,12 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(97.5851 45.0382) scale(25.7255)"
         >
-          <stop stop-color="#95B83D" />
-          <stop offset="0.332" stop-color="#89B442" />
-          <stop offset="0.436" stop-color="#71A73D" />
-          <stop offset="0.655" stop-color="#338531" />
-          <stop offset="0.659" stop-color="#328431" />
-          <stop offset="1" stop-color="#328431" />
+          <stop stopColor="#95B83D" />
+          <stop offset="0.332" stopColor="#89B442" />
+          <stop offset="0.436" stopColor="#71A73D" />
+          <stop offset="0.655" stopColor="#338531" />
+          <stop offset="0.659" stopColor="#328431" />
+          <stop offset="1" stopColor="#328431" />
         </radialGradient>
         <radialGradient
           id="paint5_radial_60_10387"
@@ -247,12 +244,12 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(73.0694 45.7869) scale(27.2127 27.2127)"
         >
-          <stop stop-color="#95B83D" />
-          <stop offset="0.332" stop-color="#89B442" />
-          <stop offset="0.436" stop-color="#71A73D" />
-          <stop offset="0.655" stop-color="#338531" />
-          <stop offset="0.659" stop-color="#328431" />
-          <stop offset="1" stop-color="#328431" />
+          <stop stopColor="#95B83D" />
+          <stop offset="0.332" stopColor="#89B442" />
+          <stop offset="0.436" stopColor="#71A73D" />
+          <stop offset="0.655" stopColor="#338531" />
+          <stop offset="0.659" stopColor="#328431" />
+          <stop offset="1" stopColor="#328431" />
         </radialGradient>
         <radialGradient
           id="paint6_radial_60_10387"
@@ -262,19 +259,19 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(90.1981 32.3528) scale(38.2681 38.2682)"
         >
-          <stop stop-color="#005E2D" />
-          <stop offset="0.094" stop-color="#04602E" />
-          <stop offset="0.186" stop-color="#106833" />
-          <stop offset="0.279" stop-color="#24743B" />
-          <stop offset="0.371" stop-color="#408645" />
-          <stop offset="0.462" stop-color="#639C53" />
-          <stop offset="0.489" stop-color="#6FA357" />
-          <stop offset="0.514" stop-color="#649C53" />
-          <stop offset="0.611" stop-color="#408645" />
-          <stop offset="0.708" stop-color="#24753B" />
-          <stop offset="0.806" stop-color="#106833" />
-          <stop offset="0.903" stop-color="#04602F" />
-          <stop offset="1" stop-color="#005E2D" />
+          <stop stopColor="#005E2D" />
+          <stop offset="0.094" stopColor="#04602E" />
+          <stop offset="0.186" stopColor="#106833" />
+          <stop offset="0.279" stopColor="#24743B" />
+          <stop offset="0.371" stopColor="#408645" />
+          <stop offset="0.462" stopColor="#639C53" />
+          <stop offset="0.489" stopColor="#6FA357" />
+          <stop offset="0.514" stopColor="#649C53" />
+          <stop offset="0.611" stopColor="#408645" />
+          <stop offset="0.708" stopColor="#24753B" />
+          <stop offset="0.806" stopColor="#106833" />
+          <stop offset="0.903" stopColor="#04602F" />
+          <stop offset="1" stopColor="#005E2D" />
         </radialGradient>
         <radialGradient
           id="paint7_radial_60_10387"
@@ -284,12 +281,12 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(55.9019 76.3661) rotate(-106.618) scale(80.6958 40.7361)"
         >
-          <stop stop-color="#A1C642" />
-          <stop offset="0.332" stop-color="#94C247" />
-          <stop offset="0.431" stop-color="#7CB543" />
-          <stop offset="0.639" stop-color="#3E9537" />
-          <stop offset="0.659" stop-color="#389236" />
-          <stop offset="1" stop-color="#389236" />
+          <stop stopColor="#A1C642" />
+          <stop offset="0.332" stopColor="#94C247" />
+          <stop offset="0.431" stopColor="#7CB543" />
+          <stop offset="0.639" stopColor="#3E9537" />
+          <stop offset="0.659" stopColor="#389236" />
+          <stop offset="1" stopColor="#389236" />
         </radialGradient>
         <radialGradient
           id="paint8_radial_60_10387"
@@ -299,12 +296,12 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(133.73 77.2187) rotate(-77.6103) scale(91.4804 48.5571)"
         >
-          <stop stop-color="#A1C642" />
-          <stop offset="0.332" stop-color="#94C247" />
-          <stop offset="0.431" stop-color="#7CB543" />
-          <stop offset="0.639" stop-color="#3E9537" />
-          <stop offset="0.659" stop-color="#389236" />
-          <stop offset="1" stop-color="#389236" />
+          <stop stopColor="#A1C642" />
+          <stop offset="0.332" stopColor="#94C247" />
+          <stop offset="0.431" stopColor="#7CB543" />
+          <stop offset="0.639" stopColor="#3E9537" />
+          <stop offset="0.659" stopColor="#389236" />
+          <stop offset="1" stopColor="#389236" />
         </radialGradient>
         <linearGradient
           id="paint9_linear_60_10387"
@@ -314,19 +311,19 @@ function Veggies() {
           y2="61.5927"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#00793A" />
-          <stop offset="0.087" stop-color="#047B3B" />
-          <stop offset="0.173" stop-color="#10813F" />
-          <stop offset="0.259" stop-color="#248C46" />
-          <stop offset="0.344" stop-color="#409B4F" />
-          <stop offset="0.429" stop-color="#63AE5B" />
-          <stop offset="0.489" stop-color="#81BE65" />
-          <stop offset="0.549" stop-color="#64AF5B" />
-          <stop offset="0.639" stop-color="#409B4F" />
-          <stop offset="0.73" stop-color="#248C46" />
-          <stop offset="0.82" stop-color="#10823F" />
-          <stop offset="0.91" stop-color="#047B3B" />
-          <stop offset="1" stop-color="#00793A" />
+          <stop stopColor="#00793A" />
+          <stop offset="0.087" stopColor="#047B3B" />
+          <stop offset="0.173" stopColor="#10813F" />
+          <stop offset="0.259" stopColor="#248C46" />
+          <stop offset="0.344" stopColor="#409B4F" />
+          <stop offset="0.429" stopColor="#63AE5B" />
+          <stop offset="0.489" stopColor="#81BE65" />
+          <stop offset="0.549" stopColor="#64AF5B" />
+          <stop offset="0.639" stopColor="#409B4F" />
+          <stop offset="0.73" stopColor="#248C46" />
+          <stop offset="0.82" stopColor="#10823F" />
+          <stop offset="0.91" stopColor="#047B3B" />
+          <stop offset="1" stopColor="#00793A" />
         </linearGradient>
         <radialGradient
           id="paint10_radial_60_10387"
@@ -336,12 +333,12 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(93.5161 82.1846) rotate(-90.0521) scale(47.1437 28.7049)"
         >
-          <stop stop-color="#A1C642" />
-          <stop offset="0.332" stop-color="#94C247" />
-          <stop offset="0.431" stop-color="#7CB543" />
-          <stop offset="0.639" stop-color="#3E9537" />
-          <stop offset="0.659" stop-color="#389236" />
-          <stop offset="1" stop-color="#389236" />
+          <stop stopColor="#A1C642" />
+          <stop offset="0.332" stopColor="#94C247" />
+          <stop offset="0.431" stopColor="#7CB543" />
+          <stop offset="0.639" stopColor="#3E9537" />
+          <stop offset="0.659" stopColor="#389236" />
+          <stop offset="1" stopColor="#389236" />
         </radialGradient>
         <radialGradient
           id="paint11_radial_60_10387"
@@ -351,13 +348,13 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(85.0042 75.9481) scale(7.45238 12.0066)"
         >
-          <stop offset="0.003" stop-color="#FFF7E6" />
-          <stop offset="0.212" stop-color="#FFF9ED" stop-opacity="0.721" />
-          <stop offset="0.423" stop-color="#FFFBF3" stop-opacity="0.467" />
-          <stop offset="0.615" stop-color="#FFFDF8" stop-opacity="0.266" />
-          <stop offset="0.781" stop-color="#FFFEFC" stop-opacity="0.121" />
-          <stop offset="0.915" stop-color="#FFFFFE" stop-opacity="0.032" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop offset="0.003" stopColor="#FFF7E6" />
+          <stop offset="0.212" stopColor="#FFF9ED" stopOpacity="0.721" />
+          <stop offset="0.423" stopColor="#FFFBF3" stopOpacity="0.467" />
+          <stop offset="0.615" stopColor="#FFFDF8" stopOpacity="0.266" />
+          <stop offset="0.781" stopColor="#FFFEFC" stopOpacity="0.121" />
+          <stop offset="0.915" stopColor="#FFFFFE" stopOpacity="0.032" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint12_radial_60_10387"
@@ -367,12 +364,12 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(71.9876 67.8381) rotate(21.438) scale(4.55422 5.79631)"
         >
-          <stop offset="0.003" stop-color="#FFF7E6" />
-          <stop offset="0.277" stop-color="#FFFAEE" stop-opacity="0.669" />
-          <stop offset="0.538" stop-color="#FFFCF5" stop-opacity="0.383" />
-          <stop offset="0.752" stop-color="#FFFEFB" stop-opacity="0.176" />
-          <stop offset="0.912" stop-color="#FFFFFE" stop-opacity="0.048" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop offset="0.003" stopColor="#FFF7E6" />
+          <stop offset="0.277" stopColor="#FFFAEE" stopOpacity="0.669" />
+          <stop offset="0.538" stopColor="#FFFCF5" stopOpacity="0.383" />
+          <stop offset="0.752" stopColor="#FFFEFB" stopOpacity="0.176" />
+          <stop offset="0.912" stopColor="#FFFFFE" stopOpacity="0.048" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint13_radial_60_10387"
@@ -382,13 +379,13 @@ function Veggies() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(114.501 67.2433) rotate(-35.377) scale(4.55422 5.79631)"
         >
-          <stop offset="0.003" stop-color="#FFF7E6" />
-          <stop offset="0.081" stop-color="#FFF8E9" stop-opacity="0.9" />
-          <stop offset="0.342" stop-color="#FFFAF0" stop-opacity="0.584" />
-          <stop offset="0.573" stop-color="#FFFCF7" stop-opacity="0.334" />
-          <stop offset="0.766" stop-color="#FFFEFB" stop-opacity="0.153" />
-          <stop offset="0.915" stop-color="#FFFFFE" stop-opacity="0.041" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop offset="0.003" stopColor="#FFF7E6" />
+          <stop offset="0.081" stopColor="#FFF8E9" stopOpacity="0.9" />
+          <stop offset="0.342" stopColor="#FFFAF0" stopOpacity="0.584" />
+          <stop offset="0.573" stopColor="#FFFCF7" stopOpacity="0.334" />
+          <stop offset="0.766" stopColor="#FFFEFB" stopOpacity="0.153" />
+          <stop offset="0.915" stopColor="#FFFFFE" stopOpacity="0.041" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
         <clipPath id="clip0_60_10387">
           <rect
@@ -420,7 +417,7 @@ function Tomato() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_60_10414)">
+      <g clipPath="url(#clip0_60_10414)">
         <path
           d="M133.928 59.4819C133.854 54.2556 146.864 50.0926 146.864 50.0926L144.381 48.7381L141.898 47.385C141.898 47.385 138.292 52.0689 129.966 55.145C122.584 57.8727 112.407 56.0071 107.8 64.4574C104.141 71.1666 107.461 78.0155 114.169 81.6738C120.876 85.332 128.253 84.7437 132.494 76.9673C135.852 70.8088 134.013 65.4146 133.928 59.4819Z"
           fill="url(#paint0_radial_60_10414)"
@@ -434,7 +431,7 @@ function Tomato() {
           fill="url(#paint2_radial_60_10414)"
         />
       </g>
-      <g clip-path="url(#clip1_60_10414)">
+      <g clipPath="url(#clip1_60_10414)">
         <path
           d="M74.341 62.4551C70.3522 73.889 61.4428 87.2282 51.068 94.5838C43.2247 100.144 39.5763 99.6701 38.3264 97.1407C36.5614 93.5688 43.352 88.7786 48.3328 74.7299C53.7132 59.5525 48.43 47.0968 53.021 38.3498C56.365 31.9797 62.8784 31.641 66.1799 32.5343C80.7602 36.4839 77.5023 53.3911 74.341 62.4551Z"
           fill="url(#paint3_radial_60_10414)"
@@ -1289,13 +1286,13 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(107.911 59.188) rotate(-51.5325) scale(35.6159 22.2483)"
         >
-          <stop stop-color="#F7EEE9" />
-          <stop offset="0.149" stop-color="#F5EAE4" />
-          <stop offset="0.332" stop-color="#EEE0D5" />
-          <stop offset="0.386" stop-color="#ECDCCF" />
-          <stop offset="0.544" stop-color="#E1CFC4" />
-          <stop offset="0.833" stop-color="#C6AEA9" />
-          <stop offset="1" stop-color="#B39896" />
+          <stop stopColor="#F7EEE9" />
+          <stop offset="0.149" stopColor="#F5EAE4" />
+          <stop offset="0.332" stopColor="#EEE0D5" />
+          <stop offset="0.386" stopColor="#ECDCCF" />
+          <stop offset="0.544" stopColor="#E1CFC4" />
+          <stop offset="0.833" stopColor="#C6AEA9" />
+          <stop offset="1" stopColor="#B39896" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_60_10414"
@@ -1305,13 +1302,13 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(129.486 71.3152) rotate(-62.1307) scale(31.2168 23.3845)"
         >
-          <stop stop-color="#F7EEE9" />
-          <stop offset="0.206" stop-color="#F5EAE4" />
-          <stop offset="0.457" stop-color="#EEE0D5" />
-          <stop offset="0.531" stop-color="#ECDCCF" />
-          <stop offset="0.726" stop-color="#CEB9B1" />
-          <stop offset="0.895" stop-color="#BAA19D" />
-          <stop offset="1" stop-color="#B39896" />
+          <stop stopColor="#F7EEE9" />
+          <stop offset="0.206" stopColor="#F5EAE4" />
+          <stop offset="0.457" stopColor="#EEE0D5" />
+          <stop offset="0.531" stopColor="#ECDCCF" />
+          <stop offset="0.726" stopColor="#CEB9B1" />
+          <stop offset="0.895" stopColor="#BAA19D" />
+          <stop offset="1" stopColor="#B39896" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_60_10414"
@@ -1321,11 +1318,11 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(122.921 66.9724) rotate(-51.4672) scale(28.4001 19.5671)"
         >
-          <stop stop-color="#F7EEE9" />
-          <stop offset="0.145" stop-color="#F5EAE4" />
-          <stop offset="0.322" stop-color="#EEE0D5" />
-          <stop offset="0.374" stop-color="#ECDCCF" />
-          <stop offset="1" stop-color="#B39795" />
+          <stop stopColor="#F7EEE9" />
+          <stop offset="0.145" stopColor="#F5EAE4" />
+          <stop offset="0.322" stopColor="#EEE0D5" />
+          <stop offset="0.374" stopColor="#ECDCCF" />
+          <stop offset="1" stopColor="#B39795" />
         </radialGradient>
         <radialGradient
           id="paint3_radial_60_10414"
@@ -1335,14 +1332,14 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(45.705 65.2713) rotate(-70.8365) scale(58.1469 38.4067)"
         >
-          <stop offset="0.323" stop-color="#E51818" />
-          <stop offset="0.438" stop-color="#E11818" />
-          <stop offset="0.547" stop-color="#D61717" />
-          <stop offset="0.653" stop-color="#C31515" />
-          <stop offset="0.757" stop-color="#A81313" />
-          <stop offset="0.861" stop-color="#851010" />
-          <stop offset="0.962" stop-color="#5C0C0C" />
-          <stop offset="1" stop-color="#4A0B0B" />
+          <stop offset="0.323" stopColor="#E51818" />
+          <stop offset="0.438" stopColor="#E11818" />
+          <stop offset="0.547" stopColor="#D61717" />
+          <stop offset="0.653" stopColor="#C31515" />
+          <stop offset="0.757" stopColor="#A81313" />
+          <stop offset="0.861" stopColor="#851010" />
+          <stop offset="0.962" stopColor="#5C0C0C" />
+          <stop offset="1" stopColor="#4A0B0B" />
         </radialGradient>
         <radialGradient
           id="paint4_radial_60_10414"
@@ -1352,11 +1349,11 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(52.2005 32.8681) rotate(-75.5025) scale(25.173 14.9013)"
         >
-          <stop offset="0.729" stop-color="#9BCC00" />
-          <stop offset="0.778" stop-color="#94C401" />
-          <stop offset="0.852" stop-color="#82AF05" />
-          <stop offset="0.943" stop-color="#658D0B" />
-          <stop offset="1" stop-color="#4F730F" />
+          <stop offset="0.729" stopColor="#9BCC00" />
+          <stop offset="0.778" stopColor="#94C401" />
+          <stop offset="0.852" stopColor="#82AF05" />
+          <stop offset="0.943" stopColor="#658D0B" />
+          <stop offset="1" stopColor="#4F730F" />
         </radialGradient>
         <radialGradient
           id="paint5_radial_60_10414"
@@ -1366,13 +1363,13 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(86.8593 59.9684) rotate(8.14168) scale(20.1537 15.2556)"
         >
-          <stop offset="0.587" stop-color="#4F730F" />
-          <stop offset="0.601" stop-color="#658D0B" />
-          <stop offset="0.618" stop-color="#79A407" />
-          <stop offset="0.638" stop-color="#88B604" />
-          <stop offset="0.662" stop-color="#93C302" />
-          <stop offset="0.694" stop-color="#99CA00" />
-          <stop offset="0.765" stop-color="#9BCC00" />
+          <stop offset="0.587" stopColor="#4F730F" />
+          <stop offset="0.601" stopColor="#658D0B" />
+          <stop offset="0.618" stopColor="#79A407" />
+          <stop offset="0.638" stopColor="#88B604" />
+          <stop offset="0.662" stopColor="#93C302" />
+          <stop offset="0.694" stopColor="#99CA00" />
+          <stop offset="0.765" stopColor="#9BCC00" />
         </radialGradient>
         <radialGradient
           id="paint6_radial_60_10414"
@@ -1382,13 +1379,13 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(107.322 59.9698) rotate(171.858) scale(20.1537 15.2556)"
         >
-          <stop offset="0.587" stop-color="#4F730F" />
-          <stop offset="0.601" stop-color="#658D0B" />
-          <stop offset="0.618" stop-color="#79A407" />
-          <stop offset="0.638" stop-color="#88B604" />
-          <stop offset="0.662" stop-color="#93C302" />
-          <stop offset="0.694" stop-color="#99CA00" />
-          <stop offset="0.765" stop-color="#9BCC00" />
+          <stop offset="0.587" stopColor="#4F730F" />
+          <stop offset="0.601" stopColor="#658D0B" />
+          <stop offset="0.618" stopColor="#79A407" />
+          <stop offset="0.638" stopColor="#88B604" />
+          <stop offset="0.662" stopColor="#93C302" />
+          <stop offset="0.694" stopColor="#99CA00" />
+          <stop offset="0.765" stopColor="#9BCC00" />
         </radialGradient>
         <radialGradient
           id="paint7_radial_60_10414"
@@ -1398,14 +1395,14 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(77.4118 75.6624) rotate(-57.44) scale(46.0558 47.9671)"
         >
-          <stop stop-color="#F8DEDF" />
-          <stop offset="0.09" stop-color="#F1B19F" />
-          <stop offset="0.183" stop-color="#EB8764" />
-          <stop offset="0.263" stop-color="#E76938" />
-          <stop offset="0.325" stop-color="#E4561E" />
-          <stop offset="0.361" stop-color="#E34F14" />
-          <stop offset="0.88" stop-color="#BD1004" />
-          <stop offset="1" stop-color="#B40100" />
+          <stop stopColor="#F8DEDF" />
+          <stop offset="0.09" stopColor="#F1B19F" />
+          <stop offset="0.183" stopColor="#EB8764" />
+          <stop offset="0.263" stopColor="#E76938" />
+          <stop offset="0.325" stopColor="#E4561E" />
+          <stop offset="0.361" stopColor="#E34F14" />
+          <stop offset="0.88" stopColor="#BD1004" />
+          <stop offset="1" stopColor="#B40100" />
         </radialGradient>
         <radialGradient
           id="paint8_radial_60_10414"
@@ -1415,11 +1412,11 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(95.1111 65.774) rotate(-89.0319) scale(11.3965 3.09818)"
         >
-          <stop offset="0.235" stop-color="#9BCC00" />
-          <stop offset="0.547" stop-color="#97C801" />
-          <stop offset="0.634" stop-color="#8CBB03" />
-          <stop offset="0.796" stop-color="#709909" />
-          <stop offset="0.952" stop-color="#4F730F" />
+          <stop offset="0.235" stopColor="#9BCC00" />
+          <stop offset="0.547" stopColor="#97C801" />
+          <stop offset="0.634" stopColor="#8CBB03" />
+          <stop offset="0.796" stopColor="#709909" />
+          <stop offset="0.952" stopColor="#4F730F" />
         </radialGradient>
         <linearGradient
           id="paint9_linear_60_10414"
@@ -1429,10 +1426,10 @@ function Tomato() {
           y2="47.0485"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.158" stop-color="#44630D" />
-          <stop offset="0.247" stop-color="#658A12" />
-          <stop offset="0.343" stop-color="#83AE16" />
-          <stop offset="0.393" stop-color="#8EBC18" />
+          <stop offset="0.158" stopColor="#44630D" />
+          <stop offset="0.247" stopColor="#658A12" />
+          <stop offset="0.343" stopColor="#83AE16" />
+          <stop offset="0.393" stopColor="#8EBC18" />
         </linearGradient>
         <radialGradient
           id="paint10_radial_60_10414"
@@ -1442,12 +1439,12 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(92.5231 63.3799) rotate(-27.6245) scale(18.2721 12.1729)"
         >
-          <stop offset="0.587" stop-color="#4F730F" />
-          <stop offset="0.619" stop-color="#658D0B" />
-          <stop offset="0.662" stop-color="#7DA806" />
-          <stop offset="0.705" stop-color="#8EBC03" />
-          <stop offset="0.749" stop-color="#98C801" />
-          <stop offset="0.793" stop-color="#9BCC00" />
+          <stop offset="0.587" stopColor="#4F730F" />
+          <stop offset="0.619" stopColor="#658D0B" />
+          <stop offset="0.662" stopColor="#7DA806" />
+          <stop offset="0.705" stopColor="#8EBC03" />
+          <stop offset="0.749" stopColor="#98C801" />
+          <stop offset="0.793" stopColor="#9BCC00" />
         </radialGradient>
         <radialGradient
           id="paint11_radial_60_10414"
@@ -1457,12 +1454,12 @@ function Tomato() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(101.549 63.3792) rotate(-152.376) scale(18.2721 12.1729)"
         >
-          <stop offset="0.587" stop-color="#4F730F" />
-          <stop offset="0.619" stop-color="#658D0B" />
-          <stop offset="0.662" stop-color="#7DA806" />
-          <stop offset="0.705" stop-color="#8EBC03" />
-          <stop offset="0.749" stop-color="#98C801" />
-          <stop offset="0.793" stop-color="#9BCC00" />
+          <stop offset="0.587" stopColor="#4F730F" />
+          <stop offset="0.619" stopColor="#658D0B" />
+          <stop offset="0.662" stopColor="#7DA806" />
+          <stop offset="0.705" stopColor="#8EBC03" />
+          <stop offset="0.749" stopColor="#98C801" />
+          <stop offset="0.793" stopColor="#9BCC00" />
         </radialGradient>
         <clipPath id="clip0_60_10414">
           <rect
@@ -1494,7 +1491,7 @@ function Cook() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_60_10634)">
+      <g clipPath="url(#clip0_60_10634)">
         <path
           d="M95.1364 53.5608C95.1364 53.5608 94.7911 63.7471 99.9895 75.7272C101.785 79.0686 99.5052 80.4329 99.5052 80.4329C99.5052 80.4329 82.9668 86.9114 65.6324 86.2988C65.6324 79.2749 65.6324 40.1953 65.6324 40.1953L94.7553 45.4127L95.1364 53.5608Z"
           fill="url(#paint0_linear_60_10634)"
@@ -1957,11 +1954,11 @@ function Cook() {
           y2="66.5144"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="0.165" stop-color="#AA8054" />
-          <stop offset="0.337" stop-color="#946A40" />
-          <stop offset="0.447" stop-color="#8C6239" />
-          <stop offset="0.999" stop-color="#331604" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="0.165" stopColor="#AA8054" />
+          <stop offset="0.337" stopColor="#946A40" />
+          <stop offset="0.447" stopColor="#8C6239" />
+          <stop offset="0.999" stopColor="#331604" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_60_10634"
@@ -1971,11 +1968,11 @@ function Cook() {
           y2="66.7915"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="0.165" stop-color="#AA8054" />
-          <stop offset="0.337" stop-color="#946A40" />
-          <stop offset="0.447" stop-color="#8C6239" />
-          <stop offset="0.999" stop-color="#331604" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="0.165" stopColor="#AA8054" />
+          <stop offset="0.337" stopColor="#946A40" />
+          <stop offset="0.447" stopColor="#8C6239" />
+          <stop offset="0.999" stopColor="#331604" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_60_10634"
@@ -1985,11 +1982,11 @@ function Cook() {
           y2="66.8107"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#B78E60" />
-          <stop offset="0.133" stop-color="#A47A4F" />
-          <stop offset="0.325" stop-color="#8E643B" />
-          <stop offset="0.447" stop-color="#865C34" />
-          <stop offset="0.999" stop-color="#391B06" />
+          <stop stopColor="#B78E60" />
+          <stop offset="0.133" stopColor="#A47A4F" />
+          <stop offset="0.325" stopColor="#8E643B" />
+          <stop offset="0.447" stopColor="#865C34" />
+          <stop offset="0.999" stopColor="#391B06" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_60_10634"
@@ -1999,11 +1996,11 @@ function Cook() {
           y2="66.8274"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#A97F53" />
-          <stop offset="0.091" stop-color="#9D7449" />
-          <stop offset="0.308" stop-color="#875E35" />
-          <stop offset="0.447" stop-color="#7F562E" />
-          <stop offset="0.999" stop-color="#402008" />
+          <stop stopColor="#A97F53" />
+          <stop offset="0.091" stopColor="#9D7449" />
+          <stop offset="0.308" stopColor="#875E35" />
+          <stop offset="0.447" stopColor="#7F562E" />
+          <stop offset="0.999" stopColor="#402008" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_60_10634"
@@ -2013,11 +2010,11 @@ function Cook() {
           y2="66.8508"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#9A7146" />
-          <stop offset="0.025" stop-color="#976F44" />
-          <stop offset="0.282" stop-color="#815830" />
-          <stop offset="0.447" stop-color="#795029" />
-          <stop offset="0.999" stop-color="#46250A" />
+          <stop stopColor="#9A7146" />
+          <stop offset="0.025" stopColor="#976F44" />
+          <stop offset="0.282" stopColor="#815830" />
+          <stop offset="0.447" stopColor="#795029" />
+          <stop offset="0.999" stopColor="#46250A" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_60_10634"
@@ -2027,10 +2024,10 @@ function Cook() {
           y2="66.8716"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8C633A" />
-          <stop offset="0.246" stop-color="#7B522B" />
-          <stop offset="0.447" stop-color="#734A23" />
-          <stop offset="0.999" stop-color="#4D290D" />
+          <stop stopColor="#8C633A" />
+          <stop offset="0.246" stopColor="#7B522B" />
+          <stop offset="0.447" stopColor="#734A23" />
+          <stop offset="0.999" stopColor="#4D290D" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_60_10634"
@@ -2040,10 +2037,10 @@ function Cook() {
           y2="66.895"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#7D552D" />
-          <stop offset="0.182" stop-color="#754C25" />
-          <stop offset="0.447" stop-color="#6D441E" />
-          <stop offset="0.999" stop-color="#532E0F" />
+          <stop stopColor="#7D552D" />
+          <stop offset="0.182" stopColor="#754C25" />
+          <stop offset="0.447" stopColor="#6D441E" />
+          <stop offset="0.999" stopColor="#532E0F" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_60_10634"
@@ -2053,10 +2050,10 @@ function Cook() {
           y2="66.9181"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6F4620" />
-          <stop offset="0.03" stop-color="#6E451F" />
-          <stop offset="0.447" stop-color="#663E18" />
-          <stop offset="0.999" stop-color="#5A3311" />
+          <stop stopColor="#6F4620" />
+          <stop offset="0.03" stopColor="#6E451F" />
+          <stop offset="0.447" stopColor="#663E18" />
+          <stop offset="0.999" stopColor="#5A3311" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_60_10634"
@@ -2066,11 +2063,11 @@ function Cook() {
           y2="66.712"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="0.165" stop-color="#AA8054" />
-          <stop offset="0.337" stop-color="#946A40" />
-          <stop offset="0.447" stop-color="#8C6239" />
-          <stop offset="0.999" stop-color="#331604" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="0.165" stopColor="#AA8054" />
+          <stop offset="0.337" stopColor="#946A40" />
+          <stop offset="0.447" stopColor="#8C6239" />
+          <stop offset="0.999" stopColor="#331604" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_60_10634"
@@ -2080,11 +2077,11 @@ function Cook() {
           y2="66.9875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="0.165" stop-color="#AA8054" />
-          <stop offset="0.337" stop-color="#946A40" />
-          <stop offset="0.447" stop-color="#8C6239" />
-          <stop offset="0.999" stop-color="#331604" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="0.165" stopColor="#AA8054" />
+          <stop offset="0.337" stopColor="#946A40" />
+          <stop offset="0.447" stopColor="#8C6239" />
+          <stop offset="0.999" stopColor="#331604" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_60_10634"
@@ -2094,11 +2091,11 @@ function Cook() {
           y2="67.0087"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#B78E60" />
-          <stop offset="0.133" stop-color="#A47A4F" />
-          <stop offset="0.325" stop-color="#8E643B" />
-          <stop offset="0.447" stop-color="#865C34" />
-          <stop offset="0.999" stop-color="#391B06" />
+          <stop stopColor="#B78E60" />
+          <stop offset="0.133" stopColor="#A47A4F" />
+          <stop offset="0.325" stopColor="#8E643B" />
+          <stop offset="0.447" stopColor="#865C34" />
+          <stop offset="0.999" stopColor="#391B06" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_60_10634"
@@ -2108,11 +2105,11 @@ function Cook() {
           y2="67.0254"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#A97F53" />
-          <stop offset="0.091" stop-color="#9D7449" />
-          <stop offset="0.308" stop-color="#875E35" />
-          <stop offset="0.447" stop-color="#7F562E" />
-          <stop offset="0.999" stop-color="#402008" />
+          <stop stopColor="#A97F53" />
+          <stop offset="0.091" stopColor="#9D7449" />
+          <stop offset="0.308" stopColor="#875E35" />
+          <stop offset="0.447" stopColor="#7F562E" />
+          <stop offset="0.999" stopColor="#402008" />
         </linearGradient>
         <linearGradient
           id="paint12_linear_60_10634"
@@ -2122,11 +2119,11 @@ function Cook() {
           y2="67.0486"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#9A7146" />
-          <stop offset="0.025" stop-color="#976F44" />
-          <stop offset="0.282" stop-color="#815830" />
-          <stop offset="0.447" stop-color="#795029" />
-          <stop offset="0.999" stop-color="#46250A" />
+          <stop stopColor="#9A7146" />
+          <stop offset="0.025" stopColor="#976F44" />
+          <stop offset="0.282" stopColor="#815830" />
+          <stop offset="0.447" stopColor="#795029" />
+          <stop offset="0.999" stopColor="#46250A" />
         </linearGradient>
         <linearGradient
           id="paint13_linear_60_10634"
@@ -2136,10 +2133,10 @@ function Cook() {
           y2="67.0694"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#8C633A" />
-          <stop offset="0.246" stop-color="#7B522B" />
-          <stop offset="0.447" stop-color="#734A23" />
-          <stop offset="0.999" stop-color="#4D290D" />
+          <stop stopColor="#8C633A" />
+          <stop offset="0.246" stopColor="#7B522B" />
+          <stop offset="0.447" stopColor="#734A23" />
+          <stop offset="0.999" stopColor="#4D290D" />
         </linearGradient>
         <linearGradient
           id="paint14_linear_60_10634"
@@ -2149,10 +2146,10 @@ function Cook() {
           y2="67.0928"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#7D552D" />
-          <stop offset="0.182" stop-color="#754C25" />
-          <stop offset="0.447" stop-color="#6D441E" />
-          <stop offset="0.999" stop-color="#532E0F" />
+          <stop stopColor="#7D552D" />
+          <stop offset="0.182" stopColor="#754C25" />
+          <stop offset="0.447" stopColor="#6D441E" />
+          <stop offset="0.999" stopColor="#532E0F" />
         </linearGradient>
         <linearGradient
           id="paint15_linear_60_10634"
@@ -2162,10 +2159,10 @@ function Cook() {
           y2="67.114"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6F4620" />
-          <stop offset="0.03" stop-color="#6E451F" />
-          <stop offset="0.447" stop-color="#663E18" />
-          <stop offset="0.999" stop-color="#5A3311" />
+          <stop stopColor="#6F4620" />
+          <stop offset="0.03" stopColor="#6E451F" />
+          <stop offset="0.447" stopColor="#663E18" />
+          <stop offset="0.999" stopColor="#5A3311" />
         </linearGradient>
         <radialGradient
           id="paint16_radial_60_10634"
@@ -2175,8 +2172,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.7813 109.162) scale(34.795 34.795)"
         >
-          <stop offset="0.002" stop-color="white" />
-          <stop offset="1" stop-color="#D2D5D6" />
+          <stop offset="0.002" stopColor="white" />
+          <stop offset="1" stopColor="#D2D5D6" />
         </radialGradient>
         <radialGradient
           id="paint17_radial_60_10634"
@@ -2186,8 +2183,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(62.4102 109.52) scale(31.9231 31.9231)"
         >
-          <stop offset="0.002" stop-color="#F7F7F7" />
-          <stop offset="1" stop-color="#D1D3D4" />
+          <stop offset="0.002" stopColor="#F7F7F7" />
+          <stop offset="1" stopColor="#D1D3D4" />
         </radialGradient>
         <radialGradient
           id="paint18_radial_60_10634"
@@ -2197,8 +2194,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(60.476 109.598) scale(29.7271 29.7271)"
         >
-          <stop offset="0.002" stop-color="#F0F0F0" />
-          <stop offset="1" stop-color="#D0D2D2" />
+          <stop offset="0.002" stopColor="#F0F0F0" />
+          <stop offset="1" stopColor="#D0D2D2" />
         </radialGradient>
         <radialGradient
           id="paint19_radial_60_10634"
@@ -2208,8 +2205,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(58.5936 109.67) scale(27.6027 27.6027)"
         >
-          <stop offset="0.002" stop-color="#EAEAEA" />
-          <stop offset="1" stop-color="#CFD0D1" />
+          <stop offset="0.002" stopColor="#EAEAEA" />
+          <stop offset="1" stopColor="#CFD0D1" />
         </radialGradient>
         <radialGradient
           id="paint20_radial_60_10634"
@@ -2219,8 +2216,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(56.7418 109.729) scale(25.5183 25.5183)"
         >
-          <stop offset="0.002" stop-color="#E3E3E3" />
-          <stop offset="1" stop-color="#CECFCF" />
+          <stop offset="0.002" stopColor="#E3E3E3" />
+          <stop offset="1" stopColor="#CECFCF" />
         </radialGradient>
         <radialGradient
           id="paint21_radial_60_10634"
@@ -2230,8 +2227,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(54.8916 109.779) scale(23.4402 23.4402)"
         >
-          <stop offset="0.002" stop-color="#DDDDDD" />
-          <stop offset="1" stop-color="#CCCDCE" />
+          <stop offset="0.002" stopColor="#DDDDDD" />
+          <stop offset="1" stopColor="#CCCDCE" />
         </radialGradient>
         <radialGradient
           id="paint22_radial_60_10634"
@@ -2241,8 +2238,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(53.043 109.827) scale(21.3642 21.3642)"
         >
-          <stop offset="0.002" stop-color="#D6D6D6" />
-          <stop offset="1" stop-color="#CBCCCC" />
+          <stop offset="0.002" stopColor="#D6D6D6" />
+          <stop offset="1" stopColor="#CBCCCC" />
         </radialGradient>
         <radialGradient
           id="paint23_radial_60_10634"
@@ -2252,8 +2249,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(51.192 109.872) scale(19.2924 19.2924)"
         >
-          <stop offset="0.002" stop-color="#D0D0D0" />
-          <stop offset="1" stop-color="#CACACB" />
+          <stop offset="0.002" stopColor="#D0D0D0" />
+          <stop offset="1" stopColor="#CACACB" />
         </radialGradient>
         <radialGradient
           id="paint24_radial_60_10634"
@@ -2263,8 +2260,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(68.9471 109.519) rotate(180) scale(31.9231 31.9199)"
         >
-          <stop offset="0.002" stop-color="#F7F7F7" />
-          <stop offset="1" stop-color="#D1D3D4" />
+          <stop offset="0.002" stopColor="#F7F7F7" />
+          <stop offset="1" stopColor="#D1D3D4" />
         </radialGradient>
         <radialGradient
           id="paint25_radial_60_10634"
@@ -2274,8 +2271,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(70.8831 109.597) rotate(180) scale(29.7271 29.7241)"
         >
-          <stop offset="0.002" stop-color="#F0F0F0" />
-          <stop offset="1" stop-color="#D0D2D2" />
+          <stop offset="0.002" stopColor="#F0F0F0" />
+          <stop offset="1" stopColor="#D0D2D2" />
         </radialGradient>
         <radialGradient
           id="paint26_radial_60_10634"
@@ -2285,8 +2282,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(72.7655 109.668) rotate(180) scale(27.6027 27.5999)"
         >
-          <stop offset="0.002" stop-color="#EAEAEA" />
-          <stop offset="1" stop-color="#CFD0D1" />
+          <stop offset="0.002" stopColor="#EAEAEA" />
+          <stop offset="1" stopColor="#CFD0D1" />
         </radialGradient>
         <radialGradient
           id="paint27_radial_60_10634"
@@ -2296,8 +2293,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(74.6151 109.727) rotate(180) scale(25.5183 25.5157)"
         >
-          <stop offset="0.002" stop-color="#E3E3E3" />
-          <stop offset="1" stop-color="#CECFCF" />
+          <stop offset="0.002" stopColor="#E3E3E3" />
+          <stop offset="1" stopColor="#CECFCF" />
         </radialGradient>
         <radialGradient
           id="paint28_radial_60_10634"
@@ -2307,8 +2304,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(76.4658 109.778) rotate(180) scale(23.4402 23.4378)"
         >
-          <stop offset="0.002" stop-color="#DDDDDD" />
-          <stop offset="1" stop-color="#CCCDCE" />
+          <stop offset="0.002" stopColor="#DDDDDD" />
+          <stop offset="1" stopColor="#CCCDCE" />
         </radialGradient>
         <radialGradient
           id="paint29_radial_60_10634"
@@ -2318,8 +2315,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(78.315 109.826) rotate(180) scale(21.3642 21.3621)"
         >
-          <stop offset="0.002" stop-color="#D6D6D6" />
-          <stop offset="1" stop-color="#CBCCCC" />
+          <stop offset="0.002" stopColor="#D6D6D6" />
+          <stop offset="1" stopColor="#CBCCCC" />
         </radialGradient>
         <radialGradient
           id="paint30_radial_60_10634"
@@ -2329,8 +2326,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(80.1652 109.87) rotate(180) scale(19.2924 19.2905)"
         >
-          <stop offset="0.002" stop-color="#D0D0D0" />
-          <stop offset="1" stop-color="#CACACB" />
+          <stop offset="0.002" stopColor="#D0D0D0" />
+          <stop offset="1" stopColor="#CACACB" />
         </radialGradient>
         <linearGradient
           id="paint31_linear_60_10634"
@@ -2340,11 +2337,11 @@ function Cook() {
           y2="105.271"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FBCA9D" />
-          <stop offset="0.167" stop-color="#F4C295" />
-          <stop offset="0.422" stop-color="#DFAD80" />
-          <stop offset="0.732" stop-color="#BF8A5E" />
-          <stop offset="0.999" stop-color="#9D673B" />
+          <stop stopColor="#FBCA9D" />
+          <stop offset="0.167" stopColor="#F4C295" />
+          <stop offset="0.422" stopColor="#DFAD80" />
+          <stop offset="0.732" stopColor="#BF8A5E" />
+          <stop offset="0.999" stopColor="#9D673B" />
         </linearGradient>
         <radialGradient
           id="paint32_radial_60_10634"
@@ -2354,8 +2351,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.2322 109.737) scale(37.6942 37.6942)"
         >
-          <stop offset="0.002" stop-color="white" />
-          <stop offset="1" stop-color="#D2D5D6" />
+          <stop offset="0.002" stopColor="white" />
+          <stop offset="1" stopColor="#D2D5D6" />
         </radialGradient>
         <radialGradient
           id="paint33_radial_60_10634"
@@ -2365,8 +2362,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.2238 109.731) scale(37.0794 37.0794)"
         >
-          <stop offset="0.002" stop-color="#F7F7F7" />
-          <stop offset="1" stop-color="#D0D3D3" />
+          <stop offset="0.002" stopColor="#F7F7F7" />
+          <stop offset="1" stopColor="#D0D3D3" />
         </radialGradient>
         <radialGradient
           id="paint34_radial_60_10634"
@@ -2376,8 +2373,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.2133 109.728) scale(36.4646 36.4646)"
         >
-          <stop offset="0.002" stop-color="#EEEEEE" />
-          <stop offset="1" stop-color="#CED0D1" />
+          <stop offset="0.002" stopColor="#EEEEEE" />
+          <stop offset="1" stopColor="#CED0D1" />
         </radialGradient>
         <radialGradient
           id="paint35_radial_60_10634"
@@ -2387,8 +2384,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.2049 109.728) scale(35.8477 35.8477)"
         >
-          <stop offset="0.002" stop-color="#E6E6E6" />
-          <stop offset="1" stop-color="#CCCECE" />
+          <stop offset="0.002" stopColor="#E6E6E6" />
+          <stop offset="1" stopColor="#CCCECE" />
         </radialGradient>
         <radialGradient
           id="paint36_radial_60_10634"
@@ -2398,8 +2395,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1938 109.728) scale(35.235 35.235)"
         >
-          <stop offset="0.002" stop-color="#DDDDDD" />
-          <stop offset="1" stop-color="#CACBCC" />
+          <stop offset="0.002" stopColor="#DDDDDD" />
+          <stop offset="1" stopColor="#CACBCC" />
         </radialGradient>
         <radialGradient
           id="paint37_radial_60_10634"
@@ -2409,8 +2406,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1859 109.728) scale(34.6202 34.6202)"
         >
-          <stop offset="0.002" stop-color="#D5D5D5" />
-          <stop offset="1" stop-color="#C8C9C9" />
+          <stop offset="0.002" stopColor="#D5D5D5" />
+          <stop offset="1" stopColor="#C8C9C9" />
         </radialGradient>
         <radialGradient
           id="paint38_radial_60_10634"
@@ -2420,8 +2417,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1761 109.728) scale(34.0054)"
         >
-          <stop offset="0.002" stop-color="#CCCCCC" />
-          <stop offset="1" stop-color="#C6C6C7" />
+          <stop offset="0.002" stopColor="#CCCCCC" />
+          <stop offset="1" stopColor="#C6C6C7" />
         </radialGradient>
         <linearGradient
           id="paint39_linear_60_10634"
@@ -2431,9 +2428,9 @@ function Cook() {
           y2="87.0506"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.002" stop-color="#90BCFC" />
-          <stop offset="0.617" stop-color="#3B8CE6" />
-          <stop offset="1" stop-color="#0B71D9" />
+          <stop offset="0.002" stopColor="#90BCFC" />
+          <stop offset="0.617" stopColor="#3B8CE6" />
+          <stop offset="1" stopColor="#0B71D9" />
         </linearGradient>
         <linearGradient
           id="paint40_linear_60_10634"
@@ -2443,10 +2440,10 @@ function Cook() {
           y2="100.416"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.008" stop-color="#666666" stop-opacity="0" />
-          <stop offset="0.402" stop-color="#616161" stop-opacity="0.398" />
-          <stop offset="0.893" stop-color="#515151" stop-opacity="0.893" />
-          <stop offset="0.999" stop-color="#4D4D4D" />
+          <stop offset="0.008" stopColor="#666666" stopOpacity="0" />
+          <stop offset="0.402" stopColor="#616161" stopOpacity="0.398" />
+          <stop offset="0.893" stopColor="#515151" stopOpacity="0.893" />
+          <stop offset="0.999" stopColor="#4D4D4D" />
         </linearGradient>
         <radialGradient
           id="paint41_radial_60_10634"
@@ -2456,13 +2453,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(80.4017 100.155) scale(2.26759)"
         >
-          <stop offset="0.008" stop-color="#90BCFC" />
-          <stop offset="0.153" stop-color="#8BB9FB" />
-          <stop offset="0.334" stop-color="#7BB0F7" />
-          <stop offset="0.534" stop-color="#62A2F0" />
-          <stop offset="0.748" stop-color="#3E8EE6" />
-          <stop offset="0.972" stop-color="#1174DB" />
-          <stop offset="0.999" stop-color="#0B71D9" />
+          <stop offset="0.008" stopColor="#90BCFC" />
+          <stop offset="0.153" stopColor="#8BB9FB" />
+          <stop offset="0.334" stopColor="#7BB0F7" />
+          <stop offset="0.534" stopColor="#62A2F0" />
+          <stop offset="0.748" stopColor="#3E8EE6" />
+          <stop offset="0.972" stopColor="#1174DB" />
+          <stop offset="0.999" stopColor="#0B71D9" />
         </radialGradient>
         <linearGradient
           id="paint42_linear_60_10634"
@@ -2472,10 +2469,10 @@ function Cook() {
           y2="107.873"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.008" stop-color="#666666" stop-opacity="0" />
-          <stop offset="0.402" stop-color="#616161" stop-opacity="0.398" />
-          <stop offset="0.893" stop-color="#515151" stop-opacity="0.893" />
-          <stop offset="0.999" stop-color="#4D4D4D" />
+          <stop offset="0.008" stopColor="#666666" stopOpacity="0" />
+          <stop offset="0.402" stopColor="#616161" stopOpacity="0.398" />
+          <stop offset="0.893" stopColor="#515151" stopOpacity="0.893" />
+          <stop offset="0.999" stopColor="#4D4D4D" />
         </linearGradient>
         <radialGradient
           id="paint43_radial_60_10634"
@@ -2485,13 +2482,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(81.149 107.612) scale(2.26759)"
         >
-          <stop offset="0.008" stop-color="#90BCFC" />
-          <stop offset="0.153" stop-color="#8BB9FB" />
-          <stop offset="0.334" stop-color="#7BB0F7" />
-          <stop offset="0.534" stop-color="#62A2F0" />
-          <stop offset="0.748" stop-color="#3E8EE6" />
-          <stop offset="0.972" stop-color="#1174DB" />
-          <stop offset="0.999" stop-color="#0B71D9" />
+          <stop offset="0.008" stopColor="#90BCFC" />
+          <stop offset="0.153" stopColor="#8BB9FB" />
+          <stop offset="0.334" stopColor="#7BB0F7" />
+          <stop offset="0.534" stopColor="#62A2F0" />
+          <stop offset="0.748" stopColor="#3E8EE6" />
+          <stop offset="0.972" stopColor="#1174DB" />
+          <stop offset="0.999" stopColor="#0B71D9" />
         </radialGradient>
         <linearGradient
           id="paint44_linear_60_10634"
@@ -2501,10 +2498,10 @@ function Cook() {
           y2="100.418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.008" stop-color="#666666" stop-opacity="0" />
-          <stop offset="0.402" stop-color="#616161" stop-opacity="0.398" />
-          <stop offset="0.893" stop-color="#515151" stop-opacity="0.893" />
-          <stop offset="0.999" stop-color="#4D4D4D" />
+          <stop offset="0.008" stopColor="#666666" stopOpacity="0" />
+          <stop offset="0.402" stopColor="#616161" stopOpacity="0.398" />
+          <stop offset="0.893" stopColor="#515151" stopOpacity="0.893" />
+          <stop offset="0.999" stopColor="#4D4D4D" />
         </linearGradient>
         <radialGradient
           id="paint45_radial_60_10634"
@@ -2514,13 +2511,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(51.6279 100.155) scale(2.26759)"
         >
-          <stop offset="0.008" stop-color="#90BCFC" />
-          <stop offset="0.153" stop-color="#8BB9FB" />
-          <stop offset="0.334" stop-color="#7BB0F7" />
-          <stop offset="0.534" stop-color="#62A2F0" />
-          <stop offset="0.748" stop-color="#3E8EE6" />
-          <stop offset="0.972" stop-color="#1174DB" />
-          <stop offset="0.999" stop-color="#0B71D9" />
+          <stop offset="0.008" stopColor="#90BCFC" />
+          <stop offset="0.153" stopColor="#8BB9FB" />
+          <stop offset="0.334" stopColor="#7BB0F7" />
+          <stop offset="0.534" stopColor="#62A2F0" />
+          <stop offset="0.748" stopColor="#3E8EE6" />
+          <stop offset="0.972" stopColor="#1174DB" />
+          <stop offset="0.999" stopColor="#0B71D9" />
         </radialGradient>
         <linearGradient
           id="paint46_linear_60_10634"
@@ -2530,10 +2527,10 @@ function Cook() {
           y2="107.873"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.008" stop-color="#666666" stop-opacity="0" />
-          <stop offset="0.402" stop-color="#616161" stop-opacity="0.398" />
-          <stop offset="0.893" stop-color="#515151" stop-opacity="0.893" />
-          <stop offset="0.999" stop-color="#4D4D4D" />
+          <stop offset="0.008" stopColor="#666666" stopOpacity="0" />
+          <stop offset="0.402" stopColor="#616161" stopOpacity="0.398" />
+          <stop offset="0.893" stopColor="#515151" stopOpacity="0.893" />
+          <stop offset="0.999" stopColor="#4D4D4D" />
         </linearGradient>
         <radialGradient
           id="paint47_radial_60_10634"
@@ -2543,13 +2540,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(50.9693 107.612) scale(2.26759)"
         >
-          <stop offset="0.008" stop-color="#90BCFC" />
-          <stop offset="0.153" stop-color="#8BB9FB" />
-          <stop offset="0.334" stop-color="#7BB0F7" />
-          <stop offset="0.534" stop-color="#62A2F0" />
-          <stop offset="0.748" stop-color="#3E8EE6" />
-          <stop offset="0.972" stop-color="#1174DB" />
-          <stop offset="0.999" stop-color="#0B71D9" />
+          <stop offset="0.008" stopColor="#90BCFC" />
+          <stop offset="0.153" stopColor="#8BB9FB" />
+          <stop offset="0.334" stopColor="#7BB0F7" />
+          <stop offset="0.534" stopColor="#62A2F0" />
+          <stop offset="0.748" stopColor="#3E8EE6" />
+          <stop offset="0.972" stopColor="#1174DB" />
+          <stop offset="0.999" stopColor="#0B71D9" />
         </radialGradient>
         <linearGradient
           id="paint48_linear_60_10634"
@@ -2559,11 +2556,11 @@ function Cook() {
           y2="87.0547"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FBCA9D" />
-          <stop offset="0.167" stop-color="#F4C295" />
-          <stop offset="0.422" stop-color="#DFAD80" />
-          <stop offset="0.732" stop-color="#BF8A5E" />
-          <stop offset="0.999" stop-color="#9D673B" />
+          <stop stopColor="#FBCA9D" />
+          <stop offset="0.167" stopColor="#F4C295" />
+          <stop offset="0.422" stopColor="#DFAD80" />
+          <stop offset="0.732" stopColor="#BF8A5E" />
+          <stop offset="0.999" stopColor="#9D673B" />
         </linearGradient>
         <linearGradient
           id="paint49_linear_60_10634"
@@ -2573,9 +2570,9 @@ function Cook() {
           y2="87.0547"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FBCA9D" />
-          <stop offset="0.268" stop-color="#E1AF82" />
-          <stop offset="0.999" stop-color="#9D673B" />
+          <stop stopColor="#FBCA9D" />
+          <stop offset="0.268" stopColor="#E1AF82" />
+          <stop offset="0.999" stopColor="#9D673B" />
         </linearGradient>
         <radialGradient
           id="paint50_radial_60_10634"
@@ -2585,11 +2582,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(41.8272 60.8167) rotate(170.751) scale(5.20696 10.6024)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.461" stop-color="#FFD226" />
-          <stop offset="0.658" stop-color="#FBC921" />
-          <stop offset="0.978" stop-color="#F1B114" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.461" stopColor="#FFD226" />
+          <stop offset="0.658" stopColor="#FBC921" />
+          <stop offset="0.978" stopColor="#F1B114" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint51_radial_60_10634"
@@ -2599,10 +2596,10 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(90.2632 60.8452) rotate(9.33558) scale(5.23638 10.7583)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.461" stop-color="#FFD226" />
-          <stop offset="0.741" stop-color="#F8C21D" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.461" stopColor="#FFD226" />
+          <stop offset="0.741" stopColor="#F8C21D" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint52_radial_60_10634"
@@ -2612,11 +2609,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0398 54.435) scale(27.7476 33.8347)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.629" stop-color="#FFD226" />
-          <stop offset="0.75" stop-color="#FDCD23" />
-          <stop offset="0.899" stop-color="#F6BD1B" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.629" stopColor="#FFD226" />
+          <stop offset="0.75" stopColor="#FDCD23" />
+          <stop offset="0.899" stopColor="#F6BD1B" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint53_radial_60_10634"
@@ -2626,13 +2623,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.9605 36.5671) rotate(90.6554) scale(18.1155 26.4349)"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="0.232" stop-color="#AA8054" />
-          <stop offset="0.474" stop-color="#946A40" />
-          <stop offset="0.629" stop-color="#8C6239" />
-          <stop offset="0.734" stop-color="#875D34" />
-          <stop offset="0.865" stop-color="#774E27" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="0.232" stopColor="#AA8054" />
+          <stop offset="0.474" stopColor="#946A40" />
+          <stop offset="0.629" stopColor="#8C6239" />
+          <stop offset="0.734" stopColor="#875D34" />
+          <stop offset="0.865" stopColor="#774E27" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint54_radial_60_10634"
@@ -2642,8 +2639,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0479 45.4651) scale(27.7417 27.7417)"
         >
-          <stop stop-color="#603813" stop-opacity="0" />
-          <stop offset="0.999" stop-color="#603813" stop-opacity="0.2" />
+          <stop stopColor="#603813" stopOpacity="0" />
+          <stop offset="0.999" stopColor="#603813" stopOpacity="0.2" />
         </radialGradient>
         <radialGradient
           id="paint55_radial_60_10634"
@@ -2653,8 +2650,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0478 45.4104) scale(27.729 27.729)"
         >
-          <stop stop-color="#5C3512" stop-opacity="0.143" />
-          <stop offset="0.999" stop-color="#5C3512" stop-opacity="0.314" />
+          <stop stopColor="#5C3512" stopOpacity="0.143" />
+          <stop offset="0.999" stopColor="#5C3512" stopOpacity="0.314" />
         </radialGradient>
         <radialGradient
           id="paint56_radial_60_10634"
@@ -2664,8 +2661,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0488 45.3516) scale(27.7164 27.7164)"
         >
-          <stop stop-color="#573111" stop-opacity="0.286" />
-          <stop offset="0.999" stop-color="#573111" stop-opacity="0.429" />
+          <stop stopColor="#573111" stopOpacity="0.286" />
+          <stop offset="0.999" stopColor="#573111" stopOpacity="0.429" />
         </radialGradient>
         <radialGradient
           id="paint57_radial_60_10634"
@@ -2675,8 +2672,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0508 45.2988) scale(27.7059)"
         >
-          <stop stop-color="#532E10" stop-opacity="0.429" />
-          <stop offset="0.999" stop-color="#532E10" stop-opacity="0.543" />
+          <stop stopColor="#532E10" stopOpacity="0.429" />
+          <stop offset="0.999" stopColor="#532E10" stopOpacity="0.543" />
         </radialGradient>
         <radialGradient
           id="paint58_radial_60_10634"
@@ -2686,8 +2683,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0511 45.244) scale(27.6953)"
         >
-          <stop stop-color="#4F2B0E" stop-opacity="0.571" />
-          <stop offset="0.999" stop-color="#4F2B0E" stop-opacity="0.657" />
+          <stop stopColor="#4F2B0E" stopOpacity="0.571" />
+          <stop offset="0.999" stopColor="#4F2B0E" stopOpacity="0.657" />
         </radialGradient>
         <radialGradient
           id="paint59_radial_60_10634"
@@ -2697,8 +2694,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.05 45.1852) scale(27.6848)"
         >
-          <stop stop-color="#4B280D" stop-opacity="0.714" />
-          <stop offset="0.999" stop-color="#4B280D" stop-opacity="0.771" />
+          <stop stopColor="#4B280D" stopOpacity="0.714" />
+          <stop offset="0.999" stopColor="#4B280D" stopOpacity="0.771" />
         </radialGradient>
         <radialGradient
           id="paint60_radial_60_10634"
@@ -2708,8 +2705,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.0544 45.1305) scale(27.6722 27.6722)"
         >
-          <stop stop-color="#46240C" stop-opacity="0.857" />
-          <stop offset="0.999" stop-color="#46240C" stop-opacity="0.886" />
+          <stop stopColor="#46240C" stopOpacity="0.857" />
+          <stop offset="0.999" stopColor="#46240C" stopOpacity="0.886" />
         </radialGradient>
         <radialGradient
           id="paint61_radial_60_10634"
@@ -2719,13 +2716,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1601 42.7956) scale(23.7137 23.5614)"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="0.232" stop-color="#AA8054" />
-          <stop offset="0.474" stop-color="#946A40" />
-          <stop offset="0.629" stop-color="#8C6239" />
-          <stop offset="0.734" stop-color="#875D34" />
-          <stop offset="0.865" stop-color="#774E27" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="0.232" stopColor="#AA8054" />
+          <stop offset="0.474" stopColor="#946A40" />
+          <stop offset="0.629" stopColor="#8C6239" />
+          <stop offset="0.734" stopColor="#875D34" />
+          <stop offset="0.865" stopColor="#774E27" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint62_radial_60_10634"
@@ -2735,13 +2732,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1572 42.9205) scale(23.6752 23.5434)"
         >
-          <stop stop-color="#B78E60" />
-          <stop offset="0.188" stop-color="#A47A4F" />
-          <stop offset="0.457" stop-color="#8E643B" />
-          <stop offset="0.629" stop-color="#865C34" />
-          <stop offset="0.744" stop-color="#81572F" />
-          <stop offset="0.886" stop-color="#714822" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#B78E60" />
+          <stop offset="0.188" stopColor="#A47A4F" />
+          <stop offset="0.457" stopColor="#8E643B" />
+          <stop offset="0.629" stopColor="#865C34" />
+          <stop offset="0.744" stopColor="#81572F" />
+          <stop offset="0.886" stopColor="#714822" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint63_radial_60_10634"
@@ -2751,13 +2748,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1533 43.0484) scale(23.6346 23.528)"
         >
-          <stop stop-color="#A97F53" />
-          <stop offset="0.129" stop-color="#9D7449" />
-          <stop offset="0.434" stop-color="#875E35" />
-          <stop offset="0.629" stop-color="#7F562E" />
-          <stop offset="0.759" stop-color="#7A5129" />
-          <stop offset="0.92" stop-color="#6A421C" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#A97F53" />
+          <stop offset="0.129" stopColor="#9D7449" />
+          <stop offset="0.434" stopColor="#875E35" />
+          <stop offset="0.629" stopColor="#7F562E" />
+          <stop offset="0.759" stopColor="#7A5129" />
+          <stop offset="0.92" stopColor="#6A421C" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint64_radial_60_10634"
@@ -2767,13 +2764,13 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1505 43.1735) scale(23.5969 23.5127)"
         >
-          <stop stop-color="#9A7146" />
-          <stop offset="0.035" stop-color="#976F44" />
-          <stop offset="0.397" stop-color="#815830" />
-          <stop offset="0.629" stop-color="#795029" />
-          <stop offset="0.776" stop-color="#744B24" />
-          <stop offset="0.96" stop-color="#643C17" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#9A7146" />
+          <stop offset="0.035" stopColor="#976F44" />
+          <stop offset="0.397" stopColor="#815830" />
+          <stop offset="0.629" stopColor="#795029" />
+          <stop offset="0.776" stopColor="#744B24" />
+          <stop offset="0.96" stopColor="#643C17" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint65_radial_60_10634"
@@ -2783,11 +2780,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1506 43.2975) scale(23.5597 23.4951)"
         >
-          <stop stop-color="#8C633A" />
-          <stop offset="0.346" stop-color="#7B522B" />
-          <stop offset="0.629" stop-color="#734A23" />
-          <stop offset="0.803" stop-color="#6E451E" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#8C633A" />
+          <stop offset="0.346" stopColor="#7B522B" />
+          <stop offset="0.629" stopColor="#734A23" />
+          <stop offset="0.803" stopColor="#6E451E" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint66_radial_60_10634"
@@ -2797,11 +2794,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1492 43.4244) scale(23.525 23.4822)"
         >
-          <stop stop-color="#7D552D" />
-          <stop offset="0.257" stop-color="#754C25" />
-          <stop offset="0.629" stop-color="#6D441E" />
-          <stop offset="0.847" stop-color="#683F19" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#7D552D" />
+          <stop offset="0.257" stopColor="#754C25" />
+          <stop offset="0.629" stopColor="#6D441E" />
+          <stop offset="0.847" stopColor="#683F19" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <radialGradient
           id="paint67_radial_60_10634"
@@ -2811,11 +2808,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.1464 43.6606) scale(23.5094 23.4882)"
         >
-          <stop stop-color="#6F4620" />
-          <stop offset="0.042" stop-color="#6E451F" />
-          <stop offset="0.629" stop-color="#663E18" />
-          <stop offset="0.975" stop-color="#613914" />
-          <stop offset="0.999" stop-color="#603813" />
+          <stop stopColor="#6F4620" />
+          <stop offset="0.042" stopColor="#6E451F" />
+          <stop offset="0.629" stopColor="#663E18" />
+          <stop offset="0.975" stopColor="#613914" />
+          <stop offset="0.999" stopColor="#603813" />
         </radialGradient>
         <linearGradient
           id="paint68_linear_60_10634"
@@ -2825,8 +2822,8 @@ function Cook() {
           y2="57.7235"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="1" stop-color="#754C24" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="1" stopColor="#754C24" />
         </linearGradient>
         <radialGradient
           id="paint69_radial_60_10634"
@@ -2836,8 +2833,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(53.3526 57.7234) scale(2.21706)"
         >
-          <stop stop-color="#1C1911" />
-          <stop offset="0.999" stop-color="#171714" />
+          <stop stopColor="#1C1911" />
+          <stop offset="0.999" stopColor="#171714" />
         </radialGradient>
         <linearGradient
           id="paint70_linear_60_10634"
@@ -2847,8 +2844,8 @@ function Cook() {
           y2="57.7235"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#C69C6D" />
-          <stop offset="1" stop-color="#754C24" />
+          <stop stopColor="#C69C6D" />
+          <stop offset="1" stopColor="#754C24" />
         </linearGradient>
         <radialGradient
           id="paint71_radial_60_10634"
@@ -2858,8 +2855,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(78.4247 57.7234) rotate(180) scale(2.21706)"
         >
-          <stop stop-color="#1C1911" />
-          <stop offset="0.999" stop-color="#171714" />
+          <stop stopColor="#1C1911" />
+          <stop offset="0.999" stopColor="#171714" />
         </radialGradient>
         <radialGradient
           id="paint72_radial_60_10634"
@@ -2869,8 +2866,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1444 49.7499) scale(20.7262 20.7262)"
         >
-          <stop stop-color="#5C3512" stop-opacity="0.143" />
-          <stop offset="0.999" stop-color="#5C3512" stop-opacity="0.314" />
+          <stop stopColor="#5C3512" stopOpacity="0.143" />
+          <stop offset="0.999" stopColor="#5C3512" stopOpacity="0.314" />
         </radialGradient>
         <radialGradient
           id="paint73_radial_60_10634"
@@ -2880,8 +2877,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1444 49.6046) scale(20.7094 20.7094)"
         >
-          <stop stop-color="#5D3512" stop-opacity="0.265" />
-          <stop offset="0.999" stop-color="#5D3512" stop-opacity="0.412" />
+          <stop stopColor="#5D3512" stopOpacity="0.265" />
+          <stop offset="0.999" stopColor="#5D3512" stopOpacity="0.412" />
         </radialGradient>
         <radialGradient
           id="paint74_radial_60_10634"
@@ -2891,8 +2888,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1418 49.4614) scale(20.6925)"
         >
-          <stop stop-color="#5D3612" stop-opacity="0.388" />
-          <stop offset="0.999" stop-color="#5D3612" stop-opacity="0.51" />
+          <stop stopColor="#5D3612" stopOpacity="0.388" />
+          <stop offset="0.999" stopColor="#5D3612" stopOpacity="0.51" />
         </radialGradient>
         <radialGradient
           id="paint75_radial_60_10634"
@@ -2902,8 +2899,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1418 49.3161) scale(20.6757 20.6757)"
         >
-          <stop stop-color="#5E3612" stop-opacity="0.51" />
-          <stop offset="0.999" stop-color="#5E3612" stop-opacity="0.608" />
+          <stop stopColor="#5E3612" stopOpacity="0.51" />
+          <stop offset="0.999" stopColor="#5E3612" stopOpacity="0.608" />
         </radialGradient>
         <radialGradient
           id="paint76_radial_60_10634"
@@ -2913,8 +2910,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1444 49.173) scale(20.661 20.661)"
         >
-          <stop stop-color="#5E3713" stop-opacity="0.633" />
-          <stop offset="0.999" stop-color="#5E3713" stop-opacity="0.706" />
+          <stop stopColor="#5E3713" stopOpacity="0.633" />
+          <stop offset="0.999" stopColor="#5E3713" stopOpacity="0.706" />
         </radialGradient>
         <radialGradient
           id="paint77_radial_60_10634"
@@ -2924,8 +2921,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1444 49.0277) scale(20.6462)"
         >
-          <stop stop-color="#5F3713" stop-opacity="0.755" />
-          <stop offset="0.999" stop-color="#5F3713" stop-opacity="0.804" />
+          <stop stopColor="#5F3713" stopOpacity="0.755" />
+          <stop offset="0.999" stopColor="#5F3713" stopOpacity="0.804" />
         </radialGradient>
         <radialGradient
           id="paint78_radial_60_10634"
@@ -2935,8 +2932,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1444 48.8824) scale(20.6315 20.6315)"
         >
-          <stop stop-color="#5F3813" stop-opacity="0.878" />
-          <stop offset="0.999" stop-color="#5F3813" stop-opacity="0.902" />
+          <stop stopColor="#5F3813" stopOpacity="0.878" />
+          <stop offset="0.999" stopColor="#5F3813" stopOpacity="0.902" />
         </radialGradient>
         <radialGradient
           id="paint79_radial_60_10634"
@@ -2946,10 +2943,10 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.047 26.6399) scale(36.9004 19.8488)"
         >
-          <stop stop-color="#FDFDFD" />
-          <stop offset="0.295" stop-color="#F5F6F6" />
-          <stop offset="0.744" stop-color="#E0E2E3" />
-          <stop offset="0.999" stop-color="#D1D4D5" />
+          <stop stopColor="#FDFDFD" />
+          <stop offset="0.295" stopColor="#F5F6F6" />
+          <stop offset="0.744" stopColor="#E0E2E3" />
+          <stop offset="0.999" stopColor="#D1D4D5" />
         </radialGradient>
         <radialGradient
           id="paint80_radial_60_10634"
@@ -2959,10 +2956,10 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.8369 30.3358) scale(32.0831 21.7524)"
         >
-          <stop stop-color="#FDFDFD" />
-          <stop offset="0.295" stop-color="#F5F6F6" />
-          <stop offset="0.744" stop-color="#E0E2E3" />
-          <stop offset="0.999" stop-color="#D1D4D5" />
+          <stop stopColor="#FDFDFD" />
+          <stop offset="0.295" stopColor="#F5F6F6" />
+          <stop offset="0.744" stopColor="#E0E2E3" />
+          <stop offset="0.999" stopColor="#D1D4D5" />
         </radialGradient>
         <radialGradient
           id="paint81_radial_60_10634"
@@ -2972,10 +2969,10 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.795 30.4748) scale(31.8284 21.5796)"
         >
-          <stop stop-color="#F3F3F3" />
-          <stop offset="0.327" stop-color="#EBECEC" />
-          <stop offset="0.825" stop-color="#D6D8D9" />
-          <stop offset="0.999" stop-color="#CDD0D1" />
+          <stop stopColor="#F3F3F3" />
+          <stop offset="0.327" stopColor="#EBECEC" />
+          <stop offset="0.825" stopColor="#D6D8D9" />
+          <stop offset="0.999" stopColor="#CDD0D1" />
         </radialGradient>
         <radialGradient
           id="paint82_radial_60_10634"
@@ -2985,10 +2982,10 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.7478 30.621) scale(31.582 21.4126)"
         >
-          <stop stop-color="#E9E9E9" />
-          <stop offset="0.377" stop-color="#E1E2E2" />
-          <stop offset="0.952" stop-color="#CCCECE" />
-          <stop offset="0.999" stop-color="#CACCCC" />
+          <stop stopColor="#E9E9E9" />
+          <stop offset="0.377" stopColor="#E1E2E2" />
+          <stop offset="0.952" stopColor="#CCCECE" />
+          <stop offset="0.999" stopColor="#CACCCC" />
         </radialGradient>
         <radialGradient
           id="paint83_radial_60_10634"
@@ -2998,9 +2995,9 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.6979 30.7656) scale(31.3399 21.2485)"
         >
-          <stop stop-color="#DFDFDF" />
-          <stop offset="0.438" stop-color="#D7D8D8" />
-          <stop offset="0.999" stop-color="#C6C8C8" />
+          <stop stopColor="#DFDFDF" />
+          <stop offset="0.438" stopColor="#D7D8D8" />
+          <stop offset="0.999" stopColor="#C6C8C8" />
         </radialGradient>
         <radialGradient
           id="paint84_radial_60_10634"
@@ -3010,9 +3007,9 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.6507 30.9064) scale(31.0999 21.0857)"
         >
-          <stop stop-color="#D5D5D5" />
-          <stop offset="0.531" stop-color="#CDCECE" />
-          <stop offset="0.999" stop-color="#C2C3C4" />
+          <stop stopColor="#D5D5D5" />
+          <stop offset="0.531" stopColor="#CDCECE" />
+          <stop offset="0.999" stopColor="#C2C3C4" />
         </radialGradient>
         <radialGradient
           id="paint85_radial_60_10634"
@@ -3022,9 +3019,9 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.5944 31.0506) scale(30.8767 20.9344)"
         >
-          <stop stop-color="#CBCBCB" />
-          <stop offset="0.693" stop-color="#C3C4C4" />
-          <stop offset="0.999" stop-color="#BEBFC0" />
+          <stop stopColor="#CBCBCB" />
+          <stop offset="0.693" stopColor="#C3C4C4" />
+          <stop offset="0.999" stopColor="#BEBFC0" />
         </radialGradient>
         <radialGradient
           id="paint86_radial_60_10634"
@@ -3034,8 +3031,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.5398 31.1955) scale(30.6662 20.7917)"
         >
-          <stop stop-color="#C1C1C1" />
-          <stop offset="0.999" stop-color="#BBBBBB" />
+          <stop stopColor="#C1C1C1" />
+          <stop offset="0.999" stopColor="#BBBBBB" />
         </radialGradient>
         <radialGradient
           id="paint87_radial_60_10634"
@@ -3045,11 +3042,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(65.8115 40.9553) scale(26.7984 14.4149)"
         >
-          <stop stop-color="#FDFDFD" />
-          <stop offset="0.205" stop-color="#F5F5F5" />
-          <stop offset="0.518" stop-color="#E0E0E0" />
-          <stop offset="0.898" stop-color="#BDBDBD" />
-          <stop offset="0.999" stop-color="#B3B3B3" />
+          <stop stopColor="#FDFDFD" />
+          <stop offset="0.205" stopColor="#F5F5F5" />
+          <stop offset="0.518" stopColor="#E0E0E0" />
+          <stop offset="0.898" stopColor="#BDBDBD" />
+          <stop offset="0.999" stopColor="#B3B3B3" />
         </radialGradient>
         <radialGradient
           id="paint88_radial_60_10634"
@@ -3059,11 +3056,11 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.1213 67.2705) scale(4.9296 4.74789)"
         >
-          <stop offset="0.245" stop-color="#CC9000" />
-          <stop offset="0.415" stop-color="#D09504" stop-opacity="0.822" />
-          <stop offset="0.627" stop-color="#DCA50F" stop-opacity="0.599" />
-          <stop offset="0.851" stop-color="#EEBD20" stop-opacity="0.363" />
-          <stop offset="1" stop-color="#FED12E" stop-opacity="0" />
+          <stop offset="0.245" stopColor="#CC9000" />
+          <stop offset="0.415" stopColor="#D09504" stopOpacity="0.822" />
+          <stop offset="0.627" stopColor="#DCA50F" stopOpacity="0.599" />
+          <stop offset="0.851" stopColor="#EEBD20" stopOpacity="0.363" />
+          <stop offset="1" stopColor="#FED12E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint89_radial_60_10634"
@@ -3073,9 +3070,9 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.2134 66.8911) rotate(1.39087) scale(5.49595 2.63214)"
         >
-          <stop offset="0.479" stop-color="#FED53F" />
-          <stop offset="0.926" stop-color="#FED53F" stop-opacity="0.141" />
-          <stop offset="1" stop-color="#FED53F" stop-opacity="0" />
+          <stop offset="0.479" stopColor="#FED53F" />
+          <stop offset="0.926" stopColor="#FED53F" stopOpacity="0.141" />
+          <stop offset="1" stopColor="#FED53F" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint90_radial_60_10634"
@@ -3085,8 +3082,8 @@ function Cook() {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(66.2461 66.7881) scale(2.97082 1.95955)"
         >
-          <stop offset="0.004" stop-color="#FFF4C9" />
-          <stop offset="1" stop-color="#FFF4C9" stop-opacity="0" />
+          <stop offset="0.004" stopColor="#FFF4C9" />
+          <stop offset="1" stopColor="#FFF4C9" stopOpacity="0" />
         </radialGradient>
         <clipPath id="clip0_60_10634">
           <rect

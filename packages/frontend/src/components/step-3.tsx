@@ -40,8 +40,8 @@ export function Step3Custom(props: Props) {
 
   return (
     <div className="flex flex-col">
-      <div className="pb-10 text-base font-bold">
-        <div className="text-xs text-[#9621BF]">
+      <div className="pb-5 text-base font-bold">
+        <div className="text-xs text-[#9621BF] dark:text-pink-200">
           Please share your preferences and we’ll prepare the best pizza for
           you.
         </div>
@@ -291,11 +291,11 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(23.0812 28.8107) scale(29.416 26.545)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.629" stop-color="#FFD226" />
-          <stop offset="0.75" stop-color="#FDCD23" />
-          <stop offset="0.899" stop-color="#F6BD1B" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.629" stopColor="#FFD226" />
+          <stop offset="0.75" stopColor="#FDCD23" />
+          <stop offset="0.899" stopColor="#F6BD1B" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <linearGradient
           id="paint1_linear_18_62"
@@ -305,8 +305,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="43.4813"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F4BA22" stop-opacity="0.409" />
-          <stop offset="1" stop-color="#FBCE32" />
+          <stop stopColor="#F4BA22" stopOpacity="0.409" />
+          <stop offset="1" stopColor="#FBCE32" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_18_62"
@@ -316,8 +316,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="46.4094"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F2B721" stop-opacity="0.468" />
-          <stop offset="1" stop-color="#F9C930" />
+          <stop stopColor="#F2B721" stopOpacity="0.468" />
+          <stop offset="1" stopColor="#F9C930" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_18_62"
@@ -327,8 +327,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="49.5387"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F0B320" stop-opacity="0.527" />
-          <stop offset="1" stop-color="#F6C32D" />
+          <stop stopColor="#F0B320" stopOpacity="0.527" />
+          <stop offset="1" stopColor="#F6C32D" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_18_62"
@@ -338,8 +338,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="52.1693"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EEB01F" stop-opacity="0.586" />
-          <stop offset="1" stop-color="#F3BE2A" />
+          <stop stopColor="#EEB01F" stopOpacity="0.586" />
+          <stop offset="1" stopColor="#F3BE2A" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_18_62"
@@ -349,8 +349,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="53.6772"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#ECAC1E" stop-opacity="0.645" />
-          <stop offset="1" stop-color="#F0B827" />
+          <stop stopColor="#ECAC1E" stopOpacity="0.645" />
+          <stop offset="1" stopColor="#F0B827" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_18_62"
@@ -360,8 +360,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="53.9305"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EAA91C" stop-opacity="0.705" />
-          <stop offset="1" stop-color="#EEB325" />
+          <stop stopColor="#EAA91C" stopOpacity="0.705" />
+          <stop offset="1" stopColor="#EEB325" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_18_62"
@@ -371,8 +371,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="52.7508"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E8A51B" stop-opacity="0.764" />
-          <stop offset="1" stop-color="#EBAD22" />
+          <stop stopColor="#E8A51B" stopOpacity="0.764" />
+          <stop offset="1" stopColor="#EBAD22" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_18_62"
@@ -382,8 +382,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="50.004"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E6A21A" stop-opacity="0.823" />
-          <stop offset="1" stop-color="#E8A81F" />
+          <stop stopColor="#E6A21A" stopOpacity="0.823" />
+          <stop offset="1" stopColor="#E8A81F" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_18_62"
@@ -393,8 +393,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="46.5214"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E49E19" stop-opacity="0.882" />
-          <stop offset="1" stop-color="#E5A21C" />
+          <stop stopColor="#E49E19" stopOpacity="0.882" />
+          <stop offset="1" stopColor="#E5A21C" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_18_62"
@@ -404,8 +404,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="43.4052"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E29B18" stop-opacity="0.941" />
-          <stop offset="1" stop-color="#E39D1A" />
+          <stop stopColor="#E29B18" stopOpacity="0.941" />
+          <stop offset="1" stopColor="#E39D1A" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_18_62"
@@ -415,8 +415,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.6519"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E09717" />
-          <stop offset="1" stop-color="#E09717" />
+          <stop stopColor="#E09717" />
+          <stop offset="1" stopColor="#E09717" />
         </linearGradient>
         <linearGradient
           id="paint12_linear_18_62"
@@ -426,9 +426,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.3121"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EFAE13" />
-          <stop offset="0.519" stop-color="#FCCC24" stop-opacity="0.536" />
-          <stop offset="0.999" stop-color="#FCCB23" />
+          <stop stopColor="#EFAE13" />
+          <stop offset="0.519" stopColor="#FCCC24" stopOpacity="0.536" />
+          <stop offset="0.999" stopColor="#FCCB23" />
         </linearGradient>
         <linearGradient
           id="paint13_linear_18_62"
@@ -438,9 +438,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.4336"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EEAC13" />
-          <stop offset="0.519" stop-color="#F9C723" stop-opacity="0.583" />
-          <stop offset="0.999" stop-color="#F9C621" />
+          <stop stopColor="#EEAC13" />
+          <stop offset="0.519" stopColor="#F9C723" stopOpacity="0.583" />
+          <stop offset="0.999" stopColor="#F9C621" />
         </linearGradient>
         <linearGradient
           id="paint14_linear_18_62"
@@ -450,9 +450,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.5546"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EDAB14" />
-          <stop offset="0.519" stop-color="#F7C321" stop-opacity="0.629" />
-          <stop offset="0.999" stop-color="#F7C220" />
+          <stop stopColor="#EDAB14" />
+          <stop offset="0.519" stopColor="#F7C321" stopOpacity="0.629" />
+          <stop offset="0.999" stopColor="#F7C220" />
         </linearGradient>
         <linearGradient
           id="paint15_linear_18_62"
@@ -462,9 +462,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.6746"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#ECAA14" />
-          <stop offset="0.519" stop-color="#F5BF20" stop-opacity="0.675" />
-          <stop offset="0.999" stop-color="#F5BE1F" />
+          <stop stopColor="#ECAA14" />
+          <stop offset="0.519" stopColor="#F5BF20" stopOpacity="0.675" />
+          <stop offset="0.999" stopColor="#F5BE1F" />
         </linearGradient>
         <linearGradient
           id="paint16_linear_18_62"
@@ -474,9 +474,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.7961"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EBA814" />
-          <stop offset="0.519" stop-color="#F3BA1E" stop-opacity="0.722" />
-          <stop offset="0.999" stop-color="#F3BA1D" />
+          <stop stopColor="#EBA814" />
+          <stop offset="0.519" stopColor="#F3BA1E" stopOpacity="0.722" />
+          <stop offset="0.999" stopColor="#F3BA1D" />
         </linearGradient>
         <linearGradient
           id="paint17_linear_18_62"
@@ -486,9 +486,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="41.9173"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EAA714" />
-          <stop offset="0.519" stop-color="#F0B61D" stop-opacity="0.768" />
-          <stop offset="0.999" stop-color="#F0B51C" />
+          <stop stopColor="#EAA714" />
+          <stop offset="0.519" stopColor="#F0B61D" stopOpacity="0.768" />
+          <stop offset="0.999" stopColor="#F0B51C" />
         </linearGradient>
         <linearGradient
           id="paint18_linear_18_62"
@@ -498,9 +498,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="42.0387"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E9A514" />
-          <stop offset="0.519" stop-color="#EEB11B" stop-opacity="0.815" />
-          <stop offset="0.999" stop-color="#EEB11A" />
+          <stop stopColor="#E9A514" />
+          <stop offset="0.519" stopColor="#EEB11B" stopOpacity="0.815" />
+          <stop offset="0.999" stopColor="#EEB11A" />
         </linearGradient>
         <linearGradient
           id="paint19_linear_18_62"
@@ -510,9 +510,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="42.1601"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E8A414" />
-          <stop offset="0.519" stop-color="#ECAD1A" stop-opacity="0.861" />
-          <stop offset="0.999" stop-color="#ECAD19" />
+          <stop stopColor="#E8A414" />
+          <stop offset="0.519" stopColor="#ECAD1A" stopOpacity="0.861" />
+          <stop offset="0.999" stopColor="#ECAD19" />
         </linearGradient>
         <linearGradient
           id="paint20_linear_18_62"
@@ -522,9 +522,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="42.2827"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E7A315" />
-          <stop offset="0.519" stop-color="#EAA918" stop-opacity="0.907" />
-          <stop offset="0.999" stop-color="#EAA918" />
+          <stop stopColor="#E7A315" />
+          <stop offset="0.519" stopColor="#EAA918" stopOpacity="0.907" />
+          <stop offset="0.999" stopColor="#EAA918" />
         </linearGradient>
         <linearGradient
           id="paint21_linear_18_62"
@@ -534,9 +534,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="42.404"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E6A115" />
-          <stop offset="0.519" stop-color="#E7A417" stop-opacity="0.954" />
-          <stop offset="0.999" stop-color="#E7A416" />
+          <stop stopColor="#E6A115" />
+          <stop offset="0.519" stopColor="#E7A417" stopOpacity="0.954" />
+          <stop offset="0.999" stopColor="#E7A416" />
         </linearGradient>
         <radialGradient
           id="paint22_radial_18_62"
@@ -546,11 +546,11 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(43.6573 55.2338) scale(8.82133 4.48741)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.629" stop-color="#FFD226" />
-          <stop offset="0.75" stop-color="#FDCD23" />
-          <stop offset="0.899" stop-color="#F6BD1B" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.629" stopColor="#FFD226" />
+          <stop offset="0.75" stopColor="#FDCD23" />
+          <stop offset="0.899" stopColor="#F6BD1B" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint23_radial_18_62"
@@ -560,11 +560,11 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(45.7959 48.5793) scale(10.1933 5.3882)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.629" stop-color="#FFD226" />
-          <stop offset="0.75" stop-color="#FDCD23" />
-          <stop offset="0.899" stop-color="#F6BD1B" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.629" stopColor="#FFD226" />
+          <stop offset="0.75" stopColor="#FDCD23" />
+          <stop offset="0.899" stopColor="#F6BD1B" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint24_radial_18_62"
@@ -574,11 +574,11 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(47.0681 41.4277) scale(11.0413 6.23062)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.629" stop-color="#FFD226" />
-          <stop offset="0.75" stop-color="#FDCD23" />
-          <stop offset="0.899" stop-color="#F6BD1B" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.629" stopColor="#FFD226" />
+          <stop offset="0.75" stopColor="#FDCD23" />
+          <stop offset="0.899" stopColor="#F6BD1B" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint25_radial_18_62"
@@ -588,11 +588,11 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(48.2136 31.1008) rotate(-4.7094) scale(9.7371 6.35754)"
         >
-          <stop stop-color="#FFE16E" />
-          <stop offset="0.629" stop-color="#FFD226" />
-          <stop offset="0.75" stop-color="#FDCD23" />
-          <stop offset="0.899" stop-color="#F6BD1B" />
-          <stop offset="0.999" stop-color="#F0AF13" />
+          <stop stopColor="#FFE16E" />
+          <stop offset="0.629" stopColor="#FFD226" />
+          <stop offset="0.75" stopColor="#FDCD23" />
+          <stop offset="0.899" stopColor="#F6BD1B" />
+          <stop offset="0.999" stopColor="#F0AF13" />
         </radialGradient>
         <radialGradient
           id="paint26_radial_18_62"
@@ -602,8 +602,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(24.5462 46.9878) rotate(-78.5677) scale(5.66925 8.59012)"
         >
-          <stop offset="0.425" stop-color="#FFE16E" />
-          <stop offset="1" stop-color="#FFE16E" stop-opacity="0" />
+          <stop offset="0.425" stopColor="#FFE16E" />
+          <stop offset="1" stopColor="#FFE16E" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint27_linear_18_62"
@@ -613,9 +613,9 @@ function ThumbsUpIcon(props: { className?: string }) {
           y2="39.4193"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFDB53" stop-opacity="0" />
-          <stop offset="0.605" stop-color="#F6C02D" />
-          <stop offset="0.999" stop-color="#F2B416" stop-opacity="0.636" />
+          <stop stopColor="#FFDB53" stopOpacity="0" />
+          <stop offset="0.605" stopColor="#F6C02D" />
+          <stop offset="0.999" stopColor="#F2B416" stopOpacity="0.636" />
         </linearGradient>
         <radialGradient
           id="paint28_radial_18_62"
@@ -625,8 +625,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(23.482 32.1473) rotate(49.6414) scale(5.09733 8.45713)"
         >
-          <stop offset="0.425" stop-color="#FFE16E" />
-          <stop offset="1" stop-color="#FFE16E" stop-opacity="0" />
+          <stop offset="0.425" stopColor="#FFE16E" />
+          <stop offset="1" stopColor="#FFE16E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint29_radial_18_62"
@@ -636,8 +636,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(48.7009 30.9969) rotate(-90) scale(3.08973 6.94798)"
         >
-          <stop offset="0.425" stop-color="#FFE16E" />
-          <stop offset="1" stop-color="#FFE16E" stop-opacity="0" />
+          <stop offset="0.425" stopColor="#FFE16E" />
+          <stop offset="1" stopColor="#FFE16E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint30_radial_18_62"
@@ -647,8 +647,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(47.4261 40.1639) rotate(-90) scale(2.70771 6.94798)"
         >
-          <stop offset="0.425" stop-color="#FFE16E" />
-          <stop offset="1" stop-color="#FFE16E" stop-opacity="0" />
+          <stop offset="0.425" stopColor="#FFE16E" />
+          <stop offset="1" stopColor="#FFE16E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint31_radial_18_62"
@@ -658,8 +658,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(46.0225 47.9504) rotate(-90) scale(2.70771 6.94798)"
         >
-          <stop offset="0.425" stop-color="#FFE16E" />
-          <stop offset="1" stop-color="#FFE16E" stop-opacity="0" />
+          <stop offset="0.425" stopColor="#FFE16E" />
+          <stop offset="1" stopColor="#FFE16E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint32_radial_18_62"
@@ -669,8 +669,8 @@ function ThumbsUpIcon(props: { className?: string }) {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(44.2517 54.4996) rotate(-90) scale(1.94019 4.97852)"
         >
-          <stop offset="0.425" stop-color="#FFE16E" />
-          <stop offset="1" stop-color="#FFE16E" stop-opacity="0" />
+          <stop offset="0.425" stopColor="#FFE16E" />
+          <stop offset="1" stopColor="#FFE16E" stopOpacity="0" />
         </radialGradient>
       </defs>
     </svg>

@@ -2,7 +2,12 @@
 import { InfoIcon } from '~/icons/info'
 import { SvgIcon, type SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
-import { Dialog, DialogContent, DialogTrigger } from './core/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from './core/dialog'
 import { StepController } from './pizza-flow'
 import { useRecategorisationPreviewContext } from './recategorisation-preview/recategorisation-preview-provider'
 import { RecategorisationPreviewSwitch } from './recategorisation-preview/recategorisation-preview-switch'
@@ -48,6 +53,7 @@ export function MainPageHeader({
               </div>
             </DialogTrigger>
             <DialogContent className="flex items-center justify-center pt-16">
+              <DialogTitle className="hidden">Pizza time</DialogTitle>
               <StepController />
             </DialogContent>
           </Dialog>

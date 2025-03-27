@@ -2,6 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
+import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import type { RosetteValue } from '../types'
 import { RealProposerFailureRisk } from './real-elements/real-da'
@@ -20,6 +21,7 @@ interface Props {
 export function RealPizzaRosetteIcon({
   values,
   className,
+  // To pass to the elements
   isUnderReview,
   background = 'header',
 }: Props) {
@@ -29,6 +31,7 @@ export function RealPizzaRosetteIcon({
 
   const [first, second, third, fourth, fifth] = values
   const setSelectedRisk = context?.setSelectedRisk
+  // To pass to the elements
   const selectedRisk = context?.selectedRisk
 
   useOnClickOutside(svgRef, () => setSelectedRisk?.(undefined))
@@ -51,9 +54,20 @@ export function RealPizzaRosetteIcon({
       ref={svgRef}
       onMouseLeave={() => setSelectedRisk?.(undefined)}
     >
-      <g clip-path="url(#clip0_1_787)">
-        <circle cx="90" cy="90" r="89.5" fill="#EEEFF4" stroke="#CCD0DA" />
-        <g clip-path="url(#clip1_1_787)">
+      <g clipPath="url(#clip0_1_787)">
+        {background && (
+          <circle
+            cx="90"
+            cy="90"
+            r="90"
+            className={cn(
+              'stroke-divider stroke-2',
+              background === 'header' && 'fill-header-secondary',
+              background === 'surface' && 'fill-surface-secondary',
+            )}
+          />
+        )}
+        <g clipPath="url(#clip1_1_787)">
           <path
             d="M80.0183 98.2023C82.6447 97.3765 85.3142 99.3485 85.2968 102.102L84.8884 166.681C84.8733 169.077 82.8084 170.912 80.4474 170.504C72.472 169.126 55.2478 165.178 41.9041 155.321C27.3872 144.597 19.147 129.784 15.85 122.825C14.8548 120.724 16.0086 118.33 18.2263 117.632L80.0183 98.2023Z"
             fill="#B1B1B1"
@@ -79,11 +93,26 @@ export function RealPizzaRosetteIcon({
             fill="#B1B1B1"
           />
           {/* naming is wrong but whatever */}
-          <RealExitWindowRisk sentiment={first.sentiment ?? 'neutral'} />
-          <RealSvRisk sentiment={second.sentiment ?? 'neutral'} />
-          <RealProposerFailureRisk sentiment={third.sentiment ?? 'neutral'} />
-          <RealSequencerFailureRisk sentiment={fourth.sentiment ?? 'neutral'} />
-          <RealDaRisk sentiment={fifth.sentiment ?? 'neutral'} />
+          <RealExitWindowRisk
+            sentiment={first.sentiment ?? 'neutral'}
+            onHover={() => selectRisk(first)}
+          />
+          <RealSvRisk
+            sentiment={second.sentiment ?? 'neutral'}
+            onHover={() => selectRisk(second)}
+          />
+          <RealProposerFailureRisk
+            sentiment={third.sentiment ?? 'neutral'}
+            onHover={() => selectRisk(third)}
+          />
+          <RealSequencerFailureRisk
+            sentiment={fourth.sentiment ?? 'neutral'}
+            onHover={() => selectRisk(fourth)}
+          />
+          <RealDaRisk
+            sentiment={fifth.sentiment ?? 'neutral'}
+            onHover={() => selectRisk(fifth)}
+          />
         </g>
       </g>
       <defs>
@@ -95,8 +124,8 @@ export function RealPizzaRosetteIcon({
           y2="112.928"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FCB142" />
-          <stop offset="1" stop-color="#997613" />
+          <stop stopColor="#FCB142" />
+          <stop offset="1" stopColor="#997613" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_787"
@@ -106,8 +135,8 @@ export function RealPizzaRosetteIcon({
           y2="85.9415"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFD359" />
-          <stop offset="1" stop-color="#FFD96F" />
+          <stop stopColor="#FFD359" />
+          <stop offset="1" stopColor="#FFD96F" />
         </linearGradient>
         <radialGradient
           id="paint2_radial_1_787"
@@ -117,8 +146,8 @@ export function RealPizzaRosetteIcon({
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(87.3645 90.2417) rotate(162.45) scale(74.8229 76.296)"
         >
-          <stop offset="0.719342" stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop offset="0.719342" stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </radialGradient>
         <linearGradient
           id="paint3_linear_1_787"
@@ -128,8 +157,8 @@ export function RealPizzaRosetteIcon({
           y2="108.945"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#FE3030" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#FE3030" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_1_787"
@@ -139,8 +168,8 @@ export function RealPizzaRosetteIcon({
           y2="102.986"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_1_787"
@@ -150,8 +179,8 @@ export function RealPizzaRosetteIcon({
           y2="26.9512"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FCB142" />
-          <stop offset="1" stop-color="#997613" />
+          <stop stopColor="#FCB142" />
+          <stop offset="1" stopColor="#997613" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_1_787"
@@ -161,8 +190,8 @@ export function RealPizzaRosetteIcon({
           y2="95.0367"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFD359" />
-          <stop offset="1" stop-color="#FFD96F" />
+          <stop stopColor="#FFD359" />
+          <stop offset="1" stopColor="#FFD96F" />
         </linearGradient>
         <radialGradient
           id="paint7_radial_1_787"
@@ -172,8 +201,8 @@ export function RealPizzaRosetteIcon({
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(88.0995 87.6727) rotate(-126.28) scale(74.8229 76.296)"
         >
-          <stop offset="0.719342" stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop offset="0.719342" stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </radialGradient>
         <linearGradient
           id="paint8_linear_1_787"
@@ -183,8 +212,8 @@ export function RealPizzaRosetteIcon({
           y2="113.234"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#FE3030" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#FE3030" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_1_787"
@@ -194,8 +223,8 @@ export function RealPizzaRosetteIcon({
           y2="121.703"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_1_787"
@@ -205,8 +234,8 @@ export function RealPizzaRosetteIcon({
           y2="115.59"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FCB142" />
-          <stop offset="1" stop-color="#997613" />
+          <stop stopColor="#FCB142" />
+          <stop offset="1" stopColor="#997613" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_1_787"
@@ -216,8 +245,8 @@ export function RealPizzaRosetteIcon({
           y2="88.9924"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFD359" />
-          <stop offset="1" stop-color="#FFD96F" />
+          <stop stopColor="#FFD359" />
+          <stop offset="1" stopColor="#FFD96F" />
         </linearGradient>
         <radialGradient
           id="paint12_radial_1_787"
@@ -227,8 +256,8 @@ export function RealPizzaRosetteIcon({
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(93.231 91.0398) rotate(19.01) scale(74.8229 76.296)"
         >
-          <stop offset="0.719342" stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop offset="0.719342" stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </radialGradient>
         <linearGradient
           id="paint13_linear_1_787"
@@ -238,8 +267,8 @@ export function RealPizzaRosetteIcon({
           y2="63.717"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#FE3030" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#FE3030" />
         </linearGradient>
         <linearGradient
           id="paint14_linear_1_787"
@@ -249,8 +278,8 @@ export function RealPizzaRosetteIcon({
           y2="61.973"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </linearGradient>
         <radialGradient
           id="paint15_radial_1_787"
@@ -260,8 +289,8 @@ export function RealPizzaRosetteIcon({
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(90.84 92.4842) rotate(89.6) scale(74.8229 76.296)"
         >
-          <stop offset="0.719342" stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop offset="0.719342" stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </radialGradient>
         <linearGradient
           id="paint16_linear_1_787"
@@ -271,8 +300,8 @@ export function RealPizzaRosetteIcon({
           y2="78.2687"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#FE3030" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#FE3030" />
         </linearGradient>
         <linearGradient
           id="paint17_linear_1_787"
@@ -282,8 +311,8 @@ export function RealPizzaRosetteIcon({
           y2="66.0356"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </linearGradient>
         <linearGradient
           id="paint18_linear_1_787"
@@ -293,8 +322,8 @@ export function RealPizzaRosetteIcon({
           y2="167.778"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FCB142" />
-          <stop offset="1" stop-color="#997613" />
+          <stop stopColor="#FCB142" />
+          <stop offset="1" stopColor="#997613" />
         </linearGradient>
         <linearGradient
           id="paint19_linear_1_787"
@@ -304,8 +333,8 @@ export function RealPizzaRosetteIcon({
           y2="82.3867"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFD359" />
-          <stop offset="1" stop-color="#FFD96F" />
+          <stop stopColor="#FFD359" />
+          <stop offset="1" stopColor="#FFD96F" />
         </linearGradient>
         <radialGradient
           id="paint20_radial_1_787"
@@ -315,8 +344,8 @@ export function RealPizzaRosetteIcon({
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(92.0007 87.9084) rotate(-53.5) scale(74.8229 76.296)"
         >
-          <stop offset="0.719342" stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop offset="0.719342" stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </radialGradient>
         <linearGradient
           id="paint21_linear_1_787"
@@ -326,8 +355,8 @@ export function RealPizzaRosetteIcon({
           y2="84.8901"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#FE3030" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#FE3030" />
         </linearGradient>
         <linearGradient
           id="paint22_linear_1_787"
@@ -337,8 +366,8 @@ export function RealPizzaRosetteIcon({
           y2="96.1505"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50000" />
-          <stop offset="1" stop-color="#8F0000" />
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
         </linearGradient>
         <linearGradient
           id="paint23_linear_1_787"
@@ -348,8 +377,8 @@ export function RealPizzaRosetteIcon({
           y2="27.3966"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FCB142" />
-          <stop offset="1" stop-color="#997613" />
+          <stop stopColor="#FCB142" />
+          <stop offset="1" stopColor="#997613" />
         </linearGradient>
         <linearGradient
           id="paint24_linear_1_787"
@@ -359,8 +388,8 @@ export function RealPizzaRosetteIcon({
           y2="96.8157"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFD359" />
-          <stop offset="1" stop-color="#FFD96F" />
+          <stop stopColor="#FFD359" />
+          <stop offset="1" stopColor="#FFD96F" />
         </linearGradient>
         <clipPath id="clip0_1_787">
           <rect width="180" height="180" rx="90" fill="white" />

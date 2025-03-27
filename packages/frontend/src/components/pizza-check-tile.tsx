@@ -13,8 +13,10 @@ export function PizzaCheckTile(props: PizzaCheckTileProps) {
   return (
     <div
       className={clsx(
-        'flex h-[200px] flex-1 cursor-pointer flex-col items-center justify-center rounded-lg bg-gray-200 px-4 py-2 text-center',
-        props.checked && 'bg-pink-900/30',
+        'flex h-[200px] flex-1 cursor-pointer flex-col items-center justify-center rounded-lg px-4 py-2 text-center transition-colors',
+        props.checked
+          ? 'bg-pink-100/30 hover:bg-pink-100/40 dark:bg-pink-200/30 dark:hover:bg-pink-200/40'
+          : 'bg-surface-secondary hover:bg-surface-secondary/80',
       )}
       onClick={() => props.onCheck(!props.checked)}
     >

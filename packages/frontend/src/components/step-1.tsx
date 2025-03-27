@@ -1,19 +1,32 @@
-import { Button } from './core/button'
+import { cn } from '~/utils/cn'
+import { Button, type ButtonProps } from './core/button'
 
 type Props = {
   onClick: () => void
+}
+
+export function PizzaButton(
+  props: ButtonProps & { children: React.ReactNode },
+) {
+  return (
+    <Button
+      onClick={props.onClick}
+      className={cn(
+        'rounded-[4px] bg-pink-900 px-6 py-4 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+        props.className,
+      )}
+      {...props}
+    >
+      {props.children}
+    </Button>
+  )
 }
 
 export function Step1(props: Props) {
   return (
     <div className="flex flex-col items-center justify-center gap-7">
       <PizzaBox />
-      <Button
-        onClick={props.onClick}
-        className="bg-pink-900 px-8 py-4 text-white"
-      >
-        Start making my pizza
-      </Button>
+      <PizzaButton onClick={props.onClick}>Start making my pizza</PizzaButton>
     </div>
   )
 }
@@ -34,10 +47,10 @@ export function PizzaBox() {
         d="M6.51025 235.935L135.919 335.468L266.367 249.106L356.352 227.968V220.722L251.268 200.188L6.51025 235.935Z"
         fill="#FFC2F6"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M226.722 24.194L223.138 23.5424C223.138 23.5424 212.389 15.3985 209.782 17.0271C207.176 18.6557 139.093 117.034 139.093 124.527C139.093 132.02 140.722 146.027 140.722 146.027L260.926 212.155L353.115 70.7773"
@@ -46,12 +59,12 @@ export function PizzaBox() {
       <path
         d="M226.722 24.194L223.138 23.5424C223.138 23.5424 212.389 15.3985 209.782 17.0271C207.176 18.6557 139.093 117.034 139.093 124.527C139.093 132.02 140.722 146.027 140.722 146.027L260.926 212.155L353.115 70.7773"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <g clip-path="url(#clip0_8_2204)">
+      <g clipPath="url(#clip0_8_2204)">
         <path
           d="M227.547 75.9087C228.7 77.4298 229.57 79.1311 229.651 81.0674L237.327 79.9455L243.09 86.3617L242.122 93.3434L219.84 105.609L215.468 107.303L209.675 88.0915C209.357 87.1571 209.087 86.1327 208.871 85.0314C208.623 83.9279 208.507 82.8239 208.532 81.7233C208.52 80.6072 208.707 79.5952 209.087 78.6741C209.952 76.578 211.092 74.9362 212.528 73.747C213.927 72.5423 215.521 71.8249 217.294 71.5778C219.073 71.344 220.939 71.619 222.893 72.4256C224.819 73.2206 226.361 74.3853 227.547 75.9087Z"
           fill="#DB0E58"
@@ -82,187 +95,187 @@ export function PizzaBox() {
         d="M259.296 245.382L136.813 172.738L8.13953 232.026L132.903 327.472L259.296 245.382Z"
         fill="#E597E2"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M131.736 176.273L248.227 248.137"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M126.494 178.92L242.985 250.784"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M121.252 181.567L237.743 253.431"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M116.011 184.214L232.502 256.077"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M110.768 186.861L227.259 258.724"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M105.527 189.508L222.018 261.371"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M100.285 192.154L216.776 264.018"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M95.0437 194.801L211.535 266.665"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M89.8021 197.448L206.293 269.312"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M84.5604 200.094L201.051 271.958"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M79.3188 202.741L195.81 274.605"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M74.0771 205.388L190.568 277.252"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M68.8356 208.035L185.327 279.899"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M63.594 210.682L180.085 282.545"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M58.3523 213.329L174.843 285.192"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M53.1108 215.976L169.602 287.84"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M47.8685 218.622L164.36 290.486"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M42.6268 221.269L159.118 293.133"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M37.3854 223.916L153.876 295.779"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M33.1855 225.013L147.032 299.716"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M26.9021 229.209L138.151 303.72"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M138.442 145.375C138.442 145.375 6.29499 209.9 4.99179 210.552C3.68859 211.203 5.85867 234.631 6.51027 235.935L136.812 172.738C136.812 172.738 258.548 247.014 258.548 245.711C258.548 244.408 261.577 213.132 260.925 212.155C260.274 211.177 138.442 145.375 138.442 145.375Z"
         fill="#FF7EEA"
         stroke="#382631"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.33"
@@ -272,10 +285,10 @@ export function PizzaBox() {
       <path
         d="M138.767 147.655L137.464 169.806"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M260.925 212.154C260.925 212.154 356.371 72.7313 353.114 70.7765C349.857 68.8217 342.69 72.0797 339.432 75.0116C336.175 77.9434 265.812 179.579 265.812 182.837C265.812 186.094 260.925 212.154 260.925 212.154Z"
@@ -289,52 +302,52 @@ export function PizzaBox() {
       <path
         d="M260.925 212.154C260.925 212.154 356.371 72.7313 353.114 70.7765C349.857 68.8217 342.69 72.0797 339.432 75.0116C336.175 77.9434 265.812 179.579 265.812 182.837C265.812 186.094 260.925 212.154 260.925 212.154Z"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M353.114 70.7766C353.114 70.7766 226.721 27.1252 226.721 24.1933C226.721 21.2615 224.114 8.88253 226.721 7.58005C229.326 6.27686 231.607 6.27686 231.607 6.27686C231.607 6.27686 342.037 45.0417 346.272 49.9283C350.507 54.8149 351.159 58.3977 351.484 59.7009C351.811 61.0041 353.114 70.7766 353.114 70.7766Z"
         fill="#FF7EEA"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M216.021 36.8316L222.812 26.7998"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M151.457 132.204L212.944 41.377"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M144.305 142.769L149.481 135.122"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M144.804 279.28C144.419 274.653 141.72 231.474 142.877 231.859C144.034 232.245 169.479 247.666 172.563 251.136C174.726 253.57 192.624 263.206 203.125 268.747C214.422 259.65 221.154 248.212 221.154 235.788C221.154 206.141 182.842 182.107 135.582 182.107C88.3217 182.107 50.0098 206.141 50.0098 235.788C50.0098 265.434 88.3217 289.468 135.582 289.468C138.74 289.468 141.857 289.357 144.926 289.148C144.993 286.073 145.025 281.923 144.804 279.28Z"
         fill="#FFCD4D"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.29"
@@ -345,100 +358,100 @@ export function PizzaBox() {
         d="M144.804 279.28C144.419 274.653 141.72 231.474 142.877 231.86C144.034 232.245 169.479 247.666 172.563 251.136C174.27 253.056 185.774 259.461 195.711 264.801C199.758 261.302 204.953 256.13 206.276 254.146C208.196 251.265 212.517 240.703 212.517 237.343C212.517 233.983 209.636 221.5 202.915 213.819C196.194 206.138 185.632 203.738 175.55 198.457C165.469 193.175 161.148 190.295 154.907 190.295C148.666 190.295 137.624 189.335 125.623 188.855C113.621 188.375 96.8177 192.696 96.8177 192.696C96.8177 192.696 91.5365 196.536 80.4953 203.258C69.4534 209.979 62.7322 209.979 62.2527 218.14C61.7724 226.301 59.3719 228.702 57.9319 234.943C56.4919 241.184 63.6927 258.466 68.4936 264.227C73.2946 269.988 91.0577 279.11 98.7387 279.59C106.42 280.07 125.623 282.95 127.544 283.43C129.464 283.91 139.545 285.35 142.426 284.391C142.931 284.222 143.824 283.949 144.97 283.609C144.953 282.015 144.905 280.489 144.804 279.28Z"
         fill="#FF5D39"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M131.383 208.058C136.421 208.058 140.504 205.694 140.504 202.777C140.504 199.861 136.421 197.497 131.383 197.497C126.345 197.497 122.261 199.861 122.261 202.777C122.261 205.694 126.345 208.058 131.383 208.058Z"
         fill="url(#paint0_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M85.2956 222.46C90.3334 222.46 94.4173 220.096 94.4173 217.179C94.4173 214.263 90.3334 211.899 85.2956 211.899C80.2579 211.899 76.174 214.263 76.174 217.179C76.174 220.096 80.2579 222.46 85.2956 222.46Z"
         fill="url(#paint1_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M112.113 243.893C112.113 246.185 108.904 248.042 104.945 248.042C100.987 248.042 97.7775 246.185 97.7775 243.893C97.7775 241.601 100.987 239.743 104.945 239.743C108.904 239.743 112.113 241.601 112.113 243.893Z"
         fill="url(#paint2_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M183.296 224.763C183.296 226.834 180.398 228.512 176.821 228.512C173.245 228.512 170.346 226.834 170.346 224.763C170.346 222.692 173.246 221.014 176.821 221.014C180.397 221.014 183.296 222.692 183.296 224.763Z"
         fill="url(#paint3_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M130.879 238.697C135.917 238.697 140.001 236.333 140.001 233.416C140.001 230.499 135.917 228.135 130.879 228.135C125.842 228.135 121.758 230.499 121.758 233.416C121.758 236.333 125.842 238.697 130.879 238.697Z"
         fill="url(#paint4_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M163.773 213.678C168.81 213.678 172.894 211.313 172.894 208.397C172.894 205.48 168.81 203.115 163.773 203.115C158.735 203.115 154.651 205.48 154.651 208.397C154.651 211.313 158.735 213.678 163.773 213.678Z"
         fill="url(#paint5_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M128.558 273.033C133.596 273.033 137.68 270.669 137.68 267.753C137.68 264.837 133.596 262.472 128.558 262.472C123.52 262.472 119.437 264.837 119.437 267.753C119.437 270.669 123.52 273.033 128.558 273.033Z"
         fill="url(#paint6_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M77.8061 247.932C82.8439 247.932 86.9278 245.568 86.9278 242.651C86.9278 239.734 82.8439 237.37 77.8061 237.37C72.7684 237.37 68.6844 239.734 68.6844 242.651C68.6844 245.568 72.7684 247.932 77.8061 247.932Z"
         fill="url(#paint7_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M196.674 242.144C201.712 242.144 205.795 239.779 205.795 236.863C205.795 233.946 201.712 231.582 196.674 231.582C191.636 231.582 187.552 233.946 187.552 236.863C187.552 239.779 191.636 242.144 196.674 242.144Z"
         fill="url(#paint8_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M105.617 207.675C109.927 207.675 113.421 205.653 113.421 203.157C113.421 200.662 109.927 198.639 105.617 198.639C101.307 198.639 97.8127 200.662 97.8127 203.157C97.8127 205.653 101.307 207.675 105.617 207.675Z"
         fill="url(#paint9_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M152.129 228.438C149.291 228.438 147.069 226.723 147.069 224.534C147.069 222.345 149.291 220.63 152.129 220.63C154.966 220.63 157.189 222.345 157.189 224.534C157.19 226.723 154.967 228.438 152.129 228.438ZM152.129 223.04C150.612 223.04 149.479 223.829 149.479 224.534C149.479 225.24 150.612 226.028 152.129 226.028C153.646 226.028 154.779 225.24 154.779 224.534C154.779 223.829 153.646 223.04 152.129 223.04Z"
@@ -492,10 +505,10 @@ export function PizzaBox() {
         d="M260.925 212.154C260.925 212.154 221.769 240.58 220.792 241.883C219.815 243.186 134.532 295.548 134.858 296.851C135.184 298.154 131.926 330.729 133.229 331.055C134.533 331.381 259.296 245.382 259.296 245.382L260.925 212.154Z"
         fill="#9621BF"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.33"
@@ -506,136 +519,136 @@ export function PizzaBox() {
         d="M134.858 296.851L4.99178 210.552C4.99178 210.552 4.34954 209.513 4.2977 213.468C4.21202 219.963 4.89098 233.101 6.51098 235.935C9.11666 240.495 133.23 331.055 133.23 331.055L134.858 296.851Z"
         fill="#9621BF"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M314.009 275.478C326.494 275.478 336.614 269.656 336.614 262.473C336.614 255.29 326.494 249.468 314.009 249.468C301.525 249.468 291.404 255.29 291.404 262.473C291.404 269.656 301.525 275.478 314.009 275.478Z"
         fill="#263238"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M291.382 196.522C291.382 196.522 287.654 203.712 287.122 206.508C286.589 209.304 287.388 260.297 288.586 262.694C289.784 265.091 294.299 272.165 310.555 272.413C327.996 272.68 331.325 261.363 331.724 259.099C332.124 256.835 333.588 207.307 332.523 204.777C331.458 202.248 327.864 196.656 327.864 196.656L291.382 196.522Z"
         fill="#FF7EEA"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.4"
         d="M291.382 196.522C291.382 196.522 287.654 203.712 287.122 206.508C286.589 209.304 287.388 260.297 288.586 262.694C289.784 265.091 294.299 272.165 310.555 272.413C327.996 272.68 331.325 261.363 331.724 259.099C332.124 256.835 333.588 207.307 332.523 204.777C331.458 202.248 327.864 196.656 327.864 196.656L291.382 196.522Z"
         fill="black"
-        fill-opacity="0.34"
+        fillOpacity="0.34"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M309.586 204.156C320.375 204.156 329.121 200.044 329.121 194.971C329.121 189.898 320.375 185.786 309.586 185.786C298.797 185.786 290.051 189.898 290.051 194.971C290.051 200.044 298.797 204.156 309.586 204.156Z"
         fill="#A829D4"
         stroke="#263338"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M309.586 203.346C319.423 203.346 327.398 199.596 327.398 194.971C327.398 190.346 319.423 186.596 309.586 186.596C299.748 186.596 291.773 190.346 291.773 194.971C291.773 199.596 299.748 203.346 309.586 203.346Z"
         fill="white"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M309.586 203.347C318.906 203.347 326.462 200.197 326.462 196.312C326.462 192.426 318.906 189.277 309.586 189.277C300.265 189.277 292.709 192.426 292.709 196.312C292.709 200.197 300.265 203.347 309.586 203.347Z"
         fill="#FF7EEA"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M309.138 197.284C309.138 197.284 306.611 198.126 307.212 198.968C307.814 199.811 310.462 201.375 315.155 200.533C319.848 199.69 321.773 197.765 321.172 196.682C320.57 195.599 317.562 195.118 315.997 195.358C314.433 195.599 309.138 197.284 309.138 197.284Z"
         fill="#263238"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M308.966 189.591C308.966 189.591 307.304 187.691 304.85 187.691C302.396 187.691 298.122 189.749 297.963 190.62C297.805 191.49 306.117 197.507 306.75 197.823C307.382 198.139 309.679 199.248 312.211 198.693C314.744 198.139 315.932 197.11 315.997 195.357C316.061 193.605 308.966 189.591 308.966 189.591ZM302.792 192.282C301.368 192.124 299.072 191.174 300.655 189.987C302.239 188.8 305.563 188.641 305.563 188.641C306.117 188.641 307.384 189.433 306.988 190.621C306.592 191.807 304.217 192.441 302.792 192.282ZM311.025 197.982C308.017 198.14 304.693 194.974 304.693 194.182C304.693 193.391 308.571 192.203 308.571 192.203C309.758 191.491 312.608 192.994 313.479 194.182C314.349 195.37 314.032 197.823 311.025 197.982Z"
         fill="#A829D4"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M310.865 216.92C312.073 216.826 313.345 216.686 314.682 216.494"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M289.651 211.035C289.651 211.035 293.875 217.271 307.743 217.067"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M332.857 209.363C330.992 213.45 327.442 218.918 320.892 226.071C310.551 237.365 297.475 248.807 287.951 256.704C288.144 260.016 288.357 262.238 288.585 262.694C289.568 264.66 292.787 269.768 302.877 271.681C306.059 262.389 312.408 250.217 325.029 240.43C327.838 238.252 330.351 236.303 332.615 234.548C332.84 225.003 332.981 215.031 332.857 209.363Z"
         fill="#FF7EEA"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M285.458 275.206C285.458 275.206 260.61 271.424 249.806 271.964C239.002 272.504 234.141 276.286 233.6 278.446C233.06 280.607 232.52 283.848 232.52 286.009C232.52 288.17 223.337 296.273 216.314 304.376C209.292 312.479 193.725 331.574 196.425 334.814C199.126 338.056 236.3 327.604 246.564 325.983C256.828 324.362 292.48 316.8 295.72 316.259C298.961 315.719 303.823 314.639 303.823 314.639C303.823 314.639 303.823 319.5 309.226 314.639C314.628 309.777 318.949 302.754 313.007 294.111C307.066 285.469 292.48 275.746 285.458 275.206Z"
         fill="#263238"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M285.458 273.057C285.458 273.057 260.61 269.276 249.806 269.816C239.002 270.356 234.141 274.137 233.6 276.298C233.06 278.459 232.52 281.7 232.52 283.861C232.52 286.021 223.337 294.124 216.314 302.227C209.292 310.33 193.725 329.425 196.425 332.666C199.126 335.907 236.3 325.455 246.564 323.834C256.828 322.214 292.48 314.652 295.72 314.112C298.961 313.572 303.823 312.491 303.823 312.491C303.823 312.491 303.823 317.352 309.226 312.491C314.628 307.629 318.949 300.607 313.007 291.964C307.066 283.321 292.48 273.597 285.458 273.057Z"
         fill="#FF5D39"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M313.008 291.964C307.065 283.321 292.48 273.597 285.458 273.057C285.458 273.057 260.61 269.276 249.806 269.817C239.002 270.357 234.141 274.138 233.6 276.299C233.06 278.459 232.52 281.701 232.52 283.862C232.52 283.862 242.919 278.473 255.796 279.303C268.674 280.134 268.674 280.55 273.243 280.55C277.813 280.55 281.967 282.211 289.029 285.119C296.09 288.027 298.583 288.858 300.245 291.35C301.907 293.842 303.984 294.258 304.814 298.827C305.645 303.397 303.824 312.491 303.824 312.491C303.824 312.491 303.824 317.352 309.226 312.491C314.628 307.629 318.95 300.607 313.008 291.964Z"
         fill="#FFCD4D"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         opacity="0.29"
@@ -646,37 +659,37 @@ export function PizzaBox() {
         d="M281.711 300.593C287.213 300.593 291.673 297.764 291.673 294.276C291.673 290.787 287.213 287.958 281.711 287.958C276.209 287.958 271.749 290.787 271.749 294.276C271.749 297.764 276.209 300.593 281.711 300.593Z"
         fill="url(#paint10_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M243.564 316.63C248.395 316.63 252.311 314.128 252.311 311.042C252.311 307.955 248.395 305.453 243.564 305.453C238.733 305.453 234.817 307.955 234.817 311.042C234.817 314.128 238.733 316.63 243.564 316.63Z"
         fill="url(#paint11_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M251.825 298.65C256.119 298.65 259.6 296.148 259.6 293.061C259.6 289.975 256.119 287.472 251.825 287.472C247.531 287.472 244.05 289.975 244.05 293.061C244.05 296.148 247.531 298.65 251.825 298.65Z"
         fill="url(#paint12_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M219.023 317.115C222.378 317.115 225.098 315.484 225.098 313.471C225.098 311.458 222.378 309.826 219.023 309.826C215.668 309.826 212.949 311.458 212.949 313.471C212.949 315.484 215.668 317.115 219.023 317.115Z"
         fill="url(#paint13_linear_8_2204)"
         stroke="#263238"
-        stroke-width="0.72"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0.72"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M269.693 306.694C267.732 306.694 266.195 305.508 266.195 303.995C266.195 302.481 267.731 301.296 269.693 301.296C271.655 301.296 273.192 302.482 273.192 303.995C273.192 305.508 271.655 306.694 269.693 306.694ZM269.693 302.962C268.645 302.962 267.862 303.507 267.862 303.995C267.862 304.482 268.645 305.027 269.693 305.027C270.742 305.027 271.526 304.482 271.526 303.995C271.526 303.507 270.742 302.962 269.693 302.962Z"
@@ -715,8 +728,8 @@ export function PizzaBox() {
           y2="208.058"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_8_2204"
@@ -726,8 +739,8 @@ export function PizzaBox() {
           y2="222.46"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_8_2204"
@@ -737,8 +750,8 @@ export function PizzaBox() {
           y2="248.042"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_8_2204"
@@ -748,8 +761,8 @@ export function PizzaBox() {
           y2="228.512"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_8_2204"
@@ -759,8 +772,8 @@ export function PizzaBox() {
           y2="238.697"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_8_2204"
@@ -770,8 +783,8 @@ export function PizzaBox() {
           y2="213.678"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_8_2204"
@@ -781,8 +794,8 @@ export function PizzaBox() {
           y2="273.033"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_8_2204"
@@ -792,8 +805,8 @@ export function PizzaBox() {
           y2="247.932"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint8_linear_8_2204"
@@ -803,8 +816,8 @@ export function PizzaBox() {
           y2="242.144"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint9_linear_8_2204"
@@ -814,8 +827,8 @@ export function PizzaBox() {
           y2="207.675"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF0000" />
-          <stop offset="1" stop-color="#8C005C" />
+          <stop stopColor="#FF0000" />
+          <stop offset="1" stopColor="#8C005C" />
         </linearGradient>
         <linearGradient
           id="paint10_linear_8_2204"
@@ -825,8 +838,8 @@ export function PizzaBox() {
           y2="300.593"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50108" />
-          <stop offset="1" stop-color="#AD0142" />
+          <stop stopColor="#F50108" />
+          <stop offset="1" stopColor="#AD0142" />
         </linearGradient>
         <linearGradient
           id="paint11_linear_8_2204"
@@ -836,8 +849,8 @@ export function PizzaBox() {
           y2="316.63"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50108" />
-          <stop offset="1" stop-color="#AD0142" />
+          <stop stopColor="#F50108" />
+          <stop offset="1" stopColor="#AD0142" />
         </linearGradient>
         <linearGradient
           id="paint12_linear_8_2204"
@@ -847,8 +860,8 @@ export function PizzaBox() {
           y2="298.65"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50108" />
-          <stop offset="1" stop-color="#AD0142" />
+          <stop stopColor="#F50108" />
+          <stop offset="1" stopColor="#AD0142" />
         </linearGradient>
         <linearGradient
           id="paint13_linear_8_2204"
@@ -858,8 +871,8 @@ export function PizzaBox() {
           y2="317.115"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F50108" />
-          <stop offset="1" stop-color="#AD0142" />
+          <stop stopColor="#F50108" />
+          <stop offset="1" stopColor="#AD0142" />
         </linearGradient>
         <clipPath id="clip0_8_2204">
           <rect
