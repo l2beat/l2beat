@@ -32,7 +32,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "BalanceClaimer",
@@ -82,6 +83,7 @@
         "ROOT": "0xdc8d72680e7aa76a53e17f537ee4455c1546c32badeac410313687a14bbe9625",
         "version": "1.0.0"
       },
+      "derivedName": "BalanceClaimer",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -323,6 +325,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -375,6 +378,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -467,6 +471,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -535,6 +540,7 @@
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
         "version": "1.7.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -591,7 +597,8 @@
         "addressManager": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1StandardBridge",
@@ -632,6 +639,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.2.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {

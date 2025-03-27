@@ -50,7 +50,8 @@
         "$immutable": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
-      }
+      },
+      "derivedName": "OrderRegistry"
     },
     {
       "name": "StrategyCompound",
@@ -69,7 +70,8 @@
         "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
         "uniswap": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "StrategyCompound"
     },
     {
       "name": "GpsFactRegistryAdapter",
@@ -91,6 +93,7 @@
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
         "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
       },
+      "derivedName": "GpsFactRegistryAdapter",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -319,7 +322,8 @@
         "name": "Compound",
         "symbol": "COMP",
         "totalSupply": "10000000000000000000000000"
-      }
+      },
+      "derivedName": "Comp"
     },
     {
       "address": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
@@ -363,7 +367,8 @@
         "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
         "PRICE_DECIMALS": "1000000000000000000",
         "SLIPPAGE_DENOMINATOR": 10000
-      }
+      },
+      "derivedName": "Broker"
     },
     {
       "name": "Committee",

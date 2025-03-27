@@ -59,10 +59,29 @@ export class AmountService {
       blockNumber,
     )
 
-    return [...rpcAmounts, ...multicallAmounts].map((amount) => ({
+    const result = [...rpcAmounts, ...multicallAmounts].map((amount) => ({
       ...amount,
       timestamp,
     }))
+
+    return result.map((r) => {
+      const config = configurations.find((c) => c.id === r.configId)
+      assert(config, `Config ${r.configId} not found`)
+      if (config.type === 'totalSupply' && config.premint) {
+        this.$.logger.info(`Premint detected`, {
+          amount: r.amount,
+          premint: config.premint,
+          result: r.amount - BigInt(config.premint),
+          configuration: config.id,
+        })
+
+        return {
+          ...r,
+          amount: r.amount - BigInt(config.premint),
+        }
+      }
+      return r
+    })
   }
 
   private async fetchWithRpc(

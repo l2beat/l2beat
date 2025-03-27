@@ -50,7 +50,7 @@ export class DBStorage implements DataStorage {
   ): Promise<number | undefined> {
     const price = this.prices.get(timestamp)?.get(configurationId)
 
-    if (price) {
+    if (price !== undefined) {
       return Promise.resolve(price)
     }
 
@@ -83,7 +83,7 @@ export class DBStorage implements DataStorage {
       this.amounts.get(timestamp)?.get(configurationId),
     )
 
-    if (amount) {
+    if (amount !== undefined) {
       return Promise.resolve(amount)
     }
 
@@ -93,17 +93,13 @@ export class DBStorage implements DataStorage {
       configurationId,
       timestamp,
     )
-    assert(
-      fallback,
-      `Amount fallback failed for ${configurationId} for ${timestamp}`,
-    )
 
     this.logger.warn(`Amount fallback triggered`, {
       configurationId,
       timestamp,
-      fallbackTimestamp: fallback.timestamp,
-      fallbackAmount: fallback.amount,
+      fallbackTimestamp: fallback?.timestamp,
+      fallbackAmount: fallback?.amount,
     })
-    return fallback.amount
+    return fallback?.amount
   }
 }

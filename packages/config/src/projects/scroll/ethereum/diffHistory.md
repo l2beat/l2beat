@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xd350ff4ba429eb20e9b048eb63fdb191e24c3a41
+
+# Diff at Tue, 25 Mar 2025 11:06:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 22029702
+- current block number: 22123508
+
+## Description
+
+DEFAULT_ADMIN role removed from TimelockFast.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
+      values.accessControl.roles.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x0e58939204eEDa84F796FBc86840A50af10eC4F4"
++        "0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd"
+    }
+```
+
 Generated with discovered.json: 0xd8d24a998c3d4f092c1b9efd94df8a28caa1f647
 
 # Diff at Tue, 18 Mar 2025 08:13:46 GMT:

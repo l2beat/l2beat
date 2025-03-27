@@ -49,7 +49,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725051563,
       "sinceBlock": 20643936,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "name": "OneStepProverMemory",
@@ -63,7 +64,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725051551,
       "sinceBlock": 20643935,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "OneStepProverHostIo",
@@ -77,7 +79,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725051575,
       "sinceBlock": 20643937,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "Outbox",
@@ -251,6 +254,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -267,7 +271,8 @@
         "$immutable": true,
         "authority": "0x515C7d8Fcb950f8b030ac08C994b37b4b8F3F7B5",
         "owner": "0xCff1ad9f09b32252171207e8525c90B18D4E2C7D"
-      }
+      },
+      "derivedName": "Governor"
     },
     {
       "address": "0x5D2af120aED72585fd24E4176dbB4B484B84e0bE",
@@ -330,7 +335,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1725051539,
       "sinceBlock": 20643934,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "Bridge",
@@ -527,6 +533,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -570,7 +577,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1725051743,
       "sinceBlock": 20643951,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "UpgradeExecutor",
@@ -640,6 +648,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0xCff1ad9f09b32252171207e8525c90B18D4E2C7D"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -700,7 +709,8 @@
         "proverHostIo": "0x231173CC90cB8486A7dbD1733B5105254316D50A",
         "proverMath": "0x036147913eEb42E97790F9a693246c8444290AB6",
         "proverMem": "0x21c6F81b1063f09A6c26EDc74fBb9beb349A5E96"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "ChallengeManager",
@@ -742,6 +752,7 @@
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -912,7 +923,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x8672705351C81f40B55b1ac2A1998de66166d0eA"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

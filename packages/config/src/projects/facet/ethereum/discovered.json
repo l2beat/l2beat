@@ -60,6 +60,7 @@
         "getDumbContract": "0x1673540243E793B0e77C038D4a88448efF524DcE",
         "getSigner": "0x314d660b083675f415cCAA9c545FeedF377d1006"
       },
+      "derivedName": "FacetEtherBridgeV6",
       "references": [
         {
           "text": "Source Code",
@@ -110,7 +111,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0x314d660b083675f415cCAA9c545FeedF377d1006",
@@ -145,7 +147,8 @@
       "values": {
         "$immutable": true,
         "facetProxyAddress": "0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25"
-      }
+      },
+      "derivedName": "FacetSafeModule"
     },
     {
       "address": "0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
@@ -207,6 +210,7 @@
         "systemConfig": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
         "version": "2.8.1-beta.1"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -295,6 +299,7 @@
         "systemConfig": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
         "version": "2.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -480,6 +485,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -494,7 +500,8 @@
       "description": "Helper of the Safe Module that allows to send Facet transactions.",
       "sinceTimestamp": 1733593775,
       "sinceBlock": 21352209,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "FacetSafeProxy"
     },
     {
       "name": "L2OutputOracle",
@@ -570,6 +577,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -598,7 +606,8 @@
       "values": {
         "$immutable": true,
         "ethscriptionsProxyAddress": "0xeEd444Fc821b866b002f30f502C53e88E15d5095"
-      }
+      },
+      "derivedName": "EthscriptionsSafeModule"
     },
     {
       "name": "ProxyAdmin",
@@ -644,7 +653,8 @@
         "addressManager": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
         "isUpgrading": false,
         "owner": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "SuperchainConfig",
@@ -688,6 +698,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -702,7 +713,8 @@
       "description": "Helper of the Safe Module that allows to send Ethscriptions transactions.",
       "sinceTimestamp": 1697832623,
       "sinceBlock": 18393830,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EthscriptionsSafeProxy"
     }
   ],
   "abis": {

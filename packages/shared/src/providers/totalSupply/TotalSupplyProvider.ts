@@ -4,10 +4,13 @@ import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
 
 export class TotalSupplyProvider {
+  logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    _logger: Logger,
+  ) {
+    this.logger = _logger.for(this)
+  }
 
   async getTotalSupplies(
     tokens: EthereumAddress[],
@@ -29,12 +32,22 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: calls.length })
-          return Promise.all(
-            calls.map(async (c) =>
-              BigInt((await client.call(c, blockNumber)).toString()),
-            ),
-          )
+          const results = []
+          for (const c of calls) {
+            const start = Date.now()
+            const res = await client.call(c, blockNumber)
+            this.logger.tag({ chain }).info('Call duration', {
+              callDuration: (Date.now() - start) / 1000,
+              type: 'totalSupply',
+            })
+
+            if (res.toString() === '0x') {
+              results.push(0n)
+            } else {
+              results.push(BigInt(res.toString()))
+            }
+          }
+          return results
         }
       } catch (error) {
         if (i === this.rpcs.length - 1) throw error

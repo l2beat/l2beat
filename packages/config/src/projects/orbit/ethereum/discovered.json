@@ -45,7 +45,8 @@
           ]
         ],
         "$upgradeCount": 4
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "ETH Vault",
@@ -260,7 +261,8 @@
       ],
       "sinceTimestamp": 1708655543,
       "sinceBlock": 19287339,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "WBTC Farm",
@@ -334,7 +336,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

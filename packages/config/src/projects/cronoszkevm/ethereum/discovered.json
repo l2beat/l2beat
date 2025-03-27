@@ -21,6 +21,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -123,6 +124,7 @@
           "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -191,7 +193,8 @@
         "FEE_ADMIN": "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e",
         "ORACLE": "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8",
         "UPGRADER": "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c"
-      }
+      },
+      "derivedName": "CronosZkEVMAdmin"
     },
     {
       "name": "CronosZkEvm",
@@ -485,7 +488,8 @@
         "$immutable": true,
         "owner": "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "TransactionFiltererDenyList"
     },
     {
       "address": "0xAaC5b858d10107900e642681a97887D33FC3c9E9",

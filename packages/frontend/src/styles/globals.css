@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--scrollbar)) transparent;
+}
+
 @layer base {
   :root {
     --primary: 260deg 7.69% 7.65%;
@@ -26,6 +31,7 @@
     --divider: 223deg 15.9% 82.7%;
     --link-stroke: 212deg 100% 86.5%;
     --link: 223deg 69% 50.6%;
+    --scrollbar: 221deg 8.84% 57.8%;
 
     --row-highlight: 284deg 86.6% 67.8% / 0.4;
     --row-highlight-no-opacity: 284deg 80.3% 86.1%;
@@ -86,6 +92,7 @@
     --divider: 226deg 14.3% 28.8%;
     --link-stroke: 217deg 56.3% 18.8%;
     --link: 212deg 100% 66.3%;
+    --scrollbar: 225deg 13.7% 28.6%;
 
     --row-highlight: 284deg 70.5% 43.9% / 0.4;
     --row-highlight-no-opacity: 281deg 51.6% 25.1%;
@@ -219,25 +226,5 @@
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-gray-200;
-  }
-
-  .dark .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-zinc-800;
-  }
-
-  .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-50;
-  }
-
-  .dark .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-zinc-500;
   }
 }

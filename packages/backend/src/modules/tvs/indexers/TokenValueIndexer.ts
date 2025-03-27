@@ -105,12 +105,14 @@ export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
           UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted amounts for configuration', {
-        id: configuration.id,
-        from: configuration.from,
-        to: configuration.to,
-        deletedRecords,
-      })
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted records for configuration', {
+          id: configuration.id,
+          from: configuration.from,
+          to: configuration.to,
+          deletedRecords,
+        })
+      }
     }
   }
 

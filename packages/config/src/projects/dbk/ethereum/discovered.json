@@ -93,6 +93,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -136,6 +137,7 @@
         "systemConfig": "0xcCcc98e93CeE060a03604D3916EE527a57078c8b",
         "version": "2.2.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -161,7 +163,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x830e68669019a05F41676546417D2A06fdfFF9fB"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0x322C9a45368FdcdF358a4Ba340f88073Dc239e24",
@@ -239,6 +242,7 @@
         "systemConfig": "0xcCcc98e93CeE060a03604D3916EE527a57078c8b",
         "version": "2.8.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -296,7 +300,8 @@
         "bridge": "0x28f1b9F457CB51E0af56dff1d11CD6CEdFfD1977",
         "BRIDGE": "0x28f1b9F457CB51E0af56dff1d11CD6CEdFfD1977",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "address": "0x80Ea66ABb3B0258e0eFB879d5C54f01683264077",
@@ -355,7 +360,8 @@
         "addressManager": "0x306402f889035e2Cbd7e396080bf365ADB38B7DC",
         "isUpgrading": false,
         "owner": "0xfB04A190dC7D91E86109433858A48E0B98EF1450"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1ERC721Bridge",
@@ -396,6 +402,7 @@
         "superchainConfig": "0xC8271C3Be50B9D575220dA2F9FE2f670DD6483D6",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -440,6 +447,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -542,6 +550,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -589,6 +598,7 @@
         "systemConfig": "0xcCcc98e93CeE060a03604D3916EE527a57078c8b",
         "version": "2.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {

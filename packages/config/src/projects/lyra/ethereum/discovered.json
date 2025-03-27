@@ -53,7 +53,8 @@
         "$upgradeCount": 1,
         "BRIDGE": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
         "version": "1.1.1"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "SystemConfig",
@@ -129,6 +130,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -200,6 +202,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -261,7 +264,8 @@
         "addressManager": "0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
@@ -416,6 +420,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -455,6 +460,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -494,6 +500,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.1.2"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -550,6 +557,7 @@
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -644,7 +652,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "address": "0xdb5CF90A8f97C372d5AEC650a5668d4E4bECFC10",

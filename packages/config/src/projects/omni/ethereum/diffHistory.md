@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb350626136b514ee14da2819a4ac851aed875a4c
+
+# Diff at Tue, 25 Mar 2025 11:02:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 21981875
+- current block number: 22123489
+
+## Description
+
+AdaptersHash changed, no changes to validation.
+
+## Watched changes
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.expectedAdaptersHash:
+-        "0x0a74748a93656acd952c12f9e5b2b6a3eead25ba1c94ffa6ddb26f454a179cae"
++        "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a"
+    }
+```
+
 Generated with discovered.json: 0x02172968a7b271aacd9de101940d09531818a6ee
 
 # Diff at Thu, 06 Mar 2025 15:19:18 GMT:

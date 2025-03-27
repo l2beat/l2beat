@@ -3,6 +3,17 @@ import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
 
+export type StructureContractField = z.infer<typeof StructureContractField>
+export const StructureContractField = z.object({
+  handler: z.optional(UserHandlerDefinition),
+  template: z.string().optional(),
+  returnType: z.string().optional(),
+})
+
+export type RawPermissionConfiguration = z.infer<
+  typeof RawPermissionConfiguration
+>
+
 export const BasePermissionEntries = [
   'member',
   'act',
@@ -34,10 +45,6 @@ export const Permission = z.enum([
 ])
 export type Permission = z.infer<typeof Permission>
 
-export type RawPermissionConfiguration = z.infer<
-  typeof RawPermissionConfiguration
->
-
 export const RawPermissionConfiguration = z.object({
   type: Permission,
   delay: z.union([z.number(), z.string()]).default(0),
@@ -50,6 +57,9 @@ export type PermissionConfiguration = RawPermissionConfiguration & {
   delay: number
 }
 
+export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+
 export type ContractValueType = z.infer<typeof ContractValueType>
 export const ContractValueType = z.enum([
   'CODE_CHANGE',
@@ -59,22 +69,17 @@ export const ContractValueType = z.enum([
   'PERMISSION',
 ])
 
-export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
-
-export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
-export const DiscoveryContractField = z.object({
-  // NOTE(radomski): Structural configuration
-  handler: z.optional(UserHandlerDefinition),
-  template: z.string().optional(),
-
-  // NOTE(radomski): Color configuration
+export type ColorContractField = z.infer<typeof ColorContractField>
+export const ColorContractField = z.object({
   description: z.string().optional(),
-  returnType: z.string().optional(),
   severity: z.optional(ContractFieldSeverity),
   permissions: z.array(RawPermissionConfiguration).optional(),
   type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),
 })
+
+export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
+export const DiscoveryContractField =
+  StructureContractField.merge(ColorContractField)
 
 export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
 export const DiscoveryCustomType = z
@@ -116,9 +121,8 @@ export const ManualProxyType = z.enum([
   'immutable',
 ])
 
-export type DiscoveryContract = z.infer<typeof DiscoveryContract>
-export const DiscoveryContract = z.object({
-  // NOTE(radomski): Structural configuraiton
+export type StructureContract = z.infer<typeof StructureContract>
+export const StructureContract = z.object({
   extends: z.optional(z.string()),
   canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
@@ -130,21 +134,24 @@ export const DiscoveryContract = z.object({
   fields: z
     .record(z.string().regex(/^\$?[a-z_][a-z\d_]*$/i), DiscoveryContractField)
     .default({}),
-  // TODO: in fields?
   methods: z.record(z.string(), z.string()).default({}),
   manualSourcePaths: z.record(z.string()).default({}),
+  types: z.record(z.string(), DiscoveryCustomType).default({}),
+})
 
-  // NOTE(radomski): Color configuration
+export type ColorContract = z.infer<typeof ColorContract>
+export const ColorContract = z.object({
   categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   category: z.optional(z.string()),
   description: z.optional(z.string()),
   references: z.optional(z.array(ExternalReference)),
-  types: z.record(z.string(), DiscoveryCustomType).default({}),
 })
 
-export type CommonDiscoveryConfig = z.infer<typeof CommonDiscoveryConfig>
-export const CommonDiscoveryConfig = z.object({
-  // NOTE(radomski): Structural configuraiton
+export type DiscoveryContract = z.infer<typeof DiscoveryContract>
+export const DiscoveryContract = StructureContract.merge(ColorContract)
+
+export type StructureConfig = z.infer<typeof StructureConfig>
+export const StructureConfig = z.object({
   import: z.optional(z.array(z.string())),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number()),
@@ -157,10 +164,12 @@ export const CommonDiscoveryConfig = z.object({
     ),
   ),
   sharedModules: z.optional(z.array(z.string())),
-
-  // NOTE(radomski): Color configuration
-  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   types: z.optional(z.record(z.string(), DiscoveryCustomType)),
+})
+
+export type ColorConfig = z.infer<typeof ColorConfig>
+export const ColorConfig = z.object({
+  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   names: z.optional(
     z.record(
       stringAs(EthereumAddress).transform((a) => a.toString()),
@@ -168,6 +177,9 @@ export const CommonDiscoveryConfig = z.object({
     ),
   ),
 })
+
+export type CommonDiscoveryConfig = z.infer<typeof CommonDiscoveryConfig>
+export const CommonDiscoveryConfig = StructureConfig.merge(ColorConfig)
 
 export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
 export const RawDiscoveryConfig = CommonDiscoveryConfig.extend({
