@@ -6,7 +6,6 @@ export type SsrData = {
   [K in keyof Pages]: {
     page: K
     props: Parameters<Pages[K]>[0]
-    manifest: Record<string, string>
   }
 }[keyof Pages]
 

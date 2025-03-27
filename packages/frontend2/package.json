@@ -21,6 +21,7 @@
     "clsx": "^2.1.1",
     "compression": "^1.8.0",
     "express": "^5.0.0",
+    "image-size": "^2.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sirv": "^3.0.1"

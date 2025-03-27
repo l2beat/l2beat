@@ -1,6 +1,12 @@
 import crypto from 'crypto'
-import fs, { mkdirSync } from 'fs'
+import fs, { mkdirSync, readFileSync } from 'fs'
+import { imageSize } from 'image-size'
 import path from 'path'
+
+interface Manifest {
+  names: Record<string, string>
+  images: Record<string, { src: string; width: number; height: number }>
+}
 
 addHashes({
   prefix: '/static',
@@ -8,33 +14,43 @@ addHashes({
   outputDir: 'dist/static',
   manifest: 'dist/manifest.json',
   ignore: ['.gitignore'],
+  hashLength: 8,
 })
 
-/*
- * This function is used to add hashes to static files.
- * HASH_LENGTH - We are using sha256 so the maximum value can be 16. We are using 8 to keep the file names short. If you want to change this, you need to clean and rebuild the project.
- */
-const HASH_LENGTH = 8
-
-async function addHashes(options: {
+interface AddHashesOptions {
   prefix: string
   inputDir: string
   outputDir: string
   manifest: string
   ignore: string[]
-}) {
+  hashLength: number
+}
+
+async function addHashes(options: AddHashesOptions) {
   const fullInputDir = path.resolve(options.inputDir)
   const fullOutputDir = path.resolve(options.outputDir)
 
   const files = getFileList(fullInputDir)
     .map((x) => path.relative(fullInputDir, x))
     .filter((x) => !options.ignore.includes(x))
-  const manifest: Record<string, string> = {}
+  const manifest: Manifest = {
+    names: {},
+    images: {},
+  }
 
   for (const file of files) {
     const full = path.join(fullInputDir, file)
 
-    const hash = (await sha256(full)).slice(0, HASH_LENGTH)
+    const buffer = readFileSync(full)
+
+    const hash = crypto
+      .createHash('sha256')
+      .update(buffer)
+      .digest('hex')
+      .slice(0, options.hashLength)
+
+    const dimensions = getDimensions(buffer)
+
     const { name, ext, dir } = path.parse(file)
     const itemWithHash = `${name}.${hash}${ext}`
 
@@ -45,7 +61,14 @@ async function addHashes(options: {
     const oldName = path.join(options.prefix, dir, `${name}${ext}`)
     const newName = path.join(options.prefix, dir, itemWithHash)
 
-    manifest[oldName] = newName
+    manifest.names[oldName] = newName
+    if (dimensions) {
+      manifest.images[oldName] = {
+        src: newName,
+        width: dimensions.width,
+        height: dimensions.height,
+      }
+    }
   }
 
   fs.writeFileSync(options.manifest, JSON.stringify(manifest, null, 2))
@@ -66,15 +89,10 @@ function getFileList(dir: string): string[] {
   return result
 }
 
-async function sha256(file: string): Promise<string> {
-  const fd = fs.createReadStream(file)
-  const hash = crypto.createHash('sha256')
-  hash.setEncoding('hex')
-  return new Promise((resolve) => {
-    fd.on('end', function () {
-      hash.end()
-      resolve(hash.read())
-    })
-    fd.pipe(hash)
-  })
+function getDimensions(buffer: Buffer) {
+  try {
+    return imageSize(buffer)
+  } catch {
+    return undefined
+  }
 }

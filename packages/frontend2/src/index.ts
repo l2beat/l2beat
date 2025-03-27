@@ -5,11 +5,12 @@ import sirv from 'sirv'
 import type { SsrData } from './app/App'
 import { PageRouter } from './app/PageRouter'
 import { render as ssrRender } from './ssr/entry.server'
+import { getManifest, type Manifest } from './common/Manifest'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
 
-const manifest = getManifest()
+const manifest = getManifest(isProduction)
 const template = getTemplate(manifest)
 
 const app = express()
@@ -39,18 +40,13 @@ function render(ssrData: SsrData) {
     )
 }
 
-function getManifest(): Record<string, string> {
-  if (!isProduction) {
-    return {}
-  }
-  const content = readFileSync('dist/manifest.json', 'utf-8')
-  return JSON.parse(content) as Record<string, string>
-}
-
-function getTemplate(manifest: Record<string, string>) {
+function getTemplate(manifest: Manifest) {
   let template = readFileSync('index.html', 'utf-8')
-  for (const [key, value] of Object.entries(manifest)) {
-    template = template.replace(key, value)
+  const matches = [...template.matchAll(/"\/static\/.*"/g)].map((x) =>
+    x[0].slice(1, -1),
+  )
+  for (const url of matches) {
+    template = template.replace(url, manifest.getUrl(url))
   }
   return template
 }
