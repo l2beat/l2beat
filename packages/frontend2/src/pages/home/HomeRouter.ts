@@ -1,8 +1,12 @@
 import type { Router } from 'express'
 import type { Manifest } from '../../common/Manifest'
-import type { Render, RenderData } from '../../ssr/types'
+import type { RenderData, RenderFunction } from '../../ssr/server'
 
-export function HomeRouter(app: Router, manifest: Manifest, render: Render) {
+export function HomeRouter(
+  app: Router,
+  manifest: Manifest,
+  render: RenderFunction,
+) {
   app.get('/', (_req, res) => {
     const data = getHomeData(manifest)
     const html = render(data)

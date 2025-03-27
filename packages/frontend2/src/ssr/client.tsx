@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import { App, type SsrData } from '../app/App'
+import { ClientPageRouter, type SsrData } from '../pages/ClientPageRouter'
 
 declare global {
   interface Window {
@@ -13,6 +13,6 @@ const root = document.getElementById('root')!
 hydrateRoot(
   root,
   <StrictMode>
-    <App ssrData={window.__SSR_DATA__} />
+    <ClientPageRouter ssrData={window.__SSR_DATA__} />
   </StrictMode>,
 )

@@ -14,7 +14,7 @@ const pages = {
   ProductPage,
 }
 
-export function App({ ssrData }: { ssrData: SsrData }) {
+export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
   const Page = pages[ssrData.page]
   // @ts-expect-error TypeScript is not smart enough yet
   return <Page {...ssrData.props} />

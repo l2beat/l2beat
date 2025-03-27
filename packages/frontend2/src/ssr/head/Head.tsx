@@ -1,6 +1,6 @@
 import type { Manifest } from '../../common/Manifest'
-import { fonts } from './fonts'
 import { FontStyles } from './FontStyles'
+import { fonts } from './fonts'
 
 export interface HeadProps {
   manifest: Manifest

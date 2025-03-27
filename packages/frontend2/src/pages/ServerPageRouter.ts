@@ -1,10 +1,14 @@
 import type { Router } from 'express'
 import type { Manifest } from '../common/Manifest'
-import type { Render } from '../ssr/types'
+import type { RenderFunction } from '../ssr/server'
 import { HomeRouter } from './home/HomeRouter'
 import { ProductRouter } from './product/ProductRouter'
 
-export function PageRouter(app: Router, manifest: Manifest, render: Render) {
+export function ServerPageRouter(
+  app: Router,
+  manifest: Manifest,
+  render: RenderFunction,
+) {
   HomeRouter(app, manifest, render)
   ProductRouter(app, manifest, render)
 }

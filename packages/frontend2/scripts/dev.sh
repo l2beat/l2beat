@@ -29,7 +29,7 @@ trap cleanup SIGINT SIGTERM
 
 # Start processes and capture their PIDs
 esbuild \
-  src/ssr/entry.client.tsx \
+  src/ssr/client.tsx \
   --bundle \
   --watch=forever \
   --outfile=static/index.js &

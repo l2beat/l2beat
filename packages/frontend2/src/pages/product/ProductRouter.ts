@@ -1,8 +1,12 @@
 import type { Router } from 'express'
-import type { Render, RenderData } from '../../ssr/types'
 import type { Manifest } from '../../common/Manifest'
+import type { RenderData, RenderFunction } from '../../ssr/server'
 
-export function ProductRouter(app: Router, manifest: Manifest, render: Render) {
+export function ProductRouter(
+  app: Router,
+  manifest: Manifest,
+  render: RenderFunction,
+) {
   app.get('/product/:id', (req, res) => {
     const data = getProductData(+req.params.id, manifest)
     const html = render(data)

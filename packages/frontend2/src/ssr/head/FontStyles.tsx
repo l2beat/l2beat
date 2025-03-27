@@ -1,6 +1,6 @@
 import React from 'react'
-import type { FontInfo } from './fonts'
 import type { Manifest } from '../../common/Manifest'
+import type { FontInfo } from './fonts'
 
 export function FontStyles({
   fonts,

@@ -1,8 +1,16 @@
 import { StrictMode } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
-import { App } from '../app/App'
+import type { SsrData } from '../pages/ClientPageRouter'
+import { ClientPageRouter } from '../pages/ClientPageRouter'
+import type { HeadProps } from './head/Head'
 import { Head } from './head/Head'
-import type { RenderData } from './types'
+
+export interface RenderData {
+  ssr: SsrData
+  head: HeadProps
+}
+
+export type RenderFunction = (data: RenderData) => string
 
 export interface RenderResult {
   html: string
@@ -12,7 +20,7 @@ export interface RenderResult {
 export function render(data: RenderData): RenderResult {
   const html = renderToString(
     <StrictMode>
-      <App ssrData={data.ssr} />
+      <ClientPageRouter ssrData={data.ssr} />
     </StrictMode>,
   )
   const head = renderToStaticMarkup(
