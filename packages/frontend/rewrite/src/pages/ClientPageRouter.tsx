@@ -1,3 +1,4 @@
+import { FaqPage } from './faq/FaqPage'
 import { HomePage } from './home/HomePage'
 import { ProductPage } from './product/ProductPage'
 
@@ -12,6 +13,7 @@ export type SsrData = {
 const pages = {
   HomePage,
   ProductPage,
+  FaqPage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

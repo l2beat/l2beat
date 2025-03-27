@@ -15,4 +15,10 @@ tailwindcss \
   -i rewrite/src/styles/globals.css \
   -o ./rewrite/static/index.css
 tsx ./rewrite/scripts/hashFiles.ts
-tsc -p rewrite/tsconfig.build.json
+
+esbuild \
+  rewrite/src/index.ts\
+  --bundle \
+  --platform=node \
+  --outfile=rewrite/dist/server/index.js
+# tsc -p rewrite/tsconfig.build.json

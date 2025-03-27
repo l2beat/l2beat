@@ -1,8 +1,15 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     "module": "CommonJS",
     "jsx": "react-jsx",
-    "noEmit": false
-  }
+    "noEmit": false,
+    "outDir": "dist",
+    "paths": {
+      "~/*": ["./src/*"],
+      "react": ["./node_modules/@types/react"]
+    }
+  },
+  "exclude": ["dist", "static"]
 }
