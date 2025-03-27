@@ -3,12 +3,14 @@ import { Step1 } from './step-1'
 import { Step2, type Step2Payload } from './step-2'
 import { Step3Custom, type Step3Payload } from './step-3'
 import { Step4 } from './step-4'
+import { Step5 } from './step-5'
 
 type Step =
   | '1-welcoming-screen'
   | '2-variant-select'
   | '3-custom-toppings-select'
-  | '4-summary'
+  | '4-cooking'
+  | '5-summary'
 
 type PizzaState = {
   step1: boolean
@@ -32,13 +34,13 @@ export function StepController() {
     if (payload.type === 'custom') {
       setStep('3-custom-toppings-select')
     } else {
-      setStep('4-summary')
+      setStep('4-cooking')
     }
   }
 
   const handleStep3Click = (payload: Step3Payload) => {
     setPizzaState((prev) => ({ ...prev, step3: payload }))
-    setStep('4-summary')
+    setStep('4-cooking')
   }
 
   return (
@@ -49,8 +51,11 @@ export function StepController() {
         {step === '3-custom-toppings-select' && (
           <Step3Custom onClick={handleStep3Click} />
         )}
-        {step === '4-summary' && (
-          <Step4 state={pizzaState as unknown as Required<PizzaState>} />
+        {step === '4-cooking' && (
+          <Step4 onFinish={() => setStep('5-summary')} />
+        )}
+        {step === '5-summary' && (
+          <Step5 state={pizzaState as unknown as Required<PizzaState>} />
         )}
       </div>
     </div>

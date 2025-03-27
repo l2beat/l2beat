@@ -20,7 +20,7 @@ export function PizzaCheckTile(props: PizzaCheckTileProps) {
     >
       {props.image}
       <br />
-      {props.title}
+      <div className="text-lg font-bold">{props.title}</div>
       {props.subTitle && <div className="text-sm italic">{props.subTitle}</div>}
     </div>
   )

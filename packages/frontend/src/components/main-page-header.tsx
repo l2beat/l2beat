@@ -1,15 +1,8 @@
 'use client'
-
-import { DialogOverlay } from '@radix-ui/react-dialog'
 import { InfoIcon } from '~/icons/info'
 import { SvgIcon, type SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
-import {
-  Dialog,
-  DialogContent,
-  DialogPortal,
-  DialogTrigger,
-} from './core/dialog'
+import { Dialog, DialogContent, DialogTrigger } from './core/dialog'
 import { StepController } from './pizza-flow'
 import { useRecategorisationPreviewContext } from './recategorisation-preview/recategorisation-preview-provider'
 import { RecategorisationPreviewSwitch } from './recategorisation-preview/recategorisation-preview-switch'
@@ -54,12 +47,9 @@ export function MainPageHeader({
                 <PizzaIcon className="inline size-6 shrink-0" />
               </div>
             </DialogTrigger>
-            <DialogPortal>
-              <DialogOverlay />
-              <DialogContent>
-                <StepController />
-              </DialogContent>
-            </DialogPortal>
+            <DialogContent className="flex items-center justify-center pt-16">
+              <StepController />
+            </DialogContent>
           </Dialog>
         </div>
       </header>

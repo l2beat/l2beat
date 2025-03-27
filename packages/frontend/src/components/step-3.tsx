@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { PizzaCheckTile } from './pizza-check-tile'
 
 type Props = {
@@ -30,23 +30,22 @@ export function Step3Custom(props: Props) {
       setStep('spicy')
     } else if (step === 'spicy') {
       setSelections((prev) => ({ ...prev, spicy: value }))
-      props.onClick({
-        type: 'custom',
-        veggies: selections.veggies,
-        cheese: selections.cheese,
-        spicy: value,
-      })
+      send()
     }
   }
 
+  const send = useCallback(() => {
+    props.onClick(selections)
+  }, [props.onClick, selections])
+
   return (
-    <div className="flex size-full flex-col justify-center gap-5">
-      <div className="text-base font-bold">
+    <div className="flex flex-col">
+      <div className="pb-10 text-base font-bold">
         <div className="text-xs text-[#9621BF]">
           Please share your preferences and we’ll prepare the best pizza for
           you.
         </div>
-        <span>
+        <span className="text-xl font-bold">
           {step === 'veggies' && 'Would you like some veggies on your pizza?'}
           {step === 'cheese' && 'Would you like to have some cheese?'}
           {step === 'spicy' && 'Finally, would you like it spicy?'}
