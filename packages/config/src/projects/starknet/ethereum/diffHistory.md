@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xf7d7a26418823cb907b5c503f9c7e75dd4cb6d2d
+
+# Diff at Thu, 27 Mar 2025 11:15:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22123605
+- current block number: 22123605
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123605 (main branch discovery), not current.
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.aggregatorHashMapped:
+-        "273279642033703284306509103355536170486431195329675679055627933497997642494"
++        "Starknet Aggregator (since v0.13.4)"
+      values.programHashMapped:
+-        "2231644845387633655859130162745748394456578773184260372693322394988769337368"
++        "StarkNet OS (since v0.13.4)"
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
 Generated with discovered.json: 0xbc439a24f263042fa415d4ba760d508819e92ad4
 
 # Diff at Tue, 25 Mar 2025 11:36:51 GMT:

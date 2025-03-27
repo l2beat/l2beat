@@ -2,7 +2,7 @@
   "name": "hashkey",
   "chain": "ethereum",
   "blockNumber": 22081892,
-  "configHash": "0x3ee3d4d16b1fcef135ecccddc372be64427a6a99f9e1cf39759164af65b4cd14",
+  "configHash": "0x307a4fd4797b33ff62cb6e74970f39ae7f4b3572e53ab468a50669b7eb3c2728",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -580,7 +580,8 @@
         "$immutable": true,
         "owner": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MIPS",
@@ -1925,7 +1926,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",

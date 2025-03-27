@@ -625,7 +625,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1708543048,
       "sinceBlock": 183097524,
       "values": {
@@ -1540,7 +1545,7 @@
     "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
     "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
     "orbitstack/RollupProxy_fastConfirm": "0x2670543ebadf16810332337e6ead9b8949e04cacabf18b672794b471aa443db3",
-    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
+    "orbitstack/SequencerInbox": "0x6c9fb56a71e6c16fcf572638338a9ca472776731ab17ec214ed873a63f006223",
     "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19",
     "orbitstack/ValidatorUtils": "0x6da1a099d095b1ed59b7e8c0ae9c2494104c73fb1d73560be6733faacdb84f6f"
   }

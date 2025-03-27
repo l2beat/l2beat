@@ -71,7 +71,8 @@ export const RoleDescriptions: {
   },
   guard: {
     name: 'Guardian',
-    description: 'Allowed to pause deposits and withdrawals.',
+    description:
+      'Allowed to pause deposits and withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).',
   },
   validate: {
     // ORBIT specific

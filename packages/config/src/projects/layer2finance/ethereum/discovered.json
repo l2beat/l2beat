@@ -2,7 +2,7 @@
   "name": "layer2finance",
   "chain": "ethereum",
   "blockNumber": 21322782,
-  "configHash": "0x500f80d9c2bf7f0bf7488fae0534e86ff719ee64d94cfeb70da61548b2fa4ef3",
+  "configHash": "0x8b4815855ac7c779b45bec43fd78fac4c5402b4bbd3a56a6082abbd639b67756",
   "entries": [
     {
       "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",

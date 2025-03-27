@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "ethereum",
   "blockNumber": 21786859,
-  "configHash": "0xf449d2a2572b4acede068774919f94773d862bdb804150f45ba3a83941ec4b11",
+  "configHash": "0x351eaa227d266722034a4a8ec278089301140de6b0526b626e11166492e4ec30",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -125,7 +125,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1656050353,
       "sinceBlock": 15016829,
       "values": {
@@ -5233,7 +5238,7 @@
     "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
     "orbitstack/RollupProxy": "0xe63a9a0b0c6e99c11e84a68e2508b9c630918a71f31d300638d43ca02ef76b31",
     "orbitstack/SecurityCouncil": "0xdcb84d1f43f14da797bf12ed87af05af6333de2c64ea3612938d02331ef96263",
-    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
+    "orbitstack/SequencerInbox": "0x6c9fb56a71e6c16fcf572638338a9ca472776731ab17ec214ed873a63f006223",
     "orbitstack/Timelock": "0x584240f3909a1061aab7560daa6d114df6cf3c1d9f7abad51516c5554fd3e61d",
     "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19",
     "orbitstack/ValidatorUtils": "0x6da1a099d095b1ed59b7e8c0ae9c2494104c73fb1d73560be6733faacdb84f6f"
