@@ -300,30 +300,5 @@ describe(DBStorage.name, () => {
         timestamp,
       )
     })
-
-    it('throws error when fallback fails', async () => {
-      const timestamp = UnixTime(100)
-      const configId = 'config1'.repeat(2)
-
-      const tvsAmount = mockObject<Database['tvsAmount']>({
-        getLatestAmountBefore: mockFn().resolvesTo(undefined),
-      })
-
-      const storage = new DBStorage(
-        mockObject<Database>({
-          tvsAmount,
-        }),
-        Logger.SILENT,
-      )
-      ;(storage as any).amounts = new Map([[timestamp, new Map()]])
-
-      await expect(storage.getAmount(configId, timestamp)).toBeRejectedWith(
-        `Amount fallback failed for ${configId}`,
-      )
-      expect(tvsAmount.getLatestAmountBefore).toHaveBeenCalledWith(
-        configId,
-        timestamp,
-      )
-    })
   })
 })

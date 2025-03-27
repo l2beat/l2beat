@@ -1,4 +1,89 @@
-Generated with discovered.json: 0x9d96d94bc54a83fd13065208aba78b5e527853df
+Generated with discovered.json: 0x7d8888dd37ac334ba78ec5c7615681fda27b20f9
+
+# Diff at Thu, 27 Mar 2025 09:06:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@73b1a8c5f50d6fe327eed98ba839c3eed6ab6280 block: 778850
+- current block number: 781473
+
+## Description
+
+BridgedKinto upgrade. AccessManager ready for stage 1 (incl queued transactions).
+- ADMIN_ROLE grant to Kinto Multisig 2 canceled.
+- 12d delays for execution and targetAdmin queued.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
++        "0x01f873ab58dfa85af89a14ea5940a5d2d59c6c300d113b8e78d3ff47dbf70e4d"
+      values.$implementation:
+-        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
++        "0xBe19941Dd429020A5B5d2704f953Fb0f7a3A3497"
+      values.$pastUpgrades.9:
++        ["2025-03-26T22:14:03.000Z","0x3aa9d1b48b5f3f5d8b445cd0d0f21fd7c774a0dc2e601f12609759c44b366a26",["0xBe19941Dd429020A5B5d2704f953Fb0f7a3A3497"]]
+      values.$upgradeCount:
+-        9
++        10
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.6:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.5:
++        {"operationId":"0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1","nonce":1,"schedule":1743905986,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.4:
++        {"operationId":"0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d","nonce":1,"schedule":1743905137,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.3:
++        {"operationId":"0x8b8631e0ab585da013ce35fd8f3a27597f77e19c91ba1263b21cd7396f746d91","nonce":1,"schedule":1743955424,"caller":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","target":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","data":"0x3659cfe60000000000000000000000001d61772ae2e157f9f6a4127526ed86ab5801a477"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.2:
++        {"operationId":"0x7efe7055898bb49bcf4b4bac2964df4814ca5698c700d895f669b8da3b83443a","nonce":1,"schedule":1743905135,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b59890000000000000000000000005a2b641b84b0230c8e75f55d5afd27f4dbd59d5b00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.1:
++        {"operationId":"0x4a05b6df1acce9e22cf008555fa8d477bd9f116f261f267f95c2b463047e016a","nonce":1,"schedule":1743905136,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b5989000000000000000000000000f369f78e3a0492cc4e96a90dae0728a38498e9c700000000000000000000000000000000000000000000000000000000000fd200"}
+      values.OperationScheduled.0.operationId:
+-        "0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8"
++        "0x256b4be01a33f01810d8b7c1bb0e70df24b98d9f174b45ea4ea9f9f13a04990e"
+      values.OperationScheduled.0.schedule:
+-        1743464541
++        1743955424
+      values.OperationScheduled.0.caller:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      values.OperationScheduled.0.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      values.OperationScheduled.0.data:
+-        "0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"
++        "0xf4f4b03a000000000000000000000000bfe260680514e0d669fdc5a5f7334b97a5513d9d"
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@778850 => .flat}/BridgedKinto/BridgedKinto.sol      | 5 +++++
+ 1 file changed, 5 insertions(+)
+```
+
+Generated with discovered.json: 0x860f798971ee9f8ca5c2bb906627f0511e59de44
 
 # Diff at Tue, 25 Mar 2025 11:49:20 GMT:
 

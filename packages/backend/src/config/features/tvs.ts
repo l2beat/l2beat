@@ -49,7 +49,7 @@ export async function getTvsConfig(
       .map((a) => {
         switch (a.type) {
           case 'circulatingSupply':
-            return CirculatingSupplyAmountIndexer.SOURCE
+            return CirculatingSupplyAmountIndexer.SOURCE()
           case 'balanceOfEscrow':
           case 'totalSupply':
             return a.chain

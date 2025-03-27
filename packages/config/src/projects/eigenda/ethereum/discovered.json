@@ -95,7 +95,8 @@
         "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH)."
         }
-      }
+      },
+      "derivedName": "StakeRegistry"
     },
     {
       "name": "BLSApkRegistry",
@@ -161,7 +162,8 @@
         ],
         "$upgradeCount": 2,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
-      }
+      },
+      "derivedName": "BLSApkRegistry"
     },
     {
       "name": "RegistryCoordinator",
@@ -477,7 +479,8 @@
           "description": "The time in seconds that an operator must wait before being able to re-register after being ejected.",
           "type": "RISK_PARAMETER"
         }
-      }
+      },
+      "derivedName": "RegistryCoordinator"
     },
     {
       "name": "PauserRegistry",
@@ -506,7 +509,8 @@
           "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
         ],
         "unpauser": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      }
+      },
+      "derivedName": "PauserRegistry"
     },
     {
       "name": "UpgradeableBeacon",
@@ -522,7 +526,8 @@
         "$immutable": true,
         "implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      }
+      },
+      "derivedName": "UpgradeableBeacon"
     },
     {
       "address": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
@@ -628,7 +633,8 @@
         "ejectableStakePercent": {
           "description": "Max stake to be ejectable per time delta."
         }
-      }
+      },
+      "derivedName": "EjectionManager"
     },
     {
       "name": "AVSDirectory",
@@ -761,7 +767,8 @@
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060"
-      }
+      },
+      "derivedName": "AVSDirectory"
     },
     {
       "name": "EigenLayerRewardsInitiatorMultisig",
@@ -986,7 +993,8 @@
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "STAKER_DELEGATION_TYPEHASH": "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      }
+      },
+      "derivedName": "DelegationManager"
     },
     {
       "address": "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE",
@@ -1319,7 +1327,8 @@
         "$immutable": true,
         "implementation": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      }
+      },
+      "derivedName": "UpgradeableBeacon"
     },
     {
       "address": "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
@@ -1394,7 +1403,8 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyBeacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      }
+      },
+      "derivedName": "StrategyFactory"
     },
     {
       "address": "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5",
@@ -1444,7 +1454,8 @@
         "podOwner": "0x0000000000000000000000000000000000000000",
         "proofSubmitter": "0x0000000000000000000000000000000000000000",
         "withdrawableRestakedExecutionLayerGwei": 0
-      }
+      },
+      "derivedName": "EigenPod"
     },
     {
       "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
@@ -1475,7 +1486,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
       "name": "ProxyAdmin",
@@ -1517,7 +1529,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "StrategyManager",
@@ -1597,7 +1610,8 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyWhitelister": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
-      }
+      },
+      "derivedName": "StrategyManager"
     },
     {
       "name": "EigenDAServiceManager",
@@ -1888,7 +1902,8 @@
           "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.",
           "type": "RISK_PARAMETER"
         }
-      }
+      },
+      "derivedName": "EigenDAServiceManager"
     },
     {
       "name": "ProxyAdmin",
@@ -1934,7 +1949,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
@@ -2036,7 +2052,8 @@
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      }
+      },
+      "derivedName": "EigenPodManager"
     },
     {
       "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5",
@@ -2163,7 +2180,8 @@
         "$upgradeCount": 2,
         "OPERATOR_DOES_NOT_EXIST_ID": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
-      }
+      },
+      "derivedName": "IndexRegistry"
     },
     {
       "name": "EigenLayerOperationsMultisig",
@@ -2576,7 +2594,8 @@
         "paused": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Slasher"
     },
     {
       "address": "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
@@ -2648,7 +2667,8 @@
           "description": "Same as TVL limit",
           "type": "RISK_PARAMETER"
         }
-      }
+      },
+      "derivedName": "StrategyBase"
     },
     {
       "name": "EIGEN Token",

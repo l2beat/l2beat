@@ -134,5 +134,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
     }
   }
 
-  static SOURCE: 'l2b-circulating-supply'
+  static SOURCE() {
+    return 'l2b-circulating-supply'
+  }
 }

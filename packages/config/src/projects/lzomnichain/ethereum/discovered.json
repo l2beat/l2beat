@@ -22,7 +22,8 @@
         "stargateBridgeAddress": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
         "stargateTokenAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
         "utilsVersion": 1
-      }
+      },
+      "derivedName": "FPValidator"
     },
     {
       "address": "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
@@ -68,7 +69,8 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 6,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "BobaEscrow1",
@@ -107,7 +109,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x285b7EEa81a5B66B62e7276a24c1e0F83F7409c1",
@@ -147,7 +150,8 @@
         "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
         "zroEnabled": false,
         "zroFee": 0
-      }
+      },
+      "derivedName": "TreasuryV2"
     },
     {
       "address": "0x3c1Cb7D4c0ce0dc72eDc7Ea06acC866e62a8f1d8",
@@ -178,7 +182,8 @@
         "stargateBridgeAddress": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
         "stargateTokenAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
         "utilsVersion": 4
-      }
+      },
+      "derivedName": "MPTValidator01"
     },
     {
       "name": "",
@@ -200,7 +205,8 @@
         "$implementation": "0x154c7B3Eee18ABCFaede98fae00e58e7737d96dE",
         "$pastUpgrades": [],
         "$upgradeCount": 0
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "UltraLightNodeV2",
@@ -1889,7 +1895,8 @@
           "362": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "367": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098"
         }
-      }
+      },
+      "derivedName": "UltraLightNodeV2"
     },
     {
       "name": "UsdcEscrow",
@@ -2004,7 +2011,8 @@
       "values": {
         "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
-      }
+      },
+      "derivedName": "NonceContract"
     },
     {
       "name": "GnosisSafe",
@@ -2037,7 +2045,8 @@
         "multisigThreshold": "3 of 6 (50%)",
         "nonce": 903,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Endpoint",
@@ -2071,7 +2080,8 @@
           "0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
         ],
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
-      }
+      },
+      "derivedName": "Endpoint"
     },
     {
       "name": "",
@@ -2093,7 +2103,8 @@
         "$implementation": "0x61Ab01Ce58D1dFf3562bb25870020d555e39D849",
         "$pastUpgrades": [],
         "$upgradeCount": 0
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "BobaEscrow3",
@@ -2303,7 +2314,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
@@ -2331,7 +2343,8 @@
         "signerSize": 3,
         "vid": 101,
         "workerFeeLib": "0xa7b5189bcA84Cd304D8553977c7C614329750d99"
-      }
+      },
+      "derivedName": "DVN"
     },
     {
       "name": "ProxyAdmin",
@@ -2356,7 +2369,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
@@ -2371,7 +2385,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1706489555,
       "sinceBlock": 19108731,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0xAC0248e9C78774bA0ef9E71B1Ce1393a10C17E3C",
@@ -2513,7 +2528,8 @@
         "multisigThreshold": "4 of 6 (67%)",
         "nonce": 161,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "VerifierFeeLib",
@@ -2525,7 +2541,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1694217119,
       "sinceBlock": 18095085,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "VerifierFeeLib"
     },
     {
       "name": "GnosisSafe",
@@ -2556,7 +2573,8 @@
         "multisigThreshold": "2 of 4 (50%)",
         "nonce": 197,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "LinkEscrow",

@@ -54,6 +54,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -135,6 +136,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -169,6 +171,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -191,6 +194,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.1.2"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -221,7 +225,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "Ancient8GuardianMultisig",
@@ -425,6 +430,7 @@
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -471,7 +477,8 @@
         "addressManager": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
@@ -573,6 +580,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -622,6 +630,7 @@
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.1.2"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {

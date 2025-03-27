@@ -21,6 +21,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -158,6 +159,7 @@
           "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {

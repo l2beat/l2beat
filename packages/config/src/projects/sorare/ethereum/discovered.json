@@ -32,7 +32,8 @@
         "$immutable": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
-      }
+      },
+      "derivedName": "OrderRegistry"
     },
     {
       "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
@@ -160,6 +161,7 @@
         "programHash": "3174901404014912024702042974619036870715605532092680335571201877913899936957",
         "programHashMapped": "StarkEx Spot v4.0 (RhinoFi, Sorare)"
       },
+      "derivedName": "GpsFactRegistryAdapter",
       "usedTypes": [
         {
           "typeCaster": "Mapping",

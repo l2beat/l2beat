@@ -81,7 +81,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xCEA8039076E35a825854c5C2f85659430b06ec96"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
@@ -268,7 +269,8 @@
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
         "module": { "severity": "HIGH" }
-      }
+      },
+      "derivedName": "DomainRoutingIsm"
     },
     {
       "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
@@ -326,7 +328,8 @@
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "PACKAGE_VERSION": "5.6.1",
         "wrappedToken": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
-      }
+      },
+      "derivedName": "HypERC20Collateral"
     },
     {
       "address": "0x5b73A98165778BCCE72979B4EE3faCdb31728b8E",
@@ -383,7 +386,8 @@
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "PACKAGE_VERSION": "5.6.1",
         "wrappedToken": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
-      }
+      },
+      "derivedName": "HypERC20Collateral"
     },
     {
       "address": "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA",
@@ -426,7 +430,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x7C96179df8619E49B389784ECDBBcA7090a5D08F",
@@ -468,7 +473,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "StaticAggregationIsm_eclipse",
@@ -558,7 +564,8 @@
         "multisigThreshold": "4 of 9 (44%)",
         "nonce": 1948,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba",
@@ -617,7 +624,8 @@
         "validatorsAndThreshold": {
           "description": "Validators and threshold of a random USDC message from Eclipse to Ethereum."
         }
-      }
+      },
+      "derivedName": "StaticMerkleRootMultisigIsm"
     },
     {
       "name": "Mailbox",
@@ -673,7 +681,8 @@
         "defaultIsm": {
           "description": "The default ISM contract that is used for all destination contracts that do not override it."
         }
-      }
+      },
+      "derivedName": "Mailbox"
     },
     {
       "name": "HypERC20Collateral",
@@ -719,7 +728,8 @@
         "mailbox": "0xc005dc82818d67AF737725bD4bf75435d065D239",
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "wrappedToken": "0x19e099B7aEd41FA52718D780dDA74678113C0b32"
-      }
+      },
+      "derivedName": "HypERC20Collateral"
     },
     {
       "address": "0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA",
@@ -780,7 +790,8 @@
         "multisigThreshold": "4 of 6 (67%)",
         "nonce": 155,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B",
@@ -832,7 +843,8 @@
         "owner": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
         "PACKAGE_VERSION": "5.8.1",
         "wrappedToken": "0x9Ba021B0a9b958B5E75cE9f6dff97C7eE52cb3E6"
-      }
+      },
+      "derivedName": "HypERC20Collateral"
     },
     {
       "name": "HypERC20Collateral",
@@ -878,7 +890,8 @@
         "mailbox": "0xc005dc82818d67AF737725bD4bf75435d065D239",
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "wrappedToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "HypERC20Collateral"
     },
     {
       "address": "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39",
@@ -957,7 +970,8 @@
         "owner": "0xCEA8039076E35a825854c5C2f85659430b06ec96",
         "PACKAGE_VERSION": "5.6.1",
         "wrappedToken": "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88"
-      }
+      },
+      "derivedName": "HypERC20Collateral"
     },
     {
       "address": "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8",
@@ -1022,7 +1036,8 @@
         "validatorsAndThreshold": {
           "description": "Validators and threshold of a random USDC message from Eclipse to Ethereum."
         }
-      }
+      },
+      "derivedName": "StaticMessageIdMultisigIsm"
     }
   ],
   "abis": {

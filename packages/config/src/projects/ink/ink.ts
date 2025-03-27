@@ -49,14 +49,14 @@ export const ink: ScalingProject = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('INK'),
   isNodeAvailable: true,
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
 
   stage: getStage(
