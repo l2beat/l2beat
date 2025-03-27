@@ -60,9 +60,6 @@ const functionSignatures: { [selector: string]: string } = {
   '0x167bd395': 'setTargetClosed(address,bool)',
   '0x08d6122d': 'setTargetFunctionRole(address,bytes4[],uint64)',
   '0x18ff183c': 'updateAuthority(address,address)',
-  '0x8522d1b2': '0x8522d1b2',
-  '0xc664c714': '0xc664c714',
-  '0x9089e8ae': '0x9089e8ae',
 }
 
 // -------------------------
