@@ -1,0 +1,1 @@
+value(@self, "gameImpls", &gameImpls:indexed).

@@ -11,10 +11,11 @@ export function interpolateModelTemplate(
     tryCastingToName(String(values['$.address']), addressToNameMap, false),
   )
   const withValuesReplaced = withSelfReplaced.replace(
-    /&([a-zA-Z0-9_$.]+)(:raw)?(\|lower)?/g,
-    (_match, key, raw, lower) => {
+    /&([a-zA-Z0-9_$.]+)(:indexed)?(:raw)?(\|lower)?/g,
+    (_match, key, indexed, raw, lower) => {
       const leaveRaw = raw !== undefined
       const toLower = lower !== undefined
+      const addIndex = indexed !== undefined
       const value = values[key]
       if (value === undefined) {
         throw new Error(
@@ -25,6 +26,7 @@ export function interpolateModelTemplate(
         return `(${value
           .map((v) => tryCastingToName(String(v), addressToNameMap, leaveRaw))
           .map((v) => (toLower ? v.toLowerCase() : v))
+          .map((v, i) => (addIndex ? `(${i}, ${v})` : v))
           .join('; ')})`
       }
       const processedValue = toLower
