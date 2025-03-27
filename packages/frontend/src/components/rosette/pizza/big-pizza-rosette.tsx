@@ -14,8 +14,8 @@ import {
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
 import type { RosetteValue } from '../types'
-import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
+import { RealPizzaRosetteIcon } from './real-pizza-rosette-icon'
 
 export interface BigPizzaRosetteProps {
   values: RosetteValue[]
@@ -40,7 +40,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           props.className,
         )}
       >
-        <PizzaRosetteIcon
+        <RealPizzaRosetteIcon
           values={props.values}
           isUnderReview={isUnderReview}
           className={cn(props.isUpcoming && 'opacity-30')}
@@ -66,7 +66,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
         >
           <TooltipTrigger>
-            <PizzaRosetteIcon
+            <RealPizzaRosetteIcon
               values={props.values}
               isUnderReview={isUnderReview}
               background={props.background}
