@@ -2,7 +2,7 @@
   "name": "blast",
   "chain": "ethereum",
   "blockNumber": 21084957,
-  "configHash": "0x5bb1adb8b902fcb4fe626d8c9a5d2e7c7020627fea23189d3a2ed60061c8ef11",
+  "configHash": "0x5725920a78735866f241d023d9591ba838b468c25c88089ba1aa37ea780a12a5",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -975,7 +975,8 @@
         "$immutable": true,
         "owner": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
@@ -1711,7 +1712,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",

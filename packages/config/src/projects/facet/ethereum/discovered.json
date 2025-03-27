@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21678827,
-  "configHash": "0x520556ec0247c9b33a90a25051296c0f421733ddb20b149c51e03730720dcf99",
+  "configHash": "0xc6100ea9353bf879e72c6f647afa3adbb079c672f11b3aa18e15b27400461ade",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -112,7 +112,8 @@
         "$immutable": true,
         "owner": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x314d660b083675f415cCAA9c545FeedF377d1006",
@@ -1118,7 +1119,7 @@
     "facet/FacetSafeProxy": "0xcd42f19d48322e02a94f5d0d59304c4b65815f474523008cb4f4419d1aa41d27",
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1StandardBridge_facet": "0xa2981fdc6b1c3c52700c9c6d6f3ba4477d6a24c2fb8e7c1317d143fdd75c37ae",
     "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",

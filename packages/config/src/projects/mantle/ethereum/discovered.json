@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 22081896,
-  "configHash": "0x3b976fc1bef115648cb51fd7951081d85155eab2c4249889eaae484640363763",
+  "configHash": "0x5bab5157120252b6d6417fce7982366e4a6fdd40015b2cb9b8c462fbff4b9b29",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -653,7 +653,8 @@
         "$immutable": true,
         "owner": "0xca35F8338054739D138884685e08b39EE2217794"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a",
@@ -1239,7 +1240,7 @@
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "global/TimelockController": "0x15a08533b0e2d9bb08add3809242c7487b2205bde0fac91a8bc371eda55eb16c",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
     "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",

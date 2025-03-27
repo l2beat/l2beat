@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "blockNumber": 21829674,
-  "configHash": "0x9743293e8f75487e34cfddd849088c5d7c1dc8acf9a793e0abab94a4b74cd759",
+  "configHash": "0x4101e041f5d2f1200f279069e2ea06c312c24525f2da7100abe21289b5db2409",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1028,7 +1028,8 @@
         "$immutable": true,
         "owner": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
@@ -1300,7 +1301,8 @@
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -2312,7 +2314,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0x5f298bc59cbf29e7b1e8d20a3b4f84589941f57f29331cecd5aad842af268195",
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
     "lido/L1ERC20TokenBridge": "0x44d20eeab0d047608977415a93b298af0794106bce88430721828b7aebb83626",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",

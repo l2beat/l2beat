@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22123258,
-  "configHash": "0x4a20735963382d1a89bad0a4c8daf20557b3049db7c9a57af5c26cc3a7cc661e",
+  "configHash": "0xbc6d8f30a8f312cc745506984fab3fd2af0c16f4668a17d94298d6ed01b05504",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
