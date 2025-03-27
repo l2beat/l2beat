@@ -1,7 +1,9 @@
 import { Fragment } from 'react/jsx-runtime'
 import type { ApiAbi, ApiAbiEntry } from '../api/types'
+import { partition } from '../common/partition'
 import * as solidity from '../panel-code/solidity'
 import { AddressDisplay } from './AddressDisplay'
+import { Folder } from './Folder'
 
 export function AbiDisplay({ abis }: { abis: ApiAbi[] }) {
   return (
@@ -18,9 +20,7 @@ export function AbiDisplay({ abis }: { abis: ApiAbi[] }) {
               }}
             />
           </div>
-          <pre className="overflow-x-auto bg-coffee-900 px-5 py-0.5 font-mono text-xs leading-[18px]">
-            <AbiCode entries={abi.entries} />
-          </pre>
+          <AbiCode entries={abi.entries} />
         </li>
       ))}
     </ol>
@@ -28,33 +28,67 @@ export function AbiDisplay({ abis }: { abis: ApiAbi[] }) {
 }
 
 function AbiCode({ entries }: { entries: ApiAbiEntry[] }) {
-  if (entries.length === 0) {
-    return (
+  const readMarkers = [' view ', ' pure ']
+
+  const [errors, nonErrors] = partition(entries, (e) =>
+    e.value.startsWith('error'),
+  )
+  const [events, nonEvents] = partition(nonErrors, (e) =>
+    e.value.startsWith('event'),
+  )
+  const [read, write] = partition(nonEvents, (e) =>
+    readMarkers.some((marker) => e.value.includes(marker)),
+  )
+
+  return (
+    <div>
+      <Folder title={`Events (${events.length})`}>
+        <AbiCodeEntries entries={events} />
+      </Folder>
+      <Folder title={`Read Functions (${read.length})`}>
+        <AbiCodeEntries entries={read} />
+      </Folder>
+      <Folder title={`Write Functions (${write.length})`}>
+        <AbiCodeEntries entries={write} />
+      </Folder>
+      <Folder title={`Errors (${errors.length})`} collapsed={true}>
+        <AbiCodeEntries entries={errors} />
+      </Folder>
+    </div>
+  )
+}
+
+function AbiCodeEntries({ entries }: { entries: ApiAbiEntry[] }) {
+  const content =
+    entries.length === 0 ? (
       <code>
         <span className="bg-coffee-400">// No abi</span>
       </code>
+    ) : (
+      <code>
+        {entries.map((entry, i) => (
+          <Fragment key={i}>
+            {entry.value.split(/\b/).map((word, i) => (
+              <span key={i} className={getClassName(word)}>
+                {word}
+              </span>
+            ))}
+            {entry.signature && (
+              <span className="text-coffee-400"> // {entry.signature}</span>
+            )}
+            {entry.topic && (
+              <span className="text-coffee-400"> // {entry.topic}</span>
+            )}
+            {i !== entries.length - 1 && <br />}
+          </Fragment>
+        ))}
+      </code>
     )
-  }
 
   return (
-    <code>
-      {entries.map((entry, i) => (
-        <Fragment key={i}>
-          {entry.value.split(/\b/).map((word, i) => (
-            <span key={i} className={getClassName(word)}>
-              {word}
-            </span>
-          ))}
-          {entry.signature && (
-            <span className="text-coffee-400"> // {entry.signature}</span>
-          )}
-          {entry.topic && (
-            <span className="text-coffee-400"> // {entry.topic}</span>
-          )}
-          {i !== entries.length - 1 && <br />}
-        </Fragment>
-      ))}
-    </code>
+    <pre className="overflow-x-auto bg-coffee-900 px-5 py-0.5 font-mono text-xs leading-[18px]">
+      {content}
+    </pre>
   )
 }
 
