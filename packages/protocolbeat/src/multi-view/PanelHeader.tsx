@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
-import { getCode } from '../api/api'
+import { getCode, getProject } from '../api/api'
+import type { ApiProjectChain, ApiProjectContract } from '../api/types'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
@@ -17,20 +17,8 @@ export function PanelHeader(props: { id: PanelId }) {
   const pickUp = useMultiViewStore((state) => state.pickUp)
   const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const removePanel = useMultiViewStore((state) => state.removePanel)
-
   const { project } = useParams()
-  if (!project) {
-    throw new Error('Cannot use component outside of project page!')
-  }
   const selectedAddress = usePanelStore((state) => state.selected)
-  // TODO: move to onClick()
-  const codeResponse = useQuery({
-    queryKey: ['projects', project, 'code', selectedAddress],
-    enabled: selectedAddress !== undefined,
-    queryFn: () => getCode(project, selectedAddress),
-  })
-
-  const sources = codeResponse.data?.sources ?? []
 
   return (
     <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
@@ -56,18 +44,7 @@ export function PanelHeader(props: { id: PanelId }) {
       />
       <div className="hidden gap-1 group-hover:flex">
         <button
-          onClick={() => {
-            const message: string[] = []
-
-            for (const s of sources) {
-              message.push(`This is a source code for contract ${s.name}`)
-              message.push(`\`\`\``)
-              message.push(s.code)
-              message.push(`\`\`\``)
-            }
-
-            navigator.clipboard.writeText(message.join('\n'))
-          }}
+          onClick={() => toClipboard(props.id, project, selectedAddress)}
           className="w-4"
         >
           cc
@@ -81,4 +58,73 @@ export function PanelHeader(props: { id: PanelId }) {
       </div>
     </div>
   )
+}
+
+const toClipboard = async (
+  panel: PanelId,
+  project: string | undefined,
+  selectedAddress: string | undefined,
+) => {
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+
+  switch (panel) {
+    case 'code': {
+      const sources = (await getCode(project, selectedAddress))?.sources ?? []
+
+      const message: string[] = []
+
+      for (const s of sources) {
+        message.push(`This is a source code for contract ${s.name}`)
+        message.push(`\`\`\``)
+        message.push(s.code)
+        message.push(`\`\`\``)
+      }
+
+      navigator.clipboard.writeText(message.join('\n'))
+      break
+    }
+    case 'values': {
+      const projectData = await getProject(project)
+
+      const data = findSelected(projectData.entries, selectedAddress)
+      if (!data) break
+
+      if ('abis' in data) {
+        const abis: string[] = [`This is an ABI`]
+
+        for (const a of (data as ApiProjectContract).abis) {
+          for (const e of a.entries) {
+            abis.push(e.value)
+          }
+        }
+
+        navigator.clipboard.writeText(abis.join('\n'))
+      }
+    }
+  }
+}
+
+function findSelected(chains: ApiProjectChain[], address: string | undefined) {
+  if (!address) {
+    return
+  }
+  for (const chain of chains) {
+    for (const contract of chain.initialContracts) {
+      if (contract.address === address) {
+        return contract
+      }
+    }
+    for (const contract of chain.discoveredContracts) {
+      if (contract.address === address) {
+        return contract
+      }
+    }
+    for (const eoa of chain.eoas) {
+      if (eoa.address === address) {
+        return eoa
+      }
+    }
+  }
 }
