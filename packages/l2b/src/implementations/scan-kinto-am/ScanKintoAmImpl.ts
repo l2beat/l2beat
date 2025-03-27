@@ -1,18 +1,23 @@
 import chalk from 'chalk'
 import { ethers } from 'ethers'
+import { Interface } from 'ethers/lib/utils'
 
 // -------------------------
 // CONFIGURATION
 // -------------------------
 
 const RPC_URL = 'https://rpc.kinto-rpc.com'
-
 const ACCESS_MANAGER_ADDRESS = '0xacC000818e5Bbd911D5d449aA81CB5cA24024739'
-const KINTO_ID_ADDRESS = '0xf369f78e3a0492cc4e96a90dae0728a38498e9c7' // Assuming KintoID target address is the KintoID contract
-const KINTO_WALLET_EXAMPLE_ADDRESS = '0x2e2b1c42e38f5af81771e65d87729e57abd1337a' // Using Kinto Multisig 2 as an example KintoWallet
 
-const MINIMUM_DELAY_SECONDS = 1036800 // 12 days in seconds
-const SECURITY_COUNCIL_ADDRESS = '0x28fc10e12a78f986c78f973fc70ed88072b34c8e'.toLowerCase() // Ensure lowercase for comparison
+// --- NEW: Addresses for specific checks ---
+const KINTO_ID_ADDRESS = '0xf369f78e3a0492cc4e96a90dae0728a38498e9c7' // Using the existing KintoID target address
+const KINTO_WALLET_EXAMPLE_ADDRESS =
+  '0x2e2b1c42e38f5af81771e65d87729e57abd1337a' // Using Kinto Multisig 2 as example
+const SECURITY_COUNCIL_ADDRESS =
+  '0x28fc10e12a78f986c78f973fc70ed88072b34c8e'.toLowerCase() // Security Council Actor address
+
+// --- NEW: Minimum delay requirement ---
+const MIN_DELAY_SECONDS = 1036800 // 12 days in seconds
 
 // Known role constants
 const roleNames: { [role: string]: string } = {
@@ -26,13 +31,13 @@ const roleNames: { [role: string]: string } = {
 // Unified address mapping
 const addressNames: { [address: string]: string } = {
   // Actors
-  '0x2e2b1c42e38f5af81771e65d87729e57abd1337a': 'Kinto Multisig 2',
+  '0x2e2b1c42e38f5af81771e65d87729e57abd1337a': 'Kinto Multisig 2', // Also used as KintoWallet Example
   '0x28fc10e12a78f986c78f973fc70ed88072b34c8e': 'SecurityCouncil',
   '0x010600ff5f36c8ef3b6aaf2a88c2de85c798594a': 'NioGovernor',
   // Targets
   '0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75': 'KintoWalletFactory',
   '0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b': 'KintoAppRegistry',
-  '0xf369f78e3a0492cc4e96a90dae0728a38498e9c7': 'KintoID',
+  '0xf369f78e3a0492cc4e96a90dae0728a38498e9c7': 'KintoID', // Also used as KintoID contract for EXIT_WINDOW_PERIOD
   '0x793500709506652fcc61f0d2d0fda605638d4293': 'Treasury',
   '0xacc000818e5bbd911d5d449aa81cb5ca24024739': 'AccessManager',
 }
@@ -48,6 +53,10 @@ const functionSignatures: { [selector: string]: string } = {
     'updateSystemContracts(address[])',
   [getSelector('updateReservedContracts(address[])')]:
     'updateReservedContracts(address[])',
+
+  // --- NEW: KintoID & KintoWallet functions ---
+  '0xd00bb535': 'EXIT_WINDOW_PERIOD()',
+  '0x8b1b3b45': 'RECOVERY_TIME()',
 
   // AccessManager functions
   '0xd6bb62c6': 'cancel(address,address,bytes)',
@@ -66,10 +75,6 @@ const functionSignatures: { [selector: string]: string } = {
   '0x167bd395': 'setTargetClosed(address,bool)',
   '0x08d6122d': 'setTargetFunctionRole(address,bytes4[],uint64)',
   '0x18ff183c': 'updateAuthority(address,address)',
-
-  // KintoID / KintoWallet functions
-  '0xd00bb535': 'EXIT_WINDOW_PERIOD()', // KintoID.EXIT_WINDOW_PERIOD()
-  '0x8b1b3b45': 'RECOVERY_TIME()', // KintoWallet.RECOVERY_TIME()
 }
 
 // -------------------------
@@ -112,17 +117,13 @@ interface ScheduledOperation {
   data: string
 }
 
-interface ExternalDelays {
-    kintoIdExitWindowPeriod?: number;
-    kintoWalletRecoveryTime?: number;
-}
-
-interface NonCompliantValue {
-    type: 'Actor Execution Delay' | 'Target Admin Delay' | 'KintoID Exit Window' | 'KintoWallet Recovery Time';
-    location: string; // Address or descriptive name
-    role?: string; // Applicable for Actor Execution Delay
-    currentValue: number;
-    requiredValue: number;
+// --- NEW: Type for non-compliant items ---
+interface NonCompliantItem {
+  item: string
+  address?: string
+  role?: string
+  actual: number
+  expected: number
 }
 
 // -------------------------
@@ -131,12 +132,16 @@ interface NonCompliantValue {
 
 function bnToNumber(value: ethers.BigNumber | number): number {
   if (typeof value === 'number') return value
-  // Handle potential overflow for large BigNumber values if needed, though delays are usually within uint32
+  // Handle potential overflow for large BigNumbers if necessary, though delays should fit in JS number
   try {
-    return value.toNumber();
+    return value.toNumber()
   } catch (e) {
-    console.warn(chalk.yellow(`Warning: BigNumber overflow converting ${value.toString()} to number. Using MAX_SAFE_INTEGER.`));
-    return Number.MAX_SAFE_INTEGER;
+    console.warn(
+      chalk.yellow(
+        `Warning: BigNumber ${value.toString()} too large for JS number, returning as string.`,
+      ),
+    )
+    return Number.MAX_SAFE_INTEGER // Or handle as string/BigNumber object
   }
 }
 
@@ -158,117 +163,101 @@ function formatAddress(address: string): string {
 }
 
 function formatDuration(seconds: number): string {
-  if (seconds < 0) return 'Invalid Duration';
-  if (seconds >= 86400 && seconds % 86400 === 0) {
-    return `${seconds / 86400}d`
-  } else if (seconds >= 3600 && seconds % 3600 === 0) {
-    return `${seconds / 3600}h`
-  }
-  return `${seconds}s`
+  if (seconds < 0) return 'Invalid duration'
+  if (seconds === 0) return '0s'
+
+  const days = Math.floor(seconds / 86400)
+  const hours = Math.floor((seconds % 86400) / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const secs = seconds % 60
+
+  const parts: string[] = []
+  if (days > 0) parts.push(`${days}d`)
+  if (hours > 0) parts.push(`${hours}h`)
+  if (minutes > 0) parts.push(`${minutes}m`)
+  if (secs > 0 || parts.length === 0) parts.push(`${secs}s`) // Show seconds if it's non-zero or if nothing else is shown
+
+  return parts.join(' ')
 }
 
 // Function to decode operation data for known function selectors
 function decodeOperationData(selector: string, data: string): string {
   try {
-    const abiCoder = new ethers.utils.AbiCoder()
-
-    // Remove the selector to get just the parameters data
-    const paramsData = '0x' + data.slice(10)
-
-    // Decode based on function selector
-    switch (selector) {
-      // grantRole(uint64 roleId, address account, uint32 executionDelay)
-      case '0x25c471a0': {
-        const [roleId, account, executionDelay] = abiCoder.decode(
-          ['uint64', 'address', 'uint32'],
-          paramsData,
-        )
-
-        const roleName = roleNames[roleId.toString()] || roleId.toString()
-        const accountNameFormatted = formatAddress(account)
-        const delayNum = bnToNumber(executionDelay);
-
-        return `grantRole(${chalk.yellow(roleName)}, ${accountNameFormatted}, ${chalk.green(delayNum)} (${chalk.green(formatDuration(delayNum))}))`
-      }
-
-      // revokeRole(uint64 roleId, address account)
-      case '0xb7d2b162': {
-        const [roleId, account] = abiCoder.decode(
-          ['uint64', 'address'],
-          paramsData,
-        )
-
-        const roleName = roleNames[roleId.toString()] || roleId.toString()
-        const accountNameFormatted = formatAddress(account)
-
-        return `revokeRole(${chalk.yellow(roleName)}, ${accountNameFormatted})`
-      }
-
-      // setTargetAdminDelay(address target, uint32 newDelay)
-      case '0xd22b5989': {
-        const [target, newDelay] = abiCoder.decode(
-          ['address', 'uint32'],
-          paramsData,
-        )
-
-        const targetNameFormatted = formatAddress(target)
-        const delayNum = bnToNumber(newDelay);
-
-        return `setTargetAdminDelay(${targetNameFormatted}, ${chalk.green(delayNum)} (${chalk.green(formatDuration(delayNum))}))`
-      }
-
-      // setTargetClosed(address target, bool closed)
-      case '0x167bd395': {
-        const [target, closed] = abiCoder.decode(
-          ['address', 'bool'],
-          paramsData,
-        )
-
-        const targetNameFormatted = formatAddress(target)
-
-        return `setTargetClosed(${targetNameFormatted}, ${chalk.yellow(closed)})`
-      }
-
-      // setGrantDelay(uint64 roleId, uint32 newDelay)
-      case '0xa64d95ce': {
-        const [roleId, newDelay] = abiCoder.decode(
-          ['uint64', 'uint32'],
-          paramsData,
-        )
-
-        const roleName = roleNames[roleId.toString()] || roleId.toString()
-        const delayNum = bnToNumber(newDelay);
-
-        return `setGrantDelay(${chalk.yellow(roleName)}, ${chalk.green(delayNum)} (${chalk.green(formatDuration(delayNum))}))`
-      }
-
-      // upgradeTo(address)
-      case getSelector('upgradeTo(address)'): {
-         const [newImplementation] = abiCoder.decode(['address'], paramsData);
-         return `upgradeTo(${formatAddress(newImplementation)})`;
-      }
-      // upgradeAllWalletImplementations(address)
-      case getSelector('upgradeAllWalletImplementations(address)'): {
-         const [newImplementation] = abiCoder.decode(['address'], paramsData);
-         return `upgradeAllWalletImplementations(${formatAddress(newImplementation)})`;
-      }
-
-      // For other functions, just return the function name
-      default:
-        return functionSignatures[selector] || selector
+    // Find the function signature corresponding to the selector
+    const functionName = functionSignatures[selector]
+    if (!functionName) {
+      return selector // Return selector if signature is unknown
     }
-  } catch (_error) {
-    // If decoding fails, just return the function signature
+
+    // Check if the function has parameters (contains '(')
+    if (!functionName.includes('(')) {
+      return functionName // Return just the name if no parameters
+    }
+
+    // Basic decoding for known AccessManager functions
+    const iface = new Interface(accessManagerAbi) // Use AccessManager ABI for decoding its functions
+    const decoded = iface.parseTransaction({ data })
+
+    if (decoded) {
+      const argsString = decoded.args
+        .map((arg, index) => {
+          const paramType = decoded.functionFragment.inputs[index].type
+          if (paramType === 'address') {
+            return formatAddress(arg.toString())
+          } else if (
+            paramType === 'uint64' &&
+            [
+              'grantRole',
+              'setRoleAdmin',
+              'setRoleGuardian',
+              'setTargetFunctionRole',
+            ].includes(decoded.name)
+          ) {
+            const roleName = roleNames[arg.toString()] || arg.toString()
+            return chalk.yellow(roleName)
+          } else if (
+            (paramType === 'uint32' || paramType === 'uint48') &&
+            [
+              'grantRole',
+              'setGrantDelay',
+              'setTargetAdminDelay',
+              'schedule',
+            ].includes(decoded.name)
+          ) {
+            const numValue = bnToNumber(arg)
+            // Check if it looks like a duration (e.g., > 60 seconds)
+            if (numValue > 60) {
+              return `${chalk.green(numValue)} (${chalk.green(formatDuration(numValue))})`
+            } else {
+              return chalk.green(numValue.toString())
+            }
+          } else if (Array.isArray(arg)) {
+            if (paramType === 'address[]') {
+              return `[${arg.map((a) => formatAddress(a.toString())).join(', ')}]`
+            }
+            return `[${arg.join(', ')}]` // Basic array formatting
+          }
+          return arg.toString() // Default formatting
+        })
+        .join(', ')
+
+      return `${decoded.name}(${argsString})`
+    }
+
+    // Fallback for other functions if direct decoding fails or is not specific enough
+    return functionName
+  } catch (error) {
+    // If decoding fails, just return the function signature or selector
+    // console.warn(`Decoding failed for selector ${selector}:`, error);
     return functionSignatures[selector] || selector
   }
 }
 
 // -------------------------
-// ABI fragments
+// ABI fragment for AccessManager contract
 // -------------------------
 
 const accessManagerAbi = [
-  // Existing events...
   'event OperationCanceled(bytes32 indexed operationId, uint32 indexed nonce)',
   'event OperationExecuted(bytes32 indexed operationId, uint32 indexed nonce)',
   'event OperationScheduled(bytes32 indexed operationId, uint32 indexed nonce, uint48 schedule, address caller, address target, bytes data)',
@@ -281,7 +270,6 @@ const accessManagerAbi = [
   'event TargetAdminDelayUpdated(address indexed target, uint32 delay, uint48 since)',
   'event TargetClosed(address indexed target, bool closed)',
   'event TargetFunctionRoleUpdated(address indexed target, bytes4 selector, uint64 indexed roleId)',
-  // Existing view functions...
   'function ADMIN_ROLE() view returns (uint64)',
   'function PUBLIC_ROLE() view returns (uint64)',
   'function canCall(address caller, address target, bytes4 selector) view returns (bool immediate, uint32 delay)',
@@ -298,21 +286,24 @@ const accessManagerAbi = [
   'function hashOperation(address caller, address target, bytes data) view returns (bytes32)',
   'function isTargetClosed(address target) view returns (bool)',
   'function minSetback() view returns (uint32)',
+  // Include functions called by schedule for decoding
+  'function grantRole(uint64 roleId, address account, uint32 executionDelay)',
+  'function revokeRole(uint64 roleId, address account)',
+  'function setTargetAdminDelay(address target, uint32 newDelay)',
+  'function setTargetClosed(address target, bool closed)',
+  'function setGrantDelay(uint64 roleId, uint32 newDelay)',
 ]
 
-const kintoIdAbi = [
-    'function EXIT_WINDOW_PERIOD() view returns (uint256)' // 0xd00bb535
-]
+// --- NEW: ABI fragments for KintoID and KintoWallet ---
+const kintoIdAbi = ['function EXIT_WINDOW_PERIOD() view returns (uint256)']
 
-const kintoWalletAbi = [
-    'function RECOVERY_TIME() view returns (uint256)' // 0x8b1b3b45
-]
+const kintoWalletAbi = ['function RECOVERY_TIME() view returns (uint256)']
 
 // -------------------------
 // DATA FETCHING FUNCTIONS
 // -------------------------
 
-// Fetch role-related data (no changes needed here for requirements)
+// Fetch role-related data
 async function fetchRoleData(
   accessManager: ethers.Contract,
   fromBlock: number,
@@ -322,38 +313,90 @@ async function fetchRoleData(
   roleToTargetFunctions: { [roleId: string]: { [target: string]: Set<string> } }
 }> {
   console.log(chalk.bold('\nFetching role events...'))
+
+  // Initialize return objects
   const rolesData = new Map<string, RoleData>()
   const rolesByActor: { [account: string]: Array<RoleInfo> } = {}
   const roleToTargetFunctions: {
     [roleId: string]: { [target: string]: Set<string> }
   } = {}
 
+  // Fetch role grant and revoke events
   console.log(chalk.magenta('- Querying RoleGranted events...'))
-  const roleGrantedEvents = await accessManager.queryFilter('RoleGranted', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleGrantedEvents.length} RoleGranted events`))
+  const roleGrantedEvents = await accessManager.queryFilter(
+    'RoleGranted',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(`- Found ${roleGrantedEvents.length} RoleGranted events`),
+  )
 
   console.log(chalk.magenta('- Querying RoleRevoked events...'))
-  const roleRevokedEvents = await accessManager.queryFilter('RoleRevoked', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleRevokedEvents.length} RoleRevoked events`))
+  const roleRevokedEvents = await accessManager.queryFilter(
+    'RoleRevoked',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(`- Found ${roleRevokedEvents.length} RoleRevoked events`),
+  )
 
+  // Fetch role admin and guardian changes
   console.log(chalk.magenta('- Querying RoleAdminChanged events...'))
-  const roleAdminChangedEvents = await accessManager.queryFilter('RoleAdminChanged', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleAdminChangedEvents.length} RoleAdminChanged events`))
+  const roleAdminChangedEvents = await accessManager.queryFilter(
+    'RoleAdminChanged',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${roleAdminChangedEvents.length} RoleAdminChanged events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying RoleGuardianChanged events...'))
-  const roleGuardianChangedEvents = await accessManager.queryFilter('RoleGuardianChanged', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleGuardianChangedEvents.length} RoleGuardianChanged events`))
+  const roleGuardianChangedEvents = await accessManager.queryFilter(
+    'RoleGuardianChanged',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${roleGuardianChangedEvents.length} RoleGuardianChanged events`,
+    ),
+  )
 
+  // Fetch role grant delay changes
   console.log(chalk.magenta('- Querying RoleGrantDelayChanged events...'))
-  const roleGrantDelayChangedEvents = await accessManager.queryFilter('RoleGrantDelayChanged', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${roleGrantDelayChangedEvents.length} RoleGrantDelayChanged events`))
+  const roleGrantDelayChangedEvents = await accessManager.queryFilter(
+    'RoleGrantDelayChanged',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${roleGrantDelayChangedEvents.length} RoleGrantDelayChanged events`,
+    ),
+  )
 
+  // Process role events to build a mapping of accounts per role
   const accountsPerRole: { [role: string]: Set<string> } = {}
   for (const event of roleGrantedEvents) {
     if (!event.args) continue
     const roleId = event.args.roleId.toString()
     const account = event.args.account.toLowerCase()
-    if (!rolesData.has(roleId)) rolesData.set(roleId, { id: roleId, currentGrantDelay: 0, members: new Map() })
+
+    // Initialize role data structure if not exists
+    if (!rolesData.has(roleId)) {
+      rolesData.set(roleId, {
+        id: roleId,
+        currentGrantDelay: 0,
+        members: new Map(),
+      })
+    }
+
+    // Initialize accounts set for this role if not exists
     if (!accountsPerRole[roleId]) accountsPerRole[roleId] = new Set()
     accountsPerRole[roleId].add(account)
   }
@@ -362,88 +405,261 @@ async function fetchRoleData(
     if (!event.args) continue
     const roleId = event.args.roleId.toString()
     const account = event.args.account.toLowerCase()
-    accountsPerRole[roleId]?.delete(account)
+    // Find latest grant event for this role/account before this revocation
+    let grantTimestamp = 0
+    for (let i = roleGrantedEvents.length - 1; i >= 0; i--) {
+      const grantEvent = roleGrantedEvents[i]
+      if (
+        grantEvent.args &&
+        grantEvent.args.roleId.toString() === roleId &&
+        grantEvent.args.account.toLowerCase() === account &&
+        grantEvent.blockNumber < event.blockNumber
+      ) {
+        grantTimestamp = grantEvent.blockNumber // Use block number for ordering
+        break
+      }
+    }
+
+    // Only remove if this revoke event is later than the latest grant event
+    if (event.blockNumber > grantTimestamp) {
+      accountsPerRole[roleId]?.delete(account)
+    }
   }
 
+  // Process role admin and guardian changes
+  const latestAdminChanges: {
+    [roleId: string]: { adminRoleId: string; blockNumber: number }
+  } = {}
   for (const event of roleAdminChangedEvents) {
     if (!event.args) continue
     const roleId = event.args.roleId.toString()
     const adminRoleId = event.args.admin.toString()
-    if (!rolesData.has(roleId)) rolesData.set(roleId, { id: roleId, currentGrantDelay: 0, members: new Map() })
+    if (
+      !latestAdminChanges[roleId] ||
+      event.blockNumber > latestAdminChanges[roleId].blockNumber
+    ) {
+      latestAdminChanges[roleId] = {
+        adminRoleId,
+        blockNumber: event.blockNumber,
+      }
+    }
+  }
+  for (const roleId in latestAdminChanges) {
+    if (!rolesData.has(roleId)) {
+      rolesData.set(roleId, {
+        id: roleId,
+        currentGrantDelay: 0,
+        members: new Map(),
+      })
+    }
     const roleData = rolesData.get(roleId)
-    if (roleData) roleData.admin = adminRoleId
+    if (roleData) roleData.admin = latestAdminChanges[roleId].adminRoleId
   }
 
+  const latestGuardianChanges: {
+    [roleId: string]: { guardianRoleId: string; blockNumber: number }
+  } = {}
   for (const event of roleGuardianChangedEvents) {
     if (!event.args) continue
     const roleId = event.args.roleId.toString()
     const guardianRoleId = event.args.guardian.toString()
-    if (!rolesData.has(roleId)) rolesData.set(roleId, { id: roleId, currentGrantDelay: 0, members: new Map() })
+    if (
+      !latestGuardianChanges[roleId] ||
+      event.blockNumber > latestGuardianChanges[roleId].blockNumber
+    ) {
+      latestGuardianChanges[roleId] = {
+        guardianRoleId,
+        blockNumber: event.blockNumber,
+      }
+    }
+  }
+  for (const roleId in latestGuardianChanges) {
+    if (!rolesData.has(roleId)) {
+      rolesData.set(roleId, {
+        id: roleId,
+        currentGrantDelay: 0,
+        members: new Map(),
+      })
+    }
     const roleData = rolesData.get(roleId)
-    if (roleData) roleData.guardian = guardianRoleId
+    if (roleData)
+      roleData.guardian = latestGuardianChanges[roleId].guardianRoleId
   }
 
-  const currentTimestamp = Math.floor(Date.now() / 1000)
+  // Process role grant delay changes (consider latest event per role)
+  const latestGrantDelayChanges: {
+    [roleId: string]: { delay: number; since: number; blockNumber: number }
+  } = {}
   for (const event of roleGrantDelayChangedEvents) {
     if (!event.args) continue
     const roleId = event.args.roleId.toString()
-    const newDelay = bnToNumber(event.args.delay)
-    const effect = bnToNumber(event.args.since)
-    if (!rolesData.has(roleId)) rolesData.set(roleId, { id: roleId, currentGrantDelay: 0, members: new Map() })
-    const roleData = rolesData.get(roleId)
-    if (roleData) {
-      if (effect <= currentTimestamp) {
-        roleData.currentGrantDelay = newDelay
-      } else {
-        roleData.pendingGrantDelay = { newDelay, effect }
+    if (
+      !latestGrantDelayChanges[roleId] ||
+      event.blockNumber > latestGrantDelayChanges[roleId].blockNumber
+    ) {
+      latestGrantDelayChanges[roleId] = {
+        delay: bnToNumber(event.args.delay),
+        since: bnToNumber(event.args.since),
+        blockNumber: event.blockNumber,
       }
     }
   }
 
+  // Apply latest grant delay changes
+  const currentTimestamp = Math.floor(Date.now() / 1000)
+  for (const roleId in latestGrantDelayChanges) {
+    const change = latestGrantDelayChanges[roleId]
+    if (!rolesData.has(roleId)) {
+      rolesData.set(roleId, {
+        id: roleId,
+        currentGrantDelay: 0,
+        members: new Map(),
+      })
+    }
+    const roleData = rolesData.get(roleId)! // We know it exists now
+
+    // Get current delay from contract to be sure
+    try {
+      const currentDelayFromContract =
+        await accessManager.getRoleGrantDelay(roleId)
+      roleData.currentGrantDelay = bnToNumber(currentDelayFromContract)
+    } catch (error) {
+      console.error(
+        `Error fetching current grant delay for role ${roleId}:`,
+        error,
+      )
+      // Fallback to using event data if contract call fails
+      if (change.since <= currentTimestamp) {
+        roleData.currentGrantDelay = change.delay
+      } else {
+        // If the latest event is pending, fetch the *previous* delay if possible or assume 0
+        roleData.currentGrantDelay = 0 // Simplified assumption
+      }
+    }
+
+    // Set pending delay if the latest change is in the future
+    if (change.since > currentTimestamp) {
+      roleData.pendingGrantDelay = {
+        newDelay: change.delay,
+        effect: change.since,
+      }
+    } else {
+      // Ensure no stale pending delay if the latest change is already effective
+      delete roleData.pendingGrantDelay
+    }
+  }
+
+  // Fetch current role data for all potentially active members identified from events
   console.log(chalk.magenta('- Fetching current role data for actors...'))
-  for (const roleId in accountsPerRole) {
-    for (const account of accountsPerRole[roleId]) {
+  const allPotentialMembers = new Set<string>()
+  Object.values(accountsPerRole).forEach((set) =>
+    set.forEach((acc) => allPotentialMembers.add(acc)),
+  )
+
+  for (const account of allPotentialMembers) {
+    for (const roleId of Object.keys(accountsPerRole)) {
+      // Check roles this account *might* have had
       try {
-        const [isMember] = await accessManager.hasRole(roleId, account)
+        // Use hasRole to confirm current membership and get current executionDelay directly
+        const [isMember, executionDelayBN] = await accessManager.hasRole(
+          roleId,
+          account,
+        )
+
         if (isMember) {
+          const currentDelay = bnToNumber(executionDelayBN)
+          const roleData = rolesData.get(roleId) // Should exist if we tracked the role
+
+          // Fetch detailed access info only if needed (e.g., for pending changes)
+          // Often hasRole is sufficient for current state. Let's get detailed info anyway for pending.
           const accessData = await accessManager.getAccess(roleId, account)
           const since = bnToNumber(accessData[0])
-          const currentDelay = bnToNumber(accessData[1])
+          // const currentDelayFromGetAccess = bnToNumber(accessData[1]); // Can sanity check against hasRole result
           const pendingDelay = bnToNumber(accessData[2])
           const effect = bnToNumber(accessData[3])
 
-          if (!rolesByActor[account]) rolesByActor[account] = []
-          rolesByActor[account].push({ roleId, executionDelay: currentDelay, since, pendingDelay, pendingEffect: effect })
+          const roleInfo: RoleInfo = {
+            roleId,
+            executionDelay: currentDelay, // Use delay from hasRole as primary
+            since,
+            pendingDelay,
+            pendingEffect: effect,
+          }
 
+          // Update rolesByActor map
+          if (!rolesByActor[account]) rolesByActor[account] = []
+          // Avoid duplicates if re-processing
+          if (!rolesByActor[account].some((r) => r.roleId === roleId)) {
+            rolesByActor[account].push(roleInfo)
+          }
+
+          // Update rolesData map members
+          if (roleData) {
+            roleData.members.set(account, roleInfo)
+          }
+        } else {
+          // Explicitly remove if hasRole returns false, in case event processing was imperfect
           const roleData = rolesData.get(roleId)
           if (roleData) {
-            roleData.members.set(account, { roleId, executionDelay: currentDelay, since, pendingDelay, pendingEffect: effect })
+            roleData.members.delete(account)
+          }
+          if (rolesByActor[account]) {
+            rolesByActor[account] = rolesByActor[account].filter(
+              (r) => r.roleId !== roleId,
+            )
+            if (rolesByActor[account].length === 0) {
+              delete rolesByActor[account]
+            }
           }
         }
-      } catch (error: any) {
-        console.error(chalk.red(`Error fetching role data for ${account} and role ${roleId}: ${error.message}`))
+      } catch (error) {
+        console.error(
+          chalk.red(
+            `- Error fetching role data for ${formatAddress(account)} and role ${roleNames[roleId] || roleId}:`,
+          ),
+          error.message,
+        )
       }
     }
   }
 
+  // Fetch current grant delays for *all* roles identified to ensure data is accurate
   console.log(chalk.magenta('- Fetching current grant delays for all roles...'))
   for (const roleId of rolesData.keys()) {
     try {
       const grantDelay = await accessManager.getRoleGrantDelay(roleId)
       const roleData = rolesData.get(roleId)
-      if (roleData) roleData.currentGrantDelay = bnToNumber(grantDelay)
-    } catch (error: any) {
-      console.error(chalk.red(`Error fetching grant delay for role ${roleId}: ${error.message}`))
+      if (roleData) {
+        roleData.currentGrantDelay = bnToNumber(grantDelay)
+        // Clear pending if it's now effective (double check)
+        if (
+          roleData.pendingGrantDelay &&
+          roleData.pendingGrantDelay.effect <= currentTimestamp
+        ) {
+          delete roleData.pendingGrantDelay
+        }
+      }
+    } catch (error) {
+      console.error(
+        chalk.red(
+          `- Error fetching grant delay for role ${roleNames[roleId] || roleId}:`,
+        ),
+        error.message,
+      )
     }
   }
 
-  console.log(chalk.green(`- Found ${Object.keys(rolesByActor).length} actors with active roles`))
+  console.log(
+    chalk.green(
+      `- Found ${Object.keys(rolesByActor).length} actors with active roles`,
+    ),
+  )
   console.log(chalk.green(`- Found ${rolesData.size} distinct roles`))
 
   return { rolesData, rolesByActor, roleToTargetFunctions }
 }
 
-// Fetch target configuration data (no changes needed here for requirements)
+// Fetch target configuration data
 async function fetchTargetData(
   accessManager: ethers.Contract,
   fromBlock: number,
@@ -452,83 +668,193 @@ async function fetchTargetData(
   roleToTargetFunctions: { [roleId: string]: { [target: string]: Set<string> } }
 }> {
   console.log(chalk.bold('\nFetching target events...'))
+
   const targetData: { [target: string]: TargetData } = {}
   const roleToTargetFunctions: {
     [roleId: string]: { [target: string]: Set<string> }
   } = {}
 
+  // --- TargetFunctionRoleUpdated ---
   console.log(chalk.magenta('- Querying TargetFunctionRoleUpdated events...'))
-  const targetFuncRoleEvents = await accessManager.queryFilter('TargetFunctionRoleUpdated', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${targetFuncRoleEvents.length} TargetFunctionRoleUpdated events`))
+  const targetFuncRoleEvents = await accessManager.queryFilter(
+    'TargetFunctionRoleUpdated',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${targetFuncRoleEvents.length} TargetFunctionRoleUpdated events`,
+    ),
+  )
 
-  console.log(chalk.magenta('- Querying TargetAdminDelayUpdated events...'))
-  const targetAdminDelayEvents = await accessManager.queryFilter('TargetAdminDelayUpdated', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${targetAdminDelayEvents.length} TargetAdminDelayUpdated events`))
-
+  // Process TargetFunctionRoleUpdated: Keep track of the latest role per function
+  const latestFunctionRoles: {
+    [target: string]: {
+      [selector: string]: { roleId: string; blockNumber: number }
+    }
+  } = {}
   for (const event of targetFuncRoleEvents) {
     if (!event.args) continue
     const target = event.args.target.toLowerCase()
     const selector = event.args.selector
     const roleId = event.args.roleId.toString()
 
-    if (!targetData[target]) targetData[target] = { adminDelay: 0, closed: false, functions: {} }
-    if (!targetData[target].functions[roleId]) targetData[target].functions[roleId] = new Set()
-    targetData[target].functions[roleId].add(selector)
+    if (!latestFunctionRoles[target]) latestFunctionRoles[target] = {}
 
-    if (!roleToTargetFunctions[roleId]) roleToTargetFunctions[roleId] = {}
-    if (!roleToTargetFunctions[roleId][target]) roleToTargetFunctions[roleId][target] = new Set()
-    roleToTargetFunctions[roleId][target].add(selector)
-  }
-
-  for (const event of targetAdminDelayEvents) {
-    if (!event.args) continue
-    const target = event.args.target.toLowerCase()
-    if (!targetData[target]) targetData[target] = { adminDelay: 0, closed: false, functions: {} }
-    const newDelay = bnToNumber(event.args.delay)
-    const effect = bnToNumber(event.args.since)
-    if (!targetData[target].pendingAdminDelayChanges) targetData[target].pendingAdminDelayChanges = []
-    targetData[target].pendingAdminDelayChanges.push({ newDelay, effect })
-  }
-
-  console.log(chalk.magenta('- Fetching current admin delays and closures for targets...'))
-  // Add known targets even if they don't have events, to ensure we query their current state
-  const knownTargets = Object.values(addressNames).map(addr => addr.toLowerCase());
-  for (const targetAddr of knownTargets) {
-      if (!targetData[targetAddr] && targetAddr !== ACCESS_MANAGER_ADDRESS.toLowerCase()) { // Don't treat AM itself as a target here
-          // Check if it's a contract before assuming it's a target
-          const provider = accessManager.provider;
-          const code = await provider.getCode(targetAddr);
-          if (code && code !== '0x') {
-             targetData[targetAddr] = { adminDelay: 0, closed: false, functions: {} };
-             console.log(chalk.dim(`- Added known address ${formatAddress(targetAddr)} as potential target for query.`));
-          }
-      }
-  }
-
-  for (const target in targetData) {
-    try {
-      const adminDelayBN = await accessManager.getTargetAdminDelay(target)
-      targetData[target].adminDelay = bnToNumber(adminDelayBN)
-      const closed = await accessManager.isTargetClosed(target)
-      targetData[target].closed = closed
-    } catch (error: any) {
-      // It's possible getTargetAdminDelay fails if the address is not actually a target in AM
-      if (!error.message.includes('CALL_EXCEPTION')) { // Filter out expected errors for non-targets
-         console.error(chalk.red(`Error fetching config for target ${target}: ${error.message}`))
-      } else {
-         // Remove entry if it's not a valid target according to AM
-         delete targetData[target];
-         console.log(chalk.dim(`- Removed ${formatAddress(target)} as it's not a configured target in AccessManager.`));
+    if (
+      !latestFunctionRoles[target][selector] ||
+      event.blockNumber > latestFunctionRoles[target][selector].blockNumber
+    ) {
+      latestFunctionRoles[target][selector] = {
+        roleId,
+        blockNumber: event.blockNumber,
       }
     }
   }
 
-  console.log(chalk.green(`- Found configuration data for ${Object.keys(targetData).length} targets`))
+  // Build final targetData.functions and roleToTargetFunctions based on latest roles
+  for (const target in latestFunctionRoles) {
+    if (!targetData[target]) {
+      targetData[target] = { adminDelay: 0, closed: false, functions: {} }
+    }
+    for (const selector in latestFunctionRoles[target]) {
+      const { roleId } = latestFunctionRoles[target][selector]
+      // If roleId is 0 or PUBLIC_ROLE, it means the role was effectively removed or made public, handle as needed
+      // For this script, we primarily care about non-zero roles granting specific permissions.
+      // Let's assume roleId '0' means no specific role assigned (or public if PUBLIC_ROLE is 0, which it isn't here).
+      if (
+        roleId !== '0' &&
+        roleId !== roleNames['18446744073709551615'] /* PUBLIC_ROLE ID */
+      ) {
+        if (!targetData[target].functions[roleId]) {
+          targetData[target].functions[roleId] = new Set()
+        }
+        targetData[target].functions[roleId].add(selector)
+
+        if (!roleToTargetFunctions[roleId]) {
+          roleToTargetFunctions[roleId] = {}
+        }
+        if (!roleToTargetFunctions[roleId][target]) {
+          roleToTargetFunctions[roleId][target] = new Set()
+        }
+        roleToTargetFunctions[roleId][target].add(selector)
+      }
+    }
+  }
+
+  // --- TargetAdminDelayUpdated ---
+  console.log(chalk.magenta('- Querying TargetAdminDelayUpdated events...'))
+  const targetAdminDelayEvents = await accessManager.queryFilter(
+    'TargetAdminDelayUpdated',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${targetAdminDelayEvents.length} TargetAdminDelayUpdated events`,
+    ),
+  )
+
+  // Process TargetAdminDelayUpdated: Find the latest change per target
+  const latestAdminDelayChanges: {
+    [target: string]: { delay: number; since: number; blockNumber: number }
+  } = {}
+  const allTargets = new Set<string>(Object.keys(targetData)) // Include targets from function roles
+  targetAdminDelayEvents.forEach((event) =>
+    allTargets.add(event.args?.target.toLowerCase()),
+  ) // Add targets from delay events
+
+  for (const event of targetAdminDelayEvents) {
+    if (!event.args) continue
+    const target = event.args.target.toLowerCase()
+    if (
+      !latestAdminDelayChanges[target] ||
+      event.blockNumber > latestAdminDelayChanges[target].blockNumber
+    ) {
+      latestAdminDelayChanges[target] = {
+        delay: bnToNumber(event.args.delay),
+        since: bnToNumber(event.args.since),
+        blockNumber: event.blockNumber,
+      }
+    }
+  }
+
+  // Fetch current admin delays and closures for all relevant targets
+  console.log(
+    chalk.magenta(
+      '- Fetching current admin delays and closures for targets...',
+    ),
+  )
+  const currentTimestamp = Math.floor(Date.now() / 1000)
+  for (const target of allTargets) {
+    if (!targetData[target]) {
+      targetData[target] = { adminDelay: 0, closed: false, functions: {} }
+    }
+    try {
+      // Fetch current state directly from the contract
+      const adminDelayBN = await accessManager.getTargetAdminDelay(target)
+      targetData[target].adminDelay = bnToNumber(adminDelayBN)
+      const closed = await accessManager.isTargetClosed(target)
+      targetData[target].closed = closed
+
+      // Check the latest event for pending changes
+      const latestChange = latestAdminDelayChanges[target]
+      if (latestChange && latestChange.since > currentTimestamp) {
+        if (!targetData[target].pendingAdminDelayChanges) {
+          targetData[target].pendingAdminDelayChanges = []
+        }
+        // Avoid duplicates if reprocessing
+        if (
+          !targetData[target].pendingAdminDelayChanges?.some(
+            (c) =>
+              c.effect === latestChange.since &&
+              c.newDelay === latestChange.delay,
+          )
+        ) {
+          targetData[target].pendingAdminDelayChanges!.push({
+            newDelay: latestChange.delay,
+            effect: latestChange.since,
+          })
+        }
+      } else if (latestChange && latestChange.since <= currentTimestamp) {
+        // If the latest change is effective, ensure no pending change is recorded from older events
+        delete targetData[target].pendingAdminDelayChanges
+      }
+    } catch (error) {
+      console.error(
+        chalk.red(
+          `- Error fetching config for target ${formatAddress(target)}:`,
+        ),
+        error.message,
+      )
+      // Assign default/event-based values if contract call fails
+      const latestChange = latestAdminDelayChanges[target]
+      if (latestChange) {
+        if (latestChange.since <= currentTimestamp) {
+          targetData[target].adminDelay = latestChange.delay
+        } else {
+          targetData[target].adminDelay = 0 // Or fetch previous state if possible
+          targetData[target].pendingAdminDelayChanges = [
+            { newDelay: latestChange.delay, effect: latestChange.since },
+          ]
+        }
+      } else {
+        targetData[target].adminDelay = 0 // Default if no events found and call failed
+      }
+      targetData[target].closed = false // Default assumption
+    }
+  }
+
+  console.log(
+    chalk.green(
+      `- Found configuration data for ${Object.keys(targetData).length} targets`,
+    ),
+  )
 
   return { targetData, roleToTargetFunctions }
 }
 
-// Fetch scheduled operations and pending changes (no changes needed here for requirements)
+// Fetch scheduled operations and pending changes
 async function fetchOperationsData(
   accessManager: ethers.Contract,
   fromBlock: number,
@@ -542,159 +868,310 @@ async function fetchOperationsData(
 }> {
   console.log(chalk.bold('\nFetching queued operations...'))
 
+  // Fetch operation events
   console.log(chalk.magenta('- Querying OperationScheduled events...'))
-  const operationScheduledEvents = await accessManager.queryFilter('OperationScheduled', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${operationScheduledEvents.length} OperationScheduled events`))
+  const operationScheduledEvents = await accessManager.queryFilter(
+    'OperationScheduled',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${operationScheduledEvents.length} OperationScheduled events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying OperationExecuted events...'))
-  const operationExecutedEvents = await accessManager.queryFilter('OperationExecuted', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${operationExecutedEvents.length} OperationExecuted events`))
+  const operationExecutedEvents = await accessManager.queryFilter(
+    'OperationExecuted',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${operationExecutedEvents.length} OperationExecuted events`,
+    ),
+  )
 
   console.log(chalk.magenta('- Querying OperationCanceled events...'))
-  const operationCanceledEvents = await accessManager.queryFilter('OperationCanceled', fromBlock, 'latest')
-  console.log(chalk.green(`- Found ${operationCanceledEvents.length} OperationCanceled events`))
+  const operationCanceledEvents = await accessManager.queryFilter(
+    'OperationCanceled',
+    fromBlock,
+    'latest',
+  )
+  console.log(
+    chalk.green(
+      `- Found ${operationCanceledEvents.length} OperationCanceled events`,
+    ),
+  )
 
-  const executedOrCanceled = new Set<string>()
+  // Build a map of executed or cancelled operations (operationId -> nonce)
+  const executedOrCanceled = new Map<string, number>()
   for (const event of operationExecutedEvents) {
     if (!event.args) continue
-    executedOrCanceled.add(event.args.operationId)
+    executedOrCanceled.set(event.args.operationId, bnToNumber(event.args.nonce))
   }
   for (const event of operationCanceledEvents) {
     if (!event.args) continue
-    executedOrCanceled.add(event.args.operationId)
+    // Only add if nonce is greater or equal (in case of re-scheduling with same ID)
+    const existingNonce = executedOrCanceled.get(event.args.operationId)
+    const currentNonce = bnToNumber(event.args.nonce)
+    if (existingNonce === undefined || currentNonce >= existingNonce) {
+      executedOrCanceled.set(event.args.operationId, currentNonce)
+    }
   }
 
+  // Filter for pending operations by checking against executed/canceled map and schedule time
   console.log(chalk.magenta('- Filtering pending operations...'))
   const scheduledOps: ScheduledOperation[] = []
-  for (const event of operationScheduledEvents) {
+  const currentTimestamp = Math.floor(Date.now() / 1000)
+  const seenOpIds = new Set<string>() // Track ops added to avoid duplicates from re-schedules
+
+  // Process in reverse to easily find the latest schedule for a given opId/nonce
+  for (let i = operationScheduledEvents.length - 1; i >= 0; i--) {
+    const event = operationScheduledEvents[i]
     if (!event.args) continue
+
     const opId = event.args.operationId
-    if (!executedOrCanceled.has(opId)) {
+    const nonce = bnToNumber(event.args.nonce)
+    const schedule = bnToNumber(event.args.schedule)
+    const uniqueOpIdentifier = `${opId}-${nonce}` // Use ID + Nonce for uniqueness
+
+    // Skip if already processed a later schedule for this ID/Nonce or if it's executed/canceled
+    if (seenOpIds.has(uniqueOpIdentifier)) {
+      continue
+    }
+
+    const finalNonce = executedOrCanceled.get(opId)
+    const isDone = finalNonce !== undefined && nonce <= finalNonce
+
+    // Check if it's actually pending (not done and schedule time not passed, or just scheduled)
+    // We include operations even if schedule time might seem passed, as `canCall` is the ultimate check.
+    // But we definitely exclude executed/cancelled ones.
+    if (!isDone) {
       scheduledOps.push({
         operationId: opId,
-        nonce: bnToNumber(event.args.nonce),
-        schedule: bnToNumber(event.args.schedule),
+        nonce: nonce,
+        schedule: schedule,
         caller: event.args.caller.toLowerCase(),
         target: event.args.target.toLowerCase(),
         data: event.args.data,
       })
+      seenOpIds.add(uniqueOpIdentifier) // Mark as processed
     }
   }
+  scheduledOps.reverse() // Restore chronological order
+
   console.log(chalk.green(`- Found ${scheduledOps.length} pending operations`))
 
+  // Fetch role grant delay changes and filter for pending ones
   console.log(chalk.magenta('- Filtering pending role grant delay changes...'))
-  const roleGrantDelayChangedEvents = await accessManager.queryFilter('RoleGrantDelayChanged', fromBlock, 'latest')
+  const roleGrantDelayChangedEvents = await accessManager.queryFilter(
+    'RoleGrantDelayChanged',
+    fromBlock,
+    'latest',
+  )
 
-  const pendingRoleGrantChanges: Array<{ roleId: string; newDelay: number; effect: number }> = []
-  const currentTimestamp = Math.floor(Date.now() / 1000)
+  const pendingRoleGrantChanges: Array<{
+    roleId: string
+    newDelay: number
+    effect: number
+  }> = []
+  const latestPendingGrantChanges: {
+    [roleId: string]: { newDelay: number; effect: number; blockNumber: number }
+  } = {}
+
+  // Find the latest *pending* change for each role
   for (const event of roleGrantDelayChangedEvents) {
     if (!event.args) continue
     const effect = bnToNumber(event.args.since)
     if (effect > currentTimestamp) {
-      pendingRoleGrantChanges.push({
-        roleId: event.args.roleId.toString(),
-        newDelay: bnToNumber(event.args.delay),
-        effect,
-      })
+      const roleId = event.args.roleId.toString()
+      if (
+        !latestPendingGrantChanges[roleId] ||
+        event.blockNumber > latestPendingGrantChanges[roleId].blockNumber
+      ) {
+        latestPendingGrantChanges[roleId] = {
+          newDelay: bnToNumber(event.args.delay),
+          effect: effect,
+          blockNumber: event.blockNumber,
+        }
+      }
     }
   }
-  console.log(chalk.green(`- Found ${pendingRoleGrantChanges.length} pending role grant delay changes`))
+
+  // Add the latest pending changes to the result array
+  for (const roleId in latestPendingGrantChanges) {
+    const change = latestPendingGrantChanges[roleId]
+    pendingRoleGrantChanges.push({
+      roleId: roleId,
+      newDelay: change.newDelay,
+      effect: change.effect,
+    })
+  }
+
+  console.log(
+    chalk.green(
+      `- Found ${pendingRoleGrantChanges.length} pending role grant delay changes`,
+    ),
+  )
 
   return { scheduledOps, pendingRoleGrantChanges }
 }
-
-// *** NEW FUNCTION: Fetch delays from external contracts ***
-async function fetchExternalContractDelays(provider: ethers.providers.Provider): Promise<ExternalDelays> {
-    console.log(chalk.bold('\nFetching external contract delays...'));
-    const delays: ExternalDelays = {};
-
-    try {
-        console.log(chalk.magenta(`- Querying KintoID.EXIT_WINDOW_PERIOD at ${KINTO_ID_ADDRESS}...`));
-        const kintoIdContract = new ethers.Contract(KINTO_ID_ADDRESS, kintoIdAbi, provider);
-        const exitWindowPeriod = await kintoIdContract.EXIT_WINDOW_PERIOD();
-        delays.kintoIdExitWindowPeriod = bnToNumber(exitWindowPeriod);
-        console.log(chalk.green(`- Found KintoID.EXIT_WINDOW_PERIOD: ${delays.kintoIdExitWindowPeriod} (${formatDuration(delays.kintoIdExitWindowPeriod)})`));
-    } catch (error: any) {
-        console.error(chalk.red(`Error fetching KintoID.EXIT_WINDOW_PERIOD: ${error.message}`));
-    }
-
-    try {
-        console.log(chalk.magenta(`- Querying KintoWallet.RECOVERY_TIME at ${KINTO_WALLET_EXAMPLE_ADDRESS}...`));
-        const kintoWalletContract = new ethers.Contract(KINTO_WALLET_EXAMPLE_ADDRESS, kintoWalletAbi, provider);
-        const recoveryTime = await kintoWalletContract.RECOVERY_TIME();
-        delays.kintoWalletRecoveryTime = bnToNumber(recoveryTime);
-        console.log(chalk.green(`- Found KintoWallet.RECOVERY_TIME: ${delays.kintoWalletRecoveryTime} (${formatDuration(delays.kintoWalletRecoveryTime)})`));
-    } catch (error: any) {
-        console.error(chalk.red(`Error fetching KintoWallet.RECOVERY_TIME: ${error.message}`));
-    }
-
-    return delays;
-}
-
 
 // -------------------------
 // REPORTING FUNCTIONS
 // -------------------------
 
-// Generate roles overview report (no changes needed here)
+// Generate roles overview report
 function generateRolesOverviewReport(rolesData: Map<string, RoleData>): void {
   console.log(chalk.bold('\n================ Roles Overview ================'))
+
   if (rolesData.size === 0) {
     console.log(chalk.red('No roles found.'))
     return
   }
-  const sortedRoles = Array.from(rolesData.values()).sort((a, b) => parseInt(a.id) - parseInt(b.id))
+
+  // Sort roles by ID for consistent display
+  const sortedRoles = Array.from(rolesData.values()).sort((a, b) => {
+    // Try to sort numerically if possible, fallback to string sort
+    try {
+      return parseInt(a.id) - parseInt(b.id)
+    } catch {
+      return a.id.localeCompare(b.id)
+    }
+  })
+
   for (const roleData of sortedRoles) {
     const roleName = roleNames[roleData.id] || roleData.id
     console.log(`\n${chalk.yellow(roleName)} (ID: ${chalk.gray(roleData.id)}):`)
-    console.log(`  ${chalk.magenta('roleGrantDelay')}: ${chalk.green(roleData.currentGrantDelay)} (${chalk.green(formatDuration(roleData.currentGrantDelay))})`)
+
+    // Display role grant delay
+    console.log(
+      `  ${chalk.magenta('roleGrantDelay')}: ${chalk.green(roleData.currentGrantDelay)} (${chalk.green(formatDuration(roleData.currentGrantDelay))})`,
+    )
+
+    // Display pending grant delay change if any
     if (roleData.pendingGrantDelay) {
-      console.log(`  ${chalk.magenta('pendingGrantDelay')}: ${chalk.green(roleData.pendingGrantDelay.newDelay)} (${chalk.green(formatDuration(roleData.pendingGrantDelay.newDelay))}) effective at ${chalk.green(new Date(roleData.pendingGrantDelay.effect * 1000).toISOString())}`)
+      console.log(
+        `  ${chalk.magenta('pendingGrantDelay')}: ${chalk.green(roleData.pendingGrantDelay.newDelay)} (${chalk.green(formatDuration(roleData.pendingGrantDelay.newDelay))}) effective at ${chalk.cyan(new Date(roleData.pendingGrantDelay.effect * 1000).toISOString())}`,
+      )
     }
-    if (roleData.admin) console.log(`  adminRole: ${chalk.yellow(roleNames[roleData.admin] || roleData.admin)}`)
-    if (roleData.guardian) console.log(`  guardianRole: ${chalk.yellow(roleNames[roleData.guardian] || roleData.guardian)}`)
+
+    // Display admin role if available
+    if (roleData.admin) {
+      const adminRoleName = roleNames[roleData.admin] || roleData.admin
+      console.log(
+        `  ${chalk.magenta('adminRole')}: ${chalk.yellow(adminRoleName)} (${chalk.gray(roleData.admin)})`,
+      )
+    }
+
+    // Display guardian role if available
+    if (roleData.guardian) {
+      const guardianRoleName = roleNames[roleData.guardian] || roleData.guardian
+      console.log(
+        `  ${chalk.magenta('guardianRole')}: ${chalk.yellow(guardianRoleName)} (${chalk.gray(roleData.guardian)})`,
+      )
+    }
+
+    // List all members with this role
     if (roleData.members.size > 0) {
       console.log(`  members (${roleData.members.size}):`)
-      for (const [account, memberInfo] of roleData.members) {
-        console.log(`    ${formatAddress(account)}: ${chalk.magenta('executionDelay')}: ${chalk.green(memberInfo.executionDelay)} (${chalk.green(formatDuration(memberInfo.executionDelay))})`)
-        if (memberInfo.pendingDelay > 0 && memberInfo.pendingEffect > Math.floor(Date.now() / 1000)) {
-          console.log(`      ${chalk.magenta('pendingExecutionDelay')}: ${chalk.green(memberInfo.pendingDelay)} (${chalk.green(formatDuration(memberInfo.pendingDelay))}) effective at ${chalk.green(new Date(memberInfo.pendingEffect * 1000).toISOString())}`)
+      // Sort members by address for consistent display
+      const sortedMembers = Array.from(roleData.members.entries()).sort(
+        ([addrA], [addrB]) => addrA.localeCompare(addrB),
+      )
+
+      for (const [account, memberInfo] of sortedMembers) {
+        console.log(
+          `    ${formatAddress(account)}: ${chalk.magenta('executionDelay')}: ${chalk.green(memberInfo.executionDelay)} (${chalk.green(formatDuration(memberInfo.executionDelay))})`,
+        )
+
+        // Display pending execution delay change if any
+        const currentTimestamp = Math.floor(Date.now() / 1000)
+        if (
+          memberInfo.pendingDelay !== memberInfo.executionDelay && // Only show if different
+          memberInfo.pendingEffect > currentTimestamp
+        ) {
+          console.log(
+            `      ${chalk.magenta('pendingExecutionDelay')}: ${chalk.green(memberInfo.pendingDelay)} (${chalk.green(formatDuration(memberInfo.pendingDelay))}) effective at ${chalk.cyan(new Date(memberInfo.pendingEffect * 1000).toISOString())}`,
+          )
         }
       }
     } else {
-      console.log(`  members: None`)
+      console.log(`  ${chalk.magenta('members')}: None`)
     }
   }
 }
 
-// Generate actors and roles report (no changes needed here)
+// Generate actors and roles report
 function generateActorsReport(
   rolesByActor: { [account: string]: Array<RoleInfo> },
-  roleToTargetFunctions: { [roleId: string]: { [target: string]: Set<string> } },
+  roleToTargetFunctions: {
+    [roleId: string]: { [target: string]: Set<string> }
+  },
 ): void {
   console.log(chalk.bold('\n================ Actors ================'))
+
   if (Object.keys(rolesByActor).length === 0) {
     console.log(chalk.red('\nNo actors with active roles found.'))
     return
   }
-  for (const account in rolesByActor) {
+
+  // Sort actors by address
+  const sortedActors = Object.keys(rolesByActor).sort((a, b) =>
+    a.localeCompare(b),
+  )
+
+  for (const account of sortedActors) {
     console.log(`\n${formatAddress(account)}:`)
-    for (const roleInfo of rolesByActor[account]) {
+    // Sort roles for each actor
+    const sortedRoles = rolesByActor[account].sort((a, b) =>
+      (roleNames[a.roleId] || a.roleId).localeCompare(
+        roleNames[b.roleId] || b.roleId,
+      ),
+    )
+
+    for (const roleInfo of sortedRoles) {
       const roleName = roleNames[roleInfo.roleId] || roleInfo.roleId
       const delayStr = `${chalk.green(roleInfo.executionDelay)} (${chalk.green(formatDuration(roleInfo.executionDelay))})`
-      console.log(`  ${chalk.yellow(roleName)}: ${chalk.magenta('executionDelay')}: ${delayStr}`)
+      console.log(
+        `  ${chalk.yellow(roleName)}: ${chalk.magenta('executionDelay')}: ${delayStr}`,
+      )
+
+      // Display pending execution delay change if any
+      const currentTimestamp = Math.floor(Date.now() / 1000)
+      if (
+        roleInfo.pendingDelay !== roleInfo.executionDelay && // Only show if different
+        roleInfo.pendingEffect > currentTimestamp
+      ) {
+        console.log(
+          `      ${chalk.magenta('pendingExecutionDelay')}: ${chalk.green(roleInfo.pendingDelay)} (${chalk.green(formatDuration(roleInfo.pendingDelay))}) effective at ${chalk.cyan(new Date(roleInfo.pendingEffect * 1000).toISOString())}`,
+        )
+      }
+
       if (roleToTargetFunctions[roleInfo.roleId]) {
         console.log('    Callable targets and functions:')
         const targets = roleToTargetFunctions[roleInfo.roleId]
         if (Object.keys(targets).length === 0) {
-          console.log(chalk.red('      No targets or functions configured for this role'))
+          console.log(
+            chalk.grey(
+              '      No targets or functions configured for this role on this actor.',
+            ),
+          )
         } else {
-          for (const target in targets) {
+          // Sort targets by address
+          const sortedTargets = Object.keys(targets).sort((a, b) =>
+            a.localeCompare(b),
+          )
+          for (const target of sortedTargets) {
             console.log(`      Target ${formatAddress(target)}:`)
-            const functions = Array.from(targets[target]).map((sel) =>
-              functionSignatures[sel] ? chalk.gray(functionSignatures[sel]) : chalk.gray(sel),
-            )
-            console.log(`        Functions: ${functions.join(', ')}`)
+            // Sort functions alphabetically
+            const functions = Array.from(targets[target])
+              .map((sel) => functionSignatures[sel] || sel)
+              .sort()
+            const formattedFunctions = functions.map((f) => chalk.gray(f))
+            console.log(`        Functions: ${formattedFunctions.join(', ')}`)
           }
         }
       }
@@ -702,180 +1179,342 @@ function generateActorsReport(
   }
 }
 
-// Generate targets configuration report (no changes needed here)
-function generateTargetsReport(targetData: { [target: string]: TargetData }): void {
+// Generate targets configuration report
+function generateTargetsReport(targetData: {
+  [target: string]: TargetData
+}): void {
   console.log(chalk.bold('\n================ Targets ================'))
+
   if (Object.keys(targetData).length === 0) {
     console.log(chalk.red('\nNo target configurations found.'))
     return
   }
-  for (const target in targetData) {
+
+  // Sort targets by address
+  const sortedTargets = Object.keys(targetData).sort((a, b) =>
+    a.localeCompare(b),
+  )
+
+  for (const target of sortedTargets) {
+    const data = targetData[target]
     console.log(`\n${formatAddress(target)}:`)
-    console.log(`  ${chalk.magenta('targetAdminDelay')}: ${chalk.green(targetData[target].adminDelay)} (${chalk.green(formatDuration(targetData[target].adminDelay))})`)
-    console.log(`  ${chalk.magenta('Closed')}: ${chalk.yellow(targetData[target].closed)}`)
+    console.log(
+      `  ${chalk.magenta('targetAdminDelay')}: ${chalk.green(data.adminDelay)} (${chalk.green(formatDuration(data.adminDelay))})`,
+    )
+    // Display pending admin delay changes if any
+    const currentTimestamp = Math.floor(Date.now() / 1000)
+    if (data.pendingAdminDelayChanges) {
+      data.pendingAdminDelayChanges.forEach((change) => {
+        if (change.effect > currentTimestamp) {
+          console.log(
+            `  ${chalk.magenta('pendingAdminDelay')}: ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.cyan(new Date(change.effect * 1000).toISOString())}`,
+          )
+        }
+      })
+    }
+
+    console.log(`  ${chalk.magenta('Closed')}: ${chalk.yellow(data.closed)}`)
     console.log('  Function Roles:')
-    if (Object.keys(targetData[target].functions).length === 0) {
-      console.log(chalk.red('    No function roles configured for this target'))
+    if (Object.keys(data.functions).length === 0) {
+      console.log(
+        chalk.grey('    No function roles configured for this target'),
+      )
     } else {
-      for (const roleId in targetData[target].functions) {
+      // Sort roles by name
+      const sortedRoleIds = Object.keys(data.functions).sort((a, b) =>
+        (roleNames[a] || a).localeCompare(roleNames[b] || b),
+      )
+      for (const roleId of sortedRoleIds) {
         const roleName = roleNames[roleId] || roleId
-        const funcs = Array.from(targetData[target].functions[roleId]).map(
-          (sel) => functionSignatures[sel] ? chalk.gray(functionSignatures[sel]) : chalk.gray(sel),
+        // Sort functions alphabetically
+        const funcs = Array.from(data.functions[roleId])
+          .map((sel) => functionSignatures[sel] || sel)
+          .sort()
+        const formattedFuncs = funcs.map((f) => chalk.gray(f))
+        console.log(
+          `    ${chalk.yellow(roleName)}: ${formattedFuncs.join(', ')}`,
         )
-        console.log(`    ${chalk.yellow(roleName)}: ${funcs.join(', ')}`)
       }
     }
   }
 }
 
-// Generate pending changes and queued operations report (no changes needed here)
+// Generate pending changes and queued operations report
 function generatePendingChangesReport(
-  rolesByActor: { [account: string]: Array<RoleInfo> },
-  targetData: { [target: string]: TargetData },
+  // rolesByActor: { [account: string]: Array<RoleInfo> }, // No longer needed here, shown in Actors/Roles sections
+  // targetData: { [target: string]: TargetData }, // No longer needed here, shown in Targets section
   scheduledOps: ScheduledOperation[],
-  pendingRoleGrantChanges: Array<{ roleId: string; newDelay: number; effect: number }>,
+  pendingRoleGrantChanges: Array<{
+    roleId: string
+    newDelay: number
+    effect: number
+  }>,
 ): void {
-  console.log(chalk.bold('\n============= Queued Delay/Config Changes and Queued Actions ============='))
+  console.log(
+    chalk.bold(
+      '\n============= Queued Operations and Pending Role Grant Delay Changes =============',
+    ),
+  )
+
   let changesFound = false
   const currentTimestamp = Math.floor(Date.now() / 1000)
 
-  for (const account in rolesByActor) {
-    for (const roleInfo of rolesByActor[account]) {
-      if (roleInfo.pendingDelay > 0 && roleInfo.pendingEffect > currentTimestamp) {
-        changesFound = true
-        const roleName = roleNames[roleInfo.roleId] || roleInfo.roleId
-        console.log(`\nActor ${formatAddress(account)} has a scheduled change for role ${chalk.yellow(roleName)}:`)
-        console.log(`  ${chalk.magenta('executionDelay')} change from ${chalk.green(roleInfo.executionDelay)} (${chalk.green(formatDuration(roleInfo.executionDelay))}) to ${chalk.green(roleInfo.pendingDelay)} (${chalk.green(formatDuration(roleInfo.pendingDelay))}) effective at ${chalk.green(new Date(roleInfo.pendingEffect * 1000).toISOString())}`)
-      }
-    }
-  }
-
-  let pendingAdminDelayChangesFound = false
-  for (const target in targetData) {
-    if (targetData[target].pendingAdminDelayChanges) {
-      for (const change of targetData[target].pendingAdminDelayChanges) {
-        if (change.effect > currentTimestamp) {
-          changesFound = true
-          pendingAdminDelayChangesFound = true
-          console.log(`\nTarget ${formatAddress(target)} scheduled targetAdminDelay change:`)
-          console.log(`  New ${chalk.magenta('targetAdminDelay')}: ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.green(new Date(change.effect * 1000).toISOString())}`)
-        }
-      }
-    }
-  }
-  if (!pendingAdminDelayChangesFound && !changesFound) { // Only show if no other changes found yet
-      console.log(chalk.grey('No pending target admin delay changes found.')); // Less emphasis than red
-  }
-
-
+  // --- Queued operations (scheduled calls) ---
   if (scheduledOps.length > 0) {
     changesFound = true
     console.log(chalk.bold('\nQueued Operations:'))
-    for (const op of scheduledOps) {
-      const selector = op.data.slice(0, 10)
+    // Sort operations by schedule time
+    const sortedOps = scheduledOps.sort((a, b) => a.schedule - b.schedule)
+
+    for (const op of sortedOps) {
+      const selector = op.data.slice(0, 10).toLowerCase() // Ensure lowercase for matching
       const decodedFunction = decodeOperationData(selector, op.data)
+      const isEffective = op.schedule <= currentTimestamp
+      const scheduleDate = new Date(op.schedule * 1000)
+      const timeColor = isEffective ? chalk.yellow : chalk.cyan // Yellow if past, cyan if future
+
       console.log(`\nOperation ${chalk.cyan(op.operationId)}:`)
       console.log(`    Nonce: ${chalk.yellow(op.nonce)}`)
-      console.log(`    Scheduled for: ${chalk.green(new Date(op.schedule * 1000).toISOString())}`)
+      console.log(
+        `    Scheduled for: ${timeColor(scheduleDate.toISOString())} ${isEffective ? chalk.yellow('(Ready to execute)') : ''}`,
+      )
       console.log(`    Caller: ${formatAddress(op.caller)}`)
       console.log(`    Target: ${formatAddress(op.target)}`)
-      console.log(`    Function: ${decodedFunction}`) // Removed extra gray wrap
+      console.log(`    Function: ${decodedFunction}`) // Use gray from decode function
     }
   } else {
-     if (!changesFound) console.log(chalk.grey('No queued operations found.'));
+    console.log(chalk.grey('No queued operations found.'))
   }
 
+  // --- Pending role grant delay changes ---
   console.log(chalk.bold('\nPending Role Grant Delay Changes:'))
   if (pendingRoleGrantChanges.length > 0) {
     changesFound = true
-    for (const change of pendingRoleGrantChanges) {
+    // Sort changes by effect time
+    const sortedChanges = pendingRoleGrantChanges.sort(
+      (a, b) => a.effect - b.effect,
+    )
+    for (const change of sortedChanges) {
       const roleName = roleNames[change.roleId] || change.roleId
-      console.log(`  Role ${chalk.yellow(roleName)} scheduled to change grant delay to ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.green(new Date(change.effect * 1000).toISOString())}`)
+      console.log(
+        `  Role ${chalk.yellow(roleName)} grant delay to change to ${chalk.green(change.newDelay)} (${chalk.green(formatDuration(change.newDelay))}) effective at ${chalk.cyan(new Date(change.effect * 1000).toISOString())}`,
+      )
     }
   } else {
     console.log(chalk.grey('  No pending role grant delay changes found.'))
   }
 
-  if (!changesFound && !pendingAdminDelayChangesFound && scheduledOps.length === 0 && pendingRoleGrantChanges.length === 0) {
-      console.log(chalk.green('\nNo pending changes or queued actions found.')) // Changed to green
+  if (!changesFound) {
+    console.log(
+      chalk.grey(
+        '\nNo queued operations or pending role grant delay changes found.',
+      ),
+    )
   }
 }
 
-// *** NEW FUNCTION: Generate Non-Compliant Values Report ***
-function generateNonCompliantReport(nonCompliantValues: NonCompliantValue[]): void {
-    console.log(chalk.bold('\n============ Non-Compliant Values (Minimum 12d Delay) ============'));
+// --- NEW: Function to generate compliance report ---
+function generateComplianceReport(
+  exitWindowPeriod: number,
+  recoveryTime: number,
+  targetData: { [target: string]: TargetData },
+  rolesData: Map<string, RoleData>,
+): void {
+  console.log(
+    chalk.bold('\n================ Compliance Check Results ================'),
+  )
+  console.log(
+    chalk.gray(
+      `(Minimum required delay for checked items: ${MIN_DELAY_SECONDS}s / ${formatDuration(MIN_DELAY_SECONDS)})`,
+    ),
+  )
 
-    if (nonCompliantValues.length === 0) {
-        console.log(chalk.green('All checked values meet the minimum 12-day delay requirement.'));
-        return;
+  const nonCompliantItems: NonCompliantItem[] = []
+  const checkedTargets = [
+    '0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b', // KintoAppRegistry
+    '0xf369f78e3a0492cc4e96a90dae0728a38498e9c7', // KintoID
+    '0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75', // KintoWalletFactory
+  ]
+  const checkedRoles = ['0', '8663528507529876195', '14661544942390944024'] // ADMIN_ROLE, UPGRADER_ROLE, SECURITY_COUNCIL_ROLE
+
+  // 1. Check KintoID.EXIT_WINDOW_PERIOD
+  if (exitWindowPeriod < MIN_DELAY_SECONDS) {
+    nonCompliantItems.push({
+      item: 'KintoID.EXIT_WINDOW_PERIOD',
+      address: KINTO_ID_ADDRESS,
+      actual: exitWindowPeriod,
+      expected: MIN_DELAY_SECONDS,
+    })
+  }
+
+  // 2. Check KintoWallet.RECOVERY_TIME
+  if (recoveryTime < MIN_DELAY_SECONDS) {
+    nonCompliantItems.push({
+      item: `KintoWallet Example (${addressNames[KINTO_WALLET_EXAMPLE_ADDRESS] || 'Unknown'}).RECOVERY_TIME`,
+      address: KINTO_WALLET_EXAMPLE_ADDRESS,
+      actual: recoveryTime,
+      expected: MIN_DELAY_SECONDS,
+    })
+  }
+
+  // 3. Check targetAdminDelay for specific targets
+  for (const targetAddress of checkedTargets) {
+    const tData = targetData[targetAddress.toLowerCase()]
+    if (tData) {
+      if (tData.adminDelay < MIN_DELAY_SECONDS) {
+        nonCompliantItems.push({
+          item: `Target Admin Delay`,
+          address: targetAddress,
+          actual: tData.adminDelay,
+          expected: MIN_DELAY_SECONDS,
+        })
+      }
+    } else {
+      console.warn(
+        chalk.yellow(
+          `- Warning: Target ${formatAddress(targetAddress)} not found in fetched data for compliance check.`,
+        ),
+      )
     }
+  }
 
-    console.log(chalk.red(`Found ${nonCompliantValues.length} non-compliant value(s):\n`));
-
-    const requiredFormatted = `${MINIMUM_DELAY_SECONDS} (${formatDuration(MINIMUM_DELAY_SECONDS)})`;
-
-    for (const issue of nonCompliantValues) {
-        const currentFormatted = `${issue.currentValue} (${formatDuration(issue.currentValue)})`;
-        switch (issue.type) {
-            case 'Actor Execution Delay':
-                console.log(
-                    `- ${chalk.yellow('Actor Execution Delay')} for ${formatAddress(issue.location)} ` +
-                    `with role ${chalk.magenta(issue.role || 'Unknown')}: ` +
-                    `Current: ${chalk.red(currentFormatted)}, Required: >= ${chalk.green(requiredFormatted)}`
-                );
-                break;
-            case 'Target Admin Delay':
-                console.log(
-                    `- ${chalk.yellow('Target Admin Delay')} for ${formatAddress(issue.location)}: ` +
-                    `Current: ${chalk.red(currentFormatted)}, Required: >= ${chalk.green(requiredFormatted)}`
-                );
-                break;
-            case 'KintoID Exit Window':
-                console.log(
-                     `- ${chalk.yellow('KintoID.EXIT_WINDOW_PERIOD')} (${formatAddress(issue.location)}): ` +
-                     `Current: ${chalk.red(currentFormatted)}, Required: >= ${chalk.green(requiredFormatted)}`
-                 );
-                break;
-            case 'KintoWallet Recovery Time':
-                 console.log(
-                     `- ${chalk.yellow('KintoWallet.RECOVERY_TIME')} (${formatAddress(issue.location)}): ` +
-                     `Current: ${chalk.red(currentFormatted)}, Required: >= ${chalk.green(requiredFormatted)}`
-                 );
-                break;
-            default:
-                 console.log(chalk.grey(`- Unknown non-compliant type: ${JSON.stringify(issue)}`));
+  // 4. Check executionDelay for specific roles, excluding Security Council actor
+  for (const roleId of checkedRoles) {
+    const rData = rolesData.get(roleId)
+    if (rData && rData.members) {
+      for (const [account, memberInfo] of rData.members) {
+        // Exclude the Security Council actor
+        if (account.toLowerCase() !== SECURITY_COUNCIL_ADDRESS) {
+          if (memberInfo.executionDelay < MIN_DELAY_SECONDS) {
+            nonCompliantItems.push({
+              item: `Execution Delay`,
+              address: account,
+              role: roleNames[roleId] || roleId,
+              actual: memberInfo.executionDelay,
+              expected: MIN_DELAY_SECONDS,
+            })
+          }
         }
+      }
     }
-}
+    // else {
+    //    console.warn(chalk.yellow(`- Warning: Role ${roleNames[roleId] || roleId} not found or has no members for compliance check.`));
+    // }
+  }
 
+  // Print results
+  if (nonCompliantItems.length === 0) {
+    console.log(
+      chalk.green('\n✅ All checked delays meet the minimum 12d requirement.'),
+    )
+  } else {
+    console.log(
+      chalk.red(
+        `\n❌ Found ${nonCompliantItems.length} item(s) below the minimum 12d delay requirement:`,
+      ),
+    )
+    nonCompliantItems.forEach((item) => {
+      const roleStr = item.role ? ` (Role: ${chalk.yellow(item.role)})` : ''
+      const addressStr = item.address ? `${formatAddress(item.address)}` : ''
+      const itemDescription = `${item.item}${roleStr} for ${addressStr}`
+      console.log(
+        `  - ${itemDescription}: ${chalk.red(item.actual)}s (${chalk.red(formatDuration(item.actual))}) - Expected >= ${chalk.green(item.expected)}s (${chalk.green(formatDuration(item.expected))})`,
+      )
+    })
+  }
+}
 
 // -------------------------
 // MAIN FUNCTION
 // -------------------------
 
 export async function runScanKintoAm(): Promise<void> {
-  console.log(chalk.bold('Starting ScanKintoAm...'));
   try {
+    console.log(chalk.bold('Starting ScanKintoAm...\n'))
     const provider = new ethers.providers.JsonRpcProvider(RPC_URL)
-    const accessManager = new ethers.Contract(ACCESS_MANAGER_ADDRESS, accessManagerAbi, provider)
+    const accessManager = new ethers.Contract(
+      ACCESS_MANAGER_ADDRESS,
+      accessManagerAbi,
+      provider,
+    )
+    // --- NEW: Instantiate KintoID and KintoWallet contracts ---
+    const kintoIdContract = new ethers.Contract(
+      KINTO_ID_ADDRESS,
+      kintoIdAbi,
+      provider,
+    )
+    const kintoWalletExampleContract = new ethers.Contract(
+      KINTO_WALLET_EXAMPLE_ADDRESS,
+      kintoWalletAbi,
+      provider,
+    )
 
     const fromBlock = 0 // Start block for event queries
 
-    console.log(chalk.blue('\nConnecting to RPC endpoint:'), chalk.gray(RPC_URL))
-    console.log(chalk.blue('AccessManager contract:'), chalk.gray(ACCESS_MANAGER_ADDRESS))
+    console.log(chalk.blue('Connecting to RPC endpoint:'), chalk.gray(RPC_URL))
+    console.log(
+      chalk.blue('AccessManager contract:'),
+      chalk.gray(ACCESS_MANAGER_ADDRESS),
+    )
+
+    // --- NEW: Fetch KintoID and KintoWallet constants ---
+    console.log(chalk.bold('\nFetching specific contract constants...'))
+    let exitWindowPeriod = -1
+    let recoveryTime = -1
+    try {
+      const exitWindowPeriodBN = await kintoIdContract.EXIT_WINDOW_PERIOD()
+      exitWindowPeriod = bnToNumber(exitWindowPeriodBN)
+      console.log(
+        chalk.green(
+          `- Fetched KintoID.EXIT_WINDOW_PERIOD: ${exitWindowPeriod}s (${formatDuration(exitWindowPeriod)})`,
+        ),
+      )
+    } catch (e) {
+      console.error(
+        chalk.red(
+          `- Error fetching KintoID.EXIT_WINDOW_PERIOD from ${KINTO_ID_ADDRESS}:`,
+        ),
+        e.message,
+      )
+    }
+    try {
+      const recoveryTimeBN = await kintoWalletExampleContract.RECOVERY_TIME()
+      recoveryTime = bnToNumber(recoveryTimeBN)
+      console.log(
+        chalk.green(
+          `- Fetched KintoWallet_Example.RECOVERY_TIME from ${KINTO_WALLET_EXAMPLE_ADDRESS}: ${recoveryTime}s (${formatDuration(recoveryTime)})`,
+        ),
+      )
+    } catch (e) {
+      console.error(
+        chalk.red(
+          `- Error fetching KintoWallet_Example.RECOVERY_TIME from ${KINTO_WALLET_EXAMPLE_ADDRESS}:`,
+        ),
+        e.message,
+      )
+    }
 
     // 1. Fetch role data
-    const { rolesData, rolesByActor, roleToTargetFunctions: roleFunctions1 } = await fetchRoleData(accessManager, fromBlock)
+    const {
+      rolesData,
+      rolesByActor,
+      roleToTargetFunctions: roleFunctions1,
+    } = await fetchRoleData(accessManager, fromBlock)
 
     // 2. Fetch target configuration
-    const { targetData, roleToTargetFunctions: roleFunctions2 } = await fetchTargetData(accessManager, fromBlock)
+    const { targetData, roleToTargetFunctions: roleFunctions2 } =
+      await fetchTargetData(accessManager, fromBlock)
 
     // Merge the two roleToTargetFunctions objects
     const roleToTargetFunctions = { ...roleFunctions1 }
     for (const roleId in roleFunctions2) {
-      if (!roleToTargetFunctions[roleId]) roleToTargetFunctions[roleId] = {}
+      if (!roleToTargetFunctions[roleId]) {
+        roleToTargetFunctions[roleId] = {}
+      }
       for (const target in roleFunctions2[roleId]) {
-        if (!roleToTargetFunctions[roleId][target]) roleToTargetFunctions[roleId][target] = new Set()
+        if (!roleToTargetFunctions[roleId][target]) {
+          roleToTargetFunctions[roleId][target] = new Set()
+        }
         for (const func of roleFunctions2[roleId][target]) {
           roleToTargetFunctions[roleId][target].add(func)
         }
@@ -883,99 +1522,36 @@ export async function runScanKintoAm(): Promise<void> {
     }
 
     // 3. Fetch queued operations and pending changes
-    const { scheduledOps, pendingRoleGrantChanges } = await fetchOperationsData(accessManager, fromBlock)
+    const { scheduledOps, pendingRoleGrantChanges } = await fetchOperationsData(
+      accessManager,
+      fromBlock,
+    )
 
-    // *** NEW: Fetch external contract delays ***
-    const externalDelays = await fetchExternalContractDelays(provider);
-
-    // 4. Verify delays and collect non-compliant values
-    const nonCompliantValues: NonCompliantValue[] = [];
-
-    // 4.1 Verify Actor Execution Delays (excluding Security Council for specified roles)
-    const criticalRoles = ['0', '8663528507529876195', '14661544942390944024']; // ADMIN_ROLE, UPGRADER_ROLE, SECURITY_COUNCIL_ROLE IDs
-    for (const roleId of criticalRoles) {
-        const roleData = rolesData.get(roleId);
-        if (roleData?.members) {
-            for (const [account, memberInfo] of roleData.members) {
-                if (account.toLowerCase() !== SECURITY_COUNCIL_ADDRESS) {
-                    if (memberInfo.executionDelay < MINIMUM_DELAY_SECONDS) {
-                        nonCompliantValues.push({
-                            type: 'Actor Execution Delay',
-                            location: account,
-                            role: roleNames[roleId] || roleId,
-                            currentValue: memberInfo.executionDelay,
-                            requiredValue: MINIMUM_DELAY_SECONDS,
-                        });
-                    }
-                }
-            }
-        }
-    }
-
-    // 4.2 Verify Target Admin Delays for specific targets
-    const criticalTargets = [
-        addressNames['KintoAppRegistry'].toLowerCase(),
-        addressNames['KintoID'].toLowerCase(),
-        addressNames['KintoWalletFactory'].toLowerCase()
-    ];
-    for (const targetAddress in targetData) {
-        if (criticalTargets.includes(targetAddress.toLowerCase())) {
-            if (targetData[targetAddress].adminDelay < MINIMUM_DELAY_SECONDS) {
-                nonCompliantValues.push({
-                    type: 'Target Admin Delay',
-                    location: targetAddress,
-                    currentValue: targetData[targetAddress].adminDelay,
-                    requiredValue: MINIMUM_DELAY_SECONDS,
-                });
-            }
-        }
-    }
-
-    // 4.3 Verify KintoID Exit Window Period
-    if (externalDelays.kintoIdExitWindowPeriod !== undefined) {
-        if (externalDelays.kintoIdExitWindowPeriod < MINIMUM_DELAY_SECONDS) {
-            nonCompliantValues.push({
-                type: 'KintoID Exit Window',
-                location: KINTO_ID_ADDRESS,
-                currentValue: externalDelays.kintoIdExitWindowPeriod,
-                requiredValue: MINIMUM_DELAY_SECONDS,
-            });
-        }
-    } else {
-         console.warn(chalk.yellow('Could not verify KintoID.EXIT_WINDOW_PERIOD (fetch failed).'));
-    }
-
-    // 4.4 Verify KintoWallet Recovery Time
-    if (externalDelays.kintoWalletRecoveryTime !== undefined) {
-        if (externalDelays.kintoWalletRecoveryTime < MINIMUM_DELAY_SECONDS) {
-            nonCompliantValues.push({
-                type: 'KintoWallet Recovery Time',
-                location: KINTO_WALLET_EXAMPLE_ADDRESS, // Location shown is the example wallet checked
-                currentValue: externalDelays.kintoWalletRecoveryTime,
-                requiredValue: MINIMUM_DELAY_SECONDS,
-            });
-        }
-    } else {
-         console.warn(chalk.yellow('Could not verify KintoWallet.RECOVERY_TIME (fetch failed).'));
-    }
-
-
-    // 5. Generate reports
+    // 4. Generate standard reports
     generateRolesOverviewReport(rolesData)
     generateActorsReport(rolesByActor, roleToTargetFunctions)
     generateTargetsReport(targetData)
-    generatePendingChangesReport(rolesByActor, targetData, scheduledOps, pendingRoleGrantChanges)
-    generateNonCompliantReport(nonCompliantValues); // *** NEW REPORT ***
+    generatePendingChangesReport(
+      // rolesByActor, // No longer passed here
+      // targetData, // No longer passed here
+      scheduledOps,
+      pendingRoleGrantChanges,
+    )
 
+    // --- NEW: 5. Generate Compliance Report ---
+    generateComplianceReport(
+      exitWindowPeriod,
+      recoveryTime,
+      targetData,
+      rolesData,
+    )
   } catch (error) {
     console.error(chalk.red('\nError running scan:'), error)
   }
 }
 
-// Helper to run the script if executed directly
-if (require.main === module) {
-  runScanKintoAm().catch(error => {
-    console.error('Unhandled error in script execution:', error);
-    process.exit(1);
-  });
-}
+// Helper to run the async function
+runScanKintoAm().catch((error) => {
+  console.error('Unhandled error in runScanKintoAm:', error)
+  process.exit(1)
+})
