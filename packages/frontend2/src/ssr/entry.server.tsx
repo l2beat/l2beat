@@ -1,17 +1,24 @@
 import { StrictMode } from 'react'
-import { renderToString } from 'react-dom/server'
-import { App, type SsrData } from '../app/App'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
+import { App } from '../app/App'
+import { Head } from './Head'
+import type { RenderData } from './types'
 
 export interface RenderResult {
   html: string
-  head?: string
+  head: string
 }
 
-export function render(ssrData: SsrData): RenderResult {
+export function render(data: RenderData): RenderResult {
   const html = renderToString(
     <StrictMode>
-      <App ssrData={ssrData} />
+      <App ssrData={data.ssr} />
     </StrictMode>,
   )
-  return { html }
+  const head = renderToStaticMarkup(
+    <StrictMode>
+      <Head {...data.head} />
+    </StrictMode>,
+  )
+  return { html, head }
 }

@@ -1,21 +1,28 @@
-import type { Render } from '../../ssr/types'
-import type { SsrData } from '../App'
 import type { Router } from 'express'
+import type { Render, RenderData } from '../../ssr/types'
 
 export function ProductRouter(app: Router, render: Render) {
   app.get('/product/:id', (req, res) => {
-    const ssrData = getProductProps(+req.params.id)
-    const html = render(ssrData)
+    const data = getProductData(+req.params.id)
+    const html = render(data)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }
 
-function getProductProps(id: number): SsrData {
+function getProductData(id: number): RenderData {
+  const name = ['Vaccum Cleaner', 'Toy', 'Plane'][id - 1] ?? 'Unknown'
+
   return {
-    page: 'ProductPage',
-    props: {
-      id,
-      name: ['Vaccum Cleaner', 'Toy', 'Plane'][id - 1] ?? 'Unknown',
+    head: {
+      title: `${name} - Product Page`,
+      description: 'Best product best price',
+    },
+    ssr: {
+      page: 'ProductPage',
+      props: {
+        id,
+        name,
+      },
     },
   }
 }

@@ -1,3 +1,9 @@
 import type { SsrData } from '../app/App'
+import type { HeadProps } from './Head'
 
-export type Render = (ssrData: SsrData) => string
+export interface RenderData {
+  ssr: SsrData
+  head: HeadProps
+}
+
+export type Render = (data: RenderData) => string

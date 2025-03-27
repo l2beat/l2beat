@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import fs, { mkdirSync, readFileSync } from 'fs'
-import { imageSize } from 'image-size'
 import path from 'path'
+import { imageSize } from 'image-size'
 
 interface Manifest {
   names: Record<string, string>

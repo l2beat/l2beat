@@ -2,10 +2,10 @@ import { readFileSync } from 'node:fs'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
-import type { SsrData } from './app/App'
 import { PageRouter } from './app/PageRouter'
-import { render as ssrRender } from './ssr/entry.server'
-import { getManifest, type Manifest } from './common/Manifest'
+import { type Manifest, getManifest } from './common/Manifest'
+import { render } from './ssr/entry.server'
+import type { RenderData } from './ssr/types'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
@@ -23,20 +23,20 @@ if (isProduction) {
   app.use('/static', express.static('./static'))
 }
 
-PageRouter(app, manifest, render)
+PageRouter(app, manifest, renderToHtml)
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
 
-function render(ssrData: SsrData) {
-  const rendered = ssrRender(ssrData)
+function renderToHtml(data: RenderData) {
+  const rendered = render(data)
   return template
-    .replace(`<!--app-head-->`, rendered.head ?? '')
-    .replace(`<!--app-html-->`, rendered.html ?? '')
+    .replace(`<!--app-head-->`, rendered.head)
+    .replace(`<!--app-html-->`, rendered.html)
     .replace(
       `<!--ssr-data-->`,
-      `window.__SSR_DATA__=${JSON.stringify(ssrData)}`,
+      `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
 }
 
