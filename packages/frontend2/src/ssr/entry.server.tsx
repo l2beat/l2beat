@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { App } from '../app/App'
-import { Head } from './Head'
+import { Head } from './head/Head'
 import type { RenderData } from './types'
 
 export interface RenderResult {

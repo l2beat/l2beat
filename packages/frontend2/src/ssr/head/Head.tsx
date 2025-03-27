@@ -1,14 +1,13 @@
 export interface HeadProps {
   title: string
   description: string
-  additionalFonts: Font
 }
 
 interface Font {
   family: string,
+  style: string
   weight: number
-  src: string,
-  style?: string
+  
 }
 
 export function Head(props: HeadProps) {
