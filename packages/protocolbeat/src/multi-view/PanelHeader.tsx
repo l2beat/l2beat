@@ -89,19 +89,36 @@ const toClipboard = async (
       const projectData = await getProject(project)
 
       const data = findSelected(projectData.entries, selectedAddress)
-      if (!data) break
+      if (!data) return
+      const { contract, chain } = data
+      if (!contract) break
 
-      if ('abis' in data) {
-        const abis: string[] = [`This is an ABI`]
+      const fields: string[] = []
+      if ('fields' in contract) {
+        fields.push(
+          `These are the values for block number ${chain.blockNumber} on chain ${chain.chain} `,
+        )
 
-        for (const a of (data as ApiProjectContract).abis) {
+        for (const f of (contract as ApiProjectContract).fields) {
+          const obj = { ...f.value }
+          //@ts-ignore
+          delete obj.type
+          fields.push(`${f.name}: ${JSON.stringify(obj)}`)
+        }
+      }
+
+      const abis: string[] = []
+      if ('abis' in contract) {
+        abis.push(`\nThis is the ABI`)
+
+        for (const a of (contract as ApiProjectContract).abis) {
           for (const e of a.entries) {
             abis.push(e.value)
           }
         }
-
-        navigator.clipboard.writeText(abis.join('\n'))
       }
+
+      navigator.clipboard.writeText([...fields, ...abis].join('\n'))
     }
   }
 }
@@ -113,17 +130,17 @@ function findSelected(chains: ApiProjectChain[], address: string | undefined) {
   for (const chain of chains) {
     for (const contract of chain.initialContracts) {
       if (contract.address === address) {
-        return contract
+        return { contract, chain: chain }
       }
     }
     for (const contract of chain.discoveredContracts) {
       if (contract.address === address) {
-        return contract
+        return { contract, chain: chain }
       }
     }
     for (const eoa of chain.eoas) {
       if (eoa.address === address) {
-        return eoa
+        return { contract: eoa, chain: chain }
       }
     }
   }
