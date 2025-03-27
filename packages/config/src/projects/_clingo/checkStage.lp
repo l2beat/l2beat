@@ -1,10 +1,13 @@
-% #include "relations.lp".
-% #include "model.lp".
 #include "newForProjectPage.lp".
 
 % Setup:
 isSecurityCouncil(superchainProxyAdminOwner_ethereum_0x5a0aae59d09fccbddb6c6cceb07b7279367c3d2a).
 isSecurityCouncil(optimism_Security_Council_ethereum_0xc2819dc788505aac350142a7a707bf9d03e3bd03).
+
+minority(Msig, Minority) :-
+  msig(Msig, Threshold),
+  Count = #count{1, Member : member(Msig, Member)},
+  Minority = Count - Threshold + 1.
 
 currentGame(Game) :-
   isOptimismPortal(OptimismPortal),
@@ -37,6 +40,9 @@ proofSystemCanBeMadePermissionless :-
   thereArePermissionlessGamesAvailable,
   canSetRespectedGameType(Actor),
   not compromised(Actor).
+  minority(Actor, Minority),
+  msig(Actor, Threshold),
+  Threshold <= Minority.
 
 canFinalizeInvalidStateRoot :-
   proofSystemIsOrCanBeMadePermissioned,
@@ -56,11 +62,6 @@ proofSystemCanBeMadePermissioned :-
   canSetRespectedGameType(Actor),
   compromised(Actor).
 
-% proofSystemIsPermissioned :- 
-%   isOptimismPortal(OptimismPortal),
-%   canSetRespectedGameType(OptimismPortal, Actor),
-%   compromised(Actor).
-  
 canSetRespectedGameType(Actor) :-
   isOptimismPortal(OptimismPortal),
   ultimatePermission(Actor, "interact", OptimismPortal, _, "setRespectedGameType", _, _).
@@ -79,11 +80,8 @@ compromised(Actor) :-
 
 isStage1 :-
   not isNotStage1.
-  % not compromised(X),
-  % not ultimatePermission(X, _, _, _, _, _, _).
 
 isNotStage1 :-
-  % not isStage1.
   compromised(X),
   not ultimatePermission(X, _, _, _, _, _, _).
 
@@ -93,7 +91,7 @@ compromisedContract(X) :-
 
 % #show nonSCUpgradePermissionExists/1.
 % #show compromised/1.
-% #show compromisedContract/1.
+#show compromisedContract/1.
 #show isStage1/0.
 #show isNotStage1/0.
 % #show canSetRespectedGameType/1.
@@ -104,16 +102,4 @@ compromisedContract(X) :-
 % #show thereArePermissionedGamesAvailable/0.
 % #show thereArePermissionlessGamesAvailable/0.
 #show proofSystemCanBeMadePermissionless/0.
-
-
-% canActAsGuardianMsg(X) :-
-%   permission(X, "act", optimism_Guardian_Multisig_ethereum_0x09f7150d8c019bef34450d6920f6b3608cefdaf2).
-
-% % #show canActAsGuardianMsg/1.
-
-% ultimateInteracts(X, Y) :-
-%   ultimatePermission(X, "interact", Y, _, _, _, _).
-
-% #show ultimateInteracts/2.
-
-% #show isOptimismPortal/1.
+% #show minority/2.
