@@ -17,6 +17,8 @@ export function FaqRouter(
 }
 
 async function getFaqData(manifest: Manifest): Promise<RenderData> {
+  const searchBarProjects = await getSearchBarProjects()
+
   return {
     head: {
       manifest,
@@ -31,7 +33,10 @@ async function getFaqData(manifest: Manifest): Promise<RenderData> {
           id: term.id,
           matches: [term.data.term, ...(term.data.match ?? [])],
         })),
-        searchBarProjects: await getSearchBarProjects(),
+        searchBarProjects: searchBarProjects.map((p) => ({
+          ...p,
+          iconUrl: manifest.getUrl('/static' + p.iconUrl),
+        })),
       },
     },
   }
