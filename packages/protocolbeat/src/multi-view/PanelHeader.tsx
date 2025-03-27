@@ -1,7 +1,11 @@
+import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
+import { useParams } from 'react-router-dom'
+import { getCode } from '../api/api'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
+import { usePanelStore } from '../store/store'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
 
 export function PanelHeader(props: { id: PanelId }) {
@@ -13,6 +17,20 @@ export function PanelHeader(props: { id: PanelId }) {
   const pickUp = useMultiViewStore((state) => state.pickUp)
   const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const removePanel = useMultiViewStore((state) => state.removePanel)
+
+  const { project } = useParams()
+  if (!project) {
+    throw new Error('Cannot use component outside of project page!')
+  }
+  const selectedAddress = usePanelStore((state) => state.selected)
+  // TODO: move to onClick()
+  const codeResponse = useQuery({
+    queryKey: ['projects', project, 'code', selectedAddress],
+    enabled: selectedAddress !== undefined,
+    queryFn: () => getCode(project, selectedAddress),
+  })
+
+  const sources = codeResponse.data?.sources ?? []
 
   return (
     <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
@@ -37,6 +55,23 @@ export function PanelHeader(props: { id: PanelId }) {
         }
       />
       <div className="hidden gap-1 group-hover:flex">
+        <button
+          onClick={() => {
+            const message: string[] = []
+
+            for (const s of sources) {
+              message.push(`This is a source code for contract ${s.name}`)
+              message.push(`\`\`\``)
+              message.push(s.code)
+              message.push(`\`\`\``)
+            }
+
+            navigator.clipboard.writeText(message.join('\n'))
+          }}
+          className="w-4"
+        >
+          cc
+        </button>
         <button className="w-4" onClick={() => toggleFullScreen(props.id)}>
           {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
         </button>
