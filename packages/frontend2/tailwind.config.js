@@ -19,7 +19,9 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['system-ui', 'sans-serif'],
+      roboto: ['Roboto', 'sans-serif'],
+      'roboto-serif': ['Roboto Serif', 'serif'],
+      'roboto-serif-ext': ['Roboto Serif Ext', 'Roboto Serif', 'serif'],
       mono: [
         'ui-monospace',
         'Menlo',
@@ -30,7 +32,6 @@ module.exports = {
         'DejaVu Sans Mono',
         'monospace',
       ],
-      serif: ['Charter', 'Bitstream Charter', 'Sitka Text', 'Cambria', 'serif'],
     },
   },
   plugins: [],

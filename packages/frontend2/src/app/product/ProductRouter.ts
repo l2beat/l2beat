@@ -1,19 +1,21 @@
 import type { Router } from 'express'
 import type { Render, RenderData } from '../../ssr/types'
+import type { Manifest } from '../../common/Manifest'
 
-export function ProductRouter(app: Router, render: Render) {
+export function ProductRouter(app: Router, manifest: Manifest, render: Render) {
   app.get('/product/:id', (req, res) => {
-    const data = getProductData(+req.params.id)
+    const data = getProductData(+req.params.id, manifest)
     const html = render(data)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }
 
-function getProductData(id: number): RenderData {
+function getProductData(id: number, manifest: Manifest): RenderData {
   const name = ['Vaccum Cleaner', 'Toy', 'Plane'][id - 1] ?? 'Unknown'
 
   return {
     head: {
+      manifest,
       title: `${name} - Product Page`,
       description: 'Best product best price',
     },

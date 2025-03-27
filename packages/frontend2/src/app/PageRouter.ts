@@ -6,5 +6,5 @@ import { ProductRouter } from './product/ProductRouter'
 
 export function PageRouter(app: Router, manifest: Manifest, render: Render) {
   HomeRouter(app, manifest, render)
-  ProductRouter(app, render)
+  ProductRouter(app, manifest, render)
 }

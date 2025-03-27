@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "./scripts/dev.sh",
     "build": "./scripts/build.sh",
-    "start": "node ./dist/server/index.js",
+    "start": "NODE_ENV=production node ./dist/server/index.js",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",

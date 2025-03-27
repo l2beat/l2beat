@@ -13,6 +13,7 @@ export function HomeRouter(app: Router, manifest: Manifest, render: Render) {
 function getHomeData(manifest: Manifest): RenderData {
   return {
     head: {
+      manifest,
       title: 'Home',
       description: 'Sweet Home Alabama',
     },
