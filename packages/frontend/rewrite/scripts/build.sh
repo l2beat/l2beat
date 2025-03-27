@@ -17,8 +17,8 @@ tailwindcss \
 tsx ./rewrite/scripts/hashFiles.ts
 
 esbuild \
-  rewrite/src/index.ts\
+  rewrite/src/index.ts \
   --bundle \
   --platform=node \
+  --jsx=automatic \
   --outfile=rewrite/dist/server/index.js
-# tsc -p rewrite/tsconfig.build.json
