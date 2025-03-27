@@ -20,14 +20,14 @@ export function getManifest(isProduction: boolean, rootDir: string) {
       getUrl(url: string) {
         const resolved = json.names[url]
         if (!resolved) {
-          throw Error('Trying to access non existing file')
+          throw Error(`Trying to access non existing file in manifest: ${url}`)
         }
         return resolved
       },
       getImage(url: string) {
         const resolved = json.images[url]
         if (!resolved) {
-          throw Error('Trying to access non existing image')
+          throw Error(`Trying to access non existing image in manifest: ${url}`)
         }
         return resolved
       },

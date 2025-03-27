@@ -1,12 +1,8 @@
-import { TooltipProvider } from '@radix-ui/react-tooltip'
-import {
-  GlossaryContextProvider,
-  GlossaryTermWithoutDescription,
-} from '~/components/markdown/glossary-context'
-import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
-import { SearchBarProject } from '~/components/search-bar/search-bar-entry'
+import type { GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
+import type { SearchBarProject } from '~/components/search-bar/search-bar-entry'
 import _FaqPage from '../../../../src/app/(side-nav)/faq/page'
+import { AppLayout } from '~/app/_layout'
+import SideNavLayout from '~/app/(side-nav)/layout'
 
 export interface FaqPageProps {
   terms: GlossaryTermWithoutDescription[]
@@ -15,14 +11,10 @@ export interface FaqPageProps {
 
 export function FaqPage(props: FaqPageProps) {
   return (
-    <TooltipProvider delayDuration={300} disableHoverableContent>
-      <GlossaryContextProvider terms={props.terms}>
-        <SearchBarContextProvider projects={props.searchBarProjects}>
-          <RecategorisationPreviewContextProvider>
-            <_FaqPage />
-          </RecategorisationPreviewContextProvider>
-        </SearchBarContextProvider>
-      </GlossaryContextProvider>
-    </TooltipProvider>
+    <AppLayout {...props}>
+      <SideNavLayout>
+        <_FaqPage />
+      </SideNavLayout>
+    </AppLayout>
   )
 }

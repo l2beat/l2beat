@@ -1,17 +1,13 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
-import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { PlausibleProvider } from '~/providers/plausible-provider'
-import { TRPCReactProvider } from '~/trpc/react'
 import { getDefaultMetadata } from '~/utils/metadata'
-import { TooltipProvider } from '../components/core/tooltip/tooltip'
-import { GlossaryContextProvider } from '../components/markdown/glossary-context'
-import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import { AppLayout } from './_layout'
+import { TRPCReactProvider } from '~/trpc/react'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -47,21 +43,15 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <PlausibleProvider>
-              <TooltipProvider delayDuration={300} disableHoverableContent>
-                <GlossaryContextProvider
-                  terms={terms.map((term) => ({
-                    id: term.id,
-                    matches: [term.data.term, ...(term.data.match ?? [])],
-                  }))}
-                >
-                  <SearchBarContextProvider projects={searchBarProjects}>
-                    <RecategorisationPreviewContextProvider>
-                      {children}
-                    </RecategorisationPreviewContextProvider>
-                  </SearchBarContextProvider>
-                  <ProgressBar />
-                </GlossaryContextProvider>
-              </TooltipProvider>
+              <AppLayout
+                terms={terms.map((term) => ({
+                  id: term.id,
+                  matches: [term.data.term, ...(term.data.match ?? [])],
+                }))}
+                searchBarProjects={searchBarProjects}
+              >
+                {children}
+              </AppLayout>
             </PlausibleProvider>
           </ThemeProvider>
         </TRPCReactProvider>
