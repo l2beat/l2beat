@@ -51,6 +51,26 @@ export function CodePanel() {
   return (
     <div className="flex h-full w-full select-none flex-col">
       <div className="flex gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
+        <button
+          onClick={() => {
+            const contract = sources[current]
+            if (contract === undefined) {
+              navigator.clipboard.writeText('No contract selected')
+              return
+            }
+
+            const message = [
+              `This is a source code for contract ${contract.name}\n`,
+              `\`\`\``,
+              `${contract.code}`,
+              `\`\`\``,
+            ].join('\n')
+            navigator.clipboard.writeText(message)
+          }}
+          className="w-4"
+        >
+          cc
+        </button>
         {sources.map((x, i) => (
           <button
             key={i}
