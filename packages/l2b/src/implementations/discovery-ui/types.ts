@@ -4,6 +4,8 @@ export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
   name: string
+  addresses: string[]
+  contractNames: string[]
   chains: string[]
 }
 

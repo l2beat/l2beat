@@ -50,7 +50,8 @@ function AllProjects(props: { search: string }) {
     }
   }
 
-  const filtered = result.data.filter((x) => x.name.includes(props.search))
+  const search = props.search.toLowerCase()
+  const filtered = result.data.filter((x) => matchesFilter(search, x))
   const favoriteList = filtered.filter((x) => favorites.includes(x.name))
   const otherList = filtered.filter((x) => !favorites.includes(x.name))
 
@@ -88,6 +89,17 @@ function AllProjects(props: { search: string }) {
         </>
       )}
     </>
+  )
+}
+
+function matchesFilter(search: string, entry: ApiProjectEntry): boolean {
+  if (search.startsWith('%')) {
+    return entry.contractNames.some((c) => c.includes(search.slice(1)))
+  }
+
+  return (
+    entry.name.includes(search) ||
+    entry.addresses.some((a) => a.includes(search))
   )
 }
 
