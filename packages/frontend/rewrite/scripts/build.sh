@@ -10,6 +10,7 @@ esbuild \
   rewrite/src/ssr/client.tsx \
   --bundle \
   --minify \
+  --tsconfig=rewrite/tsconfig.json \
   --outfile=rewrite/static/index.js
 tailwindcss \
   -i rewrite/src/styles/globals.css \
@@ -21,5 +22,6 @@ esbuild \
   --bundle \
   --platform=node \
   --packages=external \
+  --tsconfig=rewrite/tsconfig.json \
   --jsx=automatic \
   --outfile=rewrite/dist/server/index.js

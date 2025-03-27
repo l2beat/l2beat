@@ -8,7 +8,7 @@
     "outDir": "dist",
     "paths": {
       "~/*": ["./src/*"],
-      "react": ["./node_modules/@types/react"]
+      "next/navigation": ["./src/_next/navigation"]
     }
   },
   "exclude": ["dist", "static"]
