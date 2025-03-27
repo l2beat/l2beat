@@ -57,19 +57,20 @@ export abstract class ClientCore {
   private async _fetch(url: string, init: RequestInit): Promise<json> {
     const start = Date.now()
 
-    const response = await this.deps.http.fetchEx(url, init)
+    const response = await this.deps.http.fetch(url, init)
 
     const duration = Date.now() - start
+    const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
 
-    this.metricsBuffer.push({ duration, size: response.size })
+    this.metricsBuffer.push({ duration, size: size })
 
-    const validationInfo = this.validateResponse(response.json)
+    const validationInfo = this.validateResponse(response)
 
     if (!validationInfo.success) {
       throw new Error(validationInfo.message ?? 'Response validation failed')
     }
 
-    return response.json
+    return response
   }
 
   /** This method should return false when there are errors in the response, true otherwise */
