@@ -14,7 +14,7 @@ export interface Manifest {
 
 export function getManifest(isProduction: boolean, rootDir: string) {
   if (isProduction) {
-    const content = fs.readFileSync('dist/manifest.json', 'utf-8')
+    const content = fs.readFileSync('rewrite/dist/manifest.json', 'utf-8')
     const json = JSON.parse(content) as ManifestJson
     return {
       getUrl(url: string) {

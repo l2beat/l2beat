@@ -20,5 +20,6 @@ esbuild \
   rewrite/src/index.ts \
   --bundle \
   --platform=node \
+  --packages=external \
   --jsx=automatic \
   --outfile=rewrite/dist/server/index.js

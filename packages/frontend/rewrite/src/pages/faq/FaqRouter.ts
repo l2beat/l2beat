@@ -1,4 +1,6 @@
 import type { Router } from 'express'
+import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
+import { getCollection } from '~/content/get-collection'
 import type { Manifest } from '../../common/Manifest'
 import type { RenderData, RenderFunction } from '../../ssr/server'
 
@@ -7,14 +9,14 @@ export function FaqRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/faq', (_req, res) => {
-    const data = getFaqData(manifest)
+  app.get('/faq', async (_req, res) => {
+    const data = await getFaqData(manifest)
     const html = render(data)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }
 
-function getFaqData(manifest: Manifest): RenderData {
+async function getFaqData(manifest: Manifest): Promise<RenderData> {
   return {
     head: {
       manifest,
@@ -24,7 +26,13 @@ function getFaqData(manifest: Manifest): RenderData {
     },
     ssr: {
       page: 'FaqPage',
-      props: undefined,
+      props: {
+        terms: getCollection('glossary').map((term) => ({
+          id: term.id,
+          matches: [term.data.term, ...(term.data.match ?? [])],
+        })),
+        searchBarProjects: await getSearchBarProjects(),
+      },
     },
   }
 }

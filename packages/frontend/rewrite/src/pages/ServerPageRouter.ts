@@ -1,9 +1,9 @@
 import type { Router } from 'express'
 import type { Manifest } from '../common/Manifest'
 import type { RenderFunction } from '../ssr/server'
+import { FaqRouter } from './faq/FaqRouter'
 import { HomeRouter } from './home/HomeRouter'
 import { ProductRouter } from './product/ProductRouter'
-import { FaqRouter } from './faq/FaqRouter'
 
 export function ServerPageRouter(
   app: Router,
