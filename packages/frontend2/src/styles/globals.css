@@ -1,3 +1,230 @@
+@import "./markdown.css";
+@import "./article.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--scrollbar)) transparent;
+}
+
+@layer base {
+  :root {
+    --primary: 260deg 7.69% 7.65%;
+    --primary-invert: 0deg 0% 98%;
+    --secondary: 222deg 8.21% 40.6%;
+    --positive: 124deg 100% 22.7%;
+    --warning: 44.9deg 100% 33.5%;
+    --negative: 0deg 100% 42%;
+    --brand: 285deg 62.7% 52.7%;
+    --background: 230deg 13.6% 91.4%;
+    --background-reading: 0deg 0% 98%;
+    --surface-primary: 0deg 0% 98%;
+    --surface-secondary: 230deg 13.6% 91.4%;
+    --surface-tertiary: 223deg 15.9% 82.7%;
+    --header-primary: 0deg 0% 100%;
+    --header-secondary: 230deg 21.4% 94.5%;
+    --icon-secondary: 222deg 8.21% 40.6%;
+    --overlay: 231deg 30.4% 13.5% / 60%;
+    --divider: 223deg 15.9% 82.7%;
+    --link-stroke: 212deg 100% 86.5%;
+    --link: 223deg 69% 50.6%;
+    --scrollbar: 221deg 8.84% 57.8%;
+
+    --row-highlight: 284deg 86.6% 67.8% / 0.4;
+    --row-highlight-no-opacity: 284deg 80.3% 86.1%;
+
+    /* Chart colors */
+    --chart-ethereum: 223deg 69% 50.6%;
+    --chart-ethereum-secondary: 212deg 100% 66.3%;
+    --chart-pink: 321deg 84.3% 60%;
+    --chart-cyan: 180deg 50.2% 42.5%;
+    --chart-yellow: 44.9deg 100% 33.5%;
+    --chart-emerald: 151deg 90% 48%;
+
+    --chart-stacked-pink: 320deg 100% 63.7%;
+    --chart-stacked-yellow: 45deg 100% 51.4%;
+    --chart-stacked-purple: 266deg 57.7% 52.7%;
+    --chart-stacked-blue: 220deg 100% 57.5%;
+
+    --chart-da-celestia: 284deg 100% 78%;
+
+    /* Chart gradients */
+
+    --chart-ethereum-fill-gradient: 217deg 77.8% 49.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 223deg 69% 50.6%;
+
+    --chart-pink-fill-gradient: 302deg 100% 68.6%;
+    --chart-pink-stroke-gradient-1: 266deg 57.7% 52.7%;
+    --chart-pink-stroke-gradient-2: 321deg 84.3% 60%;
+
+    --chart-cyan-fill-gradient: 190deg 73.6% 55.5%;
+    --chart-cyan-stroke-gradient-1: 180deg 50.2% 42.5%;
+    --chart-cyan-stroke-gradient-2: 191deg 70.8% 37.6%;
+
+    --chart-yellow-fill-gradient: 53.8deg 70.9% 56.9%;
+    --chart-yellow-stroke-gradient-1: 44.9deg 100% 33.5%;
+    --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
+
+    --chart-emerald-fill-gradient: 151deg 90.2% 64.1%;
+  }
+
+  .dark {
+    --primary: 0deg 0% 98%;
+    --primary-invert: 260deg 7.69% 7.65%;
+    --secondary: 223deg 8.04% 56.1%;
+    --positive: 145deg 81.2% 43.7%;
+    --warning: 45deg 100% 51.4%;
+    --negative: 0deg 100% 50%;
+    --brand: 284deg 87.1% 75.7%;
+    --background: 0deg 0% 0%;
+    --background-reading: 0deg 0% 0%;
+    --surface-primary: 225deg 14.8% 10.6%;
+    --surface-secondary: 222deg 8.06% 24.3%;
+    --surface-tertiary: 220deg 7.89% 29.8%;
+    --header-primary: 225deg 14.8% 10.6%;
+    --header-secondary: 222deg 16% 15.9%;
+    --icon-secondary: 222deg 8.21% 40.6%;
+    --overlay: 0deg 0% 0% / 60%;
+    --divider: 226deg 14.3% 28.8%;
+    --link-stroke: 217deg 56.3% 18.8%;
+    --link: 212deg 100% 66.3%;
+    --scrollbar: 225deg 13.7% 28.6%;
+
+    --row-highlight: 284deg 70.5% 43.9% / 0.4;
+    --row-highlight-no-opacity: 281deg 51.6% 25.1%;
+
+    /* Chart colors */
+    --chart-ethereum: 212deg 100% 66.3%;
+    --chart-ethereum-secondary: 223deg 69% 50.6%;
+    --chart-pink: 284deg 87.1% 75.7%;
+    --chart-cyan: 190deg 73.6% 55.5%;
+    --chart-yellow: 54.2deg 70.9% 56.9%;
+    --chart-emerald: 151deg 90.2% 48%;
+
+    --chart-stacked-pink: 320deg 100% 63.7%;
+    --chart-stacked-yellow: 45deg 100% 51.4%;
+    --chart-stacked-purple: 266deg 57.7% 52.7%;
+    --chart-stacked-blue: 220deg 100% 57.5%;
+
+    --chart-da-celestia: 285deg 62.7% 52.7%;
+
+    /* Chart gradients */
+
+    --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 217deg 77.8% 49.4%;
+
+    --chart-pink-fill-gradient: 313deg 40.1% 38.6%;
+    --chart-pink-stroke-gradient-1: 284deg 87.1% 75.7%;
+    --chart-pink-stroke-gradient-2: 321deg 84.3% 60%;
+
+    --chart-cyan-fill-gradient: 193deg 55.1% 36.7%;
+    --chart-cyan-stroke-gradient-1: 180deg 50.2% 42.5%;
+    --chart-cyan-stroke-gradient-2: 190deg 73.6% 55.5%;
+
+    --chart-yellow-fill-gradient: 50.1deg 59% 40.2%;
+    --chart-yellow-stroke-gradient-1: 45.1deg 100% 52%;
+    --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
+
+    --chart-emerald-fill-gradient: 163deg 93.5% 24.3%;
+  }
+}
+
+@layer base {
+  html:has(.smooth-scroll) {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-base text-primary md:text-lg font-sans selection:bg-brand/30 dark:selection:bg-brand/50;
+  }
+
+  body:has(.reading) {
+    @apply bg-background-reading;
+  }
+}
+
+@layer utilities {
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
+  /* Masks for overflow wrapper */
+  .fade-out-to-left {
+    -webkit-mask-image: linear-gradient(
+      to left,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to left,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+  }
+
+  .fade-out-to-right {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 0px,
+      black calc(100% - 30px),
+      transparent 100%
+    );
+  }
+  .fade-out-horizontal {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 30px calc(100% - 30px),
+      transparent
+    ) !important;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 30px calc(100% - 30px),
+      transparent
+    ) !important;
+  }
+
+  .chart-fade-out-to-bottom {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
+  }
+
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
