@@ -25,7 +25,6 @@ export function RealPizzaRosetteIcon({
   isUnderReview: _,
   background = 'header',
 }: Props) {
-  console.dir({ values }, { depth: null })
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
 
