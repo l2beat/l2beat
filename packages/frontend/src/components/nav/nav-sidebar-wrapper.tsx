@@ -54,7 +54,7 @@ export const NavSideBarWrapper = ({
       >
         <div
           className={cn(
-            'flex flex-col gap-6 overflow-y-auto overflow-x-clip px-3.5 pt-4 transition-all duration-300 ease-out max-lg:bg-surface-primary sm:w-[300px] lg:fixed lg:px-5 lg:pt-[1.125rem]',
+            'flex flex-col gap-6 overflow-y-auto overflow-x-clip px-3 pt-4 transition-all duration-300 ease-out max-lg:bg-surface-primary sm:w-[300px] lg:fixed lg:px-5 lg:pt-[1.125rem]',
             sharedSizeClasses,
             resizing && 'transition-none',
           )}

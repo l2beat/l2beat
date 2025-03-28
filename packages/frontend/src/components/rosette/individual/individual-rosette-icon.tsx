@@ -28,7 +28,7 @@ interface Props {
   background?: 'header' | 'surface'
 }
 
-export function IndividualPizzaRosetteIcon({
+export function IndividualRealPizzaRosetteIcon({
   l2,
   l3,
   className,

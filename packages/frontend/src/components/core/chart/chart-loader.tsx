@@ -40,7 +40,7 @@ export function ChartLoader({ className }: { className?: string }) {
           begin="-0.5s"
         />
         <animate
-          attributeName="fill-opacity"
+          attributeName="fillOpacity"
           values="0;0;1;1"
           calcMode="discrete"
           keyTimes="0;0.499;0.5;1"
