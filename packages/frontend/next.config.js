@@ -18,7 +18,6 @@ const nextConfig = {
       'coin-images.coingecko.com',
       'token-repository.dappradar.com',
       'l2beat.com',
-      'placehold.co',
     ],
   },
   async headers() {
