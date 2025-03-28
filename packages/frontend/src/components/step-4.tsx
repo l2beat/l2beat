@@ -97,7 +97,7 @@ export function Step5({
               should try a different one?
             </div>
             <div className="mt-4 flex gap-2">
-              <PizzaButton variant={'outline'}>
+              <PizzaButton variant={'outline'} onClick={onReset}>
                 Pick different pizza
               </PizzaButton>
             </div>
