@@ -129,7 +129,11 @@ function NameWithProjectInfoTooltip({
         <div className="grid w-full grid-cols-5">
           {project.badges?.map((badge, key) => (
             <div key={key} className="h-16 place-items-center">
-              <ProjectBadge badge={badge} hideTooltip className="lg:h-16" />
+              <ProjectBadge
+                badge={badge}
+                disableInteraction
+                className="lg:h-16"
+              />
             </div>
           ))}
         </div>
