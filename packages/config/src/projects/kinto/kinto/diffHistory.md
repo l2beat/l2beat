@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x93bee956c70ecd4851466713c0456ac6a2688a62
+
+# Diff at Fri, 28 Mar 2025 10:29:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@279f845afa28d7cd0a0fe99f5744c0fe98cd5c86 block: 781473
+- current block number: 783310
+
+## Description
+
+Ignore RewardsDistributor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 781473 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87)
+    +++ description: KINTO token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293)
+    +++ description: Kinto Treasury.
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      directlyReceivedPermissions.9:
+-        {"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}
+      directlyReceivedPermissions.8:
+-        {"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"}
+      directlyReceivedPermissions.7.from:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.6.description:
+-        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      directlyReceivedPermissions.5.description:
++        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.4.from:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      directlyReceivedPermissions.4.description:
+-        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+      directlyReceivedPermissions.3.from:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.3.description:
+-        "send tokens and ETH from the Treasury to any address without delay."
++        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7d8888dd37ac334ba78ec5c7615681fda27b20f9
 
 # Diff at Thu, 27 Mar 2025 09:06:27 GMT:
