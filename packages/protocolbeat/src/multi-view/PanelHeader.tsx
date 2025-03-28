@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { isReadOnly } from '../config'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
@@ -14,6 +15,10 @@ export function PanelHeader(props: { id: PanelId }) {
   const toggleFullScren = useMultiViewStore((state) => state.toggleFullScren)
   const removePanel = useMultiViewStore((state) => state.removePanel)
 
+  const availablePanels = isReadOnly
+    ? PANEL_IDS.filter((id) => id !== 'terminal' && id !== 'code')
+    : PANEL_IDS
+
   return (
     <div className="group flex h-[36px] select-none border-coffee-600 border-y bg-coffee-800 px-[7px] py-1">
       <select
@@ -24,7 +29,7 @@ export function PanelHeader(props: { id: PanelId }) {
         value={props.id}
         onChange={(e) => changePanel(props.id, e.target.value as PanelId)}
       >
-        {PANEL_IDS.map((id) => (
+        {availablePanels.map((id) => (
           <option key={id} value={id}>
             {id.slice(0, 1).toUpperCase() + id.slice(1)}
           </option>
