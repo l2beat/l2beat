@@ -1,3 +1,4 @@
+import { ThemeProvider } from 'next-themes'
 import { TooltipProvider } from '~/components/core/tooltip/tooltip'
 import type { GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
 import { GlossaryContextProvider } from '~/components/markdown/glossary-context'
@@ -16,15 +17,21 @@ export function AppLayout({
   searchBarProjects: SearchBarProject[]
 }) {
   return (
-    <TooltipProvider delayDuration={300} disableHoverableContent>
-      <GlossaryContextProvider terms={terms}>
-        <SearchBarContextProvider projects={searchBarProjects}>
-          <RecategorisationPreviewContextProvider>
-            {children}
-          </RecategorisationPreviewContextProvider>
-        </SearchBarContextProvider>
-        <ProgressBar />
-      </GlossaryContextProvider>
-    </TooltipProvider>
+    <ThemeProvider
+      attribute="class"
+      storageKey="l2beat-theme"
+      disableTransitionOnChange
+    >
+      <TooltipProvider delayDuration={300} disableHoverableContent>
+        <GlossaryContextProvider terms={terms}>
+          <SearchBarContextProvider projects={searchBarProjects}>
+            <RecategorisationPreviewContextProvider>
+              {children}
+            </RecategorisationPreviewContextProvider>
+          </SearchBarContextProvider>
+          <ProgressBar />
+        </GlossaryContextProvider>
+      </TooltipProvider>
+    </ThemeProvider>
   )
 }

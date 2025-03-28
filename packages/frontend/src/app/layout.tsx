@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { ThemeProvider } from 'next-themes'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
 import { PlausibleProvider } from '~/providers/plausible-provider'
@@ -37,23 +36,17 @@ export default async function RootLayout({
       </head>
       <body className={roboto.variable}>
         <TRPCReactProvider>
-          <ThemeProvider
-            attribute="class"
-            storageKey="l2beat-theme"
-            disableTransitionOnChange
-          >
-            <PlausibleProvider>
-              <AppLayout
-                terms={terms.map((term) => ({
-                  id: term.id,
-                  matches: [term.data.term, ...(term.data.match ?? [])],
-                }))}
-                searchBarProjects={searchBarProjects}
-              >
-                {children}
-              </AppLayout>
-            </PlausibleProvider>
-          </ThemeProvider>
+          <PlausibleProvider>
+            <AppLayout
+              terms={terms.map((term) => ({
+                id: term.id,
+                matches: [term.data.term, ...(term.data.match ?? [])],
+              }))}
+              searchBarProjects={searchBarProjects}
+            >
+              {children}
+            </AppLayout>
+          </PlausibleProvider>
         </TRPCReactProvider>
       </body>
     </html>
