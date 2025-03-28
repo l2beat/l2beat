@@ -45,9 +45,11 @@ export function NodeView(props: NodeViewProps) {
         <AddressIcon type={props.node.addressType} />
         <div className="truncate">{props.node.name}</div>
       </div>
-      {props.node.fields.map((field, i) => (
-        <NodeField key={i} field={field} selected={props.selected} />
-      ))}
+      {props.node.fields
+        .filter((field) => !props.node.hiddenFields.includes(field.name))
+        .map((field, i) => (
+          <NodeField key={i} field={field} selected={props.selected} />
+        ))}
     </div>
   )
 }

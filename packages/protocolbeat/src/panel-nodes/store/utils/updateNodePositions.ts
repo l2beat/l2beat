@@ -18,7 +18,9 @@ export function updateNodePositions(state: State): State {
     nodeDimensions[node.id] = {
       width: node.box.width,
       height:
-        HEADER_HEIGHT + node.fields.length * FIELD_HEIGHT + BOTTOM_PADDING,
+        HEADER_HEIGHT +
+        (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
+        BOTTOM_PADDING,
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }
@@ -41,6 +43,12 @@ export function updateNodePositions(state: State): State {
             // this should never happen
             throw new Error('missing dimensions for node ' + field.target)
           }
+
+          // Calculate the actual visible index by counting non-hidden fields up to the current index
+          const visibleIndex = node.fields
+            .slice(0, index)
+            .filter((f) => !node.hiddenFields.includes(f.name)).length
+
           return {
             ...field,
             box: {
@@ -51,7 +59,7 @@ export function updateNodePositions(state: State): State {
             },
             connection: {
               nodeId: field.target,
-              ...processConnection(index, box, to),
+              ...processConnection(visibleIndex, box, to),
             },
           }
         }),
@@ -64,7 +72,11 @@ export function updateNodePositions(state: State): State {
 
 function processConnection(
   index: number,
-  from: { x: number; y: number; width: number },
+  from: {
+    x: number
+    y: number
+    width: number
+  },
   to: { x: number; y: number; width: number },
 ): Omit<Connection, 'nodeId'> {
   const fromY = from.y + HEADER_HEIGHT + FIELD_HEIGHT * (index + 0.5)
