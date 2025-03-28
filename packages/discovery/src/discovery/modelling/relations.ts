@@ -77,6 +77,15 @@ permissionDelay(
   &permission.delay).`,
   when: (_, p) => p?.delay !== undefined && p.delay !== 0,
 }
+const permissionConditionTemplate: InlineTemplate = {
+  content: `
+permissionCondition(
+  @self,
+  "&permission.type",
+  &permission.giver,
+  "&permission.condition").`,
+  when: (_, p) => p?.condition !== undefined,
+}
 
 export function buildRelationsModels(
   discoveryOutput: DiscoveryOutput,
@@ -118,12 +127,14 @@ export function buildRelationsModels(
         'permission.giver': permission.from,
         'permission.description': permission.description,
         'permission.delay': permission.delay,
+        'permission.condition': permission.condition,
       }
 
       for (const template of [
         permissionTemplate,
         permissionDescriptionTemplate,
         permissionDelayTemplate,
+        permissionConditionTemplate,
       ]) {
         if (template.when(contractOrEoa, permission)) {
           const interpolated = interpolateModelTemplate(
