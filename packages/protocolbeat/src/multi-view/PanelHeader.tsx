@@ -97,7 +97,8 @@ const toClipboard = async (
       const fields: string[] = []
       if ('fields' in contract) {
         fields.push(
-          `These are the values for block number ${chain.blockNumber} on chain ${chain.chain} `,
+          `In our logic for fetching values we map proxy owners to $admin field.`,
+          `These are the values for block number ${chain.blockNumber} on chain ${chain.chain}:`,
         )
 
         for (const f of (contract as ApiProjectContract).fields) {
