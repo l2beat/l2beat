@@ -3,6 +3,7 @@ import { uniq } from 'lodash'
 import { usePathname } from 'next/navigation'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
+import { useSearchParamState } from '~/hooks/use-search-param-state'
 import { useTracking } from '~/hooks/use-tracking'
 import { FilterableValueId } from './filterable-value'
 
@@ -156,6 +157,7 @@ function filterReducer(
 export function useFilterState() {
   const { track } = useTracking()
   const pathname = usePathname()
+  const [filters, setFilters] = useSearchParamState('filters')
 
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
@@ -164,8 +166,6 @@ export function useFilterState() {
   )
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const filters = params.get('filters')
     if (!filters) return
     dispatch({
       type: 'set',
@@ -175,17 +175,17 @@ export function useFilterState() {
         ),
       },
     })
-  }, [])
+  }, [filters])
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
     if (Object.keys(state).length > 0) {
-      params.set('filters', encodeURIComponent(JSON.stringify(state)))
+      setFilters(encodeURIComponent(JSON.stringify(state)))
     } else {
-      params.delete('filters')
+      if (filters) {
+        setFilters(undefined)
+      }
     }
-    window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
-  }, [pathname, state])
+  }, [pathname, setFilters, state, filters])
 
   return {
     state,

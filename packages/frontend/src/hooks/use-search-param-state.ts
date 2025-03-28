@@ -1,23 +1,27 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
 
 /**
  * Use state that is persisted in a search param.
  * @param name search param name
  * @returns array containing the current value and a function to update it
  */
-export function useSearchParamState<T extends string | undefined = string>(
+export function useSearchParamState<T extends string = string>(
   key: string,
-  defaultValue: T,
+  defaultValue?: T,
   options: { shallow: boolean } = { shallow: false },
-): [string | undefined, (value: T) => void] {
+) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const [value, setStateValue] = useState<string | undefined>(undefined)
 
-  const value = searchParams.get(key) ?? defaultValue
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const value = params.get(key) ?? defaultValue
+    setStateValue(value)
+  }, [key, defaultValue])
 
   const replaceRoute = useCallback(
     (pathname: string) =>
@@ -28,11 +32,11 @@ export function useSearchParamState<T extends string | undefined = string>(
   )
 
   const setValue = useCallback(
-    (value: T) => {
-      const search = new URLSearchParams(searchParams)
+    (newValue: T | undefined) => {
+      const search = new URLSearchParams(window.location.search)
 
-      if (value !== defaultValue && value !== undefined) {
-        search.set(key, value)
+      if (newValue !== undefined) {
+        search.set(key, newValue)
       } else {
         search.delete(key)
       }
@@ -44,9 +48,11 @@ export function useSearchParamState<T extends string | undefined = string>(
       } else {
         void replaceRoute(pathname)
       }
+
+      setStateValue(newValue)
     },
-    [defaultValue, key, pathname, replaceRoute, searchParams],
+    [key, pathname, replaceRoute],
   )
 
-  return [value, setValue]
+  return [value, setValue] as const
 }
