@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
+import { Search } from '../search/Search'
 import { useMultiViewStore } from './store'
 
 export function TopBar(props: { project: string }) {
@@ -15,6 +16,7 @@ export function TopBar(props: { project: string }) {
         </Link>
         <p>{props.project}</p>
       </div>
+      <Search />
       <div className="flex gap-2">
         <div className="grid grid-cols-6">
           {layouts.map((_, i) => (

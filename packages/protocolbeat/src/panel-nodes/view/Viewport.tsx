@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
+import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
@@ -11,8 +12,10 @@ export function Viewport() {
   const viewRef = useRef<HTMLDivElement>(null)
 
   const currentPanel = useMultiViewStore((state) => state.active)
+  const searchOpened = useSearchStore((state) => state.opened)
   // Always capture if we're not in panel mode, or if we're in nodes panel
-  const shouldCapture = currentPanel === undefined || currentPanel === 'nodes'
+  const shouldCapture =
+    (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
 
   const onKeyDown = useStore((state) => state.onKeyDown)
   const onKeyUp = useStore((state) => state.onKeyUp)

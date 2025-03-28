@@ -41,11 +41,29 @@ export class Editor {
     this.currentCode = code
     const newCodeHash = cyrb64(code)
     if (this.models[newCodeHash] === undefined) {
-      this.models[newCodeHash] = monaco.editor.createModel(code, 'solidity')
+      const model = monaco.editor.createModel(code, 'solidity')
+      this.models[newCodeHash] = model
     }
 
     this.editor.setModel(this.models[newCodeHash] ?? null)
     this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
+  }
+
+  showRange(startOffset: number, length: number) {
+    const model = this.editor.getModel()
+    if (model !== null) {
+      const start = model.getPositionAt(startOffset)
+      const end = model.getPositionAt(startOffset + length)
+      const range = {
+        startLineNumber: start.lineNumber,
+        startColumn: start.column,
+        endLineNumber: end.lineNumber,
+        endColumn: end.column,
+      }
+
+      this.editor.revealRangeInCenter(range)
+      this.editor.setSelection(range)
+    }
   }
 
   resize() {
