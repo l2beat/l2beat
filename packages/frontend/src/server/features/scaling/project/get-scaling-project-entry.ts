@@ -1,14 +1,14 @@
 import type {
-  Badge,
   Project,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -21,6 +21,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -56,7 +57,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: Badge[]
+    badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory
@@ -169,7 +170,7 @@ export async function getScalingProjectEntry(
             },
           }
         : undefined,
-    badges: project.display.badges,
+    badges: project.display.badges.map(getBadgeWithParams).filter(notUndefined),
     gasTokens: project.chainConfig?.gasTokens,
   }
 
