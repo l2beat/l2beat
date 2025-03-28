@@ -45,7 +45,9 @@ type Response = RouterOutput['pizza']['projects']
 export function Step4(props: Props) {
   const [animationComplete, setAnimationComplete] = useState(false)
   const filters = getFilters(props.state)
-  const { data, isLoading, isError } = api.pizza.projects.useQuery(filters)
+  const { data, isLoading, isError } = api.pizza.projects.useQuery(filters, {
+    refetchOnWindowFocus: false,
+  })
 
   useEffect(() => {
     const timer = setTimeout(() => {
