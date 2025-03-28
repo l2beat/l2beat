@@ -154,7 +154,10 @@ function processFormulaRecursive(
   return { formulaAmounts, formulaPrices }
 }
 
-function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
+export function setPrice(
+  prices: Map<string, PriceConfig>,
+  priceToAdd: PriceConfig,
+) {
   const existingPrice = prices.get(priceToAdd.id)
   if (!existingPrice) {
     prices.set(priceToAdd.id, priceToAdd)

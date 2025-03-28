@@ -2,7 +2,10 @@ import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
 import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
-import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
+import {
+  extractPricesAndAmounts,
+  setPrice,
+} from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
   AmountConfig,
@@ -134,7 +137,7 @@ export async function getAmountsAndPrices(
     }
 
     for (const price of projectPrices) {
-      prices.set(price.priceId, price)
+      setPrice(prices, price)
     }
 
     assert(projectChains)
