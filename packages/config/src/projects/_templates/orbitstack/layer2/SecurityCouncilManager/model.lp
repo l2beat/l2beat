@@ -1,0 +1,1 @@
+canActIndependently(@self, no).
