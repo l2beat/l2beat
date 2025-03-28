@@ -1,68 +1,213 @@
+'use client'
 import Link from 'next/link'
-import { externalLinks } from '~/consts/external-links'
-import { env } from '~/env'
-import { HiringBadge } from '../badge/hiring-badge'
+import { usePathname } from 'next/navigation'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../core/collapsible'
+import { HorizontalSeparator } from '../core/horizontal-separator'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuLink,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSmallLink,
+} from '../core/sidebar'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
-import { NavLinkGroup } from './nav-link-group'
-import { NavSideBarWrapper } from './nav-sidebar-wrapper'
-import { NavSmallLink } from './nav-small-link'
-import { NavSmallLinkGroup } from './nav-small-link-group'
-import type { NavGroup } from './types'
+import type { NavGroup, NavLink } from './types'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
+import { useEffect, useState } from 'react'
 
 interface Props {
   groups: NavGroup[]
   logoLink: string
-  topNavbar: boolean
+  sideLinks: NavLink[]
 }
 
-export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
-  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
+export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
+  const pathname = usePathname()
   return (
-    <NavSideBarWrapper topNavbar={topNavbar}>
-      <div className="flex h-[38px] flex-row items-center justify-between">
-        <Link href={logoLink}>
-          <Logo className="block h-8 w-auto" />
-        </Link>
-        <div className="flex flex-row items-center gap-4">
-          <DarkThemeToggle />
-          <div className="size-6 lg:hidden">
-            <MobileNavTriggerClose />
+    <Sidebar>
+      <SidebarHeader>
+        <div className="flex h-[38px] flex-row items-center justify-between">
+          <Link href={logoLink}>
+            <Logo className="block h-8 w-auto" />
+          </Link>
+          <div className="flex flex-row items-center gap-4">
+            <DarkThemeToggle />
+            <div className="size-6 lg:hidden">
+              <MobileNavTriggerClose />
+            </div>
           </div>
         </div>
-      </div>
-      <nav className="flex flex-1 flex-col gap-1">
-        {groups.map((group) => (
-          <NavLinkGroup key={group.title} group={group} />
-        ))}
-      </nav>
-      <div>
-        <NavSmallLinkGroup className="mt-5">
-          <NavSmallLink title="About Us" href="/about-us" />
-          <NavSmallLink title="Forum" href={externalLinks.forum} />
-          <NavSmallLink title="Donate" href="/donate" />
-          <NavSmallLink
-            title="Governance"
-            href="/governance"
-            activeBehavior={{ type: 'prefix', prefix: '/governance' }}
-          />
-          <NavSmallLink title="Glossary" href="/glossary" />
-          <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
-            Jobs
-            {hiringBadge && <HiringBadge />}
-          </NavSmallLink>
-          <NavSmallLink
-            title="Brand Kit"
-            href="https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b"
-          />
-          <NavSmallLink title="FAQ" href="/faq" />
-        </NavSmallLinkGroup>
-        <ul className="mb-10 mt-8 flex gap-2 text-2xl lg:justify-between">
+      </SidebarHeader>
+      <SidebarContent>
+        {groups.map((group) => {
+          return (
+            <SidebarGroup key={group.title}>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {group.type === 'multiple' && (
+                    <SidebarMenuItem>
+                      <CollapsibleItem group={group} />
+                    </SidebarMenuItem>
+                  )}
+                  {group.type === 'single' && (
+                    <SidebarMenuItem key={group.title}>
+                      <SidebarMenuLink
+                        href={group.href}
+                        isActive={getIsActive(group.href, pathname)}
+                      >
+                        {group.icon}
+                        <span>{group.title}</span>
+                      </SidebarMenuLink>
+                    </SidebarMenuItem>
+                  )}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )
+        })}
+        <SidebarGroup className="-top-px mt-auto">
+          <SidebarMenu className="mt-1">
+            {sideLinks.map((link) => (
+              <SidebarMenuItem key={link.title}>
+                <SidebarMenuSmallLink
+                  href={link.href}
+                  isActive={getIsActive(link.href, pathname)}
+                >
+                  {link.title}
+                  {link.accessory}
+                </SidebarMenuSmallLink>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+        <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
-        </ul>
-      </div>
-    </NavSideBarWrapper>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
   )
+}
+
+function CollapsibleItem({
+  group,
+}: { group: Extract<NavGroup, { type: 'multiple' }> }) {
+  const pathname = usePathname()
+  const isActive = group.links.some((link) => getIsActive(link.href, pathname))
+  const breakpoint = useBreakpoint()
+
+  const [open, setOpen] = useState(isActive)
+
+  useEffect(() => {
+    const isActive = group.links.some((link) =>
+      getIsActive(link.href, pathname),
+    )
+    setOpen(isActive)
+  }, [group, pathname])
+
+  return (
+    <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
+      {breakpoint === 'mobile' || breakpoint === 'tablet' ? (
+        <CollapsibleTrigger
+          className="group flex cursor-pointer items-center gap-1.5 p-1.5"
+          data-active={isActive}
+        >
+          <div className="flex items-center gap-2" data-active={isActive}>
+            <div>{group.icon}</div>
+            <span
+              className={cn(
+                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                isActive && 'text-brand',
+              )}
+            >
+              {group.title}
+            </span>
+          </div>
+          <ChevronIcon
+            className={cn(
+              'size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
+              isActive && 'fill-brand',
+            )}
+          />
+        </CollapsibleTrigger>
+      ) : (
+        <div
+          className="group flex cursor-pointer items-center p-1.5"
+          data-active={isActive}
+        >
+          <Link
+            href={group.links[0]!.href}
+            className="flex items-center gap-2"
+            data-active={isActive}
+          >
+            <div>{group.icon}</div>
+            <span
+              className={cn(
+                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                isActive && 'text-brand',
+              )}
+            >
+              {group.title}
+            </span>
+          </Link>
+          <CollapsibleTrigger className="group size-6">
+            <ChevronIcon
+              className={cn(
+                'm-auto size-3 -rotate-90 fill-primary transition-[transform,_color,_fill] duration-300 group-data-[state=open]:rotate-0',
+                isActive && 'fill-brand',
+              )}
+            />
+          </CollapsibleTrigger>
+        </div>
+      )}
+      <CollapsibleContent>
+        <SidebarMenuSub>
+          {group.links.map((item) => (
+            <SidebarMenuSubButton
+              href={item.href}
+              key={item.title}
+              isActive={getIsActive(item.href, pathname)}
+            >
+              <span>{item.title}</span>
+            </SidebarMenuSubButton>
+          ))}
+          {group.secondaryLinks && group.secondaryLinks.length > 0 && (
+            <>
+              <HorizontalSeparator />
+              {group.secondaryLinks.map((item) => (
+                <SidebarMenuSubButton
+                  href={item.href}
+                  key={item.title}
+                  isActive={getIsActive(item.href, pathname)}
+                >
+                  <span>{item.title}</span>
+                </SidebarMenuSubButton>
+              ))}
+            </>
+          )}
+        </SidebarMenuSub>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
+
+function getIsActive(href: string, pathname: string) {
+  return pathname === href
 }

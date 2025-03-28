@@ -13,9 +13,10 @@ export type NavGroup =
       icon: React.ReactNode
     } & NavLink)
 
-interface NavLink {
+export interface NavLink {
   title: string
   shortTitle?: string
   href: string
   disabled?: boolean
+  accessory?: React.ReactNode
 }

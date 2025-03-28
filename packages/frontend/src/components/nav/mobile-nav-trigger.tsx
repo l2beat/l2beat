@@ -2,15 +2,15 @@
 
 import { MenuCloseIcon } from '~/icons/menu-close'
 import { MenuOpenIcon } from '~/icons/menu-open'
-import { useMobileNav } from './mobile-nav-context'
+import { useSidebar } from '../core/sidebar'
 
 /**
  * Opens the navigation menu on mobile.
  */
 export function MobileNavTriggerOpen() {
-  const { setOpen } = useMobileNav()
+  const { toggleSidebar } = useSidebar()
   return (
-    <button onClick={() => setOpen(true)}>
+    <button onClick={toggleSidebar}>
       <MenuOpenIcon className="size-6" />
     </button>
   )
@@ -20,9 +20,9 @@ export function MobileNavTriggerOpen() {
  * Closes the navigation menu on mobile.
  */
 export function MobileNavTriggerClose() {
-  const { setOpen } = useMobileNav()
+  const { toggleSidebar } = useSidebar()
   return (
-    <button onClick={() => setOpen(false)}>
+    <button onClick={toggleSidebar}>
       <MenuCloseIcon className="size-6" />
     </button>
   )

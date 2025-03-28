@@ -4,7 +4,17 @@ import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
 import React from 'react'
 import { cn } from '~/utils/cn'
 
-const Collapsible = CollapsiblePrimitive.Root
+function Collapsible({
+  className,
+  ...props
+}: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
+  return (
+    <CollapsiblePrimitive.Root
+      className={cn(className, 'group/collapsible')}
+      {...props}
+    />
+  )
+}
 
 const CollapsibleTrigger = CollapsiblePrimitive.CollapsibleTrigger
 

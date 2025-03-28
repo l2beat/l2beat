@@ -6,6 +6,9 @@ export const externalLinks = {
   youTube: 'https://www.youtube.com/channel/UCDrl-fNXFjOoykr4lQij9BA/videos',
   medium: 'https://medium.com/l2beat',
   forum: 'https://forum.l2beat.com/',
+  jobs: 'https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f',
+  brandKit:
+    'https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b',
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
