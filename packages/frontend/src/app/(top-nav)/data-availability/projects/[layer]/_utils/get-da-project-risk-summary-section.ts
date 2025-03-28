@@ -5,7 +5,7 @@ import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
 export function getDaProjectRiskSummarySection(
   layer: Project<'daLayer'>,
-  bridge: Project<'daBridge', 'contracts'> | undefined,
+  bridge: Project<'daBridge', 'contracts' | 'permissions'> | undefined,
   isVerified: boolean,
 ): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
   const bridgeSections = [
@@ -42,6 +42,16 @@ export function getDaProjectRiskSummarySection(
     }
   }
 
+  const areContractsVerified = Object.values(bridge?.contracts?.addresses ?? {})
+    .flat()
+    .every((c) => c.isVerified)
+
+  const arePermissionsVerified = Object.values(bridge?.permissions ?? {})
+    .flat()
+    .flatMap((p) => [...(p.roles ?? []), ...(p.actors ?? [])])
+    .flatMap((p) => p.accounts)
+    .every((a) => a.isVerified)
+
   return {
     layer: {
       name: layer.name,
@@ -50,6 +60,7 @@ export function getDaProjectRiskSummarySection(
     bridge: {
       name: bridge?.name ?? 'No DA Bridge',
       risks: groupRisks(bridgeRisks),
+      isVerified: arePermissionsVerified && areContractsVerified,
     },
     isVerified,
     warning: undefined,

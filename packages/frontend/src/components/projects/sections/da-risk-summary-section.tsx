@@ -15,6 +15,7 @@ export interface DaRiskSummarySectionProps extends ProjectSectionProps {
   bridge: {
     risks: RiskGroup[]
     name: string
+    isVerified: boolean
   }
   warning: string | undefined
   isVerified: boolean | undefined
@@ -75,6 +76,13 @@ export function DaRiskSummarySection({
           <span className="text-xs font-medium uppercase text-zinc-500 dark:text-gray-50">
             {bridge.name} risks
           </span>
+          {!bridge.isVerified && (
+            <WarningBar
+              text="This bridge includes unverified contracts."
+              color="red"
+              isCritical={true}
+            />
+          )}
           <EnumeratedRisks risks={bridge.risks} />
         </div>
       )}
