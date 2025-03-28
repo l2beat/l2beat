@@ -7,6 +7,7 @@ import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { TRPCReactProvider } from '~/trpc/react'
 import { AppLayout } from './_layout'
+import { ProgressBar } from '~/components/progress-bar'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -45,6 +46,7 @@ export default async function RootLayout({
               searchBarProjects={searchBarProjects}
             >
               {children}
+              <ProgressBar />
             </AppLayout>
           </PlausibleProvider>
         </TRPCReactProvider>
