@@ -29,8 +29,8 @@ app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
 
-function renderToHtml(data: RenderData) {
-  const rendered = render(data)
+function renderToHtml(data: RenderData, url: string) {
+  const rendered = render(data, url)
   return template
     .replace(`<!--app-head-->`, rendered.head)
     .replace(`<!--app-html-->`, rendered.html)

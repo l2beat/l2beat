@@ -1,6 +1,7 @@
 export function usePathname(): string {
   if (typeof window === 'undefined') {
-    return 'globalThis.__SSR_DATA__.pathname'
+    // @ts-expect-error how to type this?
+    return globalThis.__FIX_SSR_PATHNAME__ as string
   }
   return window.location.pathname
 }

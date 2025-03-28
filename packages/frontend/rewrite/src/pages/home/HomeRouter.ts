@@ -7,9 +7,9 @@ export function HomeRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/', (_req, res) => {
+  app.get('/', (req, res) => {
     const data = getHomeData(manifest)
-    const html = render(data)
+    const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }

@@ -9,9 +9,9 @@ export function FaqRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/faq', async (_req, res) => {
+  app.get('/faq', async (req, res) => {
     const data = await getFaqData(manifest)
-    const html = render(data)
+    const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }

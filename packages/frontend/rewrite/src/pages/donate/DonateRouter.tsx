@@ -9,9 +9,9 @@ export function DonateRouter(
   manifest: Manifest,
   render: RenderFunction,
 ) {
-  app.get('/donate', async (_req, res) => {
+  app.get('/donate', async (req, res) => {
     const data = await getDonateData(manifest)
-    const html = render(data)
+    const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   })
 }

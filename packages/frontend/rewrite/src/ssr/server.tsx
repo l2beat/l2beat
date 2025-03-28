@@ -10,14 +10,16 @@ export interface RenderData {
   head: HeadProps
 }
 
-export type RenderFunction = (data: RenderData) => string
+export type RenderFunction = (data: RenderData, url: string) => string
 
 export interface RenderResult {
   html: string
   head: string
 }
 
-export function render(data: RenderData): RenderResult {
+export function render(data: RenderData, url: string): RenderResult {
+  // @ts-expect-error how to type this?
+  globalThis.__FIX_SSR_PATHNAME__ = url
   const html = renderToString(
     <StrictMode>
       <ClientPageRouter ssrData={data.ssr} />

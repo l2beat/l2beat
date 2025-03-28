@@ -21,10 +21,11 @@ export function NavSmallLink({
   activeBehavior,
 }: NavSmallLinkProps) {
   const active = useActiveLink({ href, activeBehavior })
-
+  console.log('href', href, active)
   return (
     <Link href={href} target={href.startsWith('http') ? '_blank' : undefined}>
       <li
+        data-dupa={active}
         className={cn(
           'text-xs font-medium leading-none text-zinc-800 transition-colors duration-300 hover:text-zinc-500 dark:text-white dark:hover:text-gray-400',
           active && '!text-brand',

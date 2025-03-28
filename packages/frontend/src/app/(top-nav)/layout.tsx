@@ -1,8 +1,8 @@
 import { RecategorisationPreviewBanner } from '~/components/recategorisation-preview/recategorisation-preview-banner'
+import { env } from '~/env'
 import { Banner } from '../../components/banner'
 import { Footer } from '../../components/footer'
 import { NavLayout } from '../../components/nav/nav-layout'
-import { env } from '~/env'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const showHiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE

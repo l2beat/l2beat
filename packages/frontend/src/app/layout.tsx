@@ -6,8 +6,8 @@ import { PlausibleProvider } from '~/providers/plausible-provider'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { AppLayout } from './_layout'
 import { TRPCReactProvider } from '~/trpc/react'
+import { AppLayout } from './_layout'
 
 export const metadata: Metadata = getDefaultMetadata()
 
