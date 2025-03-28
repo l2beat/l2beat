@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { PizzaCheckTile } from './pizza-check-tile'
 
 type Props = {
-  onClick: (payload: Step3Payload) => void
+  onSubmit: (payload: Step3Payload) => void
 }
 
 export type Step3Payload = {
@@ -12,7 +12,7 @@ export type Step3Payload = {
   spicy: boolean | undefined
 }
 
-export function Step3Custom(props: Props) {
+export function Step3Custom({ onSubmit }: Props) {
   const [step, setStep] = useState<'veggies' | 'cheese' | 'spicy'>('veggies')
   const [selections, setSelections] = useState<Step3Payload>({
     type: 'custom',
@@ -21,23 +21,34 @@ export function Step3Custom(props: Props) {
     spicy: undefined,
   })
 
-  const handleSelect = (value: boolean) => {
-    if (step === 'veggies') {
-      setSelections((prev) => ({ ...prev, veggies: value }))
-      setStep('cheese')
-    } else if (step === 'cheese') {
-      setSelections((prev) => ({ ...prev, cheese: value }))
-      setStep('spicy')
-    } else if (step === 'spicy') {
-      setSelections((prev) => ({ ...prev, spicy: value }))
-      send()
+  useEffect(() => {
+    if (
+      selections.veggies !== undefined &&
+      selections.cheese !== undefined &&
+      selections.spicy !== undefined
+    ) {
+      onSubmit(selections)
     }
-  }
+  }, [selections, onSubmit])
 
-  const send = useCallback(() => {
-    props.onClick(selections)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.onClick, selections])
+  const handleSelect = useCallback(
+    (value: boolean) => {
+      if (step === 'veggies') {
+        setSelections((prev) => ({ ...prev, veggies: value }))
+        setStep('cheese')
+      }
+
+      if (step === 'cheese') {
+        setSelections((prev) => ({ ...prev, cheese: value }))
+        setStep('spicy')
+      }
+
+      if (step === 'spicy') {
+        setSelections((prev) => ({ ...prev, spicy: value }))
+      }
+    },
+    [step],
+  )
 
   return (
     <div className="flex flex-col">
@@ -58,13 +69,13 @@ export function Step3Custom(props: Props) {
             <PizzaCheckTile
               image={<ThumbsUpIcon />}
               title="Yes, please!"
-              onCheck={handleSelect}
+              onCheck={() => handleSelect(true)}
               checked={false}
             />
             <PizzaCheckTile
               image={<ThumbsDownIcon />}
               title="No, thanks"
-              onCheck={handleSelect}
+              onCheck={() => handleSelect(false)}
               checked={false}
             />
           </div>
@@ -74,13 +85,13 @@ export function Step3Custom(props: Props) {
             <PizzaCheckTile
               image={<ThumbsUpIcon />}
               title="Yes, please!"
-              onCheck={handleSelect}
+              onCheck={() => handleSelect(true)}
               checked={false}
             />
             <PizzaCheckTile
               image={<ThumbsDownIcon />}
               title="No, thanks"
-              onCheck={handleSelect}
+              onCheck={() => handleSelect(false)}
               checked={false}
             />
           </div>
@@ -90,13 +101,13 @@ export function Step3Custom(props: Props) {
             <PizzaCheckTile
               image={<ThumbsUpIcon />}
               title="Yes, please!"
-              onCheck={handleSelect}
+              onCheck={() => handleSelect(true)}
               checked={false}
             />
             <PizzaCheckTile
               image={<ThumbsDownIcon />}
               title="No, thanks"
-              onCheck={handleSelect}
+              onCheck={() => handleSelect(false)}
               checked={false}
             />
           </div>

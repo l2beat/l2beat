@@ -2,13 +2,6 @@
 import { InfoIcon } from '~/icons/info'
 import { SvgIcon, type SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from './core/dialog'
-import { StepController } from './pizza-flow'
 import { useRecategorisationPreviewContext } from './recategorisation-preview/recategorisation-preview-provider'
 import { RecategorisationPreviewSwitch } from './recategorisation-preview/recategorisation-preview-switch'
 import { SearchBarButton } from './search-bar/search-bar-button'
@@ -44,19 +37,6 @@ export function MainPageHeader({
         <div className="flex items-center gap-5">
           {isScalingMainPage && <RecategorisationPreviewSwitch />}
           <SearchBarButton />
-          <Dialog>
-            <DialogTrigger>
-              <div className="flex items-center gap-2 rounded bg-pink-900 px-4 py-2">
-                <PizzaIcon className="inline size-6 shrink-0" />
-                Pizza time
-                <PizzaIcon className="inline size-6 shrink-0" />
-              </div>
-            </DialogTrigger>
-            <DialogContent className="flex items-center justify-center pt-16">
-              <DialogTitle className="hidden">Pizza time</DialogTitle>
-              <StepController />
-            </DialogContent>
-          </Dialog>
         </div>
       </header>
       {(!!description || !!warning) && (

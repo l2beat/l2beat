@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { cn } from '~/utils/cn'
+import { Button } from './core/button'
 import { PizzaCheckTile } from './pizza-check-tile'
-import { PizzaButton } from './step-1'
 
 type Props = {
   onClick: (payload: Step2Payload) => void
@@ -49,13 +49,16 @@ export function Step2(props: Props) {
           checked={selected?.type === 'custom'}
         />
       </div>
-      <PizzaButton
+      <Button
         disabled={!selected}
         onClick={() => selected && props.onClick(selected)}
-        className={cn('mt-5', !selected && 'opacity-50')}
+        className={cn(
+          'mt-5 rounded-[4px] bg-pink-900 px-6 py-4 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+          !selected && 'opacity-50',
+        )}
       >
         Let&apos;s get that pizza party rolling.
-      </PizzaButton>
+      </Button>
     </div>
   )
 }

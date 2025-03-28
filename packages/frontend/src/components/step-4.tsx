@@ -1,6 +1,7 @@
 import type { inferRouterOutputs } from '@trpc/server'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import type { SvgIconProps } from '~/icons/svg-icon'
 import type { AppRouter } from '~/server/api/root'
 import { api } from '~/trpc/react'
 import { LazyLottie } from './lazy-lottie'
@@ -12,6 +13,7 @@ import type { Step2Payload } from './step-2'
 import type { Step3Payload } from './step-3'
 
 type Props = {
+  onReset: () => void
   state: {
     step1: boolean
     step2: Step2Payload
@@ -57,8 +59,8 @@ export function Step4(props: Props) {
     return <div>Error loading pizza data</div>
   }
 
-  if (animationComplete && !isLoading && data) {
-    return <Step5 data={data} />
+  if (animationComplete && !isLoading && data !== undefined) {
+    return <Step5 data={data} onReset={props.onReset} />
   }
 
   return (
@@ -75,34 +77,72 @@ export function Step4(props: Props) {
   )
 }
 
-export function Step5({ data }: { data: Response }) {
+export function Step5({
+  data,
+  onReset,
+}: {
+  data: Response
+  onReset: () => void
+}) {
+  if (!data) {
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <div className="grid grid-cols-2 items-center justify-center gap-7">
+          <div className="z-100 flex flex-col">
+            <div className="text-2xl font-bold">Mamma mia!</div>
+            <div className="text-[15px] leading-tight text-gray-500">
+              We could not find a pizza that matches your preferences. Maybe you
+              should try a different one?
+            </div>
+            <div className="mt-4 flex gap-2">
+              <PizzaButton variant={'outline'}>
+                Pick different pizza
+              </PizzaButton>
+            </div>
+          </div>
+          <div className="min-w-full">
+            <div className="relative z-10">
+              <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
+              <Frown className="absolute left-1/2 top-1/2 size-[160px] -translate-x-1/2 -translate-y-1/2 fill-none stroke-pink-200" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const risks = data.scalingRisks.stacked ?? data.scalingRisks.self
 
   const values: RosetteValue[] = [
     {
-      name: 'Exit Window',
-      value: risks.exitWindow.value,
-      sentiment: risks.exitWindow.sentiment,
+      name: 'Sequencer Failure',
+      value: risks.sequencerFailure.value,
+      sentiment: risks.sequencerFailure.sentiment,
+      description: risks.sequencerFailure.description,
     },
     {
       name: 'State Validation',
       value: risks.stateValidation.value,
       sentiment: risks.stateValidation.sentiment,
-    },
-    {
-      name: 'Proposer Failure',
-      value: risks.proposerFailure.value,
-      sentiment: risks.proposerFailure.sentiment,
-    },
-    {
-      name: 'Sequencer Failure',
-      value: risks.sequencerFailure.value,
-      sentiment: risks.sequencerFailure.sentiment,
+      description: risks.stateValidation.description,
     },
     {
       name: 'Data Availability',
       value: risks.dataAvailability.value,
       sentiment: risks.dataAvailability.sentiment,
+      description: risks.dataAvailability.description,
+    },
+    {
+      name: 'Exit Window',
+      value: risks.exitWindow.value,
+      sentiment: risks.exitWindow.sentiment,
+      description: risks.exitWindow.description,
+    },
+    {
+      name: 'Proposer Failure',
+      value: risks.proposerFailure.value,
+      sentiment: risks.proposerFailure.sentiment,
+      description: risks.proposerFailure.description,
     },
   ]
 
@@ -119,11 +159,15 @@ export function Step5({ data }: { data: Response }) {
           </div>
           <div className="mt-4 flex gap-2">
             <Link href={`/scaling/projects/${data.slug}`}>
-              <PizzaButton className="bg-[#9621BF] px-6 py-2 text-white dark:bg-pink-200">
-                Learn more
-              </PizzaButton>
+              <PizzaButton>Learn more</PizzaButton>
             </Link>
-            <PizzaButton variant={'outline'}>Pick different pizza</PizzaButton>
+            <PizzaButton
+              variant="outline"
+              className="rounded-[4px] bg-transparent text-xs"
+              onClick={onReset}
+            >
+              Pick different pizza
+            </PizzaButton>
           </div>
         </div>
         <div className="min-w-full">
@@ -154,6 +198,27 @@ function PizzaBackground({ className }: { className?: string }) {
         fill="#FF5FFB"
         fillOpacity="0.4"
       />
+    </svg>
+  )
+}
+
+function Frown(props: SvgIconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M16 16s-1.5-2-4-2-4 2-4 2" />
+      <line x1="9" x2="9.01" y1="9" y2="9" />
+      <line x1="15" x2="15.01" y1="9" y2="9" />
     </svg>
   )
 }

@@ -70,6 +70,10 @@ async function getResponse(requirements: {
     return false
   })
 
+  if (filteredProjects.length === 0) {
+    return null
+  }
+
   return pickAtRandom(filteredProjects)
 }
 

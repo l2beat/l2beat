@@ -2,11 +2,19 @@ import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
+import { Button } from '../core/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '../core/dialog'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { PizzaIcon } from '../main-page-header'
+import { StepController } from '../pizza-flow'
 import { SocialLinks } from '../social-links'
-import { PizzaButton } from '../step-1'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavLinkGroup } from './nav-link-group'
 import { NavSideBarWrapper } from './nav-sidebar-wrapper'
@@ -40,9 +48,36 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
           <NavLinkGroup key={group.title} group={group} />
         ))}
       </nav>
-      <PizzaButton className="w-full">
-        Make a Pizza <PizzaIcon />
-      </PizzaButton>
+      <Dialog>
+        <DialogTrigger>
+          <Button className="flex w-full items-center justify-center gap-1 rounded-[4px] bg-pink-900 px-6 py-3 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90">
+            <span>Make a Pizza</span>
+            <PizzaIcon />
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent className="flex items-center justify-center pt-16">
+          <DialogTitle className="hidden">Pizza time</DialogTitle>
+          <StepController />
+          <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm bg-[#9621BF]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="stroke-primary-invert"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
+
       <div>
         <NavSmallLinkGroup className="mt-5">
           <NavSmallLink title="About Us" href="/about-us" />

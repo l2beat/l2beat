@@ -24,6 +24,11 @@ export function StepController() {
     step1: false,
   })
 
+  const onReset = () => {
+    setPizzaState({ step1: false })
+    setStep('1-welcoming-screen')
+  }
+
   const handleStep1Click = () => {
     setPizzaState((prev) => ({ ...prev, step1: true }))
     setStep('2-variant-select')
@@ -49,10 +54,13 @@ export function StepController() {
         {step === '1-welcoming-screen' && <Step1 onClick={handleStep1Click} />}
         {step === '2-variant-select' && <Step2 onClick={handleStep2Click} />}
         {step === '3-custom-toppings-select' && (
-          <Step3Custom onClick={handleStep3Click} />
+          <Step3Custom onSubmit={handleStep3Click} />
         )}
         {step === '4-cooking' && (
-          <Step4 state={pizzaState as unknown as Required<PizzaState>} />
+          <Step4
+            state={pizzaState as unknown as Required<PizzaState>}
+            onReset={onReset}
+          />
         )}
       </div>
     </div>

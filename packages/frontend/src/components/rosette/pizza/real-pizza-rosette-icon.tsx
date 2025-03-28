@@ -25,6 +25,7 @@ export function RealPizzaRosetteIcon({
   isUnderReview: _,
   background = 'header',
 }: Props) {
+  console.log(values)
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
 
@@ -92,7 +93,7 @@ export function RealPizzaRosetteIcon({
             fill="#B1B1B1"
           />
           {/* naming is wrong but whatever */}
-          <RealExitWindowRisk
+          <RealSequencerFailureRisk
             sentiment={first.sentiment ?? 'neutral'}
             onHover={() => selectRisk(first)}
           />
@@ -100,15 +101,15 @@ export function RealPizzaRosetteIcon({
             sentiment={second.sentiment ?? 'neutral'}
             onHover={() => selectRisk(second)}
           />
-          <RealProposerFailureRisk
+          <RealDaRisk
             sentiment={third.sentiment ?? 'neutral'}
             onHover={() => selectRisk(third)}
           />
-          <RealSequencerFailureRisk
+          <RealExitWindowRisk
             sentiment={fourth.sentiment ?? 'neutral'}
             onHover={() => selectRisk(fourth)}
           />
-          <RealDaRisk
+          <RealProposerFailureRisk
             sentiment={fifth.sentiment ?? 'neutral'}
             onHover={() => selectRisk(fifth)}
           />
