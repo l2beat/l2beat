@@ -2,11 +2,13 @@ import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
 import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
-import { extractPricesAndAmounts } from '../../modules/tvs/tools/extractPricesAndAmounts'
+import {
+  extractPricesAndAmounts,
+  generateConfigurationId,
+} from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type {
   AmountConfig,
-  BlockTimestampConfig,
   PriceConfig,
   ProjectTvsConfig,
 } from '../../modules/tvs/types'
@@ -96,17 +98,13 @@ export function readConfigs(
 export async function getAmountsAndPrices(
   projects: ProjectTvsConfig[],
   sinceTimestamp?: UnixTime,
-): Promise<{
-  amounts: (AmountConfig & { project: string; chain?: string })[]
-  prices: PriceConfig[]
-  chains: BlockTimestampConfig[]
-}> {
+) {
   const amounts = new Map<
     string,
     AmountConfig & { project: string; chain?: string }
   >()
   const prices = new Map<string, PriceConfig>()
-  const chains: Map<string, BlockTimestampConfig> = new Map()
+  const chains = new Set<string>()
 
   const chainConfigs = await new ProjectService().getProjects({
     select: ['chainConfig'],
@@ -117,7 +115,7 @@ export async function getAmountsAndPrices(
       amounts: projectAmounts,
       prices: projectPrices,
       chains: projectChains,
-    } = extractPricesAndAmounts(project, chainConfigs)
+    } = extractPricesAndAmounts(project)
     for (const amount of projectAmounts) {
       if (amount.type === 'balanceOfEscrow' || amount.type === 'totalSupply') {
         amounts.set(amount.id, {
@@ -139,18 +137,26 @@ export async function getAmountsAndPrices(
 
     assert(projectChains)
     for (const chain of projectChains) {
-      chains.set(chain.chainName, chain)
+      chains.add(chain)
     }
   }
+
+  const configsss = Array.from(chains.values()).map((c) => {
+    const chain = chainConfigs.find((cc) => cc.id === c)
+    assert(chain, `${c}: chainConfig not configured`)
+    assert(chain.chainConfig.sinceTimestamp)
+
+    return {
+      chainName: c,
+      configurationId: generateConfigurationId([`chain_${c}`]),
+      sinceTimestamp: sinceTimestamp ?? chain.chainConfig.sinceTimestamp,
+      untilTimestamp: chain.chainConfig.untilTimestamp,
+    }
+  })
 
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
-    chains: sinceTimestamp
-      ? Array.from(chains.values()).map((c) => ({
-          ...c,
-          sinceTimestamp,
-        }))
-      : Array.from(chains.values()),
+    chains: configsss,
   }
 }

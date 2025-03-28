@@ -1,4 +1,3 @@
-import type { ChainConfig } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ProjectTvsConfig, Token } from '../types'
@@ -66,7 +65,7 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
 
-    const result = extractPricesAndAmounts(tvsConfig, CHAIN_CONFIG)
+    const result = extractPricesAndAmounts(tvsConfig)
     expect(result).toEqual({
       amounts: [
         {
@@ -115,14 +114,7 @@ describe(extractPricesAndAmounts.name, () => {
           priceId: 'price-ATH',
         },
       ],
-      chains: [
-        {
-          chainName: 'arbitrum',
-          configurationId: 'd09f3d9fe936',
-          sinceTimestamp: 1000,
-          untilTimestamp: 10000,
-        },
-      ],
+      chains: ['arbitrum'],
     })
   })
 
@@ -198,7 +190,7 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
 
-    const result = extractPricesAndAmounts(tvsConfig, CHAIN_CONFIG)
+    const result = extractPricesAndAmounts(tvsConfig)
     expect(result).toEqual({
       amounts: [
         {
@@ -242,14 +234,7 @@ describe(extractPricesAndAmounts.name, () => {
           priceId: 'price-SolvBTC',
         },
       ],
-      chains: [
-        {
-          chainName: 'bob',
-          configurationId: 'a8926b157038',
-          sinceTimestamp: 2000,
-          untilTimestamp: 20000,
-        },
-      ],
+      chains: ['bob'],
     })
   })
 
@@ -343,7 +328,7 @@ describe(extractPricesAndAmounts.name, () => {
       ],
     })
 
-    const result = extractPricesAndAmounts(tvsConfig, CHAIN_CONFIG)
+    const result = extractPricesAndAmounts(tvsConfig)
     expect(result).toEqual({
       amounts: [
         {
@@ -376,38 +361,7 @@ describe(extractPricesAndAmounts.name, () => {
           priceId: 'price-C',
         },
       ],
-      chains: [
-        {
-          chainName: 'chain',
-          configurationId: 'dfd8c3833a97',
-          sinceTimestamp: 3000,
-          untilTimestamp: 30000,
-        },
-      ],
+      chains: ['chain'],
     })
   })
 })
-
-const CHAIN_CONFIG = [
-  {
-    id: 'arbitrum',
-    chainConfig: mockObject<ChainConfig>({
-      sinceTimestamp: 1000,
-      untilTimestamp: 10_000,
-    }),
-  },
-  {
-    id: 'bob',
-    chainConfig: mockObject<ChainConfig>({
-      sinceTimestamp: 2000,
-      untilTimestamp: 20_000,
-    }),
-  },
-  {
-    id: 'chain',
-    chainConfig: mockObject<ChainConfig>({
-      sinceTimestamp: 3000,
-      untilTimestamp: 30_000,
-    }),
-  },
-]

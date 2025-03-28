@@ -1,5 +1,4 @@
 import { createHash } from 'crypto'
-import type { ChainConfig } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
@@ -15,10 +14,7 @@ import type {
 } from '../types'
 import { getTimestampsRange } from './timestamps'
 
-export function extractPricesAndAmounts(
-  config: ProjectTvsConfig,
-  chainConfigs?: { id: string; chainConfig: ChainConfig }[],
-) {
+export function extractPricesAndAmounts(config: ProjectTvsConfig) {
   const amounts = new Map<string, AmountConfig>()
   const prices = new Map<string, PriceConfig>()
   const chains = new Set<string>()
@@ -77,28 +73,10 @@ export function extractPricesAndAmounts(
     }
   }
 
-  if (chainConfigs === undefined) {
-    return {
-      amounts: Array.from(amounts.values()),
-      prices: Array.from(prices.values()),
-    }
-  }
-
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
-    chains: Array.from(chains.values()).map((c) => {
-      const chain = chainConfigs.find((cc) => cc.id === c)
-      assert(chain, `${c}: chainConfig not configured`)
-      assert(chain.chainConfig.sinceTimestamp)
-
-      return {
-        chainName: c,
-        configurationId: generateConfigurationId([`chain_${c}`]),
-        sinceTimestamp: chain.chainConfig.sinceTimestamp,
-        untilTimestamp: chain.chainConfig.untilTimestamp,
-      }
-    }),
+    chains: Array.from(chains.values()),
   }
 }
 
