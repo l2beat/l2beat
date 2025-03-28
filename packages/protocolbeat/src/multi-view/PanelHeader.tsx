@@ -61,6 +61,8 @@ export function PanelHeader(props: { id: PanelId }) {
   )
 }
 
+// Ideas:
+// - make it configurable per-project per-panel and store in browser cache
 const toClipboard = async (
   panel: PanelId,
   project: string | undefined,
