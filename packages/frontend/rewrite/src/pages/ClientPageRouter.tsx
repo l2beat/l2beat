@@ -1,3 +1,5 @@
+import { AboutUsPage } from './about/AboutUsPage'
+import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
 import { HomePage } from './home/HomePage'
 import { ProductPage } from './product/ProductPage'
@@ -14,6 +16,8 @@ const pages = {
   HomePage,
   ProductPage,
   FaqPage,
+  AboutUsPage,
+  DonatePage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {
