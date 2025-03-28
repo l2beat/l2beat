@@ -1,4 +1,5 @@
 import type { inferRouterOutputs } from '@trpc/server'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import type { SvgIconProps } from '~/icons/svg-icon'
@@ -155,7 +156,15 @@ export function Step5({
           <div className="text-2xs font-bold uppercase text-purple-100 dark:text-pink-200">
             The best choice for you:
           </div>
-          <div className="text-2xl font-bold">The {data.name} pizza!</div>
+          <div className="flex items-center gap-1">
+            <Image
+              src={`/icons/${data.slug}.png`}
+              alt={data.name}
+              width={20}
+              height={20}
+            />
+            <div className="text-2xl font-bold"> {data.name} pizza!</div>
+          </div>
           <div className="text-[15px] text-gray-500">
             Would you like to order or pick a different one?
           </div>
