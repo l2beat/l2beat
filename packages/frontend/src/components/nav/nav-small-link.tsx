@@ -21,7 +21,6 @@ export function NavSmallLink({
   activeBehavior,
 }: NavSmallLinkProps) {
   const active = useActiveLink({ href, activeBehavior })
-  console.log('href', href, active)
   return (
     <Link href={href} target={href.startsWith('http') ? '_blank' : undefined}>
       <li
