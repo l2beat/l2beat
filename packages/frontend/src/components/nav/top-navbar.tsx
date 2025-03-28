@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { VerticalSeparator } from '../core/vertical-separator'
 import { DarkThemeToggle } from '../dark-theme-toggle'
@@ -17,9 +16,12 @@ import type { NavGroup } from './types'
 export function TopNavbar({
   logoLink,
   groups,
-}: { logoLink: string; groups: NavGroup[] }) {
-  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
-
+  showHiringBadge,
+}: {
+  logoLink: string
+  groups: NavGroup[]
+  showHiringBadge: boolean
+}) {
   return (
     <div className="hidden h-[4.25rem] border-b border-divider bg-header-primary text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
@@ -67,7 +69,7 @@ export function TopNavbar({
             <TopNavLink title="Glossary" href="/glossary" />
             <TopNavLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
               Jobs
-              {hiringBadge && <HiringBadge />}
+              {showHiringBadge && <HiringBadge />}
             </TopNavLink>
             <TopNavLink title="FAQ" href="/faq" />
           </ul>

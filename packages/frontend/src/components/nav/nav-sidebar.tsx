@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { externalLinks } from '~/consts/external-links'
-import { env } from '~/env'
 import { HiringBadge } from '../badge/hiring-badge'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
@@ -16,10 +15,15 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   topNavbar: boolean
+  showHiringBadge: boolean
 }
 
-export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
-  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
+export function NavSidebar({
+  groups,
+  logoLink,
+  topNavbar,
+  showHiringBadge,
+}: Props) {
   return (
     <NavSideBarWrapper topNavbar={topNavbar}>
       <div className="flex h-[38px] flex-row items-center justify-between">
@@ -51,7 +55,7 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
           <NavSmallLink title="Glossary" href="/glossary" />
           <NavSmallLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
             Jobs
-            {hiringBadge && <HiringBadge />}
+            {showHiringBadge && <HiringBadge />}
           </NavSmallLink>
           <NavSmallLink
             title="Brand Kit"

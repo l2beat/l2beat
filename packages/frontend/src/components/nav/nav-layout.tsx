@@ -17,14 +17,16 @@ interface Props {
   logoLink: string
   topNavbar?: boolean
   topChildren?: ReactNode
+  showHiringBadge: boolean
 }
 
-export async function NavLayout({
+export function NavLayout({
   children,
   className,
   logoLink,
   topNavbar,
   topChildren,
+  showHiringBadge,
 }: Props) {
   const groups = compact<NavGroup>([
     {
@@ -154,7 +156,11 @@ export async function NavLayout({
         {!!topNavbar && (
           <>
             {topChildren}
-            <TopNavbar logoLink={logoLink} groups={groups} />
+            <TopNavbar
+              logoLink={logoLink}
+              groups={groups}
+              showHiringBadge={showHiringBadge}
+            />
           </>
         )}
         {!topNavbar && topChildren && (
@@ -169,6 +175,7 @@ export async function NavLayout({
           logoLink={logoLink}
           groups={groups}
           topNavbar={!!topNavbar}
+          showHiringBadge={showHiringBadge}
         />
         <div className="min-w-0 flex-1">
           {!topNavbar && topChildren && (
