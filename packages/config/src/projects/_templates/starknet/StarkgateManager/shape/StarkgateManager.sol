@@ -858,7 +858,11 @@ contract StarkgateManager is Identity, IStarkgateManager, ProxySupport {
     }
 
     // Storage Getters.
-    // TODO : add doc.
+    /**
+     * @notice Returns the address of the Starkgate Registry contract.
+     * @dev This internal function retrieves the registry address from named storage.
+     * @return The address of the Starkgate Registry contract.
+     */
     function registry() internal view returns (address) {
         return NamedStorage.getAddressValue(REGISTRY_TAG);
     }
