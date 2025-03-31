@@ -12,7 +12,7 @@ export function L2BeatzzaResult({
   const { setOpen } = useL2BeatzzaDialog()
   return (
     <>
-      <div className="hidden">
+      <div className="size-0">
         <FullRedPizzaSymbol />
         <FullYellowPizzaSymbol />
         <FullGreenPizzaSymbol />
