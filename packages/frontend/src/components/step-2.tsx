@@ -33,8 +33,9 @@ export function Step2(props: Props) {
             <Image
               src="/images/l2beatzza/vegetarian.png"
               alt="Veggie"
-              width={128}
+              width={173}
               height={128}
+              className="w-32"
             />
           }
           onCheck={() => setSelected({ type: 'predefined', pizza: 'veggie' })}
@@ -48,8 +49,9 @@ export function Step2(props: Props) {
             <Image
               src="/images/l2beatzza/spicy.png"
               alt="Spicy"
-              width={128}
+              width={182}
               height={128}
+              className="w-32"
             />
           }
           onCheck={() => setSelected({ type: 'predefined', pizza: 'tomato' })}
