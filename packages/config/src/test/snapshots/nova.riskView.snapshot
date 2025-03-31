@@ -8,7 +8,7 @@
     value: "External (DAC)"
   }
   exitWindow: {
-    description: "Non-emergency upgrades are initiated on L2 and go through a 8d delay. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have only 7d to exit. \n    \n  If users post a tx after that time, they would only be able to self propose a state root 12d 17h after the last state root was proposed and then wait for the 6d 8h challenge window, while the upgrade would be confirmed just after the 6d 8h challenge window and the 3d L1 timelock."
+    description: "Non-emergency upgrades are initiated on L2 and go through a 8d delay. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have only 7d to exit. \n    \n  If users post a tx after that time, they would only be able to self propose a state root 28d after the last state root was proposed and then wait for the 6d 8h challenge window, while the upgrade would be confirmed just after the 6d 8h challenge window and the 3d L1 timelock."
     orderHint: 604800
     secondLine: undefined
     sentiment: "warning"
@@ -19,9 +19,9 @@
     }
   }
   proposerFailure: {
-    description: "Anyone can become a Proposer after 12d 17h of inactivity from the currently whitelisted Proposers."
-    orderHint: 1099632
-    secondLine: "12d 17h delay"
+    description: "Anyone can become a Proposer after 28d of inactivity from the currently whitelisted Proposers."
+    orderHint: 2419200
+    secondLine: "28d delay"
     sentiment: "good"
     value: "Self propose"
   }

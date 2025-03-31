@@ -483,7 +483,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
-    riskView: getRiskView(templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -841,6 +841,7 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
   daProvider: DAProvider,
+  isPostBoLD: boolean = false,
 ): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -905,18 +906,18 @@ function getRiskView(
         const validatorAfkBlocks =
           templateVars.discovery.getContractValue<number>(
             'RollupProxy',
-            'VALIDATOR_AFK_BLOCKS',
+            isPostBoLD ? 'validatorAfkBlocks' : 'VALIDATOR_AFK_BLOCKS',
           )
         const validatorAfkTimeSeconds =
           validatorAfkBlocks * blockNumberOpcodeTimeSeconds
 
+        const totalDelay = isPostBoLD
+          ? validatorAfkTimeSeconds
+          : challengePeriodSeconds + validatorAfkTimeSeconds // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+
         return {
-          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-            challengePeriodSeconds + validatorAfkTimeSeconds,
-          ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-          secondLine: formatDelay(
-            challengePeriodSeconds + validatorAfkTimeSeconds,
-          ),
+          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(totalDelay),
+          secondLine: formatDelay(totalDelay),
         }
       })(),
   }

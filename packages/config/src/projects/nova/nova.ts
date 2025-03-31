@@ -23,7 +23,7 @@ const discovery_arbitrum = new ProjectDiscovery('arbitrum', 'arbitrum') // neede
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 const validatorAfkBlocks = discovery.getContractValue<number>(
   'RollupProxy',
-  'VALIDATOR_AFK_BLOCKS',
+  'validatorAfkBlocks',
 )
 const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 const challengeWindow = discovery.getContractValue<number>(
@@ -90,6 +90,11 @@ const maxTimeVariation = discovery.getContractValue<{
 }>('SequencerInbox', 'maxTimeVariation')
 
 const selfSequencingDelay = maxTimeVariation.delaySeconds
+
+const isPostBoLD = discovery.getContractValue<boolean>(
+  'RollupProxy',
+  'isPostBoLD',
+)
 
 export const nova: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
@@ -180,6 +185,7 @@ export const nova: ScalingProject = orbitStackL2({
       challengeWindowSeconds,
       validatorAfkTime,
       l1TimelockDelay,
+      isPostBoLD,
     ),
     stateValidation: RISK_VIEW.STATE_FP_INT,
   },
