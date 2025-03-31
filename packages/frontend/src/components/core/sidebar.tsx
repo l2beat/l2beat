@@ -229,7 +229,7 @@ function SidebarGroupSmallLink({
     <Comp
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
-        'text-xs leading-none text-secondary transition-colors hover:text-primary',
+        'text-xs leading-none text-primary transition-colors hover:text-secondary',
         isActive && 'text-brand hover:text-brand',
         className,
       )}

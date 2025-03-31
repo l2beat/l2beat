@@ -52,7 +52,7 @@ export function SocialLinks({ variant }: Props) {
         className={cn(
           'size-6',
           variant === 'gray' &&
-            'fill-secondary transition-colors hover:fill-primary',
+            'fill-primary transition-colors hover:fill-secondary',
         )}
       />
     </a>
