@@ -10,6 +10,8 @@ import type { NavGroup } from '../types'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { MobileSelectedLink } from './mobile-selected-link'
+import { env } from '~/env'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
@@ -27,7 +29,11 @@ export function MobileTopNavbar({
         <div className="flex items-center gap-3">
           <div className="py-4">
             <Link href={logoLink}>
-              <Logo className="h-8 w-auto" />
+              {env.NEXT_PUBLIC_L2BEATZZA ? (
+                <L2BeatzzaLogo className="h-8 w-auto" />
+              ) : (
+                <Logo className="h-8 w-auto" />
+              )}
             </Link>
           </div>
           <MobileSelectedLink groups={groups} />

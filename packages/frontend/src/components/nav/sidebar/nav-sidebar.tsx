@@ -28,6 +28,9 @@ import { Logo } from '../../logo'
 import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
+import { env } from '~/env'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
+import Image from 'next/image'
 
 interface Props {
   groups: NavGroup[]
@@ -39,21 +42,18 @@ interface Props {
 export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
   const pathname = usePathname()
   return (
-    <Sidebar topNavbar={topNavbar}>
-      <SidebarHeader>
-        <div className="flex h-[38px] flex-row items-center justify-between">
-          <Link href={logoLink}>
-            <Logo className="block h-8 w-auto" />
-          </Link>
-          <div className="flex flex-row items-center gap-4">
-            <DarkThemeToggle />
-            <div className="size-6 lg:hidden">
-              <MobileNavTriggerClose />
-            </div>
-          </div>
-        </div>
+    <Sidebar
+      topNavbar={topNavbar}
+      className={cn(
+        env.NEXT_PUBLIC_L2BEATZZA && '[&>div]:gap-0 [&>div]:space-y-6',
+      )}
+    >
+      <SidebarHeader
+        className={cn(env.NEXT_PUBLIC_L2BEATZZA && 'px-0 pt-[13px]')}
+      >
+        <Header logoLink={logoLink} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="!mt-2">
         {groups.map((group) => {
           return (
             <SidebarGroup key={group.title}>
@@ -91,6 +91,24 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        {env.NEXT_PUBLIC_L2BEATZZA && (
+          <>
+            <DarkThemeToggle />
+            <div className="relative h-[160px] w-[200px]">
+              <Image
+                src={'/images/l2beatzza.png'}
+                alt={'L2BEATZZA image'}
+                width={200}
+                height={160}
+                quality={100}
+                className="rounded-lg border border-divider"
+              />
+              <button className="absolute inset-x-3 bottom-3 h-8 rounded bg-primary-invert text-xs font-bold text-primary">
+                Make Your Pizza
+              </button>
+            </div>
+          </>
+        )}
         <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
         </div>
@@ -200,4 +218,33 @@ function NavCollapsibleItem({
 
 function getIsActive(href: string, pathname: string) {
   return pathname === href
+}
+
+function Header({ logoLink }: { logoLink: string }) {
+  if (env.NEXT_PUBLIC_L2BEATZZA) {
+    return (
+      <div className="relative flex flex-row items-center justify-center">
+        <Link href={logoLink}>
+          <L2BeatzzaLogo className="h-[70px]" />
+        </Link>
+        <div className="absolute right-3 top-2 size-6 lg:hidden">
+          <MobileNavTriggerClose />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex h-[38px] flex-row items-center justify-between">
+      <Link href={logoLink}>
+        <Logo className="block h-8 w-auto" />
+      </Link>
+      <div className="flex flex-row items-center gap-4">
+        <DarkThemeToggle />
+        <div className="size-6 lg:hidden">
+          <MobileNavTriggerClose />
+        </div>
+      </div>
+    </div>
+  )
 }

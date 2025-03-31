@@ -1,5 +1,5 @@
 'use client'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
@@ -8,7 +8,6 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import {
@@ -26,6 +25,11 @@ import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
+import {
+  L2BeatzzaTextLogoSymbol,
+  L2BeatzzaTextLogoUse,
+} from '~/icons/l2beatzza-logo'
+import { range } from 'lodash'
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
@@ -66,7 +70,19 @@ export function ScalingSummaryTables(props: Props) {
 
   return (
     <>
-      <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
+      <div className="mt-4 max-md:px-4 md:my-4">
+        <div className="flex h-4 select-none items-center gap-[5px] overflow-hidden text-[12px] leading-none *:shrink-0">
+          <L2BeatzzaTextLogoSymbol className="hidden" />
+          {range(16).map((index) => (
+            <React.Fragment key={index}>
+              <div className="relative size-4 leading-none">
+                <div className="absolute left-0.5 top-[3px]">🍕</div>
+              </div>
+              <L2BeatzzaTextLogoUse />
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
 
       <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
         <TableFilters
