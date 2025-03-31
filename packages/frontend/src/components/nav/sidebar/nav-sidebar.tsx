@@ -49,7 +49,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
       )}
     >
       <SidebarHeader
-        className={cn(env.NEXT_PUBLIC_L2BEATZZA && 'px-0 pt-[13px]')}
+        className={cn(env.NEXT_PUBLIC_L2BEATZZA && 'pr-0 pt-[13px] lg:px-0')}
       >
         <Header logoLink={logoLink} />
       </SidebarHeader>
@@ -93,7 +93,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
       <SidebarFooter>
         {env.NEXT_PUBLIC_L2BEATZZA && (
           <>
-            <DarkThemeToggle />
+            <DarkThemeToggle className="max-lg:hidden" />
             <div className="relative h-[160px] w-[200px]">
               <Image
                 src={'/images/l2beatzza.png'}
@@ -223,12 +223,15 @@ function getIsActive(href: string, pathname: string) {
 function Header({ logoLink }: { logoLink: string }) {
   if (env.NEXT_PUBLIC_L2BEATZZA) {
     return (
-      <div className="relative flex flex-row items-center justify-center">
+      <div className="relative flex flex-row items-center lg:justify-center">
         <Link href={logoLink}>
           <L2BeatzzaLogo className="h-[70px]" />
         </Link>
-        <div className="absolute right-3 top-2 size-6 lg:hidden">
-          <MobileNavTriggerClose />
+        <div className="absolute right-3 top-2 flex flex-row items-center gap-4  lg:hidden">
+          <DarkThemeToggle />
+          <div className="size-6">
+            <MobileNavTriggerClose />
+          </div>
         </div>
       </div>
     )
