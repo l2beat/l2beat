@@ -1,9 +1,12 @@
 'use client'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { env } from '~/env'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
 import {
   Collapsible,
@@ -28,9 +31,6 @@ import { Logo } from '../../logo'
 import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
-import { env } from '~/env'
-import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
-import Image from 'next/image'
 
 interface Props {
   groups: NavGroup[]

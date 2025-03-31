@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { env } from '~/env'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
 import { Logo } from '../../logo'
 import { useRecategorisationPreviewContext } from '../../recategorisation-preview/recategorisation-preview-provider'
@@ -10,8 +12,6 @@ import type { NavGroup } from '../types'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { MobileSelectedLink } from './mobile-selected-link'
-import { env } from '~/env'
-import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
