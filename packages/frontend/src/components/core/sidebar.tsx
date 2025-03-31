@@ -122,7 +122,7 @@ function Sidebar({
   }
 
   return (
-    <div className="group hidden text-primary md:block">
+    <div className="group hidden text-primary lg:block">
       {/* This is what handles the sidebar gap on desktop */}
       <div className="relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear" />
       <div
