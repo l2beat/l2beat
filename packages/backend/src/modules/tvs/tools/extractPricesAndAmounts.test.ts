@@ -1,13 +1,12 @@
-import type { ChainConfig, TvsToken } from '@l2beat/config'
+import type { TvsToken } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { ProjectTvsConfig } from '../types'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 describe(extractPricesAndAmounts.name, () => {
   it('should map amount formulas to sync configs', async () => {
     const tokens = [
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-ARB',
         amount: {
           type: 'balanceOfEscrow',
@@ -25,7 +24,7 @@ describe(extractPricesAndAmounts.name, () => {
         valueForProject: undefined,
         valueForTotal: undefined,
       }),
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-ARB',
         amount: {
           type: 'circulatingSupply',
@@ -36,7 +35,7 @@ describe(extractPricesAndAmounts.name, () => {
         valueForProject: undefined,
         valueForTotal: undefined,
       }),
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-ATH',
         amount: {
           type: 'calculation',
@@ -129,7 +128,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     const tokens = [
       // WBTC with amount formula as totalSupply on L2
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-WBTC',
         amount: {
           type: 'totalSupply',
@@ -144,7 +143,7 @@ describe(extractPricesAndAmounts.name, () => {
       // solvBTC with
       // - amount formula as totalSupply on L2
       // - valueForProject formula as totalSupply of solveBTC on L2 - balance of WBTC locked in solvBTC escrow
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-SolvBTC',
         amount: {
           type: 'totalSupply',
@@ -239,7 +238,7 @@ describe(extractPricesAndAmounts.name, () => {
     )
 
     const tokens = [
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-A',
         amount: {
           type: 'totalSupply',
@@ -252,7 +251,7 @@ describe(extractPricesAndAmounts.name, () => {
         valueForProject: undefined,
         valueForTotal: undefined,
       }),
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-A',
         amount: {
           type: 'totalSupply',
@@ -265,7 +264,7 @@ describe(extractPricesAndAmounts.name, () => {
         valueForProject: undefined,
         valueForTotal: undefined,
       }),
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-B',
         amount: {
           type: 'totalSupply',
@@ -278,7 +277,7 @@ describe(extractPricesAndAmounts.name, () => {
         valueForProject: undefined,
         valueForTotal: undefined,
       }),
-      mockObject<Token>({
+      mockObject<TvsToken>({
         priceId: 'price-B',
         amount: {
           type: 'totalSupply',

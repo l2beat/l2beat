@@ -1,8 +1,5 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
-import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { ProjectService } from '@l2beat/config'
-import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
   extractPricesAndAmounts,
@@ -12,6 +9,7 @@ import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
 import type { ProjectTvsConfig } from '../../modules/tvs/types'
 import type { TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
+import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
 
 export async function getTvsConfig(
   ps: ProjectService,
