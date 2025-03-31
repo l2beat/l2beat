@@ -49,20 +49,18 @@ export function StepController() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-4">
-        {step === '1-welcoming-screen' && <Step1 onClick={handleStep1Click} />}
-        {step === '2-variant-select' && <Step2 onClick={handleStep2Click} />}
-        {step === '3-custom-toppings-select' && (
-          <Step3Custom onSubmit={handleStep3Click} />
-        )}
-        {step === '4-cooking' && (
-          <Step4
-            state={pizzaState as unknown as Required<PizzaState>}
-            onReset={onReset}
-          />
-        )}
-      </div>
+    <div className="flex max-w-full flex-col gap-4">
+      {step === '1-welcoming-screen' && <Step1 onClick={handleStep1Click} />}
+      {step === '2-variant-select' && <Step2 onClick={handleStep2Click} />}
+      {step === '3-custom-toppings-select' && (
+        <Step3Custom onSubmit={handleStep3Click} />
+      )}
+      {step === '4-cooking' && (
+        <Step4
+          state={pizzaState as unknown as Required<PizzaState>}
+          onReset={onReset}
+        />
+      )}
     </div>
   )
 }

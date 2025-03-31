@@ -108,10 +108,13 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
               </div>
             </DialogTrigger>
 
-            <DialogContent className="flex items-center justify-center pt-16">
+            <DialogContent
+              className="flex items-center justify-center bg-surface-primary pt-16 md:left-1/2 md:top-1/2 md:h-[560px] md:max-w-[800px] md:-translate-x-1/2 md:-translate-y-1/2"
+              fullScreenMobile
+            >
               <DialogTitle className="hidden">Pizza time</DialogTitle>
               <StepController />
-              <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm bg-[#9621BF]">
+              <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm dark:bg-pink-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
