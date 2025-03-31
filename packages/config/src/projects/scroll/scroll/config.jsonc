@@ -5,15 +5,30 @@
   "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A", // L2GatewayRouter
-    "0x5300000000000000000000000000000000000000" // L2MessageQueue
+    "0x5300000000000000000000000000000000000000", // L2MessageQueue
+    "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0" // ScrollGovernor
   ],
   "names": {
     "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "L2GatewayRouter",
-    "0x5300000000000000000000000000000000000000": "L2MessageQueue"
+    "0x5300000000000000000000000000000000000000": "L2MessageQueue",
+    "0xd29687c813D741E2F938F4aC377128810E217b1b": "SCRToken"
   },
   "overrides": {
     "0x5300000000000000000000000000000000000000": {
       "ignoreMethods": ["branches"]
+    },
+    "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": {
+      "ignoreMethods": [
+        "getProposalType",
+        "proposalDeadline",
+        "proposalEta",
+        "proposalSnapshot",
+        "proposalVotes",
+        "quorum"
+      ]
+    },
+    "0xd29687c813D741E2F938F4aC377128810E217b1b": {
+      "ignoreMethods": ["getPastTotalSupply"]
     }
   }
 }
