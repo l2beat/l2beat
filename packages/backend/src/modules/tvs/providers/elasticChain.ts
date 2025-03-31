@@ -6,14 +6,13 @@ import type {
   TvsToken,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
+import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { createEscrowToken } from '../tools/mapConfig'
 import { getTimestampsRange } from '../tools/timestamps'
-import { TokenId } from '../types'
 
 export const bridgeInterface = new utils.Interface([
   'function l2TokenAddress(address _l1Token) view returns (address)',

@@ -6,6 +6,7 @@ import type {
   StringWithAutocomplete,
   Token,
   TokenBridgedUsing,
+  TokenId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -1064,10 +1065,6 @@ export interface ConstAmountFormula {
   // hardcoded value represented as bigint
   value: string
   decimals: number
-}
-
-export type TokenId = string & {
-  _TokenIdBrand: string
 }
 
 // token deployed to single chain

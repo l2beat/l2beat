@@ -6,14 +6,9 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import {
-  type Project,
-  ProjectService,
-  type TokenId,
-  type TvsToken,
-} from '@l2beat/config'
+import { type Project, ProjectService, type TvsToken } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'

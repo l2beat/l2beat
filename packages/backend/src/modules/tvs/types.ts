@@ -8,8 +8,6 @@ import type {
 import type { TokenValueRecord } from '@l2beat/database'
 import type { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 
-import type { TokenId } from '@l2beat/config'
-
 export function isEscrowToken(token: TvsToken): token is EscrowToken {
   return token.amount.type === 'balanceOfEscrow'
 }
@@ -99,11 +97,3 @@ export type AmountConfig =
   | TotalSupplyAmountConfig
   | CirculatingSupplyAmountConfig
   | ConstAmountConfig
-
-export function TokenId(value: string) {
-  return value as unknown as TokenId
-}
-
-TokenId.create = function (chain: string, symbol: string) {
-  return TokenId(`${chain}-${symbol}`)
-}

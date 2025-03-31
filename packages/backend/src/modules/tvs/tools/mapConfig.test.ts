@@ -4,10 +4,10 @@ import {
   assert,
   EthereumAddress,
   ProjectId,
+  TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { TokenId } from '../types'
 import { mapConfig } from './mapConfig'
 
 describe(mapConfig.name, () => {

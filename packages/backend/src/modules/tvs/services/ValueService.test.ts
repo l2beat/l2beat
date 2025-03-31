@@ -5,14 +5,19 @@ import type {
   TotalSupplyAmountFormula,
   TvsToken,
 } from '@l2beat/config'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from '../tools/DataStorage'
 import {
   createAmountConfig,
   createPriceConfigId,
 } from '../tools/extractPricesAndAmounts'
-import { type ProjectTvsConfig, TokenId } from '../types'
+import type { ProjectTvsConfig } from '../types'
 import { ValueService } from './ValueService'
 
 describe(ValueService.name, () => {

@@ -371,7 +371,7 @@ function toProjectEscrow(
 
 function getTvsConfig(project: ScalingProject): TvsToken[] | undefined {
   const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
-  const filePath = path.join(__dirname, `../tvs/config/${fileName}`)
+  const filePath = path.join(__dirname, `../../src/tvs/${fileName}`)
 
   if (!fs.existsSync(filePath)) {
     return undefined

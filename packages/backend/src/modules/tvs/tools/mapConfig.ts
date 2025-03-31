@@ -12,11 +12,11 @@ import {
   type ValueFormula,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, TokenId } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from '../providers/aggLayer'
 import { getElasticChainTokens } from '../providers/elasticChain'
-import { type ProjectTvsConfig, TokenId } from '../types'
+import type { ProjectTvsConfig } from '../types'
 import { getTimestampsRange } from './timestamps'
 
 export async function mapConfig(
