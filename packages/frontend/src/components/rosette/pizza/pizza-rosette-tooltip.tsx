@@ -47,6 +47,7 @@ export function PizzaRosetteTooltip({
             className="scale-75"
             isUnderReview={isUnderReview}
             background="surface"
+            containerSize={200}
           />
           <PizzaRosetteLabels
             values={values}

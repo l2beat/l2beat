@@ -1,9 +1,5 @@
 import type { SvgIconProps } from '~/icons/svg-icon'
-import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../../types'
-import { FullGreenPizzaReference } from './full-green-pizza'
-import { FullRedPizzaReference } from './full-red-pizza'
-import { FullYellowPizzaReference } from './full-yellow-pizza'
 
 function LowerLeftMaskPath(props: SvgIconProps) {
   return (
@@ -55,12 +51,6 @@ function LowerRightMaskPath(props: SvgIconProps) {
   )
 }
 
-function createMaskId(risk: RosetteValue) {
-  const noSpaces = risk.name.replace(/\s+/g, '_')
-  const maskId = `mask-${noSpaces}`
-  return maskId
-}
-
 const maskPaths = [
   LowerLeftMaskPath,
   UpperLeftMaskPath,
@@ -69,36 +59,15 @@ const maskPaths = [
   LowerRightMaskPath,
 ]
 
-function riskToPizza(risk: RosetteValue) {
-  if (risk.sentiment === 'good') {
-    return <FullGreenPizzaReference />
-  }
-
-  if (risk.sentiment === 'warning') {
-    return <FullYellowPizzaReference />
-  }
-
-  if (risk.sentiment === 'bad') {
-    return <FullRedPizzaReference />
-  }
-
-  return null
-}
-
 export function risksToPizzas(
   risks: RosetteValue[],
   selectRisk: (risk: RosetteValue) => void,
-  selectedRisk: RosetteValue | undefined,
 ) {
-  const pizzaBackgrounds: React.ReactNode[] = []
   const sliceHoverPaths: React.ReactNode[] = []
 
   for (let i = 0; i < risks.length; i++) {
     const risk = risks[i]!
     const MaskPath = maskPaths[i]!
-
-    const pizzaBackground = riskToPizza(risk)
-    pizzaBackgrounds.push(pizzaBackground)
 
     sliceHoverPaths.push(
       <MaskPath
@@ -110,43 +79,7 @@ export function risksToPizzas(
     )
   }
 
-  const pizzas = pizzaBackgrounds.map((pizzaBackground, i) => {
-    const risk = risks[i]!
-    const maskId = createMaskId(risk)
-    const MaskPath = maskPaths[i]!
-
-    const maskElement = (
-      <mask
-        id={maskId}
-        style={{ maskType: 'alpha' }}
-        maskUnits="userSpaceOnUse"
-        x="0"
-        y="0"
-        width="180"
-        height="180"
-      >
-        <MaskPath fill="black" />
-      </mask>
-    )
-
-    return (
-      <>
-        {maskElement}
-        <g
-          mask={`url(#${maskId})`}
-          className={cn(
-            'transition-opacity',
-            selectedRisk && selectedRisk.name !== risk.name && 'opacity-20',
-          )}
-        >
-          {pizzaBackground}
-        </g>
-      </>
-    )
-  })
-
   return {
-    pizzas,
     sliceHoverPaths,
   }
 }

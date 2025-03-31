@@ -13,6 +13,7 @@ interface Props {
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface' | false
+  containerSize?: number
 }
 
 export function PizzaRosetteIcon({
