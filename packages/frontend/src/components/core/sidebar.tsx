@@ -38,7 +38,7 @@ function useSidebar() {
   return context
 }
 
-const SidebarProvider = function SidebarProvider({
+function SidebarProvider({
   defaultOpen = true,
   open: openProp,
   onOpenChange: setOpenProp,
