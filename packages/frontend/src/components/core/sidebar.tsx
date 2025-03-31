@@ -11,7 +11,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '~/components/core/sheet'
-import { TooltipProvider } from '~/components/core/tooltip/tooltip'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
@@ -63,23 +62,21 @@ function SidebarProvider({
 
   return (
     <SidebarContext.Provider value={contextValue}>
-      <TooltipProvider delayDuration={0}>
-        <div
-          style={
-            {
-              '--sidebar-width': SIDEBAR_WIDTH,
-              ...style,
-            } as React.CSSProperties
-          }
-          className={cn(
-            'group/sidebar-wrapper min-h-svh w-full bg-background',
-            className,
-          )}
-          {...props}
-        >
-          {children}
-        </div>
-      </TooltipProvider>
+      <div
+        style={
+          {
+            '--sidebar-width': SIDEBAR_WIDTH,
+            ...style,
+          } as React.CSSProperties
+        }
+        className={cn(
+          'group/sidebar-wrapper min-h-svh w-full bg-background',
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </div>
     </SidebarContext.Provider>
   )
 }
