@@ -1,3 +1,599 @@
+Generated with discovered.json: 0x21c76bbb43bb73e246a3b0eddca458b71120a2aa
+
+# Diff at Mon, 31 Mar 2025 14:58:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe4425654a43d1265c2bb105623473a7b7e679b1 block: 22123258
+- current block number: 22167170
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions.2:
+-        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."}
+      directlyReceivedPermissions.1.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      directlyReceivedPermissions.1.description:
+-        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "revert batches for all connected chains."
+      directlyReceivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.0.description:
+-        "register new Elastic Chains in the shared bridge."
++        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      template:
+-        "shared-zk-stack/v25/BridgeHub"
++        "shared-zk-stack/v26/BridgeHub"
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0xe79288af01ff8940265966caffdc9ea0ef18822166fd7f704488419737716623"
+      sourceHashes.0:
+-        "0x568d6f26c34f7da5f4ac55957f99d9e66cbf967d550fa27ec431fb66bbd36a0b"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      description:
+-        "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations."
++        "The main registry (hub) for all the contracts in the ZK stack cluster. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers."
+      values.$implementation:
+-        "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"
++        "0xb720523EC3c615b069453bF4B0584CEbF034706f"
+      values.$pastUpgrades.3:
++        ["2024-06-04T17:03:59.000Z","0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61",["0x12f893689f9603991a8c22C249FFd0509Be95661"]]
+      values.$pastUpgrades.2.2:
+-        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.2.1:
+-        "2024-06-04T17:03:59.000Z"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.2.0:
+-        "0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61"
++        ["0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"]
+      values.$pastUpgrades.1.2:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        ["0xb720523EC3c615b069453bF4B0584CEbF034706f"]
+      values.$pastUpgrades.1.1:
+-        "2025-01-08T16:00:35.000Z"
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.1.0:
+-        ["0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"]
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$upgradeCount:
+-        3
++        4
+      values.chainsCreated.10.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.10.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.9.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.9.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.8.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.8.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.7.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.7.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.6.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.6.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.5.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.5.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.4.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.4.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.3.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.3.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.2.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.2.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.1.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.1.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.0.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.0.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.CronosDiamond:
+-        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
+      values.CronosSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.getHyperchain:
+-        []
+      values.GrvtDiamond:
+-        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.sharedBridge:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.SophonDiamond:
+-        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.SophonSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.ZeroNetworkDiamond:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.ZeroNetworkSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.zksyncEraDiamond:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.zksyncEraSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.assetRouter:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.getAllZKChainChainIDs:
++        [324,388,50104,543210,2741,325,61166,1345,9637,320,232]
+      values.getAllZKChains:
++        ["0x32400084C286CF3E17e7B677ea9583e60a000324","0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879","0x89f90748A9a36C30A324481133fa198f4E16A824","0xC8C4cB5AF7c723c7EfD360898B47920679f92C92","0xF2704433d11842d15aa76BBF0E00407267a99C92","0xc29d04A93F893700015138E3E334eB828dAC3cef"]
+      values.L1_CHAIN_ID:
++        1
+      values.l1CtmDeployer:
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      values.MAX_NUMBER_OF_ZK_CHAINS:
++        100
+      values.messageRoot:
++        "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
+      values.migrationPaused:
++        false
++++ description: New settlement layers and their whitelist status.
++++ severity: HIGH
+      values.settlementLayers:
++        {}
+      fieldMeta.chainsCreated.description:
+-        "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs."
++        "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
+      fieldMeta.settlementLayers:
++        {"severity":"HIGH","description":"New settlement layers and their whitelist status."}
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]}
+      receivedPermissions.1.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.description:
+-        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "revert batches for all connected chains."
+      receivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.description:
+-        "register new Elastic Chains in the shared bridge."
++        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"}
+      directlyReceivedPermissions.4.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      directlyReceivedPermissions.3.from:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.2.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      directlyReceivedPermissions.1.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      directlyReceivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0.
+      name:
+-        "StateTransitionManager"
++        "ChainTypeManager"
+      template:
+-        "shared-zk-stack/v25/StateTransitionManager"
++        "shared-zk-stack/v26/ChainTypeManager"
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37"
+      sourceHashes.0:
+-        "0x2322249822d1ffda838f7005dd4137d161f15f2cc3553e9bffba7c04a44d9226"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      description:
+-        "Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic)."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0."
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      issuedPermissions.1.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      issuedPermissions.0.description:
+-        "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
++        "revert batches for all connected chains."
+      values.$implementation:
+-        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
++        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
+      values.$pastUpgrades.3:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"]]
+      values.$pastUpgrades.2.2.0:
+-        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
++        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
+      values.$pastUpgrades.2.1:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.2.0:
+-        "2025-01-08T16:00:35.000Z"
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$upgradeCount:
+-        3
++        4
+      values.genesisUpgrade:
+-        "0x0000000000000000000000000000000000000001"
+      values.getAllHyperchainChainIDs:
+-        [324,388,50104,543210,2741,325,61166,1345,9637,320,232]
+      values.getAllHyperchains:
+-        ["0x32400084C286CF3E17e7B677ea9583e60a000324","0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879","0x89f90748A9a36C30A324481133fa198f4E16A824","0xC8C4cB5AF7c723c7EfD360898B47920679f92C92","0xF2704433d11842d15aa76BBF0E00407267a99C92","0xc29d04A93F893700015138E3E334eB828dAC3cef"]
+      values.getChainAdmin:
+-        []
+      values.initialCutHash:
+-        "0xaf3397d2d574e3fb4a729df5b561afe890323a5eab21980fe9aae230f5934458"
++        "0x1f2fc821f3af8fc4dae46f80a28e8b582ace20e83a979acacf6ecbd0e9b4fcea"
+      values.MAX_NUMBER_OF_HYPERCHAINS:
+-        100
+      values.storedBatchZero:
+-        "0xbb3c62fb5577f094f9290297114948e6f6fb8d04083a366ba3dadb3569fb5c4f"
++        "0x30624ae13932bc83804b007160a60b2394893f6097d5f7062de441172adc4749"
+      values.initialForceDeploymentHash:
++        "0x5d46606048f0821e6ce823fd9cc257b47818b44dffed0bc21489e23ab242d0e1"
+      values.l1GenesisUpgrade:
++        "0x107e92E7360e595d8129B522ABD458361f32f66C"
+      derivedName:
+-        "StateTransitionManager"
++        "ChainTypeManager"
+    }
+```
+
+```diff
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      name:
+-        "L1SharedBridge"
++        "L1Nullifier"
+      template:
+-        "shared-zk-stack/v25/L1SharedBridge"
+      sourceHashes.1:
+-        "0x23ebe4dfc517328a5acc1f6f8aa84be593be5db9d6357fcdcd69c62ca60853f7"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x1d68adefefffd4b896740e985d1d7d39abbface4239c0fb54cbda7892ce8c99d"
+      description:
+-        "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era."
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      issuedPermissions.0.description:
+-        "register new Elastic Chains in the shared bridge."
+      issuedPermissions.0.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      issuedPermissions.0.via.0.address:
+-        "0x2cf3bD6a9056b39999F3883955E183F655345063"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.$implementation:
+-        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
++        "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"
+      values.$pastUpgrades.3:
++        ["2024-08-26T07:51:11.000Z","0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c",["0xb56A8225A745756DD215faf22E4796f373561AcD"]]
+      values.$pastUpgrades.2.2.0:
+-        "0xb56A8225A745756DD215faf22E4796f373561AcD"
++        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
+      values.$pastUpgrades.2.1:
+-        "2024-08-26T07:51:11.000Z"
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.2.0:
+-        "0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.1.2:
+-        ["0xF5A14DCdde1143443f06033200D345c2a2828A99"]
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.1.1:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$pastUpgrades.1.0:
+-        "2025-01-08T16:00:35.000Z"
++        ["0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"]
+      values.$upgradeCount:
+-        3
++        4
+      values.admin:
+-        "0x2cf3bD6a9056b39999F3883955E183F655345063"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
+      values.__DEPRECATED_admin:
++        "0x2cf3bD6a9056b39999F3883955E183F655345063"
+      values.__DEPRECATED_l2BridgeAddress:
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
+      values.__DEPRECATED_pendingAdmin:
++        "0x0000000000000000000000000000000000000000"
+      values.l1AssetRouter:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.l1NativeTokenVault:
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      values.l2BridgeAddress:
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
+      derivedName:
+-        "L1SharedBridge"
++        "L1Nullifier"
+      category:
+-        {"name":"Shared Infrastructure","priority":4}
+      errors:
++        {"__DEPRECATED_l2BridgeAddress":"Processing error occurred.","l2BridgeAddress":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      template:
+-        "shared-zk-stack/v25/ProtocolUpgradeHandler"
++        "shared-zk-stack/v26/ProtocolUpgradeHandler"
+      sourceHashes.1:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x12958ca399cc6a20305ec705a35cae0ee77a75afd66ee1eb5f09d3a811ca4457"
+      sourceHashes.0:
+-        "0x07105095c7b0ff20b0cdd1e3754255aa6189aa79719f6d09fdd8e20df48bed44"
++        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
+      description:
+-        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
++        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."}
+      values.$implementation:
+-        "0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"
++        "0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"
+      values.$pastUpgrades.1:
++        ["2025-02-06T15:32:47.000Z","0xa3d1fa107e6dc4ce67d92a5af74aa7dc34602c2a1d46727790819c1f974bed95",["0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"]]
+      values.$pastUpgrades.0.2:
+-        ["0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"]
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.0.1:
+-        "2025-02-06T15:32:47.000Z"
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$pastUpgrades.0.0:
+-        "0xa3d1fa107e6dc4ce67d92a5af74aa7dc34602c2a1d46727790819c1f974bed95"
++        ["0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"]
+      values.$upgradeCount:
+-        1
++        2
+      values.emergencyUpgradeProposals:
+-        ["0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"]
+      values.SHARED_BRIDGE:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.STATE_TRANSITION_MANAGER:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.CHAIN_TYPE_MANAGER:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted:
++        ["0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"]
+      values.L1_ASSET_ROUTER:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.L1_NATIVE_TOKEN_VAULT:
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      values.L1_NULLIFIER:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      fieldMeta.emergencyUpgradeProposals:
+-        {"severity":"HIGH"}
+      fieldMeta.emergencyUpgradesExecuted:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.5.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.4.from:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      receivedPermissions.4.via.1.address:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+      receivedPermissions.3.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.2.via.1:
+-        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      receivedPermissions.2.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.1.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (0x107e92E7360e595d8129B522ABD458361f32f66C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/Bridgehub.sol                        | 2541 +++++++++++--
+ .../CTMDeploymentTracker/CTMDeploymentTracker.sol  |  674 ++++
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../ChainTypeManager/ChainTypeManager.sol}         |  476 ++-
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../ethereum/.flat/L1ERC20Bridge/L1ERC20Bridge.sol |  948 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  653 ++++
+ .../ethereum/.flat/L1GenesisUpgrade.sol            | 3775 ++++++++++++++++++++
+ .../L1Nullifier/L1Nullifier.sol}                   | 1488 ++++----
+ .../L1Nullifier/TransparentUpgradeableProxy.p.sol  |  729 ++++
+ .../ethereum/.flat/MessageRoot/MessageRoot.sol     | 1448 ++++++++
+ .../MessageRoot/TransparentUpgradeableProxy.p.sol  |  729 ++++
+ .../ProtocolUpgradeHandler.sol                     |   64 +-
+ 13 files changed, 12119 insertions(+), 1406 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123258 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      template:
+-        "shared-zk-stack/BridgeHub"
++        "shared-zk-stack/v25/BridgeHub"
+    }
+```
+
+```diff
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/RollupL1DAValidator"
++        "shared-zk-stack/v26/RollupL1DAValidator"
+    }
+```
+
+```diff
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+      template:
+-        "shared-zk-stack/L1AssetRouter"
++        "shared-zk-stack/v26/L1AssetRouter"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/ValidiumL1DAValidator"
++        "shared-zk-stack/v26/ValidiumL1DAValidator"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) {
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+      template:
+-        "shared-zk-stack/L1NativeTokenVault"
++        "shared-zk-stack/v26/L1NativeTokenVault"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      template:
+-        "shared-zk-stack/StateTransitionManager"
++        "shared-zk-stack/v25/StateTransitionManager"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      template:
+-        "shared-zk-stack/L1SharedBridge"
++        "shared-zk-stack/v25/L1SharedBridge"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      template:
+-        "shared-zk-stack/ProtocolUpgradeHandler"
++        "shared-zk-stack/v25/ProtocolUpgradeHandler"
+    }
+```
+
 Generated with discovered.json: 0xe7639ce8f9590f6e6cc987fc96ee73940a4be783
 
 # Diff at Tue, 25 Mar 2025 10:34:28 GMT:
