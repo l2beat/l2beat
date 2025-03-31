@@ -26,7 +26,7 @@ export function getBadgeLink(
     return `/data-availability/summary?highlight=${badge.action.slug}`
   }
 
-  if (badge.action.type === 'selfDaHightlight') {
+  if (badge.action.type === 'selfDaHighlight') {
     return `/data-availability/summary?tab=custom&highlight=${project.slug}`
   }
 }

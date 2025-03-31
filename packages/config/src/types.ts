@@ -164,7 +164,7 @@ export type BadgeAction =
   | BadgeScalingFilterAction
   | BadgeSelfScalingFilterAction
   | BadgePublicDaHighlightAction
-  | BadgeSelfDaHightlightAction
+  | BadgeselfDaHighlightAction
 
 // Move to scaling/summary with given filterId and value
 export type BadgeScalingFilterAction = {
@@ -186,8 +186,8 @@ export type BadgePublicDaHighlightAction = {
 }
 
 // Move to data-availability/summary and highlight project with the same slug as the project
-export type BadgeSelfDaHightlightAction = {
-  type: 'selfDaHightlight'
+export type BadgeselfDaHighlightAction = {
+  type: 'selfDaHighlight'
 }
 
 export type BadgeFilterId =

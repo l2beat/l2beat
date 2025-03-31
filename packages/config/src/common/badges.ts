@@ -223,7 +223,7 @@ export const badges = [
     name: 'Custom DA solution',
     description: 'This project is using a custom DA solution',
     action: {
-      type: 'selfDaHightlight',
+      type: 'selfDaHighlight',
     },
   },
   {
@@ -233,7 +233,7 @@ export const badges = [
     description:
       'There is a Data Availability Committee that provides/attests to data availability',
     action: {
-      type: 'selfDaHightlight',
+      type: 'selfDaHighlight',
     },
   },
   // VM
