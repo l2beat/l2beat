@@ -30,6 +30,8 @@ import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { env } from '~/env'
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
@@ -70,19 +72,23 @@ export function ScalingSummaryTables(props: Props) {
 
   return (
     <>
-      <div className="mt-4 max-md:px-4 md:my-4">
-        <div className="flex h-4 select-none items-center gap-[5px] overflow-hidden text-[12px] leading-none *:shrink-0">
-          <L2BeatzzaTextLogoSymbol className="hidden" />
-          {range(16).map((index) => (
-            <React.Fragment key={index}>
-              <div className="relative size-4 leading-none">
-                <div className="absolute left-0.5 top-[3px]">🍕</div>
-              </div>
-              <L2BeatzzaTextLogoUse />
-            </React.Fragment>
-          ))}
+      {env.NEXT_PUBLIC_L2BEATZZA ? (
+        <div className="mt-4 max-md:px-4 md:my-4">
+          <div className="flex h-4 select-none items-center gap-[5px] overflow-hidden text-[12px] leading-none *:shrink-0">
+            <L2BeatzzaTextLogoSymbol className="hidden" />
+            {range(16).map((index) => (
+              <React.Fragment key={index}>
+                <div className="relative size-4 leading-none">
+                  <div className="absolute left-0.5 top-[3px]">🍕</div>
+                </div>
+                <L2BeatzzaTextLogoUse />
+              </React.Fragment>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <HorizontalSeparator className="my-4 max-md:hidden" />
+      )}
 
       <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
         <TableFilters
