@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
-import imageSize from 'image-size'
 import path from 'path'
+import imageSize from 'image-size'
 
 export function getImageParams(filePath: string) {
   try {
