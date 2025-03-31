@@ -96,7 +96,7 @@ function Sidebar({
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
-          className="w-[--sidebar-width] border-none bg-background p-0 text-primary [&>button]:hidden"
+          className="z-999 w-[--sidebar-width] border-none bg-background p-0 text-primary [&>button]:hidden"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
