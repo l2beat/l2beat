@@ -229,7 +229,7 @@ function SidebarGroupSmallLink({
     <Comp
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
-        'text-xs leading-none text-primary transition-colors hover:text-secondary',
+        'pl-1.5 text-xs leading-none text-primary transition-colors hover:text-secondary',
         isActive && 'text-brand hover:text-brand',
         className,
       )}
@@ -242,7 +242,7 @@ function SidebarGroupSub({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
       className={cn(
-        'mx-3.5 flex min-w-0 translate-x-px flex-col gap-0.5 border-l border-divider px-[13px] py-0.5',
+        'ml-3.5 flex min-w-0 translate-x-px flex-col gap-0.5 border-l border-divider py-0.5 pl-[13px]',
         className,
       )}
       {...props}

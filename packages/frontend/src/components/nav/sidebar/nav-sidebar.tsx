@@ -76,7 +76,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
             </SidebarGroup>
           )
         })}
-        <SidebarGroup className="-top-px mt-auto">
+        <SidebarGroup className="mt-8 gap-1.5">
           {sideLinks.map((link) => (
             <SidebarGroupItem key={link.title}>
               <SidebarGroupSmallLink
