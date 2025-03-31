@@ -65,8 +65,8 @@ export function Step2(props: Props) {
             <Image
               src="/images/l2beatzza/custom.png"
               alt="Custom"
-              width={102}
-              height={102}
+              width={304}
+              height={304}
               className="w-24 sm:w-32"
             />
           }
