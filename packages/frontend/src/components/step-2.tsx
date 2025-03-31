@@ -35,7 +35,7 @@ export function Step2(props: Props) {
           }
         />
         <PizzaCheckTile
-          title="Tomato-based"
+          title="Spicy"
           image={<Tomato />}
           onCheck={() => setSelected({ type: 'predefined', pizza: 'tomato' })}
           checked={
