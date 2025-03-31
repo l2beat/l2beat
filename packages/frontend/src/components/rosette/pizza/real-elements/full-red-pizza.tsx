@@ -5,16 +5,53 @@ export function FullRedPizzaSymbol() {
         <symbol id="full-red-pizza">
           <FullRedPizza />
         </symbol>
+        <radialGradient
+          id="red_paint0_radial_0_1"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(89.5965 89.5778) rotate(90) scale(74.8229 76.296)"
+        >
+          <stop offset="0.719342" stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
+        </radialGradient>
+        <linearGradient
+          id="red_paint1_linear_0_1"
+          x1="113.656"
+          y1="34.7798"
+          x2="113.656"
+          y2="75.5299"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#FE3030" />
+        </linearGradient>
+        <linearGradient
+          id="red_paint2_linear_0_1"
+          x1="99.431"
+          y1="17.2577"
+          x2="111.28"
+          y2="63.2799"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#F50000" />
+          <stop offset="1" stopColor="#8F0000" />
+        </linearGradient>
       </defs>
     </svg>
   )
 }
 
 export function FullRedPizzaReference() {
-  return <use href="#full-red-pizza" />
+  return (
+    <>
+      <use href="#full-red-pizza" />
+    </>
+  )
 }
 
-function FullRedPizza() {
+export function FullRedPizza() {
   return (
     <>
       <path
@@ -29,13 +66,13 @@ function FullRedPizza() {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M124.598 154.281C119.058 158.383 118.952 160.938 108.152 160.923C97.3538 160.907 101.083 164.797 90.7165 164.368C80.3499 163.937 79.5383 162.227 72.8097 159.968C66.081 157.709 63.0103 162.726 58.2449 157.756C53.4787 152.785 53.6415 155.117 51.3715 152.317C49.1006 149.516 46.5075 152.002 44.0484 148.14C41.5884 144.276 39.7499 141.061 36.4621 136.333C33.1733 131.605 26.8328 131.048 24.8133 126.347C22.7948 121.646 22.2176 118.881 19.6137 111.838C17.009 104.796 13.4868 101.121 13.304 89.6828C13.1212 78.244 20.2462 81.7825 20.4335 72.8924C20.6207 64.0031 20.0969 58.6977 23.8154 53.0592C27.5339 47.4199 30.7314 46.4283 32.0722 43.068C33.413 39.7087 38.7891 35.7983 40.7434 33.5102C42.6976 31.2221 48.6238 31.347 53.1539 27.4194C57.6831 23.491 59.8979 18.8794 68.2198 15.8784C76.5418 12.8773 79.6143 17.8118 85.5586 17.0907C91.5028 16.3688 94.9427 13.8997 99.7885 15.0605C104.633 16.2213 103.483 20.6446 108.338 21.3811C113.192 22.1185 114.921 20.461 118.704 21.8118C122.488 23.1626 126.443 26.4215 129.992 28.8254C133.54 31.2293 135.954 27.2575 142.999 34.605C150.044 41.9534 148.937 44.2596 152.649 48.996C156.36 53.7324 158.441 55.4704 161.937 60.4149C165.433 65.3585 163.389 61.9276 162.165 69.7366C160.941 77.5455 162.788 80.3376 165.257 83.7784C167.726 87.2182 162.179 89.2186 162.539 92.1908C162.9 95.1629 164.125 97.3071 163.794 103.017C163.461 108.727 160.957 106.981 159.58 112.034C158.203 117.087 158.448 125.563 156.459 129.544C154.469 133.526 149.588 134.058 145.067 137.563C140.547 141.067 142.962 147.048 136.541 150.3C130.118 153.551 130.496 149.913 124.598 154.281Z"
-        fill="url(#paint0_radial_0_1)"
+        fill="url(#red_paint0_radial_0_1)"
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M113.656 75.5299C124.879 75.5299 134.031 66.3765 134.031 55.1539C134.031 43.9323 124.879 34.7798 113.656 34.7798C102.433 34.7798 93.28 43.9323 93.28 55.1539C93.28 66.3765 102.433 75.5299 113.656 75.5299Z"
-        fill="url(#paint1_linear_0_1)"
+        fill="url(#red_paint1_linear_0_1)"
       />
       <path
         fillRule="evenodd"
@@ -753,7 +790,7 @@ function FullRedPizza() {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M96.4079 18.5957C102.069 15.9892 107.012 20.3901 107.895 25.6168C108.754 30.6968 107.263 35.7328 99.8639 39.1396C92.466 42.5459 87.669 40.4049 84.3671 36.4491C80.9709 32.3794 80.8403 25.7629 86.5016 23.1563C88.4479 22.2601 90.5254 22.1482 92.2911 22.6913C93.025 20.998 94.4616 19.492 96.4079 18.5957Z"
-        fill="url(#paint2_linear_0_1)"
+        fill="url(#red_paint2_linear_0_1)"
       />
       <path
         fillRule="evenodd"
@@ -1363,7 +1400,7 @@ function FullRedPizza() {
       />
       <defs>
         <radialGradient
-          id="paint0_radial_0_1"
+          id="red_paint0_radial_0_1"
           cx="0"
           cy="0"
           r="1"
@@ -1374,7 +1411,7 @@ function FullRedPizza() {
           <stop offset="1" stopColor="#8F0000" />
         </radialGradient>
         <linearGradient
-          id="paint1_linear_0_1"
+          id="red_paint1_linear_0_1"
           x1="113.656"
           y1="34.7798"
           x2="113.656"
@@ -1385,7 +1422,7 @@ function FullRedPizza() {
           <stop offset="1" stopColor="#FE3030" />
         </linearGradient>
         <linearGradient
-          id="paint2_linear_0_1"
+          id="red_paint2_linear_0_1"
           x1="99.431"
           y1="17.2577"
           x2="111.28"

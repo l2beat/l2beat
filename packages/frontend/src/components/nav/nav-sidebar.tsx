@@ -57,7 +57,7 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
             <span>Make a Pizza</span>
             <PizzaIcon />
           </Button>
-          <div className="hidden">
+          <div className="h-0">
             <FullRedPizzaSymbol />
             <FullYellowPizzaSymbol />
             <FullGreenPizzaSymbol />

@@ -1,3 +1,4 @@
+'use client'
 import { assert } from '@l2beat/shared-pure'
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'

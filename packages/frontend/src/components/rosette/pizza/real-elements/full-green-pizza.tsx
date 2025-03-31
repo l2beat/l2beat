@@ -5,6 +5,158 @@ export function FullGreenPizzaSymbol() {
         <symbol id="full-green-pizza">
           <FullGreenPizza />
         </symbol>
+        <clipPath id="clip0_0_1">
+          <rect
+            width="14.4822"
+            height="14.4821"
+            fill="white"
+            transform="translate(65.5387 33.2951)"
+          />
+        </clipPath>
+        <clipPath id="clip1_0_1">
+          <rect
+            width="14.4822"
+            height="14.4822"
+            fill="white"
+            transform="translate(66.5934 113.145)"
+          />
+        </clipPath>
+        <clipPath id="clip2_0_1">
+          <rect
+            width="11.4846"
+            height="11.4846"
+            fill="white"
+            transform="translate(89.5743 134.627)"
+          />
+        </clipPath>
+        <clipPath id="clip3_0_1">
+          <rect
+            width="11.4846"
+            height="11.4846"
+            fill="white"
+            transform="translate(99.566 54.6938)"
+          />
+        </clipPath>
+        <clipPath id="clip4_0_1">
+          <rect
+            width="11.4846"
+            height="11.4846"
+            fill="white"
+            transform="translate(139.533 114.644)"
+          />
+        </clipPath>
+        <clipPath id="clip5_0_1">
+          <rect
+            width="11.4846"
+            height="11.4846"
+            fill="white"
+            transform="translate(78.5835 94.6605)"
+          />
+        </clipPath>
+        <clipPath id="clip6_0_1">
+          <rect
+            width="11.4846"
+            height="11.4846"
+            fill="white"
+            transform="translate(47.6093 82.6705)"
+          />
+        </clipPath>
+        <clipPath id="clip7_0_1">
+          <rect
+            width="26.9775"
+            height="26.9775"
+            fill="white"
+            transform="translate(63.5959 60.1892)"
+          />
+        </clipPath>
+        <clipPath id="clip8_0_1">
+          <rect
+            width="14.4821"
+            height="14.4821"
+            fill="white"
+            transform="translate(138.534 83.17)"
+          />
+        </clipPath>
+        <clipPath id="clip9_0_1">
+          <rect
+            width="19.913"
+            height="19.913"
+            fill="white"
+            transform="translate(108.21 71.8162)"
+          />
+        </clipPath>
+        <clipPath id="clip10_0_1">
+          <rect
+            width="19.913"
+            height="19.913"
+            fill="white"
+            transform="translate(35.2704 48.8354)"
+          />
+        </clipPath>
+        <clipPath id="clip11_0_1">
+          <rect
+            width="15.9867"
+            height="15.9867"
+            fill="white"
+            transform="translate(61.5977 134.128)"
+          />
+        </clipPath>
+        <clipPath id="clip12_0_1">
+          <rect
+            width="14.4822"
+            height="14.4821"
+            fill="white"
+            transform="translate(35.6193 73.1784)"
+          />
+        </clipPath>
+        <clipPath id="clip13_0_1">
+          <rect
+            width="19.913"
+            height="19.913"
+            fill="white"
+            transform="translate(129.732 57.5693)"
+          />
+        </clipPath>
+        <clipPath id="clip14_0_1">
+          <rect
+            width="19.913"
+            height="19.9129"
+            fill="white"
+            transform="translate(111.959 138.478)"
+          />
+        </clipPath>
+        <clipPath id="clip15_0_1">
+          <rect
+            width="19.913"
+            height="19.913"
+            fill="white"
+            transform="translate(41.1 110.89)"
+          />
+        </clipPath>
+        <clipPath id="clip16_0_1">
+          <rect
+            width="14.4822"
+            height="14.4822"
+            fill="white"
+            transform="translate(26.6268 108.149)"
+          />
+        </clipPath>
+        <clipPath id="clip17_0_1">
+          <rect
+            width="19.913"
+            height="19.913"
+            fill="white"
+            transform="translate(82.7362 27.8646)"
+          />
+        </clipPath>
+        <clipPath id="clip18_0_1">
+          <rect
+            width="27.1736"
+            height="27.1736"
+            fill="white"
+            transform="translate(102.367 99.5482)"
+          />
+        </clipPath>
       </defs>
     </svg>
   )
@@ -709,160 +861,6 @@ function FullGreenPizza() {
           fill="#008040"
         />
       </g>
-      <defs>
-        <clipPath id="clip0_0_1">
-          <rect
-            width="14.4822"
-            height="14.4821"
-            fill="white"
-            transform="translate(65.5387 33.2951)"
-          />
-        </clipPath>
-        <clipPath id="clip1_0_1">
-          <rect
-            width="14.4822"
-            height="14.4822"
-            fill="white"
-            transform="translate(66.5934 113.145)"
-          />
-        </clipPath>
-        <clipPath id="clip2_0_1">
-          <rect
-            width="11.4846"
-            height="11.4846"
-            fill="white"
-            transform="translate(89.5743 134.627)"
-          />
-        </clipPath>
-        <clipPath id="clip3_0_1">
-          <rect
-            width="11.4846"
-            height="11.4846"
-            fill="white"
-            transform="translate(99.566 54.6938)"
-          />
-        </clipPath>
-        <clipPath id="clip4_0_1">
-          <rect
-            width="11.4846"
-            height="11.4846"
-            fill="white"
-            transform="translate(139.533 114.644)"
-          />
-        </clipPath>
-        <clipPath id="clip5_0_1">
-          <rect
-            width="11.4846"
-            height="11.4846"
-            fill="white"
-            transform="translate(78.5835 94.6605)"
-          />
-        </clipPath>
-        <clipPath id="clip6_0_1">
-          <rect
-            width="11.4846"
-            height="11.4846"
-            fill="white"
-            transform="translate(47.6093 82.6705)"
-          />
-        </clipPath>
-        <clipPath id="clip7_0_1">
-          <rect
-            width="26.9775"
-            height="26.9775"
-            fill="white"
-            transform="translate(63.5959 60.1892)"
-          />
-        </clipPath>
-        <clipPath id="clip8_0_1">
-          <rect
-            width="14.4821"
-            height="14.4821"
-            fill="white"
-            transform="translate(138.534 83.17)"
-          />
-        </clipPath>
-        <clipPath id="clip9_0_1">
-          <rect
-            width="19.913"
-            height="19.913"
-            fill="white"
-            transform="translate(108.21 71.8162)"
-          />
-        </clipPath>
-        <clipPath id="clip10_0_1">
-          <rect
-            width="19.913"
-            height="19.913"
-            fill="white"
-            transform="translate(35.2704 48.8354)"
-          />
-        </clipPath>
-        <clipPath id="clip11_0_1">
-          <rect
-            width="15.9867"
-            height="15.9867"
-            fill="white"
-            transform="translate(61.5977 134.128)"
-          />
-        </clipPath>
-        <clipPath id="clip12_0_1">
-          <rect
-            width="14.4822"
-            height="14.4821"
-            fill="white"
-            transform="translate(35.6193 73.1784)"
-          />
-        </clipPath>
-        <clipPath id="clip13_0_1">
-          <rect
-            width="19.913"
-            height="19.913"
-            fill="white"
-            transform="translate(129.732 57.5693)"
-          />
-        </clipPath>
-        <clipPath id="clip14_0_1">
-          <rect
-            width="19.913"
-            height="19.9129"
-            fill="white"
-            transform="translate(111.959 138.478)"
-          />
-        </clipPath>
-        <clipPath id="clip15_0_1">
-          <rect
-            width="19.913"
-            height="19.913"
-            fill="white"
-            transform="translate(41.1 110.89)"
-          />
-        </clipPath>
-        <clipPath id="clip16_0_1">
-          <rect
-            width="14.4822"
-            height="14.4822"
-            fill="white"
-            transform="translate(26.6268 108.149)"
-          />
-        </clipPath>
-        <clipPath id="clip17_0_1">
-          <rect
-            width="19.913"
-            height="19.913"
-            fill="white"
-            transform="translate(82.7362 27.8646)"
-          />
-        </clipPath>
-        <clipPath id="clip18_0_1">
-          <rect
-            width="27.1736"
-            height="27.1736"
-            fill="white"
-            transform="translate(102.367 99.5482)"
-          />
-        </clipPath>
-      </defs>
     </>
   )
 }
