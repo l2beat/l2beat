@@ -1,12 +1,9 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { env } from '~/env'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
-import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
 import {
   Collapsible,
@@ -31,6 +28,9 @@ import { Logo } from '../../logo'
 import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
+import { env } from '~/env'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
+import Image from 'next/image'
 
 interface Props {
   groups: NavGroup[]
@@ -98,9 +98,8 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
               <Image
                 src={'/images/l2beatzza.png'}
                 alt={'L2BEATZZA image'}
-                width={200}
-                height={160}
-                quality={100}
+                width={600}
+                height={480}
                 className="rounded-lg border border-divider"
               />
               <button className="absolute inset-x-3 bottom-3 h-8 rounded bg-primary-invert text-xs font-bold text-primary">
