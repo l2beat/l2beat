@@ -3,16 +3,16 @@ import type {
   ElasticChainEscrow,
   Project,
   ProjectTvlEscrow,
+  TvsToken,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
+import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { createEscrowToken } from '../tools/mapConfig'
 import { getTimestampsRange } from '../tools/timestamps'
-import { type Token, TokenId } from '../types'
 
 export const bridgeInterface = new utils.Interface([
   'function l2TokenAddress(address _l1Token) view returns (address)',
@@ -23,7 +23,7 @@ export async function getElasticChainTokens(
   escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
   chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
-): Promise<Token[]> {
+): Promise<TvsToken[]> {
   const chain = project.chainConfig
   assert(chain, `${project.id}: chain should be defined`)
   const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
@@ -114,7 +114,7 @@ export async function getElasticChainTokens(
     isAssociated: false,
   }
 
-  const tokensToAssignFromL1: Token[] = []
+  const tokensToAssignFromL1: TvsToken[] = []
 
   if (escrow.sharedEscrow.tokensToAssignFromL1) {
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {

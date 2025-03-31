@@ -6,13 +6,12 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { type Project, ProjectService } from '@l2beat/config'
+import { type Project, ProjectService, type TvsToken } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
-import type { Token, TokenId } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -66,7 +65,7 @@ const cmd = command({
       logger.info(`Generating TVS config for project ${project.id}`)
       const tvsConfig = await generateConfigForProject(project, logger)
 
-      let newConfig: Token[] = []
+      let newConfig: TvsToken[] = []
       if (tvsConfig.tokens.length > 0) {
         logger.info('Executing TVS to exclude zero-valued tokens')
         const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
@@ -97,7 +96,8 @@ const cmd = command({
         logger.info('No tokens found')
       }
 
-      const filePath = `./src/modules/tvs/config/${project.id.replace('=', '').replace(';', '')}.json`
+      // TODO when old TVL will be removed script should be moved to config package
+      const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
       const mergedTokens = mergeWithExistingConfig(
         newConfig,
@@ -158,7 +158,7 @@ function initLogger(env: Env) {
 function writeToFile(
   filePath: string,
   project: string,
-  nonZeroTokens: Token[],
+  nonZeroTokens: TvsToken[],
 ) {
   const wrapper = {
     $schema: 'schema/tvs-config-schema.json',
@@ -182,15 +182,15 @@ function readFromFile(filePath: string) {
   }
 
   const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
-  return json.tokens as Token[]
+  return json.tokens as TvsToken[]
 }
 
 function mergeWithExistingConfig(
-  nonZeroTokens: Token[],
-  currentConfig: Token[],
+  nonZeroTokens: TvsToken[],
+  currentConfig: TvsToken[],
   logger: Logger,
 ) {
-  const resultMap = new Map<string, Token>()
+  const resultMap = new Map<string, TvsToken>()
   nonZeroTokens.forEach((token) => {
     if (resultMap.has(token.id)) {
       logger.warn(`Duplicate detected: ${token.id}`)
