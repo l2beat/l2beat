@@ -63,6 +63,7 @@ import { funki } from '../projects/funki/funki'
 import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
+import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
@@ -280,6 +281,7 @@ export const layer2s: ScalingProject[] = [
   fuse,
   galxegravity,
   gameswift,
+  gasp,
   genlayer,
   gluon,
   gmnetwork,
