@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { env } from '~/env'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
 import { Logo } from '../../logo'
 import { useRecategorisationPreviewContext } from '../../recategorisation-preview/recategorisation-preview-provider'
@@ -27,7 +29,11 @@ export function MobileTopNavbar({
         <div className="flex items-center gap-3">
           <div className="py-4">
             <Link href={logoLink}>
-              <Logo className="h-8 w-auto" />
+              {env.NEXT_PUBLIC_L2BEATZZA ? (
+                <L2BeatzzaLogo className="h-8 w-auto" />
+              ) : (
+                <Logo className="h-8 w-auto" />
+              )}
             </Link>
           </div>
           <MobileSelectedLink groups={groups} />
