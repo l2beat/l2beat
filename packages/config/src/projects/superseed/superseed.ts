@@ -30,6 +30,7 @@ export const superseed: ScalingProject = opStackL2({
       ],
     },
   },
+  isNodeAvailable: 'UnderReview',
   chainConfig: {
     name: 'superseed',
     chainId: 5330,
