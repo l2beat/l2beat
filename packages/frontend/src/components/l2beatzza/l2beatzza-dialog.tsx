@@ -1,7 +1,13 @@
 'use client'
 import { useState } from 'react'
 import { createContext, useContext } from 'react'
-import { Dialog, DialogClose, DialogContent, DialogTitle } from '../core/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '../core/dialog'
 import { StepController } from './pizza-flow'
 
 type L2BeatzzaDialogContextProps = {
@@ -41,12 +47,16 @@ export function L2BeatzzaDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="flex items-center justify-center bg-surface-primary pt-16 md:left-1/2 md:top-1/2 md:h-[560px] md:max-w-[800px] md:-translate-x-1/2 md:-translate-y-1/2"
+        className="bg-surface-primary md:left-1/2 md:top-1/2 md:h-[560px] md:max-w-[800px] md:-translate-x-1/2 md:-translate-y-1/2"
         fullScreenMobile
       >
-        <DialogTitle className="hidden">Pizza time</DialogTitle>
+        <DialogHeader>
+          <DialogTitle>
+            L2BEATZZA Order #{Math.floor(Math.random() * 10000)}
+          </DialogTitle>
+        </DialogHeader>
         <StepController />
-        <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm bg-brand">
+        <DialogClose className="absolute right-6 top-[22px] flex size-[20px] items-center justify-center rounded-sm bg-brand">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

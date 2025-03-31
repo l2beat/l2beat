@@ -67,15 +67,13 @@ export function Step4(props: Props) {
   }
 
   return (
-    <div className="items-center justify-center pb-[225px]">
-      <div className="size-[500px]">
-        <LazyLottie
-          loop
-          autoplay
-          getJson={async () => animationData}
-          id="pizza-cook"
-        />
-      </div>
+    <div className="mx-auto flex size-full items-center justify-center pb-[225px] md:size-[500px]">
+      <LazyLottie
+        loop
+        autoplay
+        getJson={async () => animationData}
+        id="pizza-cook"
+      />
     </div>
   )
 }
