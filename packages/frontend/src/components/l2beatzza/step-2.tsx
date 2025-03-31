@@ -22,7 +22,7 @@ export function Step2(props: Props) {
 
   return (
     <div className="flex w-full flex-col items-center gap-5">
-      <div className="mb-2 text-xl font-bold">
+      <div className="mb-2 text-xl font-bold leading-[1.2]">
         The pizza of the day is prepared with sourdough. We have two options
         ready for you, or you can choose a custom one.
       </div>

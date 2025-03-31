@@ -52,7 +52,10 @@ export function L2BeatzzaDialog() {
       >
         <DialogHeader>
           <DialogTitle>
-            L2BEATZZA Order #{Math.floor(Math.random() * 10000)}
+            L2BEATZZA{' '}
+            <span className="text-secondary">
+              Order #{Math.floor(Math.random() * 10000)}
+            </span>
           </DialogTitle>
         </DialogHeader>
         <StepController />
