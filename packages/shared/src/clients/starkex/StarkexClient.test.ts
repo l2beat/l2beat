@@ -163,6 +163,5 @@ function mockClient(deps: {
     retryStrategy: 'TEST',
     apiKey: deps.apiKey ?? 'abcdef1234',
     sourceName: 'test',
-    metricsEnabled: false,
   })
 }

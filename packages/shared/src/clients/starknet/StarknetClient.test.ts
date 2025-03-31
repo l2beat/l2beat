@@ -118,7 +118,6 @@ function mockClient(deps: {
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
     sourceName: 'test',
-    metricsEnabled: false,
   })
 }
 

@@ -136,7 +136,6 @@ function mockClient(deps: {
     url: deps.url ?? 'https://example.com',
     type: deps.type ?? 'loopring',
     sourceName: 'test',
-    metricsEnabled: false,
   })
 }
 

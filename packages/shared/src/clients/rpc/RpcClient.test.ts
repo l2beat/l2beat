@@ -490,7 +490,6 @@ function mockClient(deps: {
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
     generateId: deps.generateId,
-    metricsEnabled: false,
   })
 }
 

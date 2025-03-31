@@ -10,7 +10,7 @@ export interface ClientCoreDependencies {
   sourceName: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
-  metricsEnabled: boolean
+  metricsEnabled?: boolean
 }
 
 type Metrics = {

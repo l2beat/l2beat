@@ -82,7 +82,6 @@ export class LocalExecutor {
       callsPerMinute: coingeckoApiKey ? 400 : 10,
       http,
       sourceName: 'coingecko',
-      metricsEnabled: false,
     })
     const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
     return coingeckoQueryService
@@ -131,7 +130,6 @@ export class LocalExecutor {
         retryStrategy: 'RELIABLE',
         sourceName: chainConfig.name,
         callsPerMinute: callsPerMinute,
-        metricsEnabled: false,
       })
 
       const multicallV3 = chainConfig.multicallContracts?.find(

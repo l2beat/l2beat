@@ -232,6 +232,5 @@ function mockClient(deps: {
     timeout: deps.timeout,
     generateId: deps.generateId,
     sourceName: 'test',
-    metricsEnabled: false,
   })
 }
