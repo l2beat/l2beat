@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe48e50416dbcbbeeb76b289511e7463e54b35e8e
+Generated with discovered.json: 0xefa2c76c0ebbc71a292e97b1d42a7de5568c4ecb
 
-# Diff at Mon, 31 Mar 2025 13:04:05 GMT:
+# Diff at Mon, 31 Mar 2025 13:05:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22167075
@@ -68,7 +68,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract LensZkEvm (0xc29d04A93F893700015138E3E334eB828dAC3cef)
-    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
 ```
 
 ```diff

@@ -2,7 +2,7 @@
   "name": "lens",
   "chain": "ethereum",
   "blockNumber": 22167075,
-  "configHash": "0xf40f52de94c0a3b2648738c776d4ed4a92d61750c7e611b918bacb31e8189e59",
+  "configHash": "0xa1858cd4c429d0c394ceee8ec36815835b25a6130b91a1fbe74fffd43615c87d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -411,9 +411,9 @@
       "address": "0xc29d04A93F893700015138E3E334eB828dAC3cef",
       "type": "Contract",
       "unverified": true,
-      "template": "shared-zk-stack/Diamond",
+      "template": "shared-zk-stack/Diamond_v26",
       "proxyType": "EIP2535 diamond proxy",
-      "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -441,17 +441,19 @@
         }
       ],
       "ignoreInWatchMode": [
-        "getPriorityQueueSize",
+        "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
         "getTotalBlocksExecuted",
         "getTotalBlocksVerified",
         "getTotalBatchesExecuted",
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
-        "getTotalPriorityTxs",
+        "getPriorityTreeStartIndex",
+        "getPriorityTreeRoot",
+        "getPriorityQueueSize",
         "getFirstUnprocessedPriorityTx",
-        "baseTokenGasPriceMultiplierNominator",
-        "baseTokenGasPriceMultiplierDenominator"
+        "baseTokenGasPriceMultiplierDenominator",
+        "baseTokenGasPriceMultiplierNominator"
       ],
       "sinceTimestamp": 1740009695,
       "sinceBlock": 21883863,
@@ -508,7 +510,6 @@
         "$upgradeCount": 4,
         "baseTokenGasPriceMultiplierDenominator": 1000,
         "baseTokenGasPriceMultiplierNominator": 0,
-        "daMode": 1,
         "facetAddresses": [
           "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
           "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
@@ -647,33 +648,6 @@
         },
         "isDiamondStorageFrozen": false,
         "isPriorityQueueActive": false,
-        "prepareChainCommitment": {
-          "totalBatchesExecuted": 4596,
-          "totalBatchesVerified": 4597,
-          "totalBatchesCommitted": 4597,
-          "l2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2SystemContractsUpgradeBatchNumber": 0,
-          "batchHashes": [
-            "0x7cf0809a0a2cebfee0b1adb81ac82b6555dbb106d15d4de8867ab54b2d9e5fc9",
-            "0x366c097520e20384bbec958720b805af1fd634874299d9f38ef57adb1078fbe3"
-          ],
-          "priorityTree": {
-            "nextLeafIndex": 54,
-            "startIndex": 25,
-            "unprocessedIndex": 53,
-            "sides": [
-              "0xef8b190eb9f13e3923e04942f8ad89f78a1e52a852bdeb714b8757d22a511162",
-              "0x5cac1677845cf6dea49b04404868a6d1b765cca0723807c2c97bbb882dc35005",
-              "0xe7d90509deb4ff4d325663da3e68daac7bdde52b8eff8d9776e2cfa8e8c3f61f",
-              "0x22b3f0391c3965f212e47dc5c89cfaea76b1cc45978075337f5bf9f3486f30e5",
-              "0x86ec649f195105a56d5795d1b3afdd83b606bb15cc46dac2c8ec1da79a7ed866",
-              "0x3cf1f0bdf02089a661b0e3c838a32f9e1b79e82a058c0e7656db37d3d6571339",
-              "0xcdc5519dafbc9bbb5ad47d3c1910b13a96d8f8cf29888af890d49a9992410459"
-            ]
-          },
-          "isPermanentRollup": false
-        },
-        "txFilterer": [],
         "validators": [
           "0x5C03468829A26981c410a7930bD4853622F0B2E5",
           "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
@@ -681,12 +655,19 @@
         ]
       },
       "fieldMeta": {
-        "txFilterer": {
+        "getAdmin": { "severity": "HIGH" },
+        "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
         },
+        "getDAValidatorPair": { "severity": "HIGH" },
+        "getPendingAdmin": { "severity": "HIGH" },
+        "getPubdataPricingMode": {
+          "severity": "HIGH",
+          "description": "0 - Rollup, 1 - Validium"
+        },
         "getProtocolVersion": {
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "description": "Protocol version, increments with each protocol upgrade."
         },
         "getVerifierParams": {
@@ -1389,7 +1370,7 @@
   "usedTemplates": {
     "shared-zk-stack/BridgeHub": "0x75912557093e5acd5d1cf29247468321e9c1de4a6d05e9432f126ffe026a174d",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/Diamond": "0x2fa90318e0fe2a65ef6b85a203ee34ce8b2b48760bff7d8054e8156dff2ebf4e",
+    "shared-zk-stack/Diamond_v26": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
     "shared-zk-stack/L1SharedBridge": "0x311b6195354f803c293572139b430c5edfc0931cce743d8eb6b5949208de0cf9",
     "shared-zk-stack/StateTransitionManager": "0x9b82b8e46dd94babb05939c3e67f7b24999a707fe26281978ef211c6e90b84f0",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
