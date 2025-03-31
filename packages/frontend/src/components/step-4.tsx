@@ -164,10 +164,7 @@ export function Step5({
                 width={20}
                 height={20}
               />
-              <div className="text-2xl font-bold">
-                {' '}
-                LONGLONGLONGLONG {data.name} pizza!
-              </div>
+              <div className="text-2xl font-bold">{data.name} pizza!</div>
             </div>
           </div>
           <div className="text-[15px] text-gray-500">
