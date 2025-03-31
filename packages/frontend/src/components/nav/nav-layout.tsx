@@ -210,8 +210,13 @@ export async function NavLayout({
           logoLink={logoLink}
           className={cn(!topNavbar && 'md:mb-5')}
         />
-        <NavSidebar logoLink={logoLink} groups={groups} sideLinks={sideLinks} />
-        <div className="min-w-0 flex-1 lg:ml-3">
+        <NavSidebar
+          logoLink={logoLink}
+          groups={groups}
+          sideLinks={sideLinks}
+          topNavbar={!!topNavbar}
+        />
+        <div className={cn('min-w-0 flex-1', !topNavbar && 'lg:ml-3')}>
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
