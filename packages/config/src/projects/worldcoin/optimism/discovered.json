@@ -1,7 +1,7 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 127729542,
+  "blockNumber": 133912814,
   "configHash": "0x28e36a616751ba84ecdd9b30ad0d9981ac9bbb3732cb066d05a9a197c6d7353f",
   "entries": [
     {
@@ -26,7 +26,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 11,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -142,14 +142,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+          "to": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
           "via": []
         }
       ],
       "sinceTimestamp": 1689068111,
       "sinceBlock": 106734667,
       "values": {
-        "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "$admin": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "$implementation": "0x11cA3127182f7583EfC416a8771BD4d11Fae4334",
         "$pastUpgrades": [
           [
@@ -160,7 +160,7 @@
         ],
         "$upgradeCount": 1,
         "groupCount": 2,
-        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "routeFor": [
           "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
@@ -239,7 +239,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 27,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -255,7 +255,7 @@
       "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1722153659,
       "sinceBlock": 123277441,
-      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 46 },
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 56 },
       "derivedName": "WLDGrant"
     },
     {
@@ -321,7 +321,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 19,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -383,10 +383,6 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
-        },
         {
           "permission": "upgrade",
           "from": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
@@ -495,6 +491,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689791675,
       "sinceBlock": 107096449,
@@ -514,7 +516,7 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 22,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -541,7 +543,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "328472627106591140054273696",
+        "totalSupply": "309007030843029270142829085",
         "version": "1.0.0"
       },
       "derivedName": "OptimismMintableERC20"

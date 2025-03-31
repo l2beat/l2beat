@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 21764788,
+  "blockNumber": 22166659,
   "configHash": "0xcf571ced59ec8b6b7dc58ea418c91694aefc3f7387ab09e125d7ca3ba6966dd3",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -116,7 +116,7 @@
         },
         {
           "permission": "sequence",
-          "to": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+          "to": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
           "via": []
         }
       ],
@@ -158,7 +158,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x16211b79e99d4cbe010b3ab8d5277d4a3e04a88dd3bc67b12a6fa8a95e3d997a",
+        "lastAccInputHash": "0x2416a6e3abbf594e31e55c4f9802426d51e18e8e4305d2bde47c11874df3cbcf",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -169,7 +169,7 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+        "trustedSequencer": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
         "trustedSequencerURL": "https://rpc.xlayer.tech"
       },
       "fieldMeta": {
@@ -215,6 +215,17 @@
       ]
     },
     {
+      "address": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
+        }
+      ]
+    },
+    {
       "address": "0xa90B4C8B8807569980F6cC958c8905383136B5eA",
       "type": "EOA",
       "proxyType": "EOA",
@@ -223,17 +234,6 @@
           "permission": "interact",
           "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-        }
-      ]
-    },
-    {
-      "address": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
         }
       ]
     },
