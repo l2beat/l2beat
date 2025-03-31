@@ -98,13 +98,6 @@ export default async function Page(props: Props) {
   // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (
     <HydrateClient>
-      {env.NEXT_PUBLIC_L2BEATZZA && (
-        <div className="size-0">
-          <FullRedPizzaSymbol />
-          <FullYellowPizzaSymbol />
-          <FullGreenPizzaSymbol />
-        </div>
-      )}
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 md:hidden">
           <MobileProjectNavigation sections={navigationSections} />

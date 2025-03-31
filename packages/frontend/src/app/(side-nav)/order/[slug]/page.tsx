@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
 import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
 import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
@@ -24,8 +25,8 @@ export default async function Page(props: Props) {
   }
 
   return (
-    <div className="mt-16 flex w-full items-center justify-center rounded-e-md bg-surface-primary px-8 py-12 md:h-[560px] md:max-w-[800px]">
-      <div className="size-0">
+    <PrimaryCard>
+      <div className="hidden">
         <FullRedPizzaSymbol />
         <FullYellowPizzaSymbol />
         <FullGreenPizzaSymbol />
@@ -33,6 +34,6 @@ export default async function Page(props: Props) {
       <div>
         <Step5 data={project} />
       </div>
-    </div>
+    </PrimaryCard>
   )
 }
