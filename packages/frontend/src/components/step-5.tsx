@@ -127,7 +127,7 @@ export function Step5({
           </div>
         </div>
         <div className="w-full md:w-1/2">
-          <div className="relative size-[350px] md:h-full">
+          <div className="relative size-[350px] md:h-full md:min-h-[350px]">
             <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
             <BigPizzaRosette
               values={values}

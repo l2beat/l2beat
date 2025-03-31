@@ -25,7 +25,7 @@ export default async function Page(props: Props) {
   }
 
   return (
-    <PrimaryCard>
+    <PrimaryCard className="mt-[83px] min-h-[350px]">
       <div className="hidden">
         <FullRedPizzaSymbol />
         <FullYellowPizzaSymbol />
