@@ -38,7 +38,6 @@ async function getResponse(requirements: {
     const yellowCount = colorArray.filter((color) => color === 'yellow').length
     const redCount = colorArray.filter((color) => color === 'red').length
 
-    // XDDD
     if (requirements.green && requirements.yellow && requirements.red) {
       return greenCount > 0 && yellowCount > 0 && redCount > 0
     }

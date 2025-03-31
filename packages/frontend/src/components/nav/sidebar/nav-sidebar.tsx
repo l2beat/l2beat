@@ -11,9 +11,6 @@ import {
   DialogTrigger,
 } from '~/components/core/dialog'
 import { StepController } from '~/components/pizza-flow'
-import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
-import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
-import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import { env } from '~/env'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
@@ -104,11 +101,6 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
       <SidebarFooter>
         {env.NEXT_PUBLIC_L2BEATZZA && (
           <>
-            <div className="size-0">
-              <FullRedPizzaSymbol />
-              <FullYellowPizzaSymbol />
-              <FullGreenPizzaSymbol />
-            </div>
             <DarkThemeToggle className="max-lg:hidden" />
             <Dialog>
               <DialogTrigger asChild>

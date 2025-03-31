@@ -1,7 +1,4 @@
 import Link from 'next/link'
-import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
-import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
-import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import { VerticalSeparator } from '../../core/vertical-separator'
 import { DarkThemeToggle } from '../../dark-theme-toggle'
 import { Logo } from '../../logo'
@@ -21,11 +18,6 @@ export function TopNavbar({
 }: { logoLink: string; groups: NavGroup[]; sideLinks: NavLink[] }) {
   return (
     <div className="hidden h-[4.25rem] border-b border-divider bg-header-primary text-base lg:block">
-      <div className="size-0">
-        <FullRedPizzaSymbol />
-        <FullYellowPizzaSymbol />
-        <FullGreenPizzaSymbol />
-      </div>
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
