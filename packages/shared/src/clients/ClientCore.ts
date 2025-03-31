@@ -10,6 +10,7 @@ export interface ClientCoreDependencies {
   sourceName: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
+  metricsEnabled: boolean
 }
 
 type Metrics = {
@@ -33,7 +34,7 @@ export abstract class ClientCore {
       this.logger.tag({ tag: deps.sourceName, source: deps.sourceName }),
     )
     this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
-    this.start()
+    if (deps.metricsEnabled) this.start()
   }
 
   /**

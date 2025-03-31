@@ -372,6 +372,7 @@ function getCoingeckoClient() {
     logger: Logger.SILENT,
     retryStrategy: 'SCRIPT',
     sourceName: 'coingeckoAPI',
+    metricsEnabled: false,
   })
   return coingeckoClient
 }

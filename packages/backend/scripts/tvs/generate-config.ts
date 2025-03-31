@@ -135,6 +135,7 @@ async function generateConfigForProject(
         logger,
         url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
         sourceName: project.id,
+        metricsEnabled: false,
       })
     : undefined
 

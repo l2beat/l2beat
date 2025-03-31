@@ -196,5 +196,6 @@ function getMockClient(http: HttpClient, logger: Logger, apiKey?: string) {
     logger,
     callsPerMinute: 100000,
     sourceName: 'test',
+    metricsEnabled: false,
   })
 }

@@ -59,6 +59,7 @@ function mocks(callsPerMinute?: number) {
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
     sourceName: 'test',
+    metricsEnabled: false,
   })
 
   return {
