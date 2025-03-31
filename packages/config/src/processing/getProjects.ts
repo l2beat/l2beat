@@ -28,8 +28,10 @@ import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
 import { getHostChain } from './utils/getHostChain'
+import { getInfrastructure } from './utils/getInfrastructure'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
+import { getVM } from './utils/getVM'
 import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
@@ -93,6 +95,8 @@ function layer2Or3ToProject(
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,
       raas: getRaas(p.badges),
+      infrastructure: getInfrastructure(p.badges),
+      vm: getVM(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
