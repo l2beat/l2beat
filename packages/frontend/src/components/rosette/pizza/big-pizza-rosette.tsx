@@ -1,5 +1,5 @@
 'use client'
-import { env } from 'process'
+import { env } from '~/env'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { UpcomingBadge } from '../../badge/upcoming-badge'
@@ -28,15 +28,15 @@ export interface BigPizzaRosetteProps {
 }
 
 export function BigPizzaRosette(props: BigPizzaRosetteProps) {
+  const PizzaComponent = env.NEXT_PUBLIC_L2BEATZZA
+    ? RealPizzaRosetteIcon
+    : PizzaRosetteIcon
+
   const isUnderReview =
     !!props.isUnderReview ||
     Object.values(props.values).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
-
-  const PizzaComponent = env.NEXT_PUBLIC_L2BEATZZA
-    ? RealPizzaRosetteIcon
-    : PizzaRosetteIcon
 
   if (isUnderReview || props.isUpcoming) {
     return (

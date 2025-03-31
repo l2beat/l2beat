@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-import { Button } from '~/components/core/button'
 import {
   Dialog,
   DialogClose,
@@ -105,57 +104,51 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
       <SidebarFooter>
         {env.NEXT_PUBLIC_L2BEATZZA && (
           <>
-            <DarkThemeToggle className="max-lg:hidden" />
-            <div className="relative h-[160px] w-[200px]">
-              <Image
-                src={'/images/l2beatzza.png'}
-                alt={'L2BEATZZA image'}
-                width={600}
-                height={480}
-                className="rounded-lg border border-divider"
-              />
-              <Dialog>
-                <DialogTrigger>
-                  <Button
-                    className="flex w-full items-center justify-center gap-1 rounded-[4px] bg-pink-900 px-6 py-3 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90"
-                    asChild
-                  >
-                    <button className="absolute inset-x-3 bottom-3 h-8 rounded bg-primary-invert text-xs font-bold text-primary">
-                      Make Your Pizza
-                    </button>
-                  </Button>
-                  <div className="size-0">
-                    <FullRedPizzaSymbol />
-                    <FullYellowPizzaSymbol />
-                    <FullGreenPizzaSymbol />
-                  </div>
-                </DialogTrigger>
-
-                <DialogContent
-                  className="flex items-center justify-center bg-surface-primary pt-16 md:left-1/2 md:top-1/2 md:h-[560px] md:max-w-[800px] md:-translate-x-1/2 md:-translate-y-1/2"
-                  fullScreenMobile
-                >
-                  <DialogTitle className="hidden">Pizza time</DialogTitle>
-                  <StepController />
-                  <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm dark:bg-pink-200">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="stroke-primary-invert"
-                    >
-                      <path d="M18 6 6 18" />
-                      <path d="m6 6 12 12" />
-                    </svg>
-                  </DialogClose>
-                </DialogContent>
-              </Dialog>
+            <div className="size-0">
+              <FullRedPizzaSymbol />
+              <FullYellowPizzaSymbol />
+              <FullGreenPizzaSymbol />
             </div>
+            <DarkThemeToggle className="max-lg:hidden" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="relative h-[160px] w-[200px]">
+                  <Image
+                    src={'/images/l2beatzza.png'}
+                    alt={'L2BEATZZA image'}
+                    width={600}
+                    height={480}
+                    className="rounded-lg border border-divider"
+                  />
+                  <button className="absolute inset-x-3 bottom-3 h-8 rounded bg-primary-invert text-xs font-bold text-primary">
+                    Make Your Pizza
+                  </button>
+                </div>
+              </DialogTrigger>
+              <DialogContent
+                className="flex items-center justify-center bg-surface-primary pt-16 md:left-1/2 md:top-1/2 md:h-[560px] md:max-w-[800px] md:-translate-x-1/2 md:-translate-y-1/2"
+                fullScreenMobile
+              >
+                <DialogTitle className="hidden">Pizza time</DialogTitle>
+                <StepController />
+                <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm dark:bg-pink-200">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="stroke-primary-invert"
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
           </>
         )}
         <div className="flex gap-2 lg:justify-between">
