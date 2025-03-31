@@ -4,16 +4,16 @@ import type {
   ChainConfig,
   Project,
   ProjectTvlEscrow,
+  TvsToken,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert, Bytes, notUndefined } from '@l2beat/shared-pure'
+import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../peripherals/multicall/types'
 import { createEscrowToken } from '../tools/mapConfig'
 import { getTimestampsRange } from '../tools/timestamps'
-import { type Token, TokenId } from '../types'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -25,7 +25,7 @@ export async function getAggLayerTokens(
   escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
   chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
-): Promise<Token[]> {
+): Promise<TvsToken[]> {
   const chain = project.chainConfig
   assert(chain, `${project.id}: chain should be defined`)
   const multicallConfig = (chain.multicallContracts ?? []).map((m) =>
@@ -101,7 +101,7 @@ export async function getAggLayerTokens(
 
   assert(chain.sinceTimestamp)
 
-  let etherOnL2: Token | undefined
+  let etherOnL2: TvsToken | undefined
 
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
     assert(escrow.sharedEscrow.wethAddress)
@@ -169,7 +169,7 @@ export async function getAggLayerTokens(
 
   assert(etherOnL2)
 
-  const tokensToAssignFromL1: Token[] = []
+  const tokensToAssignFromL1: TvsToken[] = []
 
   if (escrow.sharedEscrow.tokensToAssignFromL1) {
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {

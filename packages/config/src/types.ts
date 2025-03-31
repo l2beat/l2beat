@@ -6,6 +6,7 @@ import type {
   StringWithAutocomplete,
   Token,
   TokenBridgedUsing,
+  TokenId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -96,6 +97,7 @@ export interface BaseProject {
   // feature configs
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
+  tvsConfig?: TvsToken[]
   activityConfig?: ProjectActivityConfig
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
@@ -1001,5 +1003,87 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
+}
+// #endregion
+
+// #region TVS
+export type Operator = 'sum' | 'diff' | 'max' | 'min'
+
+export interface CalculationFormula {
+  type: 'calculation'
+  operator: Operator
+  arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
+}
+
+export type ValueFormula = {
+  type: 'value'
+  amount: AmountFormula | CalculationFormula
+  priceId: string
+}
+
+export type AmountFormula =
+  | BalanceOfEscrowAmountFormula
+  | TotalSupplyAmountFormula
+  | CirculatingSupplyAmountFormula
+  | ConstAmountFormula
+
+export interface BalanceOfEscrowAmountFormula {
+  type: 'balanceOfEscrow'
+  chain: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // token contract to query balanceOf
+  address: EthereumAddress | 'native'
+  decimals: number
+  // escrow contract address
+  escrowAddress: EthereumAddress
+}
+
+export interface TotalSupplyAmountFormula {
+  type: 'totalSupply'
+  chain: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // token contract address to query totalSupply
+  address: EthereumAddress
+  decimals: number
+}
+
+export interface CirculatingSupplyAmountFormula {
+  type: 'circulatingSupply'
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // token id in coingecko API
+  apiId: string
+  decimals: number
+}
+
+export interface ConstAmountFormula {
+  type: 'const'
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  // hardcoded value represented as bigint
+  value: string
+  decimals: number
+}
+
+// token deployed to single chain
+export interface TvsToken {
+  mode: 'auto' | 'custom'
+  // unique identifier
+  id: TokenId
+  // by default it is set to coingeckoId
+  priceId: string
+  symbol: string
+  displaySymbol?: string
+  name: string
+  amount: CalculationFormula | AmountFormula
+  // we need this formula to handle relations between tokens on the same chain
+  valueForProject?: CalculationFormula | ValueFormula
+  // we need this formula to handle relations between chains (L2/L3)
+  valueForTotal?: CalculationFormula | ValueFormula
+  category: 'ether' | 'stablecoin' | 'other'
+  source: 'canonical' | 'external' | 'native'
+  isAssociated: boolean
 }
 // #endregion

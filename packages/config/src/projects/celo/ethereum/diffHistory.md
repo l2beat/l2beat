@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xb772550f6323acde094961a91b201b34afcfc19d
+
+# Diff at Mon, 31 Mar 2025 10:19:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22131469
+- current block number: 22166253
+
+## Description
+
+sub safe signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0xD1C635987B6Aa287361d08C6461491Fa9df087f2) {
+    +++ description: None
+      values.$members.2:
++        "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564"
+      values.$members.1:
+-        "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564"
++        "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
+      values.$members.0:
+-        "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
++        "0x4092A77bAF58fef0309452cEaCb09221e556E112"
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        4
++        42
+    }
+```
+
 Generated with discovered.json: 0x6a48b27ed7f493a8bcfa78e134c2a69f80ad426b
 
 # Diff at Thu, 27 Mar 2025 11:14:08 GMT:
