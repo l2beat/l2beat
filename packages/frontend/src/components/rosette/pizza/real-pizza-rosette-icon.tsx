@@ -2,6 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
+import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import type { RosetteValue } from '../types'
 import { Background } from './real-elements/background'
@@ -19,8 +20,7 @@ export function RealPizzaRosetteIcon({
   className,
   // To pass to the elements
   isUnderReview: _,
-  // To pass to the elements
-  background: __,
+  background = 'header',
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -54,6 +54,18 @@ export function RealPizzaRosetteIcon({
       ref={svgRef}
       onMouseLeave={() => setSelectedRisk?.(undefined)}
     >
+      {background && (
+        <circle
+          cx="90.5461"
+          cy="90"
+          r="89.566"
+          className={cn(
+            'stroke-divider stroke-2',
+            background === 'header' && 'fill-header-secondary',
+            background === 'surface' && 'fill-surface-secondary',
+          )}
+        />
+      )}
       <Background />
       {/* Keys warning? */}
       {pizzas.map((pizza, i) => (
