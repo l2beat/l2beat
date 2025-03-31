@@ -1,20 +1,22 @@
 'use client'
 
 import Link from 'next/link'
+import { env } from '~/env'
+import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
-import { Logo } from '../logo'
-import { useRecategorisationPreviewContext } from '../recategorisation-preview/recategorisation-preview-provider'
-import { RecategorisationPreviewSwitch } from '../recategorisation-preview/recategorisation-preview-switch'
-import { SmallSearchBarButton } from '../search-bar/search-bar-button'
+import { Logo } from '../../logo'
+import { useRecategorisationPreviewContext } from '../../recategorisation-preview/recategorisation-preview-provider'
+import { RecategorisationPreviewSwitch } from '../../recategorisation-preview/recategorisation-preview-switch'
+import { SmallSearchBarButton } from '../../search-bar/search-bar-button'
+import type { NavGroup } from '../types'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { MobileSelectedLink } from './mobile-selected-link'
-import type { NavGroup } from './types'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
  */
-export function MobileNavbar({
+export function MobileTopNavbar({
   groups,
   logoLink,
   className,
@@ -27,7 +29,11 @@ export function MobileNavbar({
         <div className="flex items-center gap-3">
           <div className="py-4">
             <Link href={logoLink}>
-              <Logo className="h-8 w-auto" />
+              {env.NEXT_PUBLIC_L2BEATZZA ? (
+                <L2BeatzzaLogo className="h-8 w-auto" />
+              ) : (
+                <Logo className="h-8 w-auto" />
+              )}
             </Link>
           </div>
           <MobileSelectedLink groups={groups} />

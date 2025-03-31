@@ -1,6 +1,7 @@
+import type { ChainConfig, TvsToken } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { Token } from '../types'
+import type { ProjectTvsConfig } from '../types'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 describe(extractPricesAndAmounts.name, () => {

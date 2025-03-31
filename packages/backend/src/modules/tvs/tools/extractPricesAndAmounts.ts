@@ -1,17 +1,19 @@
 import { createHash } from 'crypto'
 import { assert } from '@l2beat/shared-pure'
 import type {
-  AmountConfig,
   AmountFormula,
   BalanceOfEscrowAmountFormula,
   CalculationFormula,
+  ChainConfig,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
   PriceConfig,
   Token,
   TotalSupplyAmountFormula,
   ValueFormula,
-} from '../types'
+} from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
+import type { AmountConfig, PriceConfig, ProjectTvsConfig } from '../types'
 import { getTimestampsRange } from './timestamps'
 
 export function extractPricesAndAmounts(tokens: Token[]) {

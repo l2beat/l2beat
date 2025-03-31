@@ -510,4 +510,28 @@ describe('getProjects', () => {
       })
     }
   })
+
+  describe('badges', () => {
+    const signularBadges = [
+      'Infra',
+      'RaaS',
+      'DA',
+      'Stack',
+      'Fork',
+      'L3ParentChain',
+    ]
+
+    for (const badge of signularBadges) {
+      it(`has maximum one ${badge} badge`, () => {
+        for (const project of projects) {
+          const badges = project.display?.badges?.filter(
+            (b) => b.type === badge,
+          )
+          if (badges) {
+            expect(badges.length).toBeLessThanOrEqual(1)
+          }
+        }
+      })
+    }
+  })
 })

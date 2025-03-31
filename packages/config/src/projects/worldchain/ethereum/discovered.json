@@ -1,11 +1,16 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 21895014,
+  "blockNumber": 22166596,
   "configHash": "0x9cd10e1aea7bba6c47ae58ab2b2e9537cbd3b393cbafc2e6e96f95030b3e0b21",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x001271c57AeC639952B5201D052767c316755512",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -80,7 +85,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1080,
+        "gameCount": 1982,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -90,7 +95,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 1080,
+        "permissionedGamesTotal": 1982,
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory",
@@ -133,6 +138,11 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "address": "0x0a214444613E3970049BD74a8d72d5bF9EF0094c",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
@@ -276,22 +286,12 @@
       "derivedName": "LivenessGuard"
     },
     {
-      "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6",
+      "address": "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -320,7 +320,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 55,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -617,15 +617,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "address": "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "MIPS",
@@ -885,7 +880,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 15,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1066,6 +1061,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Alchemy Multisig 1",
       "address": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
       "type": "Contract",
@@ -1137,27 +1137,24 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063",
-          "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01",
-          "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
-          "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6",
-          "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
+          "0x0a214444613E3970049BD74a8d72d5bF9EF0094c",
+          "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
+          "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
+          "0x001271c57AeC639952B5201D052767c316755512",
+          "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
+          "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
+          "0xeD9919D57162D518014C391a687AA8fb9DB55654",
           "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
         ],
-        "$threshold": 3,
+        "$threshold": 5,
         "domainSeparator": "0xb38a131bd7616105e60b1765f40d80d946e7ccf096e2a816236d7d819746a870",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 26,
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "address": "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
@@ -1229,7 +1226,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 17,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1260,6 +1257,11 @@
         "version": "2.0.0"
       },
       "derivedName": "DeputyGuardianModule"
+    },
+    {
+      "address": "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AnchorStateRegistry",
@@ -1352,7 +1354,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 21894870
+          "prevBlockNum": 22166535
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1481,6 +1483,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xeD9919D57162D518014C391a687AA8fb9DB55654",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1521,7 +1528,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631853",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635077",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1541,6 +1548,11 @@
       },
       "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xff00000000000000000000000000000000000480",

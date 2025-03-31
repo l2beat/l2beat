@@ -1,6 +1,8 @@
 import * as fs from 'fs'
 import { type Project, ProjectService } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { ProjectService } from '@l2beat/config'
+import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
   extractPricesAndAmounts,
@@ -16,17 +18,19 @@ export async function getTvsConfig(
   flags: FeatureFlags,
   sinceTimestamp?: number,
 ): Promise<TvsConfig> {
-  const projectsWithTvl = await ps.getProjects({
-    select: ['tvlConfig'],
+  const projectsWithTvs = await ps.getProjects({
+    select: ['tvsConfig'],
   })
 
   // filter our projects disabled by flag
-  const enabledProjects = projectsWithTvl.filter((p) =>
+  const enabledProjects = projectsWithTvs.filter((p) =>
     flags.isEnabled('tvs', p.id),
   )
 
-  // TODO be replaced by ProjectService
-  let projects = readConfigs(enabledProjects).filter((p) => p.tokens.length > 0)
+  let projects = enabledProjects.map((p) => ({
+    projectId: p.id,
+    tokens: p.tvsConfig,
+  }))
 
   // sinceTimestamp override for local development
   if (sinceTimestamp) {

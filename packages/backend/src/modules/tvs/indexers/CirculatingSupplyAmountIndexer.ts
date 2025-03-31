@@ -1,4 +1,5 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
+import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
 import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import {
@@ -13,7 +14,6 @@ import type {
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import type { CirculatingSupplyAmountFormula } from '../types'
 
 export interface CirculatingSupplyAmountIndexerDeps
   extends Omit<

@@ -1,11 +1,11 @@
 {
   "name": "blessnet",
   "chain": "arbitrum",
-  "blockNumber": 308389533,
-  "configHash": "0x4e674ffb60458a461709ec0b2faea8d8c789cf14ac37cc9a68750273aeb84b37",
+  "blockNumber": 321461043,
+  "configHash": "0xb885015f9118fcb605e10033d7bb8f65837e91ddd5d8603941bda50bafab429a",
   "entries": [
     {
-      "name": "GnosisSafeL2",
+      "name": "Blessnet Multisig 2",
       "address": "0x089E12e795b3292BcC16f29817bE124C720615b0",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -15,6 +15,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        },
         {
           "permission": "validate",
           "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
@@ -37,7 +42,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 3 (100%)",
-        "nonce": 0,
+        "nonce": 380,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -183,7 +188,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 117359,
+        "batchCount": 146425,
         "batchPosterManager": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
         "batchPosters": ["0xa0899d20D9665EB0FfE311A395FCd481bF38A5Ff"],
         "bridge": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
@@ -317,7 +322,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "BlessnetFastconfirmerMultisig",
+      "name": "Blessnet Multisig 1",
       "address": "0x571D6CA61B979A967E055696c822CF8C928d3556",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -327,11 +332,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "fastconfirm",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-        },
         {
           "permission": "validate",
           "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
@@ -548,7 +548,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 49,
+        "nonce": 51,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -752,8 +752,8 @@
         "outboxHistory": ["0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB"],
         "rollup": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
         "sequencerInbox": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
-        "sequencerMessageCount": 117359,
-        "sequencerReportedSubMessageCount": 1858676
+        "sequencerMessageCount": 146425,
+        "sequencerReportedSubMessageCount": 2464316
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -855,7 +855,7 @@
       "issuedPermissions": [
         {
           "permission": "fastconfirm",
-          "to": "0x571D6CA61B979A967E055696c822CF8C928d3556",
+          "to": "0x089E12e795b3292BcC16f29817bE124C720615b0",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "via": []
         },
@@ -934,7 +934,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "0x571D6CA61B979A967E055696c822CF8C928d3556",
+        "anyTrustFastConfirmer": "0x089E12e795b3292BcC16f29817bE124C720615b0",
         "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
@@ -942,17 +942,17 @@
         "challengeManager": "0x6f857Cfcb32951cE5A6fAD7B809af8Bcbc3d551A",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "1900000000000000000",
+        "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 43201,
+        "firstUnresolvedNode": 46897,
         "inbox": "0x46B6462301182B393ac5f014779687d3B6d4FB57",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20487666,
-        "latestConfirmed": 43200,
-        "latestNodeCreated": 46678,
+        "latestConfirmed": 46896,
+        "latestNodeCreated": 46920,
         "loserStakeEscrow": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
-        "minimumAssertionPeriod": 2,
+        "minimumAssertionPeriod": 75,
         "outbox": "0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
         "owner": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
         "paused": false,
@@ -997,10 +997,6 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        },
-        "latestConfirmed": {
-          "severity": "HIGH",
-          "description": "Was dead, now alive? Remove headerWarn if yes."
         }
       },
       "derivedName": "RollupProxy",
