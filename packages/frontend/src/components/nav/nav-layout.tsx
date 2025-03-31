@@ -1,18 +1,18 @@
 import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
+import { externalLinks } from '~/consts/external-links'
+import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
+import { HiringBadge } from '../badge/hiring-badge'
 import { SidebarProvider } from '../core/sidebar'
 import { MobileNavbar } from './mobile-navbar'
 import { NavSidebar } from './nav-sidebar'
 import { TopNavbar } from './top-navbar'
 import type { NavGroup } from './types'
-import { externalLinks } from '~/consts/external-links'
-import { HiringBadge } from '../badge/hiring-badge'
-import { env } from '~/env'
 
 interface Props {
   children: ReactNode

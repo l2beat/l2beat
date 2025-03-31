@@ -3,6 +3,7 @@
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 
+import Link from 'next/link'
 import {
   Sheet,
   SheetContent,
@@ -14,7 +15,6 @@ import { TooltipProvider } from '~/components/core/tooltip/tooltip'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
-import Link from 'next/link'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'

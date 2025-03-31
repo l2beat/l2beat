@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
@@ -17,19 +19,17 @@ import {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuLink,
   SidebarMenuItem,
+  SidebarMenuLink,
+  SidebarMenuSmallLink,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSmallLink,
 } from '../core/sidebar'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import type { NavGroup, NavLink } from './types'
-import { useBreakpoint } from '~/hooks/use-breakpoint'
-import { useEffect, useState } from 'react'
 
 interface Props {
   groups: NavGroup[]
