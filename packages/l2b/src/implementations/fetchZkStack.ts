@@ -78,7 +78,7 @@ export class ZkStackDataFetcher {
     '2741': 'Abstract',
     '325': 'GRVT',
     '61166': 'Treasure Chain',
-    '1345': 'Unknown',
+    '1345': 'OpenZK',
     '9637': 'Lumoz',
     '320': 'ZKcandy',
     '232': 'Lens',

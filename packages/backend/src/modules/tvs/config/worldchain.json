@@ -36,6 +36,24 @@
     },
     {
       "mode": "auto",
+      "id": "worldchain-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0x470458C91978D2d929704489Ad730DC3E3001113",
+        "decimals": 18,
+        "sinceTimestamp": 1719432959
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "worldchain-sDAI",
       "priceId": "savings-dai",
       "symbol": "sDAI",

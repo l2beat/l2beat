@@ -1,3 +1,176 @@
+Generated with discovered.json: 0x4c7487b1e6311f885d2fcc2f4e77223606e2c005
+
+# Diff at Fri, 28 Mar 2025 10:30:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@279f845afa28d7cd0a0fe99f5744c0fe98cd5c86 block: 22123605
+- current block number: 22144824
+
+## Description
+
+Starknet + aggregator program hash change.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "2231644845387633655859130162745748394456578773184260372693322394988769337368"
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.programHashHistory.10:
++        "1865367024509426979036104162713508294334262484507712987283009063059134893433"
+      values.programHashHistory.9:
+-        "1865367024509426979036104162713508294334262484507712987283009063059134893433"
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.programHashHistory.8:
+-        "853638403225561750106379562222782223909906501242604214771127703946595519856"
++        "54878256403880350656938046611252303365750679698042371543935159963667935317"
+      values.programHashHistory.7:
+-        "54878256403880350656938046611252303365750679698042371543935159963667935317"
++        "3258367057337572248818716706664617507069572185152472699066582725377748079373"
+      values.programHashHistory.6:
+-        "3258367057337572248818716706664617507069572185152472699066582725377748079373"
++        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
+      values.programHashHistory.5:
+-        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
++        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+      values.programHashHistory.4:
+-        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
++        "2397984267054479079853548842566103781972463965746662494980785692480538410509"
+      values.programHashHistory.3:
+-        "2397984267054479079853548842566103781972463965746662494980785692480538410509"
++        "2231644845387633655859130162745748394456578773184260372693322394988769337368"
+      values.programHashMapped:
+-        "StarkNet OS (since v0.13.4)"
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+    }
+```
+
+Generated with discovered.json: 0xf7d7a26418823cb907b5c503f9c7e75dd4cb6d2d
+
+# Diff at Thu, 27 Mar 2025 11:15:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22123605
+- current block number: 22123605
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123605 (main branch discovery), not current.
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.aggregatorHashMapped:
+-        "273279642033703284306509103355536170486431195329675679055627933497997642494"
++        "Starknet Aggregator (since v0.13.4)"
+      values.programHashMapped:
+-        "2231644845387633655859130162745748394456578773184260372693322394988769337368"
++        "StarkNet OS (since v0.13.4)"
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
+Generated with discovered.json: 0xbc439a24f263042fa415d4ba760d508819e92ad4
+
+# Diff at Tue, 25 Mar 2025 11:36:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 21973410
+- current block number: 22123605
+
+## Description
+
+Starknet upgrade v0.13.4
+
+Minor upgrade on L1 that introduces a fee collector address.
+For L2 it changes the programHashes for Starknet OS and the Aggregator.
+
+"Offchain" there are many changes, as seen [in the release-notes here](https://community.starknet.io/t/starknet-v0-13-4-pre-release-notes/115257).
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
++        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
+      values.$implementation:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.$pastUpgrades.9:
++        ["2025-03-24T17:11:59.000Z","0x7e6e541652c8ed05afba0c7fd372d6a340d438d85a545666ee7ecd1a4046eb5b",["0x2793010E6711Acd5C46ed17f2183a9d58db71e04"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.aggregatorHashMapped:
+-        "Starknet Aggregator (since v0.13.3)"
++        "273279642033703284306509103355536170486431195329675679055627933497997642494"
+      values.aggregatorProgramHash:
+-        "15787695375210609250491147414005894154890873413229882671403677761527504080"
++        "273279642033703284306509103355536170486431195329675679055627933497997642494"
+      values.identify:
+-        "StarkWare_Starknet_2024_9"
++        "StarkWare_Starknet_2025_10"
+      values.implementation:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "2397984267054479079853548842566103781972463965746662494980785692480538410509"
++        "2231644845387633655859130162745748394456578773184260372693322394988769337368"
+      values.programHashHistory.9:
++        "1865367024509426979036104162713508294334262484507712987283009063059134893433"
+      values.programHashHistory.8:
+-        "1865367024509426979036104162713508294334262484507712987283009063059134893433"
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.programHashHistory.7:
+-        "853638403225561750106379562222782223909906501242604214771127703946595519856"
++        "54878256403880350656938046611252303365750679698042371543935159963667935317"
+      values.programHashHistory.6:
+-        "54878256403880350656938046611252303365750679698042371543935159963667935317"
++        "3258367057337572248818716706664617507069572185152472699066582725377748079373"
+      values.programHashHistory.5:
+-        "3258367057337572248818716706664617507069572185152472699066582725377748079373"
++        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
+      values.programHashHistory.4:
+-        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
++        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+      values.programHashHistory.3:
+-        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
++        "2397984267054479079853548842566103781972463965746662494980785692480538410509"
+      values.programHashMapped:
+-        "StarkNet OS (Starknet)"
++        "2231644845387633655859130162745748394456578773184260372693322394988769337368"
+      values.feeCollector:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Starknet/Starknet.sol                          | 207 ++++++++++++++++++---
+ 1 file changed, 176 insertions(+), 31 deletions(-)
+```
+
 Generated with discovered.json: 0x7404a4abf39d47214e5619ff9b2fcbe83c994140
 
 # Diff at Wed, 19 Mar 2025 13:05:44 GMT:

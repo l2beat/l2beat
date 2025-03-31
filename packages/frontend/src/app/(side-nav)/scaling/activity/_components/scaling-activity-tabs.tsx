@@ -65,7 +65,7 @@ export function ScalingActivityTabs(props: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-2 [@media(min-width:1000px)]:flex-row [@media(min-width:1000px)]:justify-between">
+      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
         <TableFilters
           entries={[
             ...props.rollups,

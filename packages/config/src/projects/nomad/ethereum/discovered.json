@@ -2,7 +2,7 @@
   "name": "nomad",
   "chain": "ethereum",
   "blockNumber": 21937195,
-  "configHash": "0xcf19ae7164c4a22d54900310fab5ef4e4f0da31e9250845f5b7052de6a8155da",
+  "configHash": "0x770c72800f4db6fce2d71519cd00e8f5278cca8396a18a63b0782b8be549924c",
   "entries": [
     {
       "name": "ReplicaBeaconProxy",
@@ -101,7 +101,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1641899379,
       "sinceBlock": 13983838,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "UpgradeBeaconProxy"
     },
     {
       "address": "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
@@ -252,7 +253,8 @@
         "$immutable": true,
         "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a",
         "updater": "0xa728bE5Be33E60D9c65677EBa569555536e587E4"
-      }
+      },
+      "derivedName": "UpdaterManager"
     },
     {
       "name": "HomeBeaconProxy",
@@ -373,7 +375,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1669736603,
       "sinceBlock": 16076617,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "UpgradeBeaconProxy"
     },
     {
       "address": "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
@@ -475,7 +478,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x3009C99D370B780304D2098196f1EBF779a4777a"
-      }
+      },
+      "derivedName": "UpgradeBeaconController"
     },
     {
       "address": "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
@@ -509,7 +513,8 @@
           "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f",
           "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D"
         ]
-      }
+      },
+      "derivedName": "XAppConnectionManager"
     }
   ],
   "abis": {

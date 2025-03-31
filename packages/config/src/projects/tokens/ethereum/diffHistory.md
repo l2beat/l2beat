@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x58f306f733fa2fb36558fe1a1a6830700e696411
+
+# Diff at Tue, 25 Mar 2025 11:42:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 22017795
+- current block number: 22123688
+
+## Description
+
+Voting time confs for Lido increased (~double).
+
+## Watched changes
+
+```diff
+    contract Voting (0x2e59A20f205bB85a89C53f1936454680651E618e) {
+    +++ description: None
+      values.objectionPhaseTime:
+-        86400
++        172800
+      values.voteTime:
+-        259200
++        432000
+    }
+```
+
 Generated with discovered.json: 0x542c9e1dc004624b1c7a835c392321d8b0f29085
 
 # Diff at Tue, 18 Mar 2025 08:14:25 GMT:

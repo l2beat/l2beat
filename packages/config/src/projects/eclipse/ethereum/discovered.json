@@ -2,7 +2,7 @@
   "name": "eclipse",
   "chain": "ethereum",
   "blockNumber": 21121371,
-  "configHash": "0xc97a36b54bd27b3268c75f70a372658ad98819378d27f27c32e926fd591950e2",
+  "configHash": "0xbfd4866692a2f7ab2028c39c0445cb3393d0ab802d32741b51e386ff1c85f65e",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -31,7 +31,8 @@
         "multisigThreshold": "1 of 2 (50%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE",
@@ -101,7 +102,8 @@
         "TREASURY": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
-      }
+      },
+      "derivedName": "CanonicalBridge"
     },
     {
       "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080",
@@ -229,7 +231,8 @@
         "paused": true,
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "EtherBridge"
     },
     {
       "address": "0x950815d0e585095B06111CD101440fb1E95AB2a5",
@@ -278,7 +281,8 @@
         "proxiableUUID": "EXPECT_REVERT",
         "TRUSTED_RELAYER_ROLE": "0xe8a0628d2ba937241981f34311d9db59dd5cf223365e8b6132bca13fc7ae519c",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "Mailbox"
     },
     {
       "address": "0xBb534A6Bd0440727cb5883D037DEd7358059D547",
@@ -322,7 +326,8 @@
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
-      }
+      },
+      "derivedName": "Upgrader0to1"
     },
     {
       "address": "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
@@ -420,7 +425,8 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53"
-      }
+      },
+      "derivedName": "Treasury"
     },
     {
       "address": "0xDecF20b9213f5d7f16196420377d37ef5f8F9686",

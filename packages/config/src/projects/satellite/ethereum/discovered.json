@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0x922f38258252be9b7ddf00bb189f8e75b4f86bdb4dce8d296281251536c0a62e",
+  "configHash": "0x8fddc8f8aa829a9e6b9f16434f92753e8e264575241f0accd8f9b07f56fa172a",
   "entries": [
     {
       "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -53,7 +53,8 @@
         "implementation": "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b",
         "owner": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "AxelarGasService"
     },
     {
       "address": "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821",
@@ -179,7 +180,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1697785883,
       "sinceBlock": 18389965,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "TokenDeployer"
     },
     {
       "name": "Multisig",
@@ -204,7 +206,8 @@
         "signerEpoch": 1,
         "signers": 3,
         "signerThreshold": 3
-      }
+      },
+      "derivedName": "Multisig"
     },
     {
       "name": "AxelarAuthWeighted",
@@ -222,7 +225,8 @@
         "currentEpoch": 225,
         "owner": "0x4F4495243837681061C4743b74B3eEdf548D56A5",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "AxelarAuthWeighted"
     },
     {
       "address": "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f",
@@ -247,7 +251,8 @@
         "governanceChain": "Axelarnet",
         "governanceChainHash": "0x9d38b77bdc2e9ef511420f947b5e8145291232b74f3f3a9e327433ff8f5acb66",
         "minimumTimeLockDelay": 604800
-      }
+      },
+      "derivedName": "InterchainGovernance"
     }
   ],
   "abis": {

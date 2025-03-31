@@ -2,7 +2,7 @@
   "name": "orbit",
   "chain": "ethereum",
   "blockNumber": 20792032,
-  "configHash": "0x74cd451c85a6cdd200977f042ab6938516e94d68c9ce444cf51d4e22bd283a89",
+  "configHash": "0xd29f621826c734486fa42a40ffb2ef5b08b73e2e100392257b16c7401bad7247",
   "entries": [
     {
       "name": "",
@@ -45,7 +45,8 @@
           ]
         ],
         "$upgradeCount": 4
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "ETH Vault",
@@ -260,7 +261,8 @@
       ],
       "sinceTimestamp": 1708655543,
       "sinceBlock": 19287339,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "WBTC Farm",
@@ -334,7 +336,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

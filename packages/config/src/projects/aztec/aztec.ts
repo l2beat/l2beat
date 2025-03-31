@@ -157,8 +157,8 @@ export const aztec: ScalingProject = {
       'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol).',
   },
   scopeOfAssessment: {
-    checked: [SOA.l1Contracts, SOA.gasToken],
-    notChecked: [
+    inScope: [SOA.l1Contracts, SOA.gasToken],
+    notInScope: [
       SOA.specToSourceCode,
       SOA.nonGasTokens,
       SOA.derivationSpec,

@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 21387141,
-  "configHash": "0x3fc287bf61216f633edb2a8262ad120b3254dfe6b4bc36e2f0c5b90901ec51e7",
+  "configHash": "0xf05bf2735f72f15baa016b18a45634160dcc7aa7fbd9d4660fec24eb8356e8a8",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -38,7 +38,8 @@
           "severity": "LOW",
           "description": "Tip that gets added to a gas reimbursement for processing the rollup."
         }
-      }
+      },
+      "derivedName": "AztecFeeDistributor"
     },
     {
       "name": "TurboVerifier",
@@ -52,7 +53,8 @@
       "description": "Turbo Plonk ZK verifier.",
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "TurboVerifier"
     },
     {
       "name": "RollupProcessor",
@@ -156,7 +158,8 @@
           "description": "Address of the ZK verifier.",
           "type": "PERMISSION"
         }
-      }
+      },
+      "derivedName": "RollupProcessor"
     },
     {
       "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
@@ -197,8 +200,7 @@
       "name": "FirstAnvilAddress",
       "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",

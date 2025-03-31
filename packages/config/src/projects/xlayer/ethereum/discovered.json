@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 21764788,
-  "configHash": "0xe690caabdc99a9a4c91640fcf6faee14cff07f627767c253957cc989ce223cdc",
+  "configHash": "0xcf571ced59ec8b6b7dc58ea418c91694aefc3f7387ab09e125d7ca3ba6966dd3",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -58,6 +58,7 @@
         "owner": "0x491619874b866c3cDB7C8553877da223525ead01",
         "requiredAmountOfSignatures": 2
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -85,7 +86,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Validium",

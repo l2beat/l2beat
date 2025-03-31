@@ -1,8 +1,8 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 22045242,
-  "configHash": "0x58026bb800b15ee8c7395c300f6471020f12b037e1f10cb3b7c3110de25dbcbe",
+  "blockNumber": 22094603,
+  "configHash": "0xb8fe9657530599fa5663a72ffe3466db5000e55fa38408c9560ac5c0fb28d60b",
   "entries": [
     {
       "name": "WTIA_OFTAdapter",
@@ -29,7 +29,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "WTIA_OFTAdapter"
     },
     {
       "address": "0x1082E92A0b92e15212fD5879C1dd672AB548302c",
@@ -77,7 +78,8 @@
           ]
         ],
         "$upgradeCount": 3
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "TBankOFT",
@@ -104,7 +106,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "TBankOFT"
     },
     {
       "name": "TRESTLE_OFTAdapter",
@@ -130,7 +133,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "TRESTLE_OFTAdapter"
     },
     {
       "name": "EndpointV2",
@@ -178,7 +182,8 @@
           "severity": "HIGH",
           "description": "The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed."
         }
-      }
+      },
+      "derivedName": "EndpointV2"
     },
     {
       "name": "BlockedMessageLib",
@@ -198,7 +203,8 @@
           "minor": 255,
           "endpointVersion": 2
         }
-      }
+      },
+      "derivedName": "BlockedMessageLib"
     },
     {
       "name": "DineroOFTLockbox",
@@ -225,7 +231,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "DineroOFTLockbox"
     },
     {
       "address": "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C",
@@ -257,7 +264,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "StakedFraxEtherOFTAdapter"
     },
     {
       "name": "StakedUSDeOFTAdapter",
@@ -286,7 +294,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "StakedUSDeOFTAdapter"
     },
     {
       "name": "FraxSharesOFTAdapter",
@@ -313,7 +322,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "FraxSharesOFTAdapter"
     },
     {
       "name": "EvmZkMptValidator",
@@ -325,7 +335,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1730280551,
       "sinceBlock": 21077569,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EvmZkMptValidator"
     },
     {
       "name": "HorizenDVN",
@@ -365,7 +376,8 @@
         "$immutable": true,
         "MESSAGE_TOPIC_V1": "0x3dc6f2ede34d1db05729bbb76e5efd17ec1bc83f98f665e7fba0596dca438b96",
         "MESSAGE_TOPIC_V2": "0x1ab700d4ced0c005b164c0f789fd09fcbb0156d4c2041b8a3bfbcd961cd1567f"
-      }
+      },
+      "derivedName": "EvmMptValidator"
     },
     {
       "name": "CyberTokenAdapter",
@@ -391,7 +403,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 18
-      }
+      },
+      "derivedName": "CyberTokenAdapter"
     },
     {
       "name": "MysoOFTAdapter",
@@ -417,7 +430,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "MysoOFTAdapter"
     },
     {
       "name": "ENAOFTAdapter",
@@ -446,7 +460,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "ENAOFTAdapter"
     },
     {
       "name": "LayerZeroDVN",
@@ -499,7 +514,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "USDeOFTAdapter"
     },
     {
       "name": "Treasury",
@@ -517,7 +533,8 @@
         "lzTokenFee": 0,
         "nativeBP": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
-      }
+      },
+      "derivedName": "Treasury"
     },
     {
       "name": "ParamOFTAdapter",
@@ -544,7 +561,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "ParamOFTAdapter"
     },
     {
       "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
@@ -570,7 +588,8 @@
         "messageLibType": 2,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 10, "minor": 0, "endpointVersion": 2 }
-      }
+      },
+      "derivedName": "ReadLib1002"
     },
     {
       "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
@@ -612,7 +631,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "MyOFTAdapter"
     },
     {
       "name": "RSETH_OFTAdapter",
@@ -639,7 +659,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "RSETH_OFTAdapter"
     },
     {
       "name": "PolyhedraDVN",
@@ -699,7 +720,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1706495219,
       "sinceBlock": 19109197,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
@@ -725,7 +747,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "GnosisSafe",
@@ -755,9 +778,10 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 46,
+        "nonce": 47,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "WooTokenOFTAdapter",
@@ -783,7 +807,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "WooTokenOFTAdapter"
     },
     {
       "name": "",
@@ -793,7 +818,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1706307983,
       "sinceBlock": 19093741,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
@@ -868,7 +894,8 @@
         "ulnConfig_CYBER": {
           "description": "The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
         }
-      }
+      },
+      "derivedName": "SendUln302"
     },
     {
       "name": "ReceiveUln302",
@@ -885,7 +912,8 @@
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
-      }
+      },
+      "derivedName": "ReceiveUln302"
     },
     {
       "name": "CyberTokenAdapter",
@@ -906,12 +934,13 @@
         "oApp": "0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x7884f7F04F994da14302a16Cf15E597e31eebECf",
+        "owner": "0x455DB34c99A866489F3ac63fa2F068c726BC286b",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "CyberTokenAdapter"
     },
     {
       "name": "LayerZero Multisig",
@@ -941,7 +970,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 243,
+        "nonce": 248,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -999,7 +1028,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "KinetixFinanceTokenOFTAdapter"
     },
     {
       "name": "VerifierFeeLib",
@@ -1011,7 +1041,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1694217119,
       "sinceBlock": 18095085,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "VerifierFeeLib"
     },
     {
       "name": "ZkBridgeAdmin",
@@ -1032,7 +1063,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
-      }
+      },
+      "derivedName": "ZkBridgeAdmin"
     },
     {
       "name": "StakedFraxOFTAdapter",
@@ -1059,7 +1091,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "StakedFraxOFTAdapter"
     },
     {
       "name": "MaviaOFTAdapter",
@@ -1086,7 +1119,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "MaviaOFTAdapter"
     },
     {
       "address": "0xF94b16157948E10597481Da0523927c8BA0bd182",
@@ -1117,7 +1151,8 @@
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
-      }
+      },
+      "derivedName": "EtherFiOFTAdapter"
     }
   ],
   "abis": {

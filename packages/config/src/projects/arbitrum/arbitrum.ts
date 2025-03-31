@@ -96,6 +96,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  usesBlobs: true,
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',
@@ -249,14 +250,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     },
   ],
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
 
   nonTemplateRiskView: {
