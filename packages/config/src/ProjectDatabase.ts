@@ -49,6 +49,7 @@ const schema = {
 
   tvlInfo: 'TEXT',
   tvlConfig: 'TEXT',
+  tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
   livenessInfo: 'TEXT',
   livenessConfig: 'TEXT',

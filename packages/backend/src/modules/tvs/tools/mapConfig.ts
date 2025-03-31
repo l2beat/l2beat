@@ -1,25 +1,22 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   type AggLayerEscrow,
+  type AmountFormula,
+  type CalculationFormula,
   type ChainConfig,
   type ElasticChainEscrow,
   type Project,
   ProjectService,
   type ProjectTvlEscrow,
+  type TvsToken,
+  type ValueFormula,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { getAggLayerTokens } from '../providers/aggLayer'
 import { getElasticChainTokens } from '../providers/elasticChain'
-import {
-  type AmountFormula,
-  type CalculationFormula,
-  type ProjectTvsConfig,
-  type Token,
-  TokenId,
-  type ValueFormula,
-} from '../types'
+import { type ProjectTvsConfig, TokenId } from '../types'
 import { getTimestampsRange } from './timestamps'
 
 export async function mapConfig(
@@ -34,11 +31,11 @@ export async function mapConfig(
     return chain
   }
 
-  const tokens: Token[] = []
+  const tokens: TvsToken[] = []
   const escrowTokens: Map<
     string,
     {
-      token: Token
+      token: TvsToken
       chain: string
     }
   > = new Map()
@@ -136,7 +133,7 @@ export async function mapConfig(
     tokens.push(createToken(project, legacyToken))
   }
 
-  const uniqueTokens: Map<string, Token> = new Map()
+  const uniqueTokens: Map<string, TvsToken> = new Map()
 
   for (const token of tokens) {
     uniqueTokens.set(token.id, token)
@@ -167,7 +164,7 @@ export function createEscrowToken(
   escrow: ProjectTvlEscrow,
   chainOfEscrow: ChainConfig,
   legacyToken: LegacyToken & { isPreminted?: boolean },
-): Token {
+): TvsToken {
   assert(
     chainOfEscrow.name === legacyToken.chainName,
     `${legacyToken.symbol}: chain mismatch`,
@@ -263,7 +260,7 @@ export function createEscrowToken(
 export function createToken(
   project: Project<'tvlConfig', 'chainConfig'>,
   legacyToken: LegacyToken,
-): Token {
+): TvsToken {
   assert(
     project.chainConfig && project.chainConfig.name === legacyToken.chainName,
   )

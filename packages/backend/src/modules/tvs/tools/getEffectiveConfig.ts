@@ -1,14 +1,14 @@
 import type {
   AmountFormula,
   CalculationFormula,
-  Token,
+  TvsToken,
   ValueFormula,
-} from '../types'
+} from '@l2beat/config'
 
 export function getEffectiveConfig(
-  tokens: Token[],
+  tokens: TvsToken[],
   timestamp: number,
-): Token[] {
+): TvsToken[] {
   const tokensInRange = []
 
   for (const token of tokens) {

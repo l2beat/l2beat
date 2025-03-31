@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+import path from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
@@ -16,6 +18,7 @@ import type {
   ProjectLivenessInfo,
   ProjectTvlConfig,
   ProjectTvlEscrow,
+  TvsToken,
 } from '../types'
 import {
   areContractsDiscoveryDriven,
@@ -131,6 +134,7 @@ function layer2Or3ToProject(
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     tvlConfig: getTvlConfig(p, tokenList),
+    tvsConfig: getTvsConfig(p),
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
@@ -363,4 +367,17 @@ function toProjectEscrow(
         isPreminted: !!escrow.premintedTokens?.includes(token.symbol),
       })),
   }
+}
+
+function getTvsConfig(project: ScalingProject): TvsToken[] | undefined {
+  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
+  const filePath = path.join(__dirname, `../tvs/config/${fileName}`)
+
+  if (!fs.existsSync(filePath)) {
+    return undefined
+  }
+
+  const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+
+  return json.tokens as TvsToken[]
 }

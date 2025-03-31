@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { ProjectService, type TvsToken } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,
@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { type Token, TokenId } from '../types'
+import { TokenId } from '../types'
 import { mapConfig } from './mapConfig'
 
 describe(mapConfig.name, () => {
@@ -24,7 +24,9 @@ describe(mapConfig.name, () => {
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
-    expect(result.tokens.find((t: Token) => t.id === 'arbitrum-ETH')).toEqual({
+    expect(
+      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH'),
+    ).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
@@ -73,7 +75,7 @@ describe(mapConfig.name, () => {
 
     expect(
       result.tokens.find(
-        (t: Token) =>
+        (t: TvsToken) =>
           t.id === 'arbitrum-ARB' && t.amount.type === 'circulatingSupply',
       ),
     ).toEqual({
@@ -93,7 +95,9 @@ describe(mapConfig.name, () => {
       isAssociated: true,
     })
 
-    expect(result.tokens.find((t: Token) => t.id === 'arbitrum-ATH')).toEqual({
+    expect(
+      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ATH'),
+    ).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',
