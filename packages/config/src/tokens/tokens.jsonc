@@ -2126,7 +2126,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -2142,7 +2142,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -2986,7 +2986,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -3678,7 +3678,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -5759,7 +5759,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -5775,7 +5775,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -5790,7 +5790,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -5806,7 +5806,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -6195,7 +6195,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -6211,7 +6211,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -6318,6 +6318,40 @@
       "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
       "source": "native",
       "supply": "circulatingSupply"
+    }
+  ],
+  "superseed": [
+    {
+      "symbol": "USDC",
+      "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (USDC)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "coingeckoId": "openusdt",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     }
   ]
 }
