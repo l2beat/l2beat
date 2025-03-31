@@ -23,16 +23,15 @@ async function getResponse(requirements: {
   red: boolean
 }) {
   const projects = await ps.getProjects({
-    select: ['scalingRisks'],
+    select: ['scalingRisks', 'statuses'],
   })
 
   const filteredProjects = projects.filter((project) => {
-    const targetRisks =
-      project.scalingRisks.stacked ?? project.scalingRisks.self
-
-    if (Object.values(targetRisks).some((r) => r === 'UnderReview')) {
+    if (project.statuses.isUnderReview) {
       return false
     }
+    const targetRisks =
+      project.scalingRisks.stacked ?? project.scalingRisks.self
     const colorArray = Object.values(targetRisks).flatMap(
       (risk: TableReadyValue) =>
         risk.sentiment ? sentimentToColor(risk.sentiment) : [],
