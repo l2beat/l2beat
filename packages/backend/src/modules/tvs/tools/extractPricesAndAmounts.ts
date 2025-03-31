@@ -8,23 +8,22 @@ import type {
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
   PriceConfig,
-  ProjectTvsConfig,
+  Token,
   TotalSupplyAmountFormula,
   ValueFormula,
 } from '../types'
 import { getTimestampsRange } from './timestamps'
 
-export function extractPricesAndAmounts(config: ProjectTvsConfig) {
+export function extractPricesAndAmounts(tokens: Token[]) {
   const amounts = new Map<string, AmountConfig>()
   const prices = new Map<string, PriceConfig>()
-  const chains = new Set<string>()
 
-  for (const token of config.tokens) {
+  for (const token of tokens) {
     if (token.amount.type === 'calculation') {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.amount,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
 
       assert(
         formulaPrices.length === 0,
@@ -46,7 +45,7 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig) {
       })
     } else {
       const amount = createAmountConfig(token.amount)
-      setAmount(amounts, chains, amount)
+      setAmount(amounts, amount)
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
@@ -60,7 +59,7 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig) {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForProject,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
 
@@ -68,7 +67,7 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig) {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForTotal,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
   }
@@ -76,7 +75,6 @@ export function extractPricesAndAmounts(config: ProjectTvsConfig) {
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
-    chains: Array.from(chains.values()),
   }
 }
 
@@ -162,18 +160,10 @@ function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
 
 function setAmount(
   amounts: Map<string, AmountConfig>,
-  chains: Set<string>,
   amountToAdd: AmountConfig,
 ) {
   if (amountToAdd.type === 'const') {
     return
-  }
-
-  if (
-    amountToAdd.type === 'balanceOfEscrow' ||
-    amountToAdd.type === 'totalSupply'
-  ) {
-    chains.add(amountToAdd.chain)
   }
 
   const existingAmount = amounts.get(amountToAdd.id)

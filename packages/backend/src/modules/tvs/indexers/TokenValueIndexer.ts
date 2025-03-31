@@ -58,10 +58,9 @@ export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
       return () => Promise.resolve(to)
     }
 
-    const { prices, amounts } = extractPricesAndAmounts({
-      projectId: this.$.project,
-      tokens: configurations.map((c) => c.properties),
-    })
+    const { prices, amounts } = extractPricesAndAmounts(
+      configurations.map((c) => c.properties),
+    )
 
     await this.$.dbStorage.preloadPrices(
       prices.map((p) => p.id),

@@ -37,7 +37,7 @@ export class LocalExecutor {
     timestamps: UnixTime[],
     latestMode: boolean,
   ): Promise<TokenValue[]> {
-    const { prices, amounts } = extractPricesAndAmounts(config)
+    const { prices, amounts } = extractPricesAndAmounts(config.tokens)
 
     const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
 
