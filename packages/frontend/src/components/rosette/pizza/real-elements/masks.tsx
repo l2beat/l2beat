@@ -55,27 +55,9 @@ function LowerRightMaskPath(props: SvgIconProps) {
   )
 }
 
-export function createMask(paths: React.ReactNode[]) {
-  const maskId = createMaskId()
-  const maskElement = (
-    <mask
-      id={maskId}
-      style={{ maskType: 'alpha' }}
-      maskUnits="userSpaceOnUse"
-      x="0"
-      y="0"
-      width="180"
-      height="180"
-    >
-      {paths}
-    </mask>
-  )
-
-  return { mask: maskElement, maskId }
-}
-
-function createMaskId() {
-  const maskId = `mask-${Math.random().toString(36).substring(2, 15)}`
+function createMaskId(risk: RosetteValue) {
+  const noSpaces = risk.name.replace(/\s+/g, '_')
+  const maskId = `mask-${noSpaces}`
   return maskId
 }
 
@@ -130,7 +112,7 @@ export function risksToPizzas(
 
   const pizzas = pizzaBackgrounds.map((pizzaBackground, i) => {
     const risk = risks[i]!
-    const maskId = createMaskId()
+    const maskId = createMaskId(risk)
     const MaskPath = maskPaths[i]!
 
     const maskElement = (

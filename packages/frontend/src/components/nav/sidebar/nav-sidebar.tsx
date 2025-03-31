@@ -2,6 +2,19 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Button } from '~/components/core/button'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/core/dialog'
+import { PizzaIcon } from '~/components/main-page-header'
+import { StepController } from '~/components/pizza-flow'
+import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
+import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
+import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
@@ -76,6 +89,47 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
             </SidebarGroup>
           )
         })}
+        <SidebarGroup className="mt-8 gap-1.5">
+          <Dialog>
+            <DialogTrigger>
+              <Button
+                className="flex w-full items-center justify-center gap-1 rounded-[4px] bg-pink-900 px-6 py-3 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90"
+                asChild
+              >
+                <div className="flex items-center gap-1">
+                  <span>Make a Pizza</span>
+                  <PizzaIcon />
+                </div>
+              </Button>
+              <div className="h-0">
+                <FullRedPizzaSymbol />
+                <FullYellowPizzaSymbol />
+                <FullGreenPizzaSymbol />
+              </div>
+            </DialogTrigger>
+
+            <DialogContent className="flex items-center justify-center pt-16">
+              <DialogTitle className="hidden">Pizza time</DialogTitle>
+              <StepController />
+              <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm bg-[#9621BF]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="stroke-primary-invert"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </DialogClose>
+            </DialogContent>
+          </Dialog>
+        </SidebarGroup>
         <SidebarGroup className="mt-8 gap-1.5">
           {sideLinks.map((link) => (
             <SidebarGroupItem key={link.title}>
