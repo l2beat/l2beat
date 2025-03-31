@@ -101,7 +101,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
                   <PizzaIcon />
                 </div>
               </Button>
-              <div className="h-0">
+              <div className="size-0">
                 <FullRedPizzaSymbol />
                 <FullYellowPizzaSymbol />
                 <FullGreenPizzaSymbol />
