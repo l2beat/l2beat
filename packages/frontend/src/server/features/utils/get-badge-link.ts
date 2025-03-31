@@ -8,15 +8,15 @@ export function getBadgeLink(
   if (!badge.action) return undefined
   if (badge.action.type === 'scalingFilter') {
     return `/scaling/summary?filters=${getFilterSearchParams({
-      [badge.action.filterId]: {
-        values: [badge.action.filterValue],
+      [badge.action.id]: {
+        values: [badge.action.value],
       },
     })}`
   }
 
   if (badge.action.type === 'selfScalingFilter') {
     return `/scaling/summary?filters=${getFilterSearchParams({
-      [badge.action.filterId]: {
+      [badge.action.id]: {
         values: [project.name],
       },
     })}`
