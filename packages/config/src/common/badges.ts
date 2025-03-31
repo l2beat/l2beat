@@ -647,6 +647,7 @@ export const badges = [
     type: BadgeType.Other,
     name: 'Shared Bridge',
     description: 'This project uses a shared bridge contract',
+    action: undefined,
   },
 ] as const satisfies Badge[]
 
