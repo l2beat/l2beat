@@ -18,7 +18,7 @@ import { PizzaButton } from './step-1'
 import type { Step2Payload } from './step-2'
 import type { Step3Payload } from './step-3'
 import { useL2BeatzzaDialog } from './l2beatzza-dialog'
-
+import NProgress from 'nprogress'
 type Props = {
   onReset: () => void
   state: {
@@ -201,7 +201,10 @@ export function Step5({
           <div className="mt-2 flex gap-2">
             <Link
               href={`/scaling/projects/${data.slug}`}
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false)
+                NProgress.start()
+              }}
             >
               <PizzaButton>Learn more</PizzaButton>
             </Link>
