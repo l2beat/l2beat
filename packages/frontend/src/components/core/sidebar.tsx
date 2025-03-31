@@ -156,7 +156,7 @@ function SidebarSeparator({
   className,
   ...props
 }: React.ComponentProps<typeof HorizontalSeparator>) {
-  return <HorizontalSeparator className={cn('mx-2', className)} {...props} />
+  return <HorizontalSeparator className={cn('my-1', className)} {...props} />
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {

@@ -10,7 +10,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '../../core/collapsible'
-import { HorizontalSeparator } from '../../core/horizontal-separator'
 import {
   Sidebar,
   SidebarContent,
@@ -22,6 +21,7 @@ import {
   SidebarGroupSub,
   SidebarGroupSubButton,
   SidebarHeader,
+  SidebarSeparator,
 } from '../../core/sidebar'
 import { DarkThemeToggle } from '../../dark-theme-toggle'
 import { Logo } from '../../logo'
@@ -180,7 +180,7 @@ function NavCollapsibleItem({
           ))}
           {group.secondaryLinks && group.secondaryLinks.length > 0 && (
             <>
-              <HorizontalSeparator />
+              <SidebarSeparator />
               {group.secondaryLinks.map((item) => (
                 <SidebarGroupSubButton
                   href={item.href}
