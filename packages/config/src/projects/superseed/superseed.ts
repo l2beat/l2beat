@@ -3,7 +3,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
-const discovery = new ProjectDiscovery('supeprseed')
+const discovery = new ProjectDiscovery('superseed')
 const genesisTimestamp = UnixTime(1726179683)
 
 export const superseed: ScalingProject = opStackL2({
@@ -33,6 +33,8 @@ export const superseed: ScalingProject = opStackL2({
   chainConfig: {
     name: 'superseed',
     chainId: 5330,
+    //coingeckoPlatform: 'superseed',
+    sinceTimestamp: genesisTimestamp,
     apis: [
       {
         type: 'rpc',
