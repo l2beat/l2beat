@@ -34,7 +34,7 @@ export const superseed: ScalingProject = opStackL2({
   chainConfig: {
     name: 'superseed',
     chainId: 5330,
-    //coingeckoPlatform: 'superseed',
+    // coingeckoPlatform: 'none',
     sinceTimestamp: genesisTimestamp,
     apis: [
       {
