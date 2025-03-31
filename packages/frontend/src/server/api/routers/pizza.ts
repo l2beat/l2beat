@@ -1,4 +1,4 @@
-import type { Sentiment, TableReadyValue } from '@l2beat/config'
+import type { Project, Sentiment, TableReadyValue } from '@l2beat/config'
 import { z } from 'zod'
 import { ps } from '~/server/projects'
 import { procedure, router } from '../trpc'
@@ -23,10 +23,13 @@ async function getResponse(requirements: {
   red: boolean
 }) {
   const projects = await ps.getProjects({
-    select: ['scalingRisks'],
+    select: ['scalingRisks', 'statuses'],
   })
 
   const filteredProjects = projects.filter((project) => {
+    if (project.statuses.isUnderReview) {
+      return false
+    }
     const targetRisks =
       project.scalingRisks.stacked ?? project.scalingRisks.self
     const colorArray = Object.values(targetRisks).flatMap(
@@ -73,7 +76,7 @@ async function getResponse(requirements: {
     return null
   }
 
-  return pickAtRandom(filteredProjects)
+  return pickAtRandom(filteredProjects) as Project<'scalingRisks'>
 }
 
 function sentimentToColor(sentiment: Sentiment) {

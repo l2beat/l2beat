@@ -1,16 +1,8 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '~/components/core/dialog'
-import { StepController } from '~/components/pizza-flow'
+import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 import { env } from '~/env'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
@@ -39,6 +31,7 @@ import { Logo } from '../../logo'
 import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
+import { L2BeatzzaPromo } from './l2beatzza-promo'
 
 interface Props {
   groups: NavGroup[]
@@ -102,45 +95,7 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
         {env.NEXT_PUBLIC_L2BEATZZA && (
           <>
             <DarkThemeToggle className="max-lg:hidden" />
-            <Dialog>
-              <DialogTrigger asChild>
-                <div className="relative h-[160px] w-[200px]">
-                  <Image
-                    src={'/images/l2beatzza.png'}
-                    alt={'L2BEATZZA image'}
-                    width={600}
-                    height={480}
-                    className="rounded-lg border border-divider"
-                  />
-                  <button className="absolute inset-x-3 bottom-3 h-8 rounded bg-primary-invert text-xs font-bold text-primary">
-                    Make Your Pizza
-                  </button>
-                </div>
-              </DialogTrigger>
-              <DialogContent
-                className="flex items-center justify-center bg-surface-primary pt-16 md:left-1/2 md:top-1/2 md:h-[560px] md:max-w-[800px] md:-translate-x-1/2 md:-translate-y-1/2"
-                fullScreenMobile
-              >
-                <DialogTitle className="hidden">Pizza time</DialogTitle>
-                <StepController />
-                <DialogClose className="absolute right-5 top-5 flex size-[20px] items-center justify-center rounded-sm dark:bg-pink-200">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="stroke-primary-invert"
-                  >
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                  </svg>
-                </DialogClose>
-              </DialogContent>
-            </Dialog>
+            <L2BeatzzaPromo />
           </>
         )}
         <div className="flex gap-2 lg:justify-between">
@@ -261,12 +216,14 @@ function getIsActive(href: string, pathname: string) {
 }
 
 function Header({ logoLink }: { logoLink: string }) {
+  const { setOpen } = useL2BeatzzaDialog()
+
   if (env.NEXT_PUBLIC_L2BEATZZA) {
     return (
       <div className="relative flex flex-row items-center lg:justify-center">
-        <Link href={logoLink}>
+        <button onClick={() => setOpen(true)}>
           <L2BeatzzaLogo className="h-[70px]" />
-        </Link>
+        </button>
         <div className="absolute right-3 top-2 flex flex-row items-center gap-4  lg:hidden">
           <DarkThemeToggle />
           <div className="size-6">

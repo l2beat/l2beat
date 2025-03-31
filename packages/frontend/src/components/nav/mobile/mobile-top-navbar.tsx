@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 import { env } from '~/env'
 import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
@@ -21,6 +22,7 @@ export function MobileTopNavbar({
   logoLink,
   className,
 }: { groups: NavGroup[]; logoLink: string; className?: string }) {
+  const { setOpen } = useL2BeatzzaDialog()
   const { isScalingMainPage } = useRecategorisationPreviewContext()
   return (
     <div className={cn('z-10 lg:hidden', className)}>
@@ -28,13 +30,15 @@ export function MobileTopNavbar({
         {/* Left side */}
         <div className="flex items-center gap-3">
           <div className="py-4">
-            <Link href={logoLink}>
-              {env.NEXT_PUBLIC_L2BEATZZA ? (
+            {env.NEXT_PUBLIC_L2BEATZZA ? (
+              <button onClick={() => setOpen(true)}>
                 <L2BeatzzaLogo className="h-8 w-auto" />
-              ) : (
+              </button>
+            ) : (
+              <Link href={logoLink}>
                 <Logo className="h-8 w-auto" />
-              )}
-            </Link>
+              </Link>
+            )}
           </div>
           <MobileSelectedLink groups={groups} />
         </div>
