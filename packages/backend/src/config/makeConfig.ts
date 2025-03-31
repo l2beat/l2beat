@@ -156,6 +156,7 @@ export async function makeConfig(
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     // Must be last
     flags: flags.getResolved(),
+    clientMetricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', !isLocal),
   }
 }
 
