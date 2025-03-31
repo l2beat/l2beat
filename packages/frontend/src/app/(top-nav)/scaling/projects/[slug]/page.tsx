@@ -99,7 +99,7 @@ export default async function Page(props: Props) {
   return (
     <HydrateClient>
       {env.NEXT_PUBLIC_L2BEATZZA && (
-        <div className="hidden">
+        <div className="size-0">
           <FullRedPizzaSymbol />
           <FullYellowPizzaSymbol />
           <FullGreenPizzaSymbol />
