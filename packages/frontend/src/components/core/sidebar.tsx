@@ -295,11 +295,11 @@ function SidebarGroupSubButton({
   isActive,
   className,
   ...props
-}: React.ComponentProps<'a'> & {
+}: React.ComponentProps<typeof Link> & {
   asChild?: boolean
   isActive?: boolean
 }) {
-  const Comp = asChild ? Slot : 'a'
+  const Comp = asChild ? Slot : Link
 
   return (
     <Comp

@@ -58,7 +58,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
             <SidebarGroup key={group.title}>
               {group.type === 'multiple' && (
                 <SidebarGroupItem>
-                  <CollapsibleItem group={group} />
+                  <NavCollapsibleItem group={group} />
                 </SidebarGroupItem>
               )}
               {group.type === 'single' && (
@@ -98,7 +98,7 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   )
 }
 
-function CollapsibleItem({
+function NavCollapsibleItem({
   group,
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
