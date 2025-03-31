@@ -46,11 +46,8 @@ export default function Page() {
       <Header />
       <main>
         <div className="grid md:mt-6 md:gap-6 lg:grid-cols-8 lg:gap-6 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
-          <RecentPublicationsSection
-            publications={publicationEntries}
-            className="lg:col-span-5"
-          />
-          <OfficeHoursSection className="lg:col-span-3" />
+          <RecentPublicationsSection publications={publicationEntries} />
+          <OfficeHoursSection />
           <GovernanceEventsSection
             events={eventEntries}
             className="lg:col-span-full"
@@ -69,9 +66,9 @@ function Header() {
   return (
     <PrimaryCard className="md:p-8">
       <h1 className="mb-4 text-3xl font-bold md:hidden">Governance</h1>
-      <div className="flex w-full justify-between gap-5">
+      <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
-          <p className="text-lg font-normal leading-[150%]">
+          <p className="paragraph-18">
             By delegating your governance votes to L2BEAT, you&apos;re
             supporting our mission to protect the interests of the Ethereum
             community and uphold our shared values. Together, we can lead the L2
@@ -101,7 +98,7 @@ function Header() {
               ))}
             </div>
           </div>
-          <p className="text-sm font-normal leading-[150%]">
+          <p className="paragraph-15">
             If you&apos;d like to see us act as a delegate in another protocol,
             please let us know and we&apos;ll see what we can do.
           </p>

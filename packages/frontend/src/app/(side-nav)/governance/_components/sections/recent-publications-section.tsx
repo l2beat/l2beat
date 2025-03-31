@@ -2,21 +2,21 @@ import Link from 'next/link'
 import { Button } from '~/components/core/button'
 import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
 import type { GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
-import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
+import { GovernanceCard } from '../governance-card'
 
 interface Props {
   publications: GovernancePublicationEntry[]
   className?: string
 }
 
-export function RecentPublicationsSection({ publications, className }: Props) {
+export function RecentPublicationsSection({ publications }: Props) {
   return (
-    <GovernanceCard mobileFull className={className}>
+    <GovernanceCard mobileFull className="flex flex-col gap-8 lg:col-span-5">
       <div className="flex flex-wrap justify-between gap-2">
-        <GovernanceCardHeader>Recent publications</GovernanceCardHeader>
+        <div className="heading-24 md:heading-32">Recent publications</div>
         <ExploreAllButton className="hidden md:block" />
       </div>
-      <div className="mt-8 flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         {publications.map((publication) => (
           <Publication publication={publication} key={publication.id} />
         ))}
@@ -44,9 +44,7 @@ function Publication({ publication }: PublicationProps) {
       src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
       topAccessory={
-        <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
-          {publication.publishedOn}
-        </p>
+        <p className="subtitle-11 text-brand">{publication.publishedOn}</p>
       }
       title={publication.shortTitle ?? publication.title}
       description={publication.description ?? publication.excerpt}

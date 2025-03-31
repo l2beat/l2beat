@@ -45,15 +45,15 @@ export function LinkWithThumbnail({
         className={cn(
           orientation === 'vertical' && 'mb-12 mt-6 px-8',
           orientation === 'horizontal' &&
-            'self-center py-2 transition-all group-hover:translate-x-0.5',
+            'self-center py-[15px] transition-all group-hover:translate-x-0.5',
         )}
       >
-        {props.topAccessory && <div className="mb-2">{props.topAccessory}</div>}
+        {props.topAccessory && <div>{props.topAccessory}</div>}
         <p
           className={cn(
             orientation === 'vertical' && 'text-2xl',
-            orientation === 'horizontal' && 'text-lg',
-            'text-balance font-bold leading-[1.1]',
+            orientation === 'horizontal' && 'heading-18',
+            'text-balance',
           )}
         >
           {props.title}
@@ -62,8 +62,8 @@ export function LinkWithThumbnail({
           <div className="hidden md:block">
             <p
               className={cn(
-                'mt-1.5 text-xs text-opacity-80',
-                orientation === 'horizontal' && 'line-clamp-1 pr-2',
+                'text-secondary',
+                orientation === 'horizontal' && 'paragraph-14 line-clamp-1',
                 orientation === 'vertical' && 'line-clamp-3',
               )}
             >
@@ -71,7 +71,7 @@ export function LinkWithThumbnail({
             </p>
           </div>
         )}
-        <p className="flex flex-wrap items-center gap-1 text-sm font-medium text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
+        <p className="label-value-14-bold flex flex-wrap items-center gap-1 text-link underline transition-colors group-hover:text-blue-550 md:mt-2">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

@@ -40,7 +40,7 @@ export function GovernanceCard({
       className={cn(
         governanceCardVariants({ type, size }),
         mobileFull &&
-          '-mx-4 rounded-none px-4 py-16 md:mx-0 md:rounded-lg md:p-8',
+          '-mx-4 rounded-none px-8 py-16 md:mx-0 md:rounded-lg md:p-8',
         className,
       )}
       {...rest}
