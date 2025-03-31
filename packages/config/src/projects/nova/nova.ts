@@ -187,7 +187,6 @@ export const nova: ScalingProject = orbitStackL2({
       l1TimelockDelay,
       isPostBoLD,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT,
   },
   stateValidation: {
     isUnderReview: true,
@@ -234,7 +233,8 @@ export const nova: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
-      title: 'Bold, permissionless proof system, deployed',
+      title:
+        'Bold, permissionless proof system, but in permissioned mode, deployed',
       url: 'https://x.com/arbitrum/status/1889710151332245837',
       date: '2025-02-15T00:00:00Z',
       type: 'general',

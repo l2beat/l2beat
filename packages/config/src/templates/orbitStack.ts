@@ -873,9 +873,15 @@ function getRiskView(
           return RISK_VIEW.STATE_FP_INT
         }
 
-        const nOfChallengers = templateVars.discovery.getContractValue<
-          string[]
-        >('RollupProxy', 'validators').length
+        const nOfChallengers = isPostBoLD
+          ? templateVars.discovery.getContractValue<string[]>(
+              'RollupProxy',
+              'getValidators',
+            ).length
+          : templateVars.discovery.getContractValue<string[]>(
+              'RollupProxy',
+              'validators',
+            ).length
 
         return {
           ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
