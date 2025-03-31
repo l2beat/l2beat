@@ -1,3 +1,4 @@
+'use client'
 import type { inferRouterOutputs } from '@trpc/server'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,6 +13,10 @@ import type { RosetteValue } from '../rosette/types'
 import { PizzaButton } from './step-1'
 import type { Step2Payload } from './step-2'
 import type { Step3Payload } from './step-3'
+import { XIcon } from '~/icons/products/x'
+import { buttonVariants } from '../core/button'
+import { cn } from '~/utils/cn'
+import type { Project } from '@l2beat/config'
 
 type Props = {
   onReset: () => void
@@ -63,7 +68,7 @@ export function Step4(props: Props) {
   }
 
   if (animationComplete && !isLoading && data !== undefined) {
-    return <Step5 data={data} onReset={props.onReset} />
+    return <Step5 data={data} onPickDifferentClick={props.onReset} shareOnX />
   }
 
   return (
@@ -80,10 +85,12 @@ export function Step4(props: Props) {
 
 export function Step5({
   data,
-  onReset,
+  onPickDifferentClick,
+  shareOnX,
 }: {
   data: Response
-  onReset: () => void
+  onPickDifferentClick: () => void
+  shareOnX?: boolean
 }) {
   if (!data) {
     return (
@@ -96,14 +103,14 @@ export function Step5({
               should try a different one?
             </div>
             <div className="mt-4 flex gap-2">
-              <PizzaButton variant={'outline'} onClick={onReset}>
+              <PizzaButton variant="outline" onClick={onPickDifferentClick}>
                 Pick different pizza
               </PizzaButton>
             </div>
           </div>
           <div className="min-w-full">
             <div className="relative z-10">
-              <PizzaBackground className="absolute left-1/2 top-1/2 size-[300px] -translate-x-1/2 -translate-y-1/2 xs:size-[350px]" />
+              <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
               <Frown className="absolute left-1/2 top-1/2 size-[160px] -translate-x-1/2 -translate-y-1/2 fill-none stroke-pink-200" />
             </div>
           </div>
@@ -149,39 +156,53 @@ export function Step5({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-7 md:flex-row">
+      <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
         <div className="flex w-full flex-col md:w-1/2">
           <div className="text-2xs font-bold uppercase text-purple-100 dark:text-pink-200">
             The best choice for you:
           </div>
           <div>
-            <div className="flex items-center gap-2 ">
+            <div className="flex items-center gap-2">
               <Image
                 src={`/icons/${data.slug}.png`}
                 alt={data.name}
                 width={20}
                 height={20}
               />
-              <div className="text-2xl font-bold">{data.name} pizza!</div>
+              <div className="mt-0.5 text-2xl font-bold !leading-none">
+                {data.shortName ?? data.name} pizza!
+              </div>
             </div>
           </div>
-          <div className="text-[15px] text-gray-500">
+          <div className="mb-4 text-[15px] text-gray-500">
             Would you like to order or pick a different one?
           </div>
-          <div className="mt-4 flex gap-2">
+          {shareOnX && (
+            <a
+              target="_blank"
+              className={cn(
+                buttonVariants({ variant: 'outline' }),
+                'h-10 w-full',
+              )}
+              href={getTwitterShareUrl(data)}
+            >
+              Share on <XIcon className="ml-1 size-5" />
+            </a>
+          )}
+          <div className="mt-2 flex gap-2">
             <Link href={`/scaling/projects/${data.slug}`}>
               <PizzaButton>Learn more</PizzaButton>
             </Link>
             <PizzaButton
               variant="outline"
-              className="rounded-[4px] bg-transparent text-xs"
-              onClick={onReset}
+              className="w-full bg-transparent text-xs"
+              onClick={onPickDifferentClick}
             >
               Pick different pizza
             </PizzaButton>
           </div>
         </div>
-        <div className="-ml-6 w-full md:w-1/2">
+        <div className="-ml-6 size-[350px] w-full md:w-1/2">
           <div className="relative size-[350px] md:h-full">
             <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
             <BigPizzaRosette
@@ -193,6 +214,12 @@ export function Step5({
       </div>
     </div>
   )
+}
+
+function getTwitterShareUrl(project: Project) {
+  return `https://x.com/intent/tweet?text=${encodeURIComponent(
+    `I have just ordered a ${project.name} pizza! Get yours at https://l2beat.com/order/${project.slug}`,
+  )}`
 }
 
 function PizzaBackground({ className }: { className?: string }) {

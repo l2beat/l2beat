@@ -14,7 +14,7 @@ export function PizzaButton(
       onClick={props.onClick}
       className={cn(
         props.className,
-        'rounded-[4px] bg-pink-900 px-6 py-4 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+        'rounded-lg bg-pink-900 px-6 py-2 text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
       )}
       {...props}
     >
