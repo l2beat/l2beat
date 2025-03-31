@@ -1,11 +1,11 @@
 import type {
   AmountFormula,
   CalculationFormula,
-  Token,
+  TvsToken,
   ValueFormula,
-} from '../types'
+} from '@l2beat/config'
 
-export function getTokenSyncRange(token: Token): {
+export function getTokenSyncRange(token: TvsToken): {
   sinceTimestamp: number
   untilTimestamp: number | undefined
 } {

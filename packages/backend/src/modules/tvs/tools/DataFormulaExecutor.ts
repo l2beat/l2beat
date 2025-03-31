@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { BalanceOfEscrowAmountFormula } from '@l2beat/config'
 import type { BlockProvider } from '@l2beat/shared'
 import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { BalanceProvider } from '../providers/BalanceProvider'
@@ -7,7 +8,6 @@ import type { PriceProvider } from '../providers/PriceProvider'
 import type { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import type {
   AmountConfig,
-  BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountConfig,
   PriceConfig,
   TotalSupplyAmountConfig,

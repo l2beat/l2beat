@@ -57,6 +57,7 @@ export class AgglayerDataFetcher {
     '14': 'cdk-sov test (z-chain/token)',
     '15': 'pentagon.games/pen-chain ',
     '16': 'pentagon games testnet?',
+    '17': 'Okto (wallet?)',
   }
 
   // Rollup type ID descriptions
