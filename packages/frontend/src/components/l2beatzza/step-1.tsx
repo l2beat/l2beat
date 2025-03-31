@@ -31,7 +31,7 @@ export function Step1(props: Props) {
         alt="Open pizza"
         width={1000}
         height={1000}
-        className="size-[360px]"
+        className="w-full max-w-[360px]"
       />
       <PizzaButton onClick={props.onClick}>Start making my pizza</PizzaButton>
     </div>

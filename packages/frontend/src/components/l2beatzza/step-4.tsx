@@ -103,7 +103,7 @@ export function Step5({
           </div>
           <div className="min-w-full">
             <div className="relative z-10">
-              <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
+              <PizzaBackground className="absolute left-1/2 top-1/2 size-[300px] -translate-x-1/2 -translate-y-1/2 xs:size-[350px]" />
               <Frown className="absolute left-1/2 top-1/2 size-[160px] -translate-x-1/2 -translate-y-1/2 fill-none stroke-pink-200" />
             </div>
           </div>
@@ -181,7 +181,7 @@ export function Step5({
             </PizzaButton>
           </div>
         </div>
-        <div className="w-full md:w-1/2">
+        <div className="-ml-6 w-full md:w-1/2">
           <div className="relative size-[350px] md:h-full">
             <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
             <BigPizzaRosette

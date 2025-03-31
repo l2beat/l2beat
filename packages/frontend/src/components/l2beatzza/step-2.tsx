@@ -26,7 +26,7 @@ export function Step2(props: Props) {
         The pizza of the day is prepared with sourdough. We have two options
         ready for you, or you can choose a custom one.
       </div>
-      <div className="flex w-full gap-2">
+      <div className="grid w-full grid-cols-3 gap-2">
         <PizzaCheckTile
           title="Vegetarian"
           image={
@@ -35,7 +35,7 @@ export function Step2(props: Props) {
               alt="Veggie"
               width={173}
               height={128}
-              className="w-32"
+              className="w-24 sm:w-32"
             />
           }
           onCheck={() => setSelected({ type: 'predefined', pizza: 'veggie' })}
@@ -51,7 +51,7 @@ export function Step2(props: Props) {
               alt="Spicy"
               width={182}
               height={128}
-              className="w-32"
+              className="w-24 sm:w-32"
             />
           }
           onCheck={() => setSelected({ type: 'predefined', pizza: 'tomato' })}
@@ -61,7 +61,15 @@ export function Step2(props: Props) {
         />
         <PizzaCheckTile
           title="Custom"
-          image={<div className="text-[80px]">🧑‍🍳</div>}
+          image={
+            <Image
+              src="/images/l2beatzza/custom.png"
+              alt="Custom"
+              width={102}
+              height={102}
+              className="w-24 sm:w-32"
+            />
+          }
           onCheck={() => setSelected({ type: 'custom' })}
           checked={selected?.type === 'custom'}
         />
