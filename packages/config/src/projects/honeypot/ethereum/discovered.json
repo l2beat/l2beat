@@ -2,7 +2,7 @@
   "name": "honeypot",
   "chain": "ethereum",
   "blockNumber": 20641250,
-  "configHash": "0x8e1ff8ea6ef73bf9d4f72d439163d5972797224a5b3cb7a8939930fae279bca5",
+  "configHash": "0x04663ca5b9492afec6e29604fcde5494f7f1d41509c291854d64b1a9f31875b1",
   "entries": [
     {
       "name": "Honeypot",
@@ -35,7 +35,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
-      }
+      },
+      "derivedName": "History"
     },
     {
       "name": "InputBox",
@@ -47,7 +48,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1690464923,
       "sinceBlock": 17784733,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "InputBox"
     },
     {
       "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
@@ -67,7 +69,8 @@
       "values": {
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
-      }
+      },
+      "derivedName": "ERC20Portal"
     },
     {
       "name": "Authority",
@@ -83,7 +86,8 @@
         "$immutable": true,
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
         "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
-      }
+      },
+      "derivedName": "Authority"
     }
   ],
   "abis": {

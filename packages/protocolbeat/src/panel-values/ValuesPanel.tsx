@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { type ReactNode, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import type {
@@ -8,12 +7,11 @@ import type {
   ApiProjectContract,
 } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
-import { IconChevronDown } from '../icons/IconChevronDown'
-import { IconChevronRight } from '../icons/IconChevronRight'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
+import { Folder } from './Folder'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -124,27 +122,5 @@ function Display({
         </Folder>
       )}
     </>
-  )
-}
-
-function Folder(props: {
-  title: string
-  children: ReactNode
-  collapsed?: boolean
-}) {
-  const [open, setOpen] = useState(!props.collapsed)
-
-  return (
-    <div className="border-coffee-600 border-t">
-      <button
-        onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
-      >
-        {open && <IconChevronDown />}
-        {!open && <IconChevronRight />}
-        {props.title}
-      </button>
-      {open && props.children}
-    </div>
   )
 }

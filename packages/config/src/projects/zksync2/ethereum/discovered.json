@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 22123358,
-  "configHash": "0xb80dd037d0dedc0ac1029f06b143d8fd4ddb274023844f026a1791e33d0a2383",
+  "configHash": "0x5a17712e9a9415024a83d463f9daee07adb0f6d029ff7315a9415834921548fe",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -31,6 +31,7 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "Governance",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -616,6 +617,7 @@
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
         "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
       },
+      "derivedName": "L1ERC20Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -711,6 +713,7 @@
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -778,6 +781,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

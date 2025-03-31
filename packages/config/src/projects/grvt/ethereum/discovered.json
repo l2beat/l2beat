@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 22122838,
-  "configHash": "0x75983af2300490b4026600d8f6602de55acb27d480a32ec8ba90d3fb9d19858f",
+  "configHash": "0x4ffb0c3829f811a75f77b8b577e43e7b0ced00fc93f19d1dc129b4113891d314",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -169,7 +169,8 @@
           "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
           "0x8829AD80E425C646DAB305381ff105169FeEcE56"
         ]
-      }
+      },
+      "derivedName": "GRVTTransactionFilterer"
     },
     {
       "address": "0x58D14960E0a2be353eDdE61ad719196A2b816522",
@@ -340,6 +341,7 @@
           "0x58D14960E0a2be353eDdE61ad719196A2b816522"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -368,6 +370,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -427,7 +430,8 @@
         },
         "owner": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "GRVTBridgeProxy"
     },
     {
       "name": "GrvtZkEvm",
@@ -729,7 +733,8 @@
         "owner": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Governance"
     },
     {
       "address": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",

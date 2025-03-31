@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22123258,
-  "configHash": "0x4a20735963382d1a89bad0a4c8daf20557b3049db7c9a57af5c26cc3a7cc661e",
+  "configHash": "0xbc6d8f30a8f312cc745506984fab3fd2af0c16f4668a17d94298d6ed01b05504",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -34,6 +34,7 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -52,8 +53,7 @@
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "description": "start (queue) upgrades."
         }
-      ],
-      "derivedName": ""
+      ]
     },
     {
       "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709",
@@ -95,6 +95,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -132,6 +133,7 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -155,7 +157,8 @@
         "$immutable": true,
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9",
@@ -202,6 +205,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -436,6 +440,7 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -469,6 +474,7 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -519,6 +525,7 @@
         "nonce": 1,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -628,6 +635,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -669,6 +677,7 @@
         "nonce": 4,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -701,6 +710,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -758,6 +768,7 @@
         "PROTOCOL_UPGRADE_HANDLER": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
+      "derivedName": "Guardians",
       "references": [
         {
           "text": "Guardians - ZK Nation docs",
@@ -844,6 +855,7 @@
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
         }
       },
+      "derivedName": "SecurityCouncil",
       "references": [
         {
           "text": "Security Council members - ZK Nation docs",
@@ -899,6 +911,7 @@
         "nonce": 12,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -926,6 +939,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -961,6 +975,7 @@
       "sinceTimestamp": 1739108915,
       "sinceBlock": 21809357,
       "values": { "$immutable": true },
+      "derivedName": "RollupL1DAValidator",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -988,6 +1003,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1041,6 +1057,7 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1089,6 +1106,7 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1AssetRouter",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1114,6 +1132,7 @@
       "sinceTimestamp": 1739108927,
       "sinceBlock": 21809358,
       "values": { "$immutable": true },
+      "derivedName": "ValidiumL1DAValidator",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1145,6 +1164,7 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1180,6 +1200,7 @@
         "nonce": 10,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1251,6 +1272,7 @@
         "nonce": 10,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1340,6 +1362,7 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "WETH_TOKEN": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "derivedName": "L1NativeTokenVault",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1378,7 +1401,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xC2Cd2330A575af7f124E07820E7c4AbfaeD02392",
@@ -1464,6 +1488,7 @@
         "storedBatchZero": "0xbb3c62fb5577f094f9290297114948e6f6fb8d04083a366ba3dadb3569fb5c4f",
         "validatorTimelock": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       },
+      "derivedName": "StateTransitionManager",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1496,6 +1521,7 @@
         "nonce": 7,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1543,6 +1569,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1618,6 +1645,7 @@
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L1SharedBridge",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1724,6 +1752,7 @@
         },
         "emergencyUpgradeProposals": { "severity": "HIGH" }
       },
+      "derivedName": "ProtocolUpgradeHandler",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1815,6 +1844,7 @@
         "SECURITY_COUNCIL": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
         "ZK_FOUNDATION_SAFE": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
       },
+      "derivedName": "EmergencyUpgradeBoard",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1857,6 +1887,7 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       },
+      "derivedName": "GnosisSafe",
       "category": { "name": "Spam", "priority": -1 }
     },
     {

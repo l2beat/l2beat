@@ -24,6 +24,7 @@ export function getCommonScalingEntry({
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
+
   return {
     id: project.id,
     slug: project.slug,
@@ -72,6 +73,14 @@ export function getCommonScalingEntry({
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',
       },
+      {
+        id: 'infrastructure',
+        value: project.scalingInfo.infrastructure ?? 'No infrastructure',
+      },
+      ...project.scalingInfo.vm.map((vm) => ({
+        id: 'vm' as const,
+        value: vm,
+      })),
     ],
     description: project.display?.description,
     badges: project.display.badges,

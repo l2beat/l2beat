@@ -2,6 +2,7 @@ import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import http from 'http'
 import path from 'path'
+import { assert } from '@l2beat/shared-pure'
 import Convert from 'ansi-to-html'
 import chalk from 'chalk'
 import { splitIntoSubfiles } from './powerdiff/splitIntoFiles'
@@ -141,11 +142,24 @@ function processGitDiff(gitDiff: string): LeftRightPair[] {
   const lines = gitDiff.split('\n')
   const pathLines = lines.filter((line) => line.startsWith('diff --git'))
   const pathsList = pathLines.map((path) => {
-    const split = path.split(' ')
-    return {
-      left: split[2].replace('a/', ''),
-      right: split[3].replace('b/', ''),
-    }
+    // Find the start of first path (after 'a/')
+    const aIndex = path.indexOf('a/')
+    assert(
+      aIndex !== -1,
+      `Invalid git diff line - missing 'a/' prefix: ${path}`,
+    )
+
+    // Find the separator between paths (space before 'b/')
+    const bIndex = path.indexOf(' b/')
+    assert(
+      bIndex !== -1,
+      `Invalid git diff line - missing ' b/' separator: ${path}`,
+    )
+
+    const left = path.slice(aIndex + 2, bIndex) // +2 to skip 'a/'
+    const right = path.slice(bIndex + 3) // +3 to skip ' b/'
+
+    return { left, right }
   })
   return pathsList
 }

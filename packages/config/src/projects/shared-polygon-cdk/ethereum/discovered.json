@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 22094624,
-  "configHash": "0xca05abaa1e9206b073309551263fee4824e02ab3fdc10ea39108f8587ce7fb07",
+  "configHash": "0x3002cf68fe62d01cbbffece237ccf70375e831dffa5356dc14db99af2620fe13",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -783,6 +783,7 @@
           "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
+      "derivedName": "PolygonRollupManager",
       "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }],
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },

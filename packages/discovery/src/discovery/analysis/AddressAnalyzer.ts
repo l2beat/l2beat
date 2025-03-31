@@ -188,10 +188,7 @@ export class AddressAnalyzer {
     const analysisWithoutMeta: Omit<Analysis, 'selfMeta' | 'targetsMeta'> = {
       type: isEOA ? 'EOA' : 'Contract',
       name: isEOA ? config.name : (config.name ?? sources.name),
-      derivedName:
-        config.name !== undefined && config.name !== sources.name
-          ? sources.name
-          : undefined,
+      derivedName: isEOA ? undefined : sources.name,
       isVerified: sources.isVerified,
       address,
       deploymentTimestamp: deployment?.timestamp,

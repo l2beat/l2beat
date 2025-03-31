@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0xf54b2e749ceea90d896d791d9c723bcd070c15efbbe760c9c2bfea7a06859c89",
+  "configHash": "0xb57b066e3e9b68b7bb4360b23278dca92ac1a3b5d36a5c909b0fdc2e3baa215f",
   "entries": [
     {
       "name": "ProxyAdminOwner",
@@ -112,7 +112,8 @@
         "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
         "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
-      }
+      },
+      "derivedName": "DepositBoxERC1155"
     },
     {
       "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
@@ -189,7 +190,8 @@
         "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
         "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
-      }
+      },
+      "derivedName": "DepositBoxEth"
     },
     {
       "name": "CommunityPool",
@@ -268,7 +270,8 @@
         "minTransactionGas": 1000000,
         "multiplierDivider": 2,
         "multiplierNumerator": 3
-      }
+      },
+      "derivedName": "CommunityPool"
     },
     {
       "name": "Linker",
@@ -328,7 +331,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
         "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
-      }
+      },
+      "derivedName": "Linker"
     },
     {
       "name": "DepositBoxERC721",
@@ -400,7 +404,8 @@
         "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
         "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
-      }
+      },
+      "derivedName": "DepositBoxERC721"
     },
     {
       "name": "MessageProxyForMainnet",
@@ -499,7 +504,8 @@
         "PAUSABLE_ROLE": "0x09b6fca8f5f3ab2900d9586d1d15872611c1bd42b268b973ad886d4f2646b560",
         "REVERT_REASON_LENGTH": 64,
         "version": "2.2.0"
-      }
+      },
+      "derivedName": "MessageProxyForMainnet"
     },
     {
       "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
@@ -582,7 +588,8 @@
         "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
         "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
-      }
+      },
+      "derivedName": "DepositBoxERC20"
     },
     {
       "name": "DepositBoxERC721WithMetadata",
@@ -634,7 +641,8 @@
         "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
         "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
-      }
+      },
+      "derivedName": "DepositBoxERC721WithMetadata"
     },
     {
       "name": "ProxyAdmin",
@@ -683,7 +691,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
