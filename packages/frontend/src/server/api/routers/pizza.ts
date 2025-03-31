@@ -1,4 +1,4 @@
-import type { Sentiment, TableReadyValue } from '@l2beat/config'
+import type { Project, Sentiment, TableReadyValue } from '@l2beat/config'
 import { z } from 'zod'
 import { ps } from '~/server/projects'
 import { procedure, router } from '../trpc'
@@ -76,7 +76,7 @@ async function getResponse(requirements: {
     return null
   }
 
-  return pickAtRandom(filteredProjects)
+  return pickAtRandom(filteredProjects) as Project<'scalingRisks'>
 }
 
 function sentimentToColor(sentiment: Sentiment) {
