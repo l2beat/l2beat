@@ -4,6 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   Sheet,
   SheetContent,
@@ -14,7 +15,6 @@ import {
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
-import { usePathname } from 'next/navigation'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
