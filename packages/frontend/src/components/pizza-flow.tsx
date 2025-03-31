@@ -49,7 +49,7 @@ export function StepController() {
   }
 
   return (
-    <div className="flex max-w-full flex-col gap-4">
+    <div className="flex w-full items-center md:px-8">
       {step === '1-welcoming-screen' && <Step1 onClick={handleStep1Click} />}
       {step === '2-variant-select' && <Step2 onClick={handleStep2Click} />}
       {step === '3-custom-toppings-select' && (

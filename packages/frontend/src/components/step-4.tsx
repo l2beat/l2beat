@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import type { SvgIconProps } from '~/icons/svg-icon'
 import type { AppRouter } from '~/server/api/root'
 import { api } from '~/trpc/react'
+import { cn } from '~/utils/cn'
+import { Button } from './core/button'
 import { LazyLottie } from './lazy-lottie'
 import animationData from './pizza-cook-frames.json'
 import { BigPizzaRosette } from './rosette/pizza/big-pizza-rosette'
@@ -67,8 +69,8 @@ export function Step4(props: Props) {
   }
 
   return (
-    <div className="items-center justify-center pb-[225px]">
-      <div className="size-[500px]">
+    <div className="flex w-full items-center justify-center pb-[225px]">
+      <div className="size-[350px] md:size-[500px]">
         <LazyLottie
           loop
           autoplay
@@ -89,7 +91,7 @@ export function Step5({
 }) {
   if (!data) {
     return (
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center justify-center">
         <div className="grid grid-cols-2 items-center justify-center gap-7">
           <div className="z-100 flex flex-col">
             <div className="text-2xl font-bold">Mamma mia!</div>
@@ -151,7 +153,7 @@ export function Step5({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-7 md:flex-row">
+      <div className="flex flex-col-reverse items-center justify-center gap-7 md:flex-row">
         <div className="flex w-full flex-col md:w-1/2">
           <div className="text-2xs font-bold uppercase text-purple-100 dark:text-pink-200">
             The best choice for you:
@@ -170,13 +172,20 @@ export function Step5({
           <div className="text-[15px] text-gray-500">
             Would you like to order or pick a different one?
           </div>
-          <div className="mt-4 flex gap-2">
+          <div className="mt-4 flex flex-col gap-2 md:flex-row">
             <Link href={`/scaling/projects/${data.slug}`}>
-              <PizzaButton>Learn more</PizzaButton>
+              <Button
+                onClick={() => null}
+                className={cn(
+                  'w-full rounded-[4px] bg-pink-900 px-6 py-4 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+                )}
+              >
+                Learn more
+              </Button>
             </Link>
             <PizzaButton
               variant="outline"
-              className="rounded-[4px] bg-transparent text-xs"
+              className="w-full rounded-[4px] bg-transparent py-3.5 text-xs md:w-fit"
               onClick={onReset}
             >
               Pick different pizza

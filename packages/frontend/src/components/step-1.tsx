@@ -12,8 +12,8 @@ export function PizzaButton(
     <Button
       onClick={props.onClick}
       className={cn(
-        props.className,
         'rounded-[4px] bg-pink-900 px-6 py-4 text-xs text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+        props.className,
       )}
       {...props}
     >
@@ -24,7 +24,7 @@ export function PizzaButton(
 
 export function Step1(props: Props) {
   return (
-    <div className="flex flex-col items-center justify-center gap-7">
+    <div className="flex w-full flex-col items-center justify-center gap-7">
       <PizzaBox />
       <PizzaButton onClick={props.onClick}>Start making my pizza</PizzaButton>
     </div>

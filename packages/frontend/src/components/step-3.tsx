@@ -51,9 +51,9 @@ export function Step3Custom({ onSubmit }: Props) {
   )
 
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       <div className="pb-5 text-base font-bold">
-        <div className="text-xs text-[#9621BF] dark:text-pink-200">
+        <div className="mb-1 text-xs uppercase text-[#9621BF] dark:text-pink-200">
           Please share your preferences and we’ll prepare the best pizza for
           you.
         </div>
@@ -63,17 +63,25 @@ export function Step3Custom({ onSubmit }: Props) {
           {step === 'spicy' && 'Finally, would you like it spicy?'}
         </span>
       </div>
-      <div className="flex size-full items-center justify-center gap-2">
+      <div className="flex size-full items-center justify-center gap-2 md:gap-5">
         {step === 'veggies' && (
           <div className="flex w-full gap-2">
             <PizzaCheckTile
-              image={<ThumbsUpIcon />}
+              image={
+                <div className="mb-2 rounded-md bg-surface-primary p-7">
+                  <ThumbsUpIcon />
+                </div>
+              }
               title="Yes, please!"
               onCheck={() => handleSelect(true)}
               checked={false}
             />
             <PizzaCheckTile
-              image={<ThumbsDownIcon />}
+              image={
+                <div className="mb-2 rounded-md bg-surface-primary p-7">
+                  <ThumbsDownIcon />
+                </div>
+              }
               title="No, thanks"
               onCheck={() => handleSelect(false)}
               checked={false}
@@ -83,13 +91,21 @@ export function Step3Custom({ onSubmit }: Props) {
         {step === 'cheese' && (
           <div className="flex w-full gap-2">
             <PizzaCheckTile
-              image={<ThumbsUpIcon />}
+              image={
+                <div className="mb-2 rounded-md bg-surface-primary p-7">
+                  <ThumbsUpIcon />
+                </div>
+              }
               title="Yes, please!"
               onCheck={() => handleSelect(true)}
               checked={false}
             />
             <PizzaCheckTile
-              image={<ThumbsDownIcon />}
+              image={
+                <div className="mb-2 rounded-md bg-surface-primary p-7">
+                  <ThumbsDownIcon />
+                </div>
+              }
               title="No, thanks"
               onCheck={() => handleSelect(false)}
               checked={false}
@@ -99,13 +115,21 @@ export function Step3Custom({ onSubmit }: Props) {
         {step === 'spicy' && (
           <div className="flex w-full gap-2">
             <PizzaCheckTile
-              image={<ThumbsUpIcon />}
+              image={
+                <div className="mb-2 rounded-md bg-surface-primary p-7">
+                  <ThumbsUpIcon />
+                </div>
+              }
               title="Yes, please!"
               onCheck={() => handleSelect(true)}
               checked={false}
             />
             <PizzaCheckTile
-              image={<ThumbsDownIcon />}
+              image={
+                <div className="mb-2 rounded-md bg-surface-primary p-7">
+                  <ThumbsDownIcon />
+                </div>
+              }
               title="No, thanks"
               onCheck={() => handleSelect(false)}
               checked={false}
