@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { L2BeatzzaResult } from './_components/result'
-import { env } from '~/env'
 
 type Params = {
   slug: string
