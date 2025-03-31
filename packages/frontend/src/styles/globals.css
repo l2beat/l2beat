@@ -329,7 +329,7 @@
   .label-value-12-medium {
     @apply text-2xs font-medium leading-[100%];
   }
-  
+
   /* Label value bold */
   .label-value-20-bold {
     @apply text-xl font-bold leading-[100%];
@@ -363,7 +363,7 @@
   .paragraph-18 {
     @apply text-base font-normal leading-[150%];
   }
-  
+
   .paragraph-16 {
     @apply text-base font-normal leading-[150%];
   }
