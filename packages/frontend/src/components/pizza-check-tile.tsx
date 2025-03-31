@@ -20,7 +20,7 @@ export function PizzaCheckTile(props: PizzaCheckTileProps) {
       )}
       onClick={() => props.onCheck(!props.checked)}
     >
-      <div className="flex max-w-[100px] flex-1 items-center justify-center">
+      <div className="flex flex-1 items-center justify-center">
         {props.image}
       </div>
       <div className="text-lg font-bold">{props.title}</div>
