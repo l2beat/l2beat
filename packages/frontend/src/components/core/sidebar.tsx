@@ -110,7 +110,6 @@ const SidebarProvider = function SidebarProvider({
     </SidebarContext.Provider>
   )
 }
-SidebarProvider.displayName = 'SidebarProvider'
 
 function Sidebar({
   className,
@@ -161,7 +160,6 @@ function Sidebar({
     </div>
   )
 }
-Sidebar.displayName = 'Sidebar'
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -171,7 +169,6 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
     />
   )
 }
-SidebarHeader.displayName = 'SidebarHeader'
 
 function SidebarFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -181,7 +178,6 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<'div'>) {
     />
   )
 }
-SidebarFooter.displayName = 'SidebarFooter'
 
 function SidebarSeparator({
   className,
@@ -189,7 +185,6 @@ function SidebarSeparator({
 }: React.ComponentProps<typeof HorizontalSeparator>) {
   return <HorizontalSeparator className={cn('mx-2', className)} {...props} />
 }
-SidebarSeparator.displayName = 'SidebarSeparator'
 
 function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -202,7 +197,6 @@ function SidebarContent({ className, ...props }: React.ComponentProps<'div'>) {
     />
   )
 }
-SidebarContent.displayName = 'SidebarContent'
 
 function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -215,7 +209,6 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<'div'>) {
     />
   )
 }
-SidebarGroup.displayName = 'SidebarGroup'
 
 function SidebarGroupItem({ className, ...props }: React.ComponentProps<'li'>) {
   return (
@@ -225,7 +218,6 @@ function SidebarGroupItem({ className, ...props }: React.ComponentProps<'li'>) {
     />
   )
 }
-SidebarGroupItem.displayName = 'SidebarGroupItem'
 
 function SidebarGroupLink({
   isActive = false,
@@ -245,7 +237,6 @@ function SidebarGroupLink({
     />
   )
 }
-SidebarGroupLink.displayName = 'SidebarGroupLink'
 
 function SidebarGroupSmallLink({
   isActive = false,
@@ -270,7 +261,6 @@ function SidebarGroupSmallLink({
     />
   )
 }
-SidebarGroupLink.displayName = 'SidebarGroupLink'
 
 function SidebarGroupSub({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
@@ -283,12 +273,10 @@ function SidebarGroupSub({ className, ...props }: React.ComponentProps<'ul'>) {
     />
   )
 }
-SidebarGroupSub.displayName = 'SidebarGroupSub'
 
 function SidebarGroupSubItem(props: React.ComponentProps<'li'>) {
   return <li {...props} />
 }
-SidebarGroupSubItem.displayName = 'SidebarGroupSubItem'
 
 function SidebarGroupSubButton({
   asChild = false,
@@ -313,7 +301,6 @@ function SidebarGroupSubButton({
     />
   )
 }
-SidebarGroupSubButton.displayName = 'SidebarGroupSubButton'
 
 export {
   Sidebar,
