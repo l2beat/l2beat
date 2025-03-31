@@ -17,6 +17,7 @@ import type { RosetteValue } from '../rosette/types'
 import { PizzaButton } from './step-1'
 import type { Step2Payload } from './step-2'
 import type { Step3Payload } from './step-3'
+import { useL2BeatzzaDialog } from './l2beatzza-dialog'
 
 type Props = {
   onReset: () => void
@@ -98,6 +99,7 @@ export function Step5({
   onPickDifferentClick: () => void
   shareOnX?: boolean
 }) {
+  const { setOpen } = useL2BeatzzaDialog()
   if (!data) {
     return (
       <div className="flex flex-col items-center justify-center">
@@ -182,7 +184,7 @@ export function Step5({
           </div>
           <div className="mb-4 text-[15px] text-secondary">
             {descriptionText ??
-              'Would you like to order or pick a different one?'}
+              'Would you like to learn more about your pizza, or pick a different one?'}
           </div>
           {shareOnX && (
             <a
@@ -197,7 +199,10 @@ export function Step5({
             </a>
           )}
           <div className="mt-2 flex gap-2">
-            <Link href={`/scaling/projects/${data.slug}`}>
+            <Link
+              href={`/scaling/projects/${data.slug}`}
+              onClick={() => setOpen(false)}
+            >
               <PizzaButton>Learn more</PizzaButton>
             </Link>
             <PizzaButton
@@ -225,7 +230,7 @@ export function Step5({
 
 function getTwitterShareUrl(project: Project) {
   return `https://x.com/intent/tweet?text=${encodeURIComponent(
-    `I have just ordered a ${project.name} pizza! Get yours at https://l2beat.com/order/${project.slug}`,
+    `I just ordered a freshly baked ${project.name} pizza, straight out of the L2BEAT oven! 🍕\nGet yours at https://l2beat.com/order/${project.slug} 👩‍🍳`,
   )}`
 }
 
