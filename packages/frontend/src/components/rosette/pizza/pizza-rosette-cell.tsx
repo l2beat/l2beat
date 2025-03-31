@@ -1,5 +1,4 @@
 import { TableLink } from '~/components/table/table-link'
-import { env } from '~/env'
 import {
   Tooltip,
   TooltipContent,
@@ -8,7 +7,6 @@ import {
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
-import { RealPizzaRosetteIcon } from './real-pizza-rosette-icon'
 
 interface Props {
   href: string
@@ -21,10 +19,6 @@ export function PizzaRosetteCell(props: Props) {
     !!props.isUnderReview ||
     props.values.some((value) => value.sentiment === 'UnderReview')
 
-  const PizzaComponent = env.NEXT_PUBLIC_L2BEATZZA
-    ? RealPizzaRosetteIcon
-    : PizzaRosetteIcon
-
   return (
     <Tooltip>
       <TooltipTrigger
@@ -32,7 +26,7 @@ export function PizzaRosetteCell(props: Props) {
         disabledOnMobile
       >
         <TableLink href={props.href}>
-          <PizzaComponent
+          <PizzaRosetteIcon
             values={props.values}
             className="size-6 md:size-8"
             isUnderReview={isUnderReview}
