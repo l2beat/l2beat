@@ -24,7 +24,7 @@ export function LinkWithThumbnail({
       href={props.href}
       className={cn(
         'group flex gap-6 rounded-md bg-surface-primary transition-all hover:bg-surface-secondary',
-        orientation === 'vertical' && 'max-w-96 flex-col',
+        orientation === 'vertical' && 'max-w-96 flex-col bg-surface-secondary',
         props.className,
       )}
     >
@@ -43,35 +43,38 @@ export function LinkWithThumbnail({
       />
       <div
         className={cn(
-          orientation === 'vertical' && 'mb-12 mt-6 px-8',
+          orientation === 'vertical' &&
+            'mb-6 flex h-full flex-col justify-between px-6',
           orientation === 'horizontal' &&
             'self-center py-[15px] transition-all group-hover:translate-x-0.5',
         )}
       >
-        {props.topAccessory && <div>{props.topAccessory}</div>}
-        <p
-          className={cn(
-            orientation === 'vertical' && 'text-2xl',
-            orientation === 'horizontal' && 'heading-16 md:heading-18',
-            'text-balance',
+        <div>
+          {props.topAccessory && <div>{props.topAccessory}</div>}
+          <p
+            className={cn(
+              orientation === 'vertical' && 'heading-20 mt-2',
+              orientation === 'horizontal' && 'heading-16 md:heading-18',
+              'text-balance',
+            )}
+          >
+            {props.title}
+          </p>
+          {props.description && (
+            <div className="hidden md:block">
+              <p
+                className={cn(
+                  'paragraph-14 text-secondary',
+                  orientation === 'horizontal' && 'line-clamp-1',
+                  orientation === 'vertical' && 'mt-3 line-clamp-3',
+                )}
+              >
+                {props.description}
+              </p>
+            </div>
           )}
-        >
-          {props.title}
-        </p>
-        {props.description && (
-          <div className="hidden md:block">
-            <p
-              className={cn(
-                'text-secondary',
-                orientation === 'horizontal' && 'paragraph-14 line-clamp-1',
-                orientation === 'vertical' && 'line-clamp-3',
-              )}
-            >
-              {props.description}
-            </p>
-          </div>
-        )}
-        <p className="label-value-14-bold flex flex-wrap items-center gap-1 text-link underline transition-colors group-hover:text-blue-550 md:mt-2">
+        </div>
+        <p className="label-value-14-bold flex flex-wrap items-center gap-1 text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>
