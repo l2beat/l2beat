@@ -118,7 +118,7 @@ function NavCollapsibleItem({
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
       {breakpoint === 'mobile' || breakpoint === 'tablet' ? (
         <CollapsibleTrigger
-          className="group flex cursor-pointer items-center gap-1.5 p-1.5"
+          className="group flex items-center gap-1.5 p-1.5"
           data-active={isActive}
         >
           <div className="flex items-center gap-2" data-active={isActive}>
@@ -140,10 +140,7 @@ function NavCollapsibleItem({
           />
         </CollapsibleTrigger>
       ) : (
-        <div
-          className="group flex cursor-pointer items-center p-1.5"
-          data-active={isActive}
-        >
+        <div className="group flex items-center p-1.5" data-active={isActive}>
           <Link
             href={group.links[0]!.href}
             className="flex items-center gap-2"
