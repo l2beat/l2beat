@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { FullPageHeader } from '~/components/full-page-header'
+import { MainPageHeader } from '~/components/main-page-header'
 import { Article } from '~/components/markdown/article'
+import { NavDivider } from '~/components/nav/nav-divider'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getCollection, getCollectionEntry } from '~/content/get-collection'
 import { env } from '~/env'
 import { roboto_serif } from '~/fonts'
@@ -52,16 +53,17 @@ export default async function Page(props: Props) {
   }
   const publicationEntry = getGovernancePublicationEntry(publication)
   return (
-    <div className="reading">
-      <Header publication={publicationEntry} />
-      <ContentWrapper
-        className={cn(
-          roboto_serif.variable,
-          'mt-12 max-w-[816px] md:mt-16 lg:mt-20',
-        )}
-        asChild
-      >
-        <main>
+    <>
+      <MainPageHeader>Governance</MainPageHeader>
+      <PrimaryCard className="md:p-8">
+        <PublicationHeader publication={publicationEntry} />
+        <NavDivider className="my-8" />
+        <div
+          className={cn(
+            roboto_serif.variable,
+            'mx-auto mt-8 max-w-[720px] md:pt-8',
+          )}
+        >
           {publicationEntry.description && (
             <p className="mb-12 font-roboto-serif text-xl font-light leading-[1.6] opacity-80 ">
               {publicationEntry.description}
@@ -75,41 +77,39 @@ export default async function Page(props: Props) {
             height={674}
           />
           <Article>{publicationEntry.content}</Article>
-        </main>
-      </ContentWrapper>
-    </div>
+        </div>
+      </PrimaryCard>
+    </>
   )
 }
 
-function Header({ publication }: { publication: GovernancePublicationEntry }) {
+function PublicationHeader({
+  publication,
+}: { publication: GovernancePublicationEntry }) {
   return (
-    <FullPageHeader contentWrapperClassName="flex-col items-start gap-2 md:gap-6">
-      <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
+    <div>
+      <p className="subtitle-12 uppercase text-brand">
         {publication.readTimeInMinutes} min read • Published on{' '}
         {publication.publishedOn}
       </p>
-      <h1 className="text-2xl font-bold md:text-3xl lg:text-[44px] lg:leading-[1.2]">
-        {publication.title}
-      </h1>
-      <div>
-        <div className="flex items-center justify-center">
-          <Image
-            alt={`Avatar of ${publication.author.firstName} ${publication.author.lastName}`}
-            src={`/images/avatars/${publication.author.id}.png`}
-            width={128}
-            height={128}
-            className="mr-2 size-10 rounded-full"
-          />
-          <div>
-            <p className="text-lg font-bold leading-none">
-              {publication.author.firstName} {publication.author.lastName}
-            </p>
-            <p className="text-2xs font-medium text-zinc-500 dark:text-gray-50">
-              {publication.author.role}
-            </p>
-          </div>
+      <h1 className="md:heading-32 heading-24 mt-2">{publication.title}</h1>
+      <div className="mt-6 flex items-center justify-start">
+        <Image
+          alt={`Avatar of ${publication.author.firstName} ${publication.author.lastName}`}
+          src={`/images/avatars/${publication.author.id}.png`}
+          width={128}
+          height={128}
+          className="mr-2 size-10 rounded-full"
+        />
+        <div>
+          <p className="label-value-16-bold">
+            {publication.author.firstName} {publication.author.lastName}
+          </p>
+          <p className="label-value-12-bold mt-1 text-zinc-500 dark:text-gray-50">
+            {publication.author.role}
+          </p>
         </div>
       </div>
-    </FullPageHeader>
+    </div>
   )
 }
