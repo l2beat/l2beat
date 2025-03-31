@@ -31,6 +31,7 @@ import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
 import { L2BeatzzaPromo } from './l2beatzza-promo'
+import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 
 interface Props {
   groups: NavGroup[]
@@ -215,12 +216,14 @@ function getIsActive(href: string, pathname: string) {
 }
 
 function Header({ logoLink }: { logoLink: string }) {
+  const { setOpen } = useL2BeatzzaDialog()
+
   if (env.NEXT_PUBLIC_L2BEATZZA) {
     return (
       <div className="relative flex flex-row items-center lg:justify-center">
-        <Link href={logoLink}>
+        <button onClick={() => setOpen(true)}>
           <L2BeatzzaLogo className="h-[70px]" />
-        </Link>
+        </button>
         <div className="absolute right-3 top-2 flex flex-row items-center gap-4  lg:hidden">
           <DarkThemeToggle />
           <div className="size-6">

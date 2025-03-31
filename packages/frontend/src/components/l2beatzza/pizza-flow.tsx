@@ -25,8 +25,8 @@ export function StepController() {
   })
 
   const onReset = () => {
-    setPizzaState({ step1: false })
-    setStep('1-welcoming-screen')
+    setPizzaState({ step1: true })
+    setStep('2-variant-select')
   }
 
   const handleStep1Click = () => {

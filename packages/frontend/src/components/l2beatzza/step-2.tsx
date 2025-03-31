@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { cn } from '~/utils/cn'
-import { Button } from './core/button'
-import { PizzaCheckTile } from './pizza-check-tile'
+import { Button } from '../core/button'
+import { PizzaCheckTile } from '../pizza-check-tile'
 import Image from 'next/image'
 
 type Props = {

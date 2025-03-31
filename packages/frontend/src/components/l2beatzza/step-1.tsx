@@ -1,5 +1,5 @@
 import { cn } from '~/utils/cn'
-import { Button, type ButtonProps } from './core/button'
+import { Button, type ButtonProps } from '../core/button'
 import Image from 'next/image'
 
 type Props = {

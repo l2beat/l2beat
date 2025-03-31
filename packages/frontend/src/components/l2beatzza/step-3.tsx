@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { PizzaCheckTile } from './pizza-check-tile'
+import { PizzaCheckTile } from '../pizza-check-tile'
 import { cn } from '~/utils/cn'
 
 type Props = {
