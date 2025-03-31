@@ -15,6 +15,7 @@ import { TooltipProvider } from '~/components/core/tooltip/tooltip'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
+import { usePathname } from 'next/navigation'
 
 const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
@@ -45,6 +46,7 @@ function SidebarProvider({
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }) {
+  const pathname = usePathname()
   const [openMobile, setOpenMobile] = React.useState(false)
 
   const contextValue = React.useMemo<SidebarContextProps>(
@@ -54,6 +56,10 @@ function SidebarProvider({
     }),
     [openMobile, setOpenMobile],
   )
+
+  React.useEffect(() => {
+    setOpenMobile(false)
+  }, [pathname])
 
   return (
     <SidebarContext.Provider value={contextValue}>
