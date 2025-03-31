@@ -8,9 +8,9 @@ import { useSidebar } from '../../core/sidebar'
  * Opens the navigation menu on mobile.
  */
 export function MobileNavTriggerOpen() {
-  const { toggleSidebar } = useSidebar()
+  const { setOpenMobile } = useSidebar()
   return (
-    <button onClick={toggleSidebar}>
+    <button onClick={() => setOpenMobile(true)}>
       <MenuOpenIcon className="size-6" />
     </button>
   )
@@ -20,9 +20,9 @@ export function MobileNavTriggerOpen() {
  * Closes the navigation menu on mobile.
  */
 export function MobileNavTriggerClose() {
-  const { toggleSidebar } = useSidebar()
+  const { setOpenMobile } = useSidebar()
   return (
-    <button onClick={toggleSidebar}>
+    <button onClick={() => setOpenMobile(false)}>
       <MenuCloseIcon className="size-6" />
     </button>
   )

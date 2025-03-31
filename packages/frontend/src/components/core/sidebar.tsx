@@ -20,11 +20,8 @@ const SIDEBAR_WIDTH = '15rem'
 const SIDEBAR_WIDTH_MOBILE = '100%'
 
 type SidebarContextProps = {
-  open: boolean
-  setOpen: (open: boolean) => void
   openMobile: boolean
   setOpenMobile: (open: boolean) => void
-  toggleSidebar: () => void
 }
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
@@ -39,9 +36,6 @@ function useSidebar() {
 }
 
 function SidebarProvider({
-  defaultOpen = true,
-  open: openProp,
-  onOpenChange: setOpenProp,
   className,
   style,
   children,
@@ -51,41 +45,14 @@ function SidebarProvider({
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }) {
-  const breakpoint = useBreakpoint()
   const [openMobile, setOpenMobile] = React.useState(false)
-
-  // This is the internal state of the sidebar.
-  // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen)
-  const open = openProp ?? _open
-  const setOpen = React.useCallback(
-    (value: boolean | ((value: boolean) => boolean)) => {
-      const openState = typeof value === 'function' ? value(open) : value
-      if (setOpenProp) {
-        setOpenProp(openState)
-      } else {
-        _setOpen(openState)
-      }
-    },
-    [setOpenProp, open],
-  )
-
-  // Helper to toggle the sidebar.
-  const toggleSidebar = React.useCallback(() => {
-    return breakpoint === 'mobile' || breakpoint === 'tablet'
-      ? setOpenMobile((open) => !open)
-      : setOpen((open) => !open)
-  }, [breakpoint, setOpen, setOpenMobile])
 
   const contextValue = React.useMemo<SidebarContextProps>(
     () => ({
-      open,
-      setOpen,
       openMobile,
       setOpenMobile,
-      toggleSidebar,
     }),
-    [open, setOpen, openMobile, setOpenMobile, toggleSidebar],
+    [openMobile, setOpenMobile],
   )
 
   return (
