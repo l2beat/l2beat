@@ -126,7 +126,7 @@ function NavCollapsibleItem({
             <div>{group.icon}</div>
             <span
               className={cn(
-                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                'text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
                 isActive && 'text-brand',
               )}
             >
@@ -150,7 +150,7 @@ function NavCollapsibleItem({
             <div>{group.icon}</div>
             <span
               className={cn(
-                'ml-1 text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                'text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
                 isActive && 'text-brand',
               )}
             >
