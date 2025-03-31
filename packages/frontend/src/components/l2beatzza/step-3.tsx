@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { PizzaCheckTile } from '../pizza-check-tile'
 import { cn } from '~/utils/cn'
+import { PizzaCheckTile } from '../pizza-check-tile'
 
 type Props = {
   onSubmit: (payload: Step3Payload) => void

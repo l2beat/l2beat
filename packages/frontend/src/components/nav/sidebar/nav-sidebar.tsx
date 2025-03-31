@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
+import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 import { env } from '~/env'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
@@ -31,7 +32,6 @@ import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
 import { L2BeatzzaPromo } from './l2beatzza-promo'
-import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 
 interface Props {
   groups: NavGroup[]

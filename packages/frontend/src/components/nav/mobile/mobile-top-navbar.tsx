@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 import { env } from '~/env'
 import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
@@ -12,7 +13,6 @@ import type { NavGroup } from '../types'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { MobileSelectedLink } from './mobile-selected-link'
-import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.

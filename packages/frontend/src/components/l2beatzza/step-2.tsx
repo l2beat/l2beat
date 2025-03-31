@@ -1,8 +1,8 @@
+import Image from 'next/image'
 import { useState } from 'react'
 import { cn } from '~/utils/cn'
 import { Button } from '../core/button'
 import { PizzaCheckTile } from '../pizza-check-tile'
-import Image from 'next/image'
 
 type Props = {
   onClick: (payload: Step2Payload) => void
