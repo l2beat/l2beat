@@ -1,3 +1,4 @@
+'use client'
 import { env } from '~/env'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
