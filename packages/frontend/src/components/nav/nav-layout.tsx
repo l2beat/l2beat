@@ -9,9 +9,9 @@ import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
 import { HiringBadge } from '../badge/hiring-badge'
 import { SidebarProvider } from '../core/sidebar'
-import { MobileNavbar } from './mobile-navbar'
-import { NavSidebar } from './nav-sidebar'
-import { TopNavbar } from './top-navbar'
+import { MobileTopNavbar } from './mobile/mobile-top-navbar'
+import { NavSidebar } from './sidebar/nav-sidebar'
+import { TopNavbar } from './top-nav/top-navbar'
 import type { NavGroup } from './types'
 
 interface Props {
@@ -205,7 +205,7 @@ export async function NavLayout({
         {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar
+        <MobileTopNavbar
           groups={groups}
           logoLink={logoLink}
           className={cn(!topNavbar && 'md:mb-5')}

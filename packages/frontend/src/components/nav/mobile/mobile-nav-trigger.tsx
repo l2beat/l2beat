@@ -2,7 +2,7 @@
 
 import { MenuCloseIcon } from '~/icons/menu-close'
 import { MenuOpenIcon } from '~/icons/menu-open'
-import { useSidebar } from '../core/sidebar'
+import { useSidebar } from '../../core/sidebar'
 
 /**
  * Opens the navigation menu on mobile.

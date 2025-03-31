@@ -3,7 +3,7 @@
 import { useCallback, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 
-import { glossarySectionTreshold } from '~/components/nav/consts'
+import { glossarySectionTreshold } from '../consts'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
 import { startsWithNumber } from '~/utils/starts-with-letter-or-number'

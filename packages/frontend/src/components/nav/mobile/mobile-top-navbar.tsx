@@ -2,19 +2,19 @@
 
 import Link from 'next/link'
 import { cn } from '~/utils/cn'
-import { Logo } from '../logo'
-import { useRecategorisationPreviewContext } from '../recategorisation-preview/recategorisation-preview-provider'
-import { RecategorisationPreviewSwitch } from '../recategorisation-preview/recategorisation-preview-switch'
-import { SmallSearchBarButton } from '../search-bar/search-bar-button'
+import { Logo } from '../../logo'
+import { useRecategorisationPreviewContext } from '../../recategorisation-preview/recategorisation-preview-provider'
+import { RecategorisationPreviewSwitch } from '../../recategorisation-preview/recategorisation-preview-switch'
+import { SmallSearchBarButton } from '../../search-bar/search-bar-button'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { MobileSelectedLink } from './mobile-selected-link'
-import type { NavGroup } from './types'
+import type { NavGroup } from '../types'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.
  */
-export function MobileNavbar({
+export function MobileTopNavbar({
   groups,
   logoLink,
   className,

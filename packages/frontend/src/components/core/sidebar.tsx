@@ -166,7 +166,7 @@ Sidebar.displayName = 'Sidebar'
 function SidebarHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('flex flex-col gap-2 px-5 pt-[23px]', className)}
+      className={cn('flex flex-col gap-2 px-5 pt-[18px]', className)}
       {...props}
     />
   )
@@ -276,7 +276,7 @@ function SidebarGroupSub({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
       className={cn(
-        'mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-divider px-2.5 py-0.5',
+        'mx-3.5 flex min-w-0 translate-x-px flex-col gap-0.5 border-l border-divider px-2.5 py-0.5',
         className,
       )}
       {...props}

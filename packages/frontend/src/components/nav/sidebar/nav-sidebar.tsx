@@ -9,8 +9,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '../core/collapsible'
-import { HorizontalSeparator } from '../core/horizontal-separator'
+} from '../../core/collapsible'
+import { HorizontalSeparator } from '../../core/horizontal-separator'
 import {
   Sidebar,
   SidebarContent,
@@ -22,12 +22,12 @@ import {
   SidebarGroupSmallLink,
   SidebarGroupSub,
   SidebarGroupSubButton,
-} from '../core/sidebar'
-import { DarkThemeToggle } from '../dark-theme-toggle'
-import { Logo } from '../logo'
-import { SocialLinks } from '../social-links'
-import { MobileNavTriggerClose } from './mobile-nav-trigger'
-import type { NavGroup, NavLink } from './types'
+} from '../../core/sidebar'
+import { DarkThemeToggle } from '../../dark-theme-toggle'
+import { Logo } from '../../logo'
+import { SocialLinks } from '../../social-links'
+import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
+import type { NavGroup, NavLink } from '../types'
 
 interface Props {
   groups: NavGroup[]
