@@ -28,7 +28,6 @@ import { henez } from '../projects/henez/henez'
 import { hook } from '../projects/hook/hook'
 import { huddle01 } from '../projects/huddle01/huddle01'
 import { hyperagi } from '../projects/hyperagi/hyperagi'
-import { hyperliquid } from '../projects/hyperliquid/hyperliquid'
 import { inevm } from '../projects/inevm/inevm'
 import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
@@ -93,7 +92,6 @@ export const layer3s: ScalingProject[] = [
   henez,
   huddle01,
   hyperagi,
-  hyperliquid,
   hook,
   rari,
   rivalz,
