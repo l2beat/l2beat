@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0xc4901efef7babb0280c7f3d4cef2de443c724a7f3050b9817277d348952f1bba",
+  "configHash": "0x692b42658b57414aafbdcce3e5c93c14eece016bb4902265da50e6f55f400ffe",
   "entries": [
     {
       "name": "PeggedTokenBridge",
@@ -21,14 +21,14 @@
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
+      },
+      "derivedName": "PeggedTokenBridge"
     },
     {
       "name": "SentinelAdmin",
       "address": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
@@ -84,7 +84,8 @@
         "pegVaultV2": "0x7510792A3B1969F9307F3845CE88e39578f2bAE1",
         "preExecuteMessageGasUsage": 0,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
+      },
+      "derivedName": "MessageBus"
     },
     {
       "address": "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
@@ -110,7 +111,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "PeggedTokenBridgeV2",
@@ -129,7 +131,8 @@
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
+      },
+      "derivedName": "PeggedTokenBridgeV2"
     },
     {
       "name": "Liquidity Network",
@@ -196,7 +199,8 @@
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
         "THRESHOLD_DECIMAL": 100
-      }
+      },
+      "derivedName": "MessageBusOwner"
     },
     {
       "name": "OriginalTokenVaultV2",
@@ -216,7 +220,8 @@
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
         "paused": false,
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
+      },
+      "derivedName": "OriginalTokenVaultV2"
     },
     {
       "address": "0x83039377ddD862821d92d416b2DDB9EFb5BA9000",
@@ -270,7 +275,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
-      }
+      },
+      "derivedName": "TransferAgent"
     },
     {
       "address": "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
@@ -307,7 +313,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
-      }
+      },
+      "derivedName": "OriginalTokenVault"
     },
     {
       "address": "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
@@ -393,7 +400,8 @@
           "severity": "MEDIUM",
           "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)"
         }
-      }
+      },
+      "derivedName": "Sentinel"
     },
     {
       "name": "SimpleGovernance",
@@ -436,7 +444,8 @@
         "MIN_ACTIVE_PERIOD": 3600,
         "nextProposalId": 93,
         "THRESHOLD_DECIMAL": 100
-      }
+      },
+      "derivedName": "SimpleGovernance"
     }
   ],
   "abis": {

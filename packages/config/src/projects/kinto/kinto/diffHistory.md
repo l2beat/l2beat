@@ -1,3 +1,302 @@
+Generated with discovered.json: 0x93bee956c70ecd4851466713c0456ac6a2688a62
+
+# Diff at Fri, 28 Mar 2025 10:29:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@279f845afa28d7cd0a0fe99f5744c0fe98cd5c86 block: 781473
+- current block number: 783310
+
+## Description
+
+Ignore RewardsDistributor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 781473 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87)
+    +++ description: KINTO token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293)
+    +++ description: Kinto Treasury.
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      directlyReceivedPermissions.9:
+-        {"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}
+      directlyReceivedPermissions.8:
+-        {"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"}
+      directlyReceivedPermissions.7.from:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.6.description:
+-        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      directlyReceivedPermissions.5.description:
++        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.4.from:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      directlyReceivedPermissions.4.description:
+-        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+      directlyReceivedPermissions.3.from:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.3.description:
+-        "send tokens and ETH from the Treasury to any address without delay."
++        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x7d8888dd37ac334ba78ec5c7615681fda27b20f9
+
+# Diff at Thu, 27 Mar 2025 09:06:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@73b1a8c5f50d6fe327eed98ba839c3eed6ab6280 block: 778850
+- current block number: 781473
+
+## Description
+
+BridgedKinto upgrade. AccessManager ready for stage 1 (incl queued transactions).
+- ADMIN_ROLE grant to Kinto Multisig 2 canceled.
+- 12d delays for execution and targetAdmin queued.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
++        "0x01f873ab58dfa85af89a14ea5940a5d2d59c6c300d113b8e78d3ff47dbf70e4d"
+      values.$implementation:
+-        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
++        "0xBe19941Dd429020A5B5d2704f953Fb0f7a3A3497"
+      values.$pastUpgrades.9:
++        ["2025-03-26T22:14:03.000Z","0x3aa9d1b48b5f3f5d8b445cd0d0f21fd7c774a0dc2e601f12609759c44b366a26",["0xBe19941Dd429020A5B5d2704f953Fb0f7a3A3497"]]
+      values.$upgradeCount:
+-        9
++        10
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.6:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.5:
++        {"operationId":"0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1","nonce":1,"schedule":1743905986,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.4:
++        {"operationId":"0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d","nonce":1,"schedule":1743905137,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.3:
++        {"operationId":"0x8b8631e0ab585da013ce35fd8f3a27597f77e19c91ba1263b21cd7396f746d91","nonce":1,"schedule":1743955424,"caller":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","target":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","data":"0x3659cfe60000000000000000000000001d61772ae2e157f9f6a4127526ed86ab5801a477"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.2:
++        {"operationId":"0x7efe7055898bb49bcf4b4bac2964df4814ca5698c700d895f669b8da3b83443a","nonce":1,"schedule":1743905135,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b59890000000000000000000000005a2b641b84b0230c8e75f55d5afd27f4dbd59d5b00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.1:
++        {"operationId":"0x4a05b6df1acce9e22cf008555fa8d477bd9f116f261f267f95c2b463047e016a","nonce":1,"schedule":1743905136,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b5989000000000000000000000000f369f78e3a0492cc4e96a90dae0728a38498e9c700000000000000000000000000000000000000000000000000000000000fd200"}
+      values.OperationScheduled.0.operationId:
+-        "0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8"
++        "0x256b4be01a33f01810d8b7c1bb0e70df24b98d9f174b45ea4ea9f9f13a04990e"
+      values.OperationScheduled.0.schedule:
+-        1743464541
++        1743955424
+      values.OperationScheduled.0.caller:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      values.OperationScheduled.0.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      values.OperationScheduled.0.data:
+-        "0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"
++        "0xf4f4b03a000000000000000000000000bfe260680514e0d669fdc5a5f7334b97a5513d9d"
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@778850 => .flat}/BridgedKinto/BridgedKinto.sol      | 5 +++++
+ 1 file changed, 5 insertions(+)
+```
+
+Generated with discovered.json: 0x860f798971ee9f8ca5c2bb906627f0511e59de44
+
+# Diff at Tue, 25 Mar 2025 11:49:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 773151
+- current block number: 778850
+
+## Description
+
+BridgedKinto upgrade.
+
+Current state of permissions in the AccessManager is unchanged.
+
+waiting for:
+queue operations for 12d values for:
+- executionDelays for all non-SC actors for the roles UPGRADER_ROLE, ADMIN_ROLE and SECURITY_COUNCIL role
+- targetAdminDelays for the 3 targets: KintoAppRegistry, KintoID, KintoWalletFactory
+- KintoWallet.RECOVERY_TIME
+- KintoID.EXIT_WINDOW_PERIOD
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x8afd4a6a4dce2fedf29d5a78d35edbb8101e74ea5e923aebda93db04b4f44121"
++        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
+      values.$implementation:
+-        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
++        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
+      values.$pastUpgrades.8:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$pastUpgrades.7.2:
+-        "2025-02-21T21:13:41.000Z"
++        "2024-06-29T15:10:34.000Z"
+      values.$pastUpgrades.7.1.0:
+-        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
++        "0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"
+      values.$pastUpgrades.7.0:
+-        "0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb"
++        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
+      values.$pastUpgrades.6.2:
+-        "2024-06-29T15:10:34.000Z"
++        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
+      values.$pastUpgrades.6.1:
+-        ["0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"]
++        "2025-03-19T21:51:53.000Z"
+      values.$pastUpgrades.6.0:
+-        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
++        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
+      values.$pastUpgrades.5.2:
+-        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
++        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
+      values.$pastUpgrades.5.1:
+-        "2025-03-19T21:51:53.000Z"
++        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
+      values.$pastUpgrades.5.0:
+-        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
++        "2024-12-18T00:08:48.000Z"
+      values.$pastUpgrades.4.2:
+-        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
++        ["0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"]
+      values.$pastUpgrades.4.1:
+-        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
++        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
+      values.$pastUpgrades.4.0:
+-        "2024-12-18T00:08:48.000Z"
++        "2024-06-20T23:33:48.000Z"
+      values.$pastUpgrades.3.2.0:
+-        "0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"
++        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
+      values.$pastUpgrades.3.1:
+-        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
++        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
+      values.$pastUpgrades.3.0:
+-        "2024-06-20T23:33:48.000Z"
++        "2025-03-20T00:39:13.000Z"
+      values.$pastUpgrades.2.2:
+-        ["0x6af53F698b87809d98CeAAfa848c73e192400E61"]
++        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
+      values.$pastUpgrades.2.1:
+-        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
++        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
+      values.$pastUpgrades.2.0:
+-        "2025-03-20T00:39:13.000Z"
++        "2024-07-10T20:17:25.000Z"
+      values.$pastUpgrades.1.2:
+-        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
++        "2025-03-25T01:46:55.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
++        "0x4c3e223697c1a08b1539359340534964303bba7cbc4519e70044c74ad19fd784"
+      values.$pastUpgrades.1.0:
+-        "2024-07-10T20:17:25.000Z"
++        ["0xF22F907b74CAB91864B7bEEcAdf762F464a96140"]
+      values.$upgradeCount:
+-        8
++        9
+      values.VAULT:
++        "0x3De040ef2Fbf9158BADF559C5606d7706ca72309"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl.roles.UPGRADER_ROLE.members.1:
+-        {"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1733181166,"executionDelay":604800}
++++ description: List of roles revoked from accounts.
+      values.RolesRevoked.8663528507529876195:
++        [{"roleId":"8663528507529876195","account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
+-        0
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
+-        604800
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
+-        604800
++        950400
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@773151 => .flat}/BridgedKinto/BridgedKinto.sol     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x433020c537dbdf2e53a26994bff8c280032ed795
 
 # Diff at Fri, 21 Mar 2025 14:35:20 GMT:

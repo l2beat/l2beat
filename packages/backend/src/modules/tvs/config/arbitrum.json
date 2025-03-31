@@ -3769,25 +3769,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-rDPX.ext",
-      "priceId": "dopex-rebate-token",
-      "symbol": "rDPX.ext",
-      "displaySymbol": "rDPX",
-      "name": "Dopex Rebate Token",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11",
-        "chain": "ethereum",
-        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
-        "decimals": 18,
-        "sinceTimestamp": 1624579200
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-REN",
       "priceId": "republic-protocol",
       "symbol": "REN",

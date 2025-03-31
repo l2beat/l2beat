@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "blockNumber": 21322840,
-  "configHash": "0xbdd6a1834c96d044590b4bc0e11a810ddad7bd6dec859f2733044ffdbd1dc72e",
+  "configHash": "0xf004b8ed666d707b0600e545194f49191853c91ea1adebb511fd49dfacfc44dc",
   "entries": [
     {
       "address": "0x095D2918B03b2e86D68551DCF11302121fb626c9",
@@ -34,7 +34,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1649661119,
       "sinceBlock": 14563000,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OBSource"
     }
   ],
   "abis": {

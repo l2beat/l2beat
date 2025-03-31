@@ -115,7 +115,8 @@
       },
       "fieldMeta": {
         "activeRoles": { "description": "role 1: ADMIN, role 2: ASSET_MANAGER" }
-      }
+      },
+      "derivedName": "ERC1967Proxy"
     },
     {
       "name": "",
@@ -145,7 +146,8 @@
         "$threshold": 2,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)"
-      }
+      },
+      "derivedName": ""
     },
     {
       "address": "0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed",
@@ -199,7 +201,8 @@
           ]
         ],
         "$upgradeCount": 1
-      }
+      },
+      "derivedName": ""
     }
   ],
   "abis": {

@@ -152,13 +152,51 @@ export interface ProjectLinks {
   socialMedia?: string[]
   rollupCodes?: string
 }
-
 export interface Badge {
   id: string
   type: string
   name: string
   description: string
+  action: BadgeAction | undefined
 }
+
+export type BadgeAction =
+  | BadgeScalingFilterAction
+  | BadgeSelfScalingFilterAction
+  | BadgePublicDaHighlightAction
+  | BadgeselfDaHighlightAction
+
+// Move to scaling/summary with given filterId and value
+export type BadgeScalingFilterAction = {
+  type: 'scalingFilter'
+  id: BadgeFilterId
+  value: string
+}
+
+// Move to scaling/summary with given filterId and name of the project as a value
+export type BadgeSelfScalingFilterAction = {
+  type: 'selfScalingFilter'
+  id: BadgeFilterId
+}
+
+// Move to data-availability/summary and highlight project with given slug
+export type BadgePublicDaHighlightAction = {
+  type: 'publicDaHighlight'
+  slug: string
+}
+
+// Move to data-availability/summary and highlight project with the same slug as the project
+export type BadgeselfDaHighlightAction = {
+  type: 'selfDaHighlight'
+}
+
+export type BadgeFilterId =
+  | 'stack'
+  | 'hostChain'
+  | 'daLayer'
+  | 'raas'
+  | 'infrastructure'
+  | 'vm'
 
 export interface Milestone {
   title: string
@@ -272,6 +310,8 @@ export interface ProjectScalingInfo {
   }
   stack: ProjectScalingStack | undefined
   raas: string | undefined
+  infrastructure: string | undefined
+  vm: string[]
   daLayer: string
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
@@ -289,8 +329,8 @@ export type ProjectScalingCategory =
 export type ProjectScalingCapability = 'universal' | 'appchain'
 
 export type ProjectScalingScopeOfAssessment = {
-  checked: string[]
-  notChecked: string[]
+  inScope: string[]
+  notInScope: string[]
 }
 
 export interface ReasonForBeingInOther {

@@ -42,7 +42,7 @@ export const facet: ScalingProject = opStackL2({
       description: 'Fast bridge contract.',
     }),
   ],
-  riskView: {
+  nonTemplateRiskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),

@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "blockNumber": 21995404,
-  "configHash": "0x859cf74a92e60c5d84ec6f946755a620a9301bf2ebe60a10728c1fe40d92ed00",
+  "configHash": "0xad80270c76f2598bb21ffc2afd7f87ef3504b8ade9a863ee9aa84b8cdcc9e0ce",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000007B",
@@ -44,7 +44,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1640210870,
       "sinceBlock": 13857570,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "AxelarGatewayProxyMultisig"
     },
     {
       "name": "RootAxelarBridgeAdaptor",
@@ -103,7 +104,8 @@
         "initializerAddress": "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333",
         "rootBridge": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
         "TARGET_MANAGER_ROLE": "0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2"
-      }
+      },
+      "derivedName": "RootAxelarBridgeAdaptor"
     },
     {
       "address": "0x52A6c53869Ce09a731CD772f245b97A4401d3348",
@@ -128,7 +130,8 @@
         "rootToken": "0x000000000000000000000000000000000000007B",
         "symbol": "TPT",
         "totalSupply": 0
-      }
+      },
+      "derivedName": "ChildERC20"
     },
     {
       "address": "0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
@@ -298,7 +301,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xD2C37fC6fD89563187f3679304975655e448D192"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

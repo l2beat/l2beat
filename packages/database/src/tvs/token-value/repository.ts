@@ -13,6 +13,22 @@ export class TokenValueRepository extends BaseRepository {
     return rows.length
   }
 
+  async getByProject(
+    project: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<TokenValueRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .selectAll()
+      .where('projectId', '=', project)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

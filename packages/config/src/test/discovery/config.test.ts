@@ -149,9 +149,7 @@ describe('discovery config.jsonc', () => {
         for (const c of configs) {
           for (const key of Object.keys(c.raw.overrides ?? {})) {
             it(`${c.name} on ${c.chain} with the override ${key}`, () => {
-              if (!EthereumAddress.check(key)) {
-                expect(() => c.for(key)).not.toThrow()
-              }
+              expect(() => c.for(EthereumAddress(key))).not.toThrow()
             })
           }
         }

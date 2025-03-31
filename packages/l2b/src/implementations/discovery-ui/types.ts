@@ -4,6 +4,8 @@ export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
   name: string
+  addresses: string[]
+  contractNames: string[]
   chains: string[]
 }
 
@@ -41,6 +43,7 @@ export interface ApiProjectChain {
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]
+  blockNumber: number
 }
 
 export type ApiAddressType =

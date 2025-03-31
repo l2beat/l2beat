@@ -3,6 +3,7 @@ import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
 import { aevo } from '../projects/aevo/aevo'
 import { aiechain } from '../projects/aiechain/aiechain'
+import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
 import { align } from '../projects/align/align'
@@ -119,6 +120,7 @@ import { nal } from '../projects/nal/nal'
 import { network3 } from '../projects/network3/network3'
 import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
+import { nodle } from '../projects/nodle/nodle'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { ola } from '../projects/ola/ola'
@@ -220,6 +222,7 @@ export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,
+  airas,
   alephzero,
   alienx,
   align,
@@ -334,6 +337,7 @@ export const layer2s: ScalingProject[] = [
   network3,
   neva,
   nil,
+  nodle,
   nova,
   oevnetwork,
   ola,

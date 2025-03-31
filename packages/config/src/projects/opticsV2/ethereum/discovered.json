@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 21937191,
-  "configHash": "0xf8679103ff7665c72a7a00552ced6d571b4e415768c43ce91bcc7ab1328ff58c",
+  "configHash": "0x8da779bb2df5b50f2f14a45dcf2163223311701c5b15b757fca5eca629434500",
   "entries": [
     {
       "name": "HomeUpgradeBeacon",
@@ -146,7 +146,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
-      }
+      },
+      "derivedName": "UpgradeBeaconController"
     },
     {
       "name": "BridgeRouterBeaconProxy",
@@ -225,7 +226,8 @@
         "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "updater": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
-      }
+      },
+      "derivedName": "UpdaterManager"
     },
     {
       "name": "XAppConnectionManager",
@@ -243,7 +245,8 @@
         "localDomain": 6648936,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "watchers": ["0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"]
-      }
+      },
+      "derivedName": "XAppConnectionManager"
     },
     {
       "address": "0xa725898D6F73C512f803B564A89DFbd96cF298EC",

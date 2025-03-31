@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21678827,
-  "configHash": "0x520556ec0247c9b33a90a25051296c0f421733ddb20b149c51e03730720dcf99",
+  "configHash": "0xc6100ea9353bf879e72c6f647afa3adbb079c672f11b3aa18e15b27400461ade",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -60,6 +60,7 @@
         "getDumbContract": "0x1673540243E793B0e77C038D4a88448efF524DcE",
         "getSigner": "0x314d660b083675f415cCAA9c545FeedF377d1006"
       },
+      "derivedName": "FacetEtherBridgeV6",
       "references": [
         {
           "text": "Source Code",
@@ -110,7 +111,9 @@
       "values": {
         "$immutable": true,
         "owner": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x314d660b083675f415cCAA9c545FeedF377d1006",
@@ -145,7 +148,8 @@
       "values": {
         "$immutable": true,
         "facetProxyAddress": "0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25"
-      }
+      },
+      "derivedName": "FacetSafeModule"
     },
     {
       "address": "0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
@@ -207,6 +211,7 @@
         "systemConfig": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
         "version": "2.8.1-beta.1"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -295,6 +300,7 @@
         "systemConfig": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
         "version": "2.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -480,6 +486,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -494,7 +501,8 @@
       "description": "Helper of the Safe Module that allows to send Facet transactions.",
       "sinceTimestamp": 1733593775,
       "sinceBlock": 21352209,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "FacetSafeProxy"
     },
     {
       "name": "L2OutputOracle",
@@ -570,6 +578,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -598,7 +607,8 @@
       "values": {
         "$immutable": true,
         "ethscriptionsProxyAddress": "0xeEd444Fc821b866b002f30f502C53e88E15d5095"
-      }
+      },
+      "derivedName": "EthscriptionsSafeModule"
     },
     {
       "name": "ProxyAdmin",
@@ -644,7 +654,8 @@
         "addressManager": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
         "isUpgrading": false,
         "owner": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "SuperchainConfig",
@@ -688,6 +699,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -702,7 +714,8 @@
       "description": "Helper of the Safe Module that allows to send Ethscriptions transactions.",
       "sinceTimestamp": 1697832623,
       "sinceBlock": 18393830,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EthscriptionsSafeProxy"
     }
   ],
   "abis": {
@@ -1106,7 +1119,7 @@
     "facet/FacetSafeProxy": "0xcd42f19d48322e02a94f5d0d59304c4b65815f474523008cb4f4419d1aa41d27",
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1StandardBridge_facet": "0xa2981fdc6b1c3c52700c9c6d6f3ba4477d6a24c2fb8e7c1317d143fdd75c37ae",
     "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",
