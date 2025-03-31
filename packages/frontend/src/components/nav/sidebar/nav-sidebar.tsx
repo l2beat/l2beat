@@ -16,12 +16,12 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarHeader,
   SidebarGroupItem,
   SidebarGroupLink,
   SidebarGroupSmallLink,
   SidebarGroupSub,
   SidebarGroupSubButton,
+  SidebarHeader,
 } from '../../core/sidebar'
 import { DarkThemeToggle } from '../../dark-theme-toggle'
 import { Logo } from '../../logo'

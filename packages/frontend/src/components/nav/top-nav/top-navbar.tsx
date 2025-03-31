@@ -4,8 +4,8 @@ import { DarkThemeToggle } from '../../dark-theme-toggle'
 import { Logo } from '../../logo'
 import { SmallSearchBarButton } from '../../search-bar/search-bar-button'
 import { SocialLinks } from '../../social-links'
-import { TopNavLink } from './top-nav-link'
 import type { NavGroup, NavLink } from '../types'
+import { TopNavLink } from './top-nav-link'
 
 /**
  * Top navbar component used on old-style pages *on xl screens*.
