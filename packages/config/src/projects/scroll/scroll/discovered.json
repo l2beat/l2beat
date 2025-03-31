@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 14330529,
-  "configHash": "0xb9ec1dc0a8185d279fe4ba5359353052555bf523f975f6a04420a41b175de9d7",
+  "blockNumber": 14331960,
+  "configHash": "0x0add4a292faae361efab86b393a3832a90c767be3d81091679225ba5837d8820",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -100,19 +100,11 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "branches": [
-          "0x4a53294b258403d2e81d9f5d7821cb62b31a30d7b092fbb06fb9b2b2759ddded",
-          "0xfb4dfcd4ce263681b12e03f549a27e1580b1c23e309a305dac89cff18205928d",
-          "0xea841816bcc3d5238f7dc0c20832187cd5ba76366bacbeb9dc9d536ecc43a234",
-          "0x974f89b9df9235fdb4dd06df3ede33a2f57f43c9725149122110df9c09bb2395",
-          "0x8dcb4d3af3471f5fbec962a541bac38046e55fabc5786a3ff083543092b5619e"
-        ],
-        "messageRoot": "0x924fe9a73e476cb9d396ced175d2476efd760c9c7c373dced1e19b3766ac7d78",
+        "messageRoot": "0x56bebaafd5a938d883597bfd60d53cd2b07e61e4f01950c8ea107b48aac3a49b",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 203130,
+        "nextMessageIndex": 203139,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
-      "errors": { "branches": "Processing error occurred." },
       "derivedName": "L2MessageQueue"
     },
     {

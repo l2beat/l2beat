@@ -1,12 +1,19 @@
 {
-    "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
-    "chain": "scroll",
-    "name": "scroll",
-    "import": ["../../globalConfig.jsonc"],
-    "initialAddresses": [
-        "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A" // L2GatewayRouter
-    ],
-    "names": {
-        "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "L2GatewayRouter"
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "scroll",
+  "name": "scroll",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A", // L2GatewayRouter
+    "0x5300000000000000000000000000000000000000" // L2MessageQueue
+  ],
+  "names": {
+    "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": "L2GatewayRouter",
+    "0x5300000000000000000000000000000000000000": "L2MessageQueue"
+  },
+  "overrides": {
+    "0x5300000000000000000000000000000000000000": {
+      "ignoreMethods": ["branches"]
     }
+  }
 }
