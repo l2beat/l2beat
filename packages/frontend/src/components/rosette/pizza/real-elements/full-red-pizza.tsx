@@ -1,4 +1,20 @@
-export function FullRedPizza() {
+export function FullRedPizzaSymbol() {
+  return (
+    <svg>
+      <defs>
+        <symbol id="full-red-pizza">
+          <FullRedPizza />
+        </symbol>
+      </defs>
+    </svg>
+  )
+}
+
+export function FullRedPizzaReference() {
+  return <use href="#full-red-pizza" />
+}
+
+function FullRedPizza() {
   return (
     <>
       <path

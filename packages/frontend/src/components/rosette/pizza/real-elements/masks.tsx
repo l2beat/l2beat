@@ -1,9 +1,9 @@
 import type { SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../../types'
-import { FullGreenPizza } from './full-green-pizza'
-import { FullRedPizza } from './full-red-pizza'
-import { FullYellowPizza } from './full-yellow-pizza'
+import { FullGreenPizzaReference } from './full-green-pizza'
+import { FullRedPizzaReference } from './full-red-pizza'
+import { FullYellowPizzaReference } from './full-yellow-pizza'
 
 function LowerLeftMaskPath(props: SvgIconProps) {
   return (
@@ -89,15 +89,15 @@ const maskPaths = [
 
 function riskToPizza(risk: RosetteValue) {
   if (risk.sentiment === 'good') {
-    return <FullGreenPizza />
+    return <FullGreenPizzaReference />
   }
 
   if (risk.sentiment === 'warning') {
-    return <FullYellowPizza />
+    return <FullYellowPizzaReference />
   }
 
   if (risk.sentiment === 'bad') {
-    return <FullRedPizza />
+    return <FullRedPizzaReference />
   }
 
   return null

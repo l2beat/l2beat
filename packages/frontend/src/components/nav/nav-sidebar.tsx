@@ -14,6 +14,9 @@ import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
 import { PizzaIcon } from '../main-page-header'
 import { StepController } from '../pizza-flow'
+import { FullGreenPizzaSymbol } from '../rosette/pizza/real-elements/full-green-pizza'
+import { FullRedPizzaSymbol } from '../rosette/pizza/real-elements/full-red-pizza'
+import { FullYellowPizzaSymbol } from '../rosette/pizza/real-elements/full-yellow-pizza'
 import { SocialLinks } from '../social-links'
 import { MobileNavTriggerClose } from './mobile-nav-trigger'
 import { NavLinkGroup } from './nav-link-group'
@@ -54,6 +57,11 @@ export async function NavSidebar({ groups, logoLink, topNavbar }: Props) {
             <span>Make a Pizza</span>
             <PizzaIcon />
           </Button>
+          <div className="hidden">
+            <FullRedPizzaSymbol />
+            <FullYellowPizzaSymbol />
+            <FullGreenPizzaSymbol />
+          </div>
         </DialogTrigger>
 
         <DialogContent className="flex items-center justify-center pt-16">

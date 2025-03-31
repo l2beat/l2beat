@@ -2,6 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
+import type { SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import type { RosetteValue } from '../types'
@@ -43,11 +44,7 @@ export function RealPizzaRosetteIcon({
   )
 
   return (
-    <svg
-      width="181"
-      height="180"
-      viewBox="0 0 181 180"
-      fill="none"
+    <RealPizzaSvgFrame
       className={className}
       ref={svgRef}
       onMouseLeave={() => setSelectedRisk?.(undefined)}
@@ -113,6 +110,19 @@ export function RealPizzaRosetteIcon({
           />
         </>
       ) : null}
+    </RealPizzaSvgFrame>
+  )
+}
+
+export function RealPizzaSvgFrame(
+  props: SvgIconProps & {
+    children?: React.ReactNode
+    ref?: React.RefObject<null>
+  },
+) {
+  return (
+    <svg width="181" height="180" viewBox="0 0 181 180" fill="none" {...props}>
+      {props.children}
     </svg>
   )
 }
