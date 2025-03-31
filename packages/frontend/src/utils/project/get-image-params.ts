@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs'
+import imageSize from 'image-size'
 import path from 'path'
 
 export function getImageParams(filePath: string) {
@@ -16,9 +17,8 @@ export function getImageParams(filePath: string) {
 
 export function getImageDimensions(imgBuffer: Buffer) {
   try {
-    const width = imgBuffer.readUInt32BE(16)
-    const height = imgBuffer.readUInt32BE(20)
-    return { width, height }
+    const dimensions = imageSize(imgBuffer)
+    return { width: dimensions.width, height: dimensions.height }
   } catch {
     return undefined
   }
