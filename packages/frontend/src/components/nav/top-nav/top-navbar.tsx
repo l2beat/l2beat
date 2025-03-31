@@ -1,14 +1,11 @@
 import Link from 'next/link'
-import { externalLinks } from '~/consts/external-links'
-import { env } from '~/env'
-import { HiringBadge } from '../badge/hiring-badge'
-import { VerticalSeparator } from '../core/vertical-separator'
-import { DarkThemeToggle } from '../dark-theme-toggle'
-import { Logo } from '../logo'
-import { SmallSearchBarButton } from '../search-bar/search-bar-button'
-import { SocialLinks } from '../social-links'
+import { VerticalSeparator } from '../../core/vertical-separator'
+import { DarkThemeToggle } from '../../dark-theme-toggle'
+import { Logo } from '../../logo'
+import { SmallSearchBarButton } from '../../search-bar/search-bar-button'
+import { SocialLinks } from '../../social-links'
+import type { NavGroup, NavLink } from '../types'
 import { TopNavLink } from './top-nav-link'
-import type { NavGroup } from './types'
 
 /**
  * Top navbar component used on old-style pages *on xl screens*.
@@ -17,9 +14,8 @@ import type { NavGroup } from './types'
 export function TopNavbar({
   logoLink,
   groups,
-}: { logoLink: string; groups: NavGroup[] }) {
-  const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
-
+  sideLinks,
+}: { logoLink: string; groups: NavGroup[]; sideLinks: NavLink[] }) {
   return (
     <div className="hidden h-[4.25rem] border-b border-divider bg-header-primary text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
@@ -60,16 +56,12 @@ export function TopNavbar({
           </ul>
           <VerticalSeparator className="hidden h-8 max-md:border-none xl:block" />
           <ul className="flex h-full items-center">
-            <TopNavLink title="About Us" href="/about-us" />
-            <TopNavLink title="Forum" href={externalLinks.forum} />
-            <TopNavLink title="Donate" href="/donate" />
-            <TopNavLink title="Governance" href="/governance" />
-            <TopNavLink title="Glossary" href="/glossary" />
-            <TopNavLink href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f">
-              Jobs
-              {hiringBadge && <HiringBadge />}
-            </TopNavLink>
-            <TopNavLink title="FAQ" href="/faq" />
+            {sideLinks.map((link) => (
+              <TopNavLink key={link.title} href={link.href}>
+                {link.title}
+                {link.accessory}
+              </TopNavLink>
+            ))}
           </ul>
           <VerticalSeparator className="h-8 max-md:border-none" />
           <div className="flex gap-4">
