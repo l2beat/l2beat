@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Article } from '~/components/markdown/article'
-import { NavDivider } from '~/components/nav/nav-divider'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getCollection, getCollectionEntry } from '~/content/get-collection'
 import { env } from '~/env'
@@ -57,7 +57,7 @@ export default async function Page(props: Props) {
       <MainPageHeader>Governance</MainPageHeader>
       <PrimaryCard className="md:p-8">
         <PublicationHeader publication={publicationEntry} />
-        <NavDivider className="my-8" />
+        <HorizontalSeparator className="my-8" />
         <div
           className={cn(
             roboto_serif.variable,
