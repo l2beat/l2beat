@@ -11,7 +11,6 @@ import type {
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { AmountConfig, PriceConfig } from '../types'
-import { getTimestampsRange } from './timestamps'
 
 export function extractPricesAndAmounts(tokens: TvsToken[]) {
   const amounts = new Map<string, AmountConfig>()
@@ -29,17 +28,12 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
         'Amount formula should not have any prices',
       )
 
-      const amountFormulaRange = getTimestampsRange(
-        ...formulaAmounts.map((a) => ({
-          sinceTimestamp: a.sinceTimestamp,
-          untilTimestamp: a.untilTimestamp,
-        })),
-      )
+      const { sinceTimestamp, untilTimestamp } = getPriceRange(formulaAmounts)
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
-        sinceTimestamp: amountFormulaRange.sinceTimestamp,
-        untilTimestamp: amountFormulaRange.untilTimestamp,
+        sinceTimestamp: sinceTimestamp,
+        untilTimestamp: untilTimestamp,
         priceId: token.priceId,
       })
     } else {
@@ -108,17 +102,12 @@ function processFormulaRecursive(
       'Amount formula should not have any prices',
     )
 
-    const amountFormulaRange = getTimestampsRange(
-      ...innerFormulaAmounts.map((a) => ({
-        sinceTimestamp: a.sinceTimestamp,
-        untilTimestamp: a.untilTimestamp,
-      })),
-    )
+    const { sinceTimestamp, untilTimestamp } = getPriceRange(formulaAmounts)
 
     formulaPrices.push({
       id: createPriceConfigId(formula.priceId),
-      sinceTimestamp: amountFormulaRange.sinceTimestamp,
-      untilTimestamp: amountFormulaRange.untilTimestamp,
+      sinceTimestamp: sinceTimestamp,
+      untilTimestamp: untilTimestamp,
       priceId: formula.priceId,
     })
   } else {
@@ -242,4 +231,17 @@ export function generateConfigurationId(input: string[]): string {
 
 export function createPriceConfigId(priceId: string): string {
   return generateConfigurationId([`price_${priceId}`])
+}
+
+function getPriceRange(formulaAmounts: AmountConfig[]) {
+  const sinceTimestamp = Math.min(
+    ...formulaAmounts.map((a) => a.sinceTimestamp),
+  )
+
+  const untilTimestamps = formulaAmounts.map((a) => a.untilTimestamp ?? -1)
+  const maxUntilTimestamp = Math.max(...untilTimestamps)
+  const untilTimestamp =
+    maxUntilTimestamp === -1 ? undefined : maxUntilTimestamp
+
+  return { sinceTimestamp, untilTimestamp }
 }
