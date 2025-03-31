@@ -16,14 +16,12 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuLink,
-  SidebarMenuSmallLink,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
+  SidebarGroupItem,
+  SidebarGroupLink,
+  SidebarGroupSmallLink,
+  SidebarGroupSub,
+  SidebarGroupSubButton,
 } from '../core/sidebar'
 import { DarkThemeToggle } from '../dark-theme-toggle'
 import { Logo } from '../logo'
@@ -58,43 +56,37 @@ export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
         {groups.map((group) => {
           return (
             <SidebarGroup key={group.title}>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {group.type === 'multiple' && (
-                    <SidebarMenuItem>
-                      <CollapsibleItem group={group} />
-                    </SidebarMenuItem>
-                  )}
-                  {group.type === 'single' && (
-                    <SidebarMenuItem key={group.title}>
-                      <SidebarMenuLink
-                        href={group.href}
-                        isActive={getIsActive(group.href, pathname)}
-                      >
-                        {group.icon}
-                        <span>{group.title}</span>
-                      </SidebarMenuLink>
-                    </SidebarMenuItem>
-                  )}
-                </SidebarMenu>
-              </SidebarGroupContent>
+              {group.type === 'multiple' && (
+                <SidebarGroupItem>
+                  <CollapsibleItem group={group} />
+                </SidebarGroupItem>
+              )}
+              {group.type === 'single' && (
+                <SidebarGroupItem key={group.title}>
+                  <SidebarGroupLink
+                    href={group.href}
+                    isActive={getIsActive(group.href, pathname)}
+                  >
+                    {group.icon}
+                    <span>{group.title}</span>
+                  </SidebarGroupLink>
+                </SidebarGroupItem>
+              )}
             </SidebarGroup>
           )
         })}
         <SidebarGroup className="-top-px mt-auto">
-          <SidebarMenu className="mt-1">
-            {sideLinks.map((link) => (
-              <SidebarMenuItem key={link.title}>
-                <SidebarMenuSmallLink
-                  href={link.href}
-                  isActive={getIsActive(link.href, pathname)}
-                >
-                  {link.title}
-                  {link.accessory}
-                </SidebarMenuSmallLink>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
+          {sideLinks.map((link) => (
+            <SidebarGroupItem key={link.title}>
+              <SidebarGroupSmallLink
+                href={link.href}
+                isActive={getIsActive(link.href, pathname)}
+              >
+                {link.title}
+                {link.accessory}
+              </SidebarGroupSmallLink>
+            </SidebarGroupItem>
+          ))}
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
@@ -178,31 +170,31 @@ function CollapsibleItem({
         </div>
       )}
       <CollapsibleContent>
-        <SidebarMenuSub>
+        <SidebarGroupSub>
           {group.links.map((item) => (
-            <SidebarMenuSubButton
+            <SidebarGroupSubButton
               href={item.href}
               key={item.title}
               isActive={getIsActive(item.href, pathname)}
             >
               <span>{item.title}</span>
-            </SidebarMenuSubButton>
+            </SidebarGroupSubButton>
           ))}
           {group.secondaryLinks && group.secondaryLinks.length > 0 && (
             <>
               <HorizontalSeparator />
               {group.secondaryLinks.map((item) => (
-                <SidebarMenuSubButton
+                <SidebarGroupSubButton
                   href={item.href}
                   key={item.title}
                   isActive={getIsActive(item.href, pathname)}
                 >
                   <span>{item.title}</span>
-                </SidebarMenuSubButton>
+                </SidebarGroupSubButton>
               ))}
             </>
           )}
-        </SidebarMenuSub>
+        </SidebarGroupSub>
       </CollapsibleContent>
     </Collapsible>
   )
