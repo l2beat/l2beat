@@ -3,8 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '~/utils/cn'
-import { OverflowWrapper } from '../core/overflow-wrapper'
-import type { NavGroup } from './types'
+import { OverflowWrapper } from '../../core/overflow-wrapper'
+import type { NavGroup } from '../types'
 
 /**
  * Second navbar displayed under the main navbar on mobile.

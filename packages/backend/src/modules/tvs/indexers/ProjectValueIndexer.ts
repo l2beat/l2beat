@@ -1,4 +1,5 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
+import type { TvsToken } from '@l2beat/config'
 import type { ProjectValueRecord } from '@l2beat/database'
 import { assert, type RemovalConfiguration } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -8,12 +9,12 @@ import type {
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import type { ProjectValueConfig, Token } from '../types'
+import type { ProjectValueConfig } from '../types'
 
 interface ProjectValueIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ProjectValueConfig>, 'name'> {
   syncOptimizer: SyncOptimizer
-  tokens: Map<string, Token>
+  tokens: Map<string, TvsToken>
   maxTimestampsToProcessAtOnce: number
 }
 

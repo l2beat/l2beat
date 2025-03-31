@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x13f31cbed3d6947ca257fe22573dcb11b2e85e98
+
+# Diff at Mon, 31 Mar 2025 11:37:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22144911
+- current block number: 22166647
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract TreasureChainAdminMultisig (0x282370D1e925ee897CB29Cb3beC13aAe0743067C) {
+    +++ description: None
+      values.$members.5:
+-        "0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0"
+      values.$members.4:
+-        "0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726"
++        "0x18c16E72CAa10D2Ce13E4b61bfC51AB93B7e92f0"
+      values.$members.3:
+-        "0xe25AdA29FA5873A24afEe1342422BD14e5809e03"
++        "0x1ee4324F7BD44A4c7c335C2D4e758639B60E8726"
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "4 of 5 (80%)"
+    }
+```
+
 Generated with discovered.json: 0x7f656144255621f3b3621c08e047a79825515103
 
 # Diff at Fri, 28 Mar 2025 10:52:46 GMT:
