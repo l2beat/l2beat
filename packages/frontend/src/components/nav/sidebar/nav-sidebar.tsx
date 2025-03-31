@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
@@ -103,17 +103,23 @@ function NavCollapsibleItem({
   group,
 }: { group: Extract<NavGroup, { type: 'multiple' }> }) {
   const pathname = usePathname()
-  const isActive = group.links.some((link) => getIsActive(link.href, pathname))
+  const allGroupLinks = useMemo(
+    () => [...group.links, ...(group.secondaryLinks ?? [])],
+    [group.links, group.secondaryLinks],
+  )
+  const isActive = allGroupLinks.some((link) =>
+    getIsActive(link.href, pathname),
+  )
   const breakpoint = useBreakpoint()
 
   const [open, setOpen] = useState(isActive)
 
   useEffect(() => {
-    const isActive = group.links.some((link) =>
+    const isActive = allGroupLinks.some((link) =>
       getIsActive(link.href, pathname),
     )
     setOpen(isActive)
-  }, [group, pathname])
+  }, [allGroupLinks, pathname])
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
