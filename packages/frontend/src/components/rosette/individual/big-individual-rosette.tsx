@@ -11,7 +11,7 @@ import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { PizzaRosetteLabels } from '../pizza/pizza-rosette-labels'
 import type { RosetteValueTuple } from './individual-rosette-icon'
-import { IndividualRealPizzaRosetteIcon } from './individual-rosette-icon'
+import { IndividualPizzaRosetteIcon } from './individual-rosette-icon'
 import {
   IndividualRosetteTooltipContextProvider,
   useIndividualRosetteTooltipContext,
@@ -47,7 +47,7 @@ export function BigIndividualRosette(props: Props) {
           props.className,
         )}
       >
-        <IndividualRealPizzaRosetteIcon
+        <IndividualPizzaRosetteIcon
           l2={props.l2}
           l3={props.l3}
           isUnderReview={isUnderReview}
@@ -71,7 +71,7 @@ export function BigIndividualRosette(props: Props) {
       <Tooltip>
         <div className={cn('relative w-[272px] p-12', props.className)}>
           <TooltipTrigger>
-            <IndividualRealPizzaRosetteIcon
+            <IndividualPizzaRosetteIcon
               l2={props.l2}
               l3={props.l3}
               isUnderReview={isUnderReview}
