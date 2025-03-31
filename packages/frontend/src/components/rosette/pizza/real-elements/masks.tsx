@@ -108,15 +108,15 @@ export function risksToPizzas(
   selectRisk: (risk: RosetteValue) => void,
   selectedRisk: RosetteValue | undefined,
 ) {
-  const slices: React.ReactNode[] = []
+  const pizzaBackgrounds: React.ReactNode[] = []
   const sliceHoverPaths: React.ReactNode[] = []
 
   for (let i = 0; i < risks.length; i++) {
     const risk = risks[i]!
     const MaskPath = maskPaths[i]!
 
-    const slice = riskToPizza(risk)
-    slices.push(slice)
+    const pizzaBackground = riskToPizza(risk)
+    pizzaBackgrounds.push(pizzaBackground)
 
     sliceHoverPaths.push(
       <MaskPath
@@ -128,7 +128,7 @@ export function risksToPizzas(
     )
   }
 
-  const pizzas = slices.map((slice, i) => {
+  const pizzas = pizzaBackgrounds.map((pizzaBackground, i) => {
     const risk = risks[i]!
     const maskId = createMaskId()
     const MaskPath = maskPaths[i]!
@@ -157,7 +157,7 @@ export function risksToPizzas(
             selectedRisk && selectedRisk.name !== risk.name && 'opacity-20',
           )}
         >
-          {slice}
+          {pizzaBackground}
         </g>
       </>
     )
