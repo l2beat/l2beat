@@ -29,6 +29,10 @@ async function getResponse(requirements: {
   const filteredProjects = projects.filter((project) => {
     const targetRisks =
       project.scalingRisks.stacked ?? project.scalingRisks.self
+
+    if (Object.values(targetRisks).some((r) => r === 'UnderReview')) {
+      return false
+    }
     const colorArray = Object.values(targetRisks).flatMap(
       (risk: TableReadyValue) =>
         risk.sentiment ? sentimentToColor(risk.sentiment) : [],
