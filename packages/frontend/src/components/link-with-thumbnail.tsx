@@ -32,7 +32,7 @@ export function LinkWithThumbnail({
         src={props.src}
         alt={`Thumbnail of ${props.title}`}
         className={cn(
-          'aspect-video w-full object-cover will-change-transform',
+          'aspect-video w-full object-cover object-left will-change-transform',
           orientation === 'vertical' &&
             'rounded-t-md transition-all group-hover:scale-[1.03] group-hover:rounded-md',
           orientation === 'horizontal' &&
@@ -52,7 +52,7 @@ export function LinkWithThumbnail({
         <p
           className={cn(
             orientation === 'vertical' && 'text-2xl',
-            orientation === 'horizontal' && 'heading-18',
+            orientation === 'horizontal' && 'heading-16 md:heading-18',
             'text-balance',
           )}
         >

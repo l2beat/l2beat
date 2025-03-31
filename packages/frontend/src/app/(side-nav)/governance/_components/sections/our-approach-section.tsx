@@ -1,7 +1,5 @@
-import React from 'react'
-
 import { cn } from '~/utils/cn'
-import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
+import { GovernanceCard } from '../governance-card'
 
 interface Props {
   className?: string
@@ -10,24 +8,24 @@ interface Props {
 export function OurApproachSection({ className }: Props) {
   return (
     <GovernanceCard mobileFull className={cn(className, 'h-min')}>
-      <GovernanceCardHeader>Our approach</GovernanceCardHeader>
-      <p className="mt-6 text-base md:text-sm">
+      <div className="heading-24 md:heading-32">Our approach</div>
+      <p className="md:paragraph-15 paragraph-16 mt-6">
         We recognize that achieving successful decentralized governance stands
         as a vital challenge within the blockchain realm. Our goal is to
         actively contribute to governance across the Ethereum ecosystem,
         ensuring that L2 solutions evolve towards a{' '}
         <strong>more secure, decentralized, and trustworthy future</strong>.
       </p>
-      <p className="mt-4 text-base md:text-sm">
+      <p className="md:paragraph-15 paragraph-16 mt-4">
         For us, governance isn&apos;t just about casting a vote. The real magic
         happens during{' '}
         <strong>healthy debates and coming to conclusions together</strong>.
         Voting should just be the cherry on top of a great community-driven
         process.
       </p>
-      <div className="mt-4 text-base md:text-sm">
+      <div className="md:paragraph-15 paragraph-16 mt-4">
         As a governance delegate, we hold the following core values:
-        <ul className="ml-6 mt-2 list-disc text-base md:text-sm">
+        <ul className="md:paragraph-15 paragraph-16 ml-6 mt-2 list-disc">
           <li>
             <strong>Transparency & Open Communication:</strong> We believe in
             being open about our decision-making process and keeping the

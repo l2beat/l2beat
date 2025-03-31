@@ -11,7 +11,7 @@ interface Props {
 
 export function RecentPublicationsSection({ publications }: Props) {
   return (
-    <GovernanceCard mobileFull className="flex flex-col gap-8 lg:col-span-5">
+    <GovernanceCard mobileFull className="flex flex-col gap-4 lg:col-span-5">
       <div className="flex flex-wrap justify-between gap-2">
         <div className="heading-24 md:heading-32">Recent publications</div>
         <ExploreAllButton className="hidden md:block" />
@@ -21,7 +21,7 @@ export function RecentPublicationsSection({ publications }: Props) {
           <Publication publication={publication} key={publication.id} />
         ))}
       </div>
-      <ExploreAllButton className="mt-6 w-full md:hidden" />
+      <ExploreAllButton className="w-full md:hidden" />
     </GovernanceCard>
   )
 }
