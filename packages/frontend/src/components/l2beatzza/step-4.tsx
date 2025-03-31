@@ -101,7 +101,7 @@ export function Step5({
   if (!data) {
     return (
       <div className="flex flex-col items-center justify-center">
-        <div className="grid grid-cols-2 items-center justify-center gap-7">
+        <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
           <div className="z-100 flex flex-col">
             <div className="text-2xl font-bold">Mamma mia!</div>
             <div className="text-[15px] leading-tight text-secondary">
@@ -114,8 +114,8 @@ export function Step5({
               </PizzaButton>
             </div>
           </div>
-          <div className="min-w-full">
-            <div className="relative z-10">
+          <div className="-ml-6 size-[350px] w-full md:w-1/2">
+            <div className="relative size-[350px] md:h-full">
               <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
               <Frown className="absolute left-1/2 top-1/2 size-[160px] -translate-x-1/2 -translate-y-1/2 fill-none stroke-pink-200" />
             </div>
