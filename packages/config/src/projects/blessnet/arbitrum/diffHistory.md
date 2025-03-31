@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x14447530e6c451911f53bb908775fc051c596999
+Generated with discovered.json: 0xd8bec7f98fa22836b70c61c2e5a0d973c0c4a5b5
 
-# Diff at Mon, 31 Mar 2025 12:09:03 GMT:
+# Diff at Mon, 31 Mar 2025 12:44:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 308389533
-- current block number: 321452642
+- current block number: 321461043
 
 ## Description
 
@@ -13,7 +13,7 @@ back from the dead. the operator had stopped posting batches but is now active a
 ## Watched changes
 
 ```diff
-    contract GnosisSafeL2 (0x089E12e795b3292BcC16f29817bE124C720615b0) {
+    contract Blessnet Multisig 2 (0x089E12e795b3292BcC16f29817bE124C720615b0) {
     +++ description: None
       receivedPermissions.1:
 +        {"permission":"validate","from":"0xF9327276c0E0d255543C095AC6D243B555e645D9","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
@@ -27,7 +27,7 @@ back from the dead. the operator had stopped posting batches but is now active a
 ```
 
 ```diff
-    contract BlessnetFastconfirmerMultisig (0x571D6CA61B979A967E055696c822CF8C928d3556) {
+    contract Blessnet Multisig 1 (0x571D6CA61B979A967E055696c822CF8C928d3556) {
     +++ description: None
       receivedPermissions.1:
 -        {"permission":"validate","from":"0xF9327276c0E0d255543C095AC6D243B555e645D9","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
@@ -83,8 +83,6 @@ back from the dead. the operator had stopped posting batches but is now active a
       values.anyTrustFastConfirmer:
 -        "0x571D6CA61B979A967E055696c822CF8C928d3556"
 +        "0x089E12e795b3292BcC16f29817bE124C720615b0"
-+++ description: Was dead, now alive? Remove headerWarn if yes.
-+++ severity: HIGH
       values.latestConfirmed:
 -        43200
 +        46896
@@ -92,6 +90,38 @@ back from the dead. the operator had stopped posting batches but is now active a
       values.minimumAssertionPeriod:
 -        2
 +        75
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308389533 (main branch discovery), not current.
+
+```diff
+    contract Blessnet Multisig 2 (0x089E12e795b3292BcC16f29817bE124C720615b0) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "Blessnet Multisig 2"
+    }
+```
+
+```diff
+    contract Blessnet Multisig 1 (0x571D6CA61B979A967E055696c822CF8C928d3556) {
+    +++ description: None
+      name:
+-        "BlessnetFastconfirmerMultisig"
++        "Blessnet Multisig 1"
+    }
+```
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.latestConfirmed:
+-        {"severity":"HIGH","description":"Was dead, now alive? Remove headerWarn if yes."}
     }
 ```
 
