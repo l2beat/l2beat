@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -11,6 +12,7 @@ export const superseed: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1714316238), // 2024-04-28T14:57:18Z
   additionalBadges: [BADGES.RaaS.Conduit],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Superseed',
     slug: 'superseed',
