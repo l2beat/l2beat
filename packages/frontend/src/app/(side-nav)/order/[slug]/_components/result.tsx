@@ -17,7 +17,13 @@ export function L2BeatzzaResult({
         <FullYellowPizzaSymbol />
         <FullGreenPizzaSymbol />
       </div>
-      <Step5 data={project} onPickDifferentClick={() => setOpen(true)} />
+      <Step5
+        data={project}
+        onPickDifferentClick={() => setOpen(true)}
+        pickDifferentButtonText="Get your own pizza"
+        headerText="Someone just ordered the"
+        descriptionText="Would you like to order your own pizza?"
+      />
     </>
   )
 }

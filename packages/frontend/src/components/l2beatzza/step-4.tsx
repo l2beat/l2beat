@@ -85,10 +85,16 @@ export function Step4(props: Props) {
 
 export function Step5({
   data,
+  headerText,
+  descriptionText,
+  pickDifferentButtonText,
   onPickDifferentClick,
   shareOnX,
 }: {
   data: Response
+  headerText?: string
+  descriptionText?: string
+  pickDifferentButtonText?: string
   onPickDifferentClick: () => void
   shareOnX?: boolean
 }) {
@@ -98,13 +104,13 @@ export function Step5({
         <div className="grid grid-cols-2 items-center justify-center gap-7">
           <div className="z-100 flex flex-col">
             <div className="text-2xl font-bold">Mamma mia!</div>
-            <div className="text-[15px] leading-tight text-gray-500">
-              We could not find a pizza that matches your preferences. Maybe you
-              should try a different one?
+            <div className="text-[15px] leading-tight text-secondary">
+              {descriptionText ??
+                'We could not find a pizza that matches your preferences. Maybe you should try a different one?'}
             </div>
             <div className="mt-4 flex gap-2">
               <PizzaButton variant="outline" onClick={onPickDifferentClick}>
-                Pick different pizza
+                {pickDifferentButtonText ?? 'Pick different pizza'}
               </PizzaButton>
             </div>
           </div>
@@ -159,7 +165,7 @@ export function Step5({
       <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
         <div className="flex w-full flex-col md:w-1/2">
           <div className="text-2xs font-bold uppercase text-purple-100 dark:text-pink-200">
-            The best choice for you:
+            {headerText ?? 'The best choice for you:'}
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -174,8 +180,9 @@ export function Step5({
               </div>
             </div>
           </div>
-          <div className="mb-4 text-[15px] text-gray-500">
-            Would you like to order or pick a different one?
+          <div className="mb-4 text-[15px] text-secondary">
+            {descriptionText ??
+              'Would you like to order or pick a different one?'}
           </div>
           {shareOnX && (
             <a
@@ -198,7 +205,7 @@ export function Step5({
               className="w-full bg-transparent text-xs"
               onClick={onPickDifferentClick}
             >
-              Pick different pizza
+              {pickDifferentButtonText ?? 'Pick different pizza'}
             </PizzaButton>
           </div>
         </div>
