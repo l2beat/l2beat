@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "blockNumber": 21995404,
-  "configHash": "0x859cf74a92e60c5d84ec6f946755a620a9301bf2ebe60a10728c1fe40d92ed00",
+  "configHash": "0xad80270c76f2598bb21ffc2afd7f87ef3504b8ade9a863ee9aa84b8cdcc9e0ce",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000007B",

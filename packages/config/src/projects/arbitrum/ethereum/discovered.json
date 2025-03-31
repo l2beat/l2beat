@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 22081889,
-  "configHash": "0xe01129cc1335f10c587ac15efb14bfd826bca9d761fcd086e4c1fb56be81a45e",
+  "configHash": "0xfd7a5199595fb750d108c5700e9a9cef13a64fd1f48f2ff3690197262ebba180",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -476,7 +476,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -5134,7 +5139,7 @@
     "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
     "orbitstack/RollupProxyBoLD": "0x79979c974399e5668cea2ff24e5a09bc2c46b88573d3e9dac56c9f88caa4eeca",
     "orbitstack/SecurityCouncil": "0xdcb84d1f43f14da797bf12ed87af05af6333de2c64ea3612938d02331ef96263",
-    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
+    "orbitstack/SequencerInbox": "0x6c9fb56a71e6c16fcf572638338a9ca472776731ab17ec214ed873a63f006223",
     "orbitstack/Timelock": "0x584240f3909a1061aab7560daa6d114df6cf3c1d9f7abad51516c5554fd3e61d",
     "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19"
   }

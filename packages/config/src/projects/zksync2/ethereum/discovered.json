@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "ethereum",
   "blockNumber": 22123358,
-  "configHash": "0xb80dd037d0dedc0ac1029f06b143d8fd4ddb274023844f026a1791e33d0a2383",
+  "configHash": "0x5a17712e9a9415024a83d463f9daee07adb0f6d029ff7315a9415834921548fe",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

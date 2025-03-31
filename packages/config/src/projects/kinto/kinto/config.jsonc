@@ -53,6 +53,10 @@
     // }
   },
   "overrides": {
+    "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
+      // RewardsDistributor
+      "ignoreDiscovery": true
+    },
     "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": {
       // EntryPoint
       "description": "Used as entrypoint to transact using smartwallets and UserOps."
@@ -420,17 +424,6 @@
       "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply", "clock"],
       "ignoreRelatives": ["miningContract", "SALE", "VAULT"]
-    },
-    "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
-      // RewardsDistributor
-      "category": "spam",
-      "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
-      "ignoreInWatchMode": [
-        "getTotalLimit",
-        "getUnclaimedLimit",
-        "totalClaimed",
-        "root"
-      ]
     },
     "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": {
       // Faucet
