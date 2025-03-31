@@ -1,7 +1,7 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22094602,
+  "blockNumber": 22166261,
   "configHash": "0x0703b524b7df8c4fb040f9de452ccbb14928aa06055eefe762e776191f901b9e",
   "entries": [
     {
@@ -119,12 +119,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 24334200,
-        "latestOutputIndex": 13519,
-        "nextBlockNumber": 24336000,
-        "nextFinalizeOutputIndex": 13351,
-        "nextOutputIndex": 13520,
-        "nextOutputMinL2Timestamp": 1742552389,
+        "latestBlockNumber": 24766200,
+        "latestOutputIndex": 13759,
+        "nextBlockNumber": 24768000,
+        "nextFinalizeOutputIndex": 13592,
+        "nextOutputIndex": 13760,
+        "nextOutputMinL2Timestamp": 1743416389,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -321,8 +321,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "activatedValidatorCount": 8,
-        "activatedValidatorTotalWeight": "12727206259968603879239893",
+        "activatedValidatorCount": 9,
+        "activatedValidatorTotalWeight": "31707302836246736260425743",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -336,7 +336,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x3A68B16303AF7969aE0E84DEd82dbF865D725547",
+        "nextValidator": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -407,8 +407,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 200000,
-          "prevBlockNum": 22086356
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 22164258
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -738,7 +738,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4341,
+        "messageNonce": 4345,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -961,18 +961,6 @@
         "version": "0.1.5"
       },
       "derivedName": "ZKVerifier"
-    },
-    {
-      "address": "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
-          "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
     },
     {
       "name": "Colosseum",
@@ -1293,7 +1281,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22094602,
+        "clock": 22166261,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1385,6 +1373,18 @@
       "derivedName": "SP1Verifier"
     },
     {
+      "address": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
+          "description": "one of the signers of the KromaSecurityCouncil."
+        }
+      ]
+    },
+    {
       "name": "SecurityCouncilTokenOwners",
       "address": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
       "type": "Contract",
@@ -1439,12 +1439,6 @@
         },
         {
           "permission": "interact",
-          "to": "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8",
-          "description": "one of the signers of the KromaSecurityCouncil.",
-          "via": []
-        },
-        {
-          "permission": "interact",
           "to": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
           "description": "one of the signers of the KromaSecurityCouncil.",
           "via": []
@@ -1452,6 +1446,12 @@
         {
           "permission": "interact",
           "to": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
+          "description": "one of the signers of the KromaSecurityCouncil.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
           "description": "one of the signers of the KromaSecurityCouncil.",
           "via": []
         },
@@ -1687,7 +1687,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22094602,
+        "clock": 22166261,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1722,9 +1722,9 @@
           "0x27EFE61C5266e461995141f57b4D13F13c83f786",
           "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
           "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A",
-          "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
+          "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
         ],
-        "tokens": [0, 11, 4, 10, 13, 7, 14, 9, 12, 15],
+        "tokens": [0, 11, 4, 10, 13, 7, 14, 9, 12, 16],
         "tokenURI": [
           "https://nft.kroma.network/sc/1.png",
           "https://nft.kroma.network/sc/3.png"
