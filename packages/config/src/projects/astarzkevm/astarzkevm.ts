@@ -137,8 +137,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       title: 'Astar zkEVM sunsets',
       url: 'https://x.com/AstarNetwork/status/1906658995538194650',
       date: '2025-03-31',
-      description:
-        'Astar Network has officially sunset.',
+      description: 'Astar Network has officially sunset.',
       type: 'general',
     },
     {
