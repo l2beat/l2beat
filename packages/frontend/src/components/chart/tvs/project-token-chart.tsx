@@ -148,7 +148,8 @@ export function ProjectTokenChart({
       </ChartContainer>
       <div
         className={cn(
-          tvsBreakdownUrl && 'flex flex-wrap justify-between gap-1',
+          tvsBreakdownUrl &&
+            'flex flex-wrap items-center justify-between gap-1',
           !showStackedChartLegend && 'mt-4',
         )}
       >
@@ -161,7 +162,9 @@ export function ProjectTokenChart({
           setToken={setToken}
         />
         {tvsBreakdownUrl && (
-          <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          <div className="hidden md:inline-block">
+            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          </div>
         )}
       </div>
     </section>

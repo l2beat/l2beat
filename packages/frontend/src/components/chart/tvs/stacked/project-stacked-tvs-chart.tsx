@@ -106,6 +106,11 @@ export function ProjectStackedTvsChart({
             }}
             warning={tvlInfo?.warnings[0]}
           />
+          {tvsBreakdownUrl && (
+            <div className="w-full md:hidden">
+              <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+            </div>
+          )}
         </>
       )}
     </>
@@ -177,7 +182,7 @@ function DefaultChart({
         isLoading={isLoading}
         className="mb-2 mt-4"
       />
-      <div className="flex flex-wrap justify-between gap-1">
+      <div className="flex flex-wrap items-center justify-between gap-1">
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           {tokens && (
             <TokenCombobox
@@ -189,7 +194,9 @@ function DefaultChart({
           )}
         </TvsChartUnitControls>
         {tvsBreakdownUrl && (
-          <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          <div className="hidden md:inline-block">
+            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          </div>
         )}
       </div>
     </section>
@@ -203,8 +210,8 @@ export function TvsBreakdownButton({
     <Link
       href={tvsBreakdownUrl}
       className={cn(
-        'text-xs font-bold leading-none text-white',
-        'w-fit rounded-md bg-gradient-to-r from-purple-100 to-pink-100 px-3 py-2',
+        'text-xs font-bold leading-none text-primary md:text-white',
+        'mt-4 flex w-full justify-center rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 md:mt-0 md:w-fit md:border-0 md:bg-gradient-to-r md:py-2',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
       )}
     >
