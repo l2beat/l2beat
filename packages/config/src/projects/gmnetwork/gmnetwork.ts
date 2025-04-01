@@ -30,6 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const gmnetwork: ScalingProject = opStackL2({
+  isArchived: true,
   addedAt: UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
   additionalBadges: [BADGES.RaaS.AltLayer],

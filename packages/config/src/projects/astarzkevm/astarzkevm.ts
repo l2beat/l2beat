@@ -30,6 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const astarzkevm: ScalingProject = polygonCDKStack({
+  isArchived: true,
   addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   daProvider: {
