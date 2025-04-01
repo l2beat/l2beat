@@ -15,20 +15,16 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 
-export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula & {
-  project: string
-}
-
 export interface CirculatingSupplyAmountIndexerDeps
   extends Omit<
-    ManagedMultiIndexerOptions<CirculatingSupplyAmountConfig>,
+    ManagedMultiIndexerOptions<CirculatingSupplyAmountFormula>,
     'name'
   > {
   syncOptimizer: SyncOptimizer
   circulatingSupplyProvider: CirculatingSupplyProvider
 }
 
-export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountConfig> {
+export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountFormula> {
   constructor(private readonly $: CirculatingSupplyAmountIndexerDeps) {
     super({
       ...$,
@@ -40,7 +36,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<CirculatingSupplyAmountConfig>[],
+    configurations: Configuration<CirculatingSupplyAmountFormula>[],
   ) {
     const adjustedTo = this.$.circulatingSupplyProvider.getAdjustedTo(from, to)
 
@@ -65,7 +61,6 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               configurationId: configuration.id,
               timestamp: p.timestamp,
               amount: BigInt(p.value * 10 ** configuration.properties.decimals),
-              project: configuration.properties.project,
             }))
 
             const optimizedRecords = supplyRecords.filter((p) =>

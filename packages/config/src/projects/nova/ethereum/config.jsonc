@@ -4,7 +4,6 @@
   "name": "nova",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
-    "0xFb209827c58283535b744575e11953DCC4bEAD88", // RollupProxy
     "0xc840838bc438d73c16c2f8b22d2ce3669963cd48", // L1GatewayRouter
     "0x23122da8C581AA7E0d07A36Ff1f16F799650232f", // L1CustomGateway
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786" // L1DaiGateway
@@ -15,15 +14,24 @@
     "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
     "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3",
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway",
-    "0xFb209827c58283535b744575e11953DCC4bEAD88": "RollupProxy",
+    "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd": "RollupProxy",
     "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox",
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
     "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig",
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil",
     "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
-    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumBridge"
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumBridge",
+    "0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688": "EdgeChallengeManager"
   },
   "overrides": {
+    "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999": {
+      // arbitrum one contract
+      "ignoreDiscovery": true
+    },
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
+      // arbitrum one contract
+      "ignoreDiscovery": true
+    },
     "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": {
       // ValidatorUtils
       "fields": {
@@ -41,34 +49,6 @@
       // L1Timelock
       "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
     },
-    // Arbitrum One Bridge
-    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
-      // ArbitrumBridge
-      "ignoreMethods": [
-        "acceptFundsFromOldBridge",
-        "activeOutbox",
-        "allowedDelayedInboxList",
-        "allowedDelayedInboxes",
-        "allowedOutboxList",
-        "allowedOutboxes",
-        "delayedInboxAccs",
-        "delayedMessageCount",
-        "enqueueDelayedMessage",
-        "enqueueSequencerMessage",
-        "executeCall",
-        "initialize",
-        "rollup",
-        "sequencerInbox",
-        "sequencerInboxAccs",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount",
-        "setDelayedInbox",
-        "setOutbox",
-        "setSequencerInbox",
-        "setSequencerReportedSubMessageCount",
-        "submitBatchSpendingReport"
-      ]
-    },
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": {
       // L1DaiGateway
       "ignoreRelatives": [
@@ -83,6 +63,10 @@
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": {
       // ValidatorOwnerMultisig
       "ignoreInWatchMode": ["nonce"]
+    },
+    "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd": {
+      // RollupProxy
+      "ignoreRelatives": ["getValidators"]
     }
   }
 }

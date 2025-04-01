@@ -63,6 +63,7 @@ import { funki } from '../projects/funki/funki'
 import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
+import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
@@ -152,6 +153,7 @@ import { puffer } from '../projects/puffer/puffer'
 import { quarkchain } from '../projects/quarkchain/quarkchain'
 import { r0ar } from '../projects/r0ar/r0ar'
 import { race } from '../projects/race/race'
+import { rarimo } from '../projects/rarimo/rarimo'
 import { real } from '../projects/real/real'
 import { reddioex } from '../projects/reddioex/reddioex'
 import { reddiozkvm } from '../projects/reddiozkvm/reddiozkvm'
@@ -280,6 +282,7 @@ export const layer2s: ScalingProject[] = [
   fuse,
   galxegravity,
   gameswift,
+  gasp,
   genlayer,
   gluon,
   gmnetwork,
@@ -369,6 +372,7 @@ export const layer2s: ScalingProject[] = [
   quarkchain,
   r0ar,
   race,
+  rarimo,
   real,
   reddioex,
   reddiozkvm,

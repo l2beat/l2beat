@@ -5815,6 +5815,21 @@
   ],
   "corn": [
     {
+      "symbol": "CORN",
+      "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+      "coingeckoId": "corn-3",
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
       "coingeckoId": "solv-btc",
