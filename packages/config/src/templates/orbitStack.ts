@@ -470,7 +470,7 @@ function orbitStackCommon(
     isArchived: templateVars.isArchived ?? undefined,
     display: {
       architectureImage,
-      stateValidationImage: 'orbit',
+      stateValidationImage: isPostBoLD ? 'bold' : 'orbit',
       purposes: templateVars.overridingPurposes ?? [
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
