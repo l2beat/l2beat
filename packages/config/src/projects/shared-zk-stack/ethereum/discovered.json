@@ -735,11 +735,13 @@
       "name": "MessageRoot",
       "address": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
       "type": "Contract",
+      "template": "shared-zk-stack/v26/MessageRoot",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Aggregates bridge message roots from all ZK stack chains. To be used with the Gateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -750,6 +752,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1739109035,
       "sinceBlock": 21809367,
       "values": {
@@ -765,21 +768,14 @@
         "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "chainCount": 12,
-        "chainIndex": [0, 0, 0, 0, 0],
-        "chainIndexToId": [1, 324, 388, 50104, 543210],
-        "chainRegistered": [false, true, false, false, false],
         "getAggregatedRoot": "0x160dd873fe3499b5aafd588005617fae4d12e5d11f0e856de9576aedf0565019",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
         "sharedTree": { "_height": 4, "_leafNumber": 12 }
       },
-      "errors": {
-        "chainIndex": "Processing error occurred.",
-        "chainIndexToId": "Processing error occurred.",
-        "chainRegistered": "Processing error occurred."
-      },
-      "derivedName": "MessageRoot"
+      "derivedName": "MessageRoot",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0x5F18752518d81E4AFbB28341EDFba9Aa0E16707C",
@@ -2906,6 +2902,7 @@
     "shared-zk-stack/v26/L1AssetRouter": "0x61e94b7742e84945b3af3c17cd45294e6f2421180eac8788d267a598422100c0",
     "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
     "shared-zk-stack/v26/L1Nullifier": "0x2d1bc5b5d93b8426fb6e6f34b6ad5c8d90d87a39df65ee3fbc9909f1536d1ed6",
+    "shared-zk-stack/v26/MessageRoot": "0x5e60ebc5075cd3fdd0a60421746aceda4ff513ceb8896137d3ef1107b954fc6c",
     "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x5da81803a64480b9760fb58ec48326d82ba745d88173789b38b8fda7d50f6aa6",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e"

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4a601208e43fef582b31de7a1f90883a6e5db2b3
+Generated with discovered.json: 0x9cf42ea3a42aaaabca576b099bd7b207b47ff61b
 
-# Diff at Tue, 01 Apr 2025 07:02:35 GMT:
+# Diff at Tue, 01 Apr 2025 08:33:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@fe4425654a43d1265c2bb105623473a7b7e679b1 block: 22123258
@@ -484,7 +484,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD)
-    +++ description: None
+    +++ description: Aggregates bridge message roots from all ZK stack chains. To be used with the Gateway.
 ```
 
 ```diff

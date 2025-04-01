@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Aggregates bridge message roots from all ZK stack chains. To be used with the Gateway.",
+  "category": "shared",
+  "ignoreMethods": [
+    "chainIndex",
+    "chainIndexToId",
+    "chainRegistered",
+    "l2BridgeAddress"
+  ],
+  "ignoreInWatchMode": ["sharedTree"]
+}
