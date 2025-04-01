@@ -28,9 +28,9 @@ interface Props {
   projectId: string
   tokens: ProjectTokens | undefined
   isBridge: boolean
-  slug?: string
-  tvsProjectStats?: ProjectSevenDayTvsBreakdown
-  tvlInfo?: ProjectTvlInfo
+  slug: string
+  tvsProjectStats: ProjectSevenDayTvsBreakdown
+  tvlInfo: ProjectTvlInfo
 }
 
 export function ProjectStackedTvsChart({
@@ -45,9 +45,7 @@ export function ProjectStackedTvsChart({
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const tvsBreakdownUrl = slug
-    ? `/scaling/projects/${slug}/tvs-breakdown`
-    : undefined
+  const tvsBreakdownUrl = `/scaling/projects/${slug}/tvs-breakdown`
 
   const chartComponent =
     tokens && token ? (
@@ -106,11 +104,9 @@ export function ProjectStackedTvsChart({
             }}
             warning={tvlInfo?.warnings[0]}
           />
-          {tvsBreakdownUrl && (
-            <div className="w-full md:hidden">
-              <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
-            </div>
-          )}
+          <div className="w-full md:hidden">
+            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          </div>
         </>
       )}
     </>
@@ -128,7 +124,7 @@ interface DefaultChartProps {
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
-  tvsBreakdownUrl: string | undefined
+  tvsBreakdownUrl: string
 }
 
 function DefaultChart({
@@ -193,11 +189,9 @@ function DefaultChart({
             />
           )}
         </TvsChartUnitControls>
-        {tvsBreakdownUrl && (
-          <div className="hidden md:inline-block">
-            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
-          </div>
-        )}
+        <div className="hidden md:inline-block">
+          <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+        </div>
       </div>
     </section>
   )

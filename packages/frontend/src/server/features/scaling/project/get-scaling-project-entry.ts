@@ -271,25 +271,29 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (
+    !project.isUpcoming &&
+    !isTvsChartDataEmpty(tvsChartData) &&
+    tvsProjectStats
+  ) {
     sections.push({
-      type: 'ChartSection',
+      type: 'StackedTvsSection',
       props: {
         id: 'tvs',
-        stacked: true,
         title: 'Value Secured',
         projectId: project.id,
         slug: project.slug,
         milestones: sortedMilestones,
         tokens,
         tvsProjectStats,
+        tvlInfo: project.tvlInfo,
       },
     })
   }
 
   if (!isActivityChartDataEmpty(activityChartData)) {
     sections.push({
-      type: 'ChartSection',
+      type: 'ActivitySection',
       props: {
         id: 'activity',
         title: 'Activity',
