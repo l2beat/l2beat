@@ -32,8 +32,8 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
-        sinceTimestamp: sinceTimestamp,
-        untilTimestamp: untilTimestamp,
+        sinceTimestamp,
+        untilTimestamp,
         priceId: token.priceId,
       })
     } else {
@@ -106,8 +106,8 @@ function processFormulaRecursive(
 
     formulaPrices.push({
       id: createPriceConfigId(formula.priceId),
-      sinceTimestamp: sinceTimestamp,
-      untilTimestamp: untilTimestamp,
+      sinceTimestamp,
+      untilTimestamp,
       priceId: formula.priceId,
     })
   } else {
