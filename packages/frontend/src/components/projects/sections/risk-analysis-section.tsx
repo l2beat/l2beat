@@ -1,12 +1,8 @@
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
-import { UnderReviewBadge } from '../../badge/under-review-badge'
-import { Markdown } from '../../markdown/markdown'
 import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import type { RosetteValue } from '../../rosette/types'
-import { SentimentText } from '../../sentiment-text'
-import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
+import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
 import { RiskBanner } from '../risk-banner'
@@ -69,47 +65,5 @@ export function RiskAnalysisSection({
         ))}
       </div>
     </ProjectSection>
-  )
-}
-
-export function SingleRisk({
-  value,
-}: {
-  value: RosetteValue
-}) {
-  return (
-    <div>
-      <h3 className="mt-6 text-sm font-medium uppercase text-zinc-800 dark:text-white md:text-lg">
-        {value.name}
-      </h3>
-      {value.sentiment === 'UnderReview' ? (
-        <span className="block">
-          {value.name} risk is currently <UnderReviewBadge />
-        </span>
-      ) : (
-        <>
-          <SentimentText
-            sentiment={value.sentiment ?? 'neutral'}
-            className="block text-xl font-medium md:text-2xl"
-            vibrant
-          >
-            {value.value}
-          </SentimentText>
-          {value.warning && (
-            <WarningBar
-              className="my-2"
-              icon={RoundedWarningIcon}
-              text={value.warning.value}
-              color={sentimentToWarningBarColor(value.warning.sentiment)}
-            />
-          )}
-          {value.description && (
-            <Markdown className="mt-1.5 font-normal leading-snug text-black/80 dark:text-white/80 md:text-lg">
-              {value.description}
-            </Markdown>
-          )}
-        </>
-      )}
-    </div>
   )
 }
