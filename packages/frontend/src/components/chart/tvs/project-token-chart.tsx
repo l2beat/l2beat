@@ -37,8 +37,8 @@ import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
-import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 import { TvsBreakdownButton } from './stacked/project-stacked-tvs-chart'
+import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 
 interface Props {
   projectId: string
@@ -52,7 +52,7 @@ interface Props {
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
   showStackedChartLegend?: boolean
-  tvsBreakdownUrl: string | undefined
+  tvsBreakdownUrl?: string
 }
 
 export function ProjectTokenChart({
