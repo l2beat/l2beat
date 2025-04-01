@@ -182,7 +182,7 @@ export function Step5({
               </div>
             </div>
           </div>
-          <div className="mb-4 text-[15px] text-secondary">
+          <div className="mb-4 text-[15px] leading-tight text-secondary">
             {descriptionText ??
               'Would you like to learn more about your pizza, or pick a different one?'}
           </div>
@@ -200,7 +200,7 @@ export function Step5({
           )}
           <div className="mt-2 flex gap-2">
             <Link
-              href={`/scaling/projects/${data.slug}`}
+              href={`/scaling/projects/${data.slug}#risk-analysis`}
               onClick={() => {
                 setOpen(false)
                 NProgress.start()
