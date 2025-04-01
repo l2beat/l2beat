@@ -9,7 +9,7 @@ import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
 
 export function getTvlAmountsConfig(
-  projects: Project<'tvlConfig', 'chainConfig' | 'isArchived'>[],
+  projects: Project<'tvlConfig', 'chainConfig'>[],
   chains: ChainConfig[],
   tokenList: Token[],
 ): AmountConfigEntry[] {
@@ -48,7 +48,7 @@ export function getTvlAmountsConfig(
     for (const escrow of project.tvlConfig.escrows) {
       switch (escrow.sharedEscrow?.type) {
         case 'AggLayer': {
-          if (project.isArchived) break
+          if (isRpcConfigured(project)) break
           const aggLayerEntries = aggLayerEscrowToEntries(
             escrow,
             project,
@@ -59,7 +59,7 @@ export function getTvlAmountsConfig(
           break
         }
         case 'ElasticChain': {
-          if (project.isArchived) break
+          if (isRpcConfigured(project)) break
           const elasticChainEntries = elasticChainEscrowToEntries(
             escrow,
             project,
@@ -80,7 +80,7 @@ export function getTvlAmountsConfig(
             )
 
             if (chain.name === project.id) {
-              if (project.isArchived) break
+              if (isRpcConfigured(project)) break
             }
 
             const configEntry = projectEscrowToConfigEntry(
@@ -215,4 +215,15 @@ function findProjectAndChain(
   const chain = project.chainConfig
   assert(chain, `Chain not found for token ${token.symbol}`)
   return { chain, project }
+}
+
+function isRpcConfigured(p: {
+  chainConfig: ChainConfig | undefined
+}) {
+  if (p.chainConfig === undefined) {
+    return false
+  }
+  const rpc = p.chainConfig?.apis.find((p) => p.type === 'rpc')
+
+  return !!rpc
 }
