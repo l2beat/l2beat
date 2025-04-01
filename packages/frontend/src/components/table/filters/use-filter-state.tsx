@@ -185,7 +185,7 @@ export function useFilterState() {
       window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
     } else {
       params.delete('filters')
-      window.history.replaceState(null, '', `${pathname}`)
+      window.history.replaceState(null, '', pathname)
     }
   }, [pathname, state])
 
