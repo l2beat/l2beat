@@ -2955,6 +2955,22 @@
   ],
   "optimism": [
     {
+      "symbol": "USD₮0",
+      "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "STONE",
       "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -6157,6 +6173,22 @@
     }
   ],
   "unichain": [
+    {
+      "symbol": "USDT0",
+      "address": "0x9151434b16b9763660705744891fA906F660EcC5",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDC",
       "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
