@@ -15,7 +15,7 @@ export async function getTvlConfig(
 ): Promise<TvlConfig> {
   const projects = await ps.getProjects({
     select: ['tvlConfig'],
-    optional: ['chainConfig'],
+    optional: ['chainConfig', 'isArchived'],
   })
   const tokenList = await ps.getTokens()
 
@@ -31,12 +31,21 @@ export async function getTvlConfig(
     }
   }
 
+  const archived = new Set<string>(
+    projects.filter((p) => p.isArchived).map((p) => p.id),
+  )
+
   const chainConfigs = chains
+    .filter((c) => !archived.has(c.name))
     .filter((c) => tvlChainNames.has(c.name) && flags.isEnabled('tvl', c.name))
     .map((chain) => getChainTvlConfig(env, chain, minTimestampOverride))
 
   return {
-    amounts: getTvlAmountsConfig(projects, chains, tokenList),
+    amounts: getTvlAmountsConfig(
+      projects,
+      chains.filter((c) => !archived.has(c.name)),
+      tokenList,
+    ),
     prices: getTvlPricesConfig(chains, tokenList, minTimestampOverride),
     chains: chainConfigs,
     maxTimestampsToAggregateAtOnce: env.integer(

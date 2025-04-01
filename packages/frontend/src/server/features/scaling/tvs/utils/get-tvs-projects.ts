@@ -28,7 +28,7 @@ export async function getTvsProjects(
 ): Promise<TvsProject[]> {
   const projects = await ps.getProjects({
     select: ['statuses', 'tvlConfig'],
-    optional: ['chainConfig', 'scalingInfo', 'isBridge'],
+    optional: ['chainConfig', 'scalingInfo', 'isBridge', 'isArchived'],
   })
 
   const filteredProjects = projects

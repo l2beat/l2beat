@@ -9,7 +9,7 @@ import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
 
 export function getTvlAmountsConfig(
-  projects: Project<'tvlConfig', 'chainConfig'>[],
+  projects: Project<'tvlConfig', 'chainConfig' | 'isArchived'>[],
   chains: ChainConfig[],
   tokenList: Token[],
 ): AmountConfigEntry[] {
@@ -48,6 +48,7 @@ export function getTvlAmountsConfig(
     for (const escrow of project.tvlConfig.escrows) {
       switch (escrow.sharedEscrow?.type) {
         case 'AggLayer': {
+          if (project.isArchived) break
           const aggLayerEntries = aggLayerEscrowToEntries(
             escrow,
             project,
@@ -58,6 +59,7 @@ export function getTvlAmountsConfig(
           break
         }
         case 'ElasticChain': {
+          if (project.isArchived) break
           const elasticChainEntries = elasticChainEscrowToEntries(
             escrow,
             project,
@@ -76,6 +78,10 @@ export function getTvlAmountsConfig(
               chain.name === escrow.chain,
               'Programmer error: chain mismatch',
             )
+
+            if (chain.name === project.id) {
+              if (project.isArchived) break
+            }
 
             const configEntry = projectEscrowToConfigEntry(
               chain,
