@@ -164,6 +164,7 @@ import { river } from '../projects/river/river'
 import { rss3 } from '../projects/rss3/rss3'
 import { rufus } from '../projects/rufus/rufus'
 import { scroll } from '../projects/scroll/scroll'
+import { settlus } from '../projects/settlus/settlus'
 import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
 import { silicon } from '../projects/silicon/silicon'
@@ -384,6 +385,7 @@ export const layer2s: ScalingProject[] = [
   rss3,
   rufus,
   scroll,
+  settlus,
   shape,
   shibarium,
   silicon,
