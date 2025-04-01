@@ -3,12 +3,15 @@
 import type { Milestone, ProjectTvlInfo } from '@l2beat/config'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { TvsBreakdownSummaryBox } from '~/app/(top-nav)/scaling/projects/[slug]/tvs-breakdown/_components/tvs-breakdown-summary-box'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TokenCombobox } from '~/components/token-combobox'
 import type {
   ProjectToken,
   ProjectTokens,
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
@@ -19,9 +22,6 @@ import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../project-token-chart'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
 import { StackedTvsChart } from './stacked-tvs-chart'
-import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { TvsBreakdownSummaryBox } from '~/app/(top-nav)/scaling/projects/[slug]/tvs-breakdown/_components/tvs-breakdown-summary-box'
 
 interface Props {
   milestones: Milestone[]

@@ -4,12 +4,12 @@ import type {
   ProjectTvlInfo,
 } from '@l2beat/config'
 import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectTvsChart } from '../../chart/tvs/project-tvs-chart'
 import { ProjectStackedTvsChart } from '../../chart/tvs/stacked/project-stacked-tvs-chart'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionId, ProjectSectionProps } from './types'
-import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 
 type ChartSectionId = Extract<ProjectSectionId, 'tvs' | 'activity'>
 
