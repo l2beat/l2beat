@@ -313,11 +313,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
       ),
     ],
   },
-  stateValidation: {
-    isUnderReview: true,
-    description: '.',
-    categories: [],
-  },
   milestones: [
     {
       title: 'BoLD, permissionless proof system, deployed',
