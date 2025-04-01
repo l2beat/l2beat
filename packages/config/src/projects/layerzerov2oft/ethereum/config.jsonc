@@ -28,7 +28,8 @@
     "0x1762c17f671FA27cE6C59256f5F28242de9274d0", // TBankOFT
     "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208", // DineroOFTLockboxPXETH
     "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D", // MaviaOFTAdapter
-    "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3" // RSETH_OFTAdapter
+    "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3", // RSETH_OFTAdapter
+    "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee" // USDT0OFTAdapter
   ],
   "names": {
     "0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2",
@@ -39,7 +40,7 @@
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "GoogleCloudDVN",
     "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "PolyhedraDVN",
     "0x380275805876Ff19055EA900CDb2B46a94ecF20D": "HorizenDVN",
-    "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee": "USDT0DVN",
+    "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2": "USDT0DVN",
     "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {
@@ -207,6 +208,10 @@
       "ignoreRelatives": ["owner"]
     },
     "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": {
+      "ignoreMethods": ["token"],
+      "ignoreRelatives": ["owner"]
+    },
+    "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee": {
       "ignoreMethods": ["token"],
       "ignoreRelatives": ["owner"]
     }

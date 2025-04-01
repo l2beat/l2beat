@@ -198,7 +198,7 @@ To receive the original locked token back, a user would have to return to the ma
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee'),
-        tokens: ['USDT0'],
+        tokens: ['USDT'],
         description: 'OFT adapter escrow for USDT0 on Ethereum.',
       }),
       discovery.getEscrowDetails({

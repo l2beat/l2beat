@@ -2957,7 +2957,7 @@
     {
       "symbol": "USD₮0",
       "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
-      "coingeckoId": "tether",
+      "coingeckoId": "usdt0",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -5973,7 +5973,7 @@
     {
       "symbol": "USD₮0",
       "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
-      "coingeckoId": "tether",
+      "coingeckoId": "usdt0",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -6174,9 +6174,9 @@
   ],
   "unichain": [
     {
-      "symbol": "USDT0",
+      "symbol": "USD₮0",
       "address": "0x9151434b16b9763660705744891fA906F660EcC5",
-      "coingeckoId": "tether",
+      "coingeckoId": "usdt0",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
