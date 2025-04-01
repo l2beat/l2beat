@@ -1,18 +1,18 @@
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
-import type { RosetteValue } from '../rosette/types'
 import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { sentimentToWarningBarColor, WarningBar } from '../warning-bar'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { Markdown } from '../markdown/markdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
+import { Markdown } from '../markdown/markdown'
 import { GrissiniStick } from '../rosette/grissini/grissini-stick'
+import type { RosetteValue } from '../rosette/types'
+import { WarningBar, sentimentToWarningBarColor } from '../warning-bar'
 
 interface RiskBannerProps extends RosetteValue {
   className?: string

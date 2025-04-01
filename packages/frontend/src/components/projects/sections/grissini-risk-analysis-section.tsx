@@ -1,9 +1,9 @@
 import { InlinedNoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import type { RosetteValue } from '~/components/rosette/types'
 import { Markdown } from '../../markdown/markdown'
+import { RiskBanner } from '../risk-banner'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
-import { RiskBanner } from '../risk-banner'
 
 export interface GrissiniRiskAnalysisSectionProps extends ProjectSectionProps {
   isVerified: boolean | undefined

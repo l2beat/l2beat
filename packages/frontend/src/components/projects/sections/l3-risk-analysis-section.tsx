@@ -11,9 +11,9 @@ import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
 import { sentimentToTransparentBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../warning-bar'
+import { RiskBanner } from '../risk-banner'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
-import { RiskBanner } from '../risk-banner'
 
 export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
   l2: {

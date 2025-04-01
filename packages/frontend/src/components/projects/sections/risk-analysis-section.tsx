@@ -3,9 +3,9 @@ import { UnverifiedIcon } from '~/icons/unverified'
 import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import type { RosetteValue } from '../../rosette/types'
 import { WarningBar } from '../../warning-bar'
+import { RiskBanner } from '../risk-banner'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
-import { RiskBanner } from '../risk-banner'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteValues: RosetteValue[]

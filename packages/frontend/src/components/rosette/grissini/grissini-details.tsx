@@ -1,6 +1,6 @@
+import { RiskBanner } from '~/components/projects/risk-banner'
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../types'
-import { RiskBanner } from '~/components/projects/risk-banner'
 
 interface Props {
   values: RosetteValue[]
