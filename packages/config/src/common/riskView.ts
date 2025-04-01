@@ -598,6 +598,7 @@ export function EXIT_WINDOW_NITRO(
   challengeWindowSeconds: number,
   validatorAfkTime: number,
   l1TimelockDelay: number,
+  isPostBoLD: boolean,
 ): TableReadyValue {
   const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(
     l2TimelockDelay,
@@ -608,7 +609,7 @@ export function EXIT_WINDOW_NITRO(
   )} to exit. 
     
   If users post a tx after that time, they would only be able to self propose a state root ${formatSeconds(
-    challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
+    isPostBoLD ? validatorAfkTime : challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
   )} after the last state root was proposed and then wait for the ${formatSeconds(
     challengeWindowSeconds,
   )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(

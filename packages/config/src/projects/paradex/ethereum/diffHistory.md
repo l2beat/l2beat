@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x84361864b63573b6658527d315c9d1b42f887e2c
+
+# Diff at Mon, 31 Mar 2025 10:22:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21979760
+- current block number: 22166267
+
+## Description
+
+new appgovernor, max USDC balance raise.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.APP_GOVERNOR.members.1:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: The maximum total balance that can be locked in the bridge.
+      values.maxTotalBalance:
+-        50000000000000
++        60000000000000
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/Paradex Multisig 2/Safe.sol     | 1088 ++++++++++++++++++++
+ .../.flat/Paradex Multisig 2/SafeProxy.p.sol       |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xd0ec5206adf2a943b0433009bacf20878d932750
 
 # Diff at Thu, 27 Mar 2025 11:14:51 GMT:

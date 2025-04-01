@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 22029694,
+  "blockNumber": 22166274,
   "configHash": "0x27d680940f2e6c625e41ed050336da47b3aeee8997d94f84d39a697e841dd409",
   "entries": [
     {
@@ -263,7 +263,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 225,
+        "nonce": 234,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -478,9 +478,19 @@
             "2024-01-01T16:18:59.000Z",
             "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df",
             ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+          ],
+          [
+            "2025-03-30T02:36:11.000Z",
+            "0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381",
+            ["0xC03cF2ec47426C2318F91496316c62e5FAf413f3"]
+          ],
+          [
+            "2025-03-30T02:36:11.000Z",
+            "0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381",
+            ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",

@@ -5,6 +5,7 @@ import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
 import { FilterableValueId } from './filterable-value'
+import { getFilterSearchParams } from './utils/get-filter-search-params'
 
 export type FilterValue = z.infer<typeof FilterValue>
 export const FilterValue = z.object({
@@ -180,7 +181,7 @@ export function useFilterState() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     if (Object.keys(state).length > 0) {
-      params.set('filters', encodeURIComponent(JSON.stringify(state)))
+      params.set('filters', getFilterSearchParams(state))
     } else {
       params.delete('filters')
     }

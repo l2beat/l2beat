@@ -257,11 +257,9 @@ model FlatSources {
 model TvsAmount {
   timestamp       DateTime @db.Timestamp(6)
   configurationId String   @db.Char(12)
-  project         String   @db.VarChar(255)
   amount          Decimal  @db.Decimal(80, 0)
 
   @@id([timestamp, configurationId])
-  @@index([project])
 }
 
 model TvsBlockTimestamp {
