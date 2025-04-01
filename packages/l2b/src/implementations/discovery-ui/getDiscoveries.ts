@@ -13,3 +13,11 @@ export function getProjectDiscoveries(
 
   return discoveries
 }
+
+export function getAllProjectDiscoveries(
+  configReader: ConfigReader,
+  project: string,
+): DiscoveryOutput[] {
+  const chains = configReader.readAllChainsForProject(project)
+  return chains.flatMap((c) => getProjectDiscoveries(configReader, project, c))
+}

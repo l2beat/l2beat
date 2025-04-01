@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import { toShortenedAddress } from '../common/toShortenedAddress'
@@ -8,6 +8,7 @@ import { IconCodeFile } from '../icons/IconCodeFile'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
 import { Editor } from './editor'
+import { type Range, useCodeStore } from './store'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -24,12 +25,16 @@ export function CodePanel() {
     enabled: selectedAddress !== undefined,
     queryFn: () => getCode(project, selectedAddress),
   })
-  const [current, setCurrent] = useState(0)
+  const { getSourceIndex, setSourceIndex, range } = useCodeStore()
   useEffect(() => {
-    const hasProxy =
-      codeResponse.isSuccess && codeResponse.data.sources.length > 1
-    setCurrent(hasProxy ? 1 : 0)
+    if (codeResponse.isSuccess && selectedAddress !== undefined) {
+      if (getSourceIndex(selectedAddress) === undefined) {
+        const hasProxy = codeResponse.data.sources.length > 1
+        setSourceIndex(selectedAddress, hasProxy ? 1 : 0)
+      }
+    }
   }, [codeResponse.data])
+  const sourceIndex = getSourceIndex(selectedAddress ?? 'Loading')
 
   if (projectResponse.isError || codeResponse.isError) {
     return <div>Error</div>
@@ -47,6 +52,7 @@ export function CodePanel() {
           },
         ]
       : response
+  const passedRange = codeResponse.isPending ? undefined : range
 
   return (
     <div className="flex h-full w-full select-none flex-col">
@@ -54,10 +60,10 @@ export function CodePanel() {
         {sources.map((x, i) => (
           <button
             key={i}
-            onClick={() => setCurrent(i)}
+            onClick={() => setSourceIndex(selectedAddress ?? 'Loading', i)}
             className={clsx(
               'flex h-6 items-center gap-1 px-2 text-sm',
-              current === i && 'bg-autumn-300 text-black',
+              sourceIndex === i && 'bg-autumn-300 text-black',
             )}
           >
             <IconCodeFile />
@@ -65,14 +71,17 @@ export function CodePanel() {
           </button>
         ))}
       </div>
-      <CodeView code={sources[current]?.code ?? '// No code'} />
+      <CodeView
+        code={sources[sourceIndex ?? 0]?.code ?? '// No code'}
+        range={passedRange}
+      />
     </div>
   )
 }
 
-function CodeView({ code }: { code: string }) {
+function CodeView({ code, range }: { code: string; range: Range | undefined }) {
   const monacoEl = useRef(null)
-  const [editor, setEditor] = useState<Editor | undefined>(undefined)
+  const { editor, setEditor, showRange } = useCodeStore()
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
 
@@ -101,6 +110,14 @@ function CodeView({ code }: { code: string }) {
   useEffect(() => {
     editor?.resize()
   }, [editor, panels, pickedUp])
+
+  useEffect(() => {
+    if (range !== undefined) {
+      showRange(undefined)
+      const { startOffset, length } = range
+      editor?.showRange(startOffset, length)
+    }
+  }, [editor, range])
 
   return <div className="h-full w-full" ref={monacoEl} />
 }
