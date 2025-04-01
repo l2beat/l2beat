@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21686332,
-  "configHash": "0xcf6f24e8e1f4a672afeffe479c82956f61a4ea1701f2bfa2acde8820ec69d1b2",
+  "configHash": "0xb505596d552ee473eab49778d48e58634a4cc6f01b7d3b414c3ed77dad4c0896",
   "entries": [
     {
       "name": "NextHeaderVerifier",
@@ -49,7 +49,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0"
-      }
+      },
+      "derivedName": "SuccinctFeeVault"
     },
     {
       "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
@@ -189,7 +190,8 @@
           "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
           "type": "PERMISSION"
         }
-      }
+      },
+      "derivedName": "SuccinctGateway"
     },
     {
       "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
@@ -468,7 +470,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
         "VERSION": "v3.0.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "SP1Verifier",
@@ -491,7 +494,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
         "VERSION": "v4.0.0-rc.3"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "name": "HeaderRangeVerifier",

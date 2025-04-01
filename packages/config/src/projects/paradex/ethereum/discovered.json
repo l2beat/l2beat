@@ -1,8 +1,8 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 21979760,
-  "configHash": "0x17b0b15542e9af60098cd0a30fdae521d9c879c8f896518a09da57f7bb63a7df",
+  "blockNumber": 22166267,
+  "configHash": "0xa7f64ef9ee5af9f6012eb30b7fb837810cc5b97cf7fa66704642dd78d8ef9245",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -91,12 +91,27 @@
       ]
     },
     {
+      "address": "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "address": "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -141,6 +156,11 @@
           "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
         }
       ]
+    },
+    {
+      "address": "0xd123e24C318a14BaF01f487d59D8Ce3F8E1aeE5C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "USDC Bridge",
@@ -234,7 +254,10 @@
           },
           "APP_GOVERNOR": {
             "adminRole": "APP_ROLE_ADMIN",
-            "members": ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
+            "members": [
+              "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+              "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+            ]
           },
           "APP_ROLE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
@@ -272,7 +295,7 @@
         "l2TokenContract": "0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353",
         "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 50000000000000,
+        "maxTotalBalance": 60000000000000,
         "messagingContract": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -419,7 +442,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 4520,
+        "l1ToL2MessageNonce": 6963,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -435,9 +458,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2378319297183751297253754820066023972640132997678759932158381226018233794888",
-        "stateBlockNumber": 443100,
-        "stateRoot": "1792607517067585482308344813734074820286587429622735534796780869416888503403",
+        "stateBlockHash": "2931927190372238366527745965182287519461111197008892262130307570950847716470",
+        "stateBlockNumber": 535245,
+        "stateRoot": "1662927082891669134087650812988875994884240389781425012250531072952233643322",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -461,8 +484,10 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "273279642033703284306509103355536170486431195329675679055627933497997642494": "Starknet Aggregator (since v0.13.4)",
+            "2231644845387633655859130162745748394456578773184260372693322394988769337368": "StarkNet OS (since v0.13.4)",
             "15787695375210609250491147414005894154890873413229882671403677761527504080": "Starknet Aggregator (since v0.13.3)",
-            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (Starknet)",
+            "2397984267054479079853548842566103781972463965746662494980785692480538410509": "StarkNet OS (since v0.13.3)",
             "853638403225561750106379562222782223909906501242604214771127703946595519856": "StarkNet OS (Paradex)",
             "3383082961563516565935611087683915026448707331436034043529592588079494402084": "StarkNet OS (old Paradex, old StarkNet)",
             "3485280386001712778192330279103973322645241679001461923469191557000342180556": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)",
@@ -485,11 +510,91 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Paradex Multisig 2",
+      "address": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1743136259,
+      "sinceBlock": 22143036,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
+          "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
+          "0xd123e24C318a14BaF01f487d59D8Ce3F8E1aeE5C",
+          "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
     }
   ],
   "abis": {
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [
       "constructor(address _singleton)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC": [
       "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
@@ -728,6 +833,9 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xFF57A3bB6465501c993acF8f3b29125a862661C0": [
+      "constructor(address _singleton)"
     ]
   },
   "usedTemplates": {

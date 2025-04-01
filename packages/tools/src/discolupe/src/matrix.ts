@@ -9,7 +9,7 @@ interface Matrix {
   columns: Column[]
 }
 
-interface Row {
+export interface Row {
   project: DiscoLupeProject
   columns: string[]
 }

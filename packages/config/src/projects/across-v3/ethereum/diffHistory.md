@@ -1,4 +1,41 @@
-Generated with discovered.json: 0x96306b5c0cc9f037744d79abd791b5f75e893865
+Generated with discovered.json: 0xcfeefe518ed2f5050a3169fbf01cd75af43c2632
+
+# Diff at Mon, 31 Mar 2025 10:16:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22045124
+- current block number: 22166242
+
+## Description
+
+Add a second adapter for zkstacks.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.232:
++        "0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0"
+      values.CrossChainContracts.232:
++        "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_CustomGasToken_Adapter (0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/ZkStack_CustomGasToken_Adapter.sol       | 625 +++++++++++++++++++++
+ 1 file changed, 625 insertions(+)
+```
+
+Generated with discovered.json: 0x0e07582d889b04364a1534217256640cf647864f
 
 # Diff at Fri, 14 Mar 2025 12:33:51 GMT:
 

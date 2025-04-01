@@ -2,7 +2,7 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 21736867,
-  "configHash": "0x9e75d1960f96222ea6a43a0956ba0027fb5ddd78ed7d65cd699cf8703d7974db",
+  "configHash": "0x3b87ed79f91950193877bf9ef719b8cf0271859962cccafd314edb60797cdb38",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -139,7 +139,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "PolygonDataCommittee",
@@ -194,6 +195,7 @@
         "owner": "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b",
         "requiredAmountOfSignatures": 1
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

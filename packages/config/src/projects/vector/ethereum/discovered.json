@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 21635855,
-  "configHash": "0xd7a6022a8b14cfb6c87fde69bed324dfdfffc1502ff4835a8686ec31f7c75f69",
+  "configHash": "0xe5aa759b2a5131877f318ee3ed6f9f8a28b37d03fd2c53ba146af45528464c5a",
   "entries": [
     {
       "name": "Vector",
@@ -299,7 +299,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
         "VERSION": "v3.0.0"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
@@ -327,7 +328,8 @@
         "$immutable": true,
         "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
         "VERSION": "v4.0.0-rc.3"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "address": "0xE458b870F2F59a49915591282f1Bb688901767AD",

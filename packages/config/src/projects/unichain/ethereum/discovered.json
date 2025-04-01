@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "ethereum",
   "blockNumber": 22094650,
-  "configHash": "0x5ec63efce253b0a5cae62b4d54decb8d0dc0c8f4cfb948c3733077d1a3d6db47",
+  "configHash": "0x8c2a376ea35f8c434ad635a0d1c8380bbb218e76e12a612f58c434355891aa92",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -45,7 +45,8 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      }
+      },
+      "derivedName": "LivenessModule"
     },
     {
       "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
@@ -108,6 +109,7 @@
           "description": "Prestate tag for known prestates."
         }
       },
+      "derivedName": "FaultDisputeGame",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -232,6 +234,7 @@
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
+      "derivedName": "OptimismPortal2",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -271,7 +274,8 @@
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "LivenessGuard"
     },
     {
       "name": "DisputeGameFactory",
@@ -318,6 +322,7 @@
         "permissionedGamesTotal": 1865,
         "version": "1.0.0"
       },
+      "derivedName": "DisputeGameFactory",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -380,7 +385,8 @@
         "disputeGameFactory": "0x2F12d621a16e2d3285929C9996f478508951dFe4",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
-      }
+      },
+      "derivedName": "AnchorStateRegistry"
     },
     {
       "address": "0x31e5EDc2c4cC4AA25349339f96747B54d1624160",
@@ -457,7 +463,8 @@
         "addressManager": "0x8098F676033A377b9Defe302e9fE6877cD63D575",
         "isUpgrading": false,
         "owner": "0x6d5B183F538ABB8572F5cD17109c617b994D5833"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "GnosisSafe",
@@ -486,7 +493,8 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 58,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x4665374939642965EfD8357D4568D2A77f677429",
@@ -534,7 +542,8 @@
         "safe": "0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
         "thresholdPercentage": 60,
         "version": "1.2.1-beta.1"
-      }
+      },
+      "derivedName": "LivenessModule"
     },
     {
       "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
@@ -642,7 +651,8 @@
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
         "version": "1.2.1"
-      }
+      },
+      "derivedName": "MIPS"
     },
     {
       "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
@@ -788,7 +798,9 @@
       "values": {
         "$immutable": true,
         "owner": "0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "L1StandardBridge",
@@ -825,6 +837,7 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -929,7 +942,8 @@
         "symbol": "WETH",
         "totalSupply": 0,
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "Unichain Multisig 2",
@@ -997,7 +1011,8 @@
         "$immutable": true,
         "safe": "0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC",
         "version": "1.0.1-beta.2"
-      }
+      },
+      "derivedName": "LivenessGuard"
     },
     {
       "name": "SuperchainConfig",
@@ -1074,6 +1089,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1120,6 +1136,7 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1206,7 +1223,8 @@
         "proposalCount": 0,
         "proposals": [],
         "version": "1.1.2"
-      }
+      },
+      "derivedName": "PreimageOracle"
     },
     {
       "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
@@ -1247,7 +1265,8 @@
         "bridge": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "BRIDGE": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "Unichain Multisig 1",
@@ -1457,6 +1476,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1517,6 +1537,7 @@
           "description": "Prestate tag for known prestates."
         }
       },
+      "derivedName": "PermissionedDisputeGame",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1571,7 +1592,8 @@
         "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
-      }
+      },
+      "derivedName": "DeputyGuardianModule"
     },
     {
       "name": "DelayedWETH",
@@ -1613,7 +1635,8 @@
         "symbol": "WETH",
         "totalSupply": "20447005600000000000",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "DelayedWETH"
     },
     {
       "name": "L1ERC721Bridge",
@@ -1654,6 +1677,7 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1695,7 +1719,8 @@
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2654,7 +2679,7 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "gnosisSafeModules/DeputyGuardianModule": "0x5f298bc59cbf29e7b1e8d20a3b4f84589941f57f29331cecd5aad842af268195",
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",

@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21778467,
-  "configHash": "0x1f09776a06ab400f3e73d3469aa4bd5730ebdc4ceb367ede2c67e6b1108b4fd2",
+  "configHash": "0x54987c3661c3c320be6b1e2a629bfe1acf4f7af88600b04dc7835da8fd473ddf",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -27,7 +27,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "HermezAuctionProtocol",
@@ -66,7 +67,8 @@
         "hermezRollup": "0xA68D85dF56E733A06443306A095646317B5Fa633",
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
         "tokenHEZ": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
-      }
+      },
+      "derivedName": "HermezAuctionProtocol"
     },
     {
       "address": "0x1DBA1131000664b884A1Ba238464159892252D3a",
@@ -83,7 +85,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206720,
       "sinceBlock": 12373414,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Verifier2048"
     },
     {
       "address": "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
@@ -112,7 +115,8 @@
         "MAX_WITHDRAWAL_DELAY": 1209600,
         "pendingEmergencyCouncil": "0x0000000000000000000000000000000000000000",
         "pendingGovernance": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "WithdrawalDelayer"
     },
     {
       "address": "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4",
@@ -129,7 +133,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206715,
       "sinceBlock": 12373413,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Verifier400"
     },
     {
       "name": "VerifierWithdraw",
@@ -141,7 +146,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1620206929,
       "sinceBlock": 12373429,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "VerifierWithdraw"
     },
     {
       "name": "Hermez2",
@@ -277,7 +283,8 @@
         "withdrawalDelay": 259200,
         "withdrawDelayerContract": "0x392361427Ef5e17b69cFDd1294F31ab555c86124",
         "withdrawVerifier": "0x4464A1E499cf5443541da6728871af1D5C4920ca"
-      }
+      },
+      "derivedName": "Hermez"
     },
     {
       "address": "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
@@ -315,7 +322,8 @@
         "NAME": "Gnosis Safe",
         "nonce": 1,
         "VERSION": "1.1.1"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
@@ -335,7 +343,8 @@
       "values": {
         "$immutable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "HermezGovernance"
     },
     {
       "name": "Timelock",
@@ -355,7 +364,8 @@
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Timelock"
     }
   ],
   "abis": {

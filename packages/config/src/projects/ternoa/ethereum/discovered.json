@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 21766747,
-  "configHash": "0xcacf96deb566fefd83b36518efec3a711544f83972d77099e4d5be90c4ef2d5e",
+  "configHash": "0x13c36bdc5b1367bb1d126e55f1c3f91662395ca8d1333d4983823ab00792b926",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -203,6 +203,7 @@
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC",
         "requiredAmountOfSignatures": 1
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -225,7 +226,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {

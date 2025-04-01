@@ -10,16 +10,31 @@ export interface ClientCoreDependencies {
   sourceName: string
   callsPerMinute: number
   retryStrategy: RetryHandlerVariant
+  metricsEnabled?: boolean
+}
+
+type Metrics = {
+  sizeAvg: number
+  sizeTotal: number
+  durationAvg: number
+  durationTotal: number
+  count: number
 }
 
 export abstract class ClientCore {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
+  logger: Logger
+  metricsBuffer: { duration: number; size: number }[] = []
 
   constructor(private readonly deps: ClientCoreDependencies) {
-    const logger = deps.logger.tag({ source: deps.sourceName })
-    this.retryHandler = RetryHandler.create(deps.retryStrategy, logger)
+    this.logger = deps.logger.for(this).tag({ source: deps.sourceName })
+    this.retryHandler = RetryHandler.create(
+      deps.retryStrategy,
+      this.logger.tag({ tag: deps.sourceName, source: deps.sourceName }),
+    )
     this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
+    if (deps.metricsEnabled) this.start()
   }
 
   /**
@@ -41,7 +56,14 @@ export abstract class ClientCore {
   }
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
+    const start = Date.now()
+
     const response = await this.deps.http.fetch(url, init)
+
+    const duration = Date.now() - start
+    const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
+
+    this.metricsBuffer.push({ duration, size: size })
 
     const validationInfo = this.validateResponse(response)
 
@@ -56,5 +78,53 @@ export abstract class ClientCore {
   abstract validateResponse(response: json): {
     success: boolean
     message?: string
+  }
+
+  private start(): void {
+    const interval = setInterval(async () => {
+      await this.logMetrics()
+    }, 30_000)
+
+    // object will not require the Node.js event loop to remain active
+    // nodejs.org/api/timers.html#timers_timeout_unref
+    interval.unref()
+  }
+
+  private logMetrics() {
+    if (!this.metricsBuffer.length) {
+      return
+    }
+
+    const metrics = this.metricsBuffer.reduce(
+      (acc: Metrics, curr, index) => {
+        if (index === this.metricsBuffer.length - 1) {
+          return {
+            sizeAvg: Math.floor(
+              (acc.sizeAvg + curr.size) / this.metricsBuffer.length,
+            ),
+            sizeTotal: acc.sizeTotal + curr.size,
+            durationAvg: Math.floor(
+              (acc.durationAvg + curr.duration) / this.metricsBuffer.length,
+            ),
+            durationTotal: acc.durationTotal + curr.duration,
+            count: acc.count + 1,
+          }
+        }
+
+        return {
+          sizeAvg: acc.sizeAvg + curr.size,
+          sizeTotal: acc.sizeTotal + curr.size,
+          durationAvg: acc.durationAvg + curr.duration,
+          durationTotal: acc.durationTotal + curr.duration,
+          count: acc.count + 1,
+        }
+      },
+      { sizeAvg: 0, sizeTotal: 0, durationAvg: 0, durationTotal: 0, count: 0 },
+    )
+
+    //clear buffer
+    this.metricsBuffer.splice(0)
+
+    this.logger.info('Http metrics', { ...metrics })
   }
 }

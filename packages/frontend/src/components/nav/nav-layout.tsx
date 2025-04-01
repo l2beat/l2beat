@@ -1,14 +1,17 @@
 import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
+import { externalLinks } from '~/consts/external-links'
+import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { cn } from '~/utils/cn'
-import { MobileNavProvider } from './mobile-nav-context'
-import { MobileNavbar } from './mobile-navbar'
-import { NavSidebar } from './nav-sidebar'
-import { TopNavbar } from './top-navbar'
+import { HiringBadge } from '../badge/hiring-badge'
+import { SidebarProvider } from '../core/sidebar'
+import { MobileTopNavbar } from './mobile/mobile-top-navbar'
+import { NavSidebar } from './sidebar/nav-sidebar'
+import { TopNavbar } from './top-nav/top-navbar'
 import type { NavGroup } from './types'
 
 interface Props {
@@ -142,11 +145,49 @@ export async function NavLayout({
     },
   ])
 
+  const sideLinks = [
+    {
+      title: 'About Us',
+      href: '/about-us',
+    },
+    {
+      title: 'Forum',
+      href: externalLinks.forum,
+    },
+    {
+      title: 'Donate',
+      href: '/donate',
+    },
+    {
+      title: 'Governance',
+      href: '/governance',
+    },
+    {
+      title: 'Glossary',
+      href: '/glossary',
+    },
+    {
+      title: 'Jobs',
+      href: externalLinks.jobs,
+      accessory: env.NEXT_PUBLIC_SHOW_HIRING_BADGE ? (
+        <HiringBadge />
+      ) : undefined,
+    },
+    {
+      title: 'Brand Kit',
+      href: externalLinks.brandKit,
+    },
+    {
+      title: 'FAQ',
+      href: '/faq',
+    },
+  ]
+
   return (
-    <MobileNavProvider>
+    <SidebarProvider>
       <div
         className={cn(
-          'relative flex flex-col overflow-x-clip lg:flex-row',
+          'relative flex flex-col lg:flex-row',
           topNavbar && 'lg:flex-col',
           className,
         )}
@@ -154,13 +195,17 @@ export async function NavLayout({
         {!!topNavbar && (
           <>
             {topChildren}
-            <TopNavbar logoLink={logoLink} groups={groups} />
+            <TopNavbar
+              logoLink={logoLink}
+              groups={groups}
+              sideLinks={sideLinks}
+            />
           </>
         )}
         {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileNavbar
+        <MobileTopNavbar
           groups={groups}
           logoLink={logoLink}
           className={cn(!topNavbar && 'md:mb-5')}
@@ -168,15 +213,16 @@ export async function NavLayout({
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
+          sideLinks={sideLinks}
           topNavbar={!!topNavbar}
         />
-        <div className="min-w-0 flex-1">
+        <div className={cn('min-w-0 flex-1', !topNavbar && 'lg:ml-3')}>
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
           {children}
         </div>
       </div>
-    </MobileNavProvider>
+    </SidebarProvider>
   )
 }

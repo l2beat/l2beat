@@ -118,6 +118,8 @@ export const zkfair: ScalingProject = {
     name: 'ZKFair',
     slug: 'zkfair',
     purposes: ['Universal'],
+    redWarning:
+      'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA](https://etherscan.io/address/0x4ea1f0f05e7484ee85a97303dc88c2df4288df3e).',
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
@@ -251,11 +253,12 @@ export const zkfair: ScalingProject = {
       {
         ...EXITS.REGULAR_MESSAGING('zk'),
         references: [
-          {
-            title:
-              'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-            url: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
-          },
+          // unverified
+          // {
+          //   title:
+          //     'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
+          //   url: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
+          // },
         ],
       },
     ],
@@ -286,10 +289,6 @@ export const zkfair: ScalingProject = {
         discovery.getMultisigPermission(
           'ZKFairOwner',
           'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
-        ),
-        discovery.getMultisigPermission(
-          'BridgeAdminMultiSig',
-          'The Bridge Admin is a multisig that can be used to set bridge fees and an address into which fees are transferred.',
         ),
         discovery.getPermissionDetails(
           'DAC members',

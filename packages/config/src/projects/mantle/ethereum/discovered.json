@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 22081896,
-  "configHash": "0x3b976fc1bef115648cb51fd7951081d85155eab2c4249889eaae484640363763",
+  "configHash": "0x5bab5157120252b6d6417fce7982366e4a6fdd40015b2cb9b8c462fbff4b9b29",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -173,6 +173,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -223,7 +224,8 @@
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "symbol": "MNT",
         "totalSupply": "6219316794990000000000000000"
-      }
+      },
+      "derivedName": "L1MantleToken"
     },
     {
       "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
@@ -305,6 +307,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -556,7 +559,8 @@
         "getMinDelayFormatted": "1d",
         "Proposer": ["0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
-      }
+      },
+      "derivedName": "TimelockController"
     },
     {
       "address": "0x6667961f5e9C98A76a48767522150889703Ed77D",
@@ -622,6 +626,7 @@
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -648,7 +653,8 @@
         "$immutable": true,
         "owner": "0xca35F8338054739D138884685e08b39EE2217794"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a",
@@ -688,6 +694,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -765,6 +772,7 @@
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -807,7 +815,8 @@
         "addressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "isUpgrading": false,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
@@ -1231,7 +1240,7 @@
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "global/TimelockController": "0x15a08533b0e2d9bb08add3809242c7487b2205bde0fac91a8bc371eda55eb16c",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
     "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",

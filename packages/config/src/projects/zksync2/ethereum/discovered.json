@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22044942,
-  "configHash": "0xb80dd037d0dedc0ac1029f06b143d8fd4ddb274023844f026a1791e33d0a2383",
+  "blockNumber": 22123358,
+  "configHash": "0x5a17712e9a9415024a83d463f9daee07adb0f6d029ff7315a9415834921548fe",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -31,6 +31,7 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "Governance",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -83,7 +84,6 @@
         }
       ],
       "ignoreInWatchMode": [
-        "prepareChainCommitment",
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
         "getTotalBlocksExecuted",
@@ -431,28 +431,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3270792,
+        "getFirstUnprocessedPriorityTx": 3271263,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
-        "getPriorityTreeRoot": "0x095621117fb1332a0c4d362c69fe286c0781e27f5418d079e77a294c3c8da311",
+        "getPriorityQueueSize": 8,
+        "getPriorityTreeRoot": "0x2c4aea0aac404a3924b2fb9f384fbe4ed1b6201ad1e14f9d69a9eac5109d163a",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 497874,
-        "getTotalBatchesExecuted": 497870,
-        "getTotalBatchesVerified": 497872,
-        "getTotalBlocksCommitted": 497874,
-        "getTotalBlocksExecuted": 497870,
-        "getTotalBlocksVerified": 497872,
-        "getTotalPriorityTxs": 3270799,
+        "getTotalBatchesCommitted": 498141,
+        "getTotalBatchesExecuted": 498137,
+        "getTotalBatchesVerified": 498139,
+        "getTotalBlocksCommitted": 498141,
+        "getTotalBlocksExecuted": 498137,
+        "getTotalBlocksVerified": 498139,
+        "getTotalPriorityTxs": 3271271,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -462,36 +462,6 @@
         },
         "isDiamondStorageFrozen": false,
         "isPriorityQueueActive": false,
-        "prepareChainCommitment": {
-          "totalBatchesExecuted": 497870,
-          "totalBatchesVerified": 497872,
-          "totalBatchesCommitted": 497874,
-          "l2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "l2SystemContractsUpgradeBatchNumber": 0,
-          "batchHashes": [
-            "0x7c68f5c5ae85dac45341cfdc87aeb5e492641fcf7bc4aee3a61c94f8154291c2",
-            "0x749e1edf9074f1bf9767c9cac19f20a457c73207fd88cf4ebe0f6a7a68cf2fcc",
-            "0xa4daba9a6e4af05110f8f6560424208bc2d87aa56e013c68a3237827dfc0112d",
-            "0x4682fa1ce3ac5765db668c5a3cd7775a0f119351b7ca6938a4b1cfecfc7d36f8",
-            "0x170603927e9309ec4e6e17cd2c850161ed0ec167bc3ca5d56971a68b0e7a963e"
-          ],
-          "priorityTree": {
-            "nextLeafIndex": 80,
-            "startIndex": 3270719,
-            "unprocessedIndex": 73,
-            "sides": [
-              "0x07a258c2a4dc53e855a5b8b67bf4087da9e7bcf89f85c1781cb6ed5bf9d5e220",
-              "0xc067215f20d4f2d1646e700bb1dbcc479efcf4f03b90e82b7201ac49051abd55",
-              "0x07b9611ca8b372fd1473ca5487fe0d7368c12deb26362afdb119874a1e3f908d",
-              "0x9f0b35143e17929f615affdf1899907c80b9a458d0fb1ce6070a767256f975fd",
-              "0xa7f7767838fe0fb08c390783d69add3b0c73e9a01f914761d4e035b23edd7417",
-              "0xc5b1e324c83773f5769fba7edbf5512ab2daace12d7ae13a3bfb7a35816ae586",
-              "0x183451e7453218c629d33a77620ca05816e307c0e77a3960efcd37d636aa08c2",
-              "0x095621117fb1332a0c4d362c69fe286c0781e27f5418d079e77a294c3c8da311"
-            ]
-          },
-          "isPermanentRollup": true
-        },
         "validators": [
           "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
           "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
@@ -647,6 +617,7 @@
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
         "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
       },
+      "derivedName": "L1ERC20Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -698,21 +669,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "RollupL1DAValidator",
-      "address": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
-      "type": "Contract",
-      "template": "shared-zk-stack/RollupL1DAValidator",
-      "sourceHashes": [
-        "0x0c7b1ef84ead12e6b034e6e4eb7cc9e51dba7272fe1d182749a43980da7a3932"
-      ],
-      "proxyType": "immutable",
-      "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108915,
-      "sinceBlock": 21809357,
-      "values": { "$immutable": true },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
       "name": "ValidatorTimelock",
       "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
@@ -757,6 +713,7 @@
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
         ]
       },
+      "derivedName": "ValidatorTimelock",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -824,6 +781,7 @@
         "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1033,28 +991,6 @@
       "function stateTransitionManager() view returns (address)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
-    ],
-    "0x72213dfe8CA61B0A782970dCFebFb877778f9119": [
-      "error BlobCommitmentNotPublished()",
-      "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
-      "error EmptyBlobVersionHash(uint256 index)",
-      "error InvalidL2DAOutputHash(bytes32 l2DAValidatorOutputHash)",
-      "error InvalidNumberOfBlobs(uint256 blobsProvided, uint256 maxBlobsSupported)",
-      "error InvalidPubdataCommitmentsSize()",
-      "error InvalidPubdataHash(bytes32 fullPubdataHash, bytes32 providedPubdataHash)",
-      "error InvalidPubdataSource(uint8 pubdataSource)",
-      "error NonEmptyBlobVersionHash(uint256 index)",
-      "error OnlyOneBlobWithCalldataAllowed()",
-      "error OperatorDAInputTooSmall(uint256 operatorDAInputLength, uint256 minAllowedLength)",
-      "error PointEvalCallFailed(bytes)",
-      "error PointEvalFailed(bytes)",
-      "error PubdataCommitmentsEmpty()",
-      "error PubdataInputTooSmall(uint256 pubdataInputLength, uint256 totalBlobsCommitmentSize)",
-      "error PubdataLengthTooBig(uint256 pubdataLength, uint256 totalBlobSizeBytes)",
-      "function checkDA(uint256, uint256, bytes32 _l2DAValidatorOutputHash, bytes _operatorDAInput, uint256 _maxBlobsSupported) view returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
-      "function isBlobAvailable(bytes32 _blobCommitment) view returns (bool)",
-      "function publishBlobs(bytes _pubdataCommitments)",
-      "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
     ],
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
@@ -1340,8 +1276,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond_v26": "0x5f6579ff4d790a38918f1167eadfb789b3a3b0af9b787633feb9b72e06ed8797",
-    "shared-zk-stack/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
+    "shared-zk-stack/Diamond_v26": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

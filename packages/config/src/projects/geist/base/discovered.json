@@ -1,9 +1,19 @@
 {
   "name": "geist",
   "chain": "base",
-  "blockNumber": 25463362,
+  "blockNumber": 28317508,
   "configHash": "0xe989ddf622f9fbee255a26fc30618a5070c945b8670f0d0a0119829c3f33e632",
   "entries": [
+    {
+      "address": "0x001271c57AeC639952B5201D052767c316755512",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x0a214444613E3970049BD74a8d72d5bF9EF0094c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "OneStepProver0",
       "address": "0x109b5d31a5D431B856Ae30E121A1e04302bA9872",
@@ -16,12 +26,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723027045,
       "sinceBlock": 18118849,
-      "values": { "$immutable": true }
-    },
-    {
-      "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "GnosisSafeL2",
@@ -57,9 +63,10 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 5408,
+        "nonce": 10402,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "Inbox",
@@ -114,12 +121,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6",
+      "address": "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -158,7 +160,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1729718343,
       "sinceBlock": 21464498,
       "values": {
@@ -172,7 +179,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 6965,
+        "batchCount": 11963,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xDbc9207a27aD463f0C383c05fC03AeDf1b3D90b1"],
         "bridge": "0x9F904Fea0efF79708B37B99960e05900fE310A8E",
@@ -204,7 +211,7 @@
         "rollup": "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 5331,
+        "totalDelayedMessagesRead": 5349,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -213,6 +220,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -227,7 +235,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723027165,
       "sinceBlock": 18118909,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "RollupProxy",
@@ -318,13 +327,13 @@
         "confirmPeriodBlocks": 274908,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 5633,
+        "firstUnresolvedNode": 10627,
         "inbox": "0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21466317,
-        "latestConfirmed": 5632,
-        "latestNodeCreated": 5633,
+        "latestConfirmed": 10626,
+        "latestNodeCreated": 10627,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60",
@@ -370,6 +379,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -402,11 +412,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OneStepProverMemory",
       "address": "0x696FC111c7a3E31951426660a0B1da9396056a29",
       "type": "Contract",
@@ -418,7 +423,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723027085,
       "sinceBlock": 18118869,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "RollupEventInbox",
@@ -615,18 +621,21 @@
         "$immutable": false,
         "$implementation": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
         "$members": [
-          "0x39CF304731099e756204219BF0a8cCc4738dE9dD",
-          "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6",
-          "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21",
-          "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01",
-          "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"
+          "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
+          "0x0a214444613E3970049BD74a8d72d5bF9EF0094c",
+          "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
+          "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7",
+          "0x001271c57AeC639952B5201D052767c316755512",
+          "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
+          "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
+          "0xeD9919D57162D518014C391a687AA8fb9DB55654"
         ],
-        "$threshold": 3,
+        "$threshold": 5,
         "domainSeparator": "0xfe2b5ffd0f201b89aa6e13b5aa1f580f9bb3ce92c06840de986217abbe3cdd9d",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 9,
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -679,6 +688,7 @@
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -699,7 +709,8 @@
         "proverHostIo": "0x55c6253DB419EDaE4A3d86e44064a4A5f1422751",
         "proverMath": "0xbB13eB1C56cf1408f657c6f3d56eFf188665B896",
         "proverMem": "0x696FC111c7a3E31951426660a0B1da9396056a29"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "UpgradeExecutor",
@@ -783,6 +794,7 @@
           "0x871e290d5447b958131F6d44f915F10032436ee6"
         ]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -862,7 +874,7 @@
           "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
         ],
         "allowedOutboxList": ["0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"],
-        "delayedMessageCount": 5331,
+        "delayedMessageCount": 5349,
         "inboxHistory": [
           "0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f",
           "0x6D67FD4af128eAb051EE8976e6aa65664A4806EE"
@@ -872,8 +884,8 @@
         "outboxHistory": ["0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60"],
         "rollup": "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09",
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5",
-        "sequencerMessageCount": 6965,
-        "sequencerReportedSubMessageCount": 2529973
+        "sequencerMessageCount": 11963,
+        "sequencerReportedSubMessageCount": 2563279
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -897,6 +909,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ValidatorUtils",
       "address": "0xa51F58cdE1955754329E071626C7e74d860C0406",
       "type": "Contract",
@@ -908,12 +925,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1723027369,
       "sinceBlock": 18119011,
-      "values": { "$immutable": true }
-    },
-    {
-      "address": "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "name": "ProxyAdmin",
@@ -959,7 +972,13 @@
       "values": {
         "$immutable": true,
         "owner": "0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B"
-      }
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
+      "address": "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMath",
@@ -973,7 +992,13 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1723027125,
       "sinceBlock": 18118889,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
+    },
+    {
+      "address": "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xDbc9207a27aD463f0C383c05fC03AeDf1b3D90b1",
@@ -986,6 +1011,16 @@
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
         }
       ]
+    },
+    {
+      "address": "0xeD9919D57162D518014C391a687AA8fb9DB55654",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7",
@@ -1749,7 +1784,7 @@
     "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
     "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
     "orbitstack/RollupProxy_fastConfirm": "0x2670543ebadf16810332337e6ead9b8949e04cacabf18b672794b471aa443db3",
-    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
+    "orbitstack/SequencerInbox": "0x6c9fb56a71e6c16fcf572638338a9ca472776731ab17ec214ed873a63f006223",
     "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19",
     "orbitstack/ValidatorUtils": "0x6da1a099d095b1ed59b7e8c0ae9c2494104c73fb1d73560be6733faacdb84f6f"
   }

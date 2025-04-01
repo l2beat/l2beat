@@ -2,7 +2,7 @@
   "name": "gravity",
   "chain": "ethereum",
   "blockNumber": 17065004,
-  "configHash": "0xd166500b81b1688ef6f605c8876b6672aea4041f68c667ba11567c11cf8a7097",
+  "configHash": "0xc7b5ad39a1eff4caee95a54c71486ceebb59b489a6917044f7d8e64225924253",
   "entries": [
     {
       "name": "Gravity",
@@ -26,7 +26,8 @@
         "state_lastEventNonce": 39098,
         "state_lastValsetCheckpoint": "0x1c0c3fcf1daf0414ee98c705c0b3678017a37d39c2511b3175c71da08b811433",
         "state_lastValsetNonce": 1022
-      }
+      },
+      "derivedName": "Gravity"
     }
   ],
   "abis": {

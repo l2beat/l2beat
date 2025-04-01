@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0xde27364ca05a4b88d2a420ab0833b1c2da996dce9fac8bc9915624ecedd04a85",
+  "configHash": "0xbed8b815bffe3380a587e295653c1552872982691cf07e6eb096ee5be604a556",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -46,7 +46,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470",
@@ -198,7 +199,8 @@
         "multisigThreshold": "1 of 3 (33%)",
         "nonce": 5,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x83cC8195856b0463dEd5f052021009b7985FDa2C",
@@ -270,6 +272,7 @@
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "requiredAmountOfSignatures": 3
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {

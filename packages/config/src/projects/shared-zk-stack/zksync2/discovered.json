@@ -583,8 +583,7 @@
           "from": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         }
-      ],
-      "derivedName": ""
+      ]
     },
     {
       "name": "ZkProtocolGovernor",
@@ -690,6 +689,7 @@
         "votingDelay": 259200,
         "votingPeriod": 604800
       },
+      "derivedName": "ZkProtocolGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -710,8 +710,7 @@
           "permission": "act",
           "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
         }
-      ],
-      "derivedName": ""
+      ]
     },
     {
       "name": "ZkTokenGovernor",
@@ -827,6 +826,7 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
+      "derivedName": "ZkTokenGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -1022,8 +1022,7 @@
           "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
         }
-      ],
-      "derivedName": ""
+      ]
     },
     {
       "name": "ZkTokenProxyAdmin",
@@ -1148,8 +1147,7 @@
       "name": "Guardians_l2Alias_deprecated",
       "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "ZkGovOpsGovernor",
@@ -1246,6 +1244,7 @@
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
+      "derivedName": "ZkGovOpsGovernor",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
@@ -1260,8 +1259,7 @@
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "control all roles in the ZkToken access control, including the minter roles."
         }
-      ],
-      "derivedName": ""
+      ]
     }
   ],
   "abis": {

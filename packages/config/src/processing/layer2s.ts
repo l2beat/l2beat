@@ -3,6 +3,7 @@ import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
 import { aevo } from '../projects/aevo/aevo'
 import { aiechain } from '../projects/aiechain/aiechain'
+import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
 import { align } from '../projects/align/align'
@@ -62,6 +63,7 @@ import { funki } from '../projects/funki/funki'
 import { fuse } from '../projects/fuse/fuse'
 import { galxegravity } from '../projects/galxegravity/galxegravity'
 import { gameswift } from '../projects/gameswift/gameswift'
+import { gasp } from '../projects/gasp/gasp'
 import { genlayer } from '../projects/genlayer/genlayer'
 import { gluon } from '../projects/gluon/gluon'
 import { gmnetwork } from '../projects/gmnetwork/gmnetwork'
@@ -119,6 +121,7 @@ import { nal } from '../projects/nal/nal'
 import { network3 } from '../projects/network3/network3'
 import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
+import { nodle } from '../projects/nodle/nodle'
 import { nova } from '../projects/nova/nova'
 import { oevnetwork } from '../projects/oevnetwork/oevnetwork'
 import { ola } from '../projects/ola/ola'
@@ -133,6 +136,7 @@ import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
 import { patex } from '../projects/patex/patex'
+import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
@@ -149,6 +153,7 @@ import { puffer } from '../projects/puffer/puffer'
 import { quarkchain } from '../projects/quarkchain/quarkchain'
 import { r0ar } from '../projects/r0ar/r0ar'
 import { race } from '../projects/race/race'
+import { rarimo } from '../projects/rarimo/rarimo'
 import { real } from '../projects/real/real'
 import { reddioex } from '../projects/reddioex/reddioex'
 import { reddiozkvm } from '../projects/reddiozkvm/reddiozkvm'
@@ -219,6 +224,7 @@ export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
   aiechain,
+  airas,
   alephzero,
   alienx,
   align,
@@ -276,6 +282,7 @@ export const layer2s: ScalingProject[] = [
   fuse,
   galxegravity,
   gameswift,
+  gasp,
   genlayer,
   gluon,
   gmnetwork,
@@ -333,6 +340,7 @@ export const layer2s: ScalingProject[] = [
   network3,
   neva,
   nil,
+  nodle,
   nova,
   oevnetwork,
   ola,
@@ -347,6 +355,7 @@ export const layer2s: ScalingProject[] = [
   paradex,
   parallel,
   patex,
+  pay,
   payy,
   penchain,
   pepeunchained,
@@ -363,6 +372,7 @@ export const layer2s: ScalingProject[] = [
   quarkchain,
   r0ar,
   race,
+  rarimo,
   real,
   reddioex,
   reddiozkvm,

@@ -1,5 +1,6 @@
 'use client'
-import { useMemo } from 'react'
+import { range } from 'lodash'
+import React, { useMemo } from 'react'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
@@ -19,6 +20,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { env } from '~/env'
+import {
+  L2BeatzzaTextLogoSymbol,
+  L2BeatzzaTextLogoUse,
+} from '~/icons/l2beatzza-logo'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { ExcludeAssociatedTokensCheckbox } from '../../_components/exclude-associated-tokens-checkbox'
@@ -66,9 +72,25 @@ export function ScalingSummaryTables(props: Props) {
 
   return (
     <>
-      <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
+      {env.NEXT_PUBLIC_L2BEATZZA ? (
+        <div className="mt-4 max-md:px-4 md:my-4">
+          <div className="flex h-4 select-none items-center gap-[5px] overflow-hidden text-[12px] leading-none *:shrink-0">
+            <L2BeatzzaTextLogoSymbol className="hidden" />
+            {range(16).map((index) => (
+              <React.Fragment key={index}>
+                <div className="relative size-4 leading-none">
+                  <div className="absolute left-0.5 top-[3px]">🍕</div>
+                </div>
+                <L2BeatzzaTextLogoUse />
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <HorizontalSeparator className="my-4 max-md:hidden" />
+      )}
 
-      <div className="flex flex-col gap-2 [@media(min-width:1400px)]:flex-row [@media(min-width:1400px)]:justify-between">
+      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
         <TableFilters
           entries={[
             ...props.rollups,

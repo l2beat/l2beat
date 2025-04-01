@@ -48,7 +48,7 @@ export function AnomalyIndicator({
     <Tooltip>
       <TooltipTrigger asChild>
         <div
-          className="flex h-6 w-min gap-x-0.5"
+          className="flex h-6 w-min cursor-pointer gap-x-0.5"
           title="Anomalies in the last 30 days"
         >
           {indicators.map((indicator, i) => (

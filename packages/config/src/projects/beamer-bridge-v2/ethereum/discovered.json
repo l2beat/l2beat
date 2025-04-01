@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0xc90ca9dfaf34fa98c65c26eb109a16e78034b9495972353a000530d938e755cd",
+  "configHash": "0x3a0636bbce11e69ef79ea96907ebff05591f122c730c2e6e81e86463e3612023",
   "entries": [
     {
       "name": "EthereumL1Messenger",
@@ -17,7 +17,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      }
+      },
+      "derivedName": "EthereumL1Messenger"
     },
     {
       "name": "EthereumL2Messenger",
@@ -33,7 +34,8 @@
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
         "resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD"
-      }
+      },
+      "derivedName": "EthereumL2Messenger"
     },
     {
       "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
@@ -54,7 +56,8 @@
         "$immutable": true,
         "nativeMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      }
+      },
+      "derivedName": "OptimismL1Messenger"
     },
     {
       "name": "ArbitrumL1Messenger",
@@ -71,7 +74,8 @@
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      }
+      },
+      "derivedName": "ArbitrumL1Messenger"
     },
     {
       "name": "EthereumRequestManager",
@@ -142,7 +146,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
-      }
+      },
+      "derivedName": "Resolver"
     },
     {
       "name": "EthereumFillManager",

@@ -1,4 +1,8 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
+import type {
+  BalanceOfEscrowAmountFormula,
+  TotalSupplyAmountFormula,
+} from '@l2beat/config'
 import type { BalanceProvider, TotalSupplyProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -9,15 +13,10 @@ import type {
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import type {
-  BalanceOfEscrowAmountFormula,
-  TotalSupplyAmountFormula,
-} from '../types'
 
-export type OnchainAmountConfig = (
+export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
-) & { project: string }
 
 interface OnchainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<OnchainAmountConfig>, 'name'> {
@@ -104,7 +103,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
   ) {
     const escrows = configurations.filter(
       (c) => c.properties.type === 'balanceOfEscrow',
-    ) as Configuration<BalanceOfEscrowAmountFormula & { project: string }>[]
+    ) as Configuration<BalanceOfEscrowAmountFormula>[]
 
     this.logger.info('Fetching escrow balances', {
       blockNumber,
@@ -126,7 +125,6 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       configurationId: escrows[i].id,
       amount: supply,
       timestamp,
-      project: escrows[i].properties.project,
     }))
   }
 
@@ -137,7 +135,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
   ) {
     const tokens = configurations.filter(
       (c) => c.properties.type === 'totalSupply',
-    ) as Configuration<TotalSupplyAmountFormula & { project: string }>[]
+    ) as Configuration<TotalSupplyAmountFormula>[]
 
     this.logger.info('Fetching tokens total supplies', {
       blockNumber,
@@ -156,7 +154,6 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       configurationId: tokens[i].id,
       amount: supply,
       timestamp,
-      project: tokens[i].properties.project,
     }))
   }
 
@@ -169,12 +166,14 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
           UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted amounts for configuration', {
-        id: configuration.id,
-        from: configuration.from,
-        to: configuration.to,
-        deletedRecords,
-      })
+      if (deletedRecords) {
+        this.logger.info('Deleted records for configuration', {
+          id: configuration.id,
+          from: configuration.from,
+          to: configuration.to,
+          deletedRecords,
+        })
+      }
     }
   }
 }

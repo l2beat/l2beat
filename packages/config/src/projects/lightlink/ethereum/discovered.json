@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 21995407,
-  "configHash": "0x7a4f940f727da810c42296294c6f93bf03fcacb91cfe7f36d6af129228323997",
+  "configHash": "0xe72d1a05f829d1e5463200055b59b94c4046f2cbc2c007ed2b7ae2293c37f27b",
   "entries": [
     {
       "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
@@ -63,7 +63,8 @@
         "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
         "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "Challenge"
     },
     {
       "name": "ChainOracle",
@@ -100,7 +101,8 @@
         "proxiableUUID": "EXPECT_REVERT",
         "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ChainOracle"
     },
     {
       "name": "LightLinkMultisig",
@@ -225,7 +227,8 @@
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "proxiableUUID": "EXPECT_REVERT",
         "systemVerifier": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "L1BridgeRegistry"
     },
     {
       "name": "LightLinkERC20Bridge",
@@ -336,7 +339,8 @@
         "publisher": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
         "startingTimestamp": 1717522271,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "CanonicalStateChain"
     },
     {
       "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
@@ -433,7 +437,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1717522283,
       "sinceBlock": 20019965,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "RLPReader"
     }
   ],
   "abis": {

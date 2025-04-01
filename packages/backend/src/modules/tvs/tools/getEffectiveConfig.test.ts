@@ -1,11 +1,11 @@
+import type { AmountFormula, TvsToken } from '@l2beat/config'
 import { expect, mockObject } from 'earl'
-import type { AmountFormula, Token } from '../types'
 import { getEffectiveConfig } from './getEffectiveConfig'
 
 describe(getEffectiveConfig.name, () => {
   it('should set sinceTimestamp for all amounts', async () => {
-    const tokens: Token[] = [
-      mockObject<Token>({
+    const tokens: TvsToken[] = [
+      mockObject<TvsToken>({
         amount: mockAmountFormula(0),
         valueForProject: {
           type: 'calculation',
@@ -40,7 +40,7 @@ describe(getEffectiveConfig.name, () => {
           ],
         },
       }),
-      mockObject<Token>({
+      mockObject<TvsToken>({
         amount: mockAmountFormula(30),
         valueForProject: undefined,
         valueForTotal: undefined,
@@ -120,14 +120,14 @@ describe(getEffectiveConfig.name, () => {
   })
 
   it('should remove tokens - amount not in range', async () => {
-    const tokens: Token[] = [
-      mockObject<Token>({
+    const tokens: TvsToken[] = [
+      mockObject<TvsToken>({
         amount: mockAmountFormula(0),
         valueForProject: undefined,
         valueForTotal: undefined,
       }),
       // amount formula not in range
-      mockObject<Token>({
+      mockObject<TvsToken>({
         amount: mockAmountFormula(0, 5),
         valueForProject: undefined,
         valueForTotal: undefined,
@@ -152,9 +152,9 @@ describe(getEffectiveConfig.name, () => {
   })
 
   it('should remove tokens - calculation formula with argument(s) not in range', async () => {
-    const tokens: Token[] = [
+    const tokens: TvsToken[] = [
       // calculation formula with one argument not in range - one argument should be filtered out
-      mockObject<Token>({
+      mockObject<TvsToken>({
         amount: {
           type: 'calculation',
           operator: 'sum',
@@ -164,7 +164,7 @@ describe(getEffectiveConfig.name, () => {
         valueForTotal: undefined,
       }),
       // calculation formula with all arguments not in range - entire token should be filtered out
-      mockObject<Token>({
+      mockObject<TvsToken>({
         amount: {
           type: 'calculation',
           operator: 'sum',
@@ -174,7 +174,7 @@ describe(getEffectiveConfig.name, () => {
         valueForTotal: undefined,
       }),
       // calculation formula (diff) with one argument not in range - entire token should be filtered out
-      mockObject<Token>({
+      mockObject<TvsToken>({
         amount: {
           type: 'calculation',
           operator: 'diff',

@@ -11,6 +11,10 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
+import {
+  L2BeatzzaDialog,
+  L2BeatzzaDialogProvider,
+} from '~/components/l2beatzza/l2beatzza-dialog'
 import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 
 export const metadata: Metadata = getDefaultMetadata()
@@ -56,7 +60,10 @@ export default async function RootLayout({
                 >
                   <SearchBarContextProvider projects={searchBarProjects}>
                     <RecategorisationPreviewContextProvider>
-                      {children}
+                      <L2BeatzzaDialogProvider>
+                        {children}
+                        <L2BeatzzaDialog />
+                      </L2BeatzzaDialogProvider>
                     </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>
                   <ProgressBar />

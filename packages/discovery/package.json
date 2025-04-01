@@ -16,7 +16,8 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate-schemas": "node -r esbuild-register schemas/generate.ts"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -47,6 +48,7 @@
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.4",
+    "zod-to-json-schema": "^3.24.4",
     "mock-fs": "^5.2.0"
   }
 }
