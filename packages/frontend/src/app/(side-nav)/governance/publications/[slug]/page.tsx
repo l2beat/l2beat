@@ -54,7 +54,7 @@ export default async function Page(props: Props) {
   const publicationEntry = getGovernancePublicationEntry(publication)
   return (
     <>
-      <MainPageHeader>Governance</MainPageHeader>
+      <MainPageHeader>Governance Article</MainPageHeader>
       <PrimaryCard className="md:p-8">
         <PublicationHeader publication={publicationEntry} />
         <HorizontalSeparator className="my-8" />

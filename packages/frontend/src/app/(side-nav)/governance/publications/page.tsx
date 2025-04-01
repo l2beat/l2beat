@@ -23,10 +23,10 @@ export default function Page() {
 
   return (
     <>
-      <MainPageHeader>Governance publications</MainPageHeader>
+      <MainPageHeader>Governance Publications</MainPageHeader>
       <PrimaryCard className="md:p-8">
         <h1 className="mb-4 text-3xl font-bold md:hidden">
-          Governance publications
+          Governance Publications
         </h1>
         <p className="md:paragraph-18 paragraph-16">
           Explore the L2BEAT Governance publications, and discover the latest
