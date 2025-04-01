@@ -69,14 +69,18 @@
       "name": "L1GenesisUpgrade",
       "address": "0x107e92E7360e595d8129B522ABD458361f32f66C",
       "type": "Contract",
+      "template": "shared-zk-stack/v26/L1GenesisUpgrade",
       "sourceHashes": [
         "0x50ee4004563b12b9636ff48384e6053aa1e8505ff7d5c63166b342d4eb69f6aa"
       ],
       "proxyType": "immutable",
+      "description": "Diamond implementation code to initialize new ZK chains. Used to set their chainID.",
+      "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1741097639,
       "sinceBlock": 21974049,
       "values": { "$immutable": true },
-      "derivedName": "L1GenesisUpgrade"
+      "derivedName": "L1GenesisUpgrade",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -741,7 +745,7 @@
         "0x9fe7372b4f7ead74634ad13ce858c9a6242995f2a40facaa212e524a02b506a2"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Aggregates bridge message roots from all ZK stack chains. To be used with the Gateway.",
+      "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -845,11 +849,13 @@
       "name": "CTMDeploymentTracker",
       "address": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
       "type": "Contract",
+      "template": "shared-zk-stack/v26/CTMDeploymentTracker",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0xb55fe571d010f5a5fa7f06d0aa6602a1a6b406ed8c3163fb400b0f6a947a4bba"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Handles asset registration, where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -860,6 +866,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["sharedTree"],
       "sinceTimestamp": 1739109203,
       "sinceBlock": 21809380,
       "values": {
@@ -878,7 +885,8 @@
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "derivedName": "CTMDeploymentTracker"
+      "derivedName": "CTMDeploymentTracker",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991",
@@ -2899,10 +2907,12 @@
     "shared-zk-stack/SecurityCouncil": "0x2d620c0be0c12a18cbb02aed91ed5681e263af71360d6404ff5dc03cb9f4a4cf",
     "shared-zk-stack/v26/BridgeHub": "0x6223e42c01c0b526f9060d22d104a297a9aaf56db9a41e26e96ed35d491cbb45",
     "shared-zk-stack/v26/ChainTypeManager": "0x9da3151ed9e9c7158f99bd140e94c40bd28fd15cc9d4d369464ee61f655778f4",
+    "shared-zk-stack/v26/CTMDeploymentTracker": "0x6ff3bd7620aa407a549e0e3dee87546cb606fbbeaac2bdac2683a8c252e189da",
     "shared-zk-stack/v26/L1AssetRouter": "0x61e94b7742e84945b3af3c17cd45294e6f2421180eac8788d267a598422100c0",
+    "shared-zk-stack/v26/L1GenesisUpgrade": "0x5cf4c40d7725942034b3d1644c21b83c09bbddf5ee69461c9e7c584f3e1a4dde",
     "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
     "shared-zk-stack/v26/L1Nullifier": "0x2d1bc5b5d93b8426fb6e6f34b6ad5c8d90d87a39df65ee3fbc9909f1536d1ed6",
-    "shared-zk-stack/v26/MessageRoot": "0x5e60ebc5075cd3fdd0a60421746aceda4ff513ceb8896137d3ef1107b954fc6c",
+    "shared-zk-stack/v26/MessageRoot": "0x1767029a6621737d6bf6e18cae938df805aed751f467045f51a07e2f158879fc",
     "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x5da81803a64480b9760fb58ec48326d82ba745d88173789b38b8fda7d50f6aa6",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e"

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9cf42ea3a42aaaabca576b099bd7b207b47ff61b
+Generated with discovered.json: 0xf6ee1838027b028dbe0b0fbd8ef3560d4053f57e
 
-# Diff at Tue, 01 Apr 2025 08:33:05 GMT:
+# Diff at Tue, 01 Apr 2025 09:18:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@fe4425654a43d1265c2bb105623473a7b7e679b1 block: 22123258
@@ -478,19 +478,19 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1GenesisUpgrade (0x107e92E7360e595d8129B522ABD458361f32f66C)
-    +++ description: None
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
 ```
 
 ```diff
 +   Status: CREATED
     contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD)
-    +++ description: Aggregates bridge message roots from all ZK stack chains. To be used with the Gateway.
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
 ```
 
 ```diff
 +   Status: CREATED
     contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860)
-    +++ description: None
+    +++ description: Handles asset registration, where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
 ```
 
 ## Source code changes
