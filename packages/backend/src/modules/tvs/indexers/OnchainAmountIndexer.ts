@@ -14,10 +14,9 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 
-export type OnchainAmountConfig = (
+export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
-) & { project: string }
 
 interface OnchainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<OnchainAmountConfig>, 'name'> {
@@ -104,7 +103,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
   ) {
     const escrows = configurations.filter(
       (c) => c.properties.type === 'balanceOfEscrow',
-    ) as Configuration<BalanceOfEscrowAmountFormula & { project: string }>[]
+    ) as Configuration<BalanceOfEscrowAmountFormula>[]
 
     this.logger.info('Fetching escrow balances', {
       blockNumber,
@@ -126,7 +125,6 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       configurationId: escrows[i].id,
       amount: supply,
       timestamp,
-      project: escrows[i].properties.project,
     }))
   }
 
@@ -137,7 +135,7 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
   ) {
     const tokens = configurations.filter(
       (c) => c.properties.type === 'totalSupply',
-    ) as Configuration<TotalSupplyAmountFormula & { project: string }>[]
+    ) as Configuration<TotalSupplyAmountFormula>[]
 
     this.logger.info('Fetching tokens total supplies', {
       blockNumber,
@@ -156,7 +154,6 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
       configurationId: tokens[i].id,
       amount: supply,
       timestamp,
-      project: tokens[i].properties.project,
     }))
   }
 
