@@ -53,7 +53,7 @@
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
       "type": "Contract",
-      "template": "shared-zk-stack/Diamond_v26",
+      "template": "shared-zk-stack/v26/Diamond",
       "sourceHashes": [
         "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea",
         "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
@@ -1276,7 +1276,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond_v26": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
+    "shared-zk-stack/v26/Diamond": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

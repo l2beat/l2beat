@@ -181,7 +181,7 @@
       "name": "CronosZkEvm",
       "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
       "type": "Contract",
-      "template": "shared-zk-stack/Diamond_v26",
+      "template": "shared-zk-stack/v26/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
@@ -1123,7 +1123,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "shared-zk-stack/Diamond_v26": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
+    "shared-zk-stack/v26/Diamond": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

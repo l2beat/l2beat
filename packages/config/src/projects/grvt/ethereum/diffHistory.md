@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf31944eb577f00a18f3fcac709978178f59d25ea
+
+# Diff at Tue, 01 Apr 2025 10:06:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22122838
+- current block number: 22122838
+
+## Description
+
+ZK stack protocol upgrade v26 part 2: L1 shared contracts upgrade (CTM, L1NativeTokenVault, ...).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22122838 (main branch discovery), not current.
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/Diamond_v26"
++        "shared-zk-stack/v26/Diamond"
+    }
+```
+
 Generated with discovered.json: 0x31ee62342498fd2d767adb9b16770c250b4a50ac
 
 # Diff at Tue, 25 Mar 2025 10:35:35 GMT:
