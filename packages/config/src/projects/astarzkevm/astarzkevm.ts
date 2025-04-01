@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -83,6 +83,23 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
         'https://t.me/PlasmOfficial',
       ],
     },
+  },
+  chainConfig: {
+    name: 'astarzkevm',
+    chainId: 3776,
+    explorerUrl: 'https://astar-zkevm.explorer.startale.com',
+    sinceTimestamp: UnixTime(1708632059),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 183817,
+        version: '3',
+      },
+    ],
+    apis: [
+      /* No RPC, project archived */
+    ],
   },
   discovery,
   isForcedBatchDisallowed,
