@@ -65,6 +65,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                   <GrissiniDetails
                     values={project.header.daLayerGrissiniValues}
                     descriptionAsTooltip
+                    info="compact"
                   />
                 </div>
               </div>

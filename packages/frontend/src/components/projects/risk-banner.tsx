@@ -18,6 +18,7 @@ interface RiskBannerProps extends RosetteValue {
   className?: string
   size?: 'small' | 'regular'
   descriptionAsTooltip?: boolean
+  info?: 'compact' | 'full'
 }
 
 export function RiskBanner({
@@ -29,6 +30,7 @@ export function RiskBanner({
   className,
   size = 'regular',
   descriptionAsTooltip,
+  info = 'full',
 }: RiskBannerProps) {
   const adjSentiment = sentiment ?? 'neutral'
   const content = (
@@ -62,10 +64,18 @@ export function RiskBanner({
             )}
           >
             {value}
+            {warning && info === 'compact' && (
+              <RoundedWarningIcon
+                className={cn(
+                  'ml-1 inline-block fill-current',
+                  sentimentToTextColor(warning.sentiment),
+                )}
+              />
+            )}
           </div>
         </div>
       </div>
-      {warning && (
+      {warning && info === 'full' && (
         <div className="relative">
           <GrissiniStick
             className={cn(
@@ -75,14 +85,17 @@ export function RiskBanner({
             sentiment={warning.sentiment}
           />
           <WarningBar
-            className="rounded-t-none pl-5 md:pl-6"
+            className={cn(
+              'rounded-t-none pl-5 md:pl-6',
+              sentimentToTransparentBgColor(warning.sentiment),
+            )}
             icon={RoundedWarningIcon}
             text={warning.value}
             color={sentimentToWarningBarColor(warning.sentiment)}
           />
         </div>
       )}
-      {description && !descriptionAsTooltip && (
+      {description && info === 'full' && (
         <Markdown className="mt-2 font-normal leading-snug text-black/80 dark:text-white/80 md:text-lg">
           {description}
         </Markdown>
@@ -92,7 +105,17 @@ export function RiskBanner({
   return descriptionAsTooltip ? (
     <Tooltip>
       <TooltipTrigger>{content}</TooltipTrigger>
-      <TooltipContent>{description}</TooltipContent>
+      <TooltipContent>
+        {warning && (
+          <WarningBar
+            className="mb-2"
+            icon={RoundedWarningIcon}
+            text={warning.value}
+            color={sentimentToWarningBarColor(warning.sentiment)}
+          />
+        )}
+        {description}
+      </TooltipContent>
     </Tooltip>
   ) : (
     content
