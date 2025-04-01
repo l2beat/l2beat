@@ -69,7 +69,7 @@ export function RiskBanner({
         <div className="relative">
           <GrissiniStick
             className={cn(
-              'absolute inset-y-0 left-0 shrink-0 rounded-b-full max-md:w-1',
+              'absolute inset-y-0 left-0 h-full shrink-0 rounded-b-full max-md:w-1',
               className,
             )}
             sentiment={warning.sentiment}
