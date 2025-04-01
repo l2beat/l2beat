@@ -108,9 +108,11 @@ export function L3RiskAnalysisSection({
         The information below reflects{' '}
         {combined ? 'combined L2 & L3' : 'individual L3'} risks.
       </div>
-      {(combined ?? l3.risks).map((value) => (
-        <RiskBanner key={value.name} {...value} />
-      ))}
+      <div className="space-y-6">
+        {(combined ?? l3.risks).map((value) => (
+          <RiskBanner key={value.name} {...value} />
+        ))}
+      </div>
     </ProjectSection>
   )
 }
