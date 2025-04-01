@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 
-export function SingleGrissini({
+export function GrissiniStick({
   sentiment,
   className,
   ...rest

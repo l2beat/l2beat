@@ -2,7 +2,7 @@
 
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../types'
-import { SingleGrissini } from './single-grissini'
+import { GrissiniStick } from './grissini-stick'
 
 interface Props {
   values: RosetteValue[]
@@ -24,7 +24,7 @@ export function GrissiniIcon({ values, className }: Props) {
       )}
     >
       {display.map((value, i) => (
-        <SingleGrissini
+        <GrissiniStick
           sentiment={
             hasNoBridge ? 'UnderReview' : (value.sentiment ?? 'neutral')
           }

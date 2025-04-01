@@ -176,7 +176,7 @@ export function MultipleBridgeDetails({ project }: Props) {
         ) : (
           <GrissiniDetails
             values={project.header.daBridgeGrissiniValues}
-            showTooltip
+            descriptionAsTooltip
           />
         )}
       </div>

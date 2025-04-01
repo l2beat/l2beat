@@ -1,7 +1,6 @@
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../rosette/types'
 import {
-  sentimentToOpaqueBgColor,
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
@@ -13,6 +12,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
+import { GrissiniStick } from '../rosette/grissini/grissini-stick'
 
 interface RiskBannerProps extends RosetteValue {
   className?: string
@@ -43,10 +43,10 @@ export function RiskBanner({
           className,
         )}
       >
-        <div
+        <GrissiniStick
+          sentiment={adjSentiment}
           className={cn(
-            'h-full w-2 shrink-0 rounded-full max-md:w-1',
-            sentimentToOpaqueBgColor(adjSentiment),
+            'h-full shrink-0 max-md:w-1',
             warning && 'rounded-b-none',
             className,
           )}
@@ -67,12 +67,12 @@ export function RiskBanner({
       </div>
       {warning && (
         <div className="relative">
-          <div
+          <GrissiniStick
             className={cn(
-              'absolute inset-y-0 left-0 h-full w-2 shrink-0 rounded-b-full max-md:w-1',
-              sentimentToOpaqueBgColor(warning.sentiment),
+              'absolute inset-y-0 left-0 shrink-0 rounded-b-full max-md:w-1',
               className,
             )}
+            sentiment={warning.sentiment}
           />
           <WarningBar
             className="rounded-t-none pl-5 md:pl-6"

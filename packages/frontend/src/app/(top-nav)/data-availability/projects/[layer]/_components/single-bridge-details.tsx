@@ -1,5 +1,5 @@
+import { RiskBanner } from '~/components/projects/risk-banner'
 import { InlinedNoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
-import { SingleGrissiniDetails } from '~/components/rosette/grissini/single-grissini-details'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 
 interface Props {
@@ -16,7 +16,7 @@ export function SingleBridgeDetails({ project }: Props) {
         DA Bridge risks
       </div>
       {project.header.daLayerGrissiniValues.map((value) => (
-        <SingleGrissiniDetails key={value.name} {...value} />
+        <RiskBanner key={value.name} {...value} descriptionAsTooltip />
       ))}
       <div className="mt-3 text-xs text-secondary md:hidden">
         DA Bridge risks
@@ -25,7 +25,7 @@ export function SingleBridgeDetails({ project }: Props) {
         <InlinedNoBridgeGrissiniDetailsPlaceholder className="md:col-span-3" />
       ) : (
         project.header.daBridgeGrissiniValues.map((value) => (
-          <SingleGrissiniDetails key={value.name} {...value} />
+          <RiskBanner key={value.name} {...value} descriptionAsTooltip />
         ))
       )}
     </div>
