@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
+import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import type { BasicTableProps } from '../basic-table'
-import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 
 export type RowType = ReturnType<typeof getRowType>
 export function getRowType(
