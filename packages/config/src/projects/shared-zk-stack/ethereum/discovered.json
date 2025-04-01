@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22167170,
-  "configHash": "0xbc6d8f30a8f312cc745506984fab3fd2af0c16f4668a17d94298d6ed01b05504",
+  "configHash": "0xc938bc28024428422625c0f1ba367d7deb66752fd02996c886639947afda08b6",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -801,6 +801,11 @@
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "description": "extend the legal veto period, approve a protocol upgrade."
+        },
+        {
+          "permission": "interact",
+          "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "description": "one of its 3/3 signers."
         }
       ],
       "sinceTimestamp": 1738855979,
@@ -913,6 +918,11 @@
           "permission": "interact",
           "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "description": "soft freeze, hard freeze, approve a protocol upgrade."
+        },
+        {
+          "permission": "interact",
+          "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "description": "one of its 3/3 signers."
         }
       ],
       "sinceTimestamp": 1738855991,
@@ -1406,6 +1416,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "description": "one of its 3/3 signers."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721665487,
       "sinceBlock": 20363246,
@@ -1905,6 +1922,26 @@
       ],
       "proxyType": "immutable",
       "description": "A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
+          "description": "one of its 3/3 signers.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
+          "description": "one of its 3/3 signers.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c",
+          "description": "one of its 3/3 signers.",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2902,7 +2939,7 @@
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/EmergencyUpgradeBoard": "0x3aaf3bcd68c656fea1345a22d86dc81125503b4efbf4778d38476d1d4103f714",
+    "shared-zk-stack/EmergencyUpgradeBoard": "0x91f63b61f586400a5d16bbe6888e7044e78a334f3c590d4392a40e5f8a0a1dfd",
     "shared-zk-stack/Guardians": "0xa9db374eee5c5539d49661c37b377921cd849648da2f635ff2fa631715585cbc",
     "shared-zk-stack/SecurityCouncil": "0x2d620c0be0c12a18cbb02aed91ed5681e263af71360d6404ff5dc03cb9f4a4cf",
     "shared-zk-stack/v26/BridgeHub": "0x6223e42c01c0b526f9060d22d104a297a9aaf56db9a41e26e96ed35d491cbb45",

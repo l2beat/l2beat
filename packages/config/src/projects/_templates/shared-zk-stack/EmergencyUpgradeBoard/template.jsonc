@@ -3,7 +3,7 @@
   "description": "A custom contract allowing a 3/3 of {{SECURITY_COUNCIL}}, {{ZK_FOUNDATION_SAFE}} and {{GUARDIANS}} to `executeEmergencyUpgrade()` via the {{PROTOCOL_UPGRADE_HANDLER}}.",
   "category": "gov",
   "fields": {
-    "GUARDIANS":{
+    "GUARDIANS": {
       "permissions": [
         {
           "type": "interact",
@@ -11,7 +11,7 @@
         }
       ]
     },
-    "SECURITY_COUNCIL":{
+    "SECURITY_COUNCIL": {
       "permissions": [
         {
           "type": "interact",
@@ -19,7 +19,7 @@
         }
       ]
     },
-    "ZK_FOUNDATION_SAFE":{
+    "ZK_FOUNDATION_SAFE": {
       "permissions": [
         {
           "type": "interact",

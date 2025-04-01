@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf6ee1838027b028dbe0b0fbd8ef3560d4053f57e
+Generated with discovered.json: 0x2bdce1787da916490b222399491839d7ffdc556e
 
-# Diff at Tue, 01 Apr 2025 10:04:04 GMT:
+# Diff at Tue, 01 Apr 2025 10:41:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123258
@@ -197,17 +197,15 @@ Provide description of changes. This section will be preserved.
 +        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"}
       directlyReceivedPermissions.5:
 +        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"}
-      directlyReceivedPermissions.4.from:
--        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-+        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
-      directlyReceivedPermissions.3.from:
--        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
-+        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"}
       directlyReceivedPermissions.2.from:
--        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
 +        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
       directlyReceivedPermissions.1.from:
--        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
 +        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
       directlyReceivedPermissions.0.from:
 -        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
@@ -437,34 +435,26 @@ Provide description of changes. This section will be preserved.
 +        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
       receivedPermissions.6:
 +        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.5.from:
--        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-+        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
-      receivedPermissions.5.via.1.address:
--        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-+        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
-      receivedPermissions.4.from:
--        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
-+        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","via":[{"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
       receivedPermissions.3.permission:
 -        "upgrade"
 +        "interact"
-      receivedPermissions.3.from:
--        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
-+        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       receivedPermissions.3.via.1:
 -        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
       receivedPermissions.3.description:
 +        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
       receivedPermissions.2.from:
--        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
 +        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      receivedPermissions.2.via.1.address:
+      receivedPermissions.1.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.1.via.1.address:
 -        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
 +        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-      receivedPermissions.1.from:
--        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
-+        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
       receivedPermissions.0.permission:
 -        "upgrade"
 +        "interact"
@@ -493,6 +483,18 @@ Provide description of changes. This section will be preserved.
     +++ description: Handles asset registration, where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
 ```
 
+```diff
++   Status: CREATED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+```
+
+```diff
++   Status: CREATED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+```
+
 ## Source code changes
 
 ```diff
@@ -501,13 +503,17 @@ Provide description of changes. This section will be preserved.
  .../TransparentUpgradeableProxy.p.sol              |    0
  .../ChainTypeManager/ChainTypeManager.sol}         |  476 ++-
  .../TransparentUpgradeableProxy.p.sol              |    0
+ .../ethereum/.flat/L1AssetRouter/L1AssetRouter.sol | 2359 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++
  .../ethereum/.flat/L1GenesisUpgrade.sol            | 3775 ++++++++++++++++++++
+ .../L1NativeTokenVault/L1NativeTokenVault.sol      | 2202 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++
  .../L1Nullifier/L1Nullifier.sol}                   | 1488 ++++----
  .../L1Nullifier/TransparentUpgradeableProxy.p.sol  |  729 ++++
  .../ethereum/.flat/MessageRoot/MessageRoot.sol     | 1448 ++++++++
  .../MessageRoot/TransparentUpgradeableProxy.p.sol  |  729 ++++
  .../ProtocolUpgradeHandler.sol                     |   64 +-
- 11 files changed, 10518 insertions(+), 1406 deletions(-)
+ 15 files changed, 16537 insertions(+), 1406 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -526,6 +532,34 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"extend the legal veto period, approve a protocol upgrade."}
+      receivedPermissions.0.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      receivedPermissions.0.description:
+-        "extend the legal veto period, approve a protocol upgrade."
++        "one of its 3/3 signers."
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"soft freeze, hard freeze, approve a protocol upgrade."}
+      receivedPermissions.0.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      receivedPermissions.0.description:
+-        "soft freeze, hard freeze, approve a protocol upgrade."
++        "one of its 3/3 signers."
+    }
+```
+
+```diff
     contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
     +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
       template:
@@ -535,12 +569,9 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+-   Status: DELETED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
     +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
-      template:
--        "shared-zk-stack/L1AssetRouter"
-+        "shared-zk-stack/v26/L1AssetRouter"
-    }
 ```
 
 ```diff
@@ -553,11 +584,32 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) {
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","description":"one of its 3/3 signers."}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
     +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
-      template:
--        "shared-zk-stack/L1NativeTokenVault"
-+        "shared-zk-stack/v26/L1NativeTokenVault"
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"}
+      directlyReceivedPermissions.3:
+-        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56"}
+      directlyReceivedPermissions.2.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      directlyReceivedPermissions.1.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
     }
 ```
 
@@ -585,6 +637,33 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
       template:
 -        "shared-zk-stack/ProtocolUpgradeHandler"
 +        "shared-zk-stack/v25/ProtocolUpgradeHandler"
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.3.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.2.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.2.via.1.address:
+-        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      receivedPermissions.1.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      receivedPermissions.1.via.1.address:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+      issuedPermissions:
++        [{"permission":"interact","to":"0x66E4431266DC7E04E7d8b7FE9d2181253df7F410","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0x600dA620Ab29F41ABC6596a15981e14cE58c86b8","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0xbC1653bd3829dfEc575AfC3816D4899cd103B51c","description":"one of its 3/3 signers.","via":[]}]
     }
 ```
 
