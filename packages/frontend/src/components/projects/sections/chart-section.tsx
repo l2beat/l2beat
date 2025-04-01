@@ -21,6 +21,7 @@ export interface ChartSectionProps extends ProjectSectionProps {
   stacked?: boolean
   tokens?: ProjectTokens
   projectId: string
+  slug?: string
   milestones: Milestone[]
   category?: ProjectScalingCategory
   projectName?: string
@@ -52,6 +53,7 @@ function ProjectChart(props: ChartSectionProps) {
             projectId={props.projectId}
             tokens={props.tokens}
             isBridge={!!props.isBridge}
+            slug={props.slug}
           />
         )
       }

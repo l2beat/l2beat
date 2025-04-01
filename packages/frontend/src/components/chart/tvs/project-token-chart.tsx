@@ -38,6 +38,7 @@ import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
+import { TvsBreakdownButton } from './stacked/project-stacked-tvs-chart'
 
 interface Props {
   projectId: string
@@ -51,6 +52,7 @@ interface Props {
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
   showStackedChartLegend?: boolean
+  tvsBreakdownUrl: string | undefined
 }
 
 export function ProjectTokenChart({
@@ -65,6 +67,7 @@ export function ProjectTokenChart({
   unit,
   setUnit,
   showStackedChartLegend,
+  tvsBreakdownUrl,
 }: Props) {
   const properUnit = unit === 'usd' ? 'usd' : token.symbol
 
@@ -143,7 +146,12 @@ export function ProjectTokenChart({
           <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
         </AreaChart>
       </ChartContainer>
-      <div className={cn(!showStackedChartLegend && 'mt-4')}>
+      <div
+        className={cn(
+          tvsBreakdownUrl && 'flex flex-wrap justify-between gap-1',
+          !showStackedChartLegend && 'mt-4',
+        )}
+      >
         <TokenChartUnitControls
           isBridge={isBridge}
           unit={unit}
@@ -152,6 +160,9 @@ export function ProjectTokenChart({
           token={token}
           setToken={setToken}
         />
+        {tvsBreakdownUrl && (
+          <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+        )}
       </div>
     </section>
   )

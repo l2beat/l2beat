@@ -279,6 +279,7 @@ export async function getScalingProjectEntry(
         stacked: true,
         title: 'Value Secured',
         projectId: project.id,
+        slug: project.slug,
         milestones: sortedMilestones,
         tokens,
       },
