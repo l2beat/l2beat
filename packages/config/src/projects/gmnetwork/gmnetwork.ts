@@ -80,13 +80,7 @@ export const gmnetwork: ScalingProject = opStackL2({
   chainConfig: {
     name: 'gmnetwork',
     chainId: 2777,
-    apis: [
-      {
-        type: 'rpc',
-        url: 'https://rpc.gmnetwork.ai/',
-        callsPerMinute: 1500,
-      },
-    ],
+    apis: [],
   },
   customDa: {
     type: 'DA Challenges',
