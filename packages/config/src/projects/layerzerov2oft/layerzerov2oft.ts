@@ -328,6 +328,10 @@ To receive the original locked token back, a user would have to return to the ma
           'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
         ),
         discovery.getContractDetails(
+          'USDT0DVN',
+          'The USDT0 Verifier delivers their verified messages through this contract. USDT0 operations must be verified by this DVN.',
+        ),
+        discovery.getContractDetails(
           'Treasury',
           'Manages fees and fee recipients for registered OApps. Fees accumulate in the sendLib and OApp owners can withdraw them.',
         ),
