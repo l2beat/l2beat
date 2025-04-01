@@ -1,5 +1,4 @@
-import * as fs from 'fs'
-import { type Project, ProjectService } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
@@ -7,7 +6,6 @@ import {
   generateConfigurationId,
 } from '../../modules/tvs/tools/extractPricesAndAmounts'
 import { getEffectiveConfig } from '../../modules/tvs/tools/getEffectiveConfig'
-import type { ProjectTvsConfig } from '../../modules/tvs/types'
 import type { TvsConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
@@ -99,27 +97,4 @@ export async function getTvsConfig(
     chains,
     blockTimestamps,
   }
-}
-
-export function readConfigs(
-  projects: Project<'tvlConfig'>[],
-): ProjectTvsConfig[] {
-  const projectConfigs: ProjectTvsConfig[] = []
-
-  for (const project of projects) {
-    const fileName = project.id.replace(/[=;]+/g, '')
-    const filePath = `./src/modules/tvs/config/${fileName}.json`
-
-    if (!fs.existsSync(filePath)) {
-      continue
-    }
-
-    const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
-    projectConfigs.push({
-      projectId: project.id,
-      tokens: json.tokens,
-    })
-  }
-
-  return projectConfigs
 }
