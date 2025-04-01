@@ -35,8 +35,6 @@ export async function getTvlConfig(
     projects.filter(isRpcUnconfigured).map((p) => p.id),
   )
 
-  console.log(archived)
-
   const chainConfigs = chains
     .filter((c) => !archived.has(c.name))
     .filter((c) => tvlChainNames.has(c.name) && flags.isEnabled('tvl', c.name))
