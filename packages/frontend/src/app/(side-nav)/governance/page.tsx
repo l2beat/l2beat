@@ -82,7 +82,7 @@ function Header() {
               {delegatedProjects.map((delegatedProject) => (
                 <CustomLink
                   key={delegatedProject.id}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-surface-secondary p-2 text-xs tracking-[-0.14px] md:w-fit"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary p-2 text-xs tracking-[-0.14px] md:w-fit"
                   href={delegatedProject.data.delegateTokensUrl}
                   underline={false}
                 >
