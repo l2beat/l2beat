@@ -23,7 +23,7 @@ import { BADGES } from '../common/badges'
 import { formatExecutionDelay } from '../common/formatDelays'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
@@ -68,7 +68,6 @@ export interface ZkStackConfigCommon {
   addedAt: UnixTime
   capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
-  discovery_ZKstackGovL2: ProjectDiscovery
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -125,7 +124,7 @@ export type Upgradeability = {
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
-  const { discovery, discovery_ZKstackGovL2 } = templateVars
+  const discovery_ZKstackGovL2 = new ProjectDiscovery('shared-zk-stack', 'zksync2')
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
@@ -152,25 +151,25 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'ProtocolTimelockController',
     'getMinDelay',
   )
-  const executionDelayS = discovery.getContractValue<number>(
+  const executionDelayS = templateVars.discovery.getContractValue<number>(
     'ValidatorTimelock',
     'executionDelay',
   )
   const executionDelay = executionDelayS > 0 && formatSeconds(executionDelayS)
 
-  const legalVetoStandardS = discovery.getContractValue<number>(
+  const legalVetoStandardS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'STANDARD_LEGAL_VETO_PERIOD',
   )
-  const legalVetoExtendedS = discovery.getContractValue<number>(
+  const legalVetoExtendedS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'EXTENDED_LEGAL_VETO_PERIOD',
   )
-  const upgradeDelayPeriodS = discovery.getContractValue<number>(
+  const upgradeDelayPeriodS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'UPGRADE_DELAY_PERIOD',
   )
-  const upgradeWaitOrExpireS = discovery.getContractValue<number>(
+  const upgradeWaitOrExpireS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'UPGRADE_WAIT_OR_EXPIRE_PERIOD',
   )
@@ -188,36 +187,36 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     upgradeWaitOrExpireS +
     upgradeDelayPeriodS
 
-  const softFreezeS = discovery.getContractValue<number>(
+  const softFreezeS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'SOFT_FREEZE_PERIOD',
   )
-  const hardFreezeS = discovery.getContractValue<number>(
+  const hardFreezeS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'HARD_FREEZE_PERIOD',
   )
 
-  const scMemberCount = discovery.getContractValue<string[]>(
+  const scMemberCount = templateVars.discovery.getContractValue<string[]>(
     'SecurityCouncil',
     '$members',
   ).length
-  const scApprovalThreshold = discovery.getContractValue<number>(
+  const scApprovalThreshold = templateVars.discovery.getContractValue<number>(
     'SecurityCouncil',
     'APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD',
   )
-  const scMainThreshold = discovery.getContractValue<number>(
+  const scMainThreshold = templateVars.discovery.getContractValue<number>(
     'SecurityCouncil',
     'EIP1271_THRESHOLD',
   )
-  const guardiansMemberCount = discovery.getContractValue<string[]>(
+  const guardiansMemberCount = templateVars.discovery.getContractValue<string[]>(
     'Guardians',
     '$members',
   ).length
-  const guardiansMainThreshold = discovery.getContractValue<number>(
+  const guardiansMainThreshold = templateVars.discovery.getContractValue<number>(
     'Guardians',
     'EIP1271_THRESHOLD',
   )
-  const guardiansExtendThreshold = discovery.getContractValue<number>(
+  const guardiansExtendThreshold = templateVars.discovery.getContractValue<number>(
     'Guardians',
     'EXTEND_LEGAL_VETO_THRESHOLD',
   )
