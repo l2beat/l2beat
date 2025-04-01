@@ -645,6 +645,8 @@ function orbitStackCommon(
             'baseStake',
           )
 
+          const blockTime = templateVars.blockNumberOpcodeTimeSeconds ?? 12
+
           const assertionsChallengePeriod =
             templateVars.discovery.getContractValue<number>(
               'RollupProxy',
@@ -671,8 +673,8 @@ function orbitStackCommon(
             validatorWhitelistDisabled,
             baseStake,
             minimumAssertionPeriod,
-            assertionsChallengePeriod,
-            edgesChallengePeriod,
+            assertionsChallengePeriod * blockTime,
+            edgesChallengePeriod * blockTime,
             numBigStepLevels,
             stakeAmounts,
           )
@@ -1271,7 +1273,7 @@ function BoLDStateValidation(
   stakeAmounts: number[],
 ): ProjectScalingStateValidation {
   let stakeDescription = ''
-  for (let i = 0; i < numBigStepLevels; i++) {
+  for (let i = 0; i < numBigStepLevels + 2; i++) {
     if (i === 0) {
       stakeDescription += `Level ${i} (block level) requires a stake of ${utils.formatEther(stakeAmounts[i])} ETH`
     } else {
