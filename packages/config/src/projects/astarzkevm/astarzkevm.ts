@@ -30,6 +30,7 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const astarzkevm: ScalingProject = polygonCDKStack({
+  isArchived: true,
   addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   daProvider: {
@@ -132,6 +133,13 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },
   milestones: [
+    {
+      title: 'Astar zkEVM sunsets',
+      url: 'https://x.com/AstarNetwork/status/1906658995538194650',
+      date: '2025-03-31',
+      description: 'Astar Network has officially sunset.',
+      type: 'general',
+    },
     {
       title: 'Astar zkEVM Launch',
       url: 'https://astar.network/blog/astars-zkevm-mainnet-is-live-86096',
