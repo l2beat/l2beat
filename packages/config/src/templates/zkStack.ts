@@ -124,7 +124,10 @@ export type Upgradeability = {
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
-  const discovery_ZKstackGovL2 = new ProjectDiscovery('shared-zk-stack', 'zksync2')
+  const discovery_ZKstackGovL2 = new ProjectDiscovery(
+    'shared-zk-stack',
+    'zksync2',
+  )
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
@@ -208,18 +211,19 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'SecurityCouncil',
     'EIP1271_THRESHOLD',
   )
-  const guardiansMemberCount = templateVars.discovery.getContractValue<string[]>(
-    'Guardians',
-    '$members',
-  ).length
-  const guardiansMainThreshold = templateVars.discovery.getContractValue<number>(
-    'Guardians',
-    'EIP1271_THRESHOLD',
-  )
-  const guardiansExtendThreshold = templateVars.discovery.getContractValue<number>(
-    'Guardians',
-    'EXTEND_LEGAL_VETO_THRESHOLD',
-  )
+  const guardiansMemberCount = templateVars.discovery.getContractValue<
+    string[]
+  >('Guardians', '$members').length
+  const guardiansMainThreshold =
+    templateVars.discovery.getContractValue<number>(
+      'Guardians',
+      'EIP1271_THRESHOLD',
+    )
+  const guardiansExtendThreshold =
+    templateVars.discovery.getContractValue<number>(
+      'Guardians',
+      'EXTEND_LEGAL_VETO_THRESHOLD',
+    )
   const protocolStartProposalThresholdM =
     discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
@@ -437,7 +441,7 @@ There are two other tracks of Governance also starting with DAO Delegate proposa
 The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.
 Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
 ## Emergency path
-SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
+SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${templateVars.discovery.getMultisigStats(
         'ZK Foundation Multisig',
       )}) form a de-facto 3/3 Multisig
 by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
