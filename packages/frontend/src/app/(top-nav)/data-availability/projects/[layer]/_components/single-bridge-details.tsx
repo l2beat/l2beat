@@ -16,7 +16,12 @@ export function SingleBridgeDetails({ project }: Props) {
         DA Bridge risks
       </div>
       {project.header.daLayerGrissiniValues.map((value) => (
-        <RiskBanner key={value.name} {...value} descriptionAsTooltip />
+        <RiskBanner
+          key={value.name}
+          {...value}
+          descriptionAsTooltip
+          info="compact"
+        />
       ))}
       <div className="mt-3 text-xs text-secondary md:hidden">
         DA Bridge risks
@@ -25,7 +30,12 @@ export function SingleBridgeDetails({ project }: Props) {
         <InlinedNoBridgeGrissiniDetailsPlaceholder className="md:col-span-3" />
       ) : (
         project.header.daBridgeGrissiniValues.map((value) => (
-          <RiskBanner key={value.name} {...value} descriptionAsTooltip />
+          <RiskBanner
+            key={value.name}
+            {...value}
+            descriptionAsTooltip
+            info="compact"
+          />
         ))
       )}
     </div>
