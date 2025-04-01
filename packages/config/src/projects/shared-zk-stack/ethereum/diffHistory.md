@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x21c76bbb43bb73e246a3b0eddca458b71120a2aa
+Generated with discovered.json: 0x4a601208e43fef582b31de7a1f90883a6e5db2b3
 
-# Diff at Mon, 31 Mar 2025 14:58:57 GMT:
+# Diff at Tue, 01 Apr 2025 07:02:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@fe4425654a43d1265c2bb105623473a7b7e679b1 block: 22123258
@@ -193,8 +193,6 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
     +++ description: None
-      directlyReceivedPermissions.7:
-+        {"permission":"upgrade","from":"0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063"}
       directlyReceivedPermissions.6:
 +        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"}
       directlyReceivedPermissions.5:
@@ -292,12 +290,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
-    +++ description: None
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
       name:
 -        "L1SharedBridge"
 +        "L1Nullifier"
       template:
 -        "shared-zk-stack/v25/L1SharedBridge"
++        "shared-zk-stack/v26/L1Nullifier"
       sourceHashes.1:
 -        "0x23ebe4dfc517328a5acc1f6f8aa84be593be5db9d6357fcdcd69c62ca60853f7"
 +        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
@@ -306,18 +305,13 @@ Provide description of changes. This section will be preserved.
 +        "0x1d68adefefffd4b896740e985d1d7d39abbface4239c0fb54cbda7892ce8c99d"
       description:
 -        "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era."
-      issuedPermissions.1:
--        {"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
-      issuedPermissions.0.permission:
--        "interact"
-+        "upgrade"
++        "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds."
       issuedPermissions.0.to:
 -        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
 +        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
       issuedPermissions.0.description:
 -        "register new Elastic Chains in the shared bridge."
-      issuedPermissions.0.via.1:
-+        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
++        "pause, unpause and set critical escrow address references."
       issuedPermissions.0.via.0.address:
 -        "0x2cf3bD6a9056b39999F3883955E183F655345063"
 +        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
@@ -351,25 +345,13 @@ Provide description of changes. This section will be preserved.
 -        "0x2cf3bD6a9056b39999F3883955E183F655345063"
       values.pendingAdmin:
 -        "0x0000000000000000000000000000000000000000"
-      values.__DEPRECATED_admin:
-+        "0x2cf3bD6a9056b39999F3883955E183F655345063"
-      values.__DEPRECATED_l2BridgeAddress:
-+        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
-      values.__DEPRECATED_pendingAdmin:
-+        "0x0000000000000000000000000000000000000000"
       values.l1AssetRouter:
 +        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
       values.l1NativeTokenVault:
 +        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
-      values.l2BridgeAddress:
-+        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
       derivedName:
 -        "L1SharedBridge"
 +        "L1Nullifier"
-      category:
--        {"name":"Shared Infrastructure","priority":4}
-      errors:
-+        {"__DEPRECATED_l2BridgeAddress":"Processing error occurred.","l2BridgeAddress":"Processing error occurred."}
     }
 ```
 
@@ -388,8 +370,21 @@ Provide description of changes. This section will be preserved.
       description:
 -        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
 +        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
-      directlyReceivedPermissions.2:
+      directlyReceivedPermissions.3:
 +        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."}
+      directlyReceivedPermissions.2:
++        {"permission":"act","from":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      directlyReceivedPermissions.1.from:
+-        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      directlyReceivedPermissions.0.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      directlyReceivedPermissions.0.description:
++        "pause, unpause and set critical escrow address references."
       values.$implementation:
 -        "0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"
 +        "0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"
@@ -435,53 +430,54 @@ Provide description of changes. This section will be preserved.
     contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
     +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
       receivedPermissions.9:
-+        {"permission":"upgrade","from":"0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.8:
 +        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.7:
+      receivedPermissions.8:
 +        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.6:
+      receivedPermissions.7:
 +        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
       receivedPermissions.5.from:
 -        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-+        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
-      receivedPermissions.4.from:
--        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
 +        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
-      receivedPermissions.4.via.1.address:
+      receivedPermissions.5.via.1.address:
 -        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
 +        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
-      receivedPermissions.3.from:
--        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.4.from:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
 +        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
-      receivedPermissions.2.permission:
+      receivedPermissions.3.permission:
 -        "upgrade"
 +        "interact"
+      receivedPermissions.3.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.3.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.3.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
       receivedPermissions.2.from:
 -        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
-+        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-      receivedPermissions.2.via.1:
--        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
-      receivedPermissions.2.description:
-+        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.via.1.address:
+-        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
       receivedPermissions.1.from:
 -        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
-+        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      receivedPermissions.0.from:
--        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
 +        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.0.description:
++        "pause, unpause and set critical escrow address references."
     }
 ```
 
 ```diff
 +   Status: CREATED
     contract L1GenesisUpgrade (0x107e92E7360e595d8129B522ABD458361f32f66C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
     +++ description: None
 ```
 
@@ -505,15 +501,13 @@ Provide description of changes. This section will be preserved.
  .../TransparentUpgradeableProxy.p.sol              |    0
  .../ChainTypeManager/ChainTypeManager.sol}         |  476 ++-
  .../TransparentUpgradeableProxy.p.sol              |    0
- .../ethereum/.flat/L1ERC20Bridge/L1ERC20Bridge.sol |  948 +++++
- .../TransparentUpgradeableProxy.p.sol              |  653 ++++
  .../ethereum/.flat/L1GenesisUpgrade.sol            | 3775 ++++++++++++++++++++
  .../L1Nullifier/L1Nullifier.sol}                   | 1488 ++++----
  .../L1Nullifier/TransparentUpgradeableProxy.p.sol  |  729 ++++
  .../ethereum/.flat/MessageRoot/MessageRoot.sol     | 1448 ++++++++
  .../MessageRoot/TransparentUpgradeableProxy.p.sol  |  729 ++++
  .../ProtocolUpgradeHandler.sol                     |   64 +-
- 13 files changed, 12119 insertions(+), 1406 deletions(-)
+ 11 files changed, 10518 insertions(+), 1406 deletions(-)
 ```
 
 ## Config/verification related changes

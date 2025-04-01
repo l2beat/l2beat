@@ -79,11 +79,6 @@
       "derivedName": "L1GenesisUpgrade"
     },
     {
-      "address": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GnosisSafe",
       "address": "0x13f07d9BF17615f6a17F272fe1A913168C275A66",
       "type": "Contract",
@@ -172,11 +167,6 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "derivedName": "ProxyAdmin"
-    },
-    {
-      "address": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0x227230CD05e89f41E67df3E5fC61B18411d147A9",
@@ -712,93 +702,6 @@
       "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "L1ERC20Bridge",
-      "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0xa470a4cd272abd74efdef01a347542477159dba5fc965b47dca90736ae6f42db"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
-          "via": [
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" },
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" }
-          ]
-        }
-      ],
-      "sinceTimestamp": 1676370683,
-      "sinceBlock": 16626406,
-      "values": {
-        "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142",
-        "$pastUpgrades": [
-          [
-            "2023-02-14T10:31:23.000Z",
-            "0xbeb9be61e12ebe1e8abcaa0ddd3149cc0282a60af9b11ee2cae50fbcd0adb96e",
-            ["0x22bE40122BA952b81c50bcaa86F84418ff623391"]
-          ],
-          [
-            "2023-03-23T19:49:59.000Z",
-            "0x5fc563e76bc3421166b3898389b72d6a93ac04d94741fc884290d2120ce8cfd0",
-            ["0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84"]
-          ],
-          [
-            "2023-04-25T12:37:35.000Z",
-            "0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80",
-            ["0x38ABF296EE79621A225AA85086853b0dA3225D2F"]
-          ],
-          [
-            "2023-08-16T10:21:35.000Z",
-            "0x351e42a19944da59b77c2fdd0d5adb58fd0af1cc960e14af3cfae0d686fda478",
-            ["0x7FB17101A744e156e63d5fF6A4775fb48756577c"]
-          ],
-          [
-            "2023-12-04T20:29:11.000Z",
-            "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd",
-            ["0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"]
-          ],
-          [
-            "2023-12-22T10:57:59.000Z",
-            "0xd340a9274753c7f5edd33bc034c08df9e050821d399059c2f6bf0686dd341a87",
-            ["0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"]
-          ],
-          [
-            "2024-02-08T10:36:47.000Z",
-            "0x7a9c713189afcfbb07826da5078905f2543da22468f98507e51eac632dc784ce",
-            ["0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"]
-          ],
-          [
-            "2024-06-06T13:20:35.000Z",
-            "0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a",
-            ["0x8191975d8B0851C7f0740918896Cf298c09aA05E"]
-          ],
-          [
-            "2025-01-08T16:00:35.000Z",
-            "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",
-            ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
-          ],
-          [
-            "2025-03-31T08:00:47.000Z",
-            "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
-            ["0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"]
-          ]
-        ],
-        "$upgradeCount": 10,
-        "ERA_CHAIN_ID": 324,
-        "L1_ASSET_ROUTER": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
-        "L1_NATIVE_TOKEN_VAULT": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-        "L1_NULLIFIER": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-        "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
-        "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
-        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
-      },
-      "derivedName": "L1ERC20Bridge"
     },
     {
       "name": "GnosisSafe",
@@ -1585,10 +1488,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
         },
         {
@@ -1801,12 +1700,20 @@
       "name": "L1Nullifier",
       "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
       "type": "Contract",
+      "template": "shared-zk-stack/v26/L1Nullifier",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
         "0x1d68adefefffd4b896740e985d1d7d39abbface4239c0fb54cbda7892ce8c99d"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "description": "pause, unpause and set critical escrow address references.",
+          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
+        },
         {
           "permission": "upgrade",
           "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
@@ -1819,15 +1726,6 @@
       "sinceTimestamp": 1717521479,
       "sinceBlock": 20019898,
       "values": {
-        "__DEPRECATED_admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
-        "__DEPRECATED_l2BridgeAddress": [
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000"
-        ],
-        "__DEPRECATED_pendingAdmin": "0x0000000000000000000000000000000000000000",
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A",
         "$pastUpgrades": [
@@ -1856,23 +1754,13 @@
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "l1AssetRouter": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
         "l1NativeTokenVault": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
-        "l2BridgeAddress": [
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000"
-        ],
         "legacyBridge": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "errors": {
-        "__DEPRECATED_l2BridgeAddress": "Processing error occurred.",
-        "l2BridgeAddress": "Processing error occurred."
-      },
-      "derivedName": "L1Nullifier"
+      "derivedName": "L1Nullifier",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0xd9f8460f3081dC29dF1e3b6e5404B245B96F4A30",
@@ -1941,6 +1829,11 @@
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+        },
+        {
+          "permission": "interact",
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "pause, unpause and set critical escrow address references."
         }
       ],
       "sinceTimestamp": 1738855967,
@@ -2016,16 +1909,14 @@
           "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
-          "permission": "upgrade",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
-          ]
+          "permission": "interact",
+          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "description": "pause, unpause and set critical escrow address references.",
+          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "upgrade",
-          "from": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "via": [
             { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
             { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
@@ -2424,35 +2315,6 @@
       "function tokenMultiplierSetter() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142": [
-      "constructor(address _nullifier, address _assetRouter, address _nativeTokenVault, uint256 _eraChainId)",
-      "error AssetRouterAllowanceNotZero()",
-      "error ETHDepositNotSupported()",
-      "error EmptyDeposit()",
-      "error NotInitializedReentrancyGuard()",
-      "error Reentrancy()",
-      "error SlotOccupied()",
-      "error TokensWithFeesNotSupported()",
-      "error WithdrawalAlreadyFinalized()",
-      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
-      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
-      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
-      "function ERA_CHAIN_ID() view returns (uint256)",
-      "function L1_ASSET_ROUTER() view returns (address)",
-      "function L1_NATIVE_TOKEN_VAULT() view returns (address)",
-      "function L1_NULLIFIER() view returns (address)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
-      "function depositAmount(address account, address l1Token, bytes32 depositL2TxHash) view returns (uint256 amount)",
-      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function initialize()",
-      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
-      "function l2Bridge() view returns (address)",
-      "function l2TokenAddress(address _l1Token) view returns (address)",
-      "function l2TokenBeacon() view returns (address)",
-      "function l2TokenProxyBytecodeHash() view returns (bytes32)"
-    ],
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2544,17 +2406,6 @@
     ],
     "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": [
       "constructor(address _singleton)"
-    ],
-    "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69": [
       "constructor(address _singleton)"
@@ -3054,6 +2905,7 @@
     "shared-zk-stack/v26/ChainTypeManager": "0x9da3151ed9e9c7158f99bd140e94c40bd28fd15cc9d4d369464ee61f655778f4",
     "shared-zk-stack/v26/L1AssetRouter": "0x61e94b7742e84945b3af3c17cd45294e6f2421180eac8788d267a598422100c0",
     "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
+    "shared-zk-stack/v26/L1Nullifier": "0x2d1bc5b5d93b8426fb6e6f34b6ad5c8d90d87a39df65ee3fbc9909f1536d1ed6",
     "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x5da81803a64480b9760fb58ec48326d82ba745d88173789b38b8fda7d50f6aa6",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e"
