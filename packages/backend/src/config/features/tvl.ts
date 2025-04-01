@@ -15,7 +15,7 @@ export async function getTvlConfig(
 ): Promise<TvlConfig> {
   const projects = await ps.getProjects({
     select: ['tvlConfig'],
-    optional: ['chainConfig', 'isArchived'],
+    optional: ['chainConfig'],
   })
   const tokenList = await ps.getTokens()
 
@@ -32,7 +32,7 @@ export async function getTvlConfig(
   }
 
   const archived = new Set<string>(
-    projects.filter((p) => p.isArchived).map((p) => p.id),
+    projects.filter(isRpcConfigured).map((p) => p.id),
   )
 
   const chainConfigs = chains
@@ -104,4 +104,15 @@ export function getChainTvlConfig(
       toMulticallConfigEntry,
     ),
   }
+}
+
+function isRpcConfigured(p: {
+  chainConfig: ChainConfig | undefined
+}) {
+  if (p.chainConfig === undefined) {
+    return false
+  }
+  const rpc = p.chainConfig?.apis.find((p) => p.type === 'rpc')
+
+  return !!rpc
 }
