@@ -42,15 +42,17 @@ export function getDaProjectRiskSummarySection(
     }
   }
 
-  const areContractsVerified = Object.values(bridge?.contracts?.addresses ?? {})
+  const areContractsNotVerified = Object.values(
+    bridge?.contracts?.addresses ?? {},
+  )
     .flat()
-    .every((c) => c.isVerified)
+    .some((c) => !c.isVerified)
 
-  const arePermissionsVerified = Object.values(bridge?.permissions ?? {})
+  const arePermissionsNotVerified = Object.values(bridge?.permissions ?? {})
     .flat()
     .flatMap((p) => [...(p.roles ?? []), ...(p.actors ?? [])])
     .flatMap((p) => p.accounts)
-    .every((a) => a.isVerified)
+    .some((a) => !a.isVerified)
 
   return {
     layer: {
@@ -60,7 +62,7 @@ export function getDaProjectRiskSummarySection(
     bridge: {
       name: bridge?.name ?? 'No DA Bridge',
       risks: groupRisks(bridgeRisks),
-      isVerified: arePermissionsVerified && areContractsVerified,
+      isVerified: !arePermissionsNotVerified && !areContractsNotVerified,
     },
     isVerified,
     warning: undefined,
