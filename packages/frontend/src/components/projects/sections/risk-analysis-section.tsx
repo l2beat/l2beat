@@ -9,6 +9,7 @@ import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'
+import { RiskBanner } from '../risk-banner'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteValues: RosetteValue[]
@@ -62,9 +63,11 @@ export function RiskAnalysisSection({
       {!shouldHideRosette && (
         <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
       )}
-      {Object.values(rosetteValues).map((value) => (
-        <SingleRisk key={value.name} value={value} />
-      ))}
+      <div className="space-y-6">
+        {Object.values(rosetteValues).map((value) => (
+          <RiskBanner key={value.name} {...value} />
+        ))}
+      </div>
     </ProjectSection>
   )
 }
