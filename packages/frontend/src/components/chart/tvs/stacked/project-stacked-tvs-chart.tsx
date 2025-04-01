@@ -31,6 +31,7 @@ interface Props {
   slug: string
   tvsProjectStats: ProjectSevenDayTvsBreakdown
   tvlInfo: ProjectTvlInfo
+  hideBreakdownLink?: boolean
 }
 
 export function ProjectStackedTvsChart({
@@ -41,6 +42,7 @@ export function ProjectStackedTvsChart({
   slug,
   tvsProjectStats,
   tvlInfo,
+  hideBreakdownLink,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
@@ -62,6 +64,7 @@ export function ProjectStackedTvsChart({
         projectId={projectId}
         tvsBreakdownUrl={tvsBreakdownUrl}
         showStackedChartLegend
+        hideBreakdownLink={!!hideBreakdownLink}
       />
     ) : (
       <DefaultChart
@@ -76,6 +79,7 @@ export function ProjectStackedTvsChart({
         unit={unit}
         setUnit={setUnit}
         tvsBreakdownUrl={tvsBreakdownUrl}
+        hideBreakdownLink={!!hideBreakdownLink}
       />
     )
 
@@ -104,9 +108,11 @@ export function ProjectStackedTvsChart({
             }}
             warning={tvlInfo?.warnings[0]}
           />
-          <div className="w-full md:hidden">
-            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
-          </div>
+          {!hideBreakdownLink && (
+            <div className="w-full md:hidden">
+              <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+            </div>
+          )}
         </>
       )}
     </>
@@ -125,6 +131,7 @@ interface DefaultChartProps {
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
   tvsBreakdownUrl: string
+  hideBreakdownLink: boolean
 }
 
 function DefaultChart({
@@ -139,6 +146,7 @@ function DefaultChart({
   unit,
   setUnit,
   tvsBreakdownUrl,
+  hideBreakdownLink,
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
@@ -189,9 +197,11 @@ function DefaultChart({
             />
           )}
         </TvsChartUnitControls>
-        <div className="hidden md:inline-block">
-          <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
-        </div>
+        {!hideBreakdownLink && (
+          <div className="hidden md:inline-block">
+            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
+          </div>
+        )}
       </div>
     </section>
   )

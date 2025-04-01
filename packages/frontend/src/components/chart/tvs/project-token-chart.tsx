@@ -53,6 +53,7 @@ interface Props {
   setUnit: (unit: ChartUnit) => void
   showStackedChartLegend?: boolean
   tvsBreakdownUrl?: string
+  hideBreakdownLink?: boolean
 }
 
 export function ProjectTokenChart({
@@ -68,6 +69,7 @@ export function ProjectTokenChart({
   setUnit,
   showStackedChartLegend,
   tvsBreakdownUrl,
+  hideBreakdownLink,
 }: Props) {
   const properUnit = unit === 'usd' ? 'usd' : token.symbol
 
@@ -161,7 +163,7 @@ export function ProjectTokenChart({
           token={token}
           setToken={setToken}
         />
-        {tvsBreakdownUrl && (
+        {tvsBreakdownUrl && !hideBreakdownLink && (
           <div className="hidden md:inline-block">
             <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
           </div>
