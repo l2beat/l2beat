@@ -633,6 +633,14 @@ function orbitStackCommon(
     stateValidation:
       templateVars.stateValidation ??
       (() => {
+        if (isPostBoLD) {
+          const validatorWhitelistDisabled =
+            templateVars.discovery.getContractValue<boolean>(
+              'RollupProxy',
+              'validatorWhitelistDisabled',
+            )
+          return BoLDStateValidation(validatorWhitelistDisabled)
+        }
         const currentRequiredStake =
           templateVars.discovery.getContractValue<number>(
             'RollupProxy',
@@ -1215,5 +1223,28 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     riskViewExitWindow: hostChain.riskView.exitWindow,
     technology: hostChain.technology.dataAvailability,
     badge: DABadge,
+  }
+}
+function BoLDStateValidation(
+  isWhitelistDisabled: boolean,
+): ProjectScalingStateValidation {
+  return {
+    description: isWhitelistDisabled
+      ? 'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.'
+      : 'Updates to the system state can be proposed and challenged by a set of whitelisted validators. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    categories: [
+      {
+        title: 'State root proposals',
+        description: '',
+        risks: [],
+        references: [],
+      },
+      {
+        title: 'Challenges',
+        description: '',
+        risks: [],
+        references: [],
+      },
+    ],
   }
 }
