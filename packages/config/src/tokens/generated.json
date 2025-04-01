@@ -13102,6 +13102,28 @@
       }
     },
     {
+      "name": "Corn",
+      "coingeckoId": "corn-3",
+      "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+      "symbol": "CORN",
+      "decimals": 18,
+      "deploymentTimestamp": 1741184880,
+      "coingeckoListingTimestamp": 1743120000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54471/large/corn.jpg?1739933588",
+      "chainId": 21000000,
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "ether.fi BTC",
       "coingeckoId": "ether-fi-staked-btc",
       "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
