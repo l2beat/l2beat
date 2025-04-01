@@ -24,15 +24,12 @@ export const xrone: ScalingProject = underReviewL3({
       "XR One is an Orbit stack L3 with AnyTrust DA built by DeMoN Labs and partnered with Saltwater Games. It is designed to power unique PvP and AI-enhanced applications that spark user's imaginations through mechanics that reward risk-takers.",
     purposes: ['Gaming'],
     links: {
-      websites: ['https://xrone.network/', 'https://saltwatergames.com/'],
-      apps: [
-        'https://xr-one.bridge.caldera.xyz/',
-        'https://xrone.network/app/login',
-      ],
+      websites: ['https://saltwatergames.com/'],
+      apps: [],
       documentation: ['https://xr-one.gitbook.io/xr'],
-      explorers: ['https://xr-one.calderaexplorer.xyz/'],
+      explorers: [],
       socialMedia: [
-        'https://x.com/XR_Foundation',
+        'https://x.com/xr_foundation',
         'https://discord.com/invite/W4BdM6N8xb',
         'https://t.me/xrfoundation',
       ],
