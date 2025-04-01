@@ -1,5 +1,6 @@
 'use client'
 
+import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'
 import {
@@ -64,7 +65,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
                   bridge.statuses?.isUnverified
-                    ? 'bg-red-100/70 dark:bg-red-900/70'
+                    ? UNVERIFIED_DA_CLASSNAME
                     : 'bg-surface-secondary md:bg-transparent',
                 )}
               >
