@@ -31,19 +31,19 @@ export async function getTvlConfig(
     }
   }
 
-  const archived = new Set<string>(
-    projects.filter(isRpcUnconfigured).map((p) => p.id),
-  )
-
   const chainConfigs = chains
-    .filter((c) => !archived.has(c.name))
-    .filter((c) => tvlChainNames.has(c.name) && flags.isEnabled('tvl', c.name))
+    .filter(
+      (c) =>
+        tvlChainNames.has(c.name) &&
+        flags.isEnabled('tvl', c.name) &&
+        isRpcConfigured(c),
+    )
     .map((chain) => getChainTvlConfig(env, chain, minTimestampOverride))
 
   return {
     amounts: getTvlAmountsConfig(
       projects,
-      chains.filter((c) => !archived.has(c.name)),
+      chains.filter(isRpcConfigured),
       tokenList,
     ),
     prices: getTvlPricesConfig(chains, tokenList, minTimestampOverride),
@@ -106,13 +106,8 @@ export function getChainTvlConfig(
   }
 }
 
-function isRpcUnconfigured(p: {
-  chainConfig: ChainConfig | undefined
-}) {
-  if (p.chainConfig === undefined) {
-    return true
-  }
-  const rpc = p.chainConfig.apis.find((p) => p.type === 'rpc')
+function isRpcConfigured(chainConfig: ChainConfig) {
+  const rpc = chainConfig.apis.find((p) => p.type === 'rpc')
 
-  return !rpc
+  return !!rpc
 }
