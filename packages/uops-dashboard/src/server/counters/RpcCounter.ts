@@ -10,6 +10,7 @@ import {
   EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
+  ENTRY_POINT_ADDRESS_0_8_0,
   ERC20ROUTER_TRANSACTION_SELECTOR,
   ERC20ROUTER_methods,
   ERC4337_methods,
@@ -256,7 +257,9 @@ export class RpcCounter implements Counter {
         if (
           operation.contractAddress?.toLowerCase() !==
             ENTRY_POINT_ADDRESS_0_6_0 &&
-          operation.contractAddress?.toLowerCase() !== ENTRY_POINT_ADDRESS_0_7_0
+          operation.contractAddress?.toLowerCase() !==
+            ENTRY_POINT_ADDRESS_0_7_0 &&
+          operation.contractAddress?.toLowerCase() !== ENTRY_POINT_ADDRESS_0_8_0
         ) {
           return
         }
@@ -290,6 +293,8 @@ export class RpcCounter implements Counter {
         return 'ERC-4337 Entry Point 0.6.0'
       case ENTRY_POINT_ADDRESS_0_7_0:
         return 'ERC-4337 Entry Point 0.7.0'
+      case ENTRY_POINT_ADDRESS_0_8_0:
+        return 'ERC-4337 Entry Point 0.8.0'
       case SAFE_MULTI_SEND_CALL_ONLY_1_3_0:
         return 'Safe: Multi Send Call Only 1.3.0'
       case SAFE_EXEC_TRANSACTION_SELECTOR:
@@ -338,7 +343,9 @@ export class RpcCounter implements Counter {
             operation.contractAddress?.toLowerCase() !==
               ENTRY_POINT_ADDRESS_0_6_0 &&
             operation.contractAddress?.toLowerCase() !==
-              ENTRY_POINT_ADDRESS_0_7_0
+              ENTRY_POINT_ADDRESS_0_7_0 &&
+            operation.contractAddress?.toLowerCase() !==
+              ENTRY_POINT_ADDRESS_0_8_0
           ) {
             return
           }
