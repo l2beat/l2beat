@@ -32,8 +32,10 @@ export async function getTvlConfig(
   }
 
   const archived = new Set<string>(
-    projects.filter(isRpcConfigured).map((p) => p.id),
+    projects.filter(isRpcUnconfigured).map((p) => p.id),
   )
+
+  console.log(archived)
 
   const chainConfigs = chains
     .filter((c) => !archived.has(c.name))
@@ -106,13 +108,13 @@ export function getChainTvlConfig(
   }
 }
 
-function isRpcConfigured(p: {
+function isRpcUnconfigured(p: {
   chainConfig: ChainConfig | undefined
 }) {
   if (p.chainConfig === undefined) {
-    return false
+    return true
   }
-  const rpc = p.chainConfig?.apis.find((p) => p.type === 'rpc')
+  const rpc = p.chainConfig.apis.find((p) => p.type === 'rpc')
 
-  return !!rpc
+  return !rpc
 }
