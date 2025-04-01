@@ -1,10 +1,15 @@
-import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
+import type {
+  Milestone,
+  ProjectScalingCategory,
+  ProjectTvlInfo,
+} from '@l2beat/config'
 import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { ProjectActivityChart } from '../../chart/activity/project-activity-chart'
 import { ProjectTvsChart } from '../../chart/tvs/project-tvs-chart'
 import { ProjectStackedTvsChart } from '../../chart/tvs/stacked/project-stacked-tvs-chart'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionId, ProjectSectionProps } from './types'
+import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 
 type ChartSectionId = Extract<ProjectSectionId, 'tvs' | 'activity'>
 
@@ -25,6 +30,8 @@ export interface ChartSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   category?: ProjectScalingCategory
   projectName?: string
+  tvsProjectStats?: ProjectSevenDayTvsBreakdown
+  tvlInfo?: ProjectTvlInfo
 }
 
 export function ChartSection({
@@ -54,6 +61,7 @@ function ProjectChart(props: ChartSectionProps) {
             tokens={props.tokens}
             isBridge={!!props.isBridge}
             slug={props.slug}
+            tvsProjectStats={props.tvsProjectStats}
           />
         )
       }

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, ProjectTvlInfo } from '@l2beat/config'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
@@ -19,6 +19,9 @@ import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../project-token-chart'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
 import { StackedTvsChart } from './stacked-tvs-chart'
+import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { TvsBreakdownSummaryBox } from '~/app/(top-nav)/scaling/projects/[slug]/tvs-breakdown/_components/tvs-breakdown-summary-box'
 
 interface Props {
   milestones: Milestone[]
@@ -26,6 +29,8 @@ interface Props {
   tokens: ProjectTokens | undefined
   isBridge: boolean
   slug?: string
+  tvsProjectStats?: ProjectSevenDayTvsBreakdown
+  tvlInfo?: ProjectTvlInfo
 }
 
 export function ProjectStackedTvsChart({
@@ -34,6 +39,8 @@ export function ProjectStackedTvsChart({
   tokens,
   isBridge,
   slug,
+  tvsProjectStats,
+  tvlInfo,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
@@ -42,8 +49,8 @@ export function ProjectStackedTvsChart({
     ? `/scaling/projects/${slug}/tvs-breakdown`
     : undefined
 
-  if (tokens && token) {
-    return (
+  const chartComponent =
+    tokens && token ? (
       <ProjectTokenChart
         isBridge={isBridge}
         tokens={tokens}
@@ -58,23 +65,50 @@ export function ProjectStackedTvsChart({
         tvsBreakdownUrl={tvsBreakdownUrl}
         showStackedChartLegend
       />
+    ) : (
+      <DefaultChart
+        isBridge={isBridge}
+        projectId={projectId}
+        milestones={milestones}
+        timeRange={timeRange}
+        setTimeRange={setTimeRange}
+        tokens={tokens}
+        token={token}
+        setToken={setToken}
+        unit={unit}
+        setUnit={setUnit}
+        tvsBreakdownUrl={tvsBreakdownUrl}
+      />
     )
-  }
 
   return (
-    <DefaultChart
-      isBridge={isBridge}
-      projectId={projectId}
-      milestones={milestones}
-      timeRange={timeRange}
-      setTimeRange={setTimeRange}
-      tokens={tokens}
-      token={token}
-      setToken={setToken}
-      unit={unit}
-      setUnit={setUnit}
-      tvsBreakdownUrl={tvsBreakdownUrl}
-    />
+    <>
+      {chartComponent}
+      {tvsProjectStats && (
+        <>
+          <HorizontalSeparator className="my-4" />
+          <TvsBreakdownSummaryBox
+            total={{
+              value: tvsProjectStats.breakdown.total,
+              change: tvsProjectStats.change.total,
+            }}
+            canonical={{
+              value: tvsProjectStats.breakdown.canonical,
+              change: tvsProjectStats.change.canonical,
+            }}
+            external={{
+              value: tvsProjectStats.breakdown.external,
+              change: tvsProjectStats.change.external,
+            }}
+            native={{
+              value: tvsProjectStats.breakdown.native,
+              change: tvsProjectStats.change.native,
+            }}
+            warning={tvlInfo?.warnings[0]}
+          />
+        </>
+      )}
+    </>
   )
 }
 

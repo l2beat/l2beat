@@ -282,6 +282,7 @@ export async function getScalingProjectEntry(
         slug: project.slug,
         milestones: sortedMilestones,
         tokens,
+        tvsProjectStats,
       },
     })
   }
