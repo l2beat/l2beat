@@ -69,10 +69,6 @@ export class Editor {
   resize() {
     this.editor.layout()
   }
-
-  destruct() {
-    this.editor.dispose()
-  }
 }
 
 function init() {

@@ -99,7 +99,6 @@ function CodeView({ code, range }: { code: string; range: Range | undefined }) {
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
-      editor.destruct()
     }
   }, [setEditor])
 
