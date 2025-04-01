@@ -92,7 +92,7 @@ function BridgeCells({
       <TableCell
         className={cn(
           'text-sm font-medium first:pl-0',
-          isUnverified && 'bg-red-100/70 dark:bg-red-900/70',
+          getUnverifiedClassname(isUnverified),
         )}
       >
         <TableLink
@@ -115,7 +115,7 @@ function BridgeCells({
       <TableCell
         className={cn(
           'flex items-center justify-center pl-4',
-          isUnverified && 'bg-red-100/70 dark:bg-red-900/70',
+          getUnverifiedClassname(isUnverified),
         )}
       >
         <GrissiniCell
@@ -131,7 +131,7 @@ function BridgeCells({
       <TableCell
         className={cn(
           'pr-[30px] text-sm font-medium md:pr-[42px]',
-          isUnverified && 'bg-red-100/70 dark:bg-red-900/70',
+          getUnverifiedClassname(isUnverified),
         )}
         align="right"
       >
@@ -140,11 +140,18 @@ function BridgeCells({
       <TableCell
         className={cn(
           'text-sm font-medium',
-          isUnverified && 'bg-red-100/70 dark:bg-red-900/70',
+          getUnverifiedClassname(isUnverified),
         )}
       >
         <ProjectsUsedIn usedIn={bridge.usedIn} />
       </TableCell>
     </>
   )
+}
+
+function getUnverifiedClassname(isUnverified: boolean) {
+  if (isUnverified) {
+    return 'bg-red-100/70 dark:bg-red-900/70'
+  }
+  return
 }
