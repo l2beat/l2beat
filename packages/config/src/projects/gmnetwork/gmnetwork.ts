@@ -61,6 +61,15 @@ export const gmnetwork: ScalingProject = opStackL2({
       ],
     },
   },
+  milestones: [
+    {
+      title: 'GM Network sunsets',
+      url: 'https://x.com/GMNetwork_AI/status/1894592894893527317',
+      date: '2025-03-31',
+      description: 'GM Network has officially sunset.',
+      type: 'general',
+    },
+  ],
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
     daResolveWindow,
