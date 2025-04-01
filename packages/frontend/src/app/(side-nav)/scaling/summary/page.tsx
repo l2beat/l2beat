@@ -2,11 +2,7 @@ import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/scaling-summary-tvs-chart'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
-import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
-import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
-import { env } from '~/env'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -45,13 +41,6 @@ export default async function Page() {
 
   return (
     <HydrateClient>
-      {env.NEXT_PUBLIC_L2BEATZZA && (
-        <div className="size-0">
-          <FullRedPizzaSymbol />
-          <FullYellowPizzaSymbol />
-          <FullGreenPizzaSymbol />
-        </div>
-      )}
       <MainPageHeader>Summary</MainPageHeader>
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
         <PrimaryCard>

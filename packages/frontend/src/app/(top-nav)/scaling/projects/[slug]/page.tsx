@@ -8,9 +8,6 @@ import { DesktopProjectNavigation } from '~/components/projects/navigation/deskt
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
-import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
-import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
-import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import { featureFlags } from '~/consts/feature-flags'
 import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
@@ -98,13 +95,6 @@ export default async function Page(props: Props) {
   // HydrateClient is used to hydrate the client with chart data that is fetched inside get-bridges-project-details.tsx
   return (
     <HydrateClient>
-      {env.NEXT_PUBLIC_L2BEATZZA && (
-        <div className="size-0">
-          <FullRedPizzaSymbol />
-          <FullYellowPizzaSymbol />
-          <FullGreenPizzaSymbol />
-        </div>
-      )}
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 md:hidden">
           <MobileProjectNavigation sections={navigationSections} />
