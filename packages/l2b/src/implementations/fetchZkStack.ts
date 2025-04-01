@@ -15,12 +15,17 @@ interface ChainIdNameMap {
   [key: string]: string
 }
 
+interface DAValidatorMap {
+  [key: string]: string
+}
+
 interface L2Data {
   chainAddress: string
   chainID: ethers.BigNumber
   chainAdmin: string
   baseToken: string
   pubdataPricingMode: number
+  daValidatorType: string
   protocolVersion: {
     major: number
     minor: number
@@ -38,6 +43,7 @@ interface FormattedL2Data {
   baseTokenName: string
   pubdataPricingMode: number
   pubdataModeName: string
+  daValidatorType: string
   protocolVersion: string
   totalBlocksExecuted: string
 }
@@ -50,8 +56,7 @@ interface TableField {
 
 export class ZkStackDataFetcher {
   private provider: ethers.providers.JsonRpcProvider
-  private stateTransitionManagerAddress =
-    '0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C'
+  private bridgeHubAddress = '0x303a465B659cBB0ab36eE643eA362c509EEb5213'
   private outputFilePath: string
 
   private tokenAddresses: TokenAddressMap = {
@@ -67,6 +72,11 @@ export class ZkStackDataFetcher {
   private pubdataModes: PubdataModeMap = {
     0: 'rollup',
     1: 'validium',
+  }
+
+  private daValidatorMapping: DAValidatorMap = {
+    '0x72213dfe8CA61B0A782970dCFebFb877778f9119': 'Rollup',
+    '0x907b30407249949521Bf0c89A43558dae200146A': 'Validium',
   }
 
   // Chain ID to name mapping - manually fill as needed
@@ -89,16 +99,23 @@ export class ZkStackDataFetcher {
     { key: 'chainID', header: 'chain ID' },
     { key: 'name', header: 'name' },
     { key: 'baseTokenName', header: 'gas token' },
-    { key: 'pubdataModeName', header: 'DA' },
+    { key: 'daValidatorType', header: 'DA' },
     { key: 'protocolVersion', header: 'v' },
     { key: 'totalBlocksExecuted', header: 'executed' },
   ]
 
   // ABIs - separated for easy maintenance
-  private stateTransitionManagerAbi = [
-    'function getAllHyperchains() view returns (address[] chainAddresses)',
-    'function getAllHyperchainChainIDs() view returns (uint256[])',
+  private bridgeHubAbi = [
+    'function getAllZKChains() view returns (address[] chainAddresses)',
+    'function getAllZKChainChainIDs() view returns (uint256[])',
+    'function chainTypeManager(uint256 chainId) view returns (address)',
+    'function baseToken(uint256 _chainId) view returns (address)',
+  ]
+
+  private chainTypeManagerAbi = [
     'function getChainAdmin(uint256 _chainId) view returns (address)',
+    'function getProtocolVersion(uint256 _chainId) view returns (uint256)',
+    'function getSemverProtocolVersion() view returns (uint32, uint32, uint32)',
   ]
 
   private diamondAbi = [
@@ -106,6 +123,7 @@ export class ZkStackDataFetcher {
     'function getPubdataPricingMode() view returns (uint8)',
     'function getSemverProtocolVersion() view returns (uint32, uint32, uint32)',
     'function getTotalBlocksExecuted() view returns (uint256)',
+    'function getDAValidatorPair() view returns (address, address)',
   ]
 
   constructor(providerUrl: string, outputFilePath: string) {
@@ -171,29 +189,28 @@ export class ZkStackDataFetcher {
 
   // Main function to fetch and display L2 data
   public async fetchAndDisplayL2Data(): Promise<void> {
-    // Create contract instance for StateTransitionManager
-    const stateTransitionManager = new ethers.Contract(
-      this.stateTransitionManagerAddress,
-      this.stateTransitionManagerAbi,
+    // Create contract instance for BridgeHub
+    const bridgeHub = new ethers.Contract(
+      this.bridgeHubAddress,
+      this.bridgeHubAbi,
       this.provider,
     )
 
     console.log('fetching L2 data...')
 
     try {
-      // Fetch all hyperchain addresses and chain IDs
-      const chainAddresses: string[] =
-        await stateTransitionManager.getAllHyperchains()
+      // Fetch all ZK chain addresses and chain IDs
+      const chainAddresses: string[] = await bridgeHub.getAllZKChains()
       const chainIDs: ethers.BigNumber[] =
-        await stateTransitionManager.getAllHyperchainChainIDs()
+        await bridgeHub.getAllZKChainChainIDs()
 
       // Check if we have data
       if (chainAddresses.length === 0 || chainIDs.length === 0) {
-        console.log('no hyperchains found')
+        console.log('no ZK chains found')
         return
       }
 
-      // Collect data for each hyperchain
+      // Collect data for each ZK chain
       const l2DataList: L2Data[] = []
 
       for (let i = 0; i < chainAddresses.length; i++) {
@@ -208,8 +225,20 @@ export class ZkStackDataFetcher {
         console.log(`fetching data for chain ID: ${chainID.toString()}`)
 
         try {
-          // Get chain admin
-          const chainAdmin = await stateTransitionManager.getChainAdmin(chainID)
+          // Get chain type manager and base token from BridgeHub
+          const chainTypeManagerAddress =
+            await bridgeHub.chainTypeManager(chainID)
+          const baseTokenAddress = await bridgeHub.baseToken(chainID)
+
+          // Create contract instance for the ChainTypeManager
+          const chainTypeManager = new ethers.Contract(
+            chainTypeManagerAddress,
+            this.chainTypeManagerAbi,
+            this.provider,
+          )
+
+          // Get chain admin from ChainTypeManager
+          const chainAdmin = await chainTypeManager.getChainAdmin(chainID)
 
           // Create contract instance for the diamond (L2)
           const diamond = new ethers.Contract(
@@ -219,17 +248,30 @@ export class ZkStackDataFetcher {
           )
 
           // Fetch L2 specific data with safe calls
-          const baseToken = await this.safeContractCall(
-            () => diamond.getBaseToken(),
-            '0x0000000000000000000000000000000000000000',
-            `failed to get base token for chain ${chainID.toString()}`,
-          )
-
           const pubdataPricingMode = await this.safeContractCall(
             () => diamond.getPubdataPricingMode(),
             0,
             `failed to get pubdata pricing mode for chain ${chainID.toString()}`,
           )
+
+          // Get DA validator pair
+          let daValidatorType = 'Unknown'
+          try {
+            const [daValidator, _] = await diamond.getDAValidatorPair()
+            daValidatorType = this.daValidatorMapping[daValidator] || 'Unknown'
+
+            // Cross-check with pubdata pricing mode
+            if (
+              (daValidatorType === 'Rollup' && pubdataPricingMode !== 0) ||
+              (daValidatorType === 'Validium' && pubdataPricingMode !== 1)
+            ) {
+              daValidatorType = 'Inconsistent'
+            }
+          } catch (_error) {
+            console.warn(
+              `failed to get DA validator pair for chain ${chainID.toString()}`,
+            )
+          }
 
           let major = 0,
             minor = 0,
@@ -253,8 +295,9 @@ export class ZkStackDataFetcher {
             chainAddress: chainAddresses[i],
             chainID,
             chainAdmin,
-            baseToken,
+            baseToken: baseTokenAddress,
             pubdataPricingMode,
+            daValidatorType,
             protocolVersion: {
               major,
               minor,
@@ -264,7 +307,7 @@ export class ZkStackDataFetcher {
           })
         } catch (error: unknown) {
           console.error(
-            `rrror processing chain ${chainID.toString()}: ${
+            `error processing chain ${chainID.toString()}: ${
               error instanceof Error ? error.message : String(error)
             }`,
           )
@@ -283,6 +326,7 @@ export class ZkStackDataFetcher {
           baseTokenName: this.getTokenName(data.baseToken),
           pubdataPricingMode: data.pubdataPricingMode,
           pubdataModeName: this.getPubdataModeName(data.pubdataPricingMode),
+          daValidatorType: data.daValidatorType,
           protocolVersion: this.formatProtocolVersion(data.protocolVersion),
           totalBlocksExecuted: data.totalBlocksExecuted.toString(),
         }
@@ -331,5 +375,9 @@ export class ZkStackDataFetcher {
 
   public addChainNameMapping(chainID: string, name: string): void {
     this.chainIdToName[chainID] = name
+  }
+
+  public addDAValidatorMapping(address: string, type: string): void {
+    this.daValidatorMapping[address] = type
   }
 }
