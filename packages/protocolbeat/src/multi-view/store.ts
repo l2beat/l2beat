@@ -26,6 +26,7 @@ type State = {
 type Action = {
   changePanel: (from: PanelId, to: PanelId) => void
   addPanel: () => void
+  ensurePanel: (panelId: PanelId) => void
   setActivePanel: (id: PanelId | undefined) => void
   removePanel: (id?: PanelId) => void
   toggleFullScren: (id?: PanelId) => void
@@ -127,6 +128,19 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       return {
         ...withLayouts(state, panels),
         active: nextPanelId,
+      }
+    }),
+  ensurePanel: (panelId: PanelId) =>
+    set((state) => {
+      const demandedPanel = state.panels.find((p) => p.id === panelId)
+      if (demandedPanel !== undefined) {
+        return state
+      }
+
+      const panels = state.panels.concat([{ id: panelId, size: 1 }])
+      return {
+        ...withLayouts(state, panels),
+        active: panelId,
       }
     }),
   removePanel: (id) =>

@@ -98,11 +98,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       },
     ],
     apis: [
-      {
-        type: 'rpc',
-        url: 'https://rpc.startale.com/astar-zkevm',
-        callsPerMinute: 1500,
-      },
+      /* No RPC, project archived */
     ],
   },
   discovery,
