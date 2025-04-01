@@ -660,7 +660,7 @@ function orbitStackCommon(
           const numBigStepLevels =
             templateVars.discovery.getContractValue<number>(
               'EdgeChallengeManager',
-              'numBigStepLevels',
+              'NUM_BIGSTEP_LEVEL',
             )
 
           const stakeAmounts = templateVars.discovery.getContractValue<
