@@ -47,32 +47,33 @@ interface MatchingLine {
 }
 
 function getMatchingLines(code: string, searchTerm: string): MatchingLine[] {
-  let text = code
-  let of = 0
   const matches: MatchingLine[] = []
   const isCaseSensitive = searchTerm !== searchTerm.toLowerCase()
+  const searchPattern = isCaseSensitive ? searchTerm : searchTerm.toLowerCase()
+
+  let text = code
+  let offset = 0
 
   while (true) {
     const searchText = isCaseSensitive ? text : text.toLowerCase()
-    const searchPattern = isCaseSensitive
-      ? searchTerm
-      : searchTerm.toLowerCase()
     const index = searchText.indexOf(searchPattern)
-    if (index === -1) {
-      break
-    }
+
+    if (index === -1) break
+
     const left = text.slice(0, index).lastIndexOf('\n')
-    text = text.slice(left + 1)
-    const right = text.indexOf('\n')
+    const lineStart = left + 1
+    const lineText = text.slice(lineStart)
+    const right = lineText.indexOf('\n')
     assert(right !== -1)
 
     matches.push({
-      content: text.slice(0, right),
-      offset: of + index,
+      content: lineText.slice(0, right),
+      offset: offset + index,
     })
 
-    text = text.slice(right + 1)
-    of += left + 1 + right + 1
+    const nextPos = lineStart + right + 1
+    text = text.slice(nextPos)
+    offset += nextPos
   }
 
   return matches
