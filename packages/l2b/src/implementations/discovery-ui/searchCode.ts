@@ -49,15 +49,16 @@ interface MatchingLine {
 function getMatchingLines(code: string, searchTerm: string): MatchingLine[] {
   const matches: MatchingLine[] = []
   const isCaseSensitive = searchTerm !== searchTerm.toLowerCase()
+
   const searchPattern = isCaseSensitive ? searchTerm : searchTerm.toLowerCase()
+  const searchText = isCaseSensitive ? code : code.toLowerCase()
 
   let text = code
+  let searchTextRemaining = searchText
   let offset = 0
 
   while (true) {
-    const searchText = isCaseSensitive ? text : text.toLowerCase()
-    const index = searchText.indexOf(searchPattern)
-
+    const index = searchTextRemaining.indexOf(searchPattern)
     if (index === -1) break
 
     const left = text.slice(0, index).lastIndexOf('\n')
@@ -73,6 +74,7 @@ function getMatchingLines(code: string, searchTerm: string): MatchingLine[] {
 
     const nextPos = lineStart + right + 1
     text = text.slice(nextPos)
+    searchTextRemaining = searchTextRemaining.slice(nextPos)
     offset += nextPos
   }
 
