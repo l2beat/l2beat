@@ -50,7 +50,7 @@ async function searchCodeQuery(
   const searchResult = await searchCode(project, codeSearchTerm)
   const entryCount = searchResult.matches
     .map((m) => m.codeLocation.length)
-    .reduce((a, v) => a + v)
+    .reduce((a, v) => a + v, 0)
 
   return { type: 'code', entryCount, entries: searchResult.matches }
 }
