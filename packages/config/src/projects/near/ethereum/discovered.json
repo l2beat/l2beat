@@ -2,7 +2,7 @@
   "name": "near",
   "chain": "ethereum",
   "blockNumber": 19531990,
-  "configHash": "0xfd26dfba78548e02b61aff40a5323dc33501d9aedf518a5ae41b626c24994530",
+  "configHash": "0xbdf71e4c0591365d3c1bf75bf0ee678af232d416f4c02bd6d5b55758d66400f6",
   "entries": [
     {
       "name": "NearProver",
@@ -19,7 +19,8 @@
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "bridge": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
         "paused": 0
-      }
+      },
+      "derivedName": "NearProver"
     },
     {
       "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
@@ -43,7 +44,8 @@
         "nearTokenFactory_": "0x666163746f72792e6272696467652e6e656172",
         "paused": 0,
         "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
-      }
+      },
+      "derivedName": "ERC20Locker"
     },
     {
       "name": "BridgeAdminMultisig",
@@ -104,7 +106,8 @@
         "lockEthAmount": "5000000000000000000",
         "paused": 0,
         "replaceDuration": 18000000000000
-      }
+      },
+      "derivedName": "NearBridge"
     },
     {
       "name": "EthCustodian",
@@ -123,7 +126,8 @@
         "nearProofProducerAccount_": "0x6175726f7261",
         "paused": 0,
         "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
-      }
+      },
+      "derivedName": "EthCustodian"
     },
     {
       "address": "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6",

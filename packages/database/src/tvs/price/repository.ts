@@ -29,13 +29,15 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLatestPrice(
+  async getLatestPriceBefore(
     configurationId: string,
+    timestamp: UnixTime,
   ): Promise<TvsPriceRecord | undefined> {
     const row = await this.db
       .selectFrom('TvsPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
       .where('configurationId', '=', configurationId)
+      .where('timestamp', '<', UnixTime.toDate(timestamp))
       .orderBy('timestamp', 'desc')
       .limit(1)
       .executeTakeFirst()

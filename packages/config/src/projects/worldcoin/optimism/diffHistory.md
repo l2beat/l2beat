@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x815d0c037cbd2da92c88def2919033a36a9e6035
+Generated with discovered.json: 0x11ab6986e9e4bb2849da572ac79b4609d0e2d5c8
+
+# Diff at Mon, 31 Mar 2025 12:33:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 127729542
+- current block number: 133912814
+
+## Description
+
+Owner change.
+
+## Watched changes
+
+```diff
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$admin:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+    }
+```
+
+```diff
+    contract undefined (0x96d55BD9c8C4706FED243c1e15825FF7854920fA) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0x57f928158C3EE7CDad1e4D8642503c4D0201f611"}
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x57f928158C3EE7CDad1e4D8642503c4D0201f611"}]
+    }
+```
+
+Generated with discovered.json: 0x064db87ea1a5d52f6b2f76f1c2f5fbc993e166f4
 
 # Diff at Tue, 04 Mar 2025 10:40:39 GMT:
 

@@ -26,6 +26,7 @@ export const GeneratedToken = z.object({
   source: z.enum(['canonical', 'external', 'native']),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']),
   excludeFromTotal: z.literal(true).optional(),
+  premint: z.string().optional(),
   bridgedUsing: z.optional(
     z.object({
       bridges: z.array(

@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type ProjectValueRecord, toRecord, toRow } from './entity'
 
@@ -26,6 +27,30 @@ export class ProjectValueRepository extends BaseRepository {
     })
 
     return records.length
+  }
+
+  async trimProject(
+    project: string,
+    sinceTimestamp: number,
+    untilTimestamp: number | null,
+  ): Promise<number> {
+    let query = this.db
+      .deleteFrom('ProjectValue')
+      .where('project', '=', project)
+
+    if (untilTimestamp === null) {
+      query = query.where('timestamp', '<', UnixTime.toDate(sinceTimestamp))
+    } else {
+      query = query.where((qb) =>
+        qb.or([
+          qb('timestamp', '<', UnixTime.toDate(sinceTimestamp)),
+          qb('timestamp', '>', UnixTime.toDate(untilTimestamp)),
+        ]),
+      )
+    }
+
+    const result = await query.executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<ProjectValueRecord[]> {

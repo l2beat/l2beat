@@ -5,7 +5,6 @@ import type { TvsAmount } from '../../kysely/generated/types'
 export interface TvsAmountRecord {
   timestamp: UnixTime
   configurationId: string
-  project: string
   amount: bigint
 }
 

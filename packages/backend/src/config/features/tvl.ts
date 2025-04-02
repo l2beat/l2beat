@@ -32,11 +32,20 @@ export async function getTvlConfig(
   }
 
   const chainConfigs = chains
-    .filter((c) => tvlChainNames.has(c.name) && flags.isEnabled('tvl', c.name))
+    .filter(
+      (c) =>
+        tvlChainNames.has(c.name) &&
+        flags.isEnabled('tvl', c.name) &&
+        isRpcConfigured(c),
+    )
     .map((chain) => getChainTvlConfig(env, chain, minTimestampOverride))
 
   return {
-    amounts: getTvlAmountsConfig(projects, chains, tokenList),
+    amounts: getTvlAmountsConfig(
+      projects,
+      chains.filter(isRpcConfigured),
+      tokenList,
+    ),
     prices: getTvlPricesConfig(chains, tokenList, minTimestampOverride),
     chains: chainConfigs,
     maxTimestampsToAggregateAtOnce: env.integer(
@@ -95,4 +104,10 @@ export function getChainTvlConfig(
       toMulticallConfigEntry,
     ),
   }
+}
+
+function isRpcConfigured(chainConfig: ChainConfig) {
+  const rpc = chainConfig.apis.find((p) => p.type === 'rpc')
+
+  return !!rpc
 }

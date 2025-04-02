@@ -1,5 +1,5 @@
 import { hashJson } from '@l2beat/shared'
-import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
+import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { DiscoveryOutput } from '../output/types'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
@@ -18,8 +18,6 @@ export type ContractOverrides = DiscoveryContract & {
 // values inside this class should not be modified during the runtime
 // this will result in the hash being different and break the update mechanism
 export class DiscoveryConfig {
-  private readonly nameToAddress = new Map<string, EthereumAddress>()
-  private readonly addressToName = new Map<EthereumAddress, string>()
   readonly sharedModuleDiscovery: DiscoveryOutput[]
 
   constructor(
@@ -32,16 +30,10 @@ export class DiscoveryConfig {
         return configReader.readDiscovery(projectName, config.chain)
       },
     )
-
-    const addressToName = config.names ?? {}
-    for (const [address, name] of Object.entries(addressToName)) {
-      this.addressToName.set(EthereumAddress(address), name)
-      this.nameToAddress.set(name, EthereumAddress(address))
-    }
   }
 
-  for(addressOrName: string | EthereumAddress): ContractConfig {
-    const overrides = this.getOverrides(addressOrName)
+  for(address: EthereumAddress): ContractConfig {
+    const overrides = this.getOverrides(address)
 
     return createContractConfig(
       overrides,
@@ -56,10 +48,6 @@ export class DiscoveryConfig {
 
   get name(): string {
     return this.config.name
-  }
-
-  get names(): Record<string, string> {
-    return this.config.names ?? {}
   }
 
   get chain(): string {
@@ -93,27 +81,11 @@ export class DiscoveryConfig {
     })
   }
 
-  private getOverrides(
-    nameOrAddress: string | EthereumAddress,
-  ): ContractOverrides {
-    let name: string | undefined
-    let address: EthereumAddress | undefined
+  private getOverrides(address: EthereumAddress): ContractOverrides {
+    const name = (this.config.names ?? {})[address.toString()]
+    const override =
+      this.config.overrides?.[address.toString()] ?? DiscoveryContract.parse({})
 
-    if (EthereumAddress.check(nameOrAddress.toString())) {
-      address = EthereumAddress(nameOrAddress.toString())
-      name = this.addressToName.get(address)
-    } else {
-      name = nameOrAddress.toString()
-      address = this.nameToAddress.get(name)
-    }
-
-    if (address === undefined) {
-      throw new Error(`Cannot resolve ${nameOrAddress.toString()}`)
-    }
-
-    const unparsedOverride = this.config.overrides?.[address.toString()] ?? {}
-
-    const override = DiscoveryContract.parse(unparsedOverride)
     return { name, address, ...override }
   }
 }

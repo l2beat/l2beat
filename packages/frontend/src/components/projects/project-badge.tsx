@@ -7,21 +7,24 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
+import Link from 'next/link'
 
 export interface BadgeWithParams extends Badge {
   src: string
   width: number
   height: number
+  href?: string
 }
 
 export function ProjectBadge({
   badge,
-  hideTooltip,
+  disableInteraction,
   className,
 }: {
   badge: BadgeWithParams
   hideTooltip?: boolean
   className?: ClassNameValue
+  disableInteraction?: boolean
 }) {
   const badgeImg = (
     <Image
@@ -32,12 +35,18 @@ export function ProjectBadge({
       className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
     />
   )
+  const component =
+    !disableInteraction && badge.href ? (
+      <Link href={badge.href}>{badgeImg}</Link>
+    ) : (
+      badgeImg
+    )
 
-  if (hideTooltip) return badgeImg
+  if (disableInteraction) return component
 
   return (
-    <Tooltip>
-      <TooltipTrigger className="shrink-0">{badgeImg}</TooltipTrigger>
+    <Tooltip delayDuration={0}>
+      <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
       <TooltipContent>
         <span className="mb-2 block font-medium">{badge.name}</span>
         <span className="text-xs">{badge.description}</span>

@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "CELO",
+      "address": "0x057898f3C43F129a17517B9056D23851F124b19f",
+      "coingeckoId": "celo"
+    },
+    {
       "symbol": "CLEAR",
       "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8"
     },
@@ -2121,7 +2126,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -2137,7 +2142,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -2950,6 +2955,22 @@
   ],
   "optimism": [
     {
+      "symbol": "USD₮0",
+      "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+      "coingeckoId": "usdt0",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "STONE",
       "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -2981,7 +3002,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -3673,7 +3694,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -5754,7 +5775,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -5770,7 +5791,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC20)",
+            "name": "Hyperlane (xERC-20)",
             "slug": "connext"
           }
         ]
@@ -5785,7 +5806,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -5801,7 +5822,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -5809,6 +5830,21 @@
     }
   ],
   "corn": [
+    {
+      "symbol": "CORN",
+      "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+      "coingeckoId": "corn-3",
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "SolvBTC",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
@@ -5937,7 +5973,7 @@
     {
       "symbol": "USD₮0",
       "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
-      "coingeckoId": "tether",
+      "coingeckoId": "usdt0",
       "category": "stablecoin",
       "source": "external",
       "supply": "totalSupply",
@@ -6138,6 +6174,22 @@
   ],
   "unichain": [
     {
+      "symbol": "USD₮0",
+      "address": "0x9151434b16b9763660705744891fA906F660EcC5",
+      "coingeckoId": "usdt0",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
       "category": "stablecoin",
@@ -6190,7 +6242,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -6206,7 +6258,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)",
+            "name": "Hyperlane (HypERC-20)",
             "slug": "hyperlane"
           }
         ]
@@ -6219,6 +6271,125 @@
       "address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8",
       "source": "external",
       "coingeckoId": "everclear",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    }
+  ],
+  "celo": [
+    {
+      "symbol": "CELO",
+      "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "cUSD",
+      "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "cEURO",
+      "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "cREAL",
+      "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "cKES",
+      "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "ETHIX",
+      "address": "0x9995cc8F20Db5896943Afc8eE0ba463259c931ed",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "UBE",
+      "address": "0x71e26d0E519D14591b9dE9a0fE9513A398101490",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PLASTIK",
+      "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
+      "source": "native",
+      "supply": "circulatingSupply"
+    }
+  ],
+  "superseed": [
+    {
+      "symbol": "USDC",
+      "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (USDC)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "coingeckoId": "openusdt",
+      "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [

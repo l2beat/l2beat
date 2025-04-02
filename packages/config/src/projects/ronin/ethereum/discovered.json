@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 21378535,
-  "configHash": "0x252c2031b3f11094de2f55677585b7a070caab7c09c833bb37d01f37c8f5e16e",
+  "configHash": "0xf82b6e477d9ba48eb63135a09c73d60814a5fb00359ece939edefd5f97ced0f4",
   "entries": [
     {
       "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
@@ -145,7 +145,8 @@
         "getTotalWeight": 2200,
         "minimumVoteWeight": 1540,
         "totalBridgeOperator": 22
-      }
+      },
+      "derivedName": "MainchainBridgeManager"
     },
     {
       "name": "RoninManagerMultiSig",
@@ -497,7 +498,8 @@
         "name": "Wrapped Ether",
         "symbol": "WETH",
         "totalSupply": "2728790155190780839876210"
-      }
+      },
+      "derivedName": "WETH9"
     },
     {
       "address": "0xc092Fa0C772b3c850e676c57d8737BB39084B9AC",
@@ -569,7 +571,8 @@
         "emergency": false,
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
-      }
+      },
+      "derivedName": "PauseEnforcer"
     },
     {
       "address": "0xE5EB222996967BE79468C28bA39D665fd96E8b30",

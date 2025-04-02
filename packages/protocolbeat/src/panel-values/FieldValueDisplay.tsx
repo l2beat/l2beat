@@ -60,10 +60,9 @@ export function FieldValueDisplay({
       </p>
     )
   } else if (value.type === 'number') {
-    const fmt = Intl.NumberFormat('en-US')
     inlineDisplay = (
       <p className="overflow-hidden break-words font-mono text-aux-orange">
-        {fmt.format(BigInt(value.value))}
+        {BigInt(value.value)}
       </p>
     )
   } else if (value.type === 'boolean') {

@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x84361864b63573b6658527d315c9d1b42f887e2c
+
+# Diff at Mon, 31 Mar 2025 10:22:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21979760
+- current block number: 22166267
+
+## Description
+
+new appgovernor, max USDC balance raise.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.APP_GOVERNOR.members.1:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: The maximum total balance that can be locked in the bridge.
+      values.maxTotalBalance:
+-        50000000000000
++        60000000000000
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/Paradex Multisig 2/Safe.sol     | 1088 ++++++++++++++++++++
+ .../.flat/Paradex Multisig 2/SafeProxy.p.sol       |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+Generated with discovered.json: 0xd0ec5206adf2a943b0433009bacf20878d932750
+
+# Diff at Thu, 27 Mar 2025 11:14:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21979760
+- current block number: 21979760
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21979760 (main branch discovery), not current.
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
 Generated with discovered.json: 0xcf31ec92ef38e775e8d040d58b86eba8c646b552
 
 # Diff at Wed, 19 Mar 2025 13:05:14 GMT:

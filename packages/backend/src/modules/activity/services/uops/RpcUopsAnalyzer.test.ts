@@ -2,6 +2,7 @@ import {
   EIP712_TX_TYPE,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
+  ENTRY_POINT_ADDRESS_0_8_0,
   ERC20ROUTER_TRANSACTION_SELECTOR,
   MULTICALL_V3,
   type Method,
@@ -57,6 +58,20 @@ describe(RpcUopsAnalyzer.name, () => {
       const analyzer = new RpcUopsAnalyzer()
       const tx = {
         to: ENTRY_POINT_ADDRESS_0_7_0,
+        data: '0x1234abcd',
+        hash: '0x0',
+      }
+
+      analyzer.countUserOperations = mockFn().returns(2)
+
+      const count = analyzer.mapTransaction(tx)
+      expect(count).toEqual(2)
+    })
+
+    it('should handle ERC-4337:EntryPoint0.8.0', () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const tx = {
+        to: ENTRY_POINT_ADDRESS_0_8_0,
         data: '0x1234abcd',
         hash: '0x0',
       }

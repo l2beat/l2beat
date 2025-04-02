@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 21973872,
-  "configHash": "0xb1164605ff4d855a6d735f3e3c41e9d0f06a059dd960b13121311da49cd8b4c2",
+  "configHash": "0x453583c66c43b128aaf461b5fd6dabfa60abd57855ba8c4bcd9777ada2bc4807",
   "entries": [
     {
       "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
@@ -24,7 +24,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PEMCertChainLib"
     },
     {
       "name": "TaikoL1Contract",
@@ -374,7 +375,8 @@
         "proxiableUUID": "EXPECT_REVERT",
         "symbol": "TAIKO",
         "totalSupply": "1000000000000000000000000000"
-      }
+      },
+      "derivedName": "TaikoToken"
     },
     {
       "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
@@ -407,7 +409,8 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
-      }
+      },
+      "derivedName": "MainnetProverSet"
     },
     {
       "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
@@ -524,7 +527,8 @@
         "TIER_SGX_ZKVM": {
           "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
         }
-      }
+      },
+      "derivedName": "MainnetTierRouter"
     },
     {
       "name": "SigVerifyLib",
@@ -536,7 +540,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "SigVerifyLib"
     },
     {
       "name": "Risc0Verifier",
@@ -574,7 +579,8 @@
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Risc0Verifier"
     },
     {
       "name": "GuardianMinorityProver",
@@ -788,7 +794,8 @@
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "sp1RemoteVerifier": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
-      }
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
@@ -972,7 +979,8 @@
           "mrsigner": "0x8c4f5775d796503e96137f77c68a829a0056ac8ded70140b081b094490c57bff"
         },
         "sigVerifyLib": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
-      }
+      },
+      "derivedName": "AutomataDcapV3Attestation"
     },
     {
       "name": "SharedERC20Vault",
@@ -1558,7 +1566,8 @@
         "CONTROL_ROOT_1": "0x69042c9355281d562b4766691ceb35f7",
         "SELECTOR": "0xc101b42b",
         "VERSION": "1.2.0"
-      }
+      },
+      "derivedName": "RiscZeroGroth16Verifier"
     }
   ],
   "abis": {

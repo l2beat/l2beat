@@ -1,8 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22045124,
-  "configHash": "0x4864d8eb7c16e2f58ea88346cc916e898a929cc7c54035a06d2fb05456ea4cdb",
+  "blockNumber": 22166242,
+  "configHash": "0xbe21682f1763fe5127a928111156a9fca32a8d4d053256a798e384f13e858940",
   "entries": [
     {
       "name": "Zora_Adapter",
@@ -28,7 +28,8 @@
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Zora_Adapter"
     },
     {
       "name": "VotingToken",
@@ -47,14 +48,15 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "123816854238637611765605806",
+        "totalSupply": "123994960430402959005907315",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
           "100034524092695877009538769",
           "100150034524092695877009517"
         ]
-      }
+      },
+      "derivedName": "VotingToken"
     },
     {
       "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
@@ -118,7 +120,8 @@
         "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
         "RELAY_TOKENS_L2_GAS_LIMIT": 300000,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Arbitrum_Adapter"
     },
     {
       "address": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
@@ -149,7 +152,8 @@
         "MESSENGER": "0x592C1299e0F8331D81A28C0FC7352Da24eDB444a",
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Redstone_Adapter"
     },
     {
       "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
@@ -185,7 +189,8 @@
         "L2_GAS_LIMIT": 2000000,
         "L2_REFUND_ADDRESS": "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
         "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      }
+      },
+      "derivedName": "ZkStack_Adapter"
     },
     {
       "name": "Boba_Adapter",
@@ -208,7 +213,8 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2GasLimit": 2000000,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
-      }
+      },
+      "derivedName": "Boba_Adapter"
     },
     {
       "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
@@ -228,7 +234,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xB524735356985D2f267FA010D681f061DfF03715"
-      }
+      },
+      "derivedName": "AcrossConfigStore"
     },
     {
       "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
@@ -249,7 +256,8 @@
         "$immutable": true,
         "isOwner": false,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      }
+      },
+      "derivedName": "Finder"
     },
     {
       "name": "PolygonTokenBridger",
@@ -270,7 +278,8 @@
         "l2ChainId": 137,
         "l2WrappedMatic": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
         "maticToken": "0x0000000000000000000000000000000000001010"
-      }
+      },
+      "derivedName": "PolygonTokenBridger"
     },
     {
       "name": "ProposerV2",
@@ -287,11 +296,12 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743416171,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      }
+      },
+      "derivedName": "ProposerV2"
     },
     {
       "name": "Ethereum_Adapter",
@@ -308,7 +318,37 @@
       ],
       "sinceTimestamp": 1651577227,
       "sinceBlock": 14704381,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Ethereum_Adapter"
+    },
+    {
+      "name": "ZkStack_CustomGasToken_Adapter",
+      "address": "0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0",
+      "type": "Contract",
+      "template": "acrossv3/adapter",
+      "sourceHashes": [
+        "0x8b466289090e66459b36349e01501be1bd35c1736ee390dd01c68d0098ca2c06"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1742847167,
+      "sinceBlock": 22119075,
+      "values": {
+        "$immutable": true,
+        "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "CHAIN_ID": 232,
+        "CUSTOM_GAS_TOKEN": "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+        "CUSTOM_GAS_TOKEN_FUNDER": "0x0d57392895Db5aF3280e9223323e20F3951E81B1",
+        "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 2000000,
+        "L2_REFUND_ADDRESS": "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67",
+        "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      },
+      "derivedName": "ZkStack_CustomGasToken_Adapter"
     },
     {
       "name": "Ethereum_SpokePool",
@@ -386,11 +426,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743416171,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2388308,
+        "numberOfDeposits": 2441696,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -399,7 +439,8 @@
         "UPDATE_BYTES32_DEPOSIT_DETAILS_HASH": "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f",
         "withdrawalRecipient": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "Ethereum_SpokePool"
     },
     {
       "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
@@ -454,14 +495,15 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743416171,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
         "numProposals": 206
-      }
+      },
+      "derivedName": "GovernorV2"
     },
     {
       "name": "LpTokenFactory",
@@ -473,7 +515,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1651576251,
       "sinceBlock": 14704307,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "LpTokenFactory"
     },
     {
       "address": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
@@ -529,7 +572,8 @@
         "L1_TOKEN_BRIDGE": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "L1_USDC_BRIDGE": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
         "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "Linea_Adapter"
     },
     {
       "name": "EmergencyProposalExecutor",
@@ -558,7 +602,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 808,
+        "nonce": 810,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -587,7 +631,8 @@
         "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Lisk_Adapter"
     },
     {
       "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
@@ -638,7 +683,8 @@
         "ZodiacModule_guard": "0x0000000000000000000000000000000000000000",
         "ZodiacModule_modules": [],
         "ZodiacModule_target": "0xB524735356985D2f267FA010D681f061DfF03715"
-      }
+      },
+      "derivedName": "OptimisticGovernor"
     },
     {
       "name": "EmergencyProposer",
@@ -655,13 +701,14 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1741955375,
+        "getCurrentTime": 1743416171,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "quorum": "5000000000000000000000000",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      }
+      },
+      "derivedName": "EmergencyProposer"
     },
     {
       "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
@@ -737,7 +784,8 @@
         "recipientCircleDomainId": 7,
         "ROOT_CHAIN_MANAGER": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Polygon_Adapter"
     },
     {
       "name": "HubPool Multisig",
@@ -767,7 +815,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 301,
+        "nonce": 306,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -794,7 +842,8 @@
         "L2_GAS_PRICE_ORACLE": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "L2_MESSAGE_RELAY_GAS_LIMIT": 2000000,
         "L2_TOKEN_RELAY_GAS_LIMIT": 250000
-      }
+      },
+      "derivedName": "Scroll_Adapter"
     },
     {
       "name": "CoveredCallFinancialProductLibrary",
@@ -806,7 +855,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1618347170,
       "sinceBlock": 12234012,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CoveredCallFinancialProductLibrary"
     },
     {
       "name": "HubPool",
@@ -832,6 +882,7 @@
           "10": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
           "130": "0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
           "137": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
+          "232": "0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0",
           "288": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
           "324": "0x3155A91D2EBAe69443B45556e1DE5ed8eB79C90D",
           "480": "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32",
@@ -855,6 +906,7 @@
           "10": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
           "130": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "137": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
+          "232": "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12",
           "288": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
           "324": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
           "480": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
@@ -881,17 +933,18 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x144fa2439eaad140d2f791af1fcf1b9dc0ebb4cdfb4e45adb4d92e47957c3072",
-          "relayerRefundRoot": "0xc77f9ac7d4e7ea8b43edd0208842be8743802323c70fa408817cb7c9a7d875bf",
-          "slowRelayRoot": "0xc0c7d70d3af4b2a1e852cf2c90ae9b9280fef7a821e6ff6bf079268af4f2a5d7",
+          "poolRebalanceRoot": "0xe2efd617a3340e3568077b46a9f4cec6788ad1c6aad75199511789ded087a544",
+          "relayerRefundRoot": "0x4496a405d4535ba4a7f582dffbc4f5c48b8fb0601f7b8de17b1dd3746abe9d22",
+          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 16,
-          "challengePeriodEndTimestamp": 1741956563
+          "unclaimedPoolRebalanceLeafCount": 18,
+          "challengePeriodEndTimestamp": 1743416147
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "HubPool"
     },
     {
       "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
@@ -927,7 +980,8 @@
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "recipientCircleDomainId": 6,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Base_Adapter"
     },
     {
       "name": "Optimism_Adapter",
@@ -957,10 +1011,16 @@
         "SNX": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
         "SNX_OPTIMISM_BRIDGE": "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Optimism_Adapter"
     },
     {
       "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -984,7 +1044,8 @@
         "proposers": ["0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"],
         "symbol": "ABT",
         "totalSupply": "28095402467539846062"
-      }
+      },
+      "derivedName": "BondToken"
     },
     {
       "name": "UMAOptimisticOracle",
@@ -1034,7 +1095,8 @@
         "MESSENGER": "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f",
         "recipientCircleDomainId": 0,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Mode_Adapter"
     },
     {
       "name": "Blast_Adapter",
@@ -1062,7 +1124,8 @@
         "MESSENGER": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
         "recipientCircleDomainId": 4294967295,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "Blast_Adapter"
     },
     {
       "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
@@ -1093,7 +1156,8 @@
         "MESSENGER": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "recipientCircleDomainId": 10,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      }
+      },
+      "derivedName": "DoctorWho_Adapter"
     },
     {
       "name": "OptimisticOracleV3",
@@ -1115,7 +1179,8 @@
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "numericalTrue": "1000000000000000000",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      }
+      },
+      "derivedName": "OptimisticOracleV3"
     }
   ],
   "abis": {
@@ -1408,6 +1473,25 @@
     "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084": [
       "event MessageRelayed(address target, bytes message)",
       "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
+    ],
+    "0x54976794ef6b8d630F27c0F2cCB27bBcEf9aF9D0": [
+      "constructor(uint256 _chainId, address _bridgeHub, address _l1Weth, address _l2RefundAddress, address _customGasTokenFunder, uint256 _l2GasLimit, uint256 _l1GasToL2GasPerPubDataLimit, uint256 _maxTxGasprice)",
+      "error ETHGasTokenNotAllowed()",
+      "error TransactionFeeTooHigh()",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "event ZkStackMessageRelayed(bytes32 indexed canonicalTxHash)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function CHAIN_ID() view returns (uint256)",
+      "function CUSTOM_GAS_TOKEN() view returns (address)",
+      "function CUSTOM_GAS_TOKEN_FUNDER() view returns (address)",
+      "function L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT() view returns (uint256)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint256)",
+      "function L2_REFUND_ADDRESS() view returns (address)",
+      "function SHARED_BRIDGE() view returns (address)",
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],

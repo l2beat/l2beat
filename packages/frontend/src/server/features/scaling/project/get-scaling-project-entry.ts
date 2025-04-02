@@ -5,7 +5,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
@@ -170,7 +170,9 @@ export async function getScalingProjectEntry(
             },
           }
         : undefined,
-    badges: project.display.badges.map(getBadgeWithParams).filter(notUndefined),
+    badges: project.display.badges
+      .map((badge) => getBadgeWithParams(badge, project))
+      .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
   }
 

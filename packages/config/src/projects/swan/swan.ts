@@ -51,7 +51,7 @@ export const swan: ScalingProject = opStackL2({
     apis: [
       {
         type: 'rpc',
-        url: 'https://mainnet-rpc01.swanchain.io',
+        url: 'https://mainnet-rpc-01.swanchain.org',
         callsPerMinute: 1500,
       },
     ],

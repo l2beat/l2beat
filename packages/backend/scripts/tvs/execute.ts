@@ -6,22 +6,31 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { ProjectService, type TvsToken } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { command, positional, run, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
-import type {
-  ProjectTvsConfig,
-  Token,
-  TokenValue,
-  TvsBreakdown,
-} from '../../src/modules/tvs/types'
+import type { TokenValue, TvsBreakdown } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
-    type: string,
+    type: optional(string),
     displayName: 'projectId',
     description: 'Project for which tvs will be executed',
+  }),
+  includeBridges: flag({
+    type: boolean,
+    long: 'include-bridges',
+    short: 'ib',
+    description: 'Include bridges in the TVS calculation',
   }),
 }
 
@@ -31,35 +40,92 @@ const cmd = command({
   handler: async (args) => {
     const env = getEnv()
     const logger = initLogger(env)
-
     const ps = new ProjectService()
     const localExecutor = new LocalExecutor(ps, env, logger)
 
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
-    const tokens = readConfig(args.project, logger)
-    const config = {
-      projectId: ProjectId(args.project),
-      tokens,
+    if (!args.project) {
+      const projects = await ps.getProjects({
+        select: ['tvsConfig'],
+        optional: ['chainConfig'],
+        ...(args.includeBridges ? {} : { whereNot: ['isBridge'] }),
+      })
+
+      if (!projects) {
+        logger.error('No TVS projects found')
+        process.exit(1)
+      }
+
+      logger.info(`Found ${projects.length} TVS projects`)
+
+      let totalTvs = 0
+      for (const project of projects) {
+        logger.info(`Executing TVS config for project ${project.id}`)
+
+        if (project.tvsConfig.length === 0) {
+          continue
+        }
+
+        const tvs = await localExecutor.run(
+          {
+            projectId: project.id,
+            tokens: project.tvsConfig,
+          },
+          [timestamp],
+          false,
+        )
+
+        const valueForProject = tvs.reduce((acc, token) => {
+          return acc + token.valueForProject
+        }, 0)
+
+        const valueForTotal = tvs.reduce((acc, token) => {
+          return acc + token.valueForSummary
+        }, 0)
+
+        totalTvs += valueForTotal
+
+        logger.info(`TVS for project ${toDollarString(valueForProject)}`)
+        logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+      }
+    } else {
+      const project = await ps.getProject({
+        id: ProjectId(args.project),
+        select: ['tvsConfig'],
+        optional: ['chainConfig'],
+      })
+
+      if (!project) {
+        logger.error(`Project '${args.project}' not found`)
+        process.exit(1)
+      }
+
+      const tvs = await localExecutor.run(
+        {
+          projectId: project.id,
+          tokens: project.tvsConfig,
+        },
+        [timestamp],
+        false,
+      )
+
+      const tvsBreakdown = calculateBreakdown(
+        project.tvsConfig,
+        tvs,
+        timestamp,
+        args.project,
+      )
+
+      logger.info(`TVS: ${tvsBreakdown.tvs}`)
+      logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
+
+      fs.writeFileSync(
+        './scripts/tvs/breakdown.json',
+        JSON.stringify(tvsBreakdown, null, 2),
+      )
     }
-
-    const tvs = await localExecutor.run(config, [timestamp], false)
-
-    const tvsBreakdown = calculateBreakdown(
-      config,
-      tvs,
-      timestamp,
-      args.project,
-    )
-
-    logger.info(`TVS: ${tvsBreakdown.tvs}`)
-    logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
-
-    fs.writeFileSync(
-      './scripts/tvs/breakdown.json',
-      JSON.stringify(tvsBreakdown, null, 2),
-    )
 
     process.exit(0)
   },
@@ -68,7 +134,7 @@ const cmd = command({
 run(cmd, process.argv.slice(2))
 
 function calculateBreakdown(
-  config: ProjectTvsConfig,
+  config: TvsToken[],
   tokens: TokenValue[],
   timestamp: UnixTime,
   project: string,
@@ -106,7 +172,7 @@ function calculateBreakdown(
   for (const token of tokens) {
     tvsBreakdown.tvs += token.valueForProject
 
-    const tokenConfig = config.tokens.find((t) => t.id === token.tokenId)
+    const tokenConfig = config.find((t) => t.id === token.tokenId)
     assert(tokenConfig, `${token.tokenId} config not found`)
 
     if (token.amount !== 0) {
@@ -165,7 +231,7 @@ function calculateBreakdown(
         tokens: tvsBreakdown.source.canonical.tokens
           .sort((a, b) => b.value - a.value)
           .map((t) => {
-            const tokenConfig = config.tokens.find((tt) => tt.id === t.tokenId)
+            const tokenConfig = config.find((tt) => tt.id === t.tokenId)
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
@@ -179,7 +245,7 @@ function calculateBreakdown(
         tokens: tvsBreakdown.source.external.tokens
           .sort((a, b) => b.value - a.value)
           .map((t) => {
-            const tokenConfig = config.tokens.find((tt) => tt.id === t.tokenId)
+            const tokenConfig = config.find((tt) => tt.id === t.tokenId)
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
@@ -193,7 +259,7 @@ function calculateBreakdown(
         tokens: tvsBreakdown.source.native.tokens
           .sort((a, b) => b.value - a.value)
           .map((t) => {
-            const tokenConfig = config.tokens.find((tt) => tt.id === t.tokenId)
+            const tokenConfig = config.find((tt) => tt.id === t.tokenId)
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
@@ -256,14 +322,6 @@ function toDollarString(value: number) {
   } else {
     return `$${value.toFixed(2)}`
   }
-}
-
-function readConfig(project: string, logger: Logger) {
-  const filePath = `./src/modules/tvs/config/${project}.json`
-  logger.info(`reading config from file: ${filePath}`)
-
-  const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
-  return json.tokens as Token[]
 }
 
 export function formatNumberWithCommas(value: number, precision = 2): string {

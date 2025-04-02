@@ -48,6 +48,7 @@ export function getTvlAmountsConfig(
     for (const escrow of project.tvlConfig.escrows) {
       switch (escrow.sharedEscrow?.type) {
         case 'AggLayer': {
+          if (isRpcUnconfigured(project)) break
           const aggLayerEntries = aggLayerEscrowToEntries(
             escrow,
             project,
@@ -58,6 +59,7 @@ export function getTvlAmountsConfig(
           break
         }
         case 'ElasticChain': {
+          if (isRpcUnconfigured(project)) break
           const elasticChainEntries = elasticChainEscrowToEntries(
             escrow,
             project,
@@ -76,6 +78,10 @@ export function getTvlAmountsConfig(
               chain.name === escrow.chain,
               'Programmer error: chain mismatch',
             )
+
+            if (chain.name === project.id) {
+              if (isRpcUnconfigured(project)) break
+            }
 
             const configEntry = projectEscrowToConfigEntry(
               chain,
@@ -209,4 +215,15 @@ function findProjectAndChain(
   const chain = project.chainConfig
   assert(chain, `Chain not found for token ${token.symbol}`)
   return { chain, project }
+}
+
+function isRpcUnconfigured(p: {
+  chainConfig: ChainConfig | undefined
+}) {
+  if (p.chainConfig === undefined) {
+    return true
+  }
+  const rpc = p.chainConfig?.apis.find((p) => p.type === 'rpc')
+
+  return !rpc
 }

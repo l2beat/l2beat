@@ -130,7 +130,7 @@ function NameWithProjectInfoTooltip({
           {project.badges?.map((badge, key) => (
             <ProjectBadge
               badge={badge}
-              hideTooltip
+              disableInteraction
               className="!h-auto place-items-center"
               key={key}
             />

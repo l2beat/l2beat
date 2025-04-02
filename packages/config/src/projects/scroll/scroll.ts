@@ -722,7 +722,7 @@ export const scroll: ScalingProject = {
       actors: [
         discovery.getMultisigPermission(
           'Scroll Multisig 3',
-          'Can propose transactions via the TimelockFast, which currently can manage all roles in the ScrollOwner and thus get access to full upgrade and system functions. The ScrollExecutorMultisig needs to execute these proposals once ready.',
+          'Can propose transactions via the TimelockFast, which can configure operational parameters like adding provers, configuring the gas limit and token L1 -> L2 address mappings. The ScrollExecutorMultisig needs to execute these proposals once ready.',
         ),
         discovery.getMultisigPermission(
           'Scroll Security Council',

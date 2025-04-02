@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 
 export class DBStorage implements DataStorage {
@@ -50,26 +50,28 @@ export class DBStorage implements DataStorage {
   ): Promise<number | undefined> {
     const price = this.prices.get(timestamp)?.get(configurationId)
 
-    if (price) {
+    if (price !== undefined) {
       return Promise.resolve(price)
     }
 
     // Fallback is needed due to the way PriceIndexer works.
     // If CoingeckoClient returns empty response we will not save anything to DB
-    // and skip this timestamp altogether, effectively creaging a hole in data.
-    const fallback = await this.db.tvsPrice.getLatestPrice(configurationId)
-    assert(
-      fallback,
-      `Price fallback failed for ${configurationId} for ${timestamp}`,
-    )
-
-    this.logger.warn(`Price fallback triggered`, {
+    // and skip this timestamp altogether, effectively creating a gap in data.
+    const fallback = await this.db.tvsPrice.getLatestPriceBefore(
       configurationId,
       timestamp,
-      fallbackTimestamp: fallback.timestamp,
-      fallbackPrice: fallback.priceUsd,
-    })
-    return fallback.priceUsd
+    )
+
+    if (fallback) {
+      this.logger.warn(`Price fallback triggered`, {
+        configurationId,
+        timestamp,
+        fallbackTimestamp: fallback.timestamp,
+        fallbackPrice: fallback.priceUsd,
+      })
+    }
+
+    return fallback?.priceUsd
   }
 
   async getAmount(
@@ -80,24 +82,26 @@ export class DBStorage implements DataStorage {
       this.amounts.get(timestamp)?.get(configurationId),
     )
 
-    if (amount) {
+    if (amount !== undefined) {
       return Promise.resolve(amount)
     }
 
     // Fallback is needed for circulating supplies.
     // For the same reasons as in prices, CoingeckoClient can return empty response.
-    const fallback = await this.db.tvsAmount.getLatestAmount(configurationId)
-    assert(
-      fallback,
-      `Amount fallback failed for ${configurationId} for ${timestamp}`,
-    )
-
-    this.logger.warn(`Amount fallback triggered`, {
+    const fallback = await this.db.tvsAmount.getLatestAmountBefore(
       configurationId,
       timestamp,
-      fallbackTimestamp: fallback.timestamp,
-      fallbackAmount: fallback.amount,
-    })
-    return fallback.amount
+    )
+
+    if (fallback) {
+      this.logger.warn(`Amount fallback triggered`, {
+        configurationId,
+        timestamp,
+        fallbackTimestamp: fallback.timestamp,
+        fallbackAmount: fallback.amount,
+      })
+    }
+
+    return fallback?.amount
   }
 }

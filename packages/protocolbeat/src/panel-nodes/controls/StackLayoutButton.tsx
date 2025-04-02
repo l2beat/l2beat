@@ -5,9 +5,12 @@ import { ControlButton } from './ControlButton'
 
 export function StackLayoutButton() {
   const nodes = useStore((state) => state.nodes)
+  const hiddenNodes = useStore((state) => state.hidden)
   const layout = useStore((state) => state.layout)
+  const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
+
   return (
-    <ControlButton onClick={() => layout(stackAutoLayout(nodes))}>
+    <ControlButton onClick={() => layout(stackAutoLayout(visibleNodes))}>
       Stack layout
     </ControlButton>
   )
