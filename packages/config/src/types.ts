@@ -883,7 +883,10 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
-  accentColor: string
+  colors: {
+    primary: `#${string}`
+    secondary: `#${string}`
+  }
   ecosystemToken?: {
     name: string
     chain: string

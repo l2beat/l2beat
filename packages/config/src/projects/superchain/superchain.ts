@@ -8,7 +8,10 @@ export const superchain: BaseProject = {
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   ecosystemConfig: {
-    accentColor: '#F00',
+    colors: {
+      primary: '#F00',
+      secondary: '#F93E3F',
+    },
     ecosystemToken: {
       name: 'OP',
       chain: 'ethereum',
