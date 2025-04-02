@@ -6,8 +6,8 @@
     "UintPermrollupString": {
       "typeCaster": "Mapping",
       "arg": {
-        "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
-        "2": "."
+        "0": ".",
+        "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
       }
     }
   },

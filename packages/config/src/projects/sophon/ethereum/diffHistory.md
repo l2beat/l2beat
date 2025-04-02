@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x529b274e9db39c41d635b1f56d7d7b527da175fd
+Generated with discovered.json: 0x2cb9490765f4b9cec1d3a865a5d9fb8be8d3f085
 
-# Diff at Wed, 02 Apr 2025 14:42:59 GMT:
+# Diff at Wed, 02 Apr 2025 15:08:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144899
@@ -18,13 +18,10 @@ discovery. Values are for block 22144899 (main branch discovery), not current.
 
 ```diff
     contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
-      description:
--        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
-+        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0"
       issuedPermissions.1.to:
 -        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
 +        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
@@ -46,13 +43,13 @@ discovery. Values are for block 22144899 (main branch discovery), not current.
       values.isPermanentRollup:
 +        0
       values.isPermanentRollupString:
-+        0
++        "."
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
       fieldMeta.isPermanentRollup:
 +        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
       usedTypes:
-+        [{"typeCaster":"Mapping","arg":{"1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.","2":"."}}]
++        [{"typeCaster":"Mapping","arg":{"0":".","1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."}}]
     }
 ```
 

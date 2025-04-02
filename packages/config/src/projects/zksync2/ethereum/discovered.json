@@ -504,8 +504,8 @@
         {
           "typeCaster": "Mapping",
           "arg": {
-            "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
-            "2": "."
+            "0": ".",
+            "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
           }
         }
       ],
@@ -1301,7 +1301,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/v26/Diamond": "0x9e250c8b7aa61788d8ec6477aa8e21ddad05343842fb8323cf9c0b1f9123e4d3",
+    "shared-zk-stack/v26/Diamond": "0xdeb3c7f37117cbbf5abc1704aa4bf4d0eef0bae68d2f635ae073df89e75803c0",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x73b92c77d468688000c67bd71c29b03a34385063
+Generated with discovered.json: 0x1d555d1e555b38cf3aa418afd2f86ef37f8974de
 
-# Diff at Wed, 02 Apr 2025 14:43:01 GMT:
+# Diff at Wed, 02 Apr 2025 15:08:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123358
@@ -108,7 +108,7 @@ discovery. Values are for block 22123358 (main branch discovery), not current.
       fieldMeta.isPermanentRollup:
 +        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
       usedTypes:
-+        [{"typeCaster":"Mapping","arg":{"1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.","2":"."}}]
++        [{"typeCaster":"Mapping","arg":{"0":".","1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."}}]
     }
 ```
 
