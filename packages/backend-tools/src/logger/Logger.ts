@@ -17,6 +17,10 @@ export class Logger {
   private readonly logLevel: number
   private readonly cwd: string
 
+  get metricsEnabled(): boolean {
+    return this.options.metricsEnabled ?? false
+  }
+
   constructor(options: Partial<LoggerOptions>) {
     this.options = {
       ...options,
@@ -160,6 +164,12 @@ export class Logger {
     }
   }
 
+  metric(...args: unknown[]): void {
+    if (this.options.metricsEnabled) {
+      this.print(this.parseEntry('METRIC', args))
+    }
+  }
+
   private parseEntry(level: LogLevel, args: unknown[]): LogEntry {
     const parsed = parseLogArguments(args)
     return {
@@ -190,6 +200,7 @@ export class Logger {
           transportOptions.transport.warn(output)
           break
         case 'INFO':
+        case 'METRIC':
           transportOptions.transport.log(output)
           break
         case 'DEBUG':
