@@ -258,6 +258,10 @@
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
         },
+        "IsPorterAvailableStatus": {
+          "severity": "HIGH",
+          "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
+        },
         "getDAValidatorPair": { "severity": "HIGH" },
         "getPendingAdmin": { "severity": "HIGH" },
         "getPubdataPricingMode": {
@@ -1042,7 +1046,7 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
     "shared-zk-stack/L1USDCBridge": "0x38101ee641e95b308e8437435c3de4baf5094c656fcf7c11b653e865050549ac",
-    "shared-zk-stack/v26/Diamond": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
+    "shared-zk-stack/v26/Diamond": "0x1207407aaa6b1603ebb547d98140f1b30cdb50e94b0969ea7d803bf2e4ec8eaa",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

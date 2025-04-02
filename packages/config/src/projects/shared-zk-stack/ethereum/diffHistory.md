@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2bdce1787da916490b222399491839d7ffdc556e
+Generated with discovered.json: 0xd38d1256e80515d73b88c6671ef986cbcc314ef0
 
-# Diff at Tue, 01 Apr 2025 10:41:42 GMT:
+# Diff at Wed, 02 Apr 2025 12:46:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123258
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2bdce1787da916490b222399491839d7ffdc556e
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+shared zk stack contracts upgraded to v26: config related changes for all children chains.
 
 ## Watched changes
 
@@ -22,19 +22,19 @@ Provide description of changes. This section will be preserved.
 +        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       directlyReceivedPermissions.1.description:
 -        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
-+        "revert batches for all connected chains."
++        "revert batches for any connected chain."
       directlyReceivedPermissions.0.from:
 -        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
 +        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
       directlyReceivedPermissions.0.description:
 -        "register new Elastic Chains in the shared bridge."
-+        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "create new zk chains (based on the current version), register tokens."
     }
 ```
 
 ```diff
     contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
-    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
       template:
 -        "shared-zk-stack/v25/BridgeHub"
 +        "shared-zk-stack/v26/BridgeHub"
@@ -46,7 +46,19 @@ Provide description of changes. This section will be preserved.
 +        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
       description:
 -        "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations."
-+        "The main registry (hub) for all the contracts in the ZK stack cluster. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers."
++        "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers."
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      issuedPermissions.1.description:
++        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+      issuedPermissions.0.description:
+-        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "create new zk chains (based on the current version), register tokens."
       values.$implementation:
 -        "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"
 +        "0xb720523EC3c615b069453bF4B0584CEbF034706f"
@@ -156,17 +168,21 @@ Provide description of changes. This section will be preserved.
 +        100
       values.messageRoot:
 +        "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
++++ description: If false, chains can migrate to whitelisted settlement layers.
++++ severity: HIGH
       values.migrationPaused:
 +        false
-+++ description: New settlement layers and their whitelist status.
++++ description: New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin.
 +++ severity: HIGH
       values.settlementLayers:
 +        {}
       fieldMeta.chainsCreated.description:
 -        "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs."
 +        "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
+      fieldMeta.migrationPaused:
++        {"severity":"HIGH","description":"If false, chains can migrate to whitelisted settlement layers."}
       fieldMeta.settlementLayers:
-+        {"severity":"HIGH","description":"New settlement layers and their whitelist status."}
++        {"severity":"HIGH","description":"New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."}
     }
 ```
 
@@ -180,13 +196,13 @@ Provide description of changes. This section will be preserved.
 +        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       receivedPermissions.1.description:
 -        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
-+        "revert batches for all connected chains."
++        "revert batches for any connected chain."
       receivedPermissions.0.from:
 -        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
 +        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
       receivedPermissions.0.description:
 -        "register new Elastic Chains in the shared bridge."
-+        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "create new zk chains (based on the current version), register tokens."
     }
 ```
 
@@ -242,7 +258,7 @@ Provide description of changes. This section will be preserved.
 +        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
       issuedPermissions.0.description:
 -        "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
-+        "revert batches for all connected chains."
++        "revert batches for any connected chain."
       values.$implementation:
 -        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
 +        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
@@ -368,10 +384,12 @@ Provide description of changes. This section will be preserved.
       description:
 -        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
 +        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
-      directlyReceivedPermissions.3:
+      directlyReceivedPermissions.4:
 +        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."}
-      directlyReceivedPermissions.2:
+      directlyReceivedPermissions.3:
 +        {"permission":"act","from":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."}
       directlyReceivedPermissions.1.from:
 -        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
 +        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
@@ -427,34 +445,36 @@ Provide description of changes. This section will be preserved.
 ```diff
     contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
     +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
-      receivedPermissions.9:
+      receivedPermissions.10:
 +        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.8:
+      receivedPermissions.9:
 +        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.7:
+      receivedPermissions.8:
 +        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.6:
+      receivedPermissions.7:
 +        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.5:
+      receivedPermissions.6:
 +        {"permission":"upgrade","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","via":[{"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.4:
+      receivedPermissions.5:
 +        {"permission":"upgrade","from":"0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.3.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.3.via.1:
--        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
-      receivedPermissions.3.description:
-+        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.4:
++        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.3.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
       receivedPermissions.2.from:
 -        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
-+        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
       receivedPermissions.1.from:
 -        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
-+        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
-      receivedPermissions.1.via.1.address:
--        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
-+        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.1.via.1:
+-        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      receivedPermissions.1.description:
++        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
       receivedPermissions.0.permission:
 -        "upgrade"
 +        "interact"
@@ -480,7 +500,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860)
-    +++ description: Handles asset registration, where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
 ```
 
 ```diff

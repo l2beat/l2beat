@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x17f25712bc6c640d72b34cffc82f43d56c64ac4e
+Generated with discovered.json: 0x28d4ed067ec0759a77132bb3063cd9bba8846e59
 
-# Diff at Tue, 01 Apr 2025 10:06:49 GMT:
+# Diff at Wed, 02 Apr 2025 12:46:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123358
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x17f25712bc6c640d72b34cffc82f43d56c64ac4e
 
 ## Description
 
-ZK stack protocol upgrade v26 part 2: L1 shared contracts upgrade (CTM, L1NativeTokenVault, ...).
+shared zk stack contracts upgraded to v26: config related changes for all children chains.
 
 ## Config/verification related changes
 
@@ -22,6 +22,8 @@ discovery. Values are for block 22123358 (main branch discovery), not current.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      fieldMeta.IsPorterAvailableStatus:
++        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
     }
 ```
 

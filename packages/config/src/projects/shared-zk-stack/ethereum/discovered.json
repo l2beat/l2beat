@@ -233,12 +233,12 @@
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
+          "description": "create new zk chains (based on the current version), register tokens."
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for all connected chains."
+          "description": "revert batches for any connected chain."
         }
       ],
       "sinceTimestamp": 1722434735,
@@ -282,13 +282,19 @@
         "0xe79288af01ff8940265966caffdc9ea0ef18822166fd7f704488419737716623"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main registry (hub) for all the contracts in the ZK stack cluster. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+      "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
       "issuedPermissions": [
         {
           "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.",
+          "description": "create new zk chains (based on the current version), register tokens.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
         },
         {
           "permission": "upgrade",
@@ -414,12 +420,16 @@
         "sharedBridge": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
       },
       "fieldMeta": {
+        "migrationPaused": {
+          "severity": "HIGH",
+          "description": "If false, chains can migrate to whitelisted settlement layers."
+        },
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
         },
         "settlementLayers": {
           "severity": "HIGH",
-          "description": "New settlement layers and their whitelist status."
+          "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."
         }
       },
       "derivedName": "Bridgehub",
@@ -590,13 +600,13 @@
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.",
+          "description": "create new zk chains (based on the current version), register tokens.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for all connected chains.",
+          "description": "revert batches for any connected chain.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         }
       ],
@@ -860,7 +870,7 @@
         "0xb55fe571d010f5a5fa7f06d0aa6602a1a6b406ed8c3163fb400b0f6a947a4bba"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Handles asset registration, where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
+      "description": "Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1560,7 +1570,7 @@
         {
           "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "revert batches for all connected chains.",
+          "description": "revert batches for any connected chain.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
@@ -1848,6 +1858,11 @@
         },
         {
           "permission": "interact",
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+        },
+        {
+          "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
         },
@@ -1943,6 +1958,12 @@
         }
       ],
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
+          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
+        },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
@@ -2942,9 +2963,9 @@
     "shared-zk-stack/EmergencyUpgradeBoard": "0x91f63b61f586400a5d16bbe6888e7044e78a334f3c590d4392a40e5f8a0a1dfd",
     "shared-zk-stack/Guardians": "0xa9db374eee5c5539d49661c37b377921cd849648da2f635ff2fa631715585cbc",
     "shared-zk-stack/SecurityCouncil": "0x2d620c0be0c12a18cbb02aed91ed5681e263af71360d6404ff5dc03cb9f4a4cf",
-    "shared-zk-stack/v26/BridgeHub": "0x6223e42c01c0b526f9060d22d104a297a9aaf56db9a41e26e96ed35d491cbb45",
-    "shared-zk-stack/v26/ChainTypeManager": "0x9da3151ed9e9c7158f99bd140e94c40bd28fd15cc9d4d369464ee61f655778f4",
-    "shared-zk-stack/v26/CTMDeploymentTracker": "0x6ff3bd7620aa407a549e0e3dee87546cb606fbbeaac2bdac2683a8c252e189da",
+    "shared-zk-stack/v26/BridgeHub": "0xe09251424ea8accc32dcfca73428e07c08062b906d136d4f38c546029f338f56",
+    "shared-zk-stack/v26/ChainTypeManager": "0x412dc699fd2dc6eb040c30bb2f4d910778adaa2b002a0323d17275690af86983",
+    "shared-zk-stack/v26/CTMDeploymentTracker": "0x031626cf83c8d90e0bbba30181def35c6b4eebf6c85c66c85322f7dcb5c0d68a",
     "shared-zk-stack/v26/L1AssetRouter": "0x61e94b7742e84945b3af3c17cd45294e6f2421180eac8788d267a598422100c0",
     "shared-zk-stack/v26/L1GenesisUpgrade": "0x5cf4c40d7725942034b3d1644c21b83c09bbddf5ee69461c9e7c584f3e1a4dde",
     "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
