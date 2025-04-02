@@ -72,7 +72,6 @@ jobs:
           REPORT_DIR="config-diffs/pr-$PR_NUMBER"
           mkdir -p "$REPORT_DIR"
           cp /tmp/compare/diff.html "$REPORT_DIR/index.html"
-          echo "$REPORT_DIR" >> $GITHUB_OUTPUT
 
       - name: Upload GitHub Pages artifact
         if: steps.diff.outputs.has_changes != '1'
