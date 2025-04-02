@@ -1,5 +1,6 @@
 'use client'
 
+import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'
 import {
@@ -20,6 +21,7 @@ import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import { InfoIcon } from '~/icons/info'
+import { UnverifiedIcon } from '~/icons/unverified'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -57,11 +59,14 @@ export function MultipleBridgeDetails({ project }: Props) {
                 key={bridge.slug}
                 htmlFor={bridge.slug}
                 className={cn(
-                  'flex min-h-[56px] cursor-pointer flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
+                  'flex min-h-[56px] cursor-pointer flex-row gap-4 rounded-lg border-divider px-4 py-2 md:rounded-none md:border-b',
                   index === project.bridges.length - 1 && 'md:border-b-0',
                   // Hide 3rd and further bridges on mobile (will be shown in a drawer)
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
+                  bridge.statuses?.isUnverified
+                    ? UNVERIFIED_DA_CLASSNAME
+                    : 'bg-surface-secondary md:bg-transparent',
                 )}
               >
                 <RadioButton
@@ -75,8 +80,18 @@ export function MultipleBridgeDetails({ project }: Props) {
                   }}
                 />
 
-                <div className="flex flex-1 items-center text-sm font-bold text-primary">
+                <div className="flex flex-1 items-center gap-1 text-sm font-bold text-primary">
                   {bridge.name}
+                  {bridge.statuses?.isUnverified && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        This bridge contains unverified contracts.
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
                 </div>
                 <div className="flex flex-1 items-center justify-center">
                   <GrissiniCell values={bridge.grissiniValues} />
