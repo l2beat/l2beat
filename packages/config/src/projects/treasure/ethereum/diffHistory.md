@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc4f91940f792a73bc31c425e6d2ce4fca12e08db
+Generated with discovered.json: 0x68f546973b1cf7a6258e4f701d84ef65a7737a52
 
-# Diff at Wed, 02 Apr 2025 13:13:59 GMT:
+# Diff at Wed, 02 Apr 2025 13:21:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22166647
@@ -26,6 +26,18 @@ discovery. Values are for block 22166647 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
+```diff
     contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
@@ -46,6 +58,12 @@ discovery. Values are for block 22166647 (main branch discovery), not current.
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
+```
+
+```diff
++   Status: CREATED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0x13f31cbed3d6947ca257fe22573dcb11b2e85e98

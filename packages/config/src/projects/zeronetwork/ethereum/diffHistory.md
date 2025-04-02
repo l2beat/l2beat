@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x25351dd6bea7960a9634a7cf884b16aee30ca533
+Generated with discovered.json: 0x43b194b2511bae14a97c0fcc88b25a9245c99867
 
-# Diff at Wed, 02 Apr 2025 13:14:00 GMT:
+# Diff at Wed, 02 Apr 2025 13:22:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22166665
@@ -26,6 +26,18 @@ discovery. Values are for block 22166665 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
+```diff
     contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
     +++ description: None
       directlyReceivedPermissions.0.description:
@@ -46,6 +58,12 @@ discovery. Values are for block 22166665 (main branch discovery), not current.
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
     }
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0xda250aeb147e2d12030fdd14d0d65e0e459ab755

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf5ab16e80ec4306dde27c47ffd1eb0075cac74c0
+Generated with discovered.json: 0x66c706440e84133b1c6701ebaf06eca10e154247
 
-# Diff at Wed, 02 Apr 2025 13:13:55 GMT:
+# Diff at Wed, 02 Apr 2025 13:21:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144881
@@ -27,6 +27,18 @@ discovery. Values are for block 22144881 (main branch discovery), not current.
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
     }
 ```
 

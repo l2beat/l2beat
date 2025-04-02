@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9372fe8f143039cbd9f511f302e75d7b6b0e824b
+Generated with discovered.json: 0x9d07cb214e0ab98b0a7ad3c3db2bdf3918dd1a85
 
-# Diff at Wed, 02 Apr 2025 13:13:56 GMT:
+# Diff at Wed, 02 Apr 2025 13:21:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22122838
@@ -22,6 +22,18 @@ discovery. Values are for block 22122838 (main branch discovery), not current.
       receivedPermissions.0.description:
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
     }
 ```
 

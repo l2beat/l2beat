@@ -2,7 +2,7 @@
   "name": "cronoszkevm",
   "chain": "ethereum",
   "blockNumber": 22144857,
-  "configHash": "0x9a620217ee05d3531a583d9e449e7d7577fa1cb6aa1b347de42d4c41c7058f16",
+  "configHash": "0xa4f8d9a2eab7db4be5b31a20c9665ec88bf778ce1a3c442af9f1abd67a85e166",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -106,7 +106,7 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CronosZkEVMAdmin",

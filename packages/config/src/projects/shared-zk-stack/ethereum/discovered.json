@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22167170,
-  "configHash": "0xc938bc28024428422625c0f1ba367d7deb66752fd02996c886639947afda08b6",
+  "configHash": "0xc5c22c6f91f99615a22c234ae2a5054bfaa919c756cd912ea211b745c602aaee",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -1094,22 +1094,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "RollupL1DAValidator",
-      "address": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
-      "type": "Contract",
-      "template": "shared-zk-stack/v26/RollupL1DAValidator",
-      "sourceHashes": [
-        "0x0c7b1ef84ead12e6b034e6e4eb7cc9e51dba7272fe1d182749a43980da7a3932"
-      ],
-      "proxyType": "immutable",
-      "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108915,
-      "sinceBlock": 21809357,
-      "values": { "$immutable": true },
-      "derivedName": "RollupL1DAValidator",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
       "name": "GnosisSafe",
       "address": "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A",
       "type": "Contract",
@@ -1249,22 +1233,6 @@
       "address": "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "ValidiumL1DAValidator",
-      "address": "0x907b30407249949521Bf0c89A43558dae200146A",
-      "type": "Contract",
-      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
-      "sourceHashes": [
-        "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
-      ],
-      "proxyType": "immutable",
-      "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108927,
-      "sinceBlock": 21809358,
-      "values": { "$immutable": true },
-      "derivedName": "ValidiumL1DAValidator",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "GnosisSafe",
@@ -2540,28 +2508,6 @@
     "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": [
       "constructor(address _singleton)"
     ],
-    "0x72213dfe8CA61B0A782970dCFebFb877778f9119": [
-      "error BlobCommitmentNotPublished()",
-      "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
-      "error EmptyBlobVersionHash(uint256 index)",
-      "error InvalidL2DAOutputHash(bytes32 l2DAValidatorOutputHash)",
-      "error InvalidNumberOfBlobs(uint256 blobsProvided, uint256 maxBlobsSupported)",
-      "error InvalidPubdataCommitmentsSize()",
-      "error InvalidPubdataHash(bytes32 fullPubdataHash, bytes32 providedPubdataHash)",
-      "error InvalidPubdataSource(uint8 pubdataSource)",
-      "error NonEmptyBlobVersionHash(uint256 index)",
-      "error OnlyOneBlobWithCalldataAllowed()",
-      "error OperatorDAInputTooSmall(uint256 operatorDAInputLength, uint256 minAllowedLength)",
-      "error PointEvalCallFailed(bytes)",
-      "error PointEvalFailed(bytes)",
-      "error PubdataCommitmentsEmpty()",
-      "error PubdataInputTooSmall(uint256 pubdataInputLength, uint256 totalBlobsCommitmentSize)",
-      "error PubdataLengthTooBig(uint256 pubdataLength, uint256 totalBlobSizeBytes)",
-      "function checkDA(uint256, uint256, bytes32 _l2DAValidatorOutputHash, bytes _operatorDAInput, uint256 _maxBlobsSupported) view returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
-      "function isBlobAvailable(bytes32 _blobCommitment) view returns (bool)",
-      "function publishBlobs(bytes _pubdataCommitments)",
-      "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
-    ],
     "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A": [
       "constructor(address _singleton)"
     ],
@@ -2573,10 +2519,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x907b30407249949521Bf0c89A43558dae200146A": [
-      "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
-      "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
     ],
     "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88": [
       "constructor(address _singleton)"
@@ -2971,8 +2913,6 @@
     "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
     "shared-zk-stack/v26/L1Nullifier": "0x2d1bc5b5d93b8426fb6e6f34b6ad5c8d90d87a39df65ee3fbc9909f1536d1ed6",
     "shared-zk-stack/v26/MessageRoot": "0x1767029a6621737d6bf6e18cae938df805aed751f467045f51a07e2f158879fc",
-    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0xb5b3d7af257c0763b905ea426fc85ecaf082f2a8ff5e77463c171e037d6e1b82",
-    "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e"
+    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0xb5b3d7af257c0763b905ea426fc85ecaf082f2a8ff5e77463c171e037d6e1b82"
   }
 }

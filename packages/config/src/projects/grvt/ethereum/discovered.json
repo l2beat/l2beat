@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 22122838,
-  "configHash": "0x4ffb0c3829f811a75f77b8b577e43e7b0ced00fc93f19d1dc129b4113891d314",
+  "configHash": "0x185510d67545b019cb74ab6f69d081825de1441b0ce5253eea3fd994b46901d0",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -245,7 +245,7 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GrvtZkEvmAdmin",

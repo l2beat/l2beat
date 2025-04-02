@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6ff314c82d35dc856dc28601ab0bdc74fa558e7e
+Generated with discovered.json: 0x2937db19e8d41f800fb67c701fd150c3a81ae4f3
 
-# Diff at Wed, 02 Apr 2025 13:13:58 GMT:
+# Diff at Wed, 02 Apr 2025 13:21:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123258
@@ -580,12 +580,9 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
 ```
 
 ```diff
-    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
+-   Status: DELETED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
     +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
-      template:
--        "shared-zk-stack/RollupL1DAValidator"
-+        "shared-zk-stack/v26/RollupL1DAValidator"
-    }
 ```
 
 ```diff
@@ -595,12 +592,9 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+-   Status: DELETED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
     +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
-      template:
--        "shared-zk-stack/ValidiumL1DAValidator"
-+        "shared-zk-stack/v26/ValidiumL1DAValidator"
-    }
 ```
 
 ```diff

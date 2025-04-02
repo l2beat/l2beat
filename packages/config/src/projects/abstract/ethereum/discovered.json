@@ -2,7 +2,7 @@
   "name": "abstract",
   "chain": "ethereum",
   "blockNumber": 22181322,
-  "configHash": "0x1c72e1410086ab1a04e57e6fc31c7108a9abc23f6f84b2eac6f4e63eba707d61",
+  "configHash": "0x641ad03ec6ef6f240a1cbdd1ad81bb2afa753e9b54ced496c0802dd352af737b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -361,7 +361,7 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "AbstractChainAdminMultisig",
