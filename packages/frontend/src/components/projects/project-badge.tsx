@@ -1,5 +1,6 @@
 import type { Badge } from '@l2beat/config'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 import {
@@ -7,7 +8,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
-import Link from 'next/link'
 
 export interface BadgeWithParams extends Badge {
   src: string
