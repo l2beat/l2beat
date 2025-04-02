@@ -50,9 +50,12 @@ function getMatchingLines(code: string, searchTerm: string): MatchingLine[] {
   let text = code
   let of = 0
   const matches: MatchingLine[] = []
+  const isCaseSensitive = searchTerm !== searchTerm.toLowerCase()
 
   while (true) {
-    const index = text.indexOf(searchTerm)
+    const searchText = isCaseSensitive ? text : text.toLowerCase()
+    const searchPattern = isCaseSensitive ? searchTerm : searchTerm.toLowerCase()
+    const index = searchText.indexOf(searchPattern)
     if (index === -1) {
       break
     }
