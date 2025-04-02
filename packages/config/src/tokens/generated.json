@@ -6731,7 +6731,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -7023,6 +7023,50 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1738851274,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Renzo Restaked LST",
+      "coingeckoId": "renzo-restaked-lst",
+      "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
+      "symbol": "pzETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1738851439,
+      "coingeckoListingTimestamp": 1720569600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "name": "USD₮0",
@@ -7328,7 +7372,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8552,7 +8596,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8574,7 +8618,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -11737,7 +11781,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -11759,7 +11803,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
