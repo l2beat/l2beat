@@ -9,7 +9,7 @@ export abstract class MetricsAggregator<T> {
   buffer: T[] = []
 
   constructor(private readonly $: MetricsAggregatorOptions) {
-    if (!$.logger.metricsEnabled) {
+    if ($.logger.metricsEnabled) {
       this.start()
     }
   }
