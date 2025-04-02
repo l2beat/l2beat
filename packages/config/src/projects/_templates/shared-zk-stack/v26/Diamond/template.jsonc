@@ -1,8 +1,16 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions{{isPermanentRollupString}}",
   "category": "core",
-  // WIP: this template shall transition together with ZIP-6 to the new ChainTypeManager paradigm
+  "types": {
+    "UintPermrollupString": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
+        "2": "."
+      }
+    }
+  },
   "ignoreMethods": [
     "storedBlockHash",
     "storedBatchHash",
@@ -67,6 +75,23 @@
           "event": "IsPorterAvailableStatusUpdate"
         }
       }
+    },
+    "isPermanentRollup": {
+      "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 57,
+        "returnType": "uint8"
+      }
+    },
+    "isPermanentRollupString": {
+      "handler": {
+        "type": "storage",
+        "slot": 57,
+        "returnType": "uint8"
+      },
+      "returnType": "(UintPermrollupString)"
     },
     "getDAValidatorPair": {
       "severity": "HIGH"
