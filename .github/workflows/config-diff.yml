@@ -66,15 +66,14 @@ jobs:
         id: diff
         run: |
           cd packages/config
-          pnpm diff > /tmp/compare/diff.html
+          pnpm diff /tmp/compare/diff.html
           echo "has_changes=$(cat /tmp/compare/diff.html | grep -c "No changes detected" || true)" >> $GITHUB_OUTPUT
 
       - name: Setup GitHub Pages artifact
-        id: pages
         if: steps.diff.outputs.has_changes != '1'
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
-          REPORT_DIR="config-diffs/pr-$PR_NUMBER"
+          REPORT_DIR="pages-output/pr-$PR_NUMBER"
           mkdir -p "$REPORT_DIR"
           cp /tmp/compare/diff.html "$REPORT_DIR/index.html"
 
@@ -82,7 +81,7 @@ jobs:
         if: steps.diff.outputs.has_changes != '1'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: config-diffs
+          path: pages-output
 
       - name: Deploy to GitHub Pages
         id: deployment
@@ -112,7 +111,7 @@ jobs:
             
             Config changes have been detected between main and this PR.
             
-            [View Full Report](${{ steps.deployment.outputs.page_url }})
+            [View Full Report](${{ steps.deployment.outputs.page_url }}/pr-${{ github.event.pull_request.number }})
             
             *Last updated: ${{ steps.timestamp.outputs.value }}*
           edit-mode: replace

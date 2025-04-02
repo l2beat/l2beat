@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { Database } from 'sqlite3'
 import { diffAll } from './diff'
 import { diffsToHtml } from './html'
@@ -7,6 +7,12 @@ import type { Project } from './types'
 main()
 
 async function main() {
+  const args = process.argv.slice(2)
+  if (args.length !== 1) {
+    throw new Error('Invalid argument count')
+  }
+  const outputPath = args[1]
+
   const dbBefore = new Database('/tmp/compare/main/db.sqlite')
   const dbAfter = new Database('/tmp/compare/pr/db.sqlite')
 
@@ -23,12 +29,12 @@ async function main() {
   const diffs = diffAll(projectBefore, projectsAfter)
 
   if (diffs.length === 0) {
-    console.log('No changes detected')
+    writeFileSync(outputPath, 'No changes detected')
     return
   }
 
   const html = diffsToHtml({ diffs, commitBefore, commitAfter })
-  console.log(html)
+  writeFileSync(outputPath, html)
 }
 
 async function query(
