@@ -22,7 +22,6 @@ export function ProjectBadge({
   className,
 }: {
   badge: BadgeWithParams
-  hideTooltip?: boolean
   className?: ClassNameValue
   disableInteraction?: boolean
 }) {
@@ -32,7 +31,13 @@ export function ProjectBadge({
       alt={`${badge.name} badge`}
       width={badge.width}
       height={badge.height}
-      className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
+      className={cn(
+        'h-16 w-auto lg:h-[4.5rem]',
+        !disableInteraction &&
+          badge.href &&
+          'transition-all hover:scale-[1.08]',
+        className,
+      )}
     />
   )
   const component =
