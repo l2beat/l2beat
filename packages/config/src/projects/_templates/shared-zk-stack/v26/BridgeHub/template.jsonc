@@ -31,6 +31,10 @@
         }
       ]
     },
+    "migrationPaused": {
+      "description": "If false, chains can migrate to whitelisted settlement layers.",
+      "severity": "HIGH"
+    },
     "chainsCreated": {
       "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.",
       "handler": {
@@ -41,7 +45,7 @@
       }
     },
     "settlementLayers": {
-      "description": "New settlement layers and their whitelist status.",
+      "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin.",
       "severity": "HIGH",
       "handler": {
         "type": "event",

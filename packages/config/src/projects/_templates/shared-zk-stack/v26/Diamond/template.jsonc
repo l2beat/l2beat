@@ -58,6 +58,17 @@
         }
       ]
     },
+    "IsPorterAvailableStatus": {
+      "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "isPorterAvailable",
+        "set": {
+          "event": "IsPorterAvailableStatusUpdate"
+        }
+      }
+    },
     "getDAValidatorPair": {
       "severity": "HIGH"
     },
