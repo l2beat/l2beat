@@ -90,7 +90,7 @@
     },
     {
       "mode": "auto",
-      "id": "game7-USDC",
+      "id": "game7-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -98,9 +98,9 @@
         "type": "balanceOfEscrow",
         "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "chain": "arbitrum",
-        "escrowAddress": "0xe41363751bd1C305384375F428585C20e3dF516A",
+        "escrowAddress": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
         "decimals": 6,
-        "sinceTimestamp": 1728557217
+        "sinceTimestamp": 1730299307
       },
       "valueForSummary": {
         "type": "value",
@@ -108,12 +108,12 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1728557217
+          "sinceTimestamp": 1730299307
         },
         "priceId": "usd-coin"
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {

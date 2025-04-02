@@ -90,6 +90,23 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-ezETH-1",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "unichain",
+        "decimals": 18,
+        "sinceTimestamp": 1738851274
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",

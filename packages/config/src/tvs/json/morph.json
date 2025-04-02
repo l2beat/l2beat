@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "morph-BGB",
+      "id": "morph-BGB-1",
       "priceId": "bitget-token",
       "symbol": "BGB",
       "name": "BitgetToken",
@@ -22,7 +22,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-DAI",
+      "id": "morph-DAI-2",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -30,17 +30,17 @@
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+        "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
         "decimals": 18,
-        "sinceTimestamp": 1729307651
+        "sinceTimestamp": 1729307783
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "morph-ETH",
+      "id": "morph-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -72,7 +72,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-GT",
+      "id": "morph-GT-1",
       "priceId": "gatechain-token",
       "symbol": "GT",
       "name": "GateChainToken",
@@ -90,7 +90,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-HT",
+      "id": "morph-HT-1",
       "priceId": "huobi-token",
       "symbol": "HT",
       "name": "HuobiToken",
@@ -108,25 +108,47 @@
     },
     {
       "mode": "auto",
-      "id": "morph-USDC",
+      "id": "morph-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-        "decimals": 6,
-        "sinceTimestamp": 1729307651
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+            "decimals": 6,
+            "sinceTimestamp": 1729307783
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
+            "decimals": 6,
+            "sinceTimestamp": 1729308239
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "chain": "ethereum",
+            "escrowAddress": "0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+            "decimals": 6,
+            "sinceTimestamp": 1729308239
+          }
+        ]
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "morph-USDe",
+      "id": "morph-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -143,7 +165,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-USDT",
+      "id": "morph-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -161,7 +183,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-WBTC",
+      "id": "morph-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -179,7 +201,7 @@
     },
     {
       "mode": "auto",
-      "id": "morph-weETH",
+      "id": "morph-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",

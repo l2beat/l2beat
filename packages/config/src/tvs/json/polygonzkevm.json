@@ -229,16 +229,17 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
       "amount": {
-        "type": "totalSupply",
-        "address": "0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4",
-        "chain": "polygonzkevm",
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
         "decimals": 18,
-        "sinceTimestamp": 1679679015
-      }
+        "sinceTimestamp": 1695199499
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -459,7 +460,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FPI",
+      "id": "polygonzkevm-FPI-1",
       "priceId": "frax-price-index",
       "symbol": "FPI",
       "name": "Frax Price Index",
@@ -476,7 +477,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FPIS",
+      "id": "polygonzkevm-FPIS-1",
       "priceId": "frax-price-index-share",
       "symbol": "FPIS",
       "name": "Frax Price Index Share",
@@ -514,20 +515,20 @@
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
+        "address": "0x95e4e1554a3F20932b559470eb57C56B7A26d10E",
         "chain": "polygonzkevm",
         "decimals": 18,
-        "sinceTimestamp": 1680642322
-      },
-      "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+        "sinceTimestamp": 1679679015
+      }
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-frxETH",
+      "id": "polygonzkevm-frxETH-1",
       "priceId": "frax-ether",
       "symbol": "frxETH",
       "name": "Frax Ether",
@@ -561,7 +562,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FXS",
+      "id": "polygonzkevm-FXS-1",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -1109,16 +1110,17 @@
       "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
       "amount": {
-        "type": "totalSupply",
-        "address": "0xd6B9A0B261DDA05ba06DC51821C3Ba12318d9Ae1",
-        "chain": "polygonzkevm",
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
         "decimals": 18,
         "sinceTimestamp": 1696982400
-      }
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1139,7 +1141,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-sfrxETH",
+      "id": "polygonzkevm-sfrxETH-1",
       "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
@@ -1347,16 +1349,17 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
       "amount": {
-        "type": "totalSupply",
-        "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
-        "chain": "polygonzkevm",
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
         "decimals": 6,
-        "sinceTimestamp": 1679679015
-      }
+        "sinceTimestamp": 1700125979
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1466,16 +1469,17 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
       "amount": {
-        "type": "totalSupply",
-        "address": "0x5D8cfF95D7A57c0BF50B30b43c7CC0D52825D4a9",
-        "chain": "polygonzkevm",
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
         "decimals": 18,
-        "sinceTimestamp": 1679679015
-      }
+        "sinceTimestamp": 1703945135
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",

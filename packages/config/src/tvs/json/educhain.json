@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "educhain-DAI",
+      "id": "educhain-DAI-1",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -32,7 +32,7 @@
     },
     {
       "mode": "auto",
-      "id": "educhain-EDU",
+      "id": "educhain-EDU-1",
       "priceId": "edu-coin",
       "symbol": "EDU",
       "name": "EDU Coin",
@@ -90,7 +90,7 @@
     },
     {
       "mode": "auto",
-      "id": "educhain-USDC",
+      "id": "educhain-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -118,7 +118,7 @@
     },
     {
       "mode": "auto",
-      "id": "educhain-USDT",
+      "id": "educhain-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -146,7 +146,7 @@
     },
     {
       "mode": "auto",
-      "id": "educhain-wBTC",
+      "id": "educhain-wBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
@@ -174,7 +174,7 @@
     },
     {
       "mode": "auto",
-      "id": "educhain-WETH",
+      "id": "educhain-WETH-1",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",

@@ -307,14 +307,15 @@
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
       "amount": {
-        "type": "totalSupply",
+        "type": "balanceOfEscrow",
         "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
-        "chain": "base",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 8,
         "sinceTimestamp": 1726099200
       },
-      "category": "stablecoin",
-      "source": "native",
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -567,6 +568,22 @@
     },
     {
       "mode": "auto",
+      "id": "base-DOGINME",
+      "priceId": "doginme",
+      "symbol": "DOGINME",
+      "name": "doginme",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "doginme",
+        "decimals": 18,
+        "sinceTimestamp": 1707350400
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-DOLA",
       "priceId": "dola-usd",
       "symbol": "DOLA",
@@ -653,7 +670,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-EURC",
+      "id": "base-EURC-1",
       "priceId": "euro-coin",
       "symbol": "EURC",
       "name": "EURC",
@@ -710,14 +727,15 @@
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "base",
+        "type": "balanceOfEscrow",
+        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
-        "sinceTimestamp": 1712153667
+        "sinceTimestamp": 1706140800
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -826,7 +844,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-GAME",
+      "id": "base-GAME-1",
       "priceId": "game-by-virtuals",
       "symbol": "GAME",
       "name": "GAME by Virtuals",
@@ -1750,14 +1768,15 @@
       "symbol": "SPX",
       "name": "SPX6900",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x50dA645f148798F68EF2d7dB7C1CB22A6819bb2C",
-        "chain": "base",
+        "type": "balanceOfEscrow",
+        "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 8,
-        "sinceTimestamp": 1703965689
+        "sinceTimestamp": 1692835200
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1820,19 +1839,20 @@
       "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-        "chain": "base",
+        "type": "balanceOfEscrow",
+        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
-        "sinceTimestamp": 1718326583
+        "sinceTimestamp": 1710979200
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "base-sUSDS",
+      "id": "base-sUSDS-2",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -1840,12 +1860,12 @@
         "type": "balanceOfEscrow",
         "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
         "chain": "ethereum",
-        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
         "decimals": 18,
         "sinceTimestamp": 1734048000
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -1872,14 +1892,15 @@
       "symbol": "sUSDz",
       "name": "Staked USDz",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
-        "chain": "base",
+        "type": "balanceOfEscrow",
+        "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
         "sinceTimestamp": 1720656000
       },
-      "category": "other",
-      "source": "external",
+      "category": "stablecoin",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2114,19 +2135,20 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-        "chain": "base",
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 6,
-        "sinceTimestamp": 1692383789
+        "sinceTimestamp": 1686793895
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "base-USDe",
+      "id": "base-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -2143,7 +2165,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-USDS",
+      "id": "base-USDS-2",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
@@ -2151,12 +2173,12 @@
         "type": "balanceOfEscrow",
         "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "chain": "ethereum",
-        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
         "decimals": 18,
-        "sinceTimestamp": 1727136000
+        "sinceTimestamp": 1728571115
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -2306,14 +2328,15 @@
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-        "chain": "base",
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
-        "sinceTimestamp": 1713838717
+        "sinceTimestamp": 1701648000
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2362,12 +2385,12 @@
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
-        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "escrowAddress": "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72",
         "decimals": 18,
-        "sinceTimestamp": 1686793895
+        "sinceTimestamp": 1695935315
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {

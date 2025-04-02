@@ -13,9 +13,8 @@ import {
   type TvsToken,
 } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
-import { command, optional, positional, run, string } from 'cmd-ts'
-import { groupBy } from 'lodash'
+import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
+import { boolean, command, flag, optional, positional, run, string } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
@@ -24,6 +23,12 @@ const args = {
     type: optional(string),
     displayName: 'projectId',
     description: 'Project for which tvs config will be generated',
+  }),
+  includeZeroAmounts: flag({
+    type: boolean,
+    long: 'include-zero-amounts',
+    short: 'iza',
+    description: 'Include zero amounts in the config',
   }),
 }
 
@@ -96,7 +101,7 @@ const cmd = command({
         logger.info(`Total TVS ${toDollarString(totalTvs)}`)
 
         newConfig = tvs
-          .filter((token) => token.value !== 0)
+          .filter((token) => token.value !== 0 || args.includeZeroAmounts)
           .map((token) => token.tokenId)
           .sort((a, b) => a.localeCompare(b))
           .map((tokenId) => {
@@ -111,9 +116,8 @@ const cmd = command({
       // TODO when old TVL will be removed script should be moved to config package
       const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
-      const deduplicatedTokens = deduplicateTokens(newConfig)
       const mergedTokens = mergeWithExistingConfig(
-        deduplicatedTokens,
+        newConfig,
         currentConfig,
         logger,
       )
@@ -140,16 +144,16 @@ async function generateConfigForProject(
   const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
   const rpc = rpcApi
     ? new RpcClient({
-        http: new HttpClient(),
-        callsPerMinute: env.integer(
-          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-          rpcApi.callsPerMinute ?? 120,
-        ),
-        retryStrategy: 'RELIABLE',
-        logger,
-        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
-        sourceName: project.id,
-      })
+      http: new HttpClient(),
+      callsPerMinute: env.integer(
+        `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+        rpcApi.callsPerMinute ?? 120,
+      ),
+      retryStrategy: 'RELIABLE',
+      logger,
+      url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
+      sourceName: project.id,
+    })
     : undefined
 
   return mapConfig(project, chains, logger, rpc)
@@ -230,23 +234,4 @@ function toDollarString(value: number) {
   } else {
     return `$${value.toFixed(2)}`
   }
-}
-
-function deduplicateTokens(tokens: TvsToken[]) {
-  const byId = groupBy(tokens, 'id')
-
-  const deduplicatedTokens: TvsToken[] = []
-
-  for (const [id, tokensWithSameId] of Object.entries(byId)) {
-    if (tokensWithSameId.length > 1) {
-      tokensWithSameId.forEach((token, index) => {
-        const newToken = { ...token }
-        newToken.id = TokenId(`${id}-${index + 1}`)
-        deduplicatedTokens.push(newToken)
-      })
-    } else {
-      deduplicatedTokens.push(tokensWithSameId[0])
-    }
-  }
-  return deduplicatedTokens
 }
