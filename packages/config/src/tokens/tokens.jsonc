@@ -6195,6 +6195,38 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "symbol": "ezETH",
+      "category": "ether",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "connext"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "pzETH",
+      "category": "ether",
+      "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
+      "coingeckoId": "renzo-restaked-lst",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "connext"
+          }
+        ]
+      }
     }
   ],
   "morph": [
