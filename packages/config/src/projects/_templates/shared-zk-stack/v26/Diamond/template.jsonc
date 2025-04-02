@@ -32,8 +32,7 @@
       "permissions": [
         {
           "type": "interact",
-          // TODO: CTM details like migrating chains, da mode
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
         }
       ]
     },

@@ -19,7 +19,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "create new zk chains (based on the current version), register tokens."
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
         }
       ]
     },
