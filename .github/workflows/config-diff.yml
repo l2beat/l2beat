@@ -1,4 +1,4 @@
-name: Diff config output
+name: Diff
 
 on:
   pull_request:
@@ -36,7 +36,7 @@ jobs:
       - name: Save database (main)
         run: |
           mkdir -p /tmp/compare
-          cp ./packages/config/build/db.sqlite > /tmp/compare/main.sqlite
+          cp ./packages/config/build/db.sqlite /tmp/compare/main.sqlite
           git rev-parse HEAD > /tmp/main.commit
 
       - name: Checkout code (PR)
@@ -54,7 +54,7 @@ jobs:
       - name: Save database (PR)
         run: |
           mkdir -p /tmp/compare
-          cp ./packages/config/build/db.sqlite > /tmp/compare/pr.sqlite
+          cp ./packages/config/build/db.sqlite /tmp/compare/pr.sqlite
           git rev-parse HEAD > /tmp/pr.commit
 
       - name: Generate schema diff HTML report
