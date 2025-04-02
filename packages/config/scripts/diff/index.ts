@@ -1,8 +1,8 @@
 import { readFileSync } from 'fs'
 import { Database } from 'sqlite3'
 import { diffAll } from './diff'
-import type { Project } from './types'
 import { diffsToHtml } from './html'
+import type { Project } from './types'
 
 main()
 
