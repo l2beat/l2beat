@@ -11,7 +11,7 @@ async function main() {
   if (args.length !== 1) {
     throw new Error('Invalid argument count')
   }
-  const outputPath = args[1]
+  const outputPath = args[0]
 
   const dbBefore = new Database('/tmp/compare/main/db.sqlite')
   const dbAfter = new Database('/tmp/compare/pr/db.sqlite')
