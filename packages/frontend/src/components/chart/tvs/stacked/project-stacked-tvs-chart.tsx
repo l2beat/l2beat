@@ -27,32 +27,27 @@ interface Props {
   milestones: Milestone[]
   projectId: string
   tokens: ProjectTokens | undefined
-  isBridge: boolean
-  slug: string
   tvsProjectStats: ProjectSevenDayTvsBreakdown
   tvlInfo: ProjectTvlInfo
-  hideBreakdownLink?: boolean
+  tvsBreakdownUrl?: string
 }
 
 export function ProjectStackedTvsChart({
   milestones,
   projectId,
   tokens,
-  isBridge,
-  slug,
   tvsProjectStats,
   tvlInfo,
-  hideBreakdownLink,
+  tvsBreakdownUrl,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
   const [unit, setUnit] = useState<ChartUnit>('usd')
-  const tvsBreakdownUrl = `/scaling/projects/${slug}/tvs-breakdown`
 
   const chartComponent =
     tokens && token ? (
       <ProjectTokenChart
-        isBridge={isBridge}
+        isBridge={false}
         tokens={tokens}
         setToken={setToken}
         token={token}
@@ -64,11 +59,9 @@ export function ProjectStackedTvsChart({
         projectId={projectId}
         tvsBreakdownUrl={tvsBreakdownUrl}
         showStackedChartLegend
-        hideBreakdownLink={!!hideBreakdownLink}
       />
     ) : (
       <DefaultChart
-        isBridge={isBridge}
         projectId={projectId}
         milestones={milestones}
         timeRange={timeRange}
@@ -79,7 +72,6 @@ export function ProjectStackedTvsChart({
         unit={unit}
         setUnit={setUnit}
         tvsBreakdownUrl={tvsBreakdownUrl}
-        hideBreakdownLink={!!hideBreakdownLink}
       />
     )
 
@@ -108,7 +100,7 @@ export function ProjectStackedTvsChart({
             }}
             warning={tvlInfo?.warnings[0]}
           />
-          {!hideBreakdownLink && (
+          {tvsBreakdownUrl && (
             <div className="w-full md:hidden">
               <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
             </div>
@@ -121,7 +113,6 @@ export function ProjectStackedTvsChart({
 
 interface DefaultChartProps {
   projectId: string
-  isBridge: boolean
   milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
@@ -130,13 +121,11 @@ interface DefaultChartProps {
   setToken: (token: ProjectToken | undefined) => void
   unit: ChartUnit
   setUnit: (unit: ChartUnit) => void
-  tvsBreakdownUrl: string
-  hideBreakdownLink: boolean
+  tvsBreakdownUrl: string | undefined
 }
 
 function DefaultChart({
   projectId,
-  isBridge,
   milestones,
   timeRange,
   setTimeRange,
@@ -146,7 +135,6 @@ function DefaultChart({
   unit,
   setUnit,
   tvsBreakdownUrl,
-  hideBreakdownLink,
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
@@ -193,11 +181,11 @@ function DefaultChart({
               tokens={tokens}
               value={token}
               setValue={setToken}
-              isBridge={isBridge}
+              isBridge={false}
             />
           )}
         </TvsChartUnitControls>
-        {!hideBreakdownLink && (
+        {tvsBreakdownUrl && (
           <div className="hidden md:inline-block">
             <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
           </div>

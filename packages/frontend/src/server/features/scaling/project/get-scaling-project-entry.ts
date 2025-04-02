@@ -282,7 +282,7 @@ export async function getScalingProjectEntry(
         id: 'tvs',
         title: 'Value Secured',
         projectId: project.id,
-        slug: project.slug,
+        tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
         tvsProjectStats,

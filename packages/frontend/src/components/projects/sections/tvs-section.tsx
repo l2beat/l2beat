@@ -6,7 +6,6 @@ import type { ProjectSectionProps } from './types'
 
 export interface TvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
-  isBridge?: boolean
   tokens?: ProjectTokens
   projectId: string
   milestones: Milestone[]
@@ -16,7 +15,6 @@ export function TvsSection({
   projectId,
   milestones,
   tokens,
-  isBridge,
   ...sectionProps
 }: TvsSectionProps) {
   return (
@@ -25,7 +23,6 @@ export function TvsSection({
         milestones={milestones}
         projectId={projectId}
         tokens={tokens}
-        isBridge={!!isBridge}
       />
     </ProjectSection>
   )

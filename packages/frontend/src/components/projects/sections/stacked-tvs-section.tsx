@@ -7,23 +7,21 @@ import type { ProjectSectionProps } from './types'
 
 export interface StackedTvsSectionProps extends ProjectSectionProps {
   id: 'tvs'
-  isBridge?: boolean
   tokens?: ProjectTokens
   projectId: string
-  slug: string
   milestones: Milestone[]
   tvsProjectStats: ProjectSevenDayTvsBreakdown
   tvlInfo: ProjectTvlInfo
+  tvsBreakdownUrl?: string
 }
 
 export function StackedTvsSection({
   projectId,
   milestones,
   tokens,
-  isBridge,
-  slug,
   tvsProjectStats,
   tvlInfo,
+  tvsBreakdownUrl,
   ...sectionProps
 }: StackedTvsSectionProps) {
   return (
@@ -32,10 +30,9 @@ export function StackedTvsSection({
         milestones={milestones}
         projectId={projectId}
         tokens={tokens}
-        isBridge={!!isBridge}
-        slug={slug}
         tvsProjectStats={tvsProjectStats}
         tvlInfo={tvlInfo}
+        tvsBreakdownUrl={tvsBreakdownUrl}
       />
     </ProjectSection>
   )
