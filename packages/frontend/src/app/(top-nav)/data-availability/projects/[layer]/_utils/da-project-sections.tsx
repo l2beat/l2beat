@@ -77,7 +77,6 @@ export async function getRegularDaProjectSections({
       isUnderReview: layer.statuses.isUnderReview,
       isVerified,
       layerGrissiniValues,
-      hideTitle: true,
     },
   })
 
@@ -109,7 +108,6 @@ export async function getRegularDaProjectSections({
       isVerified,
       isNoBridge: !bridge || !!bridge.daBridge.risks.isNoBridge,
       bridgeGrissiniValues,
-      hideTitle: true,
     },
   })
 
@@ -286,7 +284,6 @@ export async function getEthereumDaProjectSections({
       layerGrissiniValues,
       bridgeGrissiniValues,
       description: layer.display.description,
-      hideTitle: true,
     },
   })
 
