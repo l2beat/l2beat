@@ -149,7 +149,6 @@ export async function getBridgesProjectEntry(
         title: 'Value Secured',
         projectId: project.id,
         tokens: tokens,
-        isBridge: true,
         milestones: project.milestones ?? [],
       },
     })
