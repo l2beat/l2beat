@@ -468,6 +468,8 @@ Only the SecurityCouncil can unfreeze an active freeze.
 Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:
 A single *ZK cluster Admin* role that governs parameters in the shared contracts and a *Chain Admin* role (defined in each chain-specific diamond contract) for managing parameters of each individual ZK chain that builds on the stack.
 These chain-specific actions include critical operations like setting a transaction filterer that can censor L1 -> L2 messages, changing the DA mode, migrating the chain to a different settlement layer and standard operations like setting fee parameters and adding / removing Validators in the ValidatorTimelock.
+For rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract. Each rollup can become a permanent rollup (through their Chain Admin) which disallows any DA change to a non-whitelisted source in the future.
+The source of truth for rollup-compliant DA validator contracts is the RollupDAManager contract, which is administered via the ProtocolUpgradeHandler.
 ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cluster Admin* role in the shared ZK stack contracts.`
       return description
     })(),
