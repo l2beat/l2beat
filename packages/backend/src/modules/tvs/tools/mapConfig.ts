@@ -90,9 +90,8 @@ export async function mapConfig(
       const aa = groupBy(ttt, 'coingeckoId')
 
       for (const aaa of Object.values(aa)) {
-        const chain = getChain(aaa[0].chainName)
-
         if (aaa.length === 1) {
+          const chain = getChain(aaa[0].chainName)
           const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
 
           tokens.push(token)
@@ -100,6 +99,7 @@ export async function mapConfig(
           const amounts = []
           const valueForSummary = []
           for (const aaaa of aaa) {
+            const chain = getChain(aaaa.chainName)
             const token = createEscrowToken(project, aaaa.escrow, chain, aaaa)
             amounts.push(token.amount)
             if (token.valueForSummary) {
@@ -107,6 +107,7 @@ export async function mapConfig(
             }
           }
 
+          const chain = getChain(aaa[0].chainName)
           const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
 
           tokens.push({
