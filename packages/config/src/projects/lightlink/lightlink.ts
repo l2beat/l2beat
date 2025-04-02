@@ -74,7 +74,7 @@ export const lightlink: ScalingProject = {
       'The old ETH bridge is paused and funds have been [moved to a multisig](https://etherscan.io/tx/0x416221c8a6e0454762409735f01d3b9c8bb0e894c36ccd1e3e80e4a69b5bb923). New infra is under review.',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
-    category: 'Other',
+    category: 'Optimium',
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
@@ -97,8 +97,8 @@ export const lightlink: ScalingProject = {
     associatedTokens: ['LL'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
-        sinceTimestamp: UnixTime(1692181067),
+        address: EthereumAddress('0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE'),
+        sinceTimestamp: UnixTime(1725540839),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({

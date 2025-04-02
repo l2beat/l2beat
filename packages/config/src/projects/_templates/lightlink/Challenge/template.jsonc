@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Challenge",
+  "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: {{ isDAChallengeEnabled }}. Header challenges are enabled: {{ isHeaderChallengeEnabled }}. L2 Header challenges are enabled: {{ isL2HeaderChallengeEnabled }}.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."
+        }
+      ]
+    }
+  },
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreInWatchMode": []
+}
