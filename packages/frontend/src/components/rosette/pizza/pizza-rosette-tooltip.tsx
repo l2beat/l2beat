@@ -1,10 +1,8 @@
-import { env } from '~/env'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { RiskValue } from '../risk-value'
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
-import { RealPizzaRosetteIcon } from './real-pizza-rosette-icon'
 
 export function PizzaRosetteTooltip({
   values,
@@ -13,10 +11,6 @@ export function PizzaRosetteTooltip({
   values: RosetteValue[]
   isUnderReview?: boolean
 }) {
-  const PizzaComponent = env.NEXT_PUBLIC_L2BEATZZA
-    ? RealPizzaRosetteIcon
-    : PizzaRosetteIcon
-
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
@@ -42,7 +36,7 @@ export function PizzaRosetteTooltip({
       </span>
       <div className="flex items-center gap-6">
         <div className="relative flex size-[200px] items-center justify-center">
-          <PizzaComponent
+          <PizzaRosetteIcon
             values={values}
             className="scale-75"
             isUnderReview={isUnderReview}

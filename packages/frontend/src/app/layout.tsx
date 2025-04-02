@@ -11,14 +11,7 @@ import { GlossaryContextProvider } from '../components/markdown/glossary-context
 import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import {
-  L2BeatzzaDialog,
-  L2BeatzzaDialogProvider,
-} from '~/components/l2beatzza/l2beatzza-dialog'
 import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
-import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
-import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -63,15 +56,7 @@ export default async function RootLayout({
                 >
                   <SearchBarContextProvider projects={searchBarProjects}>
                     <RecategorisationPreviewContextProvider>
-                      <L2BeatzzaDialogProvider>
-                        {children}
-                        <div className="fixed size-0">
-                          <FullRedPizzaSymbol />
-                          <FullYellowPizzaSymbol />
-                          <FullGreenPizzaSymbol />
-                        </div>
-                        <L2BeatzzaDialog />
-                      </L2BeatzzaDialogProvider>
+                      {children}
                     </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>
                   <ProgressBar />
