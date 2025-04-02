@@ -139,7 +139,7 @@ async function getPageData(params: { layer: string; bridge: string }) {
     const bridge = await ps.getProject({
       slug: params.bridge,
       select: ['daBridge', 'display'],
-      optional: ['contracts'],
+      optional: ['contracts', 'permissions'],
     })
     if (!bridge || bridge.id !== layer.id) {
       notFound()

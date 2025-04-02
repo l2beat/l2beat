@@ -228,7 +228,7 @@ export async function getRegularDaProjectSections({
 
 type EthereumDetailsParams = {
   layer: Project<'daLayer' | 'statuses' | 'display', 'milestones'>
-  bridge: Project<'daBridge', 'contracts'>
+  bridge: Project<'daBridge', 'contracts' | 'permissions'>
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
