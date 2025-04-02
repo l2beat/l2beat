@@ -32,10 +32,9 @@
     },
     {
       "mode": "auto",
-      "id": "hook-USDC.ext",
+      "id": "hook-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "calculation",
@@ -77,14 +76,49 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712179761
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712179763
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712179763
+            },
+            "priceId": "usd-coin"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "hook-WETH.ext",
+      "id": "hook-WETH",
       "priceId": "weth",
-      "symbol": "WETH.ext",
-      "displaySymbol": "WETH",
+      "symbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
         "type": "calculation",
@@ -126,7 +160,43 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1707792505
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712177617
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1707792507
+            },
+            "priceId": "weth"
+          }
+        ]
+      }
     }
   ]
 }

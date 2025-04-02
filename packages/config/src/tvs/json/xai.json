@@ -255,14 +255,30 @@
         ]
       },
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1704758400
-        },
-        "priceId": "xai-blockchain"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1704758400
+            },
+            "priceId": "xai-blockchain"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1704758400
+            },
+            "priceId": "xai-blockchain"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",

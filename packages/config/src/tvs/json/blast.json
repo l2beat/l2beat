@@ -89,26 +89,39 @@
     },
     {
       "mode": "auto",
-      "id": "blast-ETH.ext",
+      "id": "blast-ETH",
       "priceId": "ethereum",
-      "symbol": "ETH.ext",
-      "displaySymbol": "ETH",
+      "symbol": "ETH",
       "name": "Ether",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x98078db053902644191f93988341E31289E1C8FE",
-        "decimals": 18,
-        "sinceTimestamp": 1708812935
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+            "decimals": 18,
+            "sinceTimestamp": 1708812875
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+            "decimals": 18,
+            "sinceTimestamp": 1708812911
+          }
+        ]
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "blast-ezETH",
+      "id": "blast-ezETH.0",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -125,22 +138,20 @@
     },
     {
       "mode": "auto",
-      "id": "blast-ezETH.ethereum",
+      "id": "blast-ezETH.1",
       "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH.ethereum",
+      "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-        "chain": "ethereum",
-        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "type": "totalSupply",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "blast",
         "decimals": 18,
-        "sinceTimestamp": 1708812911
+        "sinceTimestamp": 1710255749
       },
       "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "ezETH"
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -247,35 +258,20 @@
     },
     {
       "mode": "auto",
-      "id": "blast-stETH.ext",
+      "id": "blast-stETH",
       "priceId": "staked-ether",
-      "symbol": "stETH.ext",
-      "displaySymbol": "stETH",
+      "symbol": "stETH",
       "name": "Liquid staked Ether 2.0",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-            "chain": "ethereum",
-            "escrowAddress": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
-            "decimals": 18,
-            "sinceTimestamp": 1700359187
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-            "chain": "ethereum",
-            "escrowAddress": "0x98078db053902644191f93988341E31289E1C8FE",
-            "decimals": 18,
-            "sinceTimestamp": 1708812935
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "chain": "ethereum",
+        "escrowAddress": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "decimals": 18,
+        "sinceTimestamp": 1708812911
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

@@ -59,14 +59,30 @@
         ]
       },
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1739404800
-        },
-        "priceId": "game7"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1739404800
+            },
+            "priceId": "game7"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1739404800
+            },
+            "priceId": "game7"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -74,18 +90,17 @@
     },
     {
       "mode": "auto",
-      "id": "game7-USDC.ext",
+      "id": "game7-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "chain": "arbitrum",
-        "escrowAddress": "0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+        "escrowAddress": "0xe41363751bd1C305384375F428585C20e3dF516A",
         "decimals": 6,
-        "sinceTimestamp": 1730299307
+        "sinceTimestamp": 1728557217
       },
       "valueForSummary": {
         "type": "value",
@@ -93,12 +108,12 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1730299307
+          "sinceTimestamp": 1728557217
         },
         "priceId": "usd-coin"
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

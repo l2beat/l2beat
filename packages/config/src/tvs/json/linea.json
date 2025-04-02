@@ -929,7 +929,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-weETH",
+      "id": "linea-weETH.0",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -946,22 +946,20 @@
     },
     {
       "mode": "auto",
-      "id": "linea-weETH.ethereum",
+      "id": "linea-weETH.1",
       "priceId": "wrapped-eeth",
-      "symbol": "weETH.ethereum",
+      "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-        "chain": "ethereum",
-        "escrowAddress": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+        "type": "totalSupply",
+        "address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
+        "chain": "linea",
         "decimals": 18,
-        "sinceTimestamp": 1701648000
+        "sinceTimestamp": 1712853058
       },
       "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "weETH"
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",

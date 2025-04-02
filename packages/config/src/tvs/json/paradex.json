@@ -4,10 +4,9 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "paradex-USDC.ext",
+      "id": "paradex-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",

@@ -22,21 +22,20 @@
     },
     {
       "mode": "auto",
-      "id": "nova-AIUS.ext",
+      "id": "nova-AIUS",
       "priceId": "arbius",
-      "symbol": "AIUS.ext",
-      "displaySymbol": "AIUS",
+      "symbol": "AIUS",
       "name": "Arbius",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852",
         "chain": "ethereum",
-        "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "decimals": 18,
         "sinceTimestamp": 1708734479
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -59,21 +58,20 @@
     },
     {
       "mode": "auto",
-      "id": "nova-ARB.ext",
+      "id": "nova-ARB",
       "priceId": "arbitrum",
-      "symbol": "ARB.ext",
-      "displaySymbol": "ARB",
+      "symbol": "ARB",
       "name": "Arbitrum",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "chain": "ethereum",
-        "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "decimals": 18,
         "sinceTimestamp": 1679529600
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": true
     },
     {
@@ -132,7 +130,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-DAI",
+      "id": "nova-DAI.0",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -150,35 +148,20 @@
     },
     {
       "mode": "auto",
-      "id": "nova-DAI.ext",
+      "id": "nova-DAI.1",
       "priceId": "dai",
-      "symbol": "DAI.ext",
-      "displaySymbol": "DAI",
+      "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-            "chain": "ethereum",
-            "escrowAddress": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
-            "decimals": 18,
-            "sinceTimestamp": 1659620187
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-            "chain": "ethereum",
-            "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-            "decimals": 18,
-            "sinceTimestamp": 1659620187
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "decimals": 18,
+        "sinceTimestamp": 1656305583
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -539,7 +522,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-USDT",
+      "id": "nova-USDT.0",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -557,21 +540,20 @@
     },
     {
       "mode": "auto",
-      "id": "nova-USDT.ext",
+      "id": "nova-USDT.1",
       "priceId": "tether",
-      "symbol": "USDT.ext",
-      "displaySymbol": "USDT",
+      "symbol": "USDT",
       "name": "Tether USD",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "chain": "ethereum",
-        "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
         "decimals": 6,
-        "sinceTimestamp": 1659620187
+        "sinceTimestamp": 1656305583
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

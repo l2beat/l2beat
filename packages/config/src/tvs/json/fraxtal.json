@@ -409,7 +409,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-sUSDe",
+      "id": "fraxtal-sUSDe.0",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -426,22 +426,20 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-sUSDe.ethereum",
+      "id": "fraxtal-sUSDe.1",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe.ethereum",
+      "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-        "chain": "ethereum",
-        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "fraxtal",
         "decimals": 18,
-        "sinceTimestamp": 1710979200
+        "sinceTimestamp": 1710892800
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "sUSDe"
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -517,7 +515,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-USDe",
+      "id": "fraxtal-USDe.0",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -534,22 +532,20 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-USDe.ethereum",
+      "id": "fraxtal-USDe.1",
       "priceId": "ethena-usde",
-      "symbol": "USDe.ethereum",
+      "symbol": "USDe",
       "name": "USDe",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-        "chain": "ethereum",
-        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "fraxtal",
         "decimals": 18,
-        "sinceTimestamp": 1706811599
+        "sinceTimestamp": 1710280993
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDe"
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",

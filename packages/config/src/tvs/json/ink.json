@@ -73,7 +73,7 @@
     {
       "mode": "auto",
       "id": "ink-USD₮0",
-      "priceId": "tether",
+      "priceId": "usdt0",
       "symbol": "USD₮0",
       "name": "USD₮0",
       "amount": {

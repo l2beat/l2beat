@@ -31,14 +31,30 @@
         ]
       },
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1714618907
-        },
-        "priceId": "ethereum"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1714618907
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1714620855
+            },
+            "priceId": "ethereum"
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
@@ -46,18 +62,17 @@
     },
     {
       "mode": "auto",
-      "id": "l3x-ezETH.ext",
+      "id": "l3x-ezETH",
       "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH.ext",
-      "displaySymbol": "ezETH",
+      "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
         "chain": "arbitrum",
-        "escrowAddress": "0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7",
+        "escrowAddress": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
         "decimals": 18,
-        "sinceTimestamp": 1713781465
+        "sinceTimestamp": 1714620855
       },
       "valueForSummary": {
         "type": "value",
@@ -65,12 +80,12 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1713781465
+          "sinceTimestamp": 1714620855
         },
         "priceId": "renzo-restaked-eth"
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

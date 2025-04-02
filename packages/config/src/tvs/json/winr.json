@@ -4,10 +4,9 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "winr-ARB.ext",
+      "id": "winr-ARB",
       "priceId": "arbitrum",
-      "symbol": "ARB.ext",
-      "displaySymbol": "ARB",
+      "symbol": "ARB",
       "name": "Arbitrum",
       "amount": {
         "type": "balanceOfEscrow",
@@ -33,10 +32,9 @@
     },
     {
       "mode": "auto",
-      "id": "winr-ETH.ext",
+      "id": "winr-ETH",
       "priceId": "ethereum",
-      "symbol": "ETH.ext",
-      "displaySymbol": "ETH",
+      "symbol": "ETH",
       "name": "Ether",
       "amount": {
         "type": "balanceOfEscrow",
@@ -62,39 +60,9 @@
     },
     {
       "mode": "auto",
-      "id": "winr-USDC.e.ext",
+      "id": "winr-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.e.ext",
-      "displaySymbol": "USDC.e",
-      "name": "USD Coin (Arb1)",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-        "chain": "arbitrum",
-        "escrowAddress": "0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56",
-        "decimals": 6,
-        "sinceTimestamp": 1722608545
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1722608545
-        },
-        "priceId": "usd-coin"
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "winr-USDC.ext",
-      "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",
@@ -120,10 +88,37 @@
     },
     {
       "mode": "auto",
-      "id": "winr-USDT.ext",
+      "id": "winr-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "USD Coin (Arb1)",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "chain": "arbitrum",
+        "escrowAddress": "0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56",
+        "decimals": 6,
+        "sinceTimestamp": 1722608545
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1722608545
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-USDT",
       "priceId": "tether",
-      "symbol": "USDT.ext",
-      "displaySymbol": "USDT",
+      "symbol": "USDT",
       "name": "Tether USD",
       "amount": {
         "type": "balanceOfEscrow",
@@ -149,10 +144,9 @@
     },
     {
       "mode": "auto",
-      "id": "winr-WETH.ext",
+      "id": "winr-WETH",
       "priceId": "weth",
-      "symbol": "WETH.ext",
-      "displaySymbol": "WETH",
+      "symbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
         "type": "balanceOfEscrow",

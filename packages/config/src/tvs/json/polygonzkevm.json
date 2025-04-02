@@ -208,7 +208,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-DAI",
+      "id": "polygonzkevm-DAI.0",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -225,22 +225,20 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-DAI.ext",
+      "id": "polygonzkevm-DAI.1",
       "priceId": "dai",
-      "symbol": "DAI.ext",
-      "displaySymbol": "DAI",
+      "symbol": "DAI",
       "name": "Dai Stablecoin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-        "decimals": 18,
-        "sinceTimestamp": 1695199499
-      },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1679679015
+      }
     },
     {
       "mode": "auto",
@@ -495,7 +493,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FRAX",
+      "id": "polygonzkevm-FRAX.0",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -512,21 +510,20 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FRAX.ethereum",
+      "id": "polygonzkevm-FRAX.1",
       "priceId": "frax",
-      "symbol": "FRAX.ethereum",
+      "symbol": "FRAX",
       "name": "Frax",
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0x95e4e1554a3F20932b559470eb57C56B7A26d10E",
+        "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
         "chain": "polygonzkevm",
         "decimals": 18,
-        "sinceTimestamp": 1679679015
+        "sinceTimestamp": 1680642322
       },
-      "displaySymbol": "FRAX"
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1091,7 +1088,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-sDAI",
+      "id": "polygonzkevm-sDAI.0",
       "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
@@ -1108,22 +1105,20 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-sDAI.ext",
+      "id": "polygonzkevm-sDAI.1",
       "priceId": "savings-dai",
-      "symbol": "sDAI.ext",
-      "displaySymbol": "sDAI",
+      "symbol": "sDAI",
       "name": "Savings Dai",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "chain": "ethereum",
-        "escrowAddress": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+        "type": "totalSupply",
+        "address": "0xd6B9A0B261DDA05ba06DC51821C3Ba12318d9Ae1",
+        "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1696982400
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
+      }
     },
     {
       "mode": "auto",
@@ -1331,7 +1326,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-USDC",
+      "id": "polygonzkevm-USDC.0",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1348,22 +1343,20 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-USDC.ext",
+      "id": "polygonzkevm-USDC.1",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-        "decimals": 6,
-        "sinceTimestamp": 1700125979
-      },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
+        "chain": "polygonzkevm",
+        "decimals": 6,
+        "sinceTimestamp": 1679679015
+      }
     },
     {
       "mode": "auto",
@@ -1452,7 +1445,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-wstETH",
+      "id": "polygonzkevm-wstETH.0",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -1469,22 +1462,20 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-wstETH.ext",
+      "id": "polygonzkevm-wstETH.1",
       "priceId": "wrapped-steth",
-      "symbol": "wstETH.ext",
-      "displaySymbol": "wstETH",
+      "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
-        "decimals": 18,
-        "sinceTimestamp": 1703945135
-      },
       "category": "ether",
-      "source": "external",
-      "isAssociated": false
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5D8cfF95D7A57c0BF50B30b43c7CC0D52825D4a9",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1679679015
+      }
     },
     {
       "mode": "auto",

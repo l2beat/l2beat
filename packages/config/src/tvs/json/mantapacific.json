@@ -229,7 +229,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-STONE",
+      "id": "mantapacific-STONE.0",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -246,22 +246,20 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-STONE.ethereum",
+      "id": "mantapacific-STONE.1",
       "priceId": "stakestone-ether",
-      "symbol": "STONE.ethereum",
+      "symbol": "STONE",
       "name": "StakeStone Ether",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "chain": "ethereum",
-        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "type": "totalSupply",
+        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
+        "chain": "mantapacific",
         "decimals": 18,
         "sinceTimestamp": 1700611200
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "STONE"
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",

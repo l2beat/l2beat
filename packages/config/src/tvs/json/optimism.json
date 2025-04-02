@@ -310,7 +310,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-DAI",
+      "id": "optimism-DAI.0",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -328,21 +328,20 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-DAI.ext",
+      "id": "optimism-DAI.1",
       "priceId": "dai",
-      "symbol": "DAI.ext",
-      "displaySymbol": "DAI",
+      "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "chain": "ethereum",
-        "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "decimals": 18,
-        "sinceTimestamp": 1625675779
+        "sinceTimestamp": 1624401464
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -606,7 +605,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FRAX",
+      "id": "optimism-FRAX.0",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -623,22 +622,20 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FRAX.ethereum",
+      "id": "optimism-FRAX.1",
       "priceId": "frax",
-      "symbol": "FRAX.ethereum",
+      "symbol": "FRAX",
       "name": "Frax",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "type": "totalSupply",
+        "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
+        "chain": "optimism",
         "decimals": 18,
-        "sinceTimestamp": 1624401464
+        "sinceTimestamp": 1641759454
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "FRAX"
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -659,7 +656,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FXS",
+      "id": "optimism-FXS.0",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -676,22 +673,20 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FXS.ethereum",
+      "id": "optimism-FXS.1",
       "priceId": "frax-share",
-      "symbol": "FXS.ethereum",
+      "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "type": "totalSupply",
+        "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
+        "chain": "optimism",
         "decimals": 18,
-        "sinceTimestamp": 1624401464
+        "sinceTimestamp": 1641759454
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "FXS"
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1422,7 +1417,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-SNX",
+      "id": "optimism-SNX.0",
       "priceId": "havven",
       "symbol": "SNX",
       "name": "Synthetix Network Token",
@@ -1440,43 +1435,20 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-SNX.ext",
+      "id": "optimism-SNX.1",
       "priceId": "havven",
-      "symbol": "SNX.ext",
-      "displaySymbol": "SNX",
+      "symbol": "SNX",
       "name": "Synthetix Network Token",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-            "chain": "ethereum",
-            "escrowAddress": "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
-            "decimals": 18,
-            "sinceTimestamp": 1620680982
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-            "chain": "ethereum",
-            "escrowAddress": "0x045e507925d2e05D114534D0810a1abD94aca8d6",
-            "decimals": 18,
-            "sinceTimestamp": 1610668212
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
-            "chain": "ethereum",
-            "escrowAddress": "0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068",
-            "decimals": 18,
-            "sinceTimestamp": 1620680934
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1710,7 +1682,24 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-USDC",
+      "id": "optimism-USD₮0",
+      "priceId": "usdt0",
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+        "chain": "optimism",
+        "decimals": 6,
+        "sinceTimestamp": 1741985315
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-USDC.0",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1727,22 +1716,20 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-USDC.ethereum",
+      "id": "optimism-USDC.1",
       "priceId": "usd-coin",
-      "symbol": "USDC.ethereum",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "type": "totalSupply",
+        "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "chain": "optimism",
         "decimals": 6,
-        "sinceTimestamp": 1624401464
+        "sinceTimestamp": 1668453318
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDC"
+      "source": "native",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1923,7 +1910,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-wstETH",
+      "id": "optimism-wstETH.0",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -1941,21 +1928,20 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-wstETH.ext",
+      "id": "optimism-wstETH.1",
       "priceId": "wrapped-steth",
-      "symbol": "wstETH.ext",
-      "displaySymbol": "wstETH",
+      "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
-        "escrowAddress": "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "decimals": 18,
-        "sinceTimestamp": 1659687799
+        "sinceTimestamp": 1633564800
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

@@ -123,7 +123,7 @@
     },
     {
       "mode": "auto",
-      "id": "kroma-USDC",
+      "id": "kroma-USDC.0",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -141,21 +141,20 @@
     },
     {
       "mode": "auto",
-      "id": "kroma-USDC.ext",
+      "id": "kroma-USDC.1",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
-        "escrowAddress": "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e",
+        "escrowAddress": "0x827962404D7104202C5aaa6b929115C8211d9596",
         "decimals": 6,
-        "sinceTimestamp": 1700122827
+        "sinceTimestamp": 1693880555
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

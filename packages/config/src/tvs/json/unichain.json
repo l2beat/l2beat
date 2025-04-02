@@ -4,24 +4,6 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "unichain-BAL",
-      "priceId": "balancer",
-      "symbol": "BAL",
-      "name": "Balancer",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
-        "chain": "ethereum",
-        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-        "decimals": 18,
-        "sinceTimestamp": 1730748227
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "unichain-COMP",
       "priceId": "compound-governance-token",
       "symbol": "COMP",
@@ -141,6 +123,23 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-USD₮0",
+      "priceId": "usdt0",
+      "symbol": "USD₮0",
+      "name": "USD₮0",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9151434b16b9763660705744891fA906F660EcC5",
+        "chain": "unichain",
+        "decimals": 6,
+        "sinceTimestamp": 1741984932
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",

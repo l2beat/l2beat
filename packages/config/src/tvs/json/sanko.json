@@ -87,14 +87,30 @@
         ]
       },
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1712958598
-        },
-        "priceId": "dream-machine-token"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712958598
+            },
+            "priceId": "dream-machine-token"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712958611
+            },
+            "priceId": "dream-machine-token"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
