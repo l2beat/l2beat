@@ -78,12 +78,19 @@ export function BridgesProjectStats({ project }: Props) {
       <ProjectStat
         title="Destination"
         value={
-          <SentimentText
-            sentiment={project.header.destination.sentiment ?? 'neutral'}
-            className="text-lg font-medium !leading-none md:text-xl md:font-bold"
-          >
-            {project.header.destination.value}
-          </SentimentText>
+          <Tooltip>
+            <TooltipTrigger disabled={!project.header.destination.description}>
+              <SentimentText
+                sentiment={project.header.destination.sentiment ?? 'neutral'}
+                className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+              >
+                {project.header.destination.value}
+              </SentimentText>
+            </TooltipTrigger>
+            <TooltipContent>
+              {project.header.destination.description}
+            </TooltipContent>
+          </Tooltip>
         }
       />
       <ProjectStat
