@@ -32,88 +32,91 @@ export async function mapConfig(
   }
 
   const tokens: TvsToken[] = []
-  const escrowTokens = new Map<string, TvsToken>()
-
-  for (const escrow of project.tvlConfig.escrows) {
-    if (escrow.sharedEscrow) {
-      if (rpcClient === undefined) {
-        logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
-        continue
-      }
-
-      const chainOfL1Escrow = getChain(escrow.chain)
-
-      if (escrow.sharedEscrow.type === 'AggLayer') {
-        logger.info(`Querying for AggLayer L2 tokens addresses`)
-        const aggLayerL2Tokens = await getAggLayerTokens(
-          project,
-          escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
-          chainOfL1Escrow,
-          rpcClient,
-        )
-        tokens.push(...aggLayerL2Tokens)
-      }
-
-      if (escrow.sharedEscrow.type === 'ElasticChain') {
-        logger.info(`Querying for ElasticChain L2 tokens addresses`)
-
-        const elasticChainTokens = await getElasticChainTokens(
-          project,
-          escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
-          chainOfL1Escrow,
-          rpcClient,
-        )
-        tokens.push(...elasticChainTokens)
-      }
-    } else {
-      for (const legacyToken of escrow.tokens) {
-        if (!legacyToken.id.endsWith('native')) {
-          assert(
-            legacyToken.address,
-            `Token address is required ${legacyToken.id}`,
-          )
-        }
-        const chain = getChain(escrow.chain)
-        const token = createEscrowToken(project, escrow, chain, legacyToken)
-        const previousToken = escrowTokens.get(token.id)
-
-        if (previousToken === undefined) {
-          escrowTokens.set(token.id, token)
-          continue
-        }
-
-        if (previousToken?.amount.type === 'balanceOfEscrow') {
-          assert(previousToken.source === token.source, `Source mismatch`)
-          escrowTokens.set(previousToken.id, {
-            ...previousToken,
-            amount: {
-              type: 'calculation',
-              operator: 'sum',
-              arguments: [previousToken.amount, token.amount],
-            },
-          })
-          continue
-        }
-
-        if (previousToken.amount.type === 'calculation') {
-          escrowTokens.set(previousToken.id, {
-            ...previousToken,
-            amount: {
-              ...(previousToken.amount as CalculationFormula),
-              arguments: [
-                ...(previousToken.amount as CalculationFormula).arguments,
-                token.amount,
-              ],
-            },
-          })
-          continue
-        }
-      }
-    }
-  }
 
   for (const legacyToken of project.tvlConfig.tokens) {
     tokens.push(createToken(project, legacyToken))
+  }
+
+  const sharedEscrows = project.tvlConfig.escrows.filter((e) => e.sharedEscrow)
+  for (const escrow of sharedEscrows) {
+    assert(escrow.sharedEscrow)
+    if (rpcClient === undefined) {
+      logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
+      continue
+    }
+
+    const chainOfL1Escrow = getChain(escrow.chain)
+
+    if (escrow.sharedEscrow.type === 'AggLayer') {
+      logger.info(`Querying for AggLayer L2 tokens addresses`)
+      const aggLayerL2Tokens = await getAggLayerTokens(
+        project,
+        escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+        chainOfL1Escrow,
+        rpcClient,
+      )
+      tokens.push(...aggLayerL2Tokens)
+    }
+
+    if (escrow.sharedEscrow.type === 'ElasticChain') {
+      logger.info(`Querying for ElasticChain L2 tokens addresses`)
+
+      const elasticChainTokens = await getElasticChainTokens(
+        project,
+        escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+        chainOfL1Escrow,
+        rpcClient,
+      )
+      tokens.push(...elasticChainTokens)
+    }
+  }
+
+  const escrowTokens = new Map<string, TvsToken>()
+
+  for (const escrow of project.tvlConfig.escrows) {
+    for (const legacyToken of escrow.tokens) {
+      if (!legacyToken.id.endsWith('native')) {
+        assert(
+          legacyToken.address,
+          `Token address is required ${legacyToken.id}`,
+        )
+      }
+      const chain = getChain(escrow.chain)
+      const token = createEscrowToken(project, escrow, chain, legacyToken)
+      const previousToken = escrowTokens.get(token.id)
+
+      if (previousToken === undefined) {
+        escrowTokens.set(token.id, token)
+        continue
+      }
+
+      if (previousToken?.amount.type === 'balanceOfEscrow') {
+        assert(previousToken.source === token.source, `Source mismatch`)
+        escrowTokens.set(previousToken.id, {
+          ...previousToken,
+          amount: {
+            type: 'calculation',
+            operator: 'sum',
+            arguments: [previousToken.amount, token.amount],
+          },
+        })
+        continue
+      }
+
+      if (previousToken.amount.type === 'calculation') {
+        escrowTokens.set(previousToken.id, {
+          ...previousToken,
+          amount: {
+            ...(previousToken.amount as CalculationFormula),
+            arguments: [
+              ...(previousToken.amount as CalculationFormula).arguments,
+              token.amount,
+            ],
+          },
+        })
+        continue
+      }
+    }
   }
 
   return {
