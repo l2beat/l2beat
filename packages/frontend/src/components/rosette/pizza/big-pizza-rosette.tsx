@@ -1,5 +1,4 @@
 'use client'
-import { env } from '~/env'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { UpcomingBadge } from '../../badge/upcoming-badge'
@@ -25,10 +24,11 @@ export interface BigPizzaRosetteProps {
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface'
+  realPizza?: boolean
 }
 
 export function BigPizzaRosette(props: BigPizzaRosetteProps) {
-  const PizzaComponent = env.NEXT_PUBLIC_L2BEATZZA
+  const PizzaComponent = props.realPizza
     ? RealPizzaRosetteIcon
     : PizzaRosetteIcon
 

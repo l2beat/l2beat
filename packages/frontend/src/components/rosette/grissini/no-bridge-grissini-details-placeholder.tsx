@@ -1,6 +1,6 @@
 import { cn } from '~/utils/cn'
 import { sentimentToTextColor } from '~/utils/sentiment'
-import { SingleGrissini } from './single-grissini'
+import { GrissiniStick } from './grissini-stick'
 
 const TITLE = 'No bridge'
 const DESCRIPTION =
@@ -57,7 +57,7 @@ export function InlinedNoBridgeGrissiniDetailsPlaceholder({
         className,
       )}
     >
-      <SingleGrissini
+      <GrissiniStick
         sentiment="neutral"
         className="h-full shrink-0 max-md:w-1"
       />

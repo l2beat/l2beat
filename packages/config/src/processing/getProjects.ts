@@ -46,9 +46,12 @@ export function getProjects(): BaseProject[] {
     .filter((c) => c !== undefined)
   const tokenList = getTokenList(chains)
 
+  const daBridges = refactored.filter((p) => p.daBridge)
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], tokenList)))
-    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, tokenList)))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], daBridges, tokenList)))
+    .concat(
+      layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges, tokenList)),
+    )
     .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
     .concat(ecosystems)
 }
@@ -56,6 +59,7 @@ export function getProjects(): BaseProject[] {
 function layer2Or3ToProject(
   p: ScalingProject,
   layer2s: ScalingProject[],
+  daBridges: BaseProject[],
   tokenList: Token[],
 ): BaseProject {
   return {
@@ -69,7 +73,7 @@ function layer2Or3ToProject(
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
       isUnderReview: isUnderReview(p),
-      isUnverified: !isVerified(p),
+      isUnverified: !isVerified(p, daBridges),
       // countdowns
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'

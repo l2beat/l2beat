@@ -2,14 +2,21 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { TableLink } from '~/components/table/table-link'
 import { useTable } from '~/hooks/use-table'
+import { UnverifiedIcon } from '~/icons/unverified'
 import type {
   DaBridgeSummaryEntry,
   DaSummaryEntry,
 } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { cn } from '~/utils/cn'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import {
   BasicDaTable,
@@ -79,14 +86,38 @@ function BridgeCells({
   layer: DaSummaryEntry
   bridge: DaBridgeSummaryEntry
 }) {
+  const isUnverified = bridge.statuses?.verificationWarning === true
   return (
     <>
-      <TableCell className="text-sm font-medium first:pl-0">
-        <TableLink href={bridge.href} className="ml-4 md:ml-1">
+      <TableCell
+        className={cn(
+          'text-sm font-medium first:pl-0',
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+        )}
+      >
+        <TableLink
+          href={bridge.href}
+          className="ml-4 flex items-center gap-1.5 md:ml-1"
+        >
           {bridge.name}
+          {isUnverified && (
+            <Tooltip>
+              <TooltipTrigger>
+                <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+              </TooltipTrigger>
+              <TooltipContent>
+                This bridge contains unverified contracts.
+              </TooltipContent>
+            </Tooltip>
+          )}
         </TableLink>
       </TableCell>
-      <TableCell className="flex items-center justify-center pl-4">
+      <TableCell
+        className={cn(
+          'flex items-center justify-center pl-4',
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+        )}
+      >
         <GrissiniCell
           values={bridge.risks}
           href={
@@ -98,14 +129,24 @@ function BridgeCells({
         />
       </TableCell>
       <TableCell
-        className="pr-[30px] text-sm font-medium md:pr-[42px]"
+        className={cn(
+          'pr-[30px] text-sm font-medium md:pr-[42px]',
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+        )}
         align="right"
       >
         {formatDollarValueNumber(bridge.tvs.latest)}
       </TableCell>
-      <TableCell className="text-sm font-medium">
+      <TableCell
+        className={cn(
+          'text-sm font-medium',
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+        )}
+      >
         <ProjectsUsedIn usedIn={bridge.usedIn} />
       </TableCell>
     </>
   )
 }
+
+export const UNVERIFIED_DA_CLASSNAME = 'bg-red-100/70 dark:bg-red-900/70'

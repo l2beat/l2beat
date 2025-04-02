@@ -2,11 +2,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
-import { useL2BeatzzaDialog } from '~/components/l2beatzza/l2beatzza-dialog'
-import { env } from '~/env'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
-import { L2BeatzzaLogo } from '~/icons/l2beatzza-logo'
 import { cn } from '~/utils/cn'
 import {
   Collapsible,
@@ -31,7 +28,6 @@ import { Logo } from '../../logo'
 import { SocialLinks } from '../../social-links'
 import { MobileNavTriggerClose } from '../mobile/mobile-nav-trigger'
 import type { NavGroup, NavLink } from '../types'
-import { L2BeatzzaPromo } from './l2beatzza-promo'
 
 interface Props {
   groups: NavGroup[]
@@ -43,16 +39,19 @@ interface Props {
 export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
   const pathname = usePathname()
   return (
-    <Sidebar
-      topNavbar={topNavbar}
-      className={cn(
-        env.NEXT_PUBLIC_L2BEATZZA && '[&>div]:gap-0 [&>div]:space-y-6',
-      )}
-    >
-      <SidebarHeader
-        className={cn(env.NEXT_PUBLIC_L2BEATZZA && 'pr-0 pt-[13px] lg:px-0')}
-      >
-        <Header logoLink={logoLink} />
+    <Sidebar topNavbar={topNavbar}>
+      <SidebarHeader>
+        <div className="flex h-[38px] flex-row items-center justify-between">
+          <Link href={logoLink}>
+            <Logo className="block h-8 w-auto" />
+          </Link>
+          <div className="flex flex-row items-center gap-4">
+            <DarkThemeToggle />
+            <div className="size-6 lg:hidden">
+              <MobileNavTriggerClose />
+            </div>
+          </div>
+        </div>
       </SidebarHeader>
       <SidebarContent className="!mt-2">
         {groups.map((group) => {
@@ -92,12 +91,6 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {env.NEXT_PUBLIC_L2BEATZZA && (
-          <>
-            <DarkThemeToggle className="max-lg:hidden" />
-            <L2BeatzzaPromo />
-          </>
-        )}
         <div className="flex gap-2 lg:justify-between">
           <SocialLinks variant="gray" />
         </div>
@@ -213,38 +206,4 @@ function NavCollapsibleItem({
 
 function getIsActive(href: string, pathname: string) {
   return pathname === href
-}
-
-function Header({ logoLink }: { logoLink: string }) {
-  const { setOpen } = useL2BeatzzaDialog()
-
-  if (env.NEXT_PUBLIC_L2BEATZZA) {
-    return (
-      <div className="relative flex flex-row items-center lg:justify-center">
-        <button onClick={() => setOpen(true)}>
-          <L2BeatzzaLogo className="h-[70px]" />
-        </button>
-        <div className="absolute right-3 top-2 flex flex-row items-center gap-4  lg:hidden">
-          <DarkThemeToggle />
-          <div className="size-6">
-            <MobileNavTriggerClose />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex h-[38px] flex-row items-center justify-between">
-      <Link href={logoLink}>
-        <Logo className="block h-8 w-auto" />
-      </Link>
-      <div className="flex flex-row items-center gap-4">
-        <DarkThemeToggle />
-        <div className="size-6 lg:hidden">
-          <MobileNavTriggerClose />
-        </div>
-      </div>
-    </div>
-  )
 }

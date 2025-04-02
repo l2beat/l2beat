@@ -54,6 +54,7 @@ export function initActivityModule(
           projectId: project.id,
           assessCount: assesCount(project.activityConfig.adjustCount),
           uopsAnalyzer: analyzer,
+          logger,
         })
 
         const activityIndexer = new BlockActivityIndexer({

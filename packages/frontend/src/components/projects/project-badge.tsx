@@ -1,4 +1,5 @@
 import type { Badge } from '@l2beat/config'
+import Image from 'next/image'
 import Link from 'next/link'
 import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
@@ -8,27 +9,30 @@ import {
   TooltipTrigger,
 } from '../core/tooltip/tooltip'
 
-export type BadgeWithLink = Badge & { href?: string }
-
-interface Props {
-  badge: BadgeWithLink
-  disableInteraction?: boolean
-  className?: ClassNameValue
+export interface BadgeWithParams extends Badge {
+  src: string
+  width: number
+  height: number
+  href?: string
 }
 
-export function ProjectBadge({ badge, disableInteraction, className }: Props) {
+export function ProjectBadge({
+  badge,
+  disableInteraction,
+  className,
+}: {
+  badge: BadgeWithParams
+  hideTooltip?: boolean
+  className?: ClassNameValue
+  disableInteraction?: boolean
+}) {
   const badgeImg = (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={`/images/badges/${badge.id}.png`}
+    <Image
+      src={badge.src}
       alt={`${badge.name} badge`}
-      className={cn(
-        'h-16 w-auto lg:h-[4.5rem]',
-        !disableInteraction &&
-          badge.href &&
-          'transition-all hover:scale-[1.08]',
-        className,
-      )}
+      width={badge.width}
+      height={badge.height}
+      className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
     />
   )
   const component =
