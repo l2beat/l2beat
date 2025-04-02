@@ -65,7 +65,7 @@ export default async function RootLayout({
                     <RecategorisationPreviewContextProvider>
                       <L2BeatzzaDialogProvider>
                         {children}
-                        <div className="size-0">
+                        <div className="fixed size-0">
                           <FullRedPizzaSymbol />
                           <FullYellowPizzaSymbol />
                           <FullGreenPizzaSymbol />
