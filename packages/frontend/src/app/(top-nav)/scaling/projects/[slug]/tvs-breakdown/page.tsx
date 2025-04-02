@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { env } from '~/env'
@@ -18,6 +19,7 @@ import { CanonicallyBridgedTable } from './_components/tables/canonically-bridge
 import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvsBreakdownPageHeader } from './_components/tvs-breakdown-page-header'
+import { TvsBreakdownSummaryBox } from './_components/tvs-breakdown-summary-box'
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
@@ -101,11 +103,26 @@ export default async function Page(props: Props) {
             projectId={project.id}
             milestones={project.milestones ?? []}
             tokens={tokens}
-            isBridge={false}
-            slug={project.slug}
-            tvsProjectStats={project7dData}
-            tvlInfo={project.tvlInfo}
-            hideBreakdownLink
+          />
+          <HorizontalSeparator className="my-4" />
+          <TvsBreakdownSummaryBox
+            total={{
+              value: project7dData.breakdown.total,
+              change: project7dData.change.total,
+            }}
+            canonical={{
+              value: project7dData.breakdown.canonical,
+              change: project7dData.change.canonical,
+            }}
+            external={{
+              value: project7dData.breakdown.external,
+              change: project7dData.change.external,
+            }}
+            native={{
+              value: project7dData.breakdown.native,
+              change: project7dData.change.native,
+            }}
+            warning={project.tvlInfo?.warnings[0]}
           />
         </PrimaryCard>
 
