@@ -3330,7 +3330,7 @@
       "symbol": "DOGINME",
       "address": "0x6921b130d297cc43754afba22e5eac0fbf8db75b",
       "source": "native",
-      "supply": "totalSupply"
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "KAITO",
