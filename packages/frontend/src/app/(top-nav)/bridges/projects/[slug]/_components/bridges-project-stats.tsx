@@ -87,11 +87,9 @@ export function BridgesProjectStats({ project }: Props) {
                 {project.header.destination.value}
               </SentimentText>
             </TooltipTrigger>
-            {project.header.destination.description && (
-              <TooltipContent>
-                {project.header.destination.description}
-              </TooltipContent>
-            )}
+            <TooltipContent>
+              {project.header.destination.description}
+            </TooltipContent>
           </Tooltip>
         }
       />
