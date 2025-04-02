@@ -16,7 +16,7 @@
         "decimals": 18,
         "sinceTimestamp": 1728557217
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -58,7 +58,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -87,7 +87,7 @@
         "decimals": 6,
         "sinceTimestamp": 1730299307
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -115,7 +115,7 @@
         "decimals": 6,
         "sinceTimestamp": 1728557217
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -143,7 +143,7 @@
         "decimals": 18,
         "sinceTimestamp": 1728557217
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

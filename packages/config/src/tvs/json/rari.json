@@ -30,7 +30,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -80,7 +80,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -122,7 +122,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -164,7 +164,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -223,7 +223,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -283,7 +283,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

@@ -27,9 +27,12 @@ export function getEffectiveConfig(
         : undefined
     }
 
-    if (token.valueForTotal) {
-      token.valueForTotal = isInRangeRecursive(token.valueForTotal, timestamp)
-        ? token.valueForTotal
+    if (token.valueForSummary) {
+      token.valueForSummary = isInRangeRecursive(
+        token.valueForSummary,
+        timestamp,
+      )
+        ? token.valueForSummary
         : undefined
     }
 

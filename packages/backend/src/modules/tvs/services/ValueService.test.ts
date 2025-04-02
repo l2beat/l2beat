@@ -43,7 +43,7 @@ describe(ValueService.name, () => {
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -128,7 +128,7 @@ describe(ValueService.name, () => {
             priceId: 'price-WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
           // solvBTC with
           // - amount formula as totalSupply on L2
@@ -153,7 +153,7 @@ describe(ValueService.name, () => {
                 },
               ],
             },
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -249,7 +249,7 @@ describe(ValueService.name, () => {
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -325,7 +325,7 @@ describe(ValueService.name, () => {
               arguments: [amountFormulaInRange, amountFormulaNotInRange],
             },
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -384,7 +384,7 @@ describe(ValueService.name, () => {
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -429,7 +429,7 @@ describe(ValueService.name, () => {
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })

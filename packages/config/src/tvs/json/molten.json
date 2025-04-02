@@ -30,7 +30,7 @@
           }
         ]
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -58,7 +58,7 @@
         "decimals": 6,
         "sinceTimestamp": 1712019098
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -86,7 +86,7 @@
         "decimals": 18,
         "sinceTimestamp": 1712019098
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

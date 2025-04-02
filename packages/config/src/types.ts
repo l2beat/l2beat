@@ -1081,7 +1081,7 @@ export interface TvsToken {
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula
   // we need this formula to handle relations between chains (L2/L3)
-  valueForTotal?: CalculationFormula | ValueFormula
+  valueForSummary?: CalculationFormula | ValueFormula
   category: 'ether' | 'stablecoin' | 'other'
   source: 'canonical' | 'external' | 'native'
   isAssociated: boolean
