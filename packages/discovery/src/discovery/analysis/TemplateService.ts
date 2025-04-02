@@ -11,7 +11,7 @@ import {
 import { flatteningHash, hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { CombinedContract } from '../config/RawDiscoveryConfig'
 import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -30,7 +30,7 @@ export interface Shape {
 }
 
 export class TemplateService {
-  private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
+  private readonly loadedTemplates: Record<string, CombinedContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
 
@@ -121,7 +121,7 @@ export class TemplateService {
     return filteredResult
   }
 
-  loadContractTemplate(template: string): DiscoveryContract {
+  loadContractTemplate(template: string): CombinedContract {
     const loadedTemplate = this.loadedTemplates[template]
     if (loadedTemplate !== undefined) {
       return loadedTemplate
@@ -129,7 +129,7 @@ export class TemplateService {
     const templateJsonc = readJsonc(
       path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
-    const parsed = DiscoveryContract.parse(templateJsonc)
+    const parsed = CombinedContract.parse(templateJsonc)
     this.loadedTemplates[template] = parsed
     return parsed
   }

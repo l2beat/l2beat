@@ -2,7 +2,12 @@ import { hashJson } from '@l2beat/shared'
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { DiscoveryOutput } from '../output/types'
 import { ConfigReader } from './ConfigReader'
-import { type ContractConfig, createContractConfig } from './ContractConfig'
+import {
+  type ContractConfig,
+  type ContractConfigColor,
+  createContractConfig,
+  createContractConfigColor,
+} from './ContractConfig'
 import {
   DiscoveryContract,
   type RawDiscoveryConfig,
@@ -38,6 +43,14 @@ export class DiscoveryConfig {
     return createContractConfig(
       overrides,
       structuredClone(this.config.types ?? {}),
+    )
+  }
+
+  forColor(address: EthereumAddress): ContractConfigColor {
+    const overrides = this.getOverrides(address)
+
+    return createContractConfigColor(
+      overrides,
       structuredClone(this.config.categories ?? {}),
     )
   }

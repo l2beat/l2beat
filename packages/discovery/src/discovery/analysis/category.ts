@@ -1,8 +1,8 @@
-import type { ContractConfig } from '../config/ContractConfig'
-import type { DiscoveryCategory } from '../config/RawDiscoveryConfig'
+import type { ContractConfigColor } from '../config/ContractConfig'
+import type { DiscoveryCategory } from '../config/ColorConfig'
 
 export function resolveCategory(
-  config: ContractConfig,
+  config: ContractConfigColor,
 ): DiscoveryCategory | undefined {
   if (config.category === undefined) {
     return undefined
