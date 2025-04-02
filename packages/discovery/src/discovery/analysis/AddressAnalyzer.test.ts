@@ -17,7 +17,6 @@ describe(AddressAnalyzer.name, () => {
   const config = createContractConfig(
     { address: EthereumAddress.random(), ...overrides },
     {},
-    {},
   )
 
   describe(AddressAnalyzer.prototype.analyze.name, () => {

@@ -25,6 +25,7 @@ import type {
   Field,
   FieldValue,
 } from './types'
+import { ContractConfigColor } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 
 interface ProjectData {
   chain: string
@@ -68,19 +69,22 @@ export function getProject(
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
-        const contarctConfig = config.for(entry.address)
+        const contractConfig = config.for(entry.address)
+        const contractColorConfig = config.forColor(entry.address)
         if (entry.template !== undefined) {
           const templateValues = templateService.loadContractTemplate(
             entry.template,
           )
-          contarctConfig.pushValues(templateValues)
+          contractConfig.pushValues(templateValues)
+          contractColorConfig.pushValues(templateService.loadContractTemplateColor(entry.template))
         }
 
         return contractFromDiscovery(
           chain,
           meta,
           entry,
-          contarctConfig,
+          contractConfig,
+          contractColorConfig,
           discovery.abis,
         )
       })
@@ -137,16 +141,18 @@ function contractFromDiscovery(
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: EntryParameters,
   contractConfig: ContractConfig,
+  contractColorConfig: ContractConfigColor,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
+    const fieldColor = contractColorConfig.fields[name]
     return {
-      description: field?.description,
+      description: fieldColor?.description,
       handler: field?.handler,
       ignoreInWatchMode: contractConfig.ignoreInWatchMode?.includes(name),
       ignoreRelatives: contractConfig.ignoreRelatives?.includes(name),
-      severity: field?.severity,
+      severity: fieldColor?.severity,
     }
   }
 

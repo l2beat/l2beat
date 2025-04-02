@@ -51,9 +51,6 @@ describe(shouldSkip.name, () => {
         name: 'Test',
         chain: 'ethereum',
         initialAddresses: [],
-        names: {
-          [address.toString()]: 'Foo',
-        },
         sharedModules: ['SharedFoo'],
       },
       configReader,

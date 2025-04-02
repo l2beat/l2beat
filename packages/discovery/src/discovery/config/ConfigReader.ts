@@ -1,17 +1,29 @@
 import { createHash } from 'crypto'
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path from 'path'
-import { assert, Hash160, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import {
+  assert,
+  Hash160,
+  type json,
+  stripAnsiEscapeCodes,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { merge } from 'lodash'
-import type { ZodError } from 'zod'
+import { type ZodError, z } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
+import { ColorConfig } from './ColorConfig'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { CommonDiscoveryConfig, RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
+
+const JustImport = z
+  .object({
+    import: z.optional(z.array(z.string())),
+  })
+  .passthrough()
 
 export class ConfigReader {
   constructor(private rootPath: string) {}
@@ -29,7 +41,7 @@ export class ConfigReader {
     )
 
     const contents = readJsonc(path.join(basePath, 'config.jsonc'))
-    const parseResult = RawDiscoveryConfig.safeParse(contents)
+    const parseResult = JustImport.safeParse(contents)
     if (!parseResult.success) {
       const message = formatZodParsingError(parseResult.error, 'config.jsonc')
       console.log(message)
@@ -46,7 +58,11 @@ export class ConfigReader {
       )
     }
 
-    const config = new DiscoveryConfig(rawConfig, this)
+    const config = new DiscoveryConfig(
+      RawDiscoveryConfig.parse(rawConfig),
+      ColorConfig.parse(rawConfig),
+      this,
+    )
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -229,8 +245,8 @@ export function resolveImports(
   basePath: string,
   imports: string[],
   visited: Set<string>,
-): CommonDiscoveryConfig {
-  let result: CommonDiscoveryConfig = {}
+): json {
+  let result: json = {}
   for (const importPath of imports) {
     const resolvedPath = path.resolve(basePath, importPath)
     if (visited.has(resolvedPath)) {
@@ -239,7 +255,7 @@ export function resolveImports(
     visited.add(resolvedPath)
 
     const contents = readJsonc(resolvedPath)
-    const parseResult = CommonDiscoveryConfig.safeParse(contents)
+    const parseResult = JustImport.safeParse(contents)
     if (!parseResult.success) {
       const message = formatZodParsingError(parseResult.error, importPath)
       console.log(message)

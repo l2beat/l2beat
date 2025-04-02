@@ -1,8 +1,11 @@
 import type { TemplateService } from '../analysis/TemplateService'
 import { resolveCategory } from '../analysis/category'
-import type { ContractConfig } from '../config/ContractConfig'
+import type { ExternalReference } from '../config/ColorConfig'
+import type {
+  ContractConfig,
+  ContractConfigColor,
+} from '../config/ContractConfig'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
-import type { ExternalReference } from '../config/RawDiscoveryConfig'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -20,22 +23,29 @@ export function colorize(
   const result: DiscoveryOutput = structure
 
   result.entries.forEach((e) => {
-    const entryConfig = config.for(e.address)
+    const entryConfigStructure = config.for(e.address)
+    const entryConfigColor = config.forColor(e.address)
 
     if (e.template !== undefined) {
       const template = templateService.loadContractTemplate(e.template)
-      entryConfig.pushValues(template)
+      const templateColor = templateService.loadContractTemplateColor(
+        e.template,
+      )
+
+      entryConfigColor.pushValues(templateColor)
+      entryConfigStructure.pushValues(template)
     }
 
-    e.name = entryConfig.name ?? e.derivedName
+    e.name =
+      entryConfigColor.name ?? entryConfigStructure.displayName ?? e.derivedName
     e.displayName =
-      entryConfig.displayName && e.name !== e.displayName
+      entryConfigStructure.displayName && e.name !== e.displayName
         ? e.displayName
         : undefined
-    e.description = interpolateString(entryConfig.description, e)
-    e.references = getReferences(entryConfig, e)
-    e.category = resolveCategory(entryConfig)
-    e.fieldMeta = getFieldsMeta(entryConfig)
+    e.description = interpolateString(entryConfigColor.description, e)
+    e.references = getReferences(entryConfigStructure, entryConfigColor, e)
+    e.category = resolveCategory(entryConfigColor)
+    e.fieldMeta = getFieldsMeta(entryConfigColor)
   })
 
   result.entries = result.entries.map((e) => sortEntry(e))
@@ -91,18 +101,20 @@ function interpolateString(
 }
 
 function getReferences(
-  entryConfig: ContractConfig,
+  entryConfigStructure: ContractConfig,
+  entryConfigColor: ContractConfigColor,
   entry: StructureEntry,
 ): ExternalReference[] | undefined {
   let result: ExternalReference[] | undefined
-  if (entryConfig.references !== undefined) {
+  if (entryConfigColor.references !== undefined) {
     result ??= []
-    result.push(...entryConfig.references)
+    result.push(...entryConfigColor.references)
   }
 
   const addresses = [entry.address, ...get$Implementations(entry.values)]
   for (const address of addresses) {
-    const manualSourcePath = entryConfig.manualSourcePaths[address.toString()]
+    const manualSourcePath =
+      entryConfigStructure.manualSourcePaths[address.toString()]
     if (manualSourcePath === undefined) {
       continue
     }
@@ -118,11 +130,11 @@ function getReferences(
 }
 
 function getFieldsMeta(
-  entryConfig: ContractConfig,
+  entryConfigColor: ContractConfigColor,
 ): Record<string, FieldMeta> | undefined {
   const result: Record<string, FieldMeta> = {}
 
-  for (const [key, value] of Object.entries(entryConfig.fields)) {
+  for (const [key, value] of Object.entries(entryConfigColor.fields)) {
     if (value.severity === undefined && value.description === undefined) {
       continue
     }

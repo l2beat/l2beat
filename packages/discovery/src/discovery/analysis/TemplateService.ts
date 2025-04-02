@@ -8,9 +8,11 @@ import {
   Hash256,
   type json,
 } from '@l2beat/shared-pure'
+import type { z } from 'zod'
 import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import { ColorContract } from '../config/ColorConfig'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
@@ -124,17 +126,36 @@ export class TemplateService {
     return filteredResult
   }
 
-  loadContractTemplate(template: string): DiscoveryContract {
-    const loadedTemplate = this.loadedTemplates[template]
+  loadContractTemplateBase<T extends z.ZodTypeAny>(
+    template: string,
+    keySuffix: string,
+    parser: T,
+  ): z.infer<T> {
+    const key = `${template}.${keySuffix}`
+    const loadedTemplate = this.loadedTemplates[key]
     if (loadedTemplate !== undefined) {
-      return loadedTemplate
+      return loadedTemplate as z.infer<T>
     }
+
     const templateJsonc = readJsonc(
       path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
-    const parsed = DiscoveryContract.parse(templateJsonc)
-    this.loadedTemplates[template] = parsed
+
+    const parsed = parser.parse(templateJsonc)
+    this.loadedTemplates[key] = parsed
     return parsed
+  }
+
+  loadContractTemplate(template: string): DiscoveryContract {
+    return this.loadContractTemplateBase(
+      template,
+      'contract',
+      DiscoveryContract,
+    )
+  }
+
+  loadContractTemplateColor(template: string): ColorContract {
+    return this.loadContractTemplateBase(template, 'color', ColorContract)
   }
 
   getTemplateHash(template: string): Hash256 {

@@ -1,8 +1,14 @@
 import { hashJson } from '@l2beat/shared'
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { DiscoveryOutput } from '../output/types'
+import { type ColorConfig, ColorContract } from './ColorConfig'
 import { ConfigReader } from './ConfigReader'
-import { type ContractConfig, createContractConfig } from './ContractConfig'
+import {
+  type ContractConfig,
+  type ContractConfigColor,
+  createContractConfig,
+  createContractConfigColor,
+} from './ContractConfig'
 import {
   DiscoveryContract,
   type RawDiscoveryConfig,
@@ -11,7 +17,6 @@ import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
 
 export type ContractOverrides = DiscoveryContract & {
-  name?: string
   address: EthereumAddress
 }
 
@@ -22,6 +27,7 @@ export class DiscoveryConfig {
 
   constructor(
     private readonly config: RawDiscoveryConfig,
+    private readonly colorConfig: ColorConfig, // TODO(radomski): I dont like this but we just want to get it working
     configReader?: ConfigReader,
   ) {
     configReader ??= new ConfigReader(getDiscoveryPaths().discovery)
@@ -33,13 +39,31 @@ export class DiscoveryConfig {
   }
 
   for(address: EthereumAddress): ContractConfig {
-    const overrides = this.getOverrides(address)
+    const override =
+      this.config.overrides?.[address.toString()] ?? DiscoveryContract.parse({})
+
+    const overrides = { address, ...override }
 
     return createContractConfig(
       overrides,
       structuredClone(this.config.types ?? {}),
-      structuredClone(this.config.categories ?? {}),
     )
+  }
+
+  forColor(address: EthereumAddress): ContractConfigColor {
+    const override =
+      this.colorConfig.overrides?.[address.toString()] ??
+      ColorContract.parse({})
+    const name = (this.colorConfig.names ?? {})[address.toString()]
+
+    const overrides = { address, name, ...override }
+
+    const result = createContractConfigColor(
+      overrides,
+      structuredClone(this.colorConfig.categories ?? {}),
+    )
+
+    return result
   }
 
   get raw(): RawDiscoveryConfig {
@@ -79,13 +103,5 @@ export class DiscoveryConfig {
       const addresses = d.entries.map((c) => c.address)
       return addresses.includes(address)
     })
-  }
-
-  private getOverrides(address: EthereumAddress): ContractOverrides {
-    const name = (this.config.names ?? {})[address.toString()]
-    const override =
-      this.config.overrides?.[address.toString()] ?? DiscoveryContract.parse({})
-
-    return { name, address, ...override }
   }
 }

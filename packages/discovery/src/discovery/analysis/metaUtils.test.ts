@@ -284,10 +284,7 @@ describe('metaUtils', () => {
 
       const selfAddress = EthereumAddress.from('0x1234')
       const fields: { [address: string]: DiscoveryContractField } = {
-        overhead: {
-          permissions: [{ type: 'interact', delay: 0 }],
-          type: 'CODE_CHANGE',
-        },
+        overhead: { permissions: [{ type: 'interact', delay: 0 }] },
         owner: {
           permissions: [
             {
@@ -297,7 +294,6 @@ describe('metaUtils', () => {
                 'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
             },
           ],
-          type: 'CODE_CHANGE',
         },
         resourceConfig: {
           permissions: [
@@ -315,12 +311,8 @@ describe('metaUtils', () => {
                 'configuring the {{ $.address }} contract allows freeze funds',
             },
           ],
-          type: ['L2', 'EXTERNAL'],
         },
-        scalar: {
-          permissions: [{ type: 'interact', delay: 0 }],
-          type: 'CODE_CHANGE',
-        },
+        scalar: { permissions: [{ type: 'interact', delay: 0 }] },
       }
 
       const mergedValues = {
@@ -421,7 +413,6 @@ describe('metaUtils', () => {
               description: 'Existing configured upgrade permission',
             },
           ],
-          type: 'CODE_CHANGE',
         },
       }
 
