@@ -1,37 +1,87 @@
-import { readFileSync } from 'fs'
-import { exit } from 'process'
+import type { Project } from './types'
 
-const prDb = readFileSync('/tmp/compare/pr/db.sqlite')
-const prCommit = readFileSync('/tmp/compare/pr/commit', 'utf-8')
-const mainDb = readFileSync('/tmp/compare/main/db.sqlite')
-const mainCommit = readFileSync('/tmp/compare/main/commit', 'utf-8')
-
-const prSize = prDb.length
-const mainSize = mainDb.length
-
-if (prSize === mainSize) {
-  console.log('No changes detected')
-  exit()
+export interface ProjectDiff {
+  id: string
+  type: 'added' | 'removed' | 'modified'
+  fields: FieldDiff[]
 }
 
-const html = `
-<!doctype html>
-<html lang="en">
+export interface FieldDiff {
+  field: string
+  before: string | undefined
+  after: string | undefined
+}
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Diff</title>
-</head>
+export function diffAll(
+  projectsBefore: Project[],
+  projectsAfter: Project[],
+): ProjectDiff[] {
+  const result: ProjectDiff[] = []
 
-<body>
-  <h1>Diff</h1>
-  <h2>Main commit ${mainCommit}</h2>
-  <p>Main size ${mainSize}</p>
-  <h2>PR commit ${prCommit}</h2>
-  <p>PR size ${prSize}</p>
-</body>
+  let beforeIndex = 0
+  let afterIndex = 0
+  while (
+    beforeIndex < projectsBefore.length ||
+    afterIndex < projectsAfter.length
+  ) {
+    const before = projectsBefore[beforeIndex]
+    const after = projectsAfter[afterIndex]
 
-</html>
-`
+    if (!before) {
+      result.push({
+        id: after.id,
+        type: 'added',
+        fields: Object.entries(after).map(([key, value]) => ({
+          field: key,
+          before: undefined,
+          after: stringify(value),
+        })),
+      })
+      afterIndex++
+    } else if (!after) {
+      result.push({
+        id: before.id,
+        type: 'removed',
+        fields: Object.entries(before).map(([key, value]) => ({
+          field: key,
+          before: stringify(value),
+          after: undefined,
+        })),
+      })
+      beforeIndex++
+    } else {
+      const diff = diffProjects(before, after)
+      if (diff.length > 0) {
+        result.push({ id: before.id, type: 'modified', fields: diff })
+      }
+      afterIndex++
+      beforeIndex++
+    }
 
-console.log(html)
+    if (!before) {
+      after.id
+    }
+  }
+
+  return result
+}
+
+function diffProjects(before: Project, after: Project): FieldDiff[] {
+  const result: FieldDiff[] = []
+  for (const field in before) {
+    const valueBefore = stringify(before[field])
+    const valueAfter = stringify(after[field])
+    if (valueBefore !== valueAfter) {
+      result.push({
+        field,
+        before: valueBefore,
+        after: valueAfter,
+      })
+    }
+  }
+  return result
+}
+
+function stringify(value: unknown) {
+  return typeof value === 'string' ? value : JSON.stringify(value, null, 2)
+}
