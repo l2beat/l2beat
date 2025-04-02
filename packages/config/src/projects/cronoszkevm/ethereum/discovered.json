@@ -1,7 +1,7 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 22144857,
+  "blockNumber": 22181510,
   "configHash": "0xa4f8d9a2eab7db4be5b31a20c9665ec88bf778ce1a3c442af9f1abd67a85e166",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -416,7 +416,7 @@
           "0x907b30407249949521Bf0c89A43558dae200146A",
           "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 4237,
+        "getFirstUnprocessedPriorityTx": 4254,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
@@ -424,20 +424,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 2,
-        "getPriorityTreeRoot": "0x68ee7b2b37628bc92cf48d1678f1d23234ad7cef7f6d1d67258f9936a05c695c",
+        "getPriorityTreeRoot": "0x23860baedb4c8decc3fbeafd3a760b479b2934a9f4f9fc39a08360ff51741415",
         "getPriorityTreeStartIndex": 4234,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 370,
-        "getTotalBatchesExecuted": 369,
-        "getTotalBatchesVerified": 369,
-        "getTotalBlocksCommitted": 370,
-        "getTotalBlocksExecuted": 369,
-        "getTotalBlocksVerified": 369,
-        "getTotalPriorityTxs": 4239,
+        "getTotalBatchesCommitted": 375,
+        "getTotalBatchesExecuted": 375,
+        "getTotalBatchesVerified": 375,
+        "getTotalBlocksCommitted": 375,
+        "getTotalBlocksExecuted": 375,
+        "getTotalBlocksVerified": 375,
+        "getTotalPriorityTxs": 4256,
         "getTransactionFilterer": "0xA8998F231a660Eca365B382943c71ad9b7619139",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -541,6 +541,22 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ValidiumL1DAValidator",
+      "address": "0x907b30407249949521Bf0c89A43558dae200146A",
+      "type": "Contract",
+      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
+      "sourceHashes": [
+        "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
+      "sinceTimestamp": 1739108927,
+      "sinceBlock": 21809358,
+      "values": { "$immutable": true },
+      "derivedName": "ValidiumL1DAValidator",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -923,6 +939,10 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
+    "0x907b30407249949521Bf0c89A43558dae200146A": [
+      "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
+      "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    ],
     "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
       "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
@@ -1128,6 +1148,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/v26/Diamond": "0xee00df4eebff2c0f14cd277ad1b4950571eb1ede4ec72a2bae7bf2adb51cc2a3",
+    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

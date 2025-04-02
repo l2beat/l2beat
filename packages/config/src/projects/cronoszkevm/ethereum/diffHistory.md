@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd197b1f43993d75c5d3463bd80ed1053ec6771c8
+Generated with discovered.json: 0x62ec0c3cbb5a2f5d374cc3ee679cba903d0d638e
 
-# Diff at Wed, 02 Apr 2025 13:21:55 GMT:
+# Diff at Wed, 02 Apr 2025 13:25:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144857
-- current block number: 22144857
+- current block number: 22181510
 
 ## Description
 
@@ -82,6 +82,12 @@ discovery. Values are for block 22144857 (main branch discovery), not current.
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
+```
+
+```diff
++   Status: CREATED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0x91dbb8733e55245490020e9b1db9887f027db0fe

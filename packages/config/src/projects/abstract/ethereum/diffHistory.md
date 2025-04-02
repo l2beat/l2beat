@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x66c706440e84133b1c6701ebaf06eca10e154247
+Generated with discovered.json: 0xc80bcbac83dec9aba29974155ca35a9aab3fdf7a
 
-# Diff at Wed, 02 Apr 2025 13:21:55 GMT:
+# Diff at Wed, 02 Apr 2025 13:24:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144881
-- current block number: 22181322
+- current block number: 22181510
 
 ## Description
 
@@ -58,6 +58,12 @@ discovery. Values are for block 22144881 (main branch discovery), not current.
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0xeef165374050cf21a75dbfe9fd523ad139cb7adb

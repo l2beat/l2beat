@@ -1,14 +1,86 @@
-Generated with discovered.json: 0xc9195eab6e176fc09e673afa52620aa791c4644f
+Generated with discovered.json: 0x1fff181a18e140a74a95c1aff62c3b13be29590e
 
-# Diff at Wed, 02 Apr 2025 13:14:00 GMT:
+# Diff at Wed, 02 Apr 2025 13:25:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123358
-- current block number: 22123358
+- current block number: 22181512
 
 ## Description
 
 shared zk stack contracts upgraded to v26: config related changes for all children chains.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      sourceHashes.0:
+-        "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
++        "0xa470a4cd272abd74efdef01a347542477159dba5fc965b47dca90736ae6f42db"
+      values.$implementation:
+-        "0x8D231E4097C3cb200Ed62134B466AA615cE60336"
++        "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
+      values.$pastUpgrades.9:
++        ["2024-06-06T13:20:35.000Z","0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a",["0x8191975d8B0851C7f0740918896Cf298c09aA05E"]]
+      values.$pastUpgrades.8.2:
+-        ["0x8191975d8B0851C7f0740918896Cf298c09aA05E"]
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.8.1:
+-        "2024-06-06T13:20:35.000Z"
++        ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
+      values.$pastUpgrades.8.0:
+-        "0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.7.2:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "2023-12-04T20:29:11.000Z"
+      values.$pastUpgrades.7.1:
+-        ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
++        "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd"
+      values.$pastUpgrades.7.0:
+-        "2025-01-08T16:00:35.000Z"
++        ["0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"]
+      values.$pastUpgrades.6.2:
+-        "2023-12-04T20:29:11.000Z"
++        "0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80"
+      values.$pastUpgrades.6.1:
+-        "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd"
++        "2023-04-25T12:37:35.000Z"
+      values.$pastUpgrades.6.0.0:
+-        "0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"
++        "0x38ABF296EE79621A225AA85086853b0dA3225D2F"
+      values.$pastUpgrades.5.2:
+-        "0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80"
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.5.1:
+-        "2023-04-25T12:37:35.000Z"
++        ["0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"]
+      values.$pastUpgrades.5.0:
+-        ["0x38ABF296EE79621A225AA85086853b0dA3225D2F"]
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$upgradeCount:
+-        9
++        10
+      values.SHARED_BRIDGE:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.ERA_CHAIN_ID:
++        324
+      values.L1_ASSET_ROUTER:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.L1_NATIVE_TOKEN_VAULT:
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      values.L1_NULLIFIER:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1ERC20Bridge/L1ERC20Bridge.sol                | 244 +++++++++++++++------
+ 1 file changed, 180 insertions(+), 64 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -25,6 +97,12 @@ discovery. Values are for block 22123358 (main branch discovery), not current.
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
     }
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0xb2bd8a922a6a577d0a5d27afc5fb4804d1191ea4

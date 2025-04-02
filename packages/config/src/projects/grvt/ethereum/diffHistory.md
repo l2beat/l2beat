@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9d07cb214e0ab98b0a7ad3c3db2bdf3918dd1a85
+Generated with discovered.json: 0x6ec1249dd62e31a8c64e5569b5be75d71377a56a
 
-# Diff at Wed, 02 Apr 2025 13:21:55 GMT:
+# Diff at Wed, 02 Apr 2025 13:25:06 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22122838
-- current block number: 22122838
+- current block number: 22181511
 
 ## Description
 
@@ -58,6 +58,12 @@ discovery. Values are for block 22122838 (main branch discovery), not current.
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
     }
+```
+
+```diff
++   Status: CREATED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0x31ee62342498fd2d767adb9b16770c250b4a50ac

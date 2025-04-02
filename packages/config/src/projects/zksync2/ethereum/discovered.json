@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22123358,
+  "blockNumber": 22181512,
   "configHash": "0x5a17712e9a9415024a83d463f9daee07adb0f6d029ff7315a9415834921548fe",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -431,28 +431,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3271263,
+        "getFirstUnprocessedPriorityTx": 3271591,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0x2c4aea0aac404a3924b2fb9f384fbe4ed1b6201ad1e14f9d69a9eac5109d163a",
+        "getPriorityQueueSize": 13,
+        "getPriorityTreeRoot": "0x2a018d656d6ac901e8e45aa774ad93e8bb34e8f2c5dbbfb513d28823616acf1a",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 498141,
-        "getTotalBatchesExecuted": 498137,
-        "getTotalBatchesVerified": 498139,
-        "getTotalBlocksCommitted": 498141,
-        "getTotalBlocksExecuted": 498137,
-        "getTotalBlocksVerified": 498139,
-        "getTotalPriorityTxs": 3271271,
+        "getTotalBatchesCommitted": 498339,
+        "getTotalBatchesExecuted": 498335,
+        "getTotalBatchesVerified": 498338,
+        "getTotalBlocksCommitted": 498339,
+        "getTotalBlocksExecuted": 498335,
+        "getTotalBlocksVerified": 498338,
+        "getTotalPriorityTxs": 3271604,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -559,7 +559,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
+        "0xa470a4cd272abd74efdef01a347542477159dba5fc965b47dca90736ae6f42db"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
@@ -567,7 +567,7 @@
       "sinceBlock": 16626406,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x8D231E4097C3cb200Ed62134B466AA615cE60336",
+        "$implementation": "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142",
         "$pastUpgrades": [
           [
             "2023-02-14T10:31:23.000Z",
@@ -613,13 +613,21 @@
             "2025-01-08T16:00:35.000Z",
             "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",
             ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
+          ],
+          [
+            "2025-03-31T08:00:47.000Z",
+            "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
+            ["0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
+        "ERA_CHAIN_ID": 324,
+        "L1_ASSET_ROUTER": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
+        "L1_NATIVE_TOKEN_VAULT": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+        "L1_NULLIFIER": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
-        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
-        "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
       },
       "derivedName": "L1ERC20Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
@@ -671,6 +679,22 @@
       },
       "derivedName": "ValidatorTimelock",
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "RollupL1DAValidator",
+      "address": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+      "type": "Contract",
+      "template": "shared-zk-stack/v26/RollupL1DAValidator",
+      "sourceHashes": [
+        "0x0c7b1ef84ead12e6b034e6e4eb7cc9e51dba7272fe1d182749a43980da7a3932"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
+      "sinceTimestamp": 1739108915,
+      "sinceBlock": 21809357,
+      "values": { "$immutable": true },
+      "derivedName": "RollupL1DAValidator",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ValidatorTimelock",
@@ -826,6 +850,35 @@
       "function transferOwnership(address newOwner)",
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
+    ],
+    "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142": [
+      "constructor(address _nullifier, address _assetRouter, address _nativeTokenVault, uint256 _eraChainId)",
+      "error AssetRouterAllowanceNotZero()",
+      "error ETHDepositNotSupported()",
+      "error EmptyDeposit()",
+      "error NotInitializedReentrancyGuard()",
+      "error Reentrancy()",
+      "error SlotOccupied()",
+      "error TokensWithFeesNotSupported()",
+      "error WithdrawalAlreadyFinalized()",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function ERA_CHAIN_ID() view returns (uint256)",
+      "function L1_ASSET_ROUTER() view returns (address)",
+      "function L1_NATIVE_TOKEN_VAULT() view returns (address)",
+      "function L1_NULLIFIER() view returns (address)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function depositAmount(address account, address l1Token, bytes32 depositL2TxHash) view returns (uint256 amount)",
+      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize()",
+      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
     "0x32400084C286CF3E17e7B677ea9583e60a000324": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
@@ -996,6 +1049,28 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
+    "0x72213dfe8CA61B0A782970dCFebFb877778f9119": [
+      "error BlobCommitmentNotPublished()",
+      "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
+      "error EmptyBlobVersionHash(uint256 index)",
+      "error InvalidL2DAOutputHash(bytes32 l2DAValidatorOutputHash)",
+      "error InvalidNumberOfBlobs(uint256 blobsProvided, uint256 maxBlobsSupported)",
+      "error InvalidPubdataCommitmentsSize()",
+      "error InvalidPubdataHash(bytes32 fullPubdataHash, bytes32 providedPubdataHash)",
+      "error InvalidPubdataSource(uint8 pubdataSource)",
+      "error NonEmptyBlobVersionHash(uint256 index)",
+      "error OnlyOneBlobWithCalldataAllowed()",
+      "error OperatorDAInputTooSmall(uint256 operatorDAInputLength, uint256 minAllowedLength)",
+      "error PointEvalCallFailed(bytes)",
+      "error PointEvalFailed(bytes)",
+      "error PubdataCommitmentsEmpty()",
+      "error PubdataInputTooSmall(uint256 pubdataInputLength, uint256 totalBlobsCommitmentSize)",
+      "error PubdataLengthTooBig(uint256 pubdataLength, uint256 totalBlobSizeBytes)",
+      "function checkDA(uint256, uint256, bytes32 _l2DAValidatorOutputHash, bytes _operatorDAInput, uint256 _maxBlobsSupported) view returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
+      "function isBlobAvailable(bytes32 _blobCommitment) view returns (bool)",
+      "function publishBlobs(bytes _pubdataCommitments)",
+      "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
+    ],
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
       "error AddressAlreadyValidator(uint256 _chainId)",
@@ -1030,32 +1105,6 @@
       "function setExecutionDelay(uint32 _executionDelay)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
-    ],
-    "0x8D231E4097C3cb200Ed62134B466AA615cE60336": [
-      "constructor(address _sharedBridge)",
-      "error EmptyDeposit()",
-      "error NotInitializedReentrancyGuard()",
-      "error Reentrancy()",
-      "error SlotOccupied()",
-      "error TokensWithFeesNotSupported()",
-      "error Unauthorized(address caller)",
-      "error WithdrawalAlreadyFinalized()",
-      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
-      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
-      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
-      "function SHARED_BRIDGE() view returns (address)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
-      "function depositAmount(address account, address l1Token, bytes32 depositL2TxHash) view returns (uint256 amount)",
-      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function initialize()",
-      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
-      "function l2Bridge() view returns (address)",
-      "function l2TokenAddress(address _l1Token) view returns (address)",
-      "function l2TokenBeacon() view returns (address)",
-      "function l2TokenProxyBytecodeHash() view returns (bytes32)",
-      "function transferTokenToSharedBridge(address _token)"
     ],
     "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
@@ -1281,6 +1330,7 @@
   },
   "usedTemplates": {
     "shared-zk-stack/v26/Diamond": "0xee00df4eebff2c0f14cd277ad1b4950571eb1ede4ec72a2bae7bf2adb51cc2a3",
+    "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }
