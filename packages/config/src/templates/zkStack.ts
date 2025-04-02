@@ -257,9 +257,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      upgradesAndGovernanceImage: 'zk-stack',
+      upgradesAndGovernanceImage: 'zkstack',
       ...templateVars.display,
       stack: 'ZK Stack',
+      architectureImage:
+        templateVars.daProvider !== undefined
+          ? 'zkstack-validium'
+          : 'zkstack-rollup',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
