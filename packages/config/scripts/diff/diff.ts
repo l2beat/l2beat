@@ -1,10 +1,10 @@
 import { readFileSync } from 'fs'
 import { exit } from 'process'
 
-const prDb = readFileSync('/tmp/compare/pr.sqlite')
-const prCommit = readFileSync('/tmp/compare/pr.commit', 'utf-8')
-const mainDb = readFileSync('/tmp/compare/main.sqlite')
-const mainCommit = readFileSync('/tmp/compare/main.commit', 'utf-8')
+const prDb = readFileSync('/tmp/compare/pr/db.sqlite')
+const prCommit = readFileSync('/tmp/compare/pr/commit', 'utf-8')
+const mainDb = readFileSync('/tmp/compare/main/db.sqlite')
+const mainCommit = readFileSync('/tmp/compare/main/commit', 'utf-8')
 
 const prSize = prDb.length
 const mainSize = mainDb.length

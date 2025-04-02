@@ -35,9 +35,9 @@ jobs:
 
       - name: Save database (main)
         run: |
-          mkdir -p /tmp/compare
-          cp ./packages/config/build/db.sqlite /tmp/compare/main.sqlite
-          git rev-parse HEAD > /tmp/main.commit
+          mkdir -p /tmp/compare/main
+          cp ./packages/config/build/db.sqlite /tmp/compare/main/db.sqlite
+          git rev-parse HEAD > /tmp/compare/main/commit
 
       - name: Checkout code (PR)
         uses: actions/checkout@v3
@@ -53,9 +53,9 @@ jobs:
 
       - name: Save database (PR)
         run: |
-          mkdir -p /tmp/compare
-          cp ./packages/config/build/db.sqlite /tmp/compare/pr.sqlite
-          git rev-parse HEAD > /tmp/pr.commit
+          mkdir -p /tmp/compare/pr
+          cp ./packages/config/build/db.sqlite /tmp/compare/pr/db.sqlite
+          git rev-parse HEAD > /tmp/compare/pr/commit
 
       - name: Generate schema diff HTML report
         id: diff
