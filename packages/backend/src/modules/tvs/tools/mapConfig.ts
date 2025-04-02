@@ -72,46 +72,69 @@ export async function mapConfig(
     }
   }
 
+  const nonSharedEscrows = project.tvlConfig.escrows.filter(
+    (e) => !e.sharedEscrow,
+  )
   const bySource = groupBy(
-    project.tvlConfig.escrows
-      .filter((e) => !e.sharedEscrow)
-      .map((e) => ({
-        ...e,
-        source: e.source ?? 'canonical',
-      })),
+    nonSharedEscrows.map((e) => ({
+      ...e,
+      source: e.source ?? 'canonical',
+    })),
     'source',
   )
 
-  for (const e of Object.values(bySource)) {
-    const t = e.flatMap((e) => e.tokens.map((t) => ({ ...t, escrow: e })))
-    const tt = groupBy(t, 'symbol')
+  for (const escrowGroup of Object.values(bySource)) {
+    const tokensWithEscrow = escrowGroup.flatMap((escrow) =>
+      escrow.tokens.map((token) => ({ ...token, escrow })),
+    )
 
-    for (const ttt of Object.values(tt)) {
-      const aa = groupBy(ttt, 'coingeckoId')
+    const tokensBySymbol = groupBy(tokensWithEscrow, 'symbol')
 
-      for (const aaa of Object.values(aa)) {
-        if (aaa.length === 1) {
-          const chain = getChain(aaa[0].chainName)
-          const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
+    for (const symbolTokens of Object.values(tokensBySymbol)) {
+      const tokensByCoingeckoId = groupBy(symbolTokens, 'coingeckoId')
+
+      for (const sameIdTokens of Object.values(tokensByCoingeckoId)) {
+        if (sameIdTokens.length === 1) {
+          const tokenData = sameIdTokens[0]
+          const chain = getChain(tokenData.chainName)
+          const token = createEscrowToken(
+            project,
+            tokenData.escrow,
+            chain,
+            tokenData,
+          )
 
           tokens.push(token)
         } else {
           const amounts = []
           const valueForSummary = []
-          for (const aaaa of aaa) {
-            const chain = getChain(aaaa.chainName)
-            const token = createEscrowToken(project, aaaa.escrow, chain, aaaa)
+
+          for (const tokenData of sameIdTokens) {
+            const chain = getChain(tokenData.chainName)
+            const token = createEscrowToken(
+              project,
+              tokenData.escrow,
+              chain,
+              tokenData,
+            )
             amounts.push(token.amount)
+
             if (token.valueForSummary) {
               valueForSummary.push(token.valueForSummary)
             }
           }
 
-          const chain = getChain(aaa[0].chainName)
-          const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
+          const firstTokenData = sameIdTokens[0]
+          const chain = getChain(firstTokenData.chainName)
+          const baseToken = createEscrowToken(
+            project,
+            firstTokenData.escrow,
+            chain,
+            firstTokenData,
+          )
 
           tokens.push({
-            ...token,
+            ...baseToken,
             amount: {
               type: 'calculation',
               operator: 'sum',
