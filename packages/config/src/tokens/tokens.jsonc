@@ -2127,7 +2127,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -2143,7 +2143,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -3003,7 +3003,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -3695,7 +3695,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -5776,7 +5776,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -5792,7 +5792,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -6207,7 +6207,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
@@ -6223,7 +6223,7 @@
         "bridges": [
           {
             "name": "Hyperlane (xERC-20)",
-            "slug": "connext"
+            "slug": "hyperlane"
           }
         ]
       }
