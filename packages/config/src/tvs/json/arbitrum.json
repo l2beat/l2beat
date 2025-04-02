@@ -3042,31 +3042,17 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MOON",
-      "priceId": "moonflow",
+      "id": "arbitrum-MOON.moon",
+      "priceId": "moon",
       "symbol": "MOON",
-      "name": "Moonflow",
+      "name": "Moons",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
-            "chain": "ethereum",
-            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-            "decimals": 18,
-            "sinceTimestamp": 1723714163
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xb2490e357980cE57bF5745e181e537a64Eb367B1",
-            "chain": "ethereum",
-            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-            "decimals": 18,
-            "sinceTimestamp": 1660059776
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xb2490e357980cE57bF5745e181e537a64Eb367B1",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1660059776
       },
       "category": "other",
       "source": "canonical",
@@ -3769,6 +3755,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-rDPX.ext",
+      "priceId": "dopex-rebate-token",
+      "symbol": "rDPX.ext",
+      "displaySymbol": "rDPX",
+      "name": "Dopex Rebate Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18,
+        "sinceTimestamp": 1624579200
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-REN",
       "priceId": "republic-protocol",
       "symbol": "REN",
@@ -4180,7 +4185,25 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SOL",
+      "id": "arbitrum-SOL.sol-wormhole",
+      "priceId": "sol-wormhole",
+      "symbol": "SOL",
+      "name": "Wrapped SOL",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 9,
+        "sinceTimestamp": 1642723200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-SOL.solana",
       "priceId": "solana",
       "symbol": "SOL",
       "name": "Wrapped SOL",
@@ -4194,25 +4217,6 @@
       "category": "other",
       "source": "external",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-SOL.ethereum",
-      "priceId": "sol-wormhole",
-      "symbol": "SOL.ethereum",
-      "name": "Wrapped SOL",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 9,
-        "sinceTimestamp": 1642723200
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "SOL"
     },
     {
       "mode": "auto",
@@ -4766,42 +4770,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "chain": "arbitrum",
-        "decimals": 6,
-        "sinceTimestamp": 1667248932
-      },
-      "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-USDC.ethereum",
-      "priceId": "usd-coin",
-      "symbol": "USDC.ethereum",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 6,
-        "sinceTimestamp": 1623784100
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDC"
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-USDC.ext",
       "priceId": "usd-coin",
       "symbol": "USDC.ext",
@@ -4818,6 +4786,42 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-USDC.usd-coin",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1667248932
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-USDC.usd-coin.ethereum",
+      "priceId": "usd-coin",
+      "symbol": "USDC.ethereum",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 6,
+        "sinceTimestamp": 1623784100
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "displaySymbol": "USDC"
     },
     {
       "mode": "auto",
@@ -4892,7 +4896,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDT",
+      "id": "arbitrum-USDT.tether",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
