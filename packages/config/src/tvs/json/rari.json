@@ -30,15 +30,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1705716148
-        },
-        "priceId": "arbitrum"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "arbitrum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "arbitrum"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -80,15 +96,41 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1705716145
-        },
-        "priceId": "ethereum"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716145
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "ethereum"
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
@@ -122,15 +164,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1705716148
-        },
-        "priceId": "chainlink"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "chainlink"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "chainlink"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -164,15 +222,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1705716148
-        },
-        "priceId": "usd-coin"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "usd-coin"
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -180,7 +254,7 @@
     },
     {
       "mode": "auto",
-      "id": "rari-USDC.e",
+      "id": "rari-USDC.e-1",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "Bridged USDC (Stargate)",
@@ -197,46 +271,20 @@
     },
     {
       "mode": "auto",
-      "id": "rari-USDC.e.arbitrum",
+      "id": "rari-USDC.e-2",
       "priceId": "usd-coin",
-      "symbol": "USDC.e.arbitrum",
-      "name": "USD Coin (Arb1)",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-            "chain": "arbitrum",
-            "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
-            "decimals": 6,
-            "sinceTimestamp": 1705716148
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-            "chain": "arbitrum",
-            "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
-            "decimals": 6,
-            "sinceTimestamp": 1705716148
-          }
-        ]
-      },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1705716148
-        },
-        "priceId": "usd-coin"
+        "type": "totalSupply",
+        "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+        "chain": "rari",
+        "decimals": 6,
+        "sinceTimestamp": 1716939237
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDC.e"
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -283,15 +331,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1705716148
-        },
-        "priceId": "weth"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "weth"
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",

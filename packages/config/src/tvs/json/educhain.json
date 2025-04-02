@@ -16,7 +16,7 @@
         "decimals": 18,
         "sinceTimestamp": 1721992935
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -58,15 +58,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1721987935
-        },
-        "priceId": "edu-coin"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1721987935
+            },
+            "priceId": "edu-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1721992935
+            },
+            "priceId": "edu-coin"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -86,7 +102,7 @@
         "decimals": 6,
         "sinceTimestamp": 1721992935
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -114,7 +130,7 @@
         "decimals": 6,
         "sinceTimestamp": 1721992935
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -142,7 +158,7 @@
         "decimals": 8,
         "sinceTimestamp": 1721992935
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -170,7 +186,7 @@
         "decimals": 18,
         "sinceTimestamp": 1721992935
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

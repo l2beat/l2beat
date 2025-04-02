@@ -84,10 +84,9 @@
     },
     {
       "mode": "auto",
-      "id": "lisk-USDC.ext",
+      "id": "lisk-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",

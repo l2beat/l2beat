@@ -228,7 +228,7 @@
             }
           ]
         },
-        "valueForTotal": {
+        "valueForSummary": {
           "anyOf": [
             {
               "$ref": "#/definitions/CalculationFormula"

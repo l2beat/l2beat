@@ -22,7 +22,7 @@ describe(getTokenSyncRange.name, () => {
           },
         ],
       },
-      valueForTotal: {
+      valueForSummary: {
         type: 'calculation',
         operator: 'sum',
         arguments: [

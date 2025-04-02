@@ -81,26 +81,12 @@
       "symbol": "mETH",
       "name": "mETH",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-            "chain": "ethereum",
-            "escrowAddress": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
-            "decimals": 18,
-            "sinceTimestamp": 1701993600
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6",
-            "chain": "ethereum",
-            "escrowAddress": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
-            "decimals": 18,
-            "sinceTimestamp": 1720421291
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "chain": "ethereum",
+        "escrowAddress": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
+        "decimals": 18,
+        "sinceTimestamp": 1701993600
       },
       "category": "ether",
       "source": "canonical",

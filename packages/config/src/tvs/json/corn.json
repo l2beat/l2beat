@@ -4,6 +4,40 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "corn-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x957C9DC25DE6B8E46a7Fa0D081bA749DD005B54f",
+        "decimals": 8,
+        "sinceTimestamp": 1733924495
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "corn-CORN",
+      "priceId": "corn-3",
+      "symbol": "CORN",
+      "name": "Corn",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "corn-3",
+        "decimals": 18,
+        "sinceTimestamp": 1743120000
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "corn-eBTC",
       "priceId": "ether-fi-staked-btc",
       "symbol": "eBTC",
@@ -106,10 +140,9 @@
     },
     {
       "mode": "auto",
-      "id": "corn-WBTC.ext",
+      "id": "corn-WBTC",
       "priceId": "wrapped-bitcoin",
-      "symbol": "WBTC.ext",
-      "displaySymbol": "WBTC",
+      "symbol": "WBTC",
       "name": "Wrapped BTC",
       "amount": {
         "type": "balanceOfEscrow",

@@ -22,7 +22,7 @@ describe(extractPricesAndAmounts.name, () => {
           untilTimestamp: UnixTime(200),
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       mockObject<TvsToken>({
         priceId: 'price-ARB',
@@ -33,7 +33,7 @@ describe(extractPricesAndAmounts.name, () => {
           sinceTimestamp: UnixTime(100),
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       mockObject<TvsToken>({
         priceId: 'price-ATH',
@@ -59,7 +59,7 @@ describe(extractPricesAndAmounts.name, () => {
           ],
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
     ]
 
@@ -138,7 +138,7 @@ describe(extractPricesAndAmounts.name, () => {
           sinceTimestamp: UnixTime(100),
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       // solvBTC with
       // - amount formula as totalSupply on L2
@@ -181,7 +181,7 @@ describe(extractPricesAndAmounts.name, () => {
             },
           ],
         },
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
     ]
 
@@ -249,7 +249,7 @@ describe(extractPricesAndAmounts.name, () => {
           untilTimestamp: UnixTime(200),
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       mockObject<TvsToken>({
         priceId: 'price-A',
@@ -262,7 +262,7 @@ describe(extractPricesAndAmounts.name, () => {
           untilTimestamp: UnixTime(300),
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       mockObject<TvsToken>({
         priceId: 'price-B',
@@ -275,7 +275,7 @@ describe(extractPricesAndAmounts.name, () => {
           untilTimestamp: UnixTime(200),
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       mockObject<TvsToken>({
         priceId: 'price-B',
@@ -316,7 +316,7 @@ describe(extractPricesAndAmounts.name, () => {
             },
           ],
         },
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
     ]
 

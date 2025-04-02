@@ -19,7 +19,13 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = await mapConfig(arbitrum, Logger.SILENT)
+    const projectsWithChain = (
+      await ps.getProjects({ select: ['chainConfig'] })
+    ).map((p) => p.chainConfig)
+
+    const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
+
+    const result = await mapConfig(arbitrum, chains, Logger.SILENT)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
