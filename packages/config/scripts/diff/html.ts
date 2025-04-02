@@ -12,10 +12,41 @@ export function diffsToHtml(props: {
 <head>
   <meta charset="UTF-8" />
   <title>Diff</title>
+  <style>
+body {
+  background-color:#222;
+  color:white;
+}
+h1, h2, h3 {
+  font-family: monospace;
+}
+pre {
+  background-color: #111;
+}
+.unmodified {
+  color: #999;
+}
+.modified {
+  color: yellow;
+}
+.added {
+  background-color: #14261f;
+  color: #7ee787;
+}
+.removed {
+  background-color: #27181d;
+  color: #f14236;
+}
+  </style>
 </head>
 
-<body style="background-color:#222;color:white;">
-  <h1>Diff between ${props.commitBefore.slice(0, 8)} (main) and ${props.commitAfter.slice(0, 8)} (PR)</h1>
+<body>
+  <h1>
+    Diff between
+    <span class="removed">${props.commitBefore.slice(0, 8)}</span> (main)
+    and
+    <span class="added">${props.commitAfter.slice(0, 8)}</span> (PR)
+  </h1>
   <ul>${props.diffs.map(diffToHtml).join('')}</ul>
 </body>
 
@@ -24,7 +55,7 @@ export function diffsToHtml(props: {
 
 function diffToHtml(diff: ProjectDiff) {
   return `<li>
-  <h2>Project: ${diff.id} - ${diff.type}</h2>
+  <h2>Project: ${diff.id} - <span class="${diff.type}">${diff.type}<span></h2>
   <ul>${diff.fields.map(fieldDiffToHtml).join('')}</ul>
 </li>`
 }
@@ -37,12 +68,12 @@ function fieldDiffToHtml(field: FieldDiff) {
 }
 
 function changeToHtml(change: Change) {
-  let style = ' style="color:#999;"'
+  let className = 'unmodified'
   if (change.added) {
-    style = ' style="font-weight:bold;color:lime;"'
+    className = 'added'
   }
   if (change.removed) {
-    style = ' style="font-weight:bold;color:red;"'
+    className = 'removed'
   }
-  return `<span${style}>${change.value}</span>`
+  return `<span class="${className}">${change.value}</span>`
 }
