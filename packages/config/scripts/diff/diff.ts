@@ -1,3 +1,4 @@
+import { type Change, diffJson } from 'diff'
 import type { Project } from './types'
 
 export interface ProjectDiff {
@@ -8,8 +9,7 @@ export interface ProjectDiff {
 
 export interface FieldDiff {
   field: string
-  before: string | undefined
-  after: string | undefined
+  diff: Change[]
 }
 
 export function diffAll(
@@ -31,10 +31,9 @@ export function diffAll(
       result.push({
         id: after.id,
         type: 'added',
-        fields: Object.entries(after).map(([key, value]) => ({
+        fields: Object.entries(after).map(([key, _value]) => ({
           field: key,
-          before: undefined,
-          after: stringify(value),
+          diff: [], // TODO
         })),
       })
       afterIndex++
@@ -42,10 +41,9 @@ export function diffAll(
       result.push({
         id: before.id,
         type: 'removed',
-        fields: Object.entries(before).map(([key, value]) => ({
+        fields: Object.entries(after).map(([key, _value]) => ({
           field: key,
-          before: stringify(value),
-          after: undefined,
+          diff: [], // TODO
         })),
       })
       beforeIndex++
@@ -69,19 +67,16 @@ export function diffAll(
 function diffProjects(before: Project, after: Project): FieldDiff[] {
   const result: FieldDiff[] = []
   for (const field in before) {
-    const valueBefore = stringify(before[field])
-    const valueAfter = stringify(after[field])
-    if (valueBefore !== valueAfter) {
+    const output = diffJson(
+      before[field] as string | object,
+      after[field] as string | object,
+    )
+    if (output.some((x) => x.added || x.removed)) {
       result.push({
         field,
-        before: valueBefore,
-        after: valueAfter,
+        diff: output,
       })
     }
   }
   return result
-}
-
-function stringify(value: unknown) {
-  return typeof value === 'string' ? value : JSON.stringify(value, null, 2)
 }
