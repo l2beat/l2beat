@@ -66,6 +66,33 @@ describe(BlockTxsCountService.name, () => {
       expect(assessCount).toHaveBeenCalledTimes(4)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(2)
     })
+
+    it('should handle negative count', async () => {
+      const analyzer = new RpcUopsAnalyzer()
+      const client = mockRpcClient([
+        { timestamp: START, count: 0, number: 1 },
+        { timestamp: START + 1 * UnixTime.HOUR, count: 2, number: 2 },
+        { timestamp: START + 2 * UnixTime.HOUR, count: 0, number: 3 },
+      ])
+      const assessCount = mockFn((count) => count - 1)
+
+      analyzer.calculateUops = mockFn()
+        .returnsOnce(0)
+        .returnsOnce(3)
+        .returnsOnce(0)
+      const txsCountProvider = new BlockTxsCountService({
+        projectId: ProjectId('a'),
+        provider: client,
+        uopsAnalyzer: analyzer,
+        assessCount,
+      })
+      const result = await txsCountProvider.getTxsCount(1, 3)
+      expect(result).toEqual([
+        activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 2, 1, 3),
+      ])
+      expect(assessCount).toHaveBeenCalledTimes(6)
+      expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
+    })
   })
 })
 
