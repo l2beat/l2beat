@@ -5,6 +5,9 @@ import type { ButtonProps } from '~/components/core/button'
 import { Button, buttonVariants } from '~/components/core/button'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
+import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
+import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
+import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -72,6 +75,11 @@ export default async function Page(props: Props) {
 
   return (
     <PrimaryCard className="min-h-[350px] pb-16 pt-8 md:mt-[83px]">
+      <div className="fixed size-0">
+        <FullRedPizzaSymbol />
+        <FullYellowPizzaSymbol />
+        <FullGreenPizzaSymbol />
+      </div>
       <div className="flex flex-col items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
           <div className="flex w-full flex-col md:w-1/2">

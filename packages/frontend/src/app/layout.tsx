@@ -12,9 +12,6 @@ import { ProgressBar } from '../components/progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-green-pizza'
-import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
-import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -60,11 +57,6 @@ export default async function RootLayout({
                   <SearchBarContextProvider projects={searchBarProjects}>
                     <RecategorisationPreviewContextProvider>
                       {children}
-                      <div className="fixed size-0">
-                        <FullRedPizzaSymbol />
-                        <FullYellowPizzaSymbol />
-                        <FullGreenPizzaSymbol />
-                      </div>
                     </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>
                   <ProgressBar />
