@@ -1,11 +1,11 @@
 import Link from 'next/link'
+import { Logo } from '~/components/logo'
 import { VerticalSeparator } from '../../core/vertical-separator'
 import { DarkThemeToggle } from '../../dark-theme-toggle'
 import { SmallSearchBarButton } from '../../search-bar/search-bar-button'
 import { SocialLinks } from '../../social-links'
 import type { NavGroup, NavLink } from '../types'
 import { TopNavLink } from './top-nav-link'
-import { Logo } from '~/components/logo'
 
 /**
  * Top navbar component used on old-style pages *on xl screens*.
