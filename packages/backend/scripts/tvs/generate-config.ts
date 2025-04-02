@@ -241,7 +241,7 @@ function deduplicateTokens(tokens: TvsToken[]) {
     if (tokensWithSameId.length > 1) {
       tokensWithSameId.forEach((token, index) => {
         const newToken = { ...token }
-        newToken.id = TokenId(`${id}.${index}`)
+        newToken.id = TokenId(`${id}-${index + 1}`)
         deduplicatedTokens.push(newToken)
       })
     } else {

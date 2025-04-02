@@ -112,7 +112,8 @@ function mergeTokensWithSameId(
     return token
   }
   const amounts = []
-  const valueForSummary = []
+  const valueForSummary: (CalculationFormula | ValueFormula)[] = []
+  let customValueForSummaryExists = false
 
   for (const tokenData of sameIdTokens) {
     const chain = getChain(tokenData.chainName, chains)
@@ -120,7 +121,14 @@ function mergeTokensWithSameId(
     amounts.push(token.amount)
 
     if (token.valueForSummary) {
+      customValueForSummaryExists = true
       valueForSummary.push(token.valueForSummary)
+    } else {
+      valueForSummary.push({
+        type: 'value',
+        priceId: token.priceId,
+        amount: token.amount,
+      })
     }
   }
 
@@ -140,16 +148,13 @@ function mergeTokensWithSameId(
       operator: 'sum',
       arguments: amounts,
     },
-    ...(valueForSummary.length > 0
+    ...(customValueForSummaryExists
       ? {
-          valueForSummary:
-            valueForSummary.length > 1
-              ? {
-                  type: 'calculation',
-                  operator: 'sum',
-                  arguments: valueForSummary,
-                }
-              : valueForSummary[0],
+          valueForSummary: {
+            type: 'calculation',
+            operator: 'sum',
+            arguments: valueForSummary,
+          },
         }
       : {}),
   }
