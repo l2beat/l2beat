@@ -54,7 +54,9 @@ function getMatchingLines(code: string, searchTerm: string): MatchingLine[] {
 
   while (true) {
     const searchText = isCaseSensitive ? text : text.toLowerCase()
-    const searchPattern = isCaseSensitive ? searchTerm : searchTerm.toLowerCase()
+    const searchPattern = isCaseSensitive
+      ? searchTerm
+      : searchTerm.toLowerCase()
     const index = searchText.indexOf(searchPattern)
     if (index === -1) {
       break
