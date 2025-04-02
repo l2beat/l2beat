@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -32,6 +32,11 @@ export const mode: ScalingProject = opStackL2({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   },
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),

@@ -58,6 +58,8 @@ const schema = {
   finalityInfo: 'TEXT',
   finalityConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
+  ecosystemInfo: 'TEXT',
+  ecosystemConfig: 'TEXT',
 
   permissions: 'TEXT',
   contracts: 'TEXT',

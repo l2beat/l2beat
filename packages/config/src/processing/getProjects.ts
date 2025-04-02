@@ -36,6 +36,7 @@ import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 import { isUnderReview } from './utils/isUnderReview'
+import { ecosystems } from './ecosystems'
 
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
@@ -49,6 +50,7 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map((p) => layer2Or3ToProject(p, [], tokenList)))
     .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, tokenList)))
     .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
+    .concat(ecosystems)
 }
 
 function layer2Or3ToProject(
@@ -148,6 +150,7 @@ function layer2Or3ToProject(
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
+    ecosystemInfo: p.ecosystemInfo,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,

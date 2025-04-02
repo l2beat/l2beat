@@ -883,11 +883,20 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
+  accentColor: string
   ecosystemToken?: {
     name: string
     chain: string
     description: string
   }
+  links?: {
+    tools?: string[]
+    forBuilders?: string
+    grants?: string
+    governanceTopDelegates?: string
+    governanceLatestProposals?: string
+  }
+  governanceReviews: boolean
 }
 // #endregion
 
