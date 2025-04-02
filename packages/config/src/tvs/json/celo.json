@@ -153,7 +153,7 @@
     },
     {
       "mode": "auto",
-      "id": "celo-WETH.0",
+      "id": "celo-WETH-1",
       "priceId": "wormhole-bridged-weth-celo",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -170,7 +170,7 @@
     },
     {
       "mode": "auto",
-      "id": "celo-WETH.1",
+      "id": "celo-WETH-2",
       "priceId": "wormhole-bridged-weth-celo",
       "symbol": "WETH",
       "name": "Wrapped Ether",

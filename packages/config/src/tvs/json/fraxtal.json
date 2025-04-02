@@ -409,7 +409,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-sUSDe.0",
+      "id": "fraxtal-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -426,7 +426,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-sUSDe.1",
+      "id": "fraxtal-sUSDe-2",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -515,7 +515,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-USDe.0",
+      "id": "fraxtal-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -532,7 +532,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-USDe.1",
+      "id": "fraxtal-USDe-2",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",

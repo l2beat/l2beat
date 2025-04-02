@@ -254,7 +254,7 @@
     },
     {
       "mode": "auto",
-      "id": "rari-USDC.e.0",
+      "id": "rari-USDC.e-1",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "Bridged USDC (Stargate)",
@@ -271,7 +271,7 @@
     },
     {
       "mode": "auto",
-      "id": "rari-USDC.e.1",
+      "id": "rari-USDC.e-2",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "Bridged USDC (Stargate)",

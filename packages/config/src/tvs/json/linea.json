@@ -929,7 +929,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-weETH.0",
+      "id": "linea-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -946,7 +946,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-weETH.1",
+      "id": "linea-weETH-2",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",

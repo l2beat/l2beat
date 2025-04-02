@@ -75,6 +75,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "dai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "chain": "ethereum",
+              "escrowAddress": "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
+              "decimals": 18,
+              "sinceTimestamp": 1715972567
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -200,14 +212,32 @@
       "source": "external",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1730656015
-        },
-        "priceId": "chainlink"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "chainlink",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "chain": "ethereum",
+              "escrowAddress": "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013",
+              "decimals": 18,
+              "sinceTimestamp": 1730655983
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1730656015
+            },
+            "priceId": "chainlink"
+          }
+        ]
       }
     },
     {
@@ -342,14 +372,32 @@
       "source": "external",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1730154133
-        },
-        "priceId": "spx6900"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "spx6900",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+              "chain": "ethereum",
+              "escrowAddress": "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
+              "decimals": 8,
+              "sinceTimestamp": 1730147723
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1730154133
+            },
+            "priceId": "spx6900"
+          }
+        ]
       }
     },
     {
@@ -415,6 +463,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
+              "decimals": 6,
+              "sinceTimestamp": 1716142595
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -468,14 +528,32 @@
       "source": "external",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716143237
-        },
-        "priceId": "ethena-usde"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "ethena-usde",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+              "chain": "ethereum",
+              "escrowAddress": "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
+              "decimals": 18,
+              "sinceTimestamp": 1716143207
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716143237
+            },
+            "priceId": "ethena-usde"
+          }
+        ]
       }
     },
     {
@@ -521,6 +599,18 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "wrapped-eeth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "chain": "ethereum",
+              "escrowAddress": "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
+              "decimals": 18,
+              "sinceTimestamp": 1716143951
+            }
+          },
           {
             "type": "value",
             "amount": {
@@ -589,6 +679,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
+              "decimals": 18,
+              "sinceTimestamp": 1716142367
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -655,6 +757,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "wrapped-steth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "chain": "ethereum",
+              "escrowAddress": "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
+              "decimals": 18,
+              "sinceTimestamp": 1716128303
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -708,14 +822,32 @@
       "source": "external",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1717616624
-        },
-        "priceId": "mountain-protocol-usdm"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "mountain-protocol-usdm",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+              "chain": "ethereum",
+              "escrowAddress": "0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc",
+              "decimals": 18,
+              "sinceTimestamp": 1716143903
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1717616624
+            },
+            "priceId": "mountain-protocol-usdm"
+          }
+        ]
       }
     },
     {

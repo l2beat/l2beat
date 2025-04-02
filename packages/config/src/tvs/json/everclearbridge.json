@@ -22,7 +22,7 @@
     },
     {
       "mode": "auto",
-      "id": "everclearbridge-USDC.0",
+      "id": "everclearbridge-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -73,6 +73,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 6,
+              "sinceTimestamp": 1726462859
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -106,7 +118,7 @@
     },
     {
       "mode": "auto",
-      "id": "everclearbridge-USDC.1",
+      "id": "everclearbridge-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -157,6 +169,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 6,
+              "sinceTimestamp": 1726462859
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -190,7 +214,7 @@
     },
     {
       "mode": "auto",
-      "id": "everclearbridge-USDT.0",
+      "id": "everclearbridge-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -220,19 +244,37 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1726461757
-        },
-        "priceId": "tether"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 6,
+              "sinceTimestamp": 1726462859
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1726461757
+            },
+            "priceId": "tether"
+          }
+        ]
       }
     },
     {
       "mode": "auto",
-      "id": "everclearbridge-USDT.1",
+      "id": "everclearbridge-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -262,19 +304,37 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1726461757
-        },
-        "priceId": "tether"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 6,
+              "sinceTimestamp": 1726462859
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1726461757
+            },
+            "priceId": "tether"
+          }
+        ]
       }
     },
     {
       "mode": "auto",
-      "id": "everclearbridge-USDT.2",
+      "id": "everclearbridge-USDT-3",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -304,14 +364,32 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1726461757
-        },
-        "priceId": "tether"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 6,
+              "sinceTimestamp": 1726462859
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1726461757
+            },
+            "priceId": "tether"
+          }
+        ]
       }
     },
     {
@@ -365,6 +443,18 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+              "decimals": 18,
+              "sinceTimestamp": 1726462859
+            }
+          },
           {
             "type": "value",
             "amount": {

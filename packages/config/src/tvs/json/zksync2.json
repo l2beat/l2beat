@@ -480,7 +480,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FRAX.0",
+      "id": "zksync2-FRAX-1",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -497,7 +497,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FRAX.1",
+      "id": "zksync2-FRAX-2",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -1124,7 +1124,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-rsETH.0",
+      "id": "zksync2-rsETH-1",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -1141,7 +1141,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-rsETH.1",
+      "id": "zksync2-rsETH-2",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -1379,7 +1379,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDC.0",
+      "id": "zksync2-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",
@@ -1396,7 +1396,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDC.1",
+      "id": "zksync2-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",
@@ -1447,7 +1447,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDP.0",
+      "id": "zksync2-USDP-1",
       "priceId": "paxos-standard",
       "symbol": "USDP",
       "name": "Pax Dollar",
@@ -1464,7 +1464,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDP.1",
+      "id": "zksync2-USDP-2",
       "priceId": "paxos-standard",
       "symbol": "USDP",
       "name": "Pax Dollar",
@@ -1634,7 +1634,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-wstETH.0",
+      "id": "zksync2-wstETH-1",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -1651,7 +1651,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-wstETH.1",
+      "id": "zksync2-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",

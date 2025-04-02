@@ -71,6 +71,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931",
+              "decimals": 18,
+              "sinceTimestamp": 1716837299
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -154,14 +166,32 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716837026
-        },
-        "priceId": "mantle-staked-ether"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "mantle-staked-ether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+              "chain": "ethereum",
+              "escrowAddress": "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
+              "decimals": 18,
+              "sinceTimestamp": 1716837323
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716837026
+            },
+            "priceId": "mantle-staked-ether"
+          }
+        ]
       }
     },
     {
@@ -196,19 +226,37 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716837016
-        },
-        "priceId": "metis-token"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "metis-token",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+              "chain": "ethereum",
+              "escrowAddress": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+              "decimals": 18,
+              "sinceTimestamp": 1716837335
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716837016
+            },
+            "priceId": "metis-token"
+          }
+        ]
       }
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDC.0",
+      "id": "stargatev2-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -267,6 +315,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
+              "decimals": 6,
+              "sinceTimestamp": 1716837347
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -310,7 +370,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDC.1",
+      "id": "stargatev2-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -369,6 +429,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
+              "decimals": 6,
+              "sinceTimestamp": 1716837347
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -412,7 +484,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDT.0",
+      "id": "stargatev2-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -455,6 +527,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x933597a323Eb81cAe705C5bC29985172fd5A3973",
+              "decimals": 6,
+              "sinceTimestamp": 1716837359
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -478,7 +562,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDT.1",
+      "id": "stargatev2-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -521,6 +605,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x933597a323Eb81cAe705C5bC29985172fd5A3973",
+              "decimals": 6,
+              "sinceTimestamp": 1716837359
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -544,7 +640,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDT.2",
+      "id": "stargatev2-USDT-3",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -587,6 +683,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x933597a323Eb81cAe705C5bC29985172fd5A3973",
+              "decimals": 6,
+              "sinceTimestamp": 1716837359
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -610,7 +718,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-WETH.0",
+      "id": "stargatev2-WETH-1",
       "priceId": "ethereum",
       "symbol": "WETH",
       "name": "Ether",
@@ -638,7 +746,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-WETH.1",
+      "id": "stargatev2-WETH-2",
       "priceId": "ethereum",
       "symbol": "WETH",
       "name": "Ether",

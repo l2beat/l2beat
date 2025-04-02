@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "zklinknova-ARB.0",
+      "id": "zklinknova-ARB-1",
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
@@ -32,7 +32,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-ARB.1",
+      "id": "zklinknova-ARB-2",
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
@@ -210,7 +210,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-ETH.0",
+      "id": "zklinknova-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -448,7 +448,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-ETH.1",
+      "id": "zklinknova-ETH-2",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -686,7 +686,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-ezETH.0",
+      "id": "zklinknova-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -780,7 +780,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-ezETH.1",
+      "id": "zklinknova-ezETH-2",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -1003,7 +1003,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-mETH.0",
+      "id": "zklinknova-mETH-1",
       "priceId": "manta-meth",
       "symbol": "mETH",
       "name": "mETH",
@@ -1031,7 +1031,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-mETH.1",
+      "id": "zklinknova-mETH-2",
       "priceId": "manta-meth",
       "symbol": "mETH",
       "name": "mETH",
@@ -1059,7 +1059,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-MNT.0",
+      "id": "zklinknova-MNT-1",
       "priceId": "mantle",
       "symbol": "MNT",
       "name": "Mantle",
@@ -1117,7 +1117,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-MNT.1",
+      "id": "zklinknova-MNT-2",
       "priceId": "mantle",
       "symbol": "MNT",
       "name": "Mantle",
@@ -1267,7 +1267,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-rsETH.0",
+      "id": "zklinknova-rsETH-1",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -1379,7 +1379,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-rsETH.1",
+      "id": "zklinknova-rsETH-2",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -1554,7 +1554,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-STONE.0",
+      "id": "zklinknova-STONE-1",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -1630,7 +1630,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-STONE.1",
+      "id": "zklinknova-STONE-2",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -1854,7 +1854,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.0",
+      "id": "zklinknova-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1948,7 +1948,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.1",
+      "id": "zklinknova-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -2042,7 +2042,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.2",
+      "id": "zklinknova-USDC-3",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -2136,7 +2136,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.3",
+      "id": "zklinknova-USDC-4",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -2230,7 +2230,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.4",
+      "id": "zklinknova-USDC-5",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -2324,7 +2324,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.e.0",
+      "id": "zklinknova-USDC.e-1",
       "priceId": "bridged-usd-coin-optimism",
       "symbol": "USDC.e",
       "name": "USD Coin",
@@ -2352,7 +2352,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.e.1",
+      "id": "zklinknova-USDC.e-2",
       "priceId": "bridged-usd-coin-optimism",
       "symbol": "USDC.e",
       "name": "USD Coin",
@@ -2380,7 +2380,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDC.e.2",
+      "id": "zklinknova-USDC.e-3",
       "priceId": "bridged-usd-coin-optimism",
       "symbol": "USDC.e",
       "name": "USD Coin",
@@ -2538,7 +2538,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT.0",
+      "id": "zklinknova-USDT-1",
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -2596,7 +2596,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT.1",
+      "id": "zklinknova-USDT-2",
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -2654,7 +2654,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT.2",
+      "id": "zklinknova-USDT-3",
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -2712,7 +2712,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT.3",
+      "id": "zklinknova-USDT-4",
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -2770,7 +2770,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT.4",
+      "id": "zklinknova-USDT-5",
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -2828,7 +2828,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-USDT.5",
+      "id": "zklinknova-USDT-6",
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -2904,7 +2904,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wBTC.0",
+      "id": "zklinknova-wBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
@@ -2980,7 +2980,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wBTC.1",
+      "id": "zklinknova-wBTC-2",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
@@ -3056,7 +3056,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wBTC.2",
+      "id": "zklinknova-wBTC-3",
       "priceId": "wrapped-bitcoin",
       "symbol": "wBTC",
       "name": "Wrapped BTC",
@@ -3132,7 +3132,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-weETH.0",
+      "id": "zklinknova-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -3208,7 +3208,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-weETH.1",
+      "id": "zklinknova-weETH-2",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -3284,7 +3284,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-WETH.0",
+      "id": "zklinknova-WETH-1",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -3360,7 +3360,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-WETH.1",
+      "id": "zklinknova-WETH-2",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -3464,7 +3464,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wstETH.0",
+      "id": "zklinknova-wstETH-1",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -3540,7 +3540,7 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-wstETH.1",
+      "id": "zklinknova-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",

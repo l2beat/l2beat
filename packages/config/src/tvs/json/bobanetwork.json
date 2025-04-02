@@ -144,7 +144,7 @@
     },
     {
       "mode": "auto",
-      "id": "bobanetwork-FRAX.0",
+      "id": "bobanetwork-FRAX-1",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -161,7 +161,7 @@
     },
     {
       "mode": "auto",
-      "id": "bobanetwork-FRAX.1",
+      "id": "bobanetwork-FRAX-2",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",

@@ -36,7 +36,7 @@
     },
     {
       "mode": "auto",
-      "id": "orderly-USDC.0",
+      "id": "orderly-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -54,7 +54,7 @@
     },
     {
       "mode": "auto",
-      "id": "orderly-USDC.1",
+      "id": "orderly-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",

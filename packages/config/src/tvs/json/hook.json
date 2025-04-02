@@ -83,6 +83,18 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981",
+              "decimals": 6,
+              "sinceTimestamp": 1712179919
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -165,6 +177,18 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
+              "decimals": 18,
+              "sinceTimestamp": 1709063015
+            }
+          },
           {
             "type": "value",
             "amount": {

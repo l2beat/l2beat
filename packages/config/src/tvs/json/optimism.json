@@ -310,7 +310,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-DAI.0",
+      "id": "optimism-DAI-1",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -328,7 +328,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-DAI.1",
+      "id": "optimism-DAI-2",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -605,7 +605,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FRAX.0",
+      "id": "optimism-FRAX-1",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -622,7 +622,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FRAX.1",
+      "id": "optimism-FRAX-2",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -656,7 +656,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FXS.0",
+      "id": "optimism-FXS-1",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -673,7 +673,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FXS.1",
+      "id": "optimism-FXS-2",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -1417,7 +1417,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-SNX.0",
+      "id": "optimism-SNX-1",
       "priceId": "havven",
       "symbol": "SNX",
       "name": "Synthetix Network Token",
@@ -1435,7 +1435,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-SNX.1",
+      "id": "optimism-SNX-2",
       "priceId": "havven",
       "symbol": "SNX",
       "name": "Synthetix Network Token",
@@ -1699,7 +1699,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-USDC.0",
+      "id": "optimism-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1716,7 +1716,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-USDC.1",
+      "id": "optimism-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1910,7 +1910,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-wstETH.0",
+      "id": "optimism-wstETH-1",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -1928,7 +1928,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-wstETH.1",
+      "id": "optimism-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",

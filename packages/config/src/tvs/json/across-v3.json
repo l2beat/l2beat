@@ -251,6 +251,42 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "coinbase-wrapped-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 8,
+              "sinceTimestamp": 1726099200
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "coinbase-wrapped-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 8,
+              "sinceTimestamp": 1726099200
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "coinbase-wrapped-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 8,
+              "sinceTimestamp": 1726099200
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -347,6 +383,42 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "dai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 18,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "dai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 18,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "dai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 18,
+              "sinceTimestamp": 1653167083
+            }
+          },
           {
             "type": "value",
             "amount": {
@@ -489,6 +561,42 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 18,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 18,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 18,
+              "sinceTimestamp": 1653167083
+            }
+          },
           {
             "type": "value",
             "amount": {
@@ -718,14 +826,56 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1682354696
-        },
-        "priceId": "havven"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "havven",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 18,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "havven",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 18,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "havven",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 18,
+              "sinceTimestamp": 1653167083
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1682354696
+            },
+            "priceId": "havven"
+          }
+        ]
       }
     },
     {
@@ -798,7 +948,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDC.0",
+      "id": "across-v3-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -881,6 +1031,42 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 6,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 6,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 6,
+              "sinceTimestamp": 1653167083
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -934,7 +1120,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDC.1",
+      "id": "across-v3-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1017,6 +1203,42 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 6,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 6,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 6,
+              "sinceTimestamp": 1653167083
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -1070,7 +1292,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDC.e.0",
+      "id": "across-v3-USDC.e-1",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "USD Coin (Arb1)",
@@ -1098,7 +1320,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDC.e.1",
+      "id": "across-v3-USDC.e-2",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "USD Coin (Arb1)",
@@ -1126,7 +1348,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDT.0",
+      "id": "across-v3-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -1183,6 +1405,42 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 6,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 6,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 6,
+              "sinceTimestamp": 1653167083
+            }
+          },
           {
             "type": "value",
             "amount": {
@@ -1208,7 +1466,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDT.1",
+      "id": "across-v3-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -1265,6 +1523,42 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 6,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 6,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 6,
+              "sinceTimestamp": 1653167083
+            }
+          },
           {
             "type": "value",
             "amount": {
@@ -1290,7 +1584,7 @@
     },
     {
       "mode": "auto",
-      "id": "across-v3-USDT.2",
+      "id": "across-v3-USDT-3",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -1347,6 +1641,42 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 6,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 6,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 6,
+              "sinceTimestamp": 1653167083
+            }
+          },
           {
             "type": "value",
             "amount": {
@@ -1571,6 +1901,42 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+              "decimals": 18,
+              "sinceTimestamp": 1653124620
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+              "decimals": 18,
+              "sinceTimestamp": 1682355155
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0x4D9079Bb4165aeb4084c526a32695dCfd2F77381",
+              "decimals": 18,
+              "sinceTimestamp": 1653167083
+            }
+          },
           {
             "type": "value",
             "amount": {

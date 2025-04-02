@@ -285,7 +285,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-cbBTC.0",
+      "id": "base-cbBTC-1",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
@@ -302,7 +302,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-cbBTC.1",
+      "id": "base-cbBTC-2",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
@@ -688,7 +688,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-ezETH.0",
+      "id": "base-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -705,7 +705,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-ezETH.1",
+      "id": "base-ezETH-2",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -1728,7 +1728,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-SPX.0",
+      "id": "base-SPX-1",
       "priceId": "spx6900",
       "symbol": "SPX",
       "name": "SPX6900",
@@ -1745,7 +1745,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-SPX.1",
+      "id": "base-SPX-2",
       "priceId": "spx6900",
       "symbol": "SPX",
       "name": "SPX6900",
@@ -1798,7 +1798,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-sUSDe.0",
+      "id": "base-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -1815,7 +1815,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-sUSDe.1",
+      "id": "base-sUSDe-2",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -1850,7 +1850,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-sUSDz.0",
+      "id": "base-sUSDz-1",
       "priceId": "anzen-staked-usdz",
       "symbol": "sUSDz",
       "name": "Staked USDz",
@@ -1867,7 +1867,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-sUSDz.1",
+      "id": "base-sUSDz-2",
       "priceId": "anzen-staked-usdz",
       "symbol": "sUSDz",
       "name": "Staked USDz",
@@ -2092,7 +2092,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-USDC.0",
+      "id": "base-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -2109,7 +2109,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-USDC.1",
+      "id": "base-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -2284,7 +2284,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-weETH.0",
+      "id": "base-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -2301,7 +2301,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-weETH.1",
+      "id": "base-weETH-2",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -2336,7 +2336,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-wstETH.0",
+      "id": "base-wstETH-1",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -2354,7 +2354,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-wstETH.1",
+      "id": "base-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",

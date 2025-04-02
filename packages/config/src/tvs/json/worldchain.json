@@ -72,7 +72,7 @@
     },
     {
       "mode": "auto",
-      "id": "worldchain-USDC.0",
+      "id": "worldchain-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -90,7 +90,7 @@
     },
     {
       "mode": "auto",
-      "id": "worldchain-USDC.1",
+      "id": "worldchain-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",

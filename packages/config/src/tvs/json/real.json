@@ -108,7 +108,7 @@
     },
     {
       "mode": "auto",
-      "id": "real-USDC.0",
+      "id": "real-USDC-1",
       "priceId": "bridged-usdc-re-al",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -125,7 +125,7 @@
     },
     {
       "mode": "auto",
-      "id": "real-USDC.1",
+      "id": "real-USDC-2",
       "priceId": "bridged-usdc-re-al",
       "symbol": "USDC",
       "name": "USD Coin",

@@ -108,7 +108,7 @@
     },
     {
       "mode": "auto",
-      "id": "fuel-mETH.0",
+      "id": "fuel-mETH-1",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
@@ -126,7 +126,7 @@
     },
     {
       "mode": "auto",
-      "id": "fuel-mETH.1",
+      "id": "fuel-mETH-2",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",

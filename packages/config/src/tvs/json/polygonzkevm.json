@@ -208,7 +208,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-DAI.0",
+      "id": "polygonzkevm-DAI-1",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -225,7 +225,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-DAI.1",
+      "id": "polygonzkevm-DAI-2",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -493,7 +493,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FRAX.0",
+      "id": "polygonzkevm-FRAX-1",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -510,7 +510,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FRAX.1",
+      "id": "polygonzkevm-FRAX-2",
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
@@ -1088,7 +1088,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-sDAI.0",
+      "id": "polygonzkevm-sDAI-1",
       "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
@@ -1105,7 +1105,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-sDAI.1",
+      "id": "polygonzkevm-sDAI-2",
       "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
@@ -1326,7 +1326,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-USDC.0",
+      "id": "polygonzkevm-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1343,7 +1343,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-USDC.1",
+      "id": "polygonzkevm-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -1445,7 +1445,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-wstETH.0",
+      "id": "polygonzkevm-wstETH-1",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -1462,7 +1462,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-wstETH.1",
+      "id": "polygonzkevm-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",

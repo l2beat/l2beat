@@ -198,7 +198,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-USDC.0",
+      "id": "lyra-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -216,7 +216,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-USDC.1",
+      "id": "lyra-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -234,7 +234,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-USDC.e.0",
+      "id": "lyra-USDC.e-1",
       "priceId": "bridged-usd-coin-optimism",
       "symbol": "USDC.e",
       "name": "USD Coin",
@@ -262,7 +262,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-USDC.e.1",
+      "id": "lyra-USDC.e-2",
       "priceId": "bridged-usd-coin-optimism",
       "symbol": "USDC.e",
       "name": "USD Coin",
@@ -308,7 +308,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-USDT.0",
+      "id": "lyra-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -326,7 +326,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-USDT.1",
+      "id": "lyra-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -402,7 +402,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-WBTC.0",
+      "id": "lyra-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -420,7 +420,7 @@
     },
     {
       "mode": "auto",
-      "id": "lyra-WBTC.1",
+      "id": "lyra-WBTC-2",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",

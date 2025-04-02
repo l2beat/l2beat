@@ -207,6 +207,30 @@
         "arguments": [
           {
             "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+              "decimals": 6,
+              "sinceTimestamp": 1636635220
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
+              "decimals": 6,
+              "sinceTimestamp": 1669206935
+            }
+          },
+          {
+            "type": "value",
             "amount": {
               "type": "const",
               "value": "0",
@@ -240,7 +264,7 @@
     },
     {
       "mode": "auto",
-      "id": "allbridge-USDT.0",
+      "id": "allbridge-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -278,19 +302,49 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1706918400
-        },
-        "priceId": "tether"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+              "decimals": 6,
+              "sinceTimestamp": 1636635220
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
+              "decimals": 6,
+              "sinceTimestamp": 1662596190
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1706918400
+            },
+            "priceId": "tether"
+          }
+        ]
       }
     },
     {
       "mode": "auto",
-      "id": "allbridge-USDT.1",
+      "id": "allbridge-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -328,14 +382,44 @@
       "source": "canonical",
       "isAssociated": false,
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1706918400
-        },
-        "priceId": "tether"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+              "decimals": 6,
+              "sinceTimestamp": 1636635220
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+              "chain": "ethereum",
+              "escrowAddress": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
+              "decimals": 6,
+              "sinceTimestamp": 1662596190
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1706918400
+            },
+            "priceId": "tether"
+          }
+        ]
       }
     },
     {

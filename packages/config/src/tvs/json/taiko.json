@@ -321,7 +321,7 @@
     },
     {
       "mode": "auto",
-      "id": "taiko-USDT.0",
+      "id": "taiko-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -338,7 +338,7 @@
     },
     {
       "mode": "auto",
-      "id": "taiko-USDT.1",
+      "id": "taiko-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",

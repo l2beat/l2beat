@@ -320,7 +320,7 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-STONE.0",
+      "id": "scroll-STONE-1",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -337,7 +337,7 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-STONE.1",
+      "id": "scroll-STONE-2",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -407,7 +407,7 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-USDC.0",
+      "id": "scroll-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -425,7 +425,7 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-USDC.1",
+      "id": "scroll-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -496,7 +496,7 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-weETH.0",
+      "id": "scroll-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -513,7 +513,7 @@
     },
     {
       "mode": "auto",
-      "id": "scroll-weETH.1",
+      "id": "scroll-weETH-2",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",

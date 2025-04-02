@@ -54,7 +54,7 @@
     },
     {
       "mode": "auto",
-      "id": "aevo-USDC.0",
+      "id": "aevo-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -71,7 +71,7 @@
     },
     {
       "mode": "auto",
-      "id": "aevo-USDC.1",
+      "id": "aevo-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -142,7 +142,7 @@
     },
     {
       "mode": "auto",
-      "id": "aevo-WETH.0",
+      "id": "aevo-WETH-1",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -159,7 +159,7 @@
     },
     {
       "mode": "auto",
-      "id": "aevo-WETH.1",
+      "id": "aevo-WETH-2",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",

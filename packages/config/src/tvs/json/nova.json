@@ -130,7 +130,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-DAI.0",
+      "id": "nova-DAI-1",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -148,7 +148,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-DAI.1",
+      "id": "nova-DAI-2",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -522,7 +522,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-USDT.0",
+      "id": "nova-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -540,7 +540,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-USDT.1",
+      "id": "nova-USDT-2",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",

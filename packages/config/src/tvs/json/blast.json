@@ -121,7 +121,7 @@
     },
     {
       "mode": "auto",
-      "id": "blast-ezETH.0",
+      "id": "blast-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -138,7 +138,7 @@
     },
     {
       "mode": "auto",
-      "id": "blast-ezETH.1",
+      "id": "blast-ezETH-2",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
