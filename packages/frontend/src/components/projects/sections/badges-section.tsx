@@ -1,9 +1,9 @@
 import { OverflowWrapper } from '../../core/overflow-wrapper'
-import type { BadgeWithLink } from '../project-badge'
+import type { BadgeWithParams } from '../project-badge'
 import { ProjectBadge } from '../project-badge'
 
 interface BadgesSectionProps {
-  badges: BadgeWithLink[]
+  badges: BadgeWithParams[]
 }
 
 export function BadgesSection({ badges }: BadgesSectionProps) {
