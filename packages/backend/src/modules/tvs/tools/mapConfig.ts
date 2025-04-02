@@ -1,15 +1,14 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  type AggLayerEscrow,
-  type AmountFormula,
-  type CalculationFormula,
-  type ChainConfig,
-  type ElasticChainEscrow,
-  type Project,
-  ProjectService,
-  type ProjectTvlEscrow,
-  type TvsToken,
-  type ValueFormula,
+import type {
+  AggLayerEscrow,
+  AmountFormula,
+  CalculationFormula,
+  ChainConfig,
+  ElasticChainEscrow,
+  Project,
+  ProjectTvlEscrow,
+  TvsToken,
+  ValueFormula,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
 import { assert, TokenId } from '@l2beat/shared-pure'
@@ -22,16 +21,10 @@ import { getTimestampsRange } from './timestamps'
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
   logger: Logger,
   rpcClient?: RpcClient,
 ): Promise<ProjectTvsConfig> {
-  const CHAINS = await getChains()
-  const getChain = (name: string) => {
-    const chain = CHAINS.get(name)
-    assert(chain)
-    return chain
-  }
-
   const tokens: TvsToken[] = []
 
   for (const legacyToken of project.tvlConfig.tokens) {
@@ -42,11 +35,11 @@ export async function mapConfig(
   for (const escrow of sharedEscrows) {
     assert(escrow.sharedEscrow)
     if (rpcClient === undefined) {
-      logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
+      logger.warn(`No rpc client passed, sharedEscrow support is not enabled`)
       continue
     }
 
-    const chainOfL1Escrow = getChain(escrow.chain)
+    const chainOfL1Escrow = getChain(escrow.chain, chains)
 
     if (escrow.sharedEscrow.type === 'AggLayer') {
       logger.info(`Querying for AggLayer L2 tokens addresses`)
@@ -94,66 +87,8 @@ export async function mapConfig(
       const tokensByCoingeckoId = groupBy(symbolTokens, 'coingeckoId')
 
       for (const sameIdTokens of Object.values(tokensByCoingeckoId)) {
-        if (sameIdTokens.length === 1) {
-          const tokenData = sameIdTokens[0]
-          const chain = getChain(tokenData.chainName)
-          const token = createEscrowToken(
-            project,
-            tokenData.escrow,
-            chain,
-            tokenData,
-          )
-
-          tokens.push(token)
-        } else {
-          const amounts = []
-          const valueForSummary = []
-
-          for (const tokenData of sameIdTokens) {
-            const chain = getChain(tokenData.chainName)
-            const token = createEscrowToken(
-              project,
-              tokenData.escrow,
-              chain,
-              tokenData,
-            )
-            amounts.push(token.amount)
-
-            if (token.valueForSummary) {
-              valueForSummary.push(token.valueForSummary)
-            }
-          }
-
-          const firstTokenData = sameIdTokens[0]
-          const chain = getChain(firstTokenData.chainName)
-          const baseToken = createEscrowToken(
-            project,
-            firstTokenData.escrow,
-            chain,
-            firstTokenData,
-          )
-
-          tokens.push({
-            ...baseToken,
-            amount: {
-              type: 'calculation',
-              operator: 'sum',
-              arguments: amounts,
-            },
-            ...(valueForSummary.length > 0
-              ? {
-                  valueForSummary:
-                    valueForSummary.length > 1
-                      ? {
-                          type: 'calculation',
-                          operator: 'sum',
-                          arguments: valueForSummary,
-                        }
-                      : valueForSummary[0],
-                }
-              : {}),
-          })
-        }
+        const token = mergeTokensWithSameId(project, chains, sameIdTokens)
+        tokens.push(token)
       }
     }
   }
@@ -161,6 +96,62 @@ export async function mapConfig(
   return {
     projectId: project.id,
     tokens,
+  }
+}
+
+function mergeTokensWithSameId(
+  project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
+  sameIdTokens: (LegacyToken & { escrow: ProjectTvlEscrow })[],
+): TvsToken {
+  if (sameIdTokens.length === 1) {
+    const tokenData = sameIdTokens[0]
+    const chain = getChain(tokenData.chainName, chains)
+    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+
+    return token
+  }
+  const amounts = []
+  const valueForSummary = []
+
+  for (const tokenData of sameIdTokens) {
+    const chain = getChain(tokenData.chainName, chains)
+    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+    amounts.push(token.amount)
+
+    if (token.valueForSummary) {
+      valueForSummary.push(token.valueForSummary)
+    }
+  }
+
+  const firstTokenData = sameIdTokens[0]
+  const chain = getChain(firstTokenData.chainName, chains)
+  const baseToken = createEscrowToken(
+    project,
+    firstTokenData.escrow,
+    chain,
+    firstTokenData,
+  )
+
+  return {
+    ...baseToken,
+    amount: {
+      type: 'calculation',
+      operator: 'sum',
+      arguments: amounts,
+    },
+    ...(valueForSummary.length > 0
+      ? {
+          valueForSummary:
+            valueForSummary.length > 1
+              ? {
+                  type: 'calculation',
+                  operator: 'sum',
+                  arguments: valueForSummary,
+                }
+              : valueForSummary[0],
+        }
+      : {}),
   }
 }
 
@@ -314,10 +305,8 @@ export function createToken(
   }
 }
 
-async function getChains() {
-  const ps = new ProjectService()
-  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-    (p) => p.chainConfig,
-  )
-  return new Map(chains.map((c) => [c.name, c]))
+function getChain(name: string, chains: Map<string, ChainConfig>): ChainConfig {
+  const chain = chains.get(name)
+  assert(chain)
+  return chain
 }

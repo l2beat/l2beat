@@ -6,7 +6,12 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { type Project, ProjectService, type TvsToken } from '@l2beat/config'
+import {
+  type ChainConfig,
+  type Project,
+  ProjectService,
+  type TvsToken,
+} from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
@@ -58,13 +63,19 @@ const cmd = command({
       projects = [project]
     }
 
+    const projectsWithChain = (
+      await ps.getProjects({ select: ['chainConfig'] })
+    ).map((p) => p.chainConfig)
+
+    const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
+
     let totalTvs = 0
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     for (const project of projects) {
       logger.info(`Generating TVS config for project ${project.id}`)
-      const tvsConfig = await generateConfigForProject(project, logger)
+      const tvsConfig = await generateConfigForProject(project, chains, logger)
 
       let newConfig: TvsToken[] = []
       if (tvsConfig.tokens.length > 0) {
@@ -121,6 +132,7 @@ run(cmd, process.argv.slice(2))
 
 async function generateConfigForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
   logger: Logger,
 ) {
   const env = getEnv()
@@ -140,7 +152,7 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, logger, rpc)
+  return mapConfig(project, chains, logger, rpc)
 }
 
 function initLogger(env: Env) {
