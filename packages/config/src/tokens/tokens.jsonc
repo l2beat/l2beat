@@ -3327,6 +3327,12 @@
   ],
   "base": [
     {
+      "symbol": "DOGINME",
+      "address": "0x6921b130d297cc43754afba22e5eac0fbf8db75b",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "KAITO",
       "address": "0x98d0baa52b2D063E780DE12F615f963Fe8537553",
       "source": "native",

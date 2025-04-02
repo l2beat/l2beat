@@ -9372,6 +9372,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "doginme",
+      "coingeckoId": "doginme",
+      "address": "0x6921B130D297cc43754afba22e5EAc0FBf8Db75b",
+      "symbol": "DOGINME",
+      "decimals": 18,
+      "deploymentTimestamp": 1707089245,
+      "coingeckoListingTimestamp": 1707350400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35123/large/doginme-logo1-transparent200.png?1710856784",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",
