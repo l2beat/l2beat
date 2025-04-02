@@ -72,13 +72,13 @@ export async function mapConfig(
     }
   }
 
-  const escrowTokens = new Map<string, TvsToken>()
-
   const bySource = groupBy(
-    project.tvlConfig.escrows.map((e) => ({
-      ...e,
-      source: e.source ?? 'canonical',
-    })),
+    project.tvlConfig.escrows
+      .filter((e) => !e.sharedEscrow)
+      .map((e) => ({
+        ...e,
+        source: e.source ?? 'canonical',
+      })),
     'source',
   )
 
@@ -98,10 +98,13 @@ export async function mapConfig(
           tokens.push(token)
         } else {
           const amounts = []
-          // TODO: group valueForProject and summary
+          const valueForSummary = []
           for (const aaaa of aaa) {
             const token = createEscrowToken(project, aaaa.escrow, chain, aaaa)
             amounts.push(token.amount)
+            if (token.valueForSummary) {
+              valueForSummary.push(token.valueForSummary)
+            }
           }
 
           const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
@@ -113,6 +116,18 @@ export async function mapConfig(
               operator: 'sum',
               arguments: amounts,
             },
+            ...(valueForSummary.length > 0
+              ? {
+                  valueForSummary:
+                    valueForSummary.length > 1
+                      ? {
+                          type: 'calculation',
+                          operator: 'sum',
+                          arguments: valueForSummary,
+                        }
+                      : valueForSummary[0],
+                }
+              : {}),
           })
         }
       }
@@ -121,7 +136,7 @@ export async function mapConfig(
 
   return {
     projectId: project.id,
-    tokens: [...tokens, ...Array.from(escrowTokens.values())],
+    tokens,
   }
 }
 
