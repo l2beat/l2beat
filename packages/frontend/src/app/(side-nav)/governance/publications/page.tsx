@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { FullPageHeader } from '~/components/full-page-header'
 import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
+import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
 import type { GovernancePublicationEntry } from '../_utils/get-governance-publication-entry'
@@ -23,34 +23,24 @@ export default function Page() {
 
   return (
     <>
-      <Header />
-      <ContentWrapper asChild>
-        <main>
-          <h1 className="mt-20 text-3xl font-bold">
-            All governance publications
-          </h1>
-          <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {publications.map((publication) => (
-              <PublicationCard publication={publication} key={publication.id} />
-            ))}
-          </div>
-        </main>
-      </ContentWrapper>
+      <MainPageHeader>Governance Publications</MainPageHeader>
+      <PrimaryCard className="md:p-8">
+        <h1 className="mb-4 text-3xl font-bold md:hidden">
+          Governance Publications
+        </h1>
+        <p className="md:paragraph-18 paragraph-16">
+          Explore the L2BEAT Governance publications, and discover the latest
+          insights, analyses, and updates on Layer 2 project governance, curated
+          by our L2BEAT Governance Team. Empower your blockchain decisions with
+          our focused research and discussions on decentralized governance.
+        </p>
+        <div className="mt-6 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {publications.map((publication) => (
+            <PublicationCard publication={publication} key={publication.id} />
+          ))}
+        </div>
+      </PrimaryCard>
     </>
-  )
-}
-
-function Header() {
-  return (
-    <FullPageHeader contentWrapperClassName="flex-col md:text-center md:items-center items-start">
-      <h1 className="mb-6 text-5xl font-bold">Governance publications</h1>
-      <p className="text-xl">
-        Explore the L2BEAT Governance publications, and discover the latest
-        insights, analyses, and updates on Layer 2 project governance, curated
-        by our L2BEAT Governance Team. Empower your blockchain decisions with
-        our focused research and discussions on decentralized governance.
-      </p>
-    </FullPageHeader>
   )
 }
 
@@ -65,7 +55,7 @@ function PublicationCard({
       src={`/meta-images/governance/publications/${publication.id}.png`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
-        <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
+        <p className="subtitle-12 uppercase text-purple-100 dark:text-pink-200">
           {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}
         </p>

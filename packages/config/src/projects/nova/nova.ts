@@ -188,11 +188,6 @@ export const nova: ScalingProject = orbitStackL2({
       isPostBoLD,
     ),
   },
-  stateValidation: {
-    isUnderReview: true,
-    description: '.',
-    categories: [],
-  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),

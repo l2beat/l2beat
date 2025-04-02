@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { FullPageHeader } from '~/components/full-page-header'
 import { CustomLink } from '~/components/link/custom-link'
+import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getCollection } from '~/content/get-collection'
 import { CustomLinkIcon } from '~/icons/outlink'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -42,24 +42,20 @@ export default function Page() {
 
   return (
     <>
+      <MainPageHeader>Governance</MainPageHeader>
       <Header />
-      <ContentWrapper className="md:px-6 lg:px-12" asChild>
-        <main>
-          <div className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
-            <RecentPublicationsSection
-              publications={publicationEntries}
-              className="lg:col-span-5"
-            />
-            <OfficeHoursSection className="lg:col-span-3" />
-            <GovernanceEventsSection
-              events={eventEntries}
-              className="lg:col-span-full"
-            />
-            <OurApproachSection className="lg:col-span-4" />
-            <OurMissionSection className="lg:col-span-4" />
-          </div>
-        </main>
-      </ContentWrapper>
+      <main>
+        <div className="grid md:mt-6 md:gap-6 lg:grid-cols-8 lg:gap-6 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-surface-primary">
+          <RecentPublicationsSection publications={publicationEntries} />
+          <OfficeHoursSection />
+          <GovernanceEventsSection
+            events={eventEntries}
+            className="lg:col-span-full"
+          />
+          <OurApproachSection className="lg:col-span-4" />
+          <OurMissionSection className="lg:col-span-4" />
+        </div>
+      </main>
     </>
   )
 }
@@ -68,26 +64,25 @@ function Header() {
   const delegatedProjects = getCollection('delegated-projects')
 
   return (
-    <FullPageHeader>
-      <div className="flex w-full justify-between gap-10">
-        <div className="leading-normal lg:max-w-[585px]">
-          <h1 className="text-5xl font-bold md:text-6xl">Governance</h1>
-          <p className="mt-6 text-lg md:text-base">
+    <PrimaryCard className="md:p-8">
+      <h1 className="mb-4 text-3xl font-bold md:hidden">Governance</h1>
+      <div className="flex w-full items-center justify-between gap-5">
+        <div className="flex flex-col gap-6">
+          <p className="paragraph-18">
             By delegating your governance votes to L2BEAT, you&apos;re
             supporting our mission to protect the interests of the Ethereum
             community and uphold our shared values. Together, we can lead the L2
             ecosystem towards a safer, more secure decentralized future.
           </p>
-
-          <div className="mt-6">
-            <span className="text-sm text-purple-100 dark:text-pink-200">
-              DELEGATE YOUR TOKENS
+          <div className="flex flex-col gap-2.5">
+            <span className="text-xs font-medium uppercase tracking-[-0.14px] text-purple-100 dark:text-pink-200">
+              Delegate your tokens
             </span>
-            <div className="mt-2 grid grid-cols-2 gap-2 md:flex md:flex-wrap">
+            <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
               {delegatedProjects.map((delegatedProject) => (
                 <CustomLink
                   key={delegatedProject.id}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary py-3 text-sm font-medium transition-colors hover:bg-surface-secondary/50 md:w-max md:px-3 md:py-1"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-secondary p-2 text-xs tracking-[-0.14px] md:w-fit"
                   href={delegatedProject.data.delegateTokensUrl}
                   underline={false}
                 >
@@ -103,13 +98,13 @@ function Header() {
               ))}
             </div>
           </div>
-          <p className="mt-6 text-xs md:text-sm">
-            If you’d like to see us act as a delegate in another protocol,
-            please let us know and we’ll see what we can do.
+          <p className="paragraph-15">
+            If you&apos;d like to see us act as a delegate in another protocol,
+            please let us know and we&apos;ll see what we can do.
           </p>
         </div>
-        <GovernanceHeaderIllustration className="hidden size-full min-w-[500px] lg:block" />
+        <GovernanceHeaderIllustration className="hidden h-full min-w-[434px] lg:block" />
       </div>
-    </FullPageHeader>
+    </PrimaryCard>
   )
 }

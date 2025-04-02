@@ -8,7 +8,7 @@ import type {
 import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
-import type { BadgeWithLink } from '~/components/projects/project-badge'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -21,6 +21,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -33,7 +34,6 @@ import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawal
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getBadgeLink } from '../../utils/get-badge-link'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
 import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
@@ -57,7 +57,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: BadgeWithLink[]
+    badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory
@@ -170,10 +170,9 @@ export async function getScalingProjectEntry(
             },
           }
         : undefined,
-    badges: project.display.badges.map((badge) => ({
-      ...badge,
-      href: getBadgeLink(badge, project),
-    })),
+    badges: project.display.badges
+      .map((badge) => getBadgeWithParams(badge, project))
+      .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
   }
 

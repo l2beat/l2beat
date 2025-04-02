@@ -6925,6 +6925,28 @@
       "supply": "zero"
     },
     {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0x01bFF41798a0BcF287b996046Ca68b395DbC1071",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1741985315,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -7001,6 +7023,28 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "USD₮0",
+      "coingeckoId": "usdt0",
+      "address": "0x9151434b16b9763660705744891fA906F660EcC5",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1741984932,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "USDC",
@@ -11832,7 +11876,7 @@
     },
     {
       "name": "USD₮0",
-      "coingeckoId": "tether",
+      "coingeckoId": "usdt0",
       "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
       "symbol": "USD₮0",
       "decimals": 6,
