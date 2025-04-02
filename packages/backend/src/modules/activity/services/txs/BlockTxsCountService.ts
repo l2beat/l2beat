@@ -25,11 +25,12 @@ export class BlockTxsCountService {
       let txsCount = this.$.assessCount(txs, blockNumber)
 
       if (txsCount < 0) {
-        txsCount = 0
         this.$.logger.warn('txsCount is negative', {
+          projectId: this.$.projectId,
           blockNumber,
           txsCount,
         })
+        txsCount = 0
       }
 
       let uopsCount: number | null = null
@@ -37,11 +38,12 @@ export class BlockTxsCountService {
         const uops = this.$.uopsAnalyzer.calculateUops(block)
         uopsCount = this.$.assessCount(uops, blockNumber)
         if (uopsCount < 0) {
-          uopsCount = 0
           this.$.logger.warn('uopsCount is negative', {
+            projectId: this.$.projectId,
             blockNumber,
             uopsCount,
           })
+          uopsCount = 0
         }
       }
 

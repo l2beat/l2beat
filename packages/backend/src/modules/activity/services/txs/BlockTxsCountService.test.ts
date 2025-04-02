@@ -100,12 +100,14 @@ describe(BlockTxsCountService.name, () => {
       ])
       expect(logger.warn).toHaveBeenCalledTimes(4)
       expect(logger.warn).toHaveBeenNthCalledWith(1, 'txsCount is negative', {
+        projectId: 'a',
         blockNumber: 1,
-        txsCount: 0,
+        txsCount: -1,
       })
       expect(logger.warn).toHaveBeenNthCalledWith(2, 'uopsCount is negative', {
+        projectId: 'a',
         blockNumber: 1,
-        uopsCount: 0,
+        uopsCount: -1,
       })
       expect(assessCount).toHaveBeenCalledTimes(6)
       expect(client.getBlockWithTransactions).toHaveBeenCalledTimes(3)
