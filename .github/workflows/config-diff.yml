@@ -6,6 +6,7 @@ on:
 permissions:
   pages: write # For GitHub Pages deployment
   id-token: write # For authentication with GitHub Pages
+  pull-requests: write # For commenting on PRs
 
 jobs:
   config-diff:
