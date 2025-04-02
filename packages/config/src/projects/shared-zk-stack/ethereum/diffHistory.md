@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd38d1256e80515d73b88c6671ef986cbcc314ef0
+Generated with discovered.json: 0x6ff314c82d35dc856dc28601ab0bdc74fa558e7e
 
-# Diff at Wed, 02 Apr 2025 12:46:51 GMT:
+# Diff at Wed, 02 Apr 2025 13:13:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123258
@@ -22,13 +22,13 @@ shared zk stack contracts upgraded to v26: config related changes for all childr
 +        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       directlyReceivedPermissions.1.description:
 -        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
-+        "revert batches for any connected chain."
++        "revert batches for any connected chain (ZK cluster Admin role)."
       directlyReceivedPermissions.0.from:
 -        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
 +        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
       directlyReceivedPermissions.0.description:
 -        "register new Elastic Chains in the shared bridge."
-+        "create new zk chains (based on the current version), register tokens."
++        "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
     }
 ```
 
@@ -58,7 +58,7 @@ shared zk stack contracts upgraded to v26: config related changes for all childr
 +        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
       issuedPermissions.0.description:
 -        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
-+        "create new zk chains (based on the current version), register tokens."
++        "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
       values.$implementation:
 -        "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"
 +        "0xb720523EC3c615b069453bF4B0584CEbF034706f"
@@ -196,13 +196,13 @@ shared zk stack contracts upgraded to v26: config related changes for all childr
 +        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       receivedPermissions.1.description:
 -        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
-+        "revert batches for any connected chain."
++        "revert batches for any connected chain (ZK cluster Admin role)."
       receivedPermissions.0.from:
 -        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
 +        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
       receivedPermissions.0.description:
 -        "register new Elastic Chains in the shared bridge."
-+        "create new zk chains (based on the current version), register tokens."
++        "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
     }
 ```
 
@@ -258,7 +258,7 @@ shared zk stack contracts upgraded to v26: config related changes for all childr
 +        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
       issuedPermissions.0.description:
 -        "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
-+        "revert batches for any connected chain."
++        "revert batches for any connected chain (ZK cluster Admin role)."
       values.$implementation:
 -        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
 +        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"

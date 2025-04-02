@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x919a38484bebd3808257208e50a0167dc1959d46
+Generated with discovered.json: 0x25351dd6bea7960a9634a7cf884b16aee30ca533
 
-# Diff at Wed, 02 Apr 2025 12:47:41 GMT:
+# Diff at Wed, 02 Apr 2025 13:14:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22166665
@@ -17,11 +17,32 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22166665 (main branch discovery), not current.
 
 ```diff
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
     contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      issuedPermissions.2.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
     }

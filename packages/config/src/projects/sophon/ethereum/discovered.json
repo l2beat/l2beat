@@ -35,7 +35,7 @@
         {
           "permission": "interact",
           "to": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
         }
       ],
@@ -473,7 +473,7 @@
         {
           "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
         }
       ],
       "sinceTimestamp": 1729079339,
@@ -510,7 +510,7 @@
         {
           "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
         }
       ],
@@ -1046,7 +1046,7 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
     "shared-zk-stack/L1USDCBridge": "0x38101ee641e95b308e8437435c3de4baf5094c656fcf7c11b653e865050549ac",
-    "shared-zk-stack/v26/Diamond": "0x1207407aaa6b1603ebb547d98140f1b30cdb50e94b0969ea7d803bf2e4ec8eaa",
+    "shared-zk-stack/v26/Diamond": "0xee00df4eebff2c0f14cd277ad1b4950571eb1ede4ec72a2bae7bf2adb51cc2a3",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

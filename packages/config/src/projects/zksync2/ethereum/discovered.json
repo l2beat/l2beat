@@ -1280,7 +1280,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/v26/Diamond": "0x1207407aaa6b1603ebb547d98140f1b30cdb50e94b0969ea7d803bf2e4ec8eaa",
+    "shared-zk-stack/v26/Diamond": "0xee00df4eebff2c0f14cd277ad1b4950571eb1ede4ec72a2bae7bf2adb51cc2a3",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

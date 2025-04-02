@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x12a35759ee9c631a7e91b13e3ff74d8c6168fe27
+Generated with discovered.json: 0x9dfb07e66a9485905ff7099f96cde489bae1bca8
 
-# Diff at Wed, 02 Apr 2025 12:46:51 GMT:
+# Diff at Wed, 02 Apr 2025 13:13:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144899
@@ -22,8 +22,42 @@ discovery. Values are for block 22144899 (main branch discovery), not current.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      issuedPermissions.1.to:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      issuedPermissions.1.description:
+-        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      issuedPermissions.1.via.0:
++        {"address":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}
+      issuedPermissions.0.to:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      issuedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+      issuedPermissions.0.via.0:
+-        {"address":"0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
 ```
 

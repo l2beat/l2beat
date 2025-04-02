@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd07e922c8a604c126fb462962d63c16908b1fd0a
+Generated with discovered.json: 0xc4f91940f792a73bc31c425e6d2ce4fca12e08db
 
-# Diff at Wed, 02 Apr 2025 12:46:52 GMT:
+# Diff at Wed, 02 Apr 2025 13:13:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22166647
@@ -17,13 +17,34 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22166647 (main branch discovery), not current.
 
 ```diff
+    contract TreasureChainAdminMultisig (0x282370D1e925ee897CB29Cb3beC13aAe0743067C) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
     contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      issuedPermissions.2.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
 ```
 

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xac3462a3d0a7a8d0ec283b044c344ff57d08e267
+Generated with discovered.json: 0x715ab623a816e169bc1ddb527b933477134b63ec
 
-# Diff at Wed, 02 Apr 2025 12:46:48 GMT:
+# Diff at Wed, 02 Apr 2025 13:13:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144857
@@ -17,13 +17,58 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22144857 (main branch discovery), not current.
 
 ```diff
+    contract CronosChainAdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract CronosZkEVMAdmin (0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4) {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
     contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      issuedPermissions.5.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      issuedPermissions.4.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+      issuedPermissions.3.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+    }
+```
+
+```diff
+    contract TxFiltererOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b) {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+    }
+```
+
+```diff
+    contract undefined (0xfD7a03Cdb68E6488F950108A4d24f15519b87339) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
++        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
 ```
 

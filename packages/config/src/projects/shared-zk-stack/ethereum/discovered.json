@@ -233,12 +233,12 @@
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "create new zk chains (based on the current version), register tokens."
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for any connected chain."
+          "description": "revert batches for any connected chain (ZK cluster Admin role)."
         }
       ],
       "sinceTimestamp": 1722434735,
@@ -287,7 +287,7 @@
         {
           "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "create new zk chains (based on the current version), register tokens.",
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
@@ -600,13 +600,13 @@
         {
           "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "description": "create new zk chains (based on the current version), register tokens.",
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
           "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for any connected chain.",
+          "description": "revert batches for any connected chain (ZK cluster Admin role).",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         }
       ],
@@ -1570,7 +1570,7 @@
         {
           "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-          "description": "revert batches for any connected chain.",
+          "description": "revert batches for any connected chain (ZK cluster Admin role).",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
@@ -2963,15 +2963,15 @@
     "shared-zk-stack/EmergencyUpgradeBoard": "0x91f63b61f586400a5d16bbe6888e7044e78a334f3c590d4392a40e5f8a0a1dfd",
     "shared-zk-stack/Guardians": "0xa9db374eee5c5539d49661c37b377921cd849648da2f635ff2fa631715585cbc",
     "shared-zk-stack/SecurityCouncil": "0x2d620c0be0c12a18cbb02aed91ed5681e263af71360d6404ff5dc03cb9f4a4cf",
-    "shared-zk-stack/v26/BridgeHub": "0xe09251424ea8accc32dcfca73428e07c08062b906d136d4f38c546029f338f56",
-    "shared-zk-stack/v26/ChainTypeManager": "0x412dc699fd2dc6eb040c30bb2f4d910778adaa2b002a0323d17275690af86983",
+    "shared-zk-stack/v26/BridgeHub": "0xd466c97e05612a433cb5abad2e27fe48d5c46296663ff0501a49a288efd77ba3",
+    "shared-zk-stack/v26/ChainTypeManager": "0xc0c68bb4b177aebd5e44acf8482df16e8a3b50b9c99b570a0773a3e4c2e924ff",
     "shared-zk-stack/v26/CTMDeploymentTracker": "0x031626cf83c8d90e0bbba30181def35c6b4eebf6c85c66c85322f7dcb5c0d68a",
     "shared-zk-stack/v26/L1AssetRouter": "0x61e94b7742e84945b3af3c17cd45294e6f2421180eac8788d267a598422100c0",
     "shared-zk-stack/v26/L1GenesisUpgrade": "0x5cf4c40d7725942034b3d1644c21b83c09bbddf5ee69461c9e7c584f3e1a4dde",
     "shared-zk-stack/v26/L1NativeTokenVault": "0x3297b08a9b954211291464dee09466a48e4cfd6a7ad3186e2a8181fc9093749d",
     "shared-zk-stack/v26/L1Nullifier": "0x2d1bc5b5d93b8426fb6e6f34b6ad5c8d90d87a39df65ee3fbc9909f1536d1ed6",
     "shared-zk-stack/v26/MessageRoot": "0x1767029a6621737d6bf6e18cae938df805aed751f467045f51a07e2f158879fc",
-    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0x5da81803a64480b9760fb58ec48326d82ba745d88173789b38b8fda7d50f6aa6",
+    "shared-zk-stack/v26/ProtocolUpgradeHandler": "0xb5b3d7af257c0763b905ea426fc85ecaf082f2a8ff5e77463c171e037d6e1b82",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e"
   }
