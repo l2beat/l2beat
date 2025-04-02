@@ -1,35 +1,30 @@
 import { Button } from '~/components/core/button'
 import { PlainLink } from '~/components/plain-link'
-import { cn } from '~/utils/cn'
 import { OfficeHoursIllustration } from '../../_assets/office-hours-illustration'
-import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
+import { GovernanceCard } from '../governance-card'
 
-interface Props {
-  className?: string
-}
-
-export function OfficeHoursSection({ className }: Props) {
+export function OfficeHoursSection() {
   return (
     <GovernanceCard
       mobileFull
       type="purple"
-      className={cn('flex flex-col justify-between', className)}
+      className="flex flex-col justify-between lg:col-span-3"
     >
-      <div>
-        <GovernanceCardHeader>Office hours</GovernanceCardHeader>
-        <p className="mt-4 text-balance text-base font-medium ">
+      <div className="flex flex-col gap-4">
+        <div className="heading-24 md:heading-32">Office hours</div>
+        <p className="paragraph-16 text-balance font-bold">
           To promote transparency and communication as delegates, we&apos;re
           hosting recurring Office Hours on Google Meets.
         </p>
-        <OfficeHoursIllustration className="mt-4 w-full" />
-        <p className="mt-4 text-sm">
+        <OfficeHoursIllustration className="w-full" />
+        <p className="paragraph-15">
           During the Office Hours, anyone is able to reach L2BEAT&apos;s
           governance team, which consists of{' '}
           <span className="underline">Kaereste</span> (Krzysztof Urbanski) and{' '}
           <span className="underline">Sinkas</span> (Anastassis Oikonomopoulos)
           and discuss our activity as delegates.
         </p>
-        <p className="mt-4 text-sm">
+        <p className="paragraph-15">
           To allow enough time for constructive discussion, each Office Hours
           call will be specifically targeted at one of the protocols we&apos;re
           delegates in.

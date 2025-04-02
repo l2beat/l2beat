@@ -1,5 +1,5 @@
 import { HeartIcon } from '~/icons/heart'
-import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
+import { GovernanceCard } from '../governance-card'
 
 interface Props {
   className?: string
@@ -8,12 +8,12 @@ interface Props {
 export function OurMissionSection({ className }: Props) {
   return (
     <GovernanceCard mobileFull className={className}>
-      <GovernanceCardHeader>Our mission</GovernanceCardHeader>
-      <div className="mt-6 text-base md:text-sm">
+      <div className="heading-24 md:heading-32">Our mission</div>
+      <div className="md:paragraph-15 paragraph-16 mt-6">
         At L2BEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
-        <ul className="ml-6 mt-2 list-disc text-base md:text-sm">
+        <ul className="md:paragraph-15 paragraph-16 ml-6 mt-2 list-disc">
           <li>
             Permissionless, no one should need a third party&apos;s permission
             to join the network,
@@ -46,7 +46,7 @@ export function OurMissionSection({ className }: Props) {
       </div>
       <div className="mt-6 flex gap-3 rounded-lg bg-[#F7DEEB] p-4 dark:bg-[#3A1929]">
         <HeartIcon className="shrink-0" />
-        <span className="text-balance text-base font-medium md:text-sm">
+        <span className="md:paragraph-15 paragraph-16 text-balance font-medium">
           We believe that right now the best ecosystem where those values could
           be represented and cherished is Ethereum together with its L2s. While
           we respect and value other blockchains and people building on top of
