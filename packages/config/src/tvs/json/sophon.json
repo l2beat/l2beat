@@ -140,10 +140,9 @@
     },
     {
       "mode": "auto",
-      "id": "sophon-USDC.ext",
+      "id": "sophon-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",

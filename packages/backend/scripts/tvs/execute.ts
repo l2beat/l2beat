@@ -81,11 +81,11 @@ const cmd = command({
           return acc + token.valueForProject
         }, 0)
 
-        const valueForTotal = tvs.reduce((acc, token) => {
+        const valueForSummary = tvs.reduce((acc, token) => {
           return acc + token.valueForSummary
         }, 0)
 
-        totalTvs += valueForTotal
+        totalTvs += valueForSummary
 
         logger.info(`TVS for project ${toDollarString(valueForProject)}`)
         logger.info(`Total TVS ${toDollarString(totalTvs)}`)

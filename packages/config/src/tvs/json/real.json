@@ -90,26 +90,25 @@
     },
     {
       "mode": "auto",
-      "id": "real-stETH.ext",
+      "id": "real-stETH",
       "priceId": "staked-ether",
-      "symbol": "stETH.ext",
-      "displaySymbol": "stETH",
+      "symbol": "stETH",
       "name": "Liquid staked Ether 2.0",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "chain": "ethereum",
-        "escrowAddress": "0x679D4C1cC6855C57726BEA1784F578315d6431f6",
+        "escrowAddress": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
         "decimals": 18,
-        "sinceTimestamp": 1715706239
+        "sinceTimestamp": 1710845159
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "real-USDC",
+      "id": "real-USDC-1",
       "priceId": "bridged-usdc-re-al",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -126,22 +125,20 @@
     },
     {
       "mode": "auto",
-      "id": "real-USDC.ethereum",
-      "priceId": "usd-coin",
-      "symbol": "USDC.ethereum",
+      "id": "real-USDC-2",
+      "priceId": "bridged-usdc-re-al",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+        "type": "totalSupply",
+        "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
+        "chain": "real",
         "decimals": 6,
-        "sinceTimestamp": 1710845159
+        "sinceTimestamp": 1728259200
       },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false,
-      "displaySymbol": "USDC"
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",

@@ -4,43 +4,27 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "edgeless-ETH.ext",
+      "id": "edgeless-ETH",
       "priceId": "ethereum",
-      "symbol": "ETH.ext",
-      "displaySymbol": "ETH",
+      "symbol": "ETH",
       "name": "Ether",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b",
-            "decimals": 18,
-            "sinceTimestamp": 1711057199
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "native",
-            "chain": "ethereum",
-            "escrowAddress": "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9",
-            "decimals": 18,
-            "sinceTimestamp": 1713942971
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x6B595398152999bBc759D5D8ed8169793F915488",
+        "decimals": 18,
+        "sinceTimestamp": 1711069223
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "edgeless-ezETH.ext",
+      "id": "edgeless-ezETH",
       "priceId": "renzo-restaked-eth",
-      "symbol": "ezETH.ext",
-      "displaySymbol": "ezETH",
+      "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
         "type": "balanceOfEscrow",
@@ -56,10 +40,9 @@
     },
     {
       "mode": "auto",
-      "id": "edgeless-stETH.ext",
+      "id": "edgeless-stETH",
       "priceId": "staked-ether",
-      "symbol": "stETH.ext",
-      "displaySymbol": "stETH",
+      "symbol": "stETH",
       "name": "Liquid staked Ether 2.0",
       "amount": {
         "type": "balanceOfEscrow",

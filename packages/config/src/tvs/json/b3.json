@@ -30,15 +30,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1722376845
-        },
-        "priceId": "ethereum"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1722376845
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1722376845
+            },
+            "priceId": "ethereum"
+          }
+        ]
       },
       "category": "ether",
       "source": "canonical",
@@ -58,7 +74,7 @@
         "decimals": 6,
         "sinceTimestamp": 1722376845
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

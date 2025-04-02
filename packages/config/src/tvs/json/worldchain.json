@@ -72,7 +72,7 @@
     },
     {
       "mode": "auto",
-      "id": "worldchain-USDC",
+      "id": "worldchain-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -90,21 +90,20 @@
     },
     {
       "mode": "auto",
-      "id": "worldchain-USDC.ext",
+      "id": "worldchain-USDC-2",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
-        "escrowAddress": "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB",
+        "escrowAddress": "0x470458C91978D2d929704489Ad730DC3E3001113",
         "decimals": 6,
-        "sinceTimestamp": 1724427575
+        "sinceTimestamp": 1719432959
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

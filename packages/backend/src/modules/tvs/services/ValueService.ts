@@ -47,8 +47,12 @@ export class ValueService {
             )
           : value
 
-        const valueForTotal = token.valueForTotal
-          ? await this.executeFormula(token.id, token.valueForTotal, timestamp)
+        const valueForSummary = token.valueForSummary
+          ? await this.executeFormula(
+              token.id,
+              token.valueForSummary,
+              timestamp,
+            )
           : (valueForProject ?? value)
 
         values.push({
@@ -61,7 +65,7 @@ export class ValueService {
             BigIntWithDecimals.toNumber(valueForProject).toFixed(2),
           ),
           valueForSummary: Number(
-            BigIntWithDecimals.toNumber(valueForTotal).toFixed(2),
+            BigIntWithDecimals.toNumber(valueForSummary).toFixed(2),
           ),
         })
       }
