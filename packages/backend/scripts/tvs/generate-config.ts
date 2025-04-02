@@ -8,8 +8,9 @@ import {
 } from '@l2beat/backend-tools'
 import { type Project, ProjectService, type TvsToken } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
+import { groupBy } from 'lodash'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
@@ -99,8 +100,9 @@ const cmd = command({
       // TODO when old TVL will be removed script should be moved to config package
       const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
+      const deduplicatedTokens = deduplicateTokens(newConfig)
       const mergedTokens = mergeWithExistingConfig(
-        newConfig,
+        deduplicatedTokens,
         currentConfig,
         logger,
       )
@@ -216,4 +218,23 @@ function toDollarString(value: number) {
   } else {
     return `$${value.toFixed(2)}`
   }
+}
+
+function deduplicateTokens(tokens: TvsToken[]) {
+  const byId = groupBy(tokens, 'id')
+
+  const deduplicatedTokens: TvsToken[] = []
+
+  for (const [id, tokensWithSameId] of Object.entries(byId)) {
+    if (tokensWithSameId.length > 1) {
+      tokensWithSameId.forEach((token, index) => {
+        const newToken = { ...token }
+        newToken.id = TokenId(`${id}.${index}`)
+        deduplicatedTokens.push(newToken)
+      })
+    } else {
+      deduplicatedTokens.push(tokensWithSameId[0])
+    }
+  }
+  return deduplicatedTokens
 }

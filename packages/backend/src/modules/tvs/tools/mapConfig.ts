@@ -32,13 +32,7 @@ export async function mapConfig(
   }
 
   const tokens: TvsToken[] = []
-  const escrowTokens: Map<
-    string,
-    {
-      token: TvsToken
-      chain: string
-    }
-  > = new Map()
+  const escrowTokens = new Map<string, TvsToken>()
 
   for (const escrow of project.tvlConfig.escrows) {
     if (escrow.sharedEscrow) {
@@ -57,9 +51,7 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-        aggLayerL2Tokens.forEach((token) =>
-          escrowTokens.set(token.id, { token, chain: escrow.chain }),
-        )
+        tokens.push(...aggLayerL2Tokens)
       }
 
       if (escrow.sharedEscrow.type === 'ElasticChain') {
@@ -71,9 +63,7 @@ export async function mapConfig(
           chainOfL1Escrow,
           rpcClient,
         )
-        elasticChainTokens.forEach((token) =>
-          escrowTokens.set(token.id, { token, chain: escrow.chain }),
-        )
+        tokens.push(...elasticChainTokens)
       }
     } else {
       for (const legacyToken of escrow.tokens) {
@@ -88,40 +78,33 @@ export async function mapConfig(
         const previousToken = escrowTokens.get(token.id)
 
         if (previousToken === undefined) {
-          escrowTokens.set(token.id, { token, chain: escrow.chain })
+          escrowTokens.set(token.id, token)
           continue
         }
 
-        if (previousToken?.token.amount.type === 'balanceOfEscrow') {
-          assert(previousToken.token.source === token.source, `Source mismatch`)
-          escrowTokens.set(token.id, {
-            token: {
-              ...previousToken.token,
-              amount: {
-                type: 'calculation',
-                operator: 'sum',
-                arguments: [previousToken.token.amount, token.amount],
-              },
+        if (previousToken?.amount.type === 'balanceOfEscrow') {
+          assert(previousToken.source === token.source, `Source mismatch`)
+          escrowTokens.set(previousToken.id, {
+            ...previousToken,
+            amount: {
+              type: 'calculation',
+              operator: 'sum',
+              arguments: [previousToken.amount, token.amount],
             },
-            chain: escrow.chain,
           })
           continue
         }
 
-        if (previousToken.token.amount.type === 'calculation') {
-          escrowTokens.set(token.id, {
-            token: {
-              ...previousToken.token,
-              amount: {
-                ...(previousToken.token.amount as CalculationFormula),
-                arguments: [
-                  ...(previousToken.token.amount as CalculationFormula)
-                    .arguments,
-                  token.amount,
-                ],
-              },
+        if (previousToken.amount.type === 'calculation') {
+          escrowTokens.set(previousToken.id, {
+            ...previousToken,
+            amount: {
+              ...(previousToken.amount as CalculationFormula),
+              arguments: [
+                ...(previousToken.amount as CalculationFormula).arguments,
+                token.amount,
+              ],
             },
-            chain: escrow.chain,
           })
           continue
         }
@@ -133,29 +116,9 @@ export async function mapConfig(
     tokens.push(createToken(project, legacyToken))
   }
 
-  const uniqueTokens: Map<string, TvsToken> = new Map()
-
-  for (const token of tokens) {
-    uniqueTokens.set(token.id, token)
-  }
-
-  for (const { token, chain } of Array.from(escrowTokens.values())) {
-    if (!uniqueTokens.has(token.id)) {
-      uniqueTokens.set(token.id, token)
-    } else {
-      const suffix = `.${chain}`
-      uniqueTokens.set(TokenId(token.id + suffix), {
-        ...token,
-        id: TokenId(token.id + suffix),
-        symbol: token.symbol + suffix,
-        displaySymbol: token.symbol,
-      })
-    }
-  }
-
   return {
     projectId: project.id,
-    tokens: Array.from(uniqueTokens.values()),
+    tokens: [...tokens, ...Array.from(escrowTokens.values())],
   }
 }
 
@@ -219,7 +182,9 @@ export function createEscrowToken(
 
   const source = escrow.source ?? 'canonical'
   const symbol =
-    source === 'external' ? legacyToken.symbol + '.ext' : legacyToken.symbol
+    source !== 'canonical'
+      ? legacyToken.symbol + `.${source}`
+      : legacyToken.symbol
   const displaySymbol = source === 'external' ? legacyToken.symbol : undefined
 
   const id = TokenId.create(project.id, symbol)
