@@ -5,7 +5,6 @@ on:
 
 jobs:
   config-diff:
-    name: Build backend container image
     runs-on: ubuntu-latest
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -77,14 +76,14 @@ jobs:
 
       - name: Upload GitHub Pages artifact
         if: steps.diff.outputs.has_changes != '1'
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: config-diffs
 
       - name: Deploy to GitHub Pages
         id: deployment
         if: steps.diff.outputs.has_changes != '1'
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
