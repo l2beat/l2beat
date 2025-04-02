@@ -77,7 +77,7 @@ export async function getAggLayerTokens(
 
       return {
         mode: 'auto' as const,
-        id: TokenId.create(project.id, token.symbol),
+        id: TokenId.create(project.id, token.symbol, token.coingeckoId),
         priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
@@ -110,7 +110,7 @@ export async function getAggLayerTokens(
 
     etherOnL2 = {
       mode: 'auto' as const,
-      id: TokenId.create(project.id, 'ETH'),
+      id: TokenId.create(project.id, 'ETH', 'ethereum'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',
@@ -135,7 +135,7 @@ export async function getAggLayerTokens(
 
     etherOnL2 = {
       mode: 'auto' as const,
-      id: TokenId.create(project.id, 'ETH'),
+      id: TokenId.create(project.id, 'ETH', 'ethereum'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ethereum',

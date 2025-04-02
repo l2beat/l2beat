@@ -222,7 +222,7 @@ export function createEscrowToken(
     source === 'external' ? legacyToken.symbol + '.ext' : legacyToken.symbol
   const displaySymbol = source === 'external' ? legacyToken.symbol : undefined
 
-  const id = TokenId.create(project.id, symbol)
+  const id = TokenId.create(project.id, symbol, legacyToken.coingeckoId)
 
   let valueForTotal: CalculationFormula | ValueFormula | undefined = undefined
   if (escrow.chain !== 'ethereum') {
@@ -264,7 +264,11 @@ export function createToken(
   assert(
     project.chainConfig && project.chainConfig.name === legacyToken.chainName,
   )
-  const id = TokenId.create(project.id, legacyToken.symbol)
+  const id = TokenId.create(
+    project.id,
+    legacyToken.symbol,
+    legacyToken.coingeckoId,
+  )
   let amountFormula: AmountFormula
 
   const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
