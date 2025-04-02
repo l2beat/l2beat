@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2937db19e8d41f800fb67c701fd150c3a81ae4f3
+Generated with discovered.json: 0x76aab63ab59b57351874ceefbea12218f8494404
 
-# Diff at Wed, 02 Apr 2025 13:21:57 GMT:
+# Diff at Wed, 02 Apr 2025 14:42:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123258
-- current block number: 22167170
+- current block number: 22181739
 
 ## Description
 
@@ -384,12 +384,18 @@ shared zk stack contracts upgraded to v26: config related changes for all childr
       description:
 -        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
 +        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."}
       directlyReceivedPermissions.4:
 +        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."}
       directlyReceivedPermissions.3:
 +        {"permission":"act","from":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
-      directlyReceivedPermissions.2:
-+        {"permission":"interact","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."}
+      directlyReceivedPermissions.2.from:
+-        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.2.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
++        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
       directlyReceivedPermissions.1.from:
 -        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
 +        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
@@ -445,26 +451,40 @@ shared zk stack contracts upgraded to v26: config related changes for all childr
 ```diff
     contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
     +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
-      receivedPermissions.10:
+      receivedPermissions.11:
 +        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.9:
+      receivedPermissions.10:
 +        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.8:
+      receivedPermissions.9:
 +        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.7:
+      receivedPermissions.8:
 +        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
       receivedPermissions.6:
 +        {"permission":"upgrade","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","via":[{"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
       receivedPermissions.5:
 +        {"permission":"upgrade","from":"0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.4:
-+        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.4.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
       receivedPermissions.3.from:
--        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
-+        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      receivedPermissions.2.from:
 -        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
 +        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.2.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      receivedPermissions.2.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
       receivedPermissions.1.permission:
 -        "upgrade"
 +        "interact"
@@ -580,9 +600,12 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
     +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/RollupL1DAValidator"
++        "shared-zk-stack/v26/RollupL1DAValidator"
+    }
 ```
 
 ```diff
@@ -651,6 +674,8 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
       template:
 -        "shared-zk-stack/ProtocolUpgradeHandler"
 +        "shared-zk-stack/v25/ProtocolUpgradeHandler"
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."}
     }
 ```
 
@@ -659,17 +684,19 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
     +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
       receivedPermissions.5:
 -        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.4:
--        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
-      receivedPermissions.3.from:
--        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.4.from:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
 +        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
       receivedPermissions.2.from:
 -        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
-+        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
-      receivedPermissions.2.via.1.address:
--        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
-+        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
+      receivedPermissions.2.via.1:
+-        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      receivedPermissions.2.description:
++        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
       receivedPermissions.1.from:
 -        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
 +        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
@@ -679,6 +706,12 @@ discovery. Values are for block 22123258 (main branch discovery), not current.
       issuedPermissions:
 +        [{"permission":"interact","to":"0x66E4431266DC7E04E7d8b7FE9d2181253df7F410","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0x600dA620Ab29F41ABC6596a15981e14cE58c86b8","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0xbC1653bd3829dfEc575AfC3816D4899cd103B51c","description":"one of its 3/3 signers.","via":[]}]
     }
+```
+
+```diff
++   Status: CREATED
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45)
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
 ```
 
 Generated with discovered.json: 0xe7639ce8f9590f6e6cc987fc96ee73940a4be783

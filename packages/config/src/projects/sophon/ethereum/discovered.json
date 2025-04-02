@@ -18,7 +18,7 @@
         "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
       ],
       "proxyType": "EIP2535 diamond proxy",
-      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -246,6 +246,8 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "isPermanentRollup": 0,
+        "isPermanentRollupString": 0,
         "isPriorityQueueActive": false,
         "validators": [
           "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
@@ -261,6 +263,10 @@
         "IsPorterAvailableStatus": {
           "severity": "HIGH",
           "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
+        },
+        "isPermanentRollup": {
+          "severity": "HIGH",
+          "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
         "getDAValidatorPair": { "severity": "HIGH" },
         "getPendingAdmin": { "severity": "HIGH" },
@@ -278,6 +284,15 @@
         }
       },
       "derivedName": "DiamondProxy",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
+            "2": "."
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1066,7 +1081,7 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
     "shared-zk-stack/L1USDCBridge": "0x38101ee641e95b308e8437435c3de4baf5094c656fcf7c11b653e865050549ac",
-    "shared-zk-stack/v26/Diamond": "0xee00df4eebff2c0f14cd277ad1b4950571eb1ede4ec72a2bae7bf2adb51cc2a3",
+    "shared-zk-stack/v26/Diamond": "0x9e250c8b7aa61788d8ec6477aa8e21ddad05343842fb8323cf9c0b1f9123e4d3",
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"

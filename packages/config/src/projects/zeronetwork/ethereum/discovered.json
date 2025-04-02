@@ -141,22 +141,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "RollupL1DAValidator",
-      "address": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
-      "type": "Contract",
-      "template": "shared-zk-stack/v26/RollupL1DAValidator",
-      "sourceHashes": [
-        "0x0c7b1ef84ead12e6b034e6e4eb7cc9e51dba7272fe1d182749a43980da7a3932"
-      ],
-      "proxyType": "immutable",
-      "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108915,
-      "sinceBlock": 21809357,
-      "values": { "$immutable": true },
-      "derivedName": "RollupL1DAValidator",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
       "name": "ValidatorTimelock",
       "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
@@ -282,7 +266,7 @@
         "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
       ],
       "proxyType": "EIP2535 diamond proxy",
-      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -510,6 +494,8 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "isPermanentRollup": 0,
+        "isPermanentRollupString": 0,
         "isPriorityQueueActive": false,
         "validators": [
           "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
@@ -525,6 +511,10 @@
         "IsPorterAvailableStatus": {
           "severity": "HIGH",
           "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
+        },
+        "isPermanentRollup": {
+          "severity": "HIGH",
+          "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
         "getDAValidatorPair": { "severity": "HIGH" },
         "getPendingAdmin": { "severity": "HIGH" },
@@ -542,15 +532,19 @@
         }
       },
       "derivedName": "DiamondProxy",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
+            "2": "."
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xF322467cec88d3CDFa9376B19bD5AD40da665277",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -745,28 +739,6 @@
       "function stateTransitionManager() view returns (address)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
-    ],
-    "0x72213dfe8CA61B0A782970dCFebFb877778f9119": [
-      "error BlobCommitmentNotPublished()",
-      "error BlobHashCommitmentError(uint256 index, bool blobHashEmpty, bool blobCommitmentEmpty)",
-      "error EmptyBlobVersionHash(uint256 index)",
-      "error InvalidL2DAOutputHash(bytes32 l2DAValidatorOutputHash)",
-      "error InvalidNumberOfBlobs(uint256 blobsProvided, uint256 maxBlobsSupported)",
-      "error InvalidPubdataCommitmentsSize()",
-      "error InvalidPubdataHash(bytes32 fullPubdataHash, bytes32 providedPubdataHash)",
-      "error InvalidPubdataSource(uint8 pubdataSource)",
-      "error NonEmptyBlobVersionHash(uint256 index)",
-      "error OnlyOneBlobWithCalldataAllowed()",
-      "error OperatorDAInputTooSmall(uint256 operatorDAInputLength, uint256 minAllowedLength)",
-      "error PointEvalCallFailed(bytes)",
-      "error PointEvalFailed(bytes)",
-      "error PubdataCommitmentsEmpty()",
-      "error PubdataInputTooSmall(uint256 pubdataInputLength, uint256 totalBlobsCommitmentSize)",
-      "error PubdataLengthTooBig(uint256 pubdataLength, uint256 totalBlobSizeBytes)",
-      "function checkDA(uint256, uint256, bytes32 _l2DAValidatorOutputHash, bytes _operatorDAInput, uint256 _maxBlobsSupported) view returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
-      "function isBlobAvailable(bytes32 _blobCommitment) view returns (bool)",
-      "function publishBlobs(bytes _pubdataCommitments)",
-      "function publishedBlobCommitments(bytes32 blobCommitment) view returns (uint256 blockOfPublishing)"
     ],
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
@@ -970,8 +942,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/v26/Diamond": "0xee00df4eebff2c0f14cd277ad1b4950571eb1ede4ec72a2bae7bf2adb51cc2a3",
-    "shared-zk-stack/v26/RollupL1DAValidator": "0x9d96f326c8e08476c6d3a869f5585a45a38b8c83f426224bbc4408b08df5dff2",
+    "shared-zk-stack/v26/Diamond": "0x9e250c8b7aa61788d8ec6477aa8e21ddad05343842fb8323cf9c0b1f9123e4d3",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

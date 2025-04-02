@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6ec1249dd62e31a8c64e5569b5be75d71377a56a
+Generated with discovered.json: 0x65709c117def7dc2a2997a68db73e6f9b84f9741
 
-# Diff at Wed, 02 Apr 2025 13:25:06 GMT:
+# Diff at Wed, 02 Apr 2025 14:42:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22122838
@@ -48,15 +48,28 @@ discovery. Values are for block 22122838 (main branch discovery), not current.
 
 ```diff
     contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      description:
+-        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0"
       issuedPermissions.3.description:
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++++ description: true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.
++++ severity: HIGH
+      values.isPermanentRollup:
++        0
+      values.isPermanentRollupString:
++        0
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+      fieldMeta.isPermanentRollup:
++        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.","2":"."}}]
     }
 ```
 

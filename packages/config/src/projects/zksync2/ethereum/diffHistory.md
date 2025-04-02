@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x1fff181a18e140a74a95c1aff62c3b13be29590e
+Generated with discovered.json: 0x73b92c77d468688000c67bd71c29b03a34385063
 
-# Diff at Wed, 02 Apr 2025 13:25:20 GMT:
+# Diff at Wed, 02 Apr 2025 14:43:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123358
@@ -90,19 +90,26 @@ discovery. Values are for block 22123358 (main branch discovery), not current.
 
 ```diff
     contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      description:
+-        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
++++ description: true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.
++++ severity: HIGH
+      values.isPermanentRollup:
++        1
+      values.isPermanentRollupString:
++        ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+      fieldMeta.isPermanentRollup:
++        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.","2":"."}}]
     }
-```
-
-```diff
-+   Status: CREATED
-    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
-    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0xb2bd8a922a6a577d0a5d27afc5fb4804d1191ea4

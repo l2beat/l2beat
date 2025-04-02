@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc80bcbac83dec9aba29974155ca35a9aab3fdf7a
+Generated with discovered.json: 0xd9931d56eb88ac8ec177c5dc9ef252ea1367f779
 
-# Diff at Wed, 02 Apr 2025 13:24:57 GMT:
+# Diff at Wed, 02 Apr 2025 14:42:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22144881
@@ -18,15 +18,28 @@ discovery. Values are for block 22144881 (main branch discovery), not current.
 
 ```diff
     contract AbstractZkEvm (0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) {
-    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0
       template:
 -        "shared-zk-stack/Diamond_v26"
 +        "shared-zk-stack/v26/Diamond"
+      description:
+-        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions0"
       issuedPermissions.1.description:
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
++++ description: true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.
++++ severity: HIGH
+      values.isPermanentRollup:
++        0
+      values.isPermanentRollupString:
++        0
       fieldMeta.IsPorterAvailableStatus:
 +        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+      fieldMeta.isPermanentRollup:
++        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.","2":"."}}]
     }
 ```
 
@@ -58,12 +71,6 @@ discovery. Values are for block 22144881 (main branch discovery), not current.
 -        "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
 +        "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
     }
-```
-
-```diff
-+   Status: CREATED
-    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
-    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
 ```
 
 Generated with discovered.json: 0xeef165374050cf21a75dbfe9fd523ad139cb7adb

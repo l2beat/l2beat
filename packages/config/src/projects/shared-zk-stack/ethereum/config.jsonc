@@ -4,7 +4,8 @@
   "name": "shared-zk-stack",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
-    "0x303a465B659cBB0ab36eE643eA362c509EEb5213" // BridgeHub
+    "0x303a465B659cBB0ab36eE643eA362c509EEb5213", // BridgeHub
+    "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
   ],
   "names": {
     "0x2cf3bD6a9056b39999F3883955E183F655345063": "EraAdminProxy",
