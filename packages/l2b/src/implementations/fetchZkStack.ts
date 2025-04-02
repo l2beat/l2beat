@@ -32,6 +32,7 @@ interface L2Data {
     patch: number
   }
   totalBlocksExecuted: ethers.BigNumber
+  txFilterer: string
 }
 
 interface FormattedL2Data {
@@ -46,6 +47,7 @@ interface FormattedL2Data {
   daValidatorType: string
   protocolVersion: string
   totalBlocksExecuted: string
+  txFilterer: string
 }
 
 // Table field configuration
@@ -100,6 +102,7 @@ export class ZkStackDataFetcher {
     { key: 'name', header: 'name' },
     { key: 'baseTokenName', header: 'gas token' },
     { key: 'daValidatorType', header: 'DA' },
+    { key: 'txFilterer', header: 'txfilterer' },
     { key: 'protocolVersion', header: 'v' },
     { key: 'totalBlocksExecuted', header: 'executed' },
   ]
@@ -124,6 +127,7 @@ export class ZkStackDataFetcher {
     'function getSemverProtocolVersion() view returns (uint32, uint32, uint32)',
     'function getTotalBlocksExecuted() view returns (uint256)',
     'function getDAValidatorPair() view returns (address, address)',
+    'function getTransactionFilterer() view returns (address)', // Added transaction filterer function
   ]
 
   constructor(providerUrl: string, outputFilePath: string) {
@@ -254,6 +258,28 @@ export class ZkStackDataFetcher {
             `failed to get pubdata pricing mode for chain ${chainID.toString()}`,
           )
 
+          // Get transaction filterer
+          let txFilterer = 'No'
+          try {
+            // Call the getTransactionFilterer function using the function selector
+            const txFiltererAddress = await this.provider.call({
+              to: chainAddresses[i],
+              data: '0x22c5cf23', // Function selector for getTransactionFilterer()
+            })
+
+            // Parse the result (it's a bytes32 value that needs to be converted to address)
+            const decodedAddress = ethers.utils.defaultAbiCoder.decode(['address'], txFiltererAddress)[0]
+
+            // Check if the address is non-zero
+            if (decodedAddress !== '0x0000000000000000000000000000000000000000') {
+              txFilterer = 'Yes'
+            }
+          } catch (_error) {
+            console.warn(
+              `failed to get transaction filterer for chain ${chainID.toString()}`,
+            )
+          }
+
           // Get DA validator pair
           let daValidatorType = 'Unknown'
           try {
@@ -304,6 +330,7 @@ export class ZkStackDataFetcher {
               patch,
             },
             totalBlocksExecuted,
+            txFilterer,
           })
         } catch (error: unknown) {
           console.error(
@@ -329,6 +356,7 @@ export class ZkStackDataFetcher {
           daValidatorType: data.daValidatorType,
           protocolVersion: this.formatProtocolVersion(data.protocolVersion),
           totalBlocksExecuted: data.totalBlocksExecuted.toString(),
+          txFilterer: data.txFilterer,
         }
       })
 
