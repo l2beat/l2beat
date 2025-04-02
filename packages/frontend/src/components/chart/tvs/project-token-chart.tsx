@@ -22,6 +22,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
+import { TvsBreakdownButton } from '~/components/projects/sections/stacked-tvs-section'
 import { TokenCombobox } from '~/components/token-combobox'
 import { useIsClient } from '~/hooks/use-is-client'
 import type {
@@ -37,7 +38,6 @@ import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
-import { TvsBreakdownButton } from './stacked/project-stacked-tvs-chart'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 
 interface Props {
