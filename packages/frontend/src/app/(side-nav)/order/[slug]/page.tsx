@@ -74,71 +74,73 @@ export default async function Page(props: Props) {
   ]
 
   return (
-    <PrimaryCard className="min-h-[350px] pb-16 pt-8 md:mt-[83px]">
-      <div className="fixed size-0">
+    <>
+      <div className="pointer-events-none fixed size-0">
         <FullRedPizzaSymbol />
         <FullYellowPizzaSymbol />
         <FullGreenPizzaSymbol />
       </div>
-      <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
-          <div className="flex w-full flex-col md:w-1/2">
-            <div className="text-2xs font-bold uppercase text-purple-100 dark:text-pink-200">
-              Someone just ordered the
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <Image
-                  src={`/icons/${project.slug}.png`}
-                  alt={project.name}
-                  width={20}
-                  height={20}
-                />
-                <div className="mt-0.5 text-2xl font-bold !leading-none">
-                  {project.shortName ?? project.name} pizza!
+      <PrimaryCard className="min-h-[350px] pb-16 pt-8 md:mt-[83px]">
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-12">
+            <div className="flex w-full flex-col md:w-1/2">
+              <div className="text-2xs font-bold uppercase text-purple-100 dark:text-pink-200">
+                Someone just ordered the
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={`/icons/${project.slug}.png`}
+                    alt={project.name}
+                    width={20}
+                    height={20}
+                  />
+                  <div className="mt-0.5 text-2xl font-bold !leading-none">
+                    {project.shortName ?? project.name} pizza!
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mb-4 text-[15px] leading-tight text-secondary">
-              Would you like to order your own pizza?
-            </div>
+              <div className="mb-4 text-[15px] leading-tight text-secondary">
+                Would you like to order your own pizza?
+              </div>
 
-            <div className="mt-2 flex gap-2">
-              <Link
-                href={`/scaling/projects/${project.slug}#risk-analysis`}
-                className={cn(
-                  buttonVariants(),
-                  'rounded-lg bg-pink-900 px-6 py-2 text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
-                )}
-              >
-                Learn more
-              </Link>
-              <PizzaButton
-                className="group grid cursor-not-allowed place-items-center bg-transparent hover:bg-transparent"
-                variant="outline"
-              >
-                <span className="col-start-1 row-start-1 group-hover:opacity-0">
-                  Get your own pizza
-                </span>
-                <span className="col-start-1 row-start-1 opacity-0 group-hover:opacity-100">
-                  We&apos;re out of dough ☹️
-                </span>
-              </PizzaButton>
+              <div className="mt-2 flex gap-2">
+                <Link
+                  href={`/scaling/projects/${project.slug}#risk-analysis`}
+                  className={cn(
+                    buttonVariants(),
+                    'rounded-lg bg-pink-900 px-6 py-2 text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+                  )}
+                >
+                  Learn more
+                </Link>
+                <PizzaButton
+                  className="group grid cursor-not-allowed place-items-center bg-transparent hover:bg-transparent"
+                  variant="outline"
+                >
+                  <span className="col-start-1 row-start-1 group-hover:opacity-0">
+                    Get your own pizza
+                  </span>
+                  <span className="col-start-1 row-start-1 opacity-0 group-hover:opacity-100">
+                    We&apos;re out of dough ☹️
+                  </span>
+                </PizzaButton>
+              </div>
             </div>
-          </div>
-          <div className="size-[350px] w-full md:w-1/2">
-            <div className="relative size-[350px] md:h-full">
-              <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
-              <BigPizzaRosette
-                values={values}
-                realPizza
-                className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
-              />
+            <div className="size-[350px] w-full md:w-1/2">
+              <div className="relative size-[350px] md:h-full">
+                <PizzaBackground className="absolute left-1/2 top-1/2 size-[350px] -translate-x-1/2 -translate-y-1/2" />
+                <BigPizzaRosette
+                  values={values}
+                  realPizza
+                  className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </PrimaryCard>
+      </PrimaryCard>
+    </>
   )
 }
 
