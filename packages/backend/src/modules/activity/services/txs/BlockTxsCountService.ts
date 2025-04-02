@@ -20,12 +20,19 @@ export class BlockTxsCountService {
       const block = await this.$.provider.getBlockWithTransactions(blockNumber)
 
       const txs = block.transactions.length
-      const txsCount = this.$.assessCount(txs, blockNumber)
+      let txsCount = this.$.assessCount(txs, blockNumber)
+
+      if (txsCount < 0) {
+        txsCount = 0
+      }
 
       let uopsCount: number | null = null
       if (this.$.uopsAnalyzer) {
         const uops = this.$.uopsAnalyzer.calculateUops(block)
         uopsCount = this.$.assessCount(uops, blockNumber)
+        if (uopsCount < 0) {
+          uopsCount = 0
+        }
       }
 
       return {
