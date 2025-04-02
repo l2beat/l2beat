@@ -7,9 +7,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
 import type { ButtonProps } from '~/components/core/button'
-import { Button } from '~/components/core/button'
+import { Button, buttonVariants } from '~/components/core/button'
 import { cn } from '~/utils/cn'
-
 type Params = {
   slug: string
 }
@@ -97,8 +96,14 @@ export default async function Page(props: Props) {
             </div>
 
             <div className="mt-2 flex gap-2">
-              <Link href={`/scaling/projects/${project.slug}#risk-analysis`}>
-                <PizzaButton>Learn more</PizzaButton>
+              <Link
+                href={`/scaling/projects/${project.slug}#risk-analysis`}
+                className={cn(
+                  buttonVariants(),
+                  'rounded-lg bg-pink-900 px-6 py-2 text-white hover:bg-pink-900/90 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90',
+                )}
+              >
+                Learn more
               </Link>
               <PizzaButton
                 className="group grid cursor-not-allowed place-items-center bg-transparent hover:bg-transparent"
