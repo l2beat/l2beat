@@ -14,6 +14,7 @@ import {
 import type { RpcClient } from '@l2beat/shared'
 import { assert, TokenId } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import { getAggLayerTokens } from '../providers/aggLayer'
 import { getElasticChainTokens } from '../providers/elasticChain'
 import type { ProjectTvsConfig } from '../types'
@@ -73,48 +74,47 @@ export async function mapConfig(
 
   const escrowTokens = new Map<string, TvsToken>()
 
-  for (const escrow of project.tvlConfig.escrows) {
-    for (const legacyToken of escrow.tokens) {
-      if (!legacyToken.id.endsWith('native')) {
-        assert(
-          legacyToken.address,
-          `Token address is required ${legacyToken.id}`,
-        )
-      }
-      const chain = getChain(escrow.chain)
-      const token = createEscrowToken(project, escrow, chain, legacyToken)
-      const previousToken = escrowTokens.get(token.id)
+  const bySource = groupBy(
+    project.tvlConfig.escrows.map((e) => ({
+      ...e,
+      source: e.source ?? 'canonical',
+    })),
+    'source',
+  )
 
-      if (previousToken === undefined) {
-        escrowTokens.set(token.id, token)
-        continue
-      }
+  for (const e of Object.values(bySource)) {
+    const t = e.flatMap((e) => e.tokens.map((t) => ({ ...t, escrow: e })))
+    const tt = groupBy(t, 'symbol')
 
-      if (previousToken?.amount.type === 'balanceOfEscrow') {
-        assert(previousToken.source === token.source, `Source mismatch`)
-        escrowTokens.set(previousToken.id, {
-          ...previousToken,
-          amount: {
-            type: 'calculation',
-            operator: 'sum',
-            arguments: [previousToken.amount, token.amount],
-          },
-        })
-        continue
-      }
+    for (const ttt of Object.values(tt)) {
+      const aa = groupBy(ttt, 'coingeckoId')
 
-      if (previousToken.amount.type === 'calculation') {
-        escrowTokens.set(previousToken.id, {
-          ...previousToken,
-          amount: {
-            ...(previousToken.amount as CalculationFormula),
-            arguments: [
-              ...(previousToken.amount as CalculationFormula).arguments,
-              token.amount,
-            ],
-          },
-        })
-        continue
+      for (const aaa of Object.values(aa)) {
+        const chain = getChain(aaa[0].chainName)
+
+        if (aaa.length === 1) {
+          const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
+
+          tokens.push(token)
+        } else {
+          const amounts = []
+          // TODO: group valueForProject and summary
+          for (const aaaa of aaa) {
+            const token = createEscrowToken(project, aaaa.escrow, chain, aaaa)
+            amounts.push(token.amount)
+          }
+
+          const token = createEscrowToken(project, aaa[0].escrow, chain, aaa[0])
+
+          tokens.push({
+            ...token,
+            amount: {
+              type: 'calculation',
+              operator: 'sum',
+              arguments: amounts,
+            },
+          })
+        }
       }
     }
   }
@@ -183,14 +183,7 @@ export function createEscrowToken(
     }
   }
 
-  const source = escrow.source ?? 'canonical'
-  const symbol =
-    source !== 'canonical'
-      ? legacyToken.symbol + `.${source}`
-      : legacyToken.symbol
-  const displaySymbol = source === 'external' ? legacyToken.symbol : undefined
-
-  const id = TokenId.create(project.id, symbol)
+  const id = TokenId.create(project.id, legacyToken.symbol)
 
   let valueForTotal: CalculationFormula | ValueFormula | undefined = undefined
   if (escrow.chain !== 'ethereum') {
@@ -211,14 +204,13 @@ export function createEscrowToken(
     mode: 'auto',
     id,
     priceId: legacyToken.coingeckoId,
-    symbol,
-    ...(displaySymbol ? { displaySymbol } : {}),
+    symbol: legacyToken.symbol,
     name: legacyToken.name,
     amount: amountFormula,
     ...(valueForTotal ? { valueForTotal } : {}),
 
     category: legacyToken.category,
-    source: source,
+    source: escrow.source ?? 'canonical',
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
       legacyToken.symbol,
     ),
