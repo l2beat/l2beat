@@ -118,7 +118,7 @@ jobs:
             
             Config changes have been detected between main and this PR.
             
-            [View Full Report](${{ steps.deployment.outputs.page_url }}/pr-${{ github.event.pull_request.number }})
+            [View Full Report](${{ steps.deployment.outputs.page_url }}pr-${{ github.event.pull_request.number }})
             
             *Last updated: ${{ steps.timestamp.outputs.value }}*
           edit-mode: replace
