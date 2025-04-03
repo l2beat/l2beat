@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe8b260db4ece65e96c52859473309acd07b7c026
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Templatized SP1Verifier.
 
 ## Config/verification related changes
 
