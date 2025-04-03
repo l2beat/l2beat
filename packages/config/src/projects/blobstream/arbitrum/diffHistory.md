@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x323c9fa17f2ae0e29e0318d475c6ced6c10996b5
+Generated with discovered.json: 0x561eb495e0f3d45d1e404c545ad36d9dad53c0b3
 
-# Diff at Thu, 03 Apr 2025 14:39:28 GMT:
+# Diff at Thu, 03 Apr 2025 14:55:23 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 305996466
@@ -69,11 +69,8 @@ discovery. Values are for block 305996466 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    contract  (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
     +++ description: None
-      name:
--        ""
-+        "SP1Verifier"
       receivedPermissions:
 -        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
     }

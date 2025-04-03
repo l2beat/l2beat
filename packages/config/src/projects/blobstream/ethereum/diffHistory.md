@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0f4fac5a6c5e68a76028ff9982884a0e093e97e5
+Generated with discovered.json: 0x04c9087ce979a7f7010c31cdf4c1256e91cef2f3
 
-# Diff at Thu, 03 Apr 2025 14:34:02 GMT:
+# Diff at Thu, 03 Apr 2025 14:54:55 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 21686332
@@ -79,9 +79,13 @@ discovery. Values are for block 21686332 (main branch discovery), not current.
 
 ```diff
     contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
-    +++ description: None
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
       receivedPermissions:
 -        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "SP1Verifier is a contract used to verify proofs given public values and verification key."
     }
 ```
 

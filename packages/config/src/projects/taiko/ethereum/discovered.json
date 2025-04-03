@@ -806,10 +806,13 @@
       "name": "SP1RemoteVerifier",
       "address": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
+      "displayName": "SP1Verifier",
+      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
       "sinceTimestamp": 1736742119,
       "sinceBlock": 21613149,
       "values": {
@@ -2545,6 +2548,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
+    "succinct/SP1Verifier": "0x7192c1fd93b120af8dcc6df20782edbb56d212ad27e0761a9fb98c8fa23d9fac"
   }
 }

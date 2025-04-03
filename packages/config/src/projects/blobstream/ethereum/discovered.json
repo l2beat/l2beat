@@ -310,10 +310,12 @@
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
+      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
       "sinceTimestamp": 1735949699,
       "sinceBlock": 21547470,
       "values": {
@@ -472,6 +474,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "succinct/SP1Blobstream": "0x02756e6ddd521ab8a6e504462ea813ffa8f5a9dd17c7b583cb8b8a0f7ec1f292",
+    "succinct/SP1Verifier": "0x7192c1fd93b120af8dcc6df20782edbb56d212ad27e0761a9fb98c8fa23d9fac",
     "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
   }
 }
