@@ -184,24 +184,6 @@
     },
     {
       "mode": "auto",
-      "id": "kontos-PEPE",
-      "priceId": "pepe",
-      "symbol": "PEPE",
-      "name": "Pepe",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
-        "chain": "ethereum",
-        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
-        "decimals": 18,
-        "sinceTimestamp": 1699939643
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "kontos-RAI",
       "priceId": "rai",
       "symbol": "RAI",
@@ -310,42 +292,6 @@
     },
     {
       "mode": "auto",
-      "id": "kontos-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
-        "decimals": 6,
-        "sinceTimestamp": 1699939643
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "kontos-USDT",
-      "priceId": "tether",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "chain": "ethereum",
-        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
-        "decimals": 6,
-        "sinceTimestamp": 1699939643
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "kontos-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
@@ -359,24 +305,6 @@
         "sinceTimestamp": 1699939643
       },
       "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "kontos-WETH",
-      "priceId": "weth",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "chain": "ethereum",
-        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
-        "decimals": 18,
-        "sinceTimestamp": 1699939643
-      },
-      "category": "ether",
       "source": "canonical",
       "isAssociated": false
     },

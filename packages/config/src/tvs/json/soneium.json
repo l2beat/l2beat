@@ -53,6 +53,23 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-nsASTR",
+      "priceId": "neemo-staked-astar",
+      "symbol": "nsASTR",
+      "name": "Neemo Staked Astar",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1737676800
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-PIPO",
       "priceId": "pipo-2",
       "symbol": "PIPO",
@@ -114,6 +131,23 @@
         "chain": "soneium",
         "decimals": 18,
         "sinceTimestamp": 1738747957
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-SolvBTC.JUP",
+      "priceId": "solv-protocol-solvbtc-jupiter",
+      "symbol": "SolvBTC.JUP",
+      "name": "SolvBTC Jupiter",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1743033600
       },
       "category": "other",
       "source": "external",
@@ -222,6 +256,23 @@
       },
       "category": "ether",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-wstASTR",
+      "priceId": "wrapped-stastr",
+      "symbol": "wstASTR",
+      "name": "Warpped stASTR",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1741564800
+      },
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {

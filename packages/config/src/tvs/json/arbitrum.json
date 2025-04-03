@@ -1790,24 +1790,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FORE-1",
-      "priceId": "fore-protocol",
-      "symbol": "FORE",
-      "name": "FORE Protocol",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18,
-        "sinceTimestamp": 1689552000
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-FORT-1",
       "priceId": "forta",
       "symbol": "FORT",
