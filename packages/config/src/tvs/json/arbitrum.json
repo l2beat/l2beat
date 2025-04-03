@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "arbitrum-1INCH",
+      "id": "arbitrum-1INCH-1",
       "priceId": "1inch",
       "symbol": "1INCH",
       "name": "1INCH Token",
@@ -22,7 +22,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-AAVE",
+      "id": "arbitrum-AAVE-1",
       "priceId": "aave",
       "symbol": "AAVE",
       "name": "Aave Token",
@@ -40,7 +40,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ACX",
+      "id": "arbitrum-ACX-1",
       "priceId": "across-protocol",
       "symbol": "ACX",
       "name": "Across Protocol Token",
@@ -58,7 +58,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-AEVO",
+      "id": "arbitrum-AEVO-1",
       "priceId": "aevo-exchange",
       "symbol": "AEVO",
       "name": "Aevo",
@@ -76,7 +76,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-AGIX",
+      "id": "arbitrum-AGIX-1",
       "priceId": "singularitynet",
       "symbol": "AGIX",
       "name": "SingularityNET Token",
@@ -94,7 +94,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-AIUS",
+      "id": "arbitrum-AIUS-1",
       "priceId": "arbius",
       "symbol": "AIUS",
       "name": "Arbius",
@@ -124,7 +124,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ALEPH",
+      "id": "arbitrum-ALEPH-1",
       "priceId": "aleph",
       "symbol": "ALEPH",
       "name": "aleph.im v2",
@@ -142,7 +142,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ALI",
+      "id": "arbitrum-ALI-1",
       "priceId": "alethea-artificial-liquid-intelligence-token",
       "symbol": "ALI",
       "name": "Artificial Liquid Intelligence Token",
@@ -160,7 +160,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-alUSD",
+      "id": "arbitrum-alUSD-1",
       "priceId": "alchemix-usd",
       "symbol": "alUSD",
       "name": "Alchemix USD",
@@ -178,7 +178,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ANIME",
+      "id": "arbitrum-ANIME-2",
       "priceId": "anime",
       "symbol": "ANIME",
       "name": "Animecoin",
@@ -186,17 +186,17 @@
         "type": "balanceOfEscrow",
         "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277",
         "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
         "decimals": 18,
         "sinceTimestamp": 1737590400
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ANKR",
+      "id": "arbitrum-ANKR-1",
       "priceId": "ankr",
       "symbol": "ANKR",
       "name": "Ankr Network",
@@ -214,7 +214,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ankrETH",
+      "id": "arbitrum-ankrETH-1",
       "priceId": "ankreth",
       "symbol": "ankrETH",
       "name": "Ankr Staked ETH",
@@ -232,7 +232,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-APE",
+      "id": "arbitrum-APE-1",
       "priceId": "apecoin",
       "symbol": "APE",
       "name": "ApeCoin",
@@ -250,7 +250,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-APEX",
+      "id": "arbitrum-APEX-1",
       "priceId": "apex-token-2",
       "symbol": "APEX",
       "name": "ApeX Token",
@@ -268,7 +268,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-API3",
+      "id": "arbitrum-API3-1",
       "priceId": "api3",
       "symbol": "API3",
       "name": "API3",
@@ -286,7 +286,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-APW",
+      "id": "arbitrum-APW-1",
       "priceId": "apwine",
       "symbol": "APW",
       "name": "APWine Token",
@@ -304,7 +304,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ARB",
+      "id": "arbitrum-ARB-1",
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
@@ -320,7 +320,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ARC",
+      "id": "arbitrum-ARC-1",
       "priceId": "arc",
       "symbol": "ARC",
       "name": "ARC",
@@ -338,7 +338,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ATA",
+      "id": "arbitrum-ATA-1",
       "priceId": "automata",
       "symbol": "ATA",
       "name": "Automata",
@@ -373,7 +373,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-AXGT",
+      "id": "arbitrum-AXGT-1",
       "priceId": "axondao-governance-token",
       "symbol": "AXGT",
       "name": "AxonDAO Governance Token",
@@ -391,7 +391,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-AXL",
+      "id": "arbitrum-AXL-1",
       "priceId": "axelar",
       "symbol": "AXL",
       "name": "Axelar",
@@ -409,7 +409,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BADGER",
+      "id": "arbitrum-BADGER-1",
       "priceId": "badger-dao",
       "symbol": "BADGER",
       "name": "Badger",
@@ -427,7 +427,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BAL",
+      "id": "arbitrum-BAL-1",
       "priceId": "balancer",
       "symbol": "BAL",
       "name": "Balancer",
@@ -445,7 +445,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BAT",
+      "id": "arbitrum-BAT-1",
       "priceId": "basic-attention-token",
       "symbol": "BAT",
       "name": "Basic Attention Token",
@@ -463,7 +463,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BICO",
+      "id": "arbitrum-BICO-1",
       "priceId": "biconomy",
       "symbol": "BICO",
       "name": "Biconomy Token",
@@ -498,7 +498,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BIT",
+      "id": "arbitrum-BIT-1",
       "priceId": "bitdao",
       "symbol": "BIT",
       "name": "BitDAO",
@@ -516,7 +516,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BLUR",
+      "id": "arbitrum-BLUR-1",
       "priceId": "blur",
       "symbol": "BLUR",
       "name": "Blur",
@@ -534,7 +534,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BNT",
+      "id": "arbitrum-BNT-1",
       "priceId": "bancor",
       "symbol": "BNT",
       "name": "Bancor Network Token",
@@ -552,7 +552,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BONE",
+      "id": "arbitrum-BONE-1",
       "priceId": "bone-shibaswap",
       "symbol": "BONE",
       "name": "BONE SHIBASWAP",
@@ -603,7 +603,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-BUSD",
+      "id": "arbitrum-BUSD-1",
       "priceId": "binance-usd",
       "symbol": "BUSD",
       "name": "BUSD",
@@ -637,7 +637,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-cbBTC",
+      "id": "arbitrum-cbBTC-1",
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
@@ -654,7 +654,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-cbETH",
+      "id": "arbitrum-cbETH-1",
       "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",
       "name": "Coinbase Wrapped Staked ETH",
@@ -672,7 +672,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CELR",
+      "id": "arbitrum-CELR-1",
       "priceId": "celer-network",
       "symbol": "CELR",
       "name": "CelerToken",
@@ -707,7 +707,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CLEAR",
+      "id": "arbitrum-CLEAR-1",
       "priceId": "everclear",
       "symbol": "CLEAR",
       "name": "Everclear",
@@ -725,7 +725,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CNFI",
+      "id": "arbitrum-CNFI-2",
       "priceId": "connect-financial",
       "symbol": "CNFI",
       "name": "Connect Financial",
@@ -733,17 +733,17 @@
         "type": "balanceOfEscrow",
         "address": "0xEABB8996eA1662cAd2f7fB715127852cd3262Ae9",
         "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
         "decimals": 18,
-        "sinceTimestamp": 1623784100
+        "sinceTimestamp": 1623867835
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-COMP",
+      "id": "arbitrum-COMP-1",
       "priceId": "compound-governance-token",
       "symbol": "COMP",
       "name": "Compound",
@@ -761,7 +761,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-COTI",
+      "id": "arbitrum-COTI-1",
       "priceId": "coti",
       "symbol": "COTI",
       "name": "COTI Token",
@@ -779,7 +779,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-COW",
+      "id": "arbitrum-COW-1",
       "priceId": "cow-protocol",
       "symbol": "COW",
       "name": "CoW Protocol Token",
@@ -797,7 +797,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CRO",
+      "id": "arbitrum-CRO-1",
       "priceId": "crypto-com-chain",
       "symbol": "CRO",
       "name": "CRO",
@@ -815,7 +815,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CRV",
+      "id": "arbitrum-CRV-1",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
@@ -833,7 +833,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-crvUSD",
+      "id": "arbitrum-crvUSD-1",
       "priceId": "crvusd",
       "symbol": "crvUSD",
       "name": "Curve.Fi USD Stablecoin",
@@ -851,7 +851,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CTSI",
+      "id": "arbitrum-CTSI-1",
       "priceId": "cartesi",
       "symbol": "CTSI",
       "name": "Cartesi Token",
@@ -869,7 +869,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CTX",
+      "id": "arbitrum-CTX-1",
       "priceId": "cryptex-finance",
       "symbol": "CTX",
       "name": "Cryptex",
@@ -887,7 +887,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CVC",
+      "id": "arbitrum-CVC-1",
       "priceId": "civic",
       "symbol": "CVC",
       "name": "Civic",
@@ -905,7 +905,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-CVX",
+      "id": "arbitrum-CVX-1",
       "priceId": "convex-finance",
       "symbol": "CVX",
       "name": "Convex Token",
@@ -923,7 +923,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-cvxCRV",
+      "id": "arbitrum-cvxCRV-1",
       "priceId": "convex-crv",
       "symbol": "cvxCRV",
       "name": "Convex CRV",
@@ -941,25 +941,39 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DAI",
+      "id": "arbitrum-DAI-2",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18,
-        "sinceTimestamp": 1623784100
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
+            "decimals": 18,
+            "sinceTimestamp": 1632133470
+          }
+        ]
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DAO",
+      "id": "arbitrum-DAO-1",
       "priceId": "dao-maker",
       "symbol": "DAO",
       "name": "DAO Maker",
@@ -977,7 +991,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DEXTF",
+      "id": "arbitrum-DEXTF-1",
       "priceId": "dextf",
       "symbol": "DEXTF",
       "name": "DEXTF Token",
@@ -995,7 +1009,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DFX",
+      "id": "arbitrum-DFX-1",
       "priceId": "dfx-finance",
       "symbol": "DFX",
       "name": "DFX Token",
@@ -1013,7 +1027,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DHT",
+      "id": "arbitrum-DHT-1",
       "priceId": "dhedge-dao",
       "symbol": "DHT",
       "name": "dHedge DAO Token",
@@ -1031,7 +1045,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DIVI",
+      "id": "arbitrum-DIVI-1",
       "priceId": "divi",
       "symbol": "DIVI",
       "name": "Divi",
@@ -1065,7 +1079,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DODO",
+      "id": "arbitrum-DODO-1",
       "priceId": "dodo",
       "symbol": "DODO",
       "name": "DODO bird",
@@ -1083,7 +1097,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DOG",
+      "id": "arbitrum-DOG-1",
       "priceId": "the-doge-nft",
       "symbol": "DOG",
       "name": "The Doge NFT",
@@ -1101,7 +1115,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DOLA",
+      "id": "arbitrum-DOLA-1",
       "priceId": "dola-usd",
       "symbol": "DOLA",
       "name": "Dola USD Stablecoin",
@@ -1119,7 +1133,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DPI",
+      "id": "arbitrum-DPI-1",
       "priceId": "defipulse-index",
       "symbol": "DPI",
       "name": "DefiPulse Index",
@@ -1137,7 +1151,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DPX",
+      "id": "arbitrum-DPX-1",
       "priceId": "dopex",
       "symbol": "DPX",
       "name": "Dopex Governance Token",
@@ -1155,7 +1169,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-DYDX",
+      "id": "arbitrum-DYDX-1",
       "priceId": "dydx",
       "symbol": "DYDX",
       "name": "dYdX",
@@ -1190,7 +1204,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-eETH",
+      "id": "arbitrum-eETH-1",
       "priceId": "ether-fi-staked-eth",
       "symbol": "eETH",
       "name": "ether.fi ETH",
@@ -1224,7 +1238,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-EIGEN",
+      "id": "arbitrum-EIGEN-1",
       "priceId": "eigenlayer",
       "symbol": "EIGEN",
       "name": "Eigen",
@@ -1242,7 +1256,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ELG",
+      "id": "arbitrum-ELG-1",
       "priceId": "escoin-token",
       "symbol": "ELG",
       "name": "EscoinToken",
@@ -1260,7 +1274,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ELON",
+      "id": "arbitrum-ELON-1",
       "priceId": "dogelon-mars",
       "symbol": "ELON",
       "name": "Dogelon",
@@ -1278,7 +1292,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ENA",
+      "id": "arbitrum-ENA-1",
       "priceId": "ethena",
       "symbol": "ENA",
       "name": "ENA",
@@ -1296,7 +1310,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ENJ",
+      "id": "arbitrum-ENJ-1",
       "priceId": "enjincoin",
       "symbol": "ENJ",
       "name": "Enjin Coin",
@@ -1314,7 +1328,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ENS",
+      "id": "arbitrum-ENS-1",
       "priceId": "ethereum-name-service",
       "symbol": "ENS",
       "name": "Ethereum Name Service",
@@ -1332,7 +1346,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-EQB",
+      "id": "arbitrum-EQB-1",
       "priceId": "equilibria-finance",
       "symbol": "EQB",
       "name": "Equilibria Token",
@@ -1366,7 +1380,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ERN",
+      "id": "arbitrum-ERN-1",
       "priceId": "ethernity-chain",
       "symbol": "ERN",
       "name": "@EthernityChain $ERN Token",
@@ -1384,7 +1398,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ETH",
+      "id": "arbitrum-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -1424,7 +1438,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ETH+",
+      "id": "arbitrum-ETH+-1",
       "priceId": "reserve-protocol-eth-plus",
       "symbol": "ETH+",
       "name": "ETHPlus",
@@ -1464,19 +1478,20 @@
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1718638923
+        "sinceTimestamp": 1710720000
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ETHx",
+      "id": "arbitrum-ETHx-1",
       "priceId": "stader-ethx",
       "symbol": "ETHx",
       "name": "ETHx",
@@ -1494,7 +1509,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-EURA",
+      "id": "arbitrum-EURA-1",
       "priceId": "ageur",
       "symbol": "EURA",
       "name": "EURA (previously agEUR)",
@@ -1512,7 +1527,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-EURC",
+      "id": "arbitrum-EURC-1",
       "priceId": "euro-coin",
       "symbol": "EURC",
       "name": "Euro Coin",
@@ -1530,7 +1545,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-EURS",
+      "id": "arbitrum-EURS-1",
       "priceId": "stasis-eurs",
       "symbol": "EURS",
       "name": "STASIS EURS Token",
@@ -1548,7 +1563,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-EURT",
+      "id": "arbitrum-EURT-1",
       "priceId": "tether-eurt",
       "symbol": "EURT",
       "name": "Euro Tether",
@@ -1566,7 +1581,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-eUSD",
+      "id": "arbitrum-eUSD-1",
       "priceId": "electronic-usd",
       "symbol": "eUSD",
       "name": "Electronic Dollar",
@@ -1584,7 +1599,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-eXRD",
+      "id": "arbitrum-eXRD-1",
       "priceId": "e-radix",
       "symbol": "eXRD",
       "name": "E-RADIX",
@@ -1624,19 +1639,20 @@
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1709142061
+        "sinceTimestamp": 1706140800
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FARM",
+      "id": "arbitrum-FARM-1",
       "priceId": "harvest-finance",
       "symbol": "FARM",
       "name": "FARM Reward Token",
@@ -1654,7 +1670,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FET",
+      "id": "arbitrum-FET-1",
       "priceId": "fetch-ai",
       "symbol": "FET",
       "name": "Fetch",
@@ -1707,32 +1723,20 @@
       "symbol": "FFM",
       "name": "Florence Finance Medici",
       "amount": {
-        "type": "calculation",
-        "operator": "min",
-        "arguments": [
-          {
-            "type": "circulatingSupply",
-            "apiId": "florence-finance-medici",
-            "decimals": 18,
-            "sinceTimestamp": 1704758400
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92",
-            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-            "chain": "ethereum",
-            "decimals": 18,
-            "sinceTimestamp": 1704758400
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x72A9B1c9B191781bB15F1b98f443a1d916557c92",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18,
+        "sinceTimestamp": 1704758400
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FIS",
+      "id": "arbitrum-FIS-1",
       "priceId": "stafi",
       "symbol": "FIS",
       "name": "StaFi",
@@ -1750,7 +1754,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FNXAI",
+      "id": "arbitrum-FNXAI-1",
       "priceId": "finanx-ai",
       "symbol": "FNXAI",
       "name": "Finanx AI",
@@ -1768,7 +1772,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FOOM",
+      "id": "arbitrum-FOOM-1",
       "priceId": "foom",
       "symbol": "FOOM",
       "name": "FOOM",
@@ -1786,25 +1790,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FORE",
-      "priceId": "fore-protocol",
-      "symbol": "FORE",
-      "name": "FORE Protocol",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18,
-        "sinceTimestamp": 1689552000
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-FORT",
+      "id": "arbitrum-FORT-1",
       "priceId": "forta",
       "symbol": "FORT",
       "name": "Forta",
@@ -1822,7 +1808,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FOX",
+      "id": "arbitrum-FOX-1",
       "priceId": "shapeshift-fox-token",
       "symbol": "FOX",
       "name": "FOX",
@@ -1862,19 +1848,20 @@
       "symbol": "FPI",
       "name": "Frax Price Index",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1677013204
+        "sinceTimestamp": 1649462400
       },
       "category": "other",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FPIS",
+      "id": "arbitrum-FPIS-1",
       "priceId": "frax-price-index-share",
       "symbol": "FPIS",
       "name": "Frax Price Index Share",
@@ -1913,14 +1900,15 @@
       "symbol": "FRAX",
       "name": "Frax",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1632766868
+        "sinceTimestamp": 1623784100
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1947,19 +1935,20 @@
       "symbol": "frxETH",
       "name": "Frax Ether",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1673211956
+        "sinceTimestamp": 1669161600
       },
       "category": "ether",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FTM",
+      "id": "arbitrum-FTM-1",
       "priceId": "wrapped-fantom",
       "symbol": "FTM",
       "name": "Fantom Token",
@@ -1999,14 +1988,15 @@
       "symbol": "FXS",
       "name": "Frax Share",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1632766868
+        "sinceTimestamp": 1623784100
       },
       "category": "other",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2043,7 +2033,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GALA",
+      "id": "arbitrum-GALA-1",
       "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
@@ -2075,7 +2065,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GEAR",
+      "id": "arbitrum-GEAR-1",
       "priceId": "gearbox",
       "symbol": "GEAR",
       "name": "Gearbox",
@@ -2093,7 +2083,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GENE",
+      "id": "arbitrum-GENE-1",
       "priceId": "genomesdao",
       "symbol": "GENE",
       "name": "GenomesDAO",
@@ -2111,7 +2101,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GHO",
+      "id": "arbitrum-GHO-1",
       "priceId": "gho",
       "symbol": "GHO",
       "name": "Gho Token",
@@ -2144,7 +2134,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GNO",
+      "id": "arbitrum-GNO-1",
       "priceId": "gnosis",
       "symbol": "GNO",
       "name": "Gnosis Token",
@@ -2179,7 +2169,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GOB",
+      "id": "arbitrum-GOB-1",
       "priceId": "goons-of-balatroon",
       "symbol": "GOB",
       "name": "Goons of Balatroon",
@@ -2197,7 +2187,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-gOHM",
+      "id": "arbitrum-gOHM-1",
       "priceId": "governance-ohm",
       "symbol": "gOHM",
       "name": "Governance OHM",
@@ -2215,7 +2205,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GOVI",
+      "id": "arbitrum-GOVI-1",
       "priceId": "govi",
       "symbol": "GOVI",
       "name": "GOVI",
@@ -2271,19 +2261,20 @@
       "symbol": "GRT",
       "name": "Graph Token",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1669815527
+        "sinceTimestamp": 1623784100
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-GTC",
+      "id": "arbitrum-GTC-1",
       "priceId": "gitcoin",
       "symbol": "GTC",
       "name": "Gitcoin",
@@ -2317,7 +2308,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-HEGIC",
+      "id": "arbitrum-HEGIC-1",
       "priceId": "hegic",
       "symbol": "HEGIC",
       "name": "Hegic",
@@ -2335,7 +2326,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-HOP",
+      "id": "arbitrum-HOP-1",
       "priceId": "hop-protocol",
       "symbol": "HOP",
       "name": "Hop",
@@ -2353,7 +2344,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-HOT",
+      "id": "arbitrum-HOT-1",
       "priceId": "holotoken",
       "symbol": "HOT",
       "name": "HoloToken",
@@ -2371,7 +2362,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ILV",
+      "id": "arbitrum-ILV-1",
       "priceId": "illuvium",
       "symbol": "ILV",
       "name": "Illuvium",
@@ -2389,7 +2380,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-IMX",
+      "id": "arbitrum-IMX-1",
       "priceId": "immutable-x",
       "symbol": "IMX",
       "name": "Immutable X",
@@ -2407,7 +2398,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-INJ",
+      "id": "arbitrum-INJ-1",
       "priceId": "injective-protocol",
       "symbol": "INJ",
       "name": "Injective Token",
@@ -2425,7 +2416,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-JASMY",
+      "id": "arbitrum-JASMY-1",
       "priceId": "jasmycoin",
       "symbol": "JASMY",
       "name": "JasmyCoin",
@@ -2476,7 +2467,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-KIBSHI",
+      "id": "arbitrum-KIBSHI-1",
       "priceId": "kiboshib",
       "symbol": "KIBSHI",
       "name": "KiboShib",
@@ -2494,7 +2485,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-KNC",
+      "id": "arbitrum-KNC-1",
       "priceId": "kyber-network-crystal",
       "symbol": "KNC",
       "name": "Kyber Network Crystal v2",
@@ -2512,7 +2503,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LDO",
+      "id": "arbitrum-LDO-1",
       "priceId": "lido-dao",
       "symbol": "LDO",
       "name": "Lido DAO Token",
@@ -2530,7 +2521,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LDY",
+      "id": "arbitrum-LDY-1",
       "priceId": "ledgity-token",
       "symbol": "LDY",
       "name": "Ledgity Token",
@@ -2548,7 +2539,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LINK",
+      "id": "arbitrum-LINK-1",
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
@@ -2582,7 +2573,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LOGX",
+      "id": "arbitrum-LOGX-1",
       "priceId": "logx-2",
       "symbol": "LOGX",
       "name": "LogX Network",
@@ -2612,7 +2603,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LON",
+      "id": "arbitrum-LON-1",
       "priceId": "tokenlon",
       "symbol": "LON",
       "name": "Tokenlon",
@@ -2630,7 +2621,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LOOKS",
+      "id": "arbitrum-LOOKS-1",
       "priceId": "looksrare",
       "symbol": "LOOKS",
       "name": "LooksRare Token",
@@ -2648,7 +2639,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LORDS",
+      "id": "arbitrum-LORDS-1",
       "priceId": "lords",
       "symbol": "LORDS",
       "name": "Lords",
@@ -2666,25 +2657,39 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LPT",
+      "id": "arbitrum-LPT-2",
       "priceId": "livepeer",
       "symbol": "LPT",
       "name": "Livepeer Token",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18,
-        "sinceTimestamp": 1623784100
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1623867835
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239",
+            "chain": "ethereum",
+            "escrowAddress": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+            "decimals": 18,
+            "sinceTimestamp": 1644777090
+          }
+        ]
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LQTY",
+      "id": "arbitrum-LQTY-1",
       "priceId": "liquity",
       "symbol": "LQTY",
       "name": "LQTY",
@@ -2702,7 +2707,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LRC",
+      "id": "arbitrum-LRC-1",
       "priceId": "loopring",
       "symbol": "LRC",
       "name": "LoopringCoin V2",
@@ -2720,7 +2725,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LUSD",
+      "id": "arbitrum-LUSD-1",
       "priceId": "liquity-usd",
       "symbol": "LUSD",
       "name": "LUSD Stablecoin",
@@ -2738,7 +2743,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LYRA",
+      "id": "arbitrum-LYRA-1",
       "priceId": "lyra-finance",
       "symbol": "LYRA",
       "name": "Lyra Token",
@@ -2756,7 +2761,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-LYXe",
+      "id": "arbitrum-LYXe-1",
       "priceId": "lukso-token",
       "symbol": "LYXe",
       "name": "LUKSO Token",
@@ -2774,7 +2779,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MAGIC",
+      "id": "arbitrum-MAGIC-1",
       "priceId": "magic",
       "symbol": "MAGIC",
       "name": "MAGIC",
@@ -2792,7 +2797,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MANA",
+      "id": "arbitrum-MANA-1",
       "priceId": "decentraland",
       "symbol": "MANA",
       "name": "Decentraland MANA",
@@ -2810,7 +2815,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MASK",
+      "id": "arbitrum-MASK-1",
       "priceId": "mask-network",
       "symbol": "MASK",
       "name": "Mask Network",
@@ -2828,7 +2833,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MATIC",
+      "id": "arbitrum-MATIC-1",
       "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
@@ -2846,7 +2851,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MCB",
+      "id": "arbitrum-MCB-2",
       "priceId": "mcdex",
       "symbol": "MCB",
       "name": "MUX Protocol",
@@ -2854,17 +2859,17 @@
         "type": "balanceOfEscrow",
         "address": "0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42",
         "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
         "decimals": 18,
-        "sinceTimestamp": 1623784100
+        "sinceTimestamp": 1623867835
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-Metis",
+      "id": "arbitrum-Metis-1",
       "priceId": "metis-token",
       "symbol": "Metis",
       "name": "Metis Token",
@@ -2899,7 +2904,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MIM",
+      "id": "arbitrum-MIM-1",
       "priceId": "magic-internet-money",
       "symbol": "MIM",
       "name": "Magic Internet Money",
@@ -2917,7 +2922,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MKR",
+      "id": "arbitrum-MKR-1",
       "priceId": "maker",
       "symbol": "MKR",
       "name": "Maker",
@@ -2935,7 +2940,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MLN",
+      "id": "arbitrum-MLN-1",
       "priceId": "melon",
       "symbol": "MLN",
       "name": "Melon Token",
@@ -2953,7 +2958,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MNT",
+      "id": "arbitrum-MNT-1",
       "priceId": "mantle",
       "symbol": "MNT",
       "name": "Mantle",
@@ -2971,7 +2976,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-Mog",
+      "id": "arbitrum-Mog-1",
       "priceId": "mog-coin",
       "symbol": "Mog",
       "name": "Mog Coin",
@@ -3006,17 +3011,17 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MOON",
-      "priceId": "moonflow",
+      "id": "arbitrum-MOON-2",
+      "priceId": "moon",
       "symbol": "MOON",
-      "name": "Moonflow",
+      "name": "Moons",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0x4a52Fa1a1115814c59C643F53f14199b8fb11cEa",
+        "address": "0xb2490e357980cE57bF5745e181e537a64Eb367B1",
         "chain": "ethereum",
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1723714163
+        "sinceTimestamp": 1660059776
       },
       "category": "other",
       "source": "canonical",
@@ -3076,20 +3081,22 @@
       "id": "arbitrum-MXC-2",
       "priceId": "mxc",
       "symbol": "MXC",
-      "name": "MXC Token",
+      "name": "MXCToken",
       "amount": {
-        "type": "circulatingSupply",
-        "apiId": "mxc",
+        "type": "balanceOfEscrow",
+        "address": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1687777847
+        "sinceTimestamp": 1623784100
       },
       "category": "other",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-MYRIA",
+      "id": "arbitrum-MYRIA-1",
       "priceId": "myria",
       "symbol": "MYRIA",
       "name": "Myria",
@@ -3107,7 +3114,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-NEXO",
+      "id": "arbitrum-NEXO-1",
       "priceId": "nexo",
       "symbol": "NEXO",
       "name": "Nexo",
@@ -3125,7 +3132,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-NEXT",
+      "id": "arbitrum-NEXT-1",
       "priceId": "connext",
       "symbol": "NEXT",
       "name": "Connext",
@@ -3159,7 +3166,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-NSTR",
+      "id": "arbitrum-NSTR-1",
       "priceId": "nostra",
       "symbol": "NSTR",
       "name": "Nostra",
@@ -3177,7 +3184,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OCEAN",
+      "id": "arbitrum-OCEAN-1",
       "priceId": "ocean-protocol",
       "symbol": "OCEAN",
       "name": "Ocean Token",
@@ -3195,7 +3202,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OGN",
+      "id": "arbitrum-OGN-1",
       "priceId": "origin-protocol",
       "symbol": "OGN",
       "name": "OriginToken",
@@ -3213,7 +3220,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OHM",
+      "id": "arbitrum-OHM-1",
       "priceId": "olympus",
       "symbol": "OHM",
       "name": "Olympus",
@@ -3231,7 +3238,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OLAS",
+      "id": "arbitrum-OLAS-1",
       "priceId": "autonolas",
       "symbol": "OLAS",
       "name": "Autonolas",
@@ -3249,7 +3256,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OMG",
+      "id": "arbitrum-OMG-1",
       "priceId": "omisego",
       "symbol": "OMG",
       "name": "OMGToken",
@@ -3267,7 +3274,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OMI",
+      "id": "arbitrum-OMI-1",
       "priceId": "ecomi",
       "symbol": "OMI",
       "name": "OMI Token",
@@ -3285,7 +3292,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ONDO",
+      "id": "arbitrum-ONDO-1",
       "priceId": "ondo-finance",
       "symbol": "ONDO",
       "name": "Ondo",
@@ -3303,7 +3310,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-OVR",
+      "id": "arbitrum-OVR-1",
       "priceId": "ovr",
       "symbol": "OVR",
       "name": "OVR",
@@ -3321,7 +3328,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PAXG",
+      "id": "arbitrum-PAXG-1",
       "priceId": "pax-gold",
       "symbol": "PAXG",
       "name": "Paxos Gold",
@@ -3339,7 +3346,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PBX",
+      "id": "arbitrum-PBX-1",
       "priceId": "paribus",
       "symbol": "PBX",
       "name": "Paribus",
@@ -3357,7 +3364,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PENDLE",
+      "id": "arbitrum-PENDLE-1",
       "priceId": "pendle",
       "symbol": "PENDLE",
       "name": "Pendle",
@@ -3375,7 +3382,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PEOPLE",
+      "id": "arbitrum-PEOPLE-1",
       "priceId": "constitutiondao",
       "symbol": "PEOPLE",
       "name": "ConstitutionDAO",
@@ -3393,7 +3400,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PEPE",
+      "id": "arbitrum-PEPE-1",
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
@@ -3410,7 +3417,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PEPU",
+      "id": "arbitrum-PEPU-1",
       "priceId": "pepe-unchained",
       "symbol": "PEPU",
       "name": "Pepe Unchained",
@@ -3428,7 +3435,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PERP",
+      "id": "arbitrum-PERP-1",
       "priceId": "perpetual-protocol",
       "symbol": "PERP",
       "name": "Perpetual",
@@ -3446,7 +3453,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PMON",
+      "id": "arbitrum-PMON-1",
       "priceId": "polychain-monsters",
       "symbol": "PMON",
       "name": "Polkamon",
@@ -3464,7 +3471,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PNK",
+      "id": "arbitrum-PNK-1",
       "priceId": "kleros",
       "symbol": "PNK",
       "name": "Pinakion",
@@ -3482,7 +3489,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-POL",
+      "id": "arbitrum-POL-1",
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
@@ -3500,7 +3507,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-POLY",
+      "id": "arbitrum-POLY-1",
       "priceId": "polymath",
       "symbol": "POLY",
       "name": "Polymath",
@@ -3544,17 +3551,17 @@
         "type": "balanceOfEscrow",
         "address": "0x57B946008913B82E4dF85f501cbAeD910e58D26C",
         "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
         "decimals": 18,
-        "sinceTimestamp": 1623784100
+        "sinceTimestamp": 1623867835
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PORK",
+      "id": "arbitrum-PORK-1",
       "priceId": "pepefork",
       "symbol": "PORK",
       "name": "PepeFork",
@@ -3572,7 +3579,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PREMIA",
+      "id": "arbitrum-PREMIA-1",
       "priceId": "premia",
       "symbol": "PREMIA",
       "name": "Premia",
@@ -3590,7 +3597,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PROM",
+      "id": "arbitrum-PROM-1",
       "priceId": "prometeus",
       "symbol": "PROM",
       "name": "Token Prometeus Network",
@@ -3608,7 +3615,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PSP",
+      "id": "arbitrum-PSP-1",
       "priceId": "paraswap",
       "symbol": "PSP",
       "name": "ParaSwap",
@@ -3626,7 +3633,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-PYR",
+      "id": "arbitrum-PYR-1",
       "priceId": "vulcan-forged",
       "symbol": "PYR",
       "name": "PYR Token",
@@ -3644,7 +3651,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-QNT",
+      "id": "arbitrum-QNT-1",
       "priceId": "quant-network",
       "symbol": "QNT",
       "name": "Quant",
@@ -3662,7 +3669,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RACA",
+      "id": "arbitrum-RACA-1",
       "priceId": "radio-caca",
       "symbol": "RACA",
       "name": "Radio Caca V2",
@@ -3680,7 +3687,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RAI",
+      "id": "arbitrum-RAI-1",
       "priceId": "rai",
       "symbol": "RAI",
       "name": "Rai Reflex Index",
@@ -3715,7 +3722,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-rDPX",
+      "id": "arbitrum-rDPX-2",
       "priceId": "dopex-rebate-token",
       "symbol": "rDPX",
       "name": "Dopex Rebate Token",
@@ -3723,17 +3730,17 @@
         "type": "balanceOfEscrow",
         "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11",
         "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
         "decimals": 18,
         "sinceTimestamp": 1624579200
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-REN",
+      "id": "arbitrum-REN-1",
       "priceId": "republic-protocol",
       "symbol": "REN",
       "name": "Republic Token",
@@ -3751,7 +3758,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-REQ",
+      "id": "arbitrum-REQ-1",
       "priceId": "request-network",
       "symbol": "REQ",
       "name": "Request Token",
@@ -3769,7 +3776,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-rETH",
+      "id": "arbitrum-rETH-1",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
       "name": "Rocket Pool ETH",
@@ -3787,7 +3794,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RGT",
+      "id": "arbitrum-RGT-1",
       "priceId": "rari-governance-token",
       "symbol": "RGT",
       "name": "Rari Governance Token",
@@ -3805,7 +3812,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RNDR",
+      "id": "arbitrum-RNDR-1",
       "priceId": "render-token",
       "symbol": "RNDR",
       "name": "Render Token",
@@ -3823,7 +3830,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RPL",
+      "id": "arbitrum-RPL-1",
       "priceId": "rocket-pool",
       "symbol": "RPL",
       "name": "Rocket Pool Protocol",
@@ -3841,7 +3848,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-rsETH",
+      "id": "arbitrum-rsETH-1",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -3858,7 +3865,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RSR",
+      "id": "arbitrum-RSR-1",
       "priceId": "reserve-rights-token",
       "symbol": "RSR",
       "name": "Reserve Rights",
@@ -3876,7 +3883,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-RSS3",
+      "id": "arbitrum-RSS3-1",
       "priceId": "rss3",
       "symbol": "RSS3",
       "name": "RSS3",
@@ -3894,7 +3901,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-rswETH",
+      "id": "arbitrum-rswETH-1",
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
@@ -3912,7 +3919,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SAND",
+      "id": "arbitrum-SAND-1",
       "priceId": "the-sandbox",
       "symbol": "SAND",
       "name": "SAND",
@@ -3930,7 +3937,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-scrvUSD",
+      "id": "arbitrum-scrvUSD-1",
       "priceId": "savings-crvusd",
       "symbol": "scrvUSD",
       "name": "Savings crvUSD",
@@ -3948,7 +3955,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sDAI",
+      "id": "arbitrum-sDAI-1",
       "priceId": "savings-dai",
       "symbol": "sDAI",
       "name": "Savings Dai",
@@ -3983,7 +3990,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SDT",
+      "id": "arbitrum-SDT-1",
       "priceId": "stake-dao",
       "symbol": "SDT",
       "name": "Stake DAO Token",
@@ -4001,7 +4008,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sFRAX",
+      "id": "arbitrum-sFRAX-1",
       "priceId": "staked-frax",
       "symbol": "sFRAX",
       "name": "Staked FRAX",
@@ -4040,19 +4047,20 @@
       "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1673211957
+        "sinceTimestamp": 1669852800
       },
       "category": "ether",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SHIB",
+      "id": "arbitrum-SHIB-1",
       "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
@@ -4070,7 +4078,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-Silo",
+      "id": "arbitrum-Silo-1",
       "priceId": "silo-finance",
       "symbol": "Silo",
       "name": "Silo Governance Token",
@@ -4088,7 +4096,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SIS",
+      "id": "arbitrum-SIS-1",
       "priceId": "symbiosis-finance",
       "symbol": "SIS",
       "name": "Symbiosis",
@@ -4106,7 +4114,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SNT",
+      "id": "arbitrum-SNT-1",
       "priceId": "status",
       "symbol": "SNT",
       "name": "Status Network Token",
@@ -4124,7 +4132,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SNX",
+      "id": "arbitrum-SNX-1",
       "priceId": "havven",
       "symbol": "SNX",
       "name": "Synthetix Network Token",
@@ -4160,18 +4168,19 @@
     {
       "mode": "auto",
       "id": "arbitrum-SOL-2",
-      "priceId": "solana",
+      "priceId": "sol-wormhole",
       "symbol": "SOL",
       "name": "Wrapped SOL",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xD31a59c85aE9D8edEFeC411D448f90841571b89c",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 9,
-        "sinceTimestamp": 1671137208
+        "sinceTimestamp": 1642723200
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -4192,7 +4201,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SPEC",
+      "id": "arbitrum-SPEC-1",
       "priceId": "spectral",
       "symbol": "SPEC",
       "name": "Spectral Token",
@@ -4210,7 +4219,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SPELL",
+      "id": "arbitrum-SPELL-1",
       "priceId": "spell-token",
       "symbol": "SPELL",
       "name": "Spell Token",
@@ -4228,7 +4237,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SPX",
+      "id": "arbitrum-SPX-1",
       "priceId": "spx6900",
       "symbol": "SPX",
       "name": "SPX6900",
@@ -4246,7 +4255,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SSV",
+      "id": "arbitrum-SSV-1",
       "priceId": "ssv-network",
       "symbol": "SSV",
       "name": "SSV Token",
@@ -4280,7 +4289,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-STG",
+      "id": "arbitrum-STG-1",
       "priceId": "stargate-finance",
       "symbol": "STG",
       "name": "StargateToken",
@@ -4297,7 +4306,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-STONE",
+      "id": "arbitrum-STONE-1",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -4314,7 +4323,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-stTAO",
+      "id": "arbitrum-stTAO-1",
       "priceId": "tensorplex-staked-tao",
       "symbol": "stTAO",
       "name": "Tensorplex Staked TAO",
@@ -4332,7 +4341,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SUPER",
+      "id": "arbitrum-SUPER-1",
       "priceId": "superfarm",
       "symbol": "SUPER",
       "name": "SuperFarm",
@@ -4350,7 +4359,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sUSDe",
+      "id": "arbitrum-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -4367,7 +4376,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sUSDS",
+      "id": "arbitrum-sUSDS-1",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
@@ -4385,7 +4394,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sUSDz",
+      "id": "arbitrum-sUSDz-1",
       "priceId": "anzen-staked-usdz",
       "symbol": "sUSDz",
       "name": "Staked USDz",
@@ -4403,7 +4412,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SUSHI",
+      "id": "arbitrum-SUSHI-1",
       "priceId": "sushi",
       "symbol": "SUSHI",
       "name": "SushiToken",
@@ -4421,7 +4430,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SWELL",
+      "id": "arbitrum-SWELL-1",
       "priceId": "swell-network",
       "symbol": "SWELL",
       "name": "Swell Governance Token",
@@ -4439,7 +4448,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SX",
+      "id": "arbitrum-SX-1",
       "priceId": "sx-network-2",
       "symbol": "SX",
       "name": "SX Network",
@@ -4457,7 +4466,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-SYN",
+      "id": "arbitrum-SYN-1",
       "priceId": "synapse-2",
       "symbol": "SYN",
       "name": "Synapse",
@@ -4475,7 +4484,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-T",
+      "id": "arbitrum-T-1",
       "priceId": "threshold-network-token",
       "symbol": "T",
       "name": "Threshold Network Token",
@@ -4493,7 +4502,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TBANK",
+      "id": "arbitrum-TBANK-1",
       "priceId": "taobank",
       "symbol": "TBANK",
       "name": "TaoBank",
@@ -4511,7 +4520,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TEL",
+      "id": "arbitrum-TEL-1",
       "priceId": "telcoin",
       "symbol": "TEL",
       "name": "Telcoin",
@@ -4529,7 +4538,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-THALES",
+      "id": "arbitrum-THALES-1",
       "priceId": "thales",
       "symbol": "THALES",
       "name": "Thales DAO Token",
@@ -4564,7 +4573,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TONCOIN",
+      "id": "arbitrum-TONCOIN-1",
       "priceId": "the-open-network",
       "symbol": "TONCOIN",
       "name": "Wrapped TON Coin",
@@ -4582,7 +4591,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TRADE",
+      "id": "arbitrum-TRADE-1",
       "priceId": "polytrade",
       "symbol": "TRADE",
       "name": "Polytrade",
@@ -4600,7 +4609,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TRB",
+      "id": "arbitrum-TRB-1",
       "priceId": "tellor",
       "symbol": "TRB",
       "name": "Tellor Tributes",
@@ -4618,7 +4627,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TRIBE",
+      "id": "arbitrum-TRIBE-1",
       "priceId": "tribe-2",
       "symbol": "TRIBE",
       "name": "Tribe",
@@ -4636,7 +4645,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-TUSD",
+      "id": "arbitrum-TUSD-1",
       "priceId": "true-usd",
       "symbol": "TUSD",
       "name": "TrueUSD",
@@ -4654,7 +4663,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-UMA",
+      "id": "arbitrum-UMA-1",
       "priceId": "uma",
       "symbol": "UMA",
       "name": "UMA Voting Token v1",
@@ -4672,7 +4681,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-UNI",
+      "id": "arbitrum-UNI-1",
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
@@ -4690,7 +4699,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-uniETH",
+      "id": "arbitrum-uniETH-1",
       "priceId": "universal-eth",
       "symbol": "uniETH",
       "name": "Universal ETH",
@@ -4708,7 +4717,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-UOS",
+      "id": "arbitrum-UOS-1",
       "priceId": "ultra",
       "symbol": "UOS",
       "name": "Ultra Token",
@@ -4748,14 +4757,15 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 6,
-        "sinceTimestamp": 1667248932
+        "sinceTimestamp": 1623784100
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -4765,19 +4775,20 @@
       "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-        "chain": "arbitrum",
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
         "decimals": 6,
-        "sinceTimestamp": 1667248932
+        "sinceTimestamp": 1623867835
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDD",
+      "id": "arbitrum-USDD-1",
       "priceId": "usdd",
       "symbol": "USDD",
       "name": "Decentralized USD",
@@ -4795,7 +4806,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDe",
+      "id": "arbitrum-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -4834,19 +4845,20 @@
       "symbol": "USDM",
       "name": "Mountain Protocol USD",
       "amount": {
-        "type": "totalSupply",
+        "type": "balanceOfEscrow",
         "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-        "chain": "arbitrum",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1700232777
+        "sinceTimestamp": 1696982400
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USDT",
+      "id": "arbitrum-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -4880,7 +4892,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-USUAL",
+      "id": "arbitrum-USUAL-1",
       "priceId": "usual",
       "symbol": "USUAL",
       "name": "USUAL",
@@ -4914,7 +4926,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-VERI",
+      "id": "arbitrum-VERI-1",
       "priceId": "veritaseum",
       "symbol": "VERI",
       "name": "Veritaseum",
@@ -4932,7 +4944,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-VITA",
+      "id": "arbitrum-VITA-1",
       "priceId": "vitadao",
       "symbol": "VITA",
       "name": "VitaDAO Token",
@@ -4950,7 +4962,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-VRTX",
+      "id": "arbitrum-VRTX-1",
       "priceId": "vertex-protocol",
       "symbol": "VRTX",
       "name": "Vertex",
@@ -4968,7 +4980,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WAMPL",
+      "id": "arbitrum-WAMPL-1",
       "priceId": "wrapped-ampleforth",
       "symbol": "WAMPL",
       "name": "Wrapped Ampleforth",
@@ -4986,7 +4998,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WBNB",
+      "id": "arbitrum-WBNB-1",
       "priceId": "binance-coin-wormhole",
       "symbol": "WBNB",
       "name": "Wrapped BNB",
@@ -5004,7 +5016,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WBTC",
+      "id": "arbitrum-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -5022,7 +5034,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-weETH",
+      "id": "arbitrum-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -5040,7 +5052,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-weETHs",
+      "id": "arbitrum-weETHs-1",
       "priceId": "etherfi-weeths",
       "symbol": "weETHs",
       "name": "Super Symbiotic LRT",
@@ -5074,7 +5086,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WLD",
+      "id": "arbitrum-WLD-1",
       "priceId": "worldcoin-wld",
       "symbol": "WLD",
       "name": "Worldcoin",
@@ -5109,7 +5121,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WOO",
+      "id": "arbitrum-WOO-1",
       "priceId": "woo-network",
       "symbol": "WOO",
       "name": "Wootrade Network",
@@ -5127,25 +5139,39 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-wstETH",
+      "id": "arbitrum-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18,
-        "sinceTimestamp": 1633564800
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "decimals": 18,
+            "sinceTimestamp": 1633564800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+            "chain": "ethereum",
+            "escrowAddress": "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+            "decimals": 18,
+            "sinceTimestamp": 1659608791
+          }
+        ]
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-wUSDM",
+      "id": "arbitrum-wUSDM-1",
       "priceId": "mountain-protocol-usdm",
       "symbol": "wUSDM",
       "name": "Wrapped Mountain Protocol USD",
@@ -5163,7 +5189,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WXM",
+      "id": "arbitrum-WXM-1",
       "priceId": "weatherxm-network",
       "symbol": "WXM",
       "name": "WeatherXM",
@@ -5181,7 +5207,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-WXT",
+      "id": "arbitrum-WXT-1",
       "priceId": "wirex",
       "symbol": "WXT",
       "name": "Wirex Token",
@@ -5215,7 +5241,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-XAUt",
+      "id": "arbitrum-XAUt-1",
       "priceId": "tether-gold",
       "symbol": "XAUt",
       "name": "Tether Gold",
@@ -5250,7 +5276,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-XCHNG",
+      "id": "arbitrum-XCHNG-1",
       "priceId": "chainge-finance",
       "symbol": "XCHNG",
       "name": "Chainge",
@@ -5268,7 +5294,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-XCN",
+      "id": "arbitrum-XCN-1",
       "priceId": "chain-2",
       "symbol": "XCN",
       "name": "Chain",
@@ -5286,7 +5312,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-xSUSHI",
+      "id": "arbitrum-xSUSHI-1",
       "priceId": "xsushi",
       "symbol": "xSUSHI",
       "name": "SushiBar",
@@ -5339,32 +5365,20 @@
       "symbol": "YBR",
       "name": "YieldBricks",
       "amount": {
-        "type": "calculation",
-        "operator": "min",
-        "arguments": [
-          {
-            "type": "circulatingSupply",
-            "apiId": "yieldbricks",
-            "decimals": 18,
-            "sinceTimestamp": 1731369600
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
-            "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-            "chain": "ethereum",
-            "decimals": 18,
-            "sinceTimestamp": 1731369600
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x9d9535Dae62F5f12aB83F1183DCa1eAd244b0DB3",
+        "chain": "ethereum",
+        "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+        "decimals": 18,
+        "sinceTimestamp": 1731369600
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "arbitrum-YFI",
+      "id": "arbitrum-YFI-1",
       "priceId": "yearn-finance",
       "symbol": "YFI",
       "name": "yearn.finance",
@@ -5382,7 +5396,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-YFX",
+      "id": "arbitrum-YFX-1",
       "priceId": "yfx",
       "symbol": "YFX",
       "name": "YFX",
@@ -5400,7 +5414,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ZRC",
+      "id": "arbitrum-ZRC-1",
       "priceId": "zircuit",
       "symbol": "ZRC",
       "name": "Zircuit",
@@ -5435,7 +5449,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-ZRX",
+      "id": "arbitrum-ZRX-1",
       "priceId": "0x",
       "symbol": "ZRX",
       "name": "0x Protocol Token",
@@ -5453,7 +5467,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-zunETH",
+      "id": "arbitrum-zunETH-1",
       "priceId": "zunami-eth-2",
       "symbol": "zunETH",
       "name": "Zunami ETH",
@@ -5471,7 +5485,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-zunUSD",
+      "id": "arbitrum-zunUSD-1",
       "priceId": "zunami-usd",
       "symbol": "zunUSD",
       "name": "Zunami USD",

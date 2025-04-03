@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "zksync2-1INCH",
+      "id": "zksync2-1INCH-1",
       "priceId": "1inch",
       "symbol": "1INCH",
       "name": "1INCH Token",
@@ -21,7 +21,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-AAVE",
+      "id": "zksync2-AAVE-1",
       "priceId": "aave",
       "symbol": "AAVE",
       "name": "Aave Token",
@@ -38,24 +38,25 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ALI",
+      "id": "zksync2-ALI-2",
       "priceId": "alethea-artificial-liquid-intelligence-token",
       "symbol": "ALI",
       "name": "Artificial Liquid Intelligence Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B0b3a982b4634aC68dD83a4DBF02311cE324181",
+        "chain": "ethereum",
+        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "decimals": 18,
+        "sinceTimestamp": 1676367083
+      },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xA52B83261b8bc31FAD96e18A172f05559cAeC1B0",
-        "chain": "zksync2",
-        "decimals": 18,
-        "sinceTimestamp": 1717521479
-      }
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-ALT",
+      "id": "zksync2-ALT-1",
       "priceId": "altlayer",
       "symbol": "ALT",
       "name": "AltLayer Token",
@@ -72,7 +73,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-API3",
+      "id": "zksync2-API3-1",
       "priceId": "api3",
       "symbol": "API3",
       "name": "API3",
@@ -89,7 +90,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ARB",
+      "id": "zksync2-ARB-1",
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
@@ -106,7 +107,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-AXL",
+      "id": "zksync2-AXL-1",
       "priceId": "axelar",
       "symbol": "AXL",
       "name": "Axelar",
@@ -123,7 +124,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-BAG",
+      "id": "zksync2-BAG-1",
       "priceId": "bag",
       "symbol": "BAG",
       "name": "Bag",
@@ -140,7 +141,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-BAL",
+      "id": "zksync2-BAL-1",
       "priceId": "balancer",
       "symbol": "BAL",
       "name": "Balancer",
@@ -157,7 +158,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-BAT",
+      "id": "zksync2-BAT-1",
       "priceId": "basic-attention-token",
       "symbol": "BAT",
       "name": "Basic Attention Token",
@@ -174,7 +175,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-BEL",
+      "id": "zksync2-BEL-1",
       "priceId": "bella-protocol",
       "symbol": "BEL",
       "name": "Bella",
@@ -191,7 +192,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-BITCOIN",
+      "id": "zksync2-BITCOIN-1",
       "priceId": "harrypotterobamasonic10in",
       "symbol": "BITCOIN",
       "name": "HarryPotterObamaSonic10Inu",
@@ -208,7 +209,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-BUSD",
+      "id": "zksync2-BUSD-1",
       "priceId": "binance-usd",
       "symbol": "BUSD",
       "name": "BUSD",
@@ -225,7 +226,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-cbETH",
+      "id": "zksync2-cbETH-1",
       "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",
       "name": "Coinbase Wrapped Staked ETH",
@@ -242,7 +243,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-CRO",
+      "id": "zksync2-CRO-1",
       "priceId": "crypto-com-chain",
       "symbol": "CRO",
       "name": "CRO",
@@ -259,7 +260,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-CRV",
+      "id": "zksync2-CRV-1",
       "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
@@ -276,7 +277,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-crvUSD",
+      "id": "zksync2-crvUSD-1",
       "priceId": "crvusd",
       "symbol": "crvUSD",
       "name": "Curve.Fi USD Stablecoin",
@@ -293,7 +294,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-DAI",
+      "id": "zksync2-DAI-1",
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
@@ -310,7 +311,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-DAO",
+      "id": "zksync2-DAO-1",
       "priceId": "dao-maker",
       "symbol": "DAO",
       "name": "DAO Maker",
@@ -327,7 +328,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-DEXTF",
+      "id": "zksync2-DEXTF-1",
       "priceId": "dextf",
       "symbol": "DEXTF",
       "name": "DEXTF Token",
@@ -344,7 +345,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ELON",
+      "id": "zksync2-ELON-1",
       "priceId": "dogelon-mars",
       "symbol": "ELON",
       "name": "Dogelon",
@@ -361,7 +362,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ETH",
+      "id": "zksync2-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
@@ -378,7 +379,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ETHFI",
+      "id": "zksync2-ETHFI-1",
       "priceId": "ether-fi",
       "symbol": "ETHFI",
       "name": "ether.fi governance token",
@@ -395,7 +396,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ETHx",
+      "id": "zksync2-ETHx-1",
       "priceId": "stader-ethx",
       "symbol": "ETHx",
       "name": "ETHx",
@@ -412,7 +413,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ezETH",
+      "id": "zksync2-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -446,7 +447,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FPI",
+      "id": "zksync2-FPI-1",
       "priceId": "frax-price-index",
       "symbol": "FPI",
       "name": "Frax Price Index",
@@ -463,7 +464,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FPIS",
+      "id": "zksync2-FPIS-1",
       "priceId": "frax-price-index-share",
       "symbol": "FPIS",
       "name": "Frax Price Index Share",
@@ -501,20 +502,20 @@
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
+        "address": "0x1af86Fc72C4363b1e35e6f79320F94B7aC848050",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1682179985
-      },
-      "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+        "sinceTimestamp": 1717521479
+      }
     },
     {
       "mode": "auto",
-      "id": "zksync2-frxETH",
+      "id": "zksync2-frxETH-1",
       "priceId": "frax-ether",
       "symbol": "frxETH",
       "name": "Frax Ether",
@@ -531,7 +532,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FTM",
+      "id": "zksync2-FTM-1",
       "priceId": "wrapped-fantom",
       "symbol": "FTM",
       "name": "Fantom Token",
@@ -548,7 +549,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FXS",
+      "id": "zksync2-FXS-1",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -565,7 +566,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-GALA",
+      "id": "zksync2-GALA-2",
       "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
@@ -574,7 +575,7 @@
       "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0x0A4ca16Aff20611748cAC8Df2CDfdd5F7d189F94",
+        "address": "0x5865F29a5A9D5BA8950C13506b014F1377F0b89f",
         "chain": "zksync2",
         "decimals": 8,
         "sinceTimestamp": 1717521479
@@ -582,7 +583,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-GOVI",
+      "id": "zksync2-GOVI-1",
       "priceId": "govi",
       "symbol": "GOVI",
       "name": "GOVI",
@@ -599,7 +600,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-GRT",
+      "id": "zksync2-GRT-1",
       "priceId": "the-graph",
       "symbol": "GRT",
       "name": "Graph Token",
@@ -616,7 +617,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-GTC",
+      "id": "zksync2-GTC-1",
       "priceId": "gitcoin",
       "symbol": "GTC",
       "name": "Gitcoin",
@@ -633,7 +634,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-HEU",
+      "id": "zksync2-HEU-1",
       "priceId": "heurist",
       "symbol": "HEU",
       "name": "Heurist",
@@ -666,7 +667,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-HOP",
+      "id": "zksync2-HOP-1",
       "priceId": "hop-protocol",
       "symbol": "HOP",
       "name": "Hop",
@@ -683,7 +684,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-INJ",
+      "id": "zksync2-INJ-1",
       "priceId": "injective-protocol",
       "symbol": "INJ",
       "name": "Injective Token",
@@ -700,7 +701,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-KNC",
+      "id": "zksync2-KNC-1",
       "priceId": "kyber-network-crystal",
       "symbol": "KNC",
       "name": "Kyber Network Crystal v2",
@@ -717,7 +718,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-KOI",
+      "id": "zksync2-KOI-1",
       "priceId": "koi-3",
       "symbol": "KOI",
       "name": "Koi",
@@ -734,7 +735,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-LDO",
+      "id": "zksync2-LDO-1",
       "priceId": "lido-dao",
       "symbol": "LDO",
       "name": "Lido DAO Token",
@@ -751,7 +752,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-LINK",
+      "id": "zksync2-LINK-1",
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
@@ -768,7 +769,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-LQTY",
+      "id": "zksync2-LQTY-1",
       "priceId": "liquity",
       "symbol": "LQTY",
       "name": "LQTY",
@@ -785,7 +786,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-LUSD",
+      "id": "zksync2-LUSD-1",
       "priceId": "liquity-usd",
       "symbol": "LUSD",
       "name": "LUSD Stablecoin",
@@ -802,7 +803,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-MAGIC",
+      "id": "zksync2-MAGIC-1",
       "priceId": "magic",
       "symbol": "MAGIC",
       "name": "MAGIC",
@@ -819,7 +820,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-MATIC",
+      "id": "zksync2-MATIC-1",
       "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
@@ -836,7 +837,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-MAV",
+      "id": "zksync2-MAV-1",
       "priceId": "maverick-protocol",
       "symbol": "MAV",
       "name": "Maverick Token",
@@ -869,7 +870,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-mETH",
+      "id": "zksync2-mETH-1",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
@@ -886,7 +887,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-Metis",
+      "id": "zksync2-Metis-1",
       "priceId": "metis-token",
       "symbol": "Metis",
       "name": "Metis Token",
@@ -903,7 +904,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-MUTE",
+      "id": "zksync2-MUTE-1",
       "priceId": "mute",
       "symbol": "MUTE",
       "name": "Mute.io",
@@ -920,7 +921,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-MVI",
+      "id": "zksync2-MVI-1",
       "priceId": "metaverse-index",
       "symbol": "MVI",
       "name": "Metaverse Index",
@@ -937,7 +938,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-NEXT",
+      "id": "zksync2-NEXT-1",
       "priceId": "connext",
       "symbol": "NEXT",
       "name": "Connext",
@@ -954,7 +955,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-OCEAN",
+      "id": "zksync2-OCEAN-1",
       "priceId": "ocean-protocol",
       "symbol": "OCEAN",
       "name": "Ocean Token",
@@ -971,7 +972,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-OLAS",
+      "id": "zksync2-OLAS-1",
       "priceId": "autonolas",
       "symbol": "OLAS",
       "name": "Autonolas",
@@ -988,7 +989,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-PEPE",
+      "id": "zksync2-PEPE-1",
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
@@ -1005,7 +1006,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-PERP",
+      "id": "zksync2-PERP-1",
       "priceId": "perpetual-protocol",
       "symbol": "PERP",
       "name": "Perpetual",
@@ -1022,7 +1023,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-POL",
+      "id": "zksync2-POL-1",
       "priceId": "polygon-ecosystem-token",
       "symbol": "POL",
       "name": "Polygon Ecosystem Token",
@@ -1039,7 +1040,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-POWR",
+      "id": "zksync2-POWR-1",
       "priceId": "power-ledger",
       "symbol": "POWR",
       "name": "PowerLedger",
@@ -1056,7 +1057,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-pufETH",
+      "id": "zksync2-pufETH-1",
       "priceId": "pufeth",
       "symbol": "pufETH",
       "name": "pufETH",
@@ -1073,7 +1074,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-rETH",
+      "id": "zksync2-rETH-1",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
       "name": "Rocket Pool ETH",
@@ -1090,7 +1091,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-RNDR",
+      "id": "zksync2-RNDR-1",
       "priceId": "render-token",
       "symbol": "RNDR",
       "name": "Render Token",
@@ -1107,7 +1108,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-RPL",
+      "id": "zksync2-RPL-1",
       "priceId": "rocket-pool",
       "symbol": "RPL",
       "name": "Rocket Pool Protocol",
@@ -1144,21 +1145,21 @@
       "id": "zksync2-rsETH-2",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
-      "name": "KelpDao Restaked ETH",
+      "name": "rsETH",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0x6bE2425C381eb034045b527780D2Bf4E21AB7236",
+        "address": "0xBc3DE055bdDc9466766B0EC79E0bA1Da112a832A",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1715792840
-      },
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
+        "sinceTimestamp": 1717521479
+      }
     },
     {
       "mode": "auto",
-      "id": "zksync2-rswETH",
+      "id": "zksync2-rswETH-1",
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
@@ -1175,7 +1176,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-sfrxETH",
+      "id": "zksync2-sfrxETH-1",
       "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
@@ -1192,7 +1193,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-SHIB",
+      "id": "zksync2-SHIB-1",
       "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
@@ -1209,7 +1210,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-SIS",
+      "id": "zksync2-SIS-1",
       "priceId": "symbiosis-finance",
       "symbol": "SIS",
       "name": "Symbiosis",
@@ -1226,7 +1227,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-SOL",
+      "id": "zksync2-SOL-1",
       "priceId": "sol-wormhole",
       "symbol": "SOL",
       "name": "Wrapped SOL",
@@ -1243,7 +1244,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-STG",
+      "id": "zksync2-STG-1",
       "priceId": "stargate-finance",
       "symbol": "STG",
       "name": "StargateToken",
@@ -1260,7 +1261,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-STORJ",
+      "id": "zksync2-STORJ-1",
       "priceId": "storj",
       "symbol": "STORJ",
       "name": "StorjToken",
@@ -1277,7 +1278,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-SUSHI",
+      "id": "zksync2-SUSHI-1",
       "priceId": "sushi",
       "symbol": "SUSHI",
       "name": "SushiToken",
@@ -1294,7 +1295,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-tBTC",
+      "id": "zksync2-tBTC-1",
       "priceId": "tbtc",
       "symbol": "tBTC",
       "name": "tBTC v2",
@@ -1311,7 +1312,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-TONCOIN",
+      "id": "zksync2-TONCOIN-1",
       "priceId": "the-open-network",
       "symbol": "TONCOIN",
       "name": "Wrapped TON Coin",
@@ -1328,7 +1329,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-TRB",
+      "id": "zksync2-TRB-1",
       "priceId": "tellor",
       "symbol": "TRB",
       "name": "Tellor Tributes",
@@ -1345,7 +1346,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-UNI",
+      "id": "zksync2-UNI-1",
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
@@ -1362,7 +1363,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-UOS",
+      "id": "zksync2-UOS-1",
       "priceId": "ultra",
       "symbol": "UOS",
       "name": "Ultra Token",
@@ -1399,21 +1400,21 @@
       "id": "zksync2-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
-      "name": "USDC",
+      "name": "USD Coin",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
       "amount": {
         "type": "totalSupply",
-        "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+        "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
         "chain": "zksync2",
         "decimals": 6,
-        "sinceTimestamp": 1706644361
-      },
-      "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+        "sinceTimestamp": 1717521479
+      }
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDM",
+      "id": "zksync2-USDM-1",
       "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
       "name": "Mountain Protocol USD",
@@ -1430,7 +1431,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDN",
+      "id": "zksync2-USDN-1",
       "priceId": "noon-usn",
       "symbol": "USDN",
       "name": "USN Token",
@@ -1468,20 +1469,21 @@
       "priceId": "paxos-standard",
       "symbol": "USDP",
       "name": "Pax Dollar",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+        "chain": "ethereum",
+        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "decimals": 18,
+        "sinceTimestamp": 1676367083
+      },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x77439055ef240ef84cbAa8332CFE2823e71dd07B",
-        "chain": "zksync2",
-        "decimals": 18,
-        "sinceTimestamp": 1717521479
-      }
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-USDT",
+      "id": "zksync2-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -1498,7 +1500,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-VERI",
+      "id": "zksync2-VERI-1",
       "priceId": "veritaseum",
       "symbol": "VERI",
       "name": "Veritaseum",
@@ -1515,7 +1517,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-VIRTUAL",
+      "id": "zksync2-VIRTUAL-1",
       "priceId": "virtual-protocol",
       "symbol": "VIRTUAL",
       "name": "Virtual Protocol",
@@ -1532,7 +1534,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-WAVAX",
+      "id": "zksync2-WAVAX-1",
       "priceId": "avalanche-wormhole",
       "symbol": "WAVAX",
       "name": "Wrapped AVAX",
@@ -1549,7 +1551,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-WBTC",
+      "id": "zksync2-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -1566,7 +1568,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-weETH",
+      "id": "zksync2-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -1583,7 +1585,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-WETH",
+      "id": "zksync2-WETH-1",
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
@@ -1600,7 +1602,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-WLD",
+      "id": "zksync2-WLD-1",
       "priceId": "worldcoin-wld",
       "symbol": "WLD",
       "name": "Worldcoin",
@@ -1617,7 +1619,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-WOO",
+      "id": "zksync2-WOO-1",
       "priceId": "woo-network",
       "symbol": "WOO",
       "name": "Wootrade Network",
@@ -1655,20 +1657,21 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false,
       "amount": {
-        "type": "totalSupply",
-        "address": "0xCafB42a2654C20cb3739F04243E925aa47302bec",
-        "chain": "zksync2",
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x41527B2d03844dB6b0945f25702cB958b6d55989",
         "decimals": 18,
-        "sinceTimestamp": 1717521479
-      }
+        "sinceTimestamp": 1698058151
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "zksync2-XCAD",
+      "id": "zksync2-XCAD-1",
       "priceId": "xcad-network",
       "symbol": "XCAD",
       "name": "XCAD Token",
@@ -1717,7 +1720,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-ZKS",
+      "id": "zksync2-ZKS-1",
       "priceId": "zkspace",
       "symbol": "ZKS",
       "name": "Zks",

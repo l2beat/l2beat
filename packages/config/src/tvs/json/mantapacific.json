@@ -124,7 +124,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-mBTC",
+      "id": "mantapacific-mBTC-1",
       "priceId": "manta-mbtc",
       "symbol": "mBTC",
       "name": "mBTC",
@@ -141,7 +141,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-mETH",
+      "id": "mantapacific-mETH-1",
       "priceId": "manta-meth",
       "symbol": "mETH",
       "name": "mETH",
@@ -158,7 +158,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-mUSD",
+      "id": "mantapacific-mUSD-1",
       "priceId": "manta-musd",
       "symbol": "mUSD",
       "name": "mUSD",
@@ -251,19 +251,20 @@
       "symbol": "STONE",
       "name": "StakeStone Ether",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-        "chain": "mantapacific",
+        "type": "balanceOfEscrow",
+        "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
         "decimals": 18,
         "sinceTimestamp": 1700611200
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "mantapacific-sUSDe",
+      "id": "mantapacific-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -369,7 +370,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantapacific-USDe",
+      "id": "mantapacific-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",

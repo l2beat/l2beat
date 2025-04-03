@@ -298,7 +298,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantle-mETH",
+      "id": "mantle-mETH-1",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
@@ -436,7 +436,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantle-sUSDe",
+      "id": "mantle-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -489,7 +489,7 @@
     },
     {
       "mode": "auto",
-      "id": "mantle-USDe",
+      "id": "mantle-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
