@@ -76,10 +76,9 @@ export function Viewport() {
       ref={containerRef}
       className={clsx(
         'relative h-full w-full overflow-hidden bg-coffee-800',
+        'touch-none', // Prevent browser handling of touch events
         mouseControls.isResizing && 'cursor-col-resize',
       )}
-      // Add touch-action CSS to prevent browser handling
-      style={{ touchAction: 'none' }}
     >
       <ScalableView ref={viewRef}>
         <NodesAndConnections />
