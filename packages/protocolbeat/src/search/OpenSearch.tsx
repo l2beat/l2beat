@@ -65,7 +65,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
 
   return (
     <>
-      <div className="flex min-w-[30rem] rounded border bg-coffee-700 p-1">
+      <div className="flex min-w-[20rem] rounded border bg-coffee-700 p-1">
         <div className="flex w-full items-center gap-2">
           <IconSearch />
           <input

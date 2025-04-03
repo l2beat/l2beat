@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "ethereum",
-  "blockNumber": 22065300,
+  "blockNumber": 22187317,
   "configHash": "0x25b7d461ba7c52a91774729ad9a6527a3a121f220b2fa6f46ddc32094ef0143c",
   "entries": [
     {
@@ -121,14 +121,14 @@
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
           "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
           "0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
-          "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044"
+          "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
         ],
         "$threshold": 2,
         "domainSeparator": "0x64412860115383b11fa25f237671c0f1360620ce4cb4483a378e947a2eaf2d69",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 19,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -171,11 +171,11 @@
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 953, "last": 952 },
+        "intentQueue": { "first": 1607, "last": 1606 },
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 2000000,
         "messageReceiver": "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 952,
+        "nonce": 1606,
         "owner": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -187,7 +187,7 @@
       "derivedName": "EverclearSpoke"
     },
     {
-      "address": "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044",
+      "address": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
       "type": "EOA",
       "proxyType": "EOA"
     },

@@ -4,7 +4,6 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { LEVEL, type LogLevel } from './LogLevel'
-import { LogThrottle, type LogThrottleOptions } from './LogThrottle'
 import { parseLogArguments } from './parseLogArguments'
 import { resolveError } from './resolveError'
 import { tagService } from './tagService'
@@ -17,7 +16,10 @@ export class Logger {
   private readonly options: LoggerOptions
   private readonly logLevel: number
   private readonly cwd: string
-  private throttle?: LogThrottle
+
+  get metricsEnabled(): boolean {
+    return this.options.metricsEnabled ?? false
+  }
 
   constructor(options: Partial<LoggerOptions>) {
     this.options = {
@@ -102,7 +104,6 @@ export class Logger {
 
   configure(options: Partial<LoggerOptions>): Logger {
     const logger = new Logger({ ...this.options, ...options })
-    logger.throttle = this.throttle
     return logger
   }
 
@@ -121,24 +122,6 @@ export class Logger {
     >,
   ): Logger {
     return this.configure(tags)
-  }
-
-  withThrottling(options: LogThrottleOptions): Logger {
-    const logger = new Logger(this.options)
-    logger.throttle = new LogThrottle(
-      {
-        print: (level, service, message, parameters) =>
-          logger.print({
-            time: logger.options.getTime(),
-            level,
-            service,
-            message,
-            parameters,
-          }),
-      },
-      options,
-    )
-    return logger
   }
 
   critical(...args: unknown[]): void {
@@ -181,6 +164,12 @@ export class Logger {
     }
   }
 
+  metric(...args: unknown[]): void {
+    if (this.options.metricsEnabled) {
+      this.print(this.parseEntry('METRIC', args))
+    }
+  }
+
   private parseEntry(level: LogLevel, args: unknown[]): LogEntry {
     const parsed = parseLogArguments(args)
     return {
@@ -200,14 +189,6 @@ export class Logger {
   }
 
   private print(entry: LogEntry): void {
-    if (this.throttle?.throttle(entry.level, entry.service, entry.message)) {
-      return
-    }
-
-    this.printExactly(entry)
-  }
-
-  private printExactly(entry: LogEntry): void {
     this.options.transports.forEach((transportOptions) => {
       const output = transportOptions.formatter.format(entry)
       switch (entry.level) {
@@ -219,6 +200,7 @@ export class Logger {
           transportOptions.transport.warn(output)
           break
         case 'INFO':
+        case 'METRIC':
           transportOptions.transport.log(output)
           break
         case 'DEBUG':

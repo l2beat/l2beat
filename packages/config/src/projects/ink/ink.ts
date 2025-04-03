@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -36,6 +36,11 @@ export const ink: ScalingProject = opStackL2({
         'https://t.me/inkonchain',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   },
   finality: {
     type: 'OPStack',

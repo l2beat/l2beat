@@ -322,6 +322,11 @@ export const optimism: ScalingProject = {
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1725314400), // 2024-09-03T00:00:00Z
+  },
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,
