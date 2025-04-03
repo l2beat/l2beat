@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
 import { EcosystemsProjectsChart } from '../_components/charts/ecosystems-projects-chart'
@@ -42,33 +41,25 @@ export default async function Page({ params }: Props) {
         />
         <main className="mt-3 space-y-[--spacing]">
           <div className="grid grid-cols-2 gap-[--spacing]">
-            <PrimaryCard>
-              <EcosystemsTvsChart
-                name={ecosystem.name}
-                entries={ecosystem.projects}
-              />
-            </PrimaryCard>
-            <PrimaryCard>
-              <EcosystemsActivityChart
-                name={ecosystem.name}
-                entries={ecosystem.projects}
-              />
-            </PrimaryCard>
+            <EcosystemsTvsChart
+              name={ecosystem.name}
+              entries={ecosystem.projects}
+            />
+            <EcosystemsActivityChart
+              name={ecosystem.name}
+              entries={ecosystem.projects}
+            />
           </div>
           <div className="grid grid-cols-3 gap-[--spacing]">
             <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
             <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
             <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
           </div>
-          <PrimaryCard>
-            <EcosystemsProjectsChart
-              entries={ecosystem.projects}
-              allScalingProjectsCount={ecosystem.allScalingProjectsCount}
-            />
-          </PrimaryCard>
-          <PrimaryCard>
-            <EcosystemProjectsTable entries={ecosystem.projects} />
-          </PrimaryCard>
+          <EcosystemsProjectsChart
+            entries={ecosystem.projects}
+            allScalingProjectsCount={ecosystem.allScalingProjectsCount}
+          />
+          <EcosystemProjectsTable entries={ecosystem.projects} />
         </main>
       </div>
     </div>

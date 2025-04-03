@@ -23,6 +23,7 @@ import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 
 export function EcosystemsTvsChart({
@@ -68,7 +69,7 @@ export function EcosystemsTvsChart({
   const range = getChartRange(chartData)
 
   return (
-    <div>
+    <EcosystemWidget>
       <Header range={range} stats={stats} unit={unit} />
       <ChartContainer
         meta={chartMeta}
@@ -112,7 +113,7 @@ export function EcosystemsTvsChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-    </div>
+    </EcosystemWidget>
   )
 }
 

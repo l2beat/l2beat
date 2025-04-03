@@ -20,6 +20,7 @@ import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatTimestamp } from '~/utils/dates'
+import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 
 interface Props {
@@ -47,7 +48,7 @@ export function EcosystemsProjectsChart({
   const range = getChartRange(data)!
   const stats = getStats(data, allScalingProjectsCount)
   return (
-    <div>
+    <EcosystemWidget>
       <Header range={range} stats={stats} />
       <ChartContainer
         meta={chartMeta}
@@ -84,7 +85,7 @@ export function EcosystemsProjectsChart({
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
-    </div>
+    </EcosystemWidget>
   )
 }
 

@@ -31,6 +31,7 @@ import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 
 export function EcosystemsActivityChart({
@@ -91,7 +92,7 @@ export function EcosystemsActivityChart({
   const range = getChartRange(chartData)
 
   return (
-    <div>
+    <EcosystemWidget>
       <Header range={range} stats={stats} />
       <ChartContainer
         data={chartData}
@@ -163,7 +164,7 @@ export function EcosystemsActivityChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-    </div>
+    </EcosystemWidget>
   )
 }
 
