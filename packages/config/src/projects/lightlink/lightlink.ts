@@ -184,27 +184,6 @@ export const lightlink: ScalingProject = {
       },
     ],
   },
-  technology: {
-    otherConsiderations: [
-      {
-        name: 'Destination tokens are upgradable',
-        description:
-          'ERC20 tokens through the L1ERC20Predicate on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
-        references: [
-          {
-            title: 'Token Implementation - requireMultisig()',
-            url: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
-          },
-        ],
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'destination token contract is maliciously upgraded.',
-          },
-        ],
-      },
-    ],
-  },
   contracts: {
     addresses: {
       [discovery.chain]: [...discovery.getDiscoveredContracts()],
