@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import type { ApiProjectChain, ApiProjectContract } from '../api/types'
-import { IconChatbot } from '../icons/IconChatbot'
 import { isReadOnly } from '../config'
+import { IconChatbot } from '../icons/IconChatbot'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
@@ -116,11 +116,17 @@ const toClipboard = async (
 
       const abis: string[] = []
       if ('abis' in contract) {
-        abis.push(`\nThis is the ABI`)
+        abis.push(
+          `\nThis is the ABI. If there is a selector it will be put after //`,
+        )
 
         for (const a of (contract as ApiProjectContract).abis) {
           for (const e of a.entries) {
-            abis.push(e.value)
+            let abi = e.value
+            if (e.signature) {
+              abi += ` //${e.signature}`
+            }
+            abis.push(abi)
           }
         }
       }
