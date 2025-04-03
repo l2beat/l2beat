@@ -59,7 +59,6 @@ export interface Config {
   readonly da: DataAvailabilityTrackingConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
-  readonly clientMetricsEnabled: boolean
 }
 
 export interface ApiConfig {
