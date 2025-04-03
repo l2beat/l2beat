@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -32,6 +32,11 @@ export const unichain: ScalingProject = opStackL2({
         'https://discord.com/invite/uniswap',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1728932992), // 2024-10-14T19:09:00Z
   },
   scopeOfAssessment: {
     inScope: [

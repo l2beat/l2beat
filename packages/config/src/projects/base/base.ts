@@ -160,6 +160,11 @@ export const base: ScalingProject = {
     },
     finality: { finalizationPeriod: maxClockDuration },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1689206400), // 2023-07-13T00:00:00Z
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

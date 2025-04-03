@@ -62,7 +62,10 @@ export function ProjectScalingSummary({ project }: Props) {
             <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
 
             <div className="max-md:hidden">
-              <DesktopProjectLinks projectLinks={project.header.links} />
+              <DesktopProjectLinks
+                projectLinks={project.header.links}
+                variant="header"
+              />
             </div>
             <div className="grid w-full md:gap-3 xl:grid-cols-3 [@media(min-width:1000px)]:grid-cols-[260px_1fr_1fr] [@media(min-width:1300px)]:grid-cols-[300px_1fr_1fr]">
               <ValueSecuredSummary

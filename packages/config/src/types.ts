@@ -106,6 +106,8 @@ export interface BaseProject {
   finalityInfo?: ProjectFinalityInfo
   finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
+  ecosystemInfo?: ProjectEcosystemInfo
+  ecosystemConfig?: ProjectEcosystemConfig
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -872,6 +874,32 @@ export interface AvailDaTrackingConfig {
   appId: string
   sinceBlock: number
   untilBlock?: number
+}
+
+export interface ProjectEcosystemInfo {
+  id: ProjectId
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+}
+
+export interface ProjectEcosystemConfig {
+  colors: {
+    primary: `#${string}`
+    secondary: `#${string}`
+  }
+  ecosystemToken?: {
+    name: string
+    chain: string
+    description: string
+  }
+  links?: {
+    tools?: string[]
+    forBuilders?: string
+    grants?: string
+    governanceTopDelegates?: string
+    governanceLatestProposals?: string
+  }
+  governanceReviews: boolean
 }
 // #endregion
 
