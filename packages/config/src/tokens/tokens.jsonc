@@ -6322,6 +6322,13 @@
   ],
   "celo": [
     {
+      "symbol": "USDGLO",
+      "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "CELO",
       "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
       "source": "native",
@@ -6330,24 +6337,28 @@
     {
       "symbol": "cUSD",
       "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+      "category": "stablecoin",
       "source": "native",
       "supply": "circulatingSupply"
     },
     {
       "symbol": "cEURO",
       "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+      "category": "stablecoin",
       "source": "native",
       "supply": "circulatingSupply"
     },
     {
       "symbol": "cREAL",
       "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+      "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
     },
     {
       "symbol": "cKES",
       "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+      "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
     },
@@ -6361,6 +6372,7 @@
     {
       "symbol": "USDC",
       "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+      "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
     },
