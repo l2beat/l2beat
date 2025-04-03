@@ -12,7 +12,7 @@ export function PanelHeader(props: { id: PanelId }) {
   const isActive = useMultiViewStore((state) => state.active === props.id)
   const changePanel = useMultiViewStore((state) => state.changePanel)
   const pickUp = useMultiViewStore((state) => state.pickUp)
-  const toggleFullScren = useMultiViewStore((state) => state.toggleFullScren)
+  const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const removePanel = useMultiViewStore((state) => state.removePanel)
 
   const availablePanels = isReadOnly
@@ -42,7 +42,7 @@ export function PanelHeader(props: { id: PanelId }) {
         }
       />
       <div className="hidden gap-1 md:group-hover:flex">
-        <button className="w-4" onClick={() => toggleFullScren(props.id)}>
+        <button className="w-4" onClick={() => toggleFullScreen(props.id)}>
           {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
         </button>
         <button className="w-4" onClick={() => removePanel(props.id)}>

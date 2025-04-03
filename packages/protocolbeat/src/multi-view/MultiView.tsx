@@ -2,6 +2,7 @@ import { type ComponentType, useEffect, useRef, useState } from 'react'
 import { BottomBar } from './BottomBar'
 import { Panel } from './Panel'
 import { TopBar } from './TopBar'
+import { useBreakpoint } from './hooks/useBreakpoint'
 import { type PanelId, useMultiViewStore } from './store'
 
 const RESIZE_AREA = 20
@@ -14,6 +15,7 @@ export interface MultiViewProps {
 
 export function MultiView(props: MultiViewProps) {
   const panelContainerRef = useRef<HTMLDivElement>(null)
+  const isMobileOrTablet = useBreakpoint()
 
   const panels = useMultiViewStore((state) => state.panels)
   const fullScreen = useMultiViewStore((state) => state.fullScreen)
@@ -23,7 +25,21 @@ export function MultiView(props: MultiViewProps) {
   const drop = useMultiViewStore((state) => state.drop)
   const order = useMultiViewStore((state) => state.order)
   const setActivePanel = useMultiViewStore((state) => state.setActivePanel)
+  const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const [sizes, setSizes] = useState<number[]>([])
+
+  useEffect(() => {
+    const firstPanel = panels[0]
+
+    if (isMobileOrTablet && !fullScreen && firstPanel) {
+      toggleFullScreen(firstPanel.id)
+    }
+
+    // Naive switch-back on desktop
+    if (!isMobileOrTablet && fullScreen) {
+      toggleFullScreen(fullScreen)
+    }
+  }, [isMobileOrTablet, fullScreen, panels, toggleFullScreen])
 
   function getPanelElements() {
     const container = panelContainerRef.current

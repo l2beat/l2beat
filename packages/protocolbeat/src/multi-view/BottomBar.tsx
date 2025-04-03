@@ -27,7 +27,7 @@ export function BottomBar() {
   const loadLayout = useMultiViewStore((state) => state.loadLayout)
   const addPanel = useMultiViewStore((state) => state.addPanel)
   const removePanel = useMultiViewStore((state) => state.removePanel)
-  const toggleFullScren = useMultiViewStore((state) => state.toggleFullScren)
+  const toggleFullScreen = useMultiViewStore((state) => state.toggleFullScreen)
   const discover = useTerminalStore((state) => state.discover)
   const setOpen = useSearchStore((state) => state.setOpen)
 
@@ -48,7 +48,7 @@ export function BottomBar() {
         removePanel()
       }
       if (e.code === 'KeyF' && e.altKey) {
-        toggleFullScren()
+        toggleFullScreen()
       }
       if (e.code === 'KeyP' && e.altKey) {
         setOpen(true)
