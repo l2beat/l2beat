@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x3fd2749cd5ddbf7c65ae87c0b20bc73e2526480c
+Generated with discovered.json: 0xa62506288a5e89088402962b6ce12c0da428c979
+
+# Diff at Thu, 03 Apr 2025 14:34:03 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 22166261
+- current block number: 22188901
+
+## Description
+
+Renamed SP1SuccinctGateway to SP1VerifierGateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166261 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      template:
+-        "succinct/SP1SuccinctGateway"
++        "succinct/SP1VerifierGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Poseidon2 (0xFd234971881a7c72965175fA8E438c97B2Dcd273)
+    +++ description: Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.
+```
+
+Generated with discovered.json: 0x41709762830ca7f85d38f855f7c24a2bf7521f8e
 
 # Diff at Mon, 31 Mar 2025 10:20:30 GMT:
 
