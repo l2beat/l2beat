@@ -31,6 +31,7 @@ export interface LoggerOptions {
   getTime: () => Date
   reportError: (entry: LogEntry) => void
   transports: LoggerTransportOptions[]
+  metricsEnabled?: boolean
 }
 
 export interface LogEntry {

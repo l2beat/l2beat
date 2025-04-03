@@ -180,7 +180,7 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-ezETH",
+      "id": "fraxtal-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -431,14 +431,15 @@
       "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-        "chain": "fraxtal",
+        "type": "balanceOfEscrow",
+        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "chain": "ethereum",
+        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "decimals": 18,
-        "sinceTimestamp": 1710892800
+        "sinceTimestamp": 1710979200
       },
       "category": "other",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -537,14 +538,15 @@
       "symbol": "USDe",
       "name": "USDe",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-        "chain": "fraxtal",
+        "type": "balanceOfEscrow",
+        "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+        "chain": "ethereum",
+        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
         "decimals": 18,
-        "sinceTimestamp": 1710280993
+        "sinceTimestamp": 1706811599
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

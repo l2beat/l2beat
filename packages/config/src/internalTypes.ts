@@ -17,6 +17,7 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectDiscoveryInfo,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -62,6 +63,8 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  /** Ecosystem information */
+  ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
   dataAvailability?: ProjectScalingDa
   /** Details about the custom availability solution */

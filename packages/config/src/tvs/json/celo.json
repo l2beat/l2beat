@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "celo-CELO",
+      "id": "celo-CELO-1",
       "priceId": "celo",
       "symbol": "CELO",
       "name": "Celo native asset",
@@ -30,7 +30,7 @@
         "decimals": 18,
         "sinceTimestamp": 1742960663
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "native",
       "isAssociated": false
     },
@@ -47,7 +47,7 @@
         "decimals": 18,
         "sinceTimestamp": 1742960663
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "native",
       "isAssociated": false
     },
@@ -64,7 +64,7 @@
         "decimals": 18,
         "sinceTimestamp": 1742960663
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "native",
       "isAssociated": false
     },
@@ -80,7 +80,7 @@
         "decimals": 18,
         "sinceTimestamp": 1742960663
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "native",
       "isAssociated": false
     },
@@ -119,7 +119,7 @@
     },
     {
       "mode": "auto",
-      "id": "celo-USDC",
+      "id": "celo-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",
@@ -130,13 +130,30 @@
         "decimals": 6,
         "sinceTimestamp": 1742960663
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "native",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "celo-USDT",
+      "id": "celo-USDGLO",
+      "priceId": "glo-dollar",
+      "symbol": "USDGLO",
+      "name": "Glo Dollar",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -171,18 +188,19 @@
     {
       "mode": "auto",
       "id": "celo-WETH-2",
-      "priceId": "wormhole-bridged-weth-celo",
+      "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207",
-        "chain": "celo",
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0x9C4955b92F34148dbcfDCD82e9c9eCe5CF2badfe",
         "decimals": 18,
-        "sinceTimestamp": 1742960663
+        "sinceTimestamp": 1741879559
       },
-      "category": "other",
-      "source": "external",
+      "category": "ether",
+      "source": "canonical",
       "isAssociated": false
     }
   ]

@@ -2,7 +2,9 @@ import crypto from 'crypto'
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { ProjectService } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { getImageDimensions } from '~/utils/project/get-image-params'
 
 describe('icons', () => {
   const icons = readdirSync(path.join(__dirname, `../../public/icons`), {
@@ -14,7 +16,10 @@ describe('icons', () => {
 
   it('every project has an icon', async () => {
     const ps = new ProjectService()
-    const projects = await ps.getProjects({})
+    const projects = await ps.getProjects({
+      // We handle ecosystem logos in a different way
+      whereNot: ['ecosystemConfig'],
+    })
     const uniqueSlugs = projects
       .map((x) => x.slug)
       .filter((x, i, a) => a.indexOf(x) === i) // unique
@@ -32,8 +37,9 @@ describe('icons', () => {
         const buffer = readFileSync(
           path.join(__dirname, `../../public/icons/${slug}.png`),
         )
-        const width = buffer.readUInt32BE(16)
-        const height = buffer.readUInt32BE(20)
+        const dimensions = getImageDimensions(buffer)
+        assert(dimensions, `No dimensions for ${slug}`)
+        const { width, height } = dimensions
         const size = buffer.length
         const hash = crypto.createHash('md5').update(buffer).digest('hex')
 

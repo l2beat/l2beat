@@ -4,20 +4,34 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "edgeless-ETH",
+      "id": "edgeless-ETH-2",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "native",
-        "chain": "ethereum",
-        "escrowAddress": "0x6B595398152999bBc759D5D8ed8169793F915488",
-        "decimals": 18,
-        "sinceTimestamp": 1711069223
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b",
+            "decimals": 18,
+            "sinceTimestamp": 1711057199
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9",
+            "decimals": 18,
+            "sinceTimestamp": 1713942971
+          }
+        ]
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {

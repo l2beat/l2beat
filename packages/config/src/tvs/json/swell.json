@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "swell-ENA",
+      "id": "swell-ENA-1",
       "priceId": "ethena",
       "symbol": "ENA",
       "name": "ENA",
@@ -53,7 +53,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-ezETH",
+      "id": "swell-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -70,7 +70,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-pzETH",
+      "id": "swell-pzETH-1",
       "priceId": "renzo-restaked-lst",
       "symbol": "pzETH",
       "name": "Renzo Restaked LST",
@@ -87,7 +87,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-rsETH",
+      "id": "swell-rsETH-1",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
@@ -121,7 +121,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-rswETH",
+      "id": "swell-rswETH-1",
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
@@ -155,7 +155,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-sUSDe",
+      "id": "swell-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -189,7 +189,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-SWELL",
+      "id": "swell-SWELL-1",
       "priceId": "swell-network",
       "symbol": "SWELL",
       "name": "Swell Governance Token",
@@ -240,7 +240,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-USDe",
+      "id": "swell-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -257,7 +257,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-USDT",
+      "id": "swell-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -274,7 +274,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-weETH",
+      "id": "swell-weETH-1",
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
@@ -291,7 +291,7 @@
     },
     {
       "mode": "auto",
-      "id": "swell-wstETH",
+      "id": "swell-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -299,12 +299,12 @@
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
-        "escrowAddress": "0x7aA4960908B13D104bf056B23E2C76B43c5AACc8",
+        "escrowAddress": "0xecf3376512EDAcA4FBB63d2c67d12a0397d24121",
         "decimals": 18,
-        "sinceTimestamp": 1732696703
+        "sinceTimestamp": 1734102575
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     }
   ]

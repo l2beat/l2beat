@@ -53,7 +53,7 @@
     },
     {
       "mode": "auto",
-      "id": "superseed-USDC",
+      "id": "superseed-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",

@@ -76,7 +76,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargate-mETH",
+      "id": "stargate-mETH-1",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",

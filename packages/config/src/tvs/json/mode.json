@@ -39,7 +39,7 @@
     },
     {
       "mode": "auto",
-      "id": "mode-ALEX",
+      "id": "mode-ALEX-1",
       "priceId": "alexgo",
       "symbol": "ALEX",
       "name": "ALEX",
@@ -160,7 +160,7 @@
     },
     {
       "mode": "auto",
-      "id": "mode-ezETH",
+      "id": "mode-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -280,7 +280,7 @@
     },
     {
       "mode": "auto",
-      "id": "mode-SolvBTC",
+      "id": "mode-SolvBTC-1",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
@@ -297,7 +297,7 @@
     },
     {
       "mode": "auto",
-      "id": "mode-STONE",
+      "id": "mode-STONE-1",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -314,7 +314,7 @@
     },
     {
       "mode": "auto",
-      "id": "mode-sUSDe",
+      "id": "mode-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -367,7 +367,7 @@
     },
     {
       "mode": "auto",
-      "id": "mode-USDe",
+      "id": "mode-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
