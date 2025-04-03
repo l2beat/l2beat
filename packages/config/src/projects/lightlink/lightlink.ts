@@ -200,6 +200,7 @@ export const lightlink: ScalingProject = {
       ),
     },
   },
+  technology: {},
 }
 
 function getMinValidatorsForConsensus(
