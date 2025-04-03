@@ -8,9 +8,11 @@ export function getTechnologySectionProps(
   if (items.length === 0) {
     return undefined
   }
+  const nonEmptyItems = items.filter((i) => i.name !== 'Empty')
   return {
     isUnderReview:
-      items.every((x) => x.isUnderReview) || project.statuses.isUnderReview,
-    items,
+      nonEmptyItems.every((x) => x.isUnderReview) ||
+      project.statuses.isUnderReview,
+    items: nonEmptyItems,
   }
 }
