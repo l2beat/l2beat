@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import type { ApiProjectChain, ApiProjectContract } from '../api/types'
+import { IconChatbot } from '../icons/IconChatbot'
 import { IconClose } from '../icons/IconClose'
 import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
@@ -48,7 +49,7 @@ export function PanelHeader(props: { id: PanelId }) {
           className="w-4"
           hidden={!['code', 'values'].includes(props.id)}
         >
-          cc
+          <IconChatbot />
         </button>
         <button className="w-4" onClick={() => toggleFullScreen(props.id)}>
           {isFullScreen ? <IconFullscreenExit /> : <IconFullscreen />}
@@ -104,10 +105,7 @@ const toClipboard = async (
         )
 
         for (const f of (contract as ApiProjectContract).fields) {
-          const obj = { ...f.value }
-          //@ts-ignore
-          delete obj.type
-          fields.push(`${f.name}: ${JSON.stringify(obj)}`)
+          fields.push(`${f.name}: ${JSON.stringify(f.value)}`)
         }
       }
 
