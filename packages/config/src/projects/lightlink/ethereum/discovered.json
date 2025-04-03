@@ -2,10 +2,15 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 22179980,
-  "configHash": "0xb79f71a6758be44b642e2a23f7f1c124832c17bb10b153184f1ad3a16945550b",
+  "configHash": "0x5874f8705d4ca36faf9fa0a892dc5ae0652d6898799b976628ad09cd4f1a4c25",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -115,6 +120,124 @@
       "derivedName": "ChainOracle"
     },
     {
+      "name": "Multisig",
+      "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1692154319,
+      "sinceBlock": 17924532,
+      "values": {
+        "$immutable": true,
+        "getMemberByIndex": [
+          "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+          "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
+        ],
+        "getMembers": [
+          "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
+          "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
+        ],
+        "getTransaction": [
+          [
+            [
+              true,
+              "0x624631881655a310adcF0d1336658Cc977609b72",
+              "0x761c91c1000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000300000000000000000000000012ece4aa73ee8ea958be327dae41dd785c9971180000000000000000000000006f933814903561f79137099587737dfb24c6e86d000000000000000000000000b44c32dd1ec374224eed43fd827ebe64db16b0df0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000014",
+              0,
+              2
+            ],
+            "0x761c91c1"
+          ],
+          [
+            [
+              true,
+              "0x624631881655a310adcF0d1336658Cc977609b72",
+              "0x47dcdaee0000000000000000000000000000000000000000000000000000000000000050",
+              0,
+              2
+            ],
+            "0x47dcdaee"
+          ],
+          [
+            [
+              true,
+              "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+              "0xf4a120f7000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+              0,
+              2
+            ],
+            "0xf4a120f7"
+          ],
+          [
+            [
+              true,
+              "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+              "0xf4a120f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+              0,
+              2
+            ],
+            "0xf4a120f7"
+          ],
+          [
+            [
+              true,
+              "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+              "0xf4a120f70000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+              0,
+              2
+            ],
+            "0xf4a120f7"
+          ]
+        ],
+        "getTransactionCount": 22,
+        "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "transactions": [
+          [
+            true,
+            "0x624631881655a310adcF0d1336658Cc977609b72",
+            "0x761c91c1000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000300000000000000000000000012ece4aa73ee8ea958be327dae41dd785c9971180000000000000000000000006f933814903561f79137099587737dfb24c6e86d000000000000000000000000b44c32dd1ec374224eed43fd827ebe64db16b0df0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000014",
+            0,
+            2
+          ],
+          [
+            true,
+            "0x624631881655a310adcF0d1336658Cc977609b72",
+            "0x47dcdaee0000000000000000000000000000000000000000000000000000000000000050",
+            0,
+            2
+          ],
+          [
+            true,
+            "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+            "0xf4a120f7000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            0,
+            2
+          ],
+          [
+            true,
+            "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+            "0xf4a120f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            0,
+            2
+          ],
+          [
+            true,
+            "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+            "0xf4a120f70000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+            0,
+            2
+          ]
+        ]
+      },
+      "errors": {
+        "getTransaction": "Processing error occurred.",
+        "transactions": "Processing error occurred."
+      },
+      "derivedName": "Multisig"
+    },
+    {
       "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
       "type": "EOA",
       "proxyType": "EOA",
@@ -125,6 +248,74 @@
           "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled."
         }
       ]
+    },
+    {
+      "name": "L1BridgeRegistry",
+      "address": "0x624631881655a310adcF0d1336658Cc977609b72",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
+        "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1692154667,
+      "sinceBlock": 17924561,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
+        "$pastUpgrades": [
+          [
+            "2023-08-16T02:57:47.000Z",
+            "0xd39a80831c0c0fdc27b6e030d6e1a393b0d3cbc0f8b9d22d0fa2046b33e2fc76",
+            ["0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "consensusPowerThreshold": 80,
+        "getMultisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "getSystemVerifier": "0x0000000000000000000000000000000000000000",
+        "getValidators": [
+          { "addr": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118", "power": 40 },
+          { "addr": "0x6f933814903561F79137099587737DFB24c6E86D", "power": 20 },
+          { "addr": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df", "power": 20 },
+          { "addr": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9", "power": 40 },
+          { "addr": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938", "power": 40 }
+        ],
+        "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "systemVerifier": "0x0000000000000000000000000000000000000000"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "derivedName": "L1BridgeRegistry"
+    },
+    {
+      "name": "L1ERC20Predicate",
+      "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
+        "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1692155531,
+      "sinceBlock": 17924631,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
+        "$pastUpgrades": [
+          [
+            "2023-08-16T03:12:11.000Z",
+            "0x2a6786734b18517394bf675986e76ba59c82e093d87180792e3f5287c98af7a0",
+            ["0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
+        "isPaused": false,
+        "l2Predicate": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+        "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "derivedName": "L1ERC20Predicate"
     },
     {
       "name": "CanonicalStateChain",
@@ -263,6 +454,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x6f933814903561F79137099587737DFB24c6E86D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Safe",
       "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
       "type": "Contract",
@@ -391,6 +587,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LightLinkPortal",
       "address": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
       "type": "Contract",
@@ -451,6 +652,11 @@
       "derivedName": "LightLinkPortal"
     },
     {
+      "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "L1StandardBridge",
       "address": "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c",
       "type": "Contract",
@@ -494,6 +700,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
       "type": "EOA",
       "proxyType": "EOA"
@@ -528,6 +739,29 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": [
+      "constructor()",
+      "event ConfirmTransaction(uint256 indexed txIndex, address indexed owner)",
+      "event ExecuteTransaction(uint256 indexed txIndex, address indexed owner)",
+      "event RevokeConfirmation(uint256 indexed txIndex, address indexed owner)",
+      "event SubmitTransaction(uint256 indexed txIndex, address indexed account, uint256 value, bytes data)",
+      "function addMember(address _account)",
+      "function confirmTransaction(uint256 _txIndex)",
+      "function executeTransaction(uint256 _txIndex)",
+      "function getMemberByIndex(uint256 _index) view returns (address)",
+      "function getMembers() view returns (address[])",
+      "function getSelector(string _func) pure returns (bytes4)",
+      "function getTransaction(uint256 _idx) view returns (tuple(bool executed, address target, bytes data, uint256 value, uint256 numConfirmations), bytes4 funcSelector)",
+      "function getTransactionCount() view returns (uint256)",
+      "function isConfirmed(uint256, address) view returns (bool)",
+      "function isOwner(address _account) view returns (bool)",
+      "function modifyMultisig(address _multisig)",
+      "function multisig() view returns (address)",
+      "function removeMember(address _account)",
+      "function revokeConfirmation(uint256 _txIndex)",
+      "function submitTransaction(address _target, uint256 _value, bytes _data)",
+      "function transactions(uint256) view returns (bool executed, address target, bytes data, uint256 value, uint256 numConfirmations)"
     ],
     "0x38104856c02f83f4048c0FBA3D7613042FEAc988": [
       "constructor()",
@@ -729,6 +963,18 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x624631881655a310adcF0d1336658Cc977609b72": [
+      "constructor(address _logic, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9": [
+      "constructor(address _logic, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": [
       "constructor(address _logic, bytes _data)",
       "error AddressEmptyCode(address target)",
@@ -828,6 +1074,35 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DepositToken(bytes message)",
+      "event Initialized(uint8 version)",
+      "event TokenMapped(bytes message)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawToken(bytes32 messageHash)",
+      "function bridgeRegistry() view returns (address)",
+      "function counter(address) view returns (uint256)",
+      "function deposit(address _l1Token, uint256 _amount)",
+      "function depositTo(address _l1Token, address _to, uint256 _amount)",
+      "function initialize(address _registry, address _l2Predicate)",
+      "function isConfirmed(address, uint256, address) view returns (bool)",
+      "function isPaused() view returns (bool)",
+      "function l1ToL2Gateway(address) view returns (address)",
+      "function l2Predicate() view returns (address)",
+      "function l2TokenBytecodeHash() view returns (bytes32)",
+      "function mapToken(address _l1Token)",
+      "function modifyL2Predicate(address _l2Predicate)",
+      "function modifyL2TokenBytecodeHash(bytes32 _l2TokenBytecodeHash)",
+      "function orderExecuted(address, uint256) view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recovery(address[] _tokens, address _to)",
+      "function syncWithdraw(address[] _currentValidators, bytes[] _signatures, bytes _data)",
+      "function toggleIsPaused(bool _status)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -837,6 +1112,34 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E": [
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ConsensusPowerThresholdModified(uint256 _amount)",
+      "event Initialized(uint8 version)",
+      "event MutisigModified(address _multisig)",
+      "event SystemVerifierModified(address _systemVerifier)",
+      "event Upgraded(address indexed implementation)",
+      "event ValidatorsModifed(address[] _accounts, uint256[] _powers)",
+      "event ValidatorsRemoved(address[] _accounts)",
+      "function consensusPowerThreshold() view returns (uint256)",
+      "function getMultisig() view returns (address)",
+      "function getPower(address _validator) view returns (uint256)",
+      "function getSystemVerifier() view returns (address)",
+      "function getValidators() view returns (tuple(address addr, uint256 power)[])",
+      "function initialize(address _multisig)",
+      "function modifyConsensusPowerThreshold(uint256 _amount)",
+      "function modifyMultisig(address _multisig)",
+      "function modifySystemVerifier(address _systemVerifier)",
+      "function modifyValidators(address[] _validators, uint256[] _powers)",
+      "function multisig() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function removeValidators(address[] _accounts)",
+      "function systemVerifier() view returns (address)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function validValidator(address _validator) view returns (bool)"
     ],
     "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": [
       "constructor(address _admin)",
