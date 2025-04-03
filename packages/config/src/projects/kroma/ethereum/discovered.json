@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22188901,
-  "configHash": "0x2c22a3db294155abbc5295ff982f6eae1e4b4a9e7daf468d825e78cb150a395e",
+  "blockNumber": 22166261,
+  "configHash": "0x7aeecd653766e1d698d32d46cdcf486d34fc676875779bec477f0a6e11029d77",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
