@@ -8338,6 +8338,20 @@
       }
     },
     {
+      "name": "Neemo Staked Astar",
+      "coingeckoId": "neemo-staked-astar",
+      "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+      "symbol": "nsASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1736732671,
+      "coingeckoListingTimestamp": 1737676800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53907/large/nsASTR_2x.png?1737707599",
+      "chainId": 1868,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Pipo",
       "coingeckoId": "pipo-2",
       "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
@@ -8426,6 +8440,27 @@
       }
     },
     {
+      "name": "SolvBTC Jupiter",
+      "coingeckoId": "solv-protocol-solvbtc-jupiter",
+      "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+      "symbol": "SolvBTC.JUP",
+      "decimals": 18,
+      "deploymentTimestamp": 1741955217,
+      "coingeckoListingTimestamp": 1743033600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54834/large/solvBTC_Jupiter.png?1741969449",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -8443,6 +8478,28 @@
           {
             "name": "Layer Zero",
             "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Warpped stASTR",
+      "coingeckoId": "wrapped-stastr",
+      "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+      "symbol": "wstASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1739152051,
+      "coingeckoListingTimestamp": 1741564800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54782/large/wstASTR.png?1741570094",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }

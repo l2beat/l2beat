@@ -5995,6 +5995,39 @@
   ],
   "soneium": [
     {
+      "symbol": "nsASTR",
+      "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+      "source": "native",
+      "supply": "totalSupply" // lower than circulating, and circulating might pump since it can also be minted on astar
+    },
+    {
+      "symbol": "wstASTR",
+      "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.JUP",
+      "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "STONE",
       "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
