@@ -8,7 +8,7 @@ import {
   Hash256,
   type json,
 } from '@l2beat/shared-pure'
-import { flatteningHash, hashFirstSource } from '../../flatten/utils'
+import { hashFirstSource } from '../../flatten/utils'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
@@ -18,7 +18,6 @@ import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
 export const TEMPLATES_PATH = path.join('_templates')
-const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 interface ShapeCriteria {
   validAddresses?: string[]
@@ -27,6 +26,14 @@ interface ShapeCriteria {
 export interface Shape {
   criteria?: ShapeCriteria
   hashes: Hash256[]
+}
+
+interface ShapeEntry {
+  description: string
+  address: EthereumAddress
+  chain: string
+  blockNumber: number
+  hash: Hash256
 }
 
 export class TemplateService {
@@ -44,7 +51,7 @@ export class TemplateService {
   listAllTemplates() {
     const result: Record<
       string,
-      { criteria?: ShapeCriteria; paths: string[] }
+      { criteria?: ShapeCriteria; shapePath: string | undefined }
     > = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     if (!fileExistsCaseSensitive(resolvedRootPath)) {
@@ -55,23 +62,20 @@ export class TemplateService {
       if (!existsSync(join(path, 'template.jsonc'))) {
         continue
       }
-      const shapePath = join(path, TEMPLATE_SHAPE_FOLDER)
+      const shapePath = join(path, 'shapes.json')
 
-      const solidityShapeFiles = !existsSync(shapePath)
-        ? []
-        : readdirSync(shapePath, {
-            withFileTypes: true,
-          })
-            .filter((x) => x.isFile() && x.name.endsWith('.sol'))
-            .map((x) => join(shapePath, x.name))
-      const criteriaPath = join(shapePath, 'criteria.json')
+      const hasShape = existsSync(shapePath)
+      const criteriaPath = join(path, 'criteria.json')
       const criteria = existsSync(criteriaPath)
         ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
         : undefined
       criteria?.validAddresses?.map((a: string) => EthereumAddress(a))
 
       const templateId = path.substring(resolvedRootPath.length + 1)
-      result[templateId] = { criteria, paths: solidityShapeFiles }
+      result[templateId] = {
+        criteria,
+        shapePath: hasShape ? shapePath : undefined,
+      }
     }
     return result
   }
@@ -146,18 +150,23 @@ export class TemplateService {
 
     const result: Record<string, Shape> = {}
     const allTemplates = this.listAllTemplates()
-    for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
-      const haystackHashes = shapeFilePaths.paths.map((p) =>
-        flatteningHash(readFileSync(p, 'utf8')),
-      )
-      result[templateId] = {
-        criteria: shapeFilePaths.criteria,
-        hashes: haystackHashes,
-      }
+    for (const [templateId, { criteria, shapePath }] of Object.entries(
+      allTemplates,
+    )) {
+      const hashes = this.getShapes(shapePath).map((shape) => shape.hash)
+      result[templateId] = { criteria, hashes }
     }
 
     this.shapeHashes = result
     return result
+  }
+
+  private getShapes(shapePath: string | undefined): ShapeEntry[] {
+    if (shapePath === undefined) {
+      return []
+    }
+
+    return JSON.parse(readFileSync(shapePath, 'utf8')) as ShapeEntry[]
   }
 
   getAllTemplateHashes(): Record<string, Hash256> {
