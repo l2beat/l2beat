@@ -1,0 +1,189 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "celo",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "celo-CELO",
+      "priceId": "celo",
+      "symbol": "CELO",
+      "name": "Celo native asset",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "celo-cEURO",
+      "priceId": "celo-euro",
+      "symbol": "cEURO",
+      "name": "Celo Euro",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "celo-euro",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-cKES",
+      "priceId": "celo-kenyan-shilling",
+      "symbol": "cKES",
+      "name": "Celo Kenyan Shilling",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-cREAL",
+      "priceId": "celo-real-creal",
+      "symbol": "cREAL",
+      "name": "Celo Brazilian Real",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-cUSD",
+      "priceId": "celo-dollar",
+      "symbol": "cUSD",
+      "name": "Celo Dollar",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "celo-dollar",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-ETHIX",
+      "priceId": "ethichub",
+      "symbol": "ETHIX",
+      "name": "Ethix",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9995cc8F20Db5896943Afc8eE0ba463259c931ed",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-PLASTIK",
+      "priceId": "plastiks",
+      "symbol": "PLASTIK",
+      "name": "PLASTIK Token",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "plastiks",
+        "decimals": 9,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USDC",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+        "chain": "celo",
+        "decimals": 6,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+        "chain": "celo",
+        "decimals": 6,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-WETH-1",
+      "priceId": "wormhole-bridged-weth-celo",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "celo-WETH-2",
+      "priceId": "wormhole-bridged-weth-celo",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x66803FB87aBd4aaC3cbB3fAd7C3aa01f6F3FB207",
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}

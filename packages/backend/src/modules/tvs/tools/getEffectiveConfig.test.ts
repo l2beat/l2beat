@@ -23,7 +23,7 @@ describe(getEffectiveConfig.name, () => {
             },
           ],
         },
-        valueForTotal: {
+        valueForSummary: {
           type: 'calculation',
           operator: 'sum',
           arguments: [
@@ -43,7 +43,7 @@ describe(getEffectiveConfig.name, () => {
       mockObject<TvsToken>({
         amount: mockAmountFormula(30),
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
     ]
 
@@ -80,7 +80,7 @@ describe(getEffectiveConfig.name, () => {
             },
           ],
         },
-        valueForTotal: {
+        valueForSummary: {
           type: 'calculation',
           operator: 'sum',
           arguments: [
@@ -112,7 +112,7 @@ describe(getEffectiveConfig.name, () => {
           untilTimestamp: undefined,
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       },
     ] as any
 
@@ -124,13 +124,13 @@ describe(getEffectiveConfig.name, () => {
       mockObject<TvsToken>({
         amount: mockAmountFormula(0),
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       // amount formula not in range
       mockObject<TvsToken>({
         amount: mockAmountFormula(0, 5),
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
     ]
 
@@ -144,7 +144,7 @@ describe(getEffectiveConfig.name, () => {
           untilTimestamp: undefined,
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       },
     ] as any
 
@@ -161,7 +161,7 @@ describe(getEffectiveConfig.name, () => {
           arguments: [mockAmountFormula(0, 5), mockAmountFormula(0)],
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       // calculation formula with all arguments not in range - entire token should be filtered out
       mockObject<TvsToken>({
@@ -171,7 +171,7 @@ describe(getEffectiveConfig.name, () => {
           arguments: [mockAmountFormula(0, 5), mockAmountFormula(0, 7)],
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
       // calculation formula (diff) with one argument not in range - entire token should be filtered out
       mockObject<TvsToken>({
@@ -181,7 +181,7 @@ describe(getEffectiveConfig.name, () => {
           arguments: [mockAmountFormula(0, 5), mockAmountFormula(0)],
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       }),
     ]
 
@@ -201,7 +201,7 @@ describe(getEffectiveConfig.name, () => {
           ],
         },
         valueForProject: undefined,
-        valueForTotal: undefined,
+        valueForSummary: undefined,
       },
     ] as any
 

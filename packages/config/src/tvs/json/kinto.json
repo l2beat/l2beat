@@ -4,10 +4,9 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "kinto-cbBTC.ext",
+      "id": "kinto-cbBTC",
       "priceId": "coinbase-wrapped-btc",
-      "symbol": "cbBTC.ext",
-      "displaySymbol": "cbBTC",
+      "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
       "amount": {
         "type": "balanceOfEscrow",
@@ -17,7 +16,7 @@
         "decimals": 8,
         "sinceTimestamp": 1730657767
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -33,10 +32,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-DAI.ext",
+      "id": "kinto-DAI",
       "priceId": "dai",
-      "symbol": "DAI.ext",
-      "displaySymbol": "DAI",
+      "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
         "type": "calculation",
@@ -70,14 +68,51 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "dai",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+              "chain": "ethereum",
+              "escrowAddress": "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
+              "decimals": 18,
+              "sinceTimestamp": 1715972567
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1715972109
+            },
+            "priceId": "dai"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1715972440
+            },
+            "priceId": "dai"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-EIGEN.ext",
+      "id": "kinto-EIGEN",
       "priceId": "eigenlayer",
-      "symbol": "EIGEN.ext",
-      "displaySymbol": "EIGEN",
+      "symbol": "EIGEN",
       "name": "Eigen",
       "amount": {
         "type": "balanceOfEscrow",
@@ -93,10 +128,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-ENA.ext",
+      "id": "kinto-ENA",
       "priceId": "ethena",
-      "symbol": "ENA.ext",
-      "displaySymbol": "ENA",
+      "symbol": "ENA",
       "name": "ENA",
       "amount": {
         "type": "balanceOfEscrow",
@@ -130,10 +164,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-ETHFI.ext",
+      "id": "kinto-ETHFI",
       "priceId": "ether-fi",
-      "symbol": "ETHFI.ext",
-      "displaySymbol": "ETHFI",
+      "symbol": "ETHFI",
       "name": "ether.fi governance token",
       "amount": {
         "type": "balanceOfEscrow",
@@ -149,10 +182,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-LINK.ext",
+      "id": "kinto-LINK",
       "priceId": "chainlink",
-      "symbol": "LINK.ext",
-      "displaySymbol": "LINK",
+      "symbol": "LINK",
       "name": "ChainLink Token",
       "amount": {
         "type": "calculation",
@@ -178,14 +210,41 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "chainlink",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+              "chain": "ethereum",
+              "escrowAddress": "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013",
+              "decimals": 18,
+              "sinceTimestamp": 1730655983
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1730656015
+            },
+            "priceId": "chainlink"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-MKR.ext",
+      "id": "kinto-MKR",
       "priceId": "maker",
-      "symbol": "MKR.ext",
-      "displaySymbol": "MKR",
+      "symbol": "MKR",
       "name": "Maker",
       "amount": {
         "type": "balanceOfEscrow",
@@ -201,10 +260,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-PAXG.ext",
+      "id": "kinto-PAXG",
       "priceId": "pax-gold",
-      "symbol": "PAXG.ext",
-      "displaySymbol": "PAXG",
+      "symbol": "PAXG",
       "name": "Paxos Gold",
       "amount": {
         "type": "balanceOfEscrow",
@@ -220,10 +278,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-sDAI.ext",
+      "id": "kinto-sDAI",
       "priceId": "savings-dai",
-      "symbol": "sDAI.ext",
-      "displaySymbol": "sDAI",
+      "symbol": "sDAI",
       "name": "Savings Dai",
       "amount": {
         "type": "balanceOfEscrow",
@@ -239,10 +296,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-SOL.ext",
+      "id": "kinto-SOL",
       "priceId": "sol-wormhole",
-      "symbol": "SOL.ext",
-      "displaySymbol": "SOL",
+      "symbol": "SOL",
       "name": "Wrapped SOL",
       "amount": {
         "type": "balanceOfEscrow",
@@ -258,10 +314,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-SolvBTC.ext",
+      "id": "kinto-SolvBTC",
       "priceId": "solv-btc",
-      "symbol": "SolvBTC.ext",
-      "displaySymbol": "SolvBTC",
+      "symbol": "SolvBTC",
       "name": "Solv BTC",
       "amount": {
         "type": "balanceOfEscrow",
@@ -271,7 +326,7 @@
         "decimals": 18,
         "sinceTimestamp": 1718367579
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -287,10 +342,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-SPX.ext",
+      "id": "kinto-SPX",
       "priceId": "spx6900",
-      "symbol": "SPX.ext",
-      "displaySymbol": "SPX",
+      "symbol": "SPX",
       "name": "SPX6900",
       "amount": {
         "type": "calculation",
@@ -316,14 +370,41 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "spx6900",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xE0f63A424a4439cBE457D80E4f4b51aD25b2c56C",
+              "chain": "ethereum",
+              "escrowAddress": "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
+              "decimals": 8,
+              "sinceTimestamp": 1730147723
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1730154133
+            },
+            "priceId": "spx6900"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-sUSDe.ext",
+      "id": "kinto-sUSDe",
       "priceId": "ethena-staked-usde",
-      "symbol": "sUSDe.ext",
-      "displaySymbol": "sUSDe",
+      "symbol": "sUSDe",
       "name": "Staked USDe",
       "amount": {
         "type": "balanceOfEscrow",
@@ -339,10 +420,9 @@
     },
     {
       "mode": "auto",
-      "id": "kinto-USDC.ext",
+      "id": "kinto-USDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.ext",
-      "displaySymbol": "USDC",
+      "symbol": "USDC",
       "name": "USD Coin",
       "amount": {
         "type": "calculation",
@@ -376,14 +456,51 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              "chain": "ethereum",
+              "escrowAddress": "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
+              "decimals": 6,
+              "sinceTimestamp": 1716142595
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716142647
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716142624
+            },
+            "priceId": "usd-coin"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-USDe.ext",
+      "id": "kinto-USDe",
       "priceId": "ethena-usde",
-      "symbol": "USDe.ext",
-      "displaySymbol": "USDe",
+      "symbol": "USDe",
       "name": "USDe",
       "amount": {
         "type": "calculation",
@@ -409,14 +526,41 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "ethena-usde",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+              "chain": "ethereum",
+              "escrowAddress": "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
+              "decimals": 18,
+              "sinceTimestamp": 1716143207
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716143237
+            },
+            "priceId": "ethena-usde"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-weETH.ext",
+      "id": "kinto-weETH",
       "priceId": "wrapped-eeth",
-      "symbol": "weETH.ext",
-      "displaySymbol": "weETH",
+      "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
         "type": "calculation",
@@ -450,14 +594,51 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "wrapped-eeth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+              "chain": "ethereum",
+              "escrowAddress": "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
+              "decimals": 18,
+              "sinceTimestamp": 1716143951
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716143999
+            },
+            "priceId": "wrapped-eeth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716143980
+            },
+            "priceId": "wrapped-eeth"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-WETH.ext",
+      "id": "kinto-WETH",
       "priceId": "weth",
-      "symbol": "WETH.ext",
-      "displaySymbol": "WETH",
+      "symbol": "WETH",
       "name": "Wrapped Ether",
       "amount": {
         "type": "calculation",
@@ -491,14 +672,51 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "weth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+              "chain": "ethereum",
+              "escrowAddress": "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
+              "decimals": 18,
+              "sinceTimestamp": 1716142367
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716142417
+            },
+            "priceId": "weth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716142397
+            },
+            "priceId": "weth"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-wstETH.ext",
+      "id": "kinto-wstETH",
       "priceId": "wrapped-steth",
-      "symbol": "wstETH.ext",
-      "displaySymbol": "wstETH",
+      "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
         "type": "calculation",
@@ -532,14 +750,51 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "wrapped-steth",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+              "chain": "ethereum",
+              "escrowAddress": "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
+              "decimals": 18,
+              "sinceTimestamp": 1716128303
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716128411
+            },
+            "priceId": "wrapped-steth"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1716128387
+            },
+            "priceId": "wrapped-steth"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-wUSDM.ext",
+      "id": "kinto-wUSDM",
       "priceId": "mountain-protocol-usdm",
-      "symbol": "wUSDM.ext",
-      "displaySymbol": "wUSDM",
+      "symbol": "wUSDM",
       "name": "Wrapped Mountain Protocol USD",
       "amount": {
         "type": "calculation",
@@ -565,14 +820,41 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "mountain-protocol-usdm",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+              "chain": "ethereum",
+              "escrowAddress": "0xD357F7Ec4826Bd1234CDA2277B623F6dE7dA56Dc",
+              "decimals": 18,
+              "sinceTimestamp": 1716143903
+            }
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1717616624
+            },
+            "priceId": "mountain-protocol-usdm"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "kinto-XAUt.ext",
+      "id": "kinto-XAUt",
       "priceId": "tether-gold",
-      "symbol": "XAUt.ext",
-      "displaySymbol": "XAUt",
+      "symbol": "XAUt",
       "name": "Tether Gold",
       "amount": {
         "type": "balanceOfEscrow",

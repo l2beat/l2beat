@@ -56,9 +56,9 @@ export function extractPricesAndAmounts(tokens: TvsToken[]) {
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
 
-    if (token.valueForTotal) {
+    if (token.valueForSummary) {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
-        token.valueForTotal,
+        token.valueForSummary,
       )
       formulaAmounts.forEach((a) => setAmount(amounts, a))
       formulaPrices.forEach((p) => setPrice(prices, p))

@@ -76,24 +76,6 @@
     },
     {
       "mode": "auto",
-      "id": "symbiosis-TONCOIN",
-      "priceId": "the-open-network",
-      "symbol": "TONCOIN",
-      "name": "Wrapped TON Coin",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",
-        "chain": "ethereum",
-        "escrowAddress": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
-        "decimals": 9,
-        "sinceTimestamp": 1668373200
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "symbiosis-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
