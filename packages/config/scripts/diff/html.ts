@@ -6,6 +6,9 @@ export function diffsToHtml(props: {
   commitBefore: string
   commitAfter: string
 }) {
+  const hashBefore = props.commitBefore.slice(0, 8)
+  const hashAfter = props.commitAfter.slice(0, 8)
+
   const alpineSource = readFileSync(
     require.resolve('alpinejs/dist/cdn.min.js'),
     'utf-8',
@@ -16,7 +19,7 @@ export function diffsToHtml(props: {
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff</title>
+  <title>Diff @${hashAfter}</title>
   <style>${getStyles()}</style>
 </head>
 
@@ -24,9 +27,9 @@ export function diffsToHtml(props: {
   <script>${alpineSource}</script>
   <h1>
     Diff between
-    <code class="removed">${props.commitBefore.slice(0, 8)}</code> (main)
+    <code class="removed">${hashBefore}</code> (main)
     and
-    <code class="added">${props.commitAfter.slice(0, 8)}</code> (PR)
+    <code class="added">${hashAfter}</code> (PR)
   </h1>
   <ul>${props.diffs.map(diffToHtml).join('')}</ul>
 </body>

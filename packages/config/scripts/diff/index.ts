@@ -56,8 +56,12 @@ function parseProject(project: unknown) {
   }
   for (const key in project) {
     const value = Reflect.get(project, key)
-    if (typeof value === 'string' && value.startsWith('{')) {
-      Reflect.set(project, key, JSON.parse(value))
+    if (typeof value === 'string') {
+      try {
+        Reflect.set(project, key, JSON.parse(value))
+      } catch {
+        Reflect.set(project, key, value)
+      }
     }
   }
   return project as Project
