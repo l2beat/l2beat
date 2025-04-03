@@ -11,7 +11,7 @@ export const settlus: ScalingProject = underReviewL2({
   display: {
     name: 'Settlus',
     slug: 'settlus',
-    category: 'Optimium',
+    category: 'Optimistic Rollup',
     stack: 'OP Stack',
     description:
       'Settlus is an OP stack L2 Settlus designed to provide transparent settlement system for the creator economy.',
