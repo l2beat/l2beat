@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -34,6 +34,11 @@ export const zora: ScalingProject = opStackL2({
         'https://zora.community',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1687305600), // 2023-06-21T00:00:00Z
   },
   finality: {
     type: 'OPStack',
