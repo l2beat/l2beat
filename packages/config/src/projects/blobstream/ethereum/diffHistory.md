@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xf3b0b88723265e426b37deba2bcfc54baca26d14
+
+# Diff at Thu, 03 Apr 2025 11:26:14 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 21686332
+- current block number: 22188074
+
+## Description
+
+Updated the blobstream template to ignore outdated gateway_deprecated method.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21686332 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract NextHeaderVerifier (0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776)
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+```
+
+```diff
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.gateway_deprecated:
+-        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SuccinctGatewayMultisig (0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract HeaderRangeVerifier (0xF33a22dFf8017813b95E5a05c9a97BaFE693001E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2bbbda81d063f4f78fcbf535622aa64fa96df05f
 
 # Diff at Tue, 04 Mar 2025 10:39:00 GMT:
