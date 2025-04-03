@@ -90,13 +90,13 @@
     },
     {
       "mode": "auto",
-      "id": "soon-mETH",
-      "priceId": "mantle-staked-ether",
+      "id": "soon-mETH-2",
+      "priceId": "manta-meth",
       "symbol": "mETH",
       "name": "mETH",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6",
         "chain": "ethereum",
         "escrowAddress": "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9",
         "decimals": 18,

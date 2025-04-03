@@ -216,7 +216,7 @@
     },
     {
       "mode": "auto",
-      "id": "taiko-SolvBTC",
+      "id": "taiko-SolvBTC-1",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
@@ -233,7 +233,7 @@
     },
     {
       "mode": "auto",
-      "id": "taiko-SolvBTC.BBN",
+      "id": "taiko-SolvBTC.BBN-1",
       "priceId": "solv-protocol-solvbtc-bbn",
       "symbol": "SolvBTC.BBN",
       "name": "SolvBTC Babylon",
@@ -343,14 +343,15 @@
       "symbol": "USDT",
       "name": "Tether USD",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x9c2dc7377717603eB92b2655c5f2E7997a4945BD",
-        "chain": "taiko",
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
         "decimals": 6,
-        "sinceTimestamp": 1718326559
+        "sinceTimestamp": 1714550603
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

@@ -4,7 +4,7 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "nova-1INCH",
+      "id": "nova-1INCH-1",
       "priceId": "1inch",
       "symbol": "1INCH",
       "name": "1INCH Token",
@@ -22,7 +22,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-AIUS",
+      "id": "nova-AIUS-2",
       "priceId": "arbius",
       "symbol": "AIUS",
       "name": "Arbius",
@@ -30,17 +30,17 @@
         "type": "balanceOfEscrow",
         "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852",
         "chain": "ethereum",
-        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
         "decimals": 18,
         "sinceTimestamp": 1708734479
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "nova-APE",
+      "id": "nova-APE-1",
       "priceId": "apecoin",
       "symbol": "APE",
       "name": "ApeCoin",
@@ -58,7 +58,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-ARB",
+      "id": "nova-ARB-2",
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
@@ -66,17 +66,17 @@
         "type": "balanceOfEscrow",
         "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "chain": "ethereum",
-        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
         "decimals": 18,
         "sinceTimestamp": 1679529600
       },
       "category": "other",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": true
     },
     {
       "mode": "auto",
-      "id": "nova-BLUR",
+      "id": "nova-BLUR-1",
       "priceId": "blur",
       "symbol": "BLUR",
       "name": "Blur",
@@ -94,7 +94,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-BUSD",
+      "id": "nova-BUSD-1",
       "priceId": "binance-usd",
       "symbol": "BUSD",
       "name": "BUSD",
@@ -112,7 +112,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-CRO",
+      "id": "nova-CRO-1",
       "priceId": "crypto-com-chain",
       "symbol": "CRO",
       "name": "CRO",
@@ -153,20 +153,34 @@
       "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "chain": "ethereum",
-        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "decimals": 18,
-        "sinceTimestamp": 1656305583
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
+            "decimals": 18,
+            "sinceTimestamp": 1659620187
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+            "chain": "ethereum",
+            "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+            "decimals": 18,
+            "sinceTimestamp": 1659620187
+          }
+        ]
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "nova-DPX",
+      "id": "nova-DPX-1",
       "priceId": "dopex",
       "symbol": "DPX",
       "name": "Dopex Governance Token",
@@ -184,7 +198,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-DYDX",
+      "id": "nova-DYDX-1",
       "priceId": "dydx",
       "symbol": "DYDX",
       "name": "dYdX",
@@ -202,7 +216,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-ETH",
+      "id": "nova-ETH-1",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -234,7 +248,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-GRT",
+      "id": "nova-GRT-1",
       "priceId": "the-graph",
       "symbol": "GRT",
       "name": "Graph Token",
@@ -252,7 +266,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-GTC",
+      "id": "nova-GTC-1",
       "priceId": "gitcoin",
       "symbol": "GTC",
       "name": "Gitcoin",
@@ -270,7 +284,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-LINK",
+      "id": "nova-LINK-1",
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
@@ -288,7 +302,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-LPT",
+      "id": "nova-LPT-1",
       "priceId": "livepeer",
       "symbol": "LPT",
       "name": "Livepeer Token",
@@ -306,7 +320,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-LRC",
+      "id": "nova-LRC-1",
       "priceId": "loopring",
       "symbol": "LRC",
       "name": "LoopringCoin V2",
@@ -324,7 +338,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-LUSD",
+      "id": "nova-LUSD-1",
       "priceId": "liquity-usd",
       "symbol": "LUSD",
       "name": "LUSD Stablecoin",
@@ -342,7 +356,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-MAGIC",
+      "id": "nova-MAGIC-1",
       "priceId": "magic",
       "symbol": "MAGIC",
       "name": "MAGIC",
@@ -360,7 +374,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-PMON",
+      "id": "nova-PMON-1",
       "priceId": "polychain-monsters",
       "symbol": "PMON",
       "name": "Polkamon",
@@ -378,7 +392,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-rETH",
+      "id": "nova-rETH-1",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
       "name": "Rocket Pool ETH",
@@ -396,7 +410,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-stETH",
+      "id": "nova-stETH-1",
       "priceId": "staked-ether",
       "symbol": "stETH",
       "name": "Liquid staked Ether 2.0",
@@ -414,7 +428,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-STG",
+      "id": "nova-STG-1",
       "priceId": "stargate-finance",
       "symbol": "STG",
       "name": "StargateToken",
@@ -432,7 +446,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-SUSHI",
+      "id": "nova-SUSHI-1",
       "priceId": "sushi",
       "symbol": "SUSHI",
       "name": "SushiToken",
@@ -450,7 +464,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-SYN",
+      "id": "nova-SYN-1",
       "priceId": "synapse-2",
       "symbol": "SYN",
       "name": "Synapse",
@@ -468,7 +482,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-TRADE",
+      "id": "nova-TRADE-1",
       "priceId": "polytrade",
       "symbol": "TRADE",
       "name": "Polytrade",
@@ -486,7 +500,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-UNI",
+      "id": "nova-UNI-1",
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
@@ -504,7 +518,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-USDC",
+      "id": "nova-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -548,17 +562,17 @@
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "chain": "ethereum",
-        "escrowAddress": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+        "escrowAddress": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
         "decimals": 6,
-        "sinceTimestamp": 1656305583
+        "sinceTimestamp": 1659620187
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "nova-WBTC",
+      "id": "nova-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -576,7 +590,7 @@
     },
     {
       "mode": "auto",
-      "id": "nova-YFI",
+      "id": "nova-YFI-1",
       "priceId": "yearn-finance",
       "symbol": "YFI",
       "name": "yearn.finance",

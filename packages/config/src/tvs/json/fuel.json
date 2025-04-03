@@ -127,12 +127,12 @@
     {
       "mode": "auto",
       "id": "fuel-mETH-2",
-      "priceId": "mantle-staked-ether",
+      "priceId": "manta-meth",
       "symbol": "mETH",
       "name": "mETH",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "address": "0x8CdF550C04Bc9B9F10938368349C9c8051A772b6",
         "chain": "ethereum",
         "escrowAddress": "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67",
         "decimals": 18,
