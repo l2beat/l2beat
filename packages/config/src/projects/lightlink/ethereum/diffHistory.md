@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb5c7815f6762f512b7c8f2b821899952e8246f76
+Generated with discovered.json: 0x32d12760aa3836f3183df65b0a492a245ed06530
 
-# Diff at Wed, 02 Apr 2025 15:35:13 GMT:
+# Diff at Thu, 03 Apr 2025 10:23:59 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@298e962a653806d8b7da53fd2c9818a831a5e68b block: 21995407
-- current block number: 22179980
+- comparing to: main@390dc72872cb4dce4017ada9ab709f2c51c936e3 block: 21995407
+- current block number: 22187475
 
 ## Description
 
@@ -17,208 +17,199 @@ Provide description of changes. This section will be preserved.
     +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
       values.chainHead:
 -        1168
-+        1275
++        1279
       values.getHead.epoch:
 -        21993309
-+        22179037
++        22186023
       values.getHead.l2Height:
 -        132108607
-+        136550839
++        136717372
       values.getHead.prevHash:
 -        "0x0357f67f6fa768ac91770152e7bebe923951d349f2648f8886c87c63d737e9dc"
-+        "0x7e433c56a62ecabe405aee339b31308a52bba71b5cba9cac4bddc61f7609a831"
++        "0x17e7cc9398b67f950c567cb36901ad93fb989a9e376ee66dae5097fafb052d6a"
       values.getHead.outputRoot:
 -        "0x62314ae58400e70955d971703a83315a1cf702aef43d048e47f39cbf9925efb7"
-+        "0x7552b22ed9929b208e0723935960ad607086e98f100b38aa0bce3995e9006216"
++        "0x0289102c0d886aa90daca7e3d87e2d12596dde22a790f478658889e29206986c"
       values.getHead.celestiaPointers.20.height:
 -        4336314
-+        4722505
++        4736582
       values.getHead.celestiaPointers.20.shareStart:
 -        5376
-+        6080
++        2112
       values.getHead.celestiaPointers.20.shareLen:
 -        3664
-+        3529
++        3589
       values.getHead.celestiaPointers.19.height:
 -        4336284
-+        4722519
-      values.getHead.celestiaPointers.19.shareStart:
--        6080
-+        4736
++        4736519
       values.getHead.celestiaPointers.19.shareLen:
 -        3655
-+        3615
++        3664
       values.getHead.celestiaPointers.18.height:
 -        4336102
-+        4722535
++        4736462
       values.getHead.celestiaPointers.18.shareStart:
 -        9344
-+        8896
++        6208
       values.getHead.celestiaPointers.18.shareLen:
 -        3663
-+        3664
++        3665
       values.getHead.celestiaPointers.17.height:
 -        4336343
-+        4722581
++        4736613
       values.getHead.celestiaPointers.17.shareStart:
 -        6208
-+        6464
++        5824
       values.getHead.celestiaPointers.17.shareLen:
 -        3664
-+        3571
++        3543
       values.getHead.celestiaPointers.16.height:
 -        4336227
-+        4722565
++        4736446
       values.getHead.celestiaPointers.16.shareStart:
 -        9920
-+        2496
++        5952
       values.getHead.celestiaPointers.16.shareLen:
 -        3664
-+        3581
++        3661
       values.getHead.celestiaPointers.15.height:
 -        4336358
-+        4722462
++        4736622
       values.getHead.celestiaPointers.15.shareStart:
 -        6848
-+        6656
++        6592
       values.getHead.celestiaPointers.15.shareLen:
 -        3529
-+        3595
++        3631
       values.getHead.celestiaPointers.14.height:
 -        4336241
-+        4722491
++        4736680
       values.getHead.celestiaPointers.14.shareStart:
 -        6784
-+        2624
++        2752
       values.getHead.celestiaPointers.14.shareLen:
 -        3546
-+        3643
++        3665
       values.getHead.celestiaPointers.13.height:
 -        4336143
-+        4722649
++        4736502
       values.getHead.celestiaPointers.13.shareStart:
 -        6784
-+        4800
-      values.getHead.celestiaPointers.13.shareLen:
--        3664
-+        3088
++        7680
       values.getHead.celestiaPointers.12.height:
 -        4336210
-+        4722633
++        4736535
       values.getHead.celestiaPointers.12.shareStart:
 -        1344
-+        2304
++        10432
       values.getHead.celestiaPointers.12.shareLen:
 -        3664
-+        3204
++        3615
       values.getHead.celestiaPointers.11.height:
 -        4336303
-+        4722608
++        4736650
       values.getHead.celestiaPointers.11.shareStart:
 -        3456
-+        2112
++        4352
       values.getHead.celestiaPointers.11.shareLen:
 -        3657
-+        3420
++        3569
       values.getHead.celestiaPointers.10.height:
 -        4336118
-+        4722595
++        4736638
       values.getHead.celestiaPointers.10.shareStart:
 -        4096
-+        2432
++        8320
       values.getHead.celestiaPointers.10.shareLen:
 -        3662
-+        3307
++        3665
       values.getHead.celestiaPointers.9.height:
 -        4336329
-+        4722686
-      values.getHead.celestiaPointers.9.shareStart:
--        4352
-+        128
++        4736689
       values.getHead.celestiaPointers.9.shareLen:
 -        3665
-+        3037
++        3664
       values.getHead.celestiaPointers.8.height:
 -        4336193
-+        4722549
++        4736599
       values.getHead.celestiaPointers.8.shareStart:
 -        7744
-+        6592
++        3968
       values.getHead.celestiaPointers.8.shareLen:
 -        3635
-+        3251
++        3660
       values.getHead.celestiaPointers.7.height:
 -        4336127
-+        4722471
++        4736550
       values.getHead.celestiaPointers.7.shareStart:
 -        4352
-+        6528
++        6272
       values.getHead.celestiaPointers.7.shareLen:
 -        3663
-+        3379
++        3281
       values.getHead.celestiaPointers.6.height:
 -        4336258
-+        4722620
++        4736665
       values.getHead.celestiaPointers.6.shareStart:
 -        1792
-+        6848
++        6272
       values.getHead.celestiaPointers.6.shareLen:
 -        3652
-+        3185
++        3187
       values.getHead.celestiaPointers.5.height:
 -        4336175
-+        4722481
++        4736673
       values.getHead.celestiaPointers.5.shareStart:
 -        1792
-+        64
++        6720
       values.getHead.celestiaPointers.5.shareLen:
 -        3664
-+        3176
++        3361
       values.getHead.celestiaPointers.4.height:
 -        4336373
-+        4722672
++        4736491
       values.getHead.celestiaPointers.4.shareStart:
 -        4416
-+        128
++        64
       values.getHead.celestiaPointers.4.shareLen:
 -        3664
-+        3357
++        3466
       values.getHead.celestiaPointers.3.height:
 -        4336090
-+        4722679
++        4736475
       values.getHead.celestiaPointers.3.shareStart:
 -        6912
-+        64
++        4224
       values.getHead.celestiaPointers.3.shareLen:
 -        3658
-+        3125
++        3484
       values.getHead.celestiaPointers.2.height:
 -        4336161
-+        4722666
++        4736697
       values.getHead.celestiaPointers.2.shareStart:
 -        3840
-+        128
++        192
       values.getHead.celestiaPointers.2.shareLen:
 -        3665
-+        3409
++        3447
       values.getHead.celestiaPointers.1.height:
 -        4336273
-+        4722693
++        4736566
       values.getHead.celestiaPointers.1.shareStart:
 -        2688
-+        64
++        4224
       values.getHead.celestiaPointers.1.shareLen:
 -        3465
-+        3353
++        3498
       values.getHead.celestiaPointers.0.height:
 -        4336382
-+        4722658
++        4736658
       values.getHead.celestiaPointers.0.shareStart:
 -        6976
 +        4352
       values.getHead.celestiaPointers.0.shareLen:
 -        3415
-+        3386
++        3418
     }
 ```
 
@@ -260,19 +251,26 @@ discovery. Values are for block 21995407 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Multisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
-    +++ description: None
+    contract LightLink Multisig 1 (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
       name:
 -        "LightLinkMultisig"
-+        "Multisig"
-      receivedPermissions:
--        [{"permission":"upgrade","from":"0x3ca373F5ecB92ac762f9876f6e773082A4589995"},{"permission":"upgrade","from":"0x624631881655a310adcF0d1336658Cc977609b72"},{"permission":"upgrade","from":"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"}]
-      values.getTransaction:
-+        [["0xf4a120f7",["0xf4a120f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",0,2,true,"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"]],["0xf4a120f7",["0xf4a120f70000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",0,2,true,"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"]],["0x47dcdaee",["0x47dcdaee0000000000000000000000000000000000000000000000000000000000000050","0x624631881655a310adcF0d1336658Cc977609b72",0,2,true]],["0x761c91c1",["0x761c91c1000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000300000000000000000000000012ece4aa73ee8ea958be327dae41dd785c9971180000000000000000000000006f933814903561f79137099587737dfb24c6e86d000000000000000000000000b44c32dd1ec374224eed43fd827ebe64db16b0df0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000014","0x624631881655a310adcF0d1336658Cc977609b72",0,2,true]],["0xf4a120f7",[0,2,true,"0xf4a120f7000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7","0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"]]]
-      values.transactions:
-+        [["0x761c91c1000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000300000000000000000000000012ece4aa73ee8ea958be327dae41dd785c9971180000000000000000000000006f933814903561f79137099587737dfb24c6e86d000000000000000000000000b44c32dd1ec374224eed43fd827ebe64db16b0df0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000014","0x624631881655a310adcF0d1336658Cc977609b72",0,2,true],["0xf4a120f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",0,2,true,"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"],["0xf4a120f70000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",0,2,true,"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"],["0x47dcdaee0000000000000000000000000000000000000000000000000000000000000050","0x624631881655a310adcF0d1336658Cc977609b72",0,2,true],[0,2,true,"0xf4a120f7000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7","0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"]]
-      errors:
-+        {"getTransaction":"Processing error occurred.","transactions":"Processing error occurred."}
++        "LightLink Multisig 1"
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"}
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0x3ca373F5ecB92ac762f9876f6e773082A4589995"}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.description:
++        "can remove and add validators, update their voting power, and change the required threshold."
+      template:
++        "lightlink/Multisig"
+      displayName:
++        "LightlinkMultisig"
+      description:
++        "Custom multisig implementation with a hardcoded n/2+1 threshold."
     }
 ```
 
@@ -292,25 +290,30 @@ discovery. Values are for block 21995407 (main branch discovery), not current.
 
 ```diff
     contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
-    +++ description: None
+    +++ description: The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.
       proxyType:
 -        "LightLink proxy"
 +        "EIP1967 proxy"
-      issuedPermissions:
--        [{"permission":"upgrade","to":"0x3345702FeA1669Efa1e085610A62F89d159Bc0c8","via":[]}]
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "can remove and add validators, update their voting power, and change the required threshold."
       values.$admin:
 -        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
 +        "0x0000000000000000000000000000000000000000"
       values.proxiableUUID:
 -        "EXPECT_REVERT"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
+      template:
++        "lightlink/L1BridgeRegistry"
+      description:
++        "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge."
     }
 ```
 
 ```diff
     contract L1ERC20Predicate (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
-    +++ description: None
+    +++ description: ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.
       name:
 -        "LightLinkERC20Bridge"
 +        "L1ERC20Predicate"
@@ -324,8 +327,10 @@ discovery. Values are for block 21995407 (main branch discovery), not current.
 +        "0x0000000000000000000000000000000000000000"
       values.proxiableUUID:
 -        "EXPECT_REVERT"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
+      template:
++        "lightlink/L1ERC20Predicate"
+      description:
++        "ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values."
     }
 ```
 
@@ -351,11 +356,11 @@ discovery. Values are for block 21995407 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Safe (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7) {
+    contract LightLink Multisig 2 (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7) {
     +++ description: None
       name:
 -        "LightLinkMultisig2"
-+        "Safe"
++        "LightLink Multisig 2"
       receivedPermissions.9:
 +        {"permission":"upgrade","from":"0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"}
       receivedPermissions.8:

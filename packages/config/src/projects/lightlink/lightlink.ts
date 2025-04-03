@@ -11,6 +11,7 @@ import { BADGES } from '../../common/badges'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -132,15 +133,12 @@ export const lightlink: ScalingProject = {
     ],
   },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_NONE,
-      description:
-        RISK_VIEW.STATE_NONE.description +
-        ` State updates must be signed by at least ${validatorThresholdPercentage}% of validators, which corresponds to a minimum of ${minValidatorsForConsensus} validators.`,
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, CHALLENGE_WINDOW_SECONDS),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+      HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+    ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
@@ -154,7 +152,7 @@ export const lightlink: ScalingProject = {
         CHALLENGE_PERIOD_SECONDS,
       )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
       the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
-      Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots. Moreover, state roots are not used for L1 bridge withdrawals.
+      Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots. Moreover, state roots are not used for ERC20 withdrawals from the LightLinkERC20Bridge.
       Users can deposit tokens on the LightLink chain by sending them to the L1BridgeRegistry contract on Ethereum L1. On the LightLink chain, token minting is then authorized by a permissioned set of signers providing signatures as input to the syncDeposit() function on the L2ERC20Predicate contract.
       Users can withdraw their funds by submitting a withdraw() transaction to the L2ERC20Predicate contract, which will burn the tokens on the LightLink chain. To then unlock tokens from the bridge on L1, a validator multisig needs to validate the withdrawal based on off-chain validity checks. 
       Users can exit the network once enough validators have signed off on the withdrawal.
@@ -206,51 +204,18 @@ export const lightlink: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('CanonicalStateChain', {
-          description:
-            'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
-          ...upgradesLightLink,
-        }),
-        discovery.getContractDetails('Challenge', {
-          description:
-            'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
-          ...upgradesLightLink,
-        }),
-        discovery.getContractDetails('L1BridgeRegistry', {
-          description:
-            'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
-        }),
-        discovery.getContractDetails('ChainOracle', {
-          description:
-            'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
-          ...upgradesLightLink,
-        }),
-      ],
+      [discovery.chain]: [...discovery.getDiscoveredContracts()],
     },
     risks: [],
   },
   permissions: {
     [discovery.chain]: {
+      ...discovery.getDiscoveredPermissions(),
       actors: [
         discovery.getPermissionDetails(
           'Validators',
           discovery.formatPermissionedAccounts(validatorAddresses),
           `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-        ),
-        discovery.getPermissionDetails(
-          'Proposer',
-          discovery.getPermissionedAccounts('CanonicalStateChain', 'publisher'),
-          'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
-        ),
-        discovery.getPermissionDetails(
-          'LightLinkMultisig',
-          discovery.getPermissionedAccounts('L1BridgeRegistry', 'multisig'),
-          'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
-        ),
-        discovery.getMultisigPermission(
-          'LightLinkMultisig2',
-          'Owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
         ),
       ],
     },

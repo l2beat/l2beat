@@ -1,8 +1,8 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 22179980,
-  "configHash": "0x5874f8705d4ca36faf9fa0a892dc5ae0652d6898799b976628ad09cd4f1a4c25",
+  "blockNumber": 22187475,
+  "configHash": "0xf0ff61a67b9078fe71406f343deb9587fc88a88653da05a9549b51aa4322b6b0",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -120,13 +120,24 @@
       "derivedName": "ChainOracle"
     },
     {
-      "name": "Multisig",
+      "name": "LightLink Multisig 1",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
       "type": "Contract",
+      "template": "lightlink/Multisig",
       "sourceHashes": [
         "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
       ],
       "proxyType": "immutable",
+      "displayName": "LightlinkMultisig",
+      "description": "Custom multisig implementation with a hardcoded n/2+1 threshold.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x624631881655a310adcF0d1336658Cc977609b72",
+          "description": "can remove and add validators, update their voting power, and change the required threshold."
+        }
+      ],
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1692154319,
       "sinceBlock": 17924532,
       "values": {
@@ -139,101 +150,8 @@
           "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590",
           "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
         ],
-        "getTransaction": [
-          [
-            [
-              true,
-              "0x624631881655a310adcF0d1336658Cc977609b72",
-              "0x761c91c1000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000300000000000000000000000012ece4aa73ee8ea958be327dae41dd785c9971180000000000000000000000006f933814903561f79137099587737dfb24c6e86d000000000000000000000000b44c32dd1ec374224eed43fd827ebe64db16b0df0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000014",
-              0,
-              2
-            ],
-            "0x761c91c1"
-          ],
-          [
-            [
-              true,
-              "0x624631881655a310adcF0d1336658Cc977609b72",
-              "0x47dcdaee0000000000000000000000000000000000000000000000000000000000000050",
-              0,
-              2
-            ],
-            "0x47dcdaee"
-          ],
-          [
-            [
-              true,
-              "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-              "0xf4a120f7000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
-              0,
-              2
-            ],
-            "0xf4a120f7"
-          ],
-          [
-            [
-              true,
-              "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-              "0xf4a120f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-              0,
-              2
-            ],
-            "0xf4a120f7"
-          ],
-          [
-            [
-              true,
-              "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-              "0xf4a120f70000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
-              0,
-              2
-            ],
-            "0xf4a120f7"
-          ]
-        ],
         "getTransactionCount": 22,
-        "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-        "transactions": [
-          [
-            true,
-            "0x624631881655a310adcF0d1336658Cc977609b72",
-            "0x761c91c1000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000300000000000000000000000012ece4aa73ee8ea958be327dae41dd785c9971180000000000000000000000006f933814903561f79137099587737dfb24c6e86d000000000000000000000000b44c32dd1ec374224eed43fd827ebe64db16b0df0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000002800000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000014",
-            0,
-            2
-          ],
-          [
-            true,
-            "0x624631881655a310adcF0d1336658Cc977609b72",
-            "0x47dcdaee0000000000000000000000000000000000000000000000000000000000000050",
-            0,
-            2
-          ],
-          [
-            true,
-            "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-            "0xf4a120f7000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
-            0,
-            2
-          ],
-          [
-            true,
-            "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-            "0xf4a120f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
-            0,
-            2
-          ],
-          [
-            true,
-            "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-            "0xf4a120f70000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
-            0,
-            2
-          ]
-        ]
-      },
-      "errors": {
-        "getTransaction": "Processing error occurred.",
-        "transactions": "Processing error occurred."
+        "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
       },
       "derivedName": "Multisig"
     },
@@ -253,11 +171,22 @@
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
       "type": "Contract",
+      "template": "lightlink/L1BridgeRegistry",
       "sourceHashes": [
         "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
         "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+          "description": "can remove and add validators, update their voting power, and change the required threshold.",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1692154667,
       "sinceBlock": 17924561,
       "values": {
@@ -284,18 +213,20 @@
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
         "systemVerifier": "0x0000000000000000000000000000000000000000"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "derivedName": "L1BridgeRegistry"
     },
     {
       "name": "L1ERC20Predicate",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
       "type": "Contract",
+      "template": "lightlink/L1ERC20Predicate",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
         "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.",
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1692155531,
       "sinceBlock": 17924631,
       "values": {
@@ -314,7 +245,6 @@
         "l2Predicate": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
         "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "derivedName": "L1ERC20Predicate"
     },
     {
@@ -366,35 +296,35 @@
           ]
         ],
         "$upgradeCount": 2,
-        "chainHead": 1275,
+        "chainHead": 1279,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 22179037,
-          "l2Height": 136550839,
-          "prevHash": "0x7e433c56a62ecabe405aee339b31308a52bba71b5cba9cac4bddc61f7609a831",
-          "outputRoot": "0x7552b22ed9929b208e0723935960ad607086e98f100b38aa0bce3995e9006216",
+          "epoch": 22186023,
+          "l2Height": 136717372,
+          "prevHash": "0x17e7cc9398b67f950c567cb36901ad93fb989a9e376ee66dae5097fafb052d6a",
+          "outputRoot": "0x0289102c0d886aa90daca7e3d87e2d12596dde22a790f478658889e29206986c",
           "celestiaPointers": [
-            { "height": 4722462, "shareStart": 6656, "shareLen": 3595 },
-            { "height": 4722471, "shareStart": 6528, "shareLen": 3379 },
-            { "height": 4722481, "shareStart": 64, "shareLen": 3176 },
-            { "height": 4722491, "shareStart": 2624, "shareLen": 3643 },
-            { "height": 4722505, "shareStart": 6080, "shareLen": 3529 },
-            { "height": 4722519, "shareStart": 4736, "shareLen": 3615 },
-            { "height": 4722535, "shareStart": 8896, "shareLen": 3664 },
-            { "height": 4722549, "shareStart": 6592, "shareLen": 3251 },
-            { "height": 4722565, "shareStart": 2496, "shareLen": 3581 },
-            { "height": 4722581, "shareStart": 6464, "shareLen": 3571 },
-            { "height": 4722595, "shareStart": 2432, "shareLen": 3307 },
-            { "height": 4722608, "shareStart": 2112, "shareLen": 3420 },
-            { "height": 4722620, "shareStart": 6848, "shareLen": 3185 },
-            { "height": 4722633, "shareStart": 2304, "shareLen": 3204 },
-            { "height": 4722649, "shareStart": 4800, "shareLen": 3088 },
-            { "height": 4722658, "shareStart": 4352, "shareLen": 3386 },
-            { "height": 4722666, "shareStart": 128, "shareLen": 3409 },
-            { "height": 4722672, "shareStart": 128, "shareLen": 3357 },
-            { "height": 4722679, "shareStart": 64, "shareLen": 3125 },
-            { "height": 4722686, "shareStart": 128, "shareLen": 3037 },
-            { "height": 4722693, "shareStart": 64, "shareLen": 3353 }
+            { "height": 4736446, "shareStart": 5952, "shareLen": 3661 },
+            { "height": 4736462, "shareStart": 6208, "shareLen": 3665 },
+            { "height": 4736475, "shareStart": 4224, "shareLen": 3484 },
+            { "height": 4736491, "shareStart": 64, "shareLen": 3466 },
+            { "height": 4736502, "shareStart": 7680, "shareLen": 3664 },
+            { "height": 4736519, "shareStart": 6080, "shareLen": 3664 },
+            { "height": 4736535, "shareStart": 10432, "shareLen": 3615 },
+            { "height": 4736550, "shareStart": 6272, "shareLen": 3281 },
+            { "height": 4736566, "shareStart": 4224, "shareLen": 3498 },
+            { "height": 4736582, "shareStart": 2112, "shareLen": 3589 },
+            { "height": 4736599, "shareStart": 3968, "shareLen": 3660 },
+            { "height": 4736613, "shareStart": 5824, "shareLen": 3543 },
+            { "height": 4736622, "shareStart": 6592, "shareLen": 3631 },
+            { "height": 4736638, "shareStart": 8320, "shareLen": 3665 },
+            { "height": 4736650, "shareStart": 4352, "shareLen": 3569 },
+            { "height": 4736658, "shareStart": 4352, "shareLen": 3418 },
+            { "height": 4736665, "shareStart": 6272, "shareLen": 3187 },
+            { "height": 4736673, "shareStart": 6720, "shareLen": 3361 },
+            { "height": 4736680, "shareStart": 2752, "shareLen": 3665 },
+            { "height": 4736689, "shareStart": 4352, "shareLen": 3664 },
+            { "height": 4736697, "shareStart": 192, "shareLen": 3447 }
           ]
         },
         "maxPointers": 21,
@@ -459,7 +389,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "LightLink Multisig 2",
       "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -568,7 +498,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619822",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619823",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -635,7 +565,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 22176848
+          "prevBlockNum": 22185254
         },
         "paused": false,
         "resourceConfig": {
@@ -1245,7 +1175,10 @@
     "lightlink/CanonicalStateChain": "0x2a1dee98a80fe70c5ab33c3a8609fdd914616093b8a54b13886ec89d95790113",
     "lightlink/ChainOracle": "0xb64f3873a84aacd7abfa1a8de00a1fcf40e58e20f71b881c8c791940ec233e61",
     "lightlink/Challenge": "0xdcb2d992b0ec031b3ea66e2a72f2f5c901f68231f201cc17993f2b13e6ebc244",
+    "lightlink/L1BridgeRegistry": "0x03bfd7764060fab451eb4e49b4c1576143cb2d058087846124a273e163152adb",
+    "lightlink/L1ERC20Predicate": "0x1af6dde39b656b446ea274487e7557e41d3216c7df34b24b2494d92686fe8d06",
     "lightlink/LightLinkPortal": "0x5b643ee65a5d04e1b6d394d4b68be2dc8fb15e5fcf044b859e53294ba3589a27",
+    "lightlink/Multisig": "0x014d248c1ff2c716fd7dd2a43514a66460a953218c4693cb98a9b283e627e21d",
     "lightlink/SystemConfig": "0x13288d411fa1ab4d8e80eb3af80d254696dc3910ad4697dd495f12ecff3dac61",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a"

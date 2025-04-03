@@ -150,6 +150,9 @@
 
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "Succinct Multisig 1",
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "Succinct Multisig 2",
+
+    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": "LightLink Multisig 1",
+    "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": "LightLink Multisig 2",
     // eoa names (mostly for SCs)
     // arbitrum SC
     "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
