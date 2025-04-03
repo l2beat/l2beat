@@ -31,8 +31,8 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - name: Find merge-base between HEAD and main
-        run: echo "MERGE_BASE_SHA=$(git merge-base HEAD origin/main)" >> $GITHUB_ENV
+      - name: Find merge-base between PR and main
+        run: echo "MERGE_BASE_SHA=$(git merge-base ${{ github.event.pull_request.head.sha }} origin/main)" >> $GITHUB_ENV
       
       - name: Checkout code (main)
         run: git checkout $MERGE_BASE_SHA
