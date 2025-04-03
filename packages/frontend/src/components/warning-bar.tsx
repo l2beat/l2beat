@@ -74,7 +74,7 @@ export function WarningBar({
     <Callout
       className={cn('p-4', className)}
       color={color}
-      icon={<Icon className={iconVariants({ color })} />}
+      icon={<Icon className={cn(iconVariants({ color }), 'mt-[3px]')} />}
       body={textElement}
     />
   )

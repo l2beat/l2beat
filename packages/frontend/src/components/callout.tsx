@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 
-const calloutVariants = cva('flex rounded-lg', {
+const calloutVariants = cva('flex items-start rounded-lg', {
   variants: {
     color: {
       red: 'bg-negative/20',
