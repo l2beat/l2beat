@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 82818646,
-  "configHash": "0xf6e68858da784e8e4197330b796dec4bb0dfcd3785238d30db8fc86b6568bea1",
+  "blockNumber": 83161150,
+  "configHash": "0x17132803eeb195c3e46a4407bfc873aeb563d14337bd28a7956e33cff73c6d5e",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -629,7 +629,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 900,
+        "exitNum": 901,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2ERC20Gateway",
