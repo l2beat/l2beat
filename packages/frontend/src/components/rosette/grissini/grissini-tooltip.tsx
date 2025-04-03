@@ -43,9 +43,11 @@ export function GrissiniTooltip({ values, isUnderReview }: GrissiniCellProps) {
         <span className="mr-2">Risk analysis</span>
       </span>
 
-      <div className="flex flex-col gap-4">
-        <GrissiniDetails values={values} className="w-auto min-w-[264px]" />
-      </div>
+      <GrissiniDetails
+        values={values}
+        className="w-auto min-w-[264px]"
+        info="compact"
+      />
     </div>
   )
 }

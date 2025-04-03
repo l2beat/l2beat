@@ -6,10 +6,16 @@ import {
   Logger,
   getEnv,
 } from '@l2beat/backend-tools'
-import { type Project, ProjectService, type TvsToken } from '@l2beat/config'
+import {
+  type ChainConfig,
+  type Project,
+  ProjectService,
+  type TvsToken,
+} from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
+import { groupBy } from 'lodash'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
@@ -57,13 +63,19 @@ const cmd = command({
       projects = [project]
     }
 
+    const projectsWithChain = (
+      await ps.getProjects({ select: ['chainConfig'] })
+    ).map((p) => p.chainConfig)
+
+    const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
+
     let totalTvs = 0
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     for (const project of projects) {
       logger.info(`Generating TVS config for project ${project.id}`)
-      const tvsConfig = await generateConfigForProject(project, logger)
+      const tvsConfig = await generateConfigForProject(project, chains, logger)
 
       let newConfig: TvsToken[] = []
       if (tvsConfig.tokens.length > 0) {
@@ -74,11 +86,11 @@ const cmd = command({
           return acc + token.valueForProject
         }, 0)
 
-        const valueForTotal = tvs.reduce((acc, token) => {
+        const valueForSummary = tvs.reduce((acc, token) => {
           return acc + token.valueForSummary
         }, 0)
 
-        totalTvs += valueForTotal
+        totalTvs += valueForSummary
 
         logger.info(`TVS for project ${toDollarString(valueForProject)}`)
         logger.info(`Total TVS ${toDollarString(totalTvs)}`)
@@ -99,8 +111,9 @@ const cmd = command({
       // TODO when old TVL will be removed script should be moved to config package
       const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
+      const deduplicatedTokens = deduplicateTokens(newConfig)
       const mergedTokens = mergeWithExistingConfig(
-        newConfig,
+        deduplicatedTokens,
         currentConfig,
         logger,
       )
@@ -119,6 +132,7 @@ run(cmd, process.argv.slice(2))
 
 async function generateConfigForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
   logger: Logger,
 ) {
   const env = getEnv()
@@ -138,7 +152,7 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, logger, rpc)
+  return mapConfig(project, chains, logger, rpc)
 }
 
 function initLogger(env: Env) {
@@ -216,4 +230,23 @@ function toDollarString(value: number) {
   } else {
     return `$${value.toFixed(2)}`
   }
+}
+
+function deduplicateTokens(tokens: TvsToken[]) {
+  const byId = groupBy(tokens, 'id')
+
+  const deduplicatedTokens: TvsToken[] = []
+
+  for (const [id, tokensWithSameId] of Object.entries(byId)) {
+    if (tokensWithSameId.length > 1) {
+      tokensWithSameId.forEach((token, index) => {
+        const newToken = { ...token }
+        newToken.id = TokenId(`${id}-${index + 1}`)
+        deduplicatedTokens.push(newToken)
+      })
+    } else {
+      deduplicatedTokens.push(tokensWithSameId[0])
+    }
+  }
+  return deduplicatedTokens
 }

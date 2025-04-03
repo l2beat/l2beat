@@ -1,10 +1,11 @@
+import Link from 'next/link'
+import { Logo } from '~/components/logo'
 import { VerticalSeparator } from '../../core/vertical-separator'
 import { DarkThemeToggle } from '../../dark-theme-toggle'
 import { SmallSearchBarButton } from '../../search-bar/search-bar-button'
 import { SocialLinks } from '../../social-links'
 import type { NavGroup, NavLink } from '../types'
 import { TopNavLink } from './top-nav-link'
-import { TopNavLogo } from './top-nav-logo'
 
 /**
  * Top navbar component used on old-style pages *on xl screens*.
@@ -20,7 +21,9 @@ export function TopNavbar({
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
-            <TopNavLogo logoLink={logoLink} />
+            <Link href={logoLink}>
+              <Logo className="h-8 w-auto" />
+            </Link>
           </li>
           {groups.map((group) => {
             if (group.type === 'single') {

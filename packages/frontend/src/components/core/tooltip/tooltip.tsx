@@ -39,6 +39,10 @@ const TooltipTrigger = ({
   const isMobile = useIsMobile()
   const { setOpen } = useTooltipTriggerContext()
 
+  if (props.disabled) {
+    return props.children
+  }
+
   // Tooltips do not work on mobile by default
   if (disabledOnMobile) {
     return <TooltipPrimitive.Trigger ref={ref} {...props} />

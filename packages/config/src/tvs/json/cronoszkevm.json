@@ -72,6 +72,23 @@
     },
     {
       "mode": "auto",
+      "id": "cronoszkevm-MOON",
+      "priceId": "moonflow",
+      "symbol": "MOON",
+      "name": "Moonflow",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC80B437c4c0f9C74CFb2e2D063A58ffB4F82D4F0",
+        "chain": "cronoszkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1723714163
+      }
+    },
+    {
+      "mode": "auto",
       "id": "cronoszkevm-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -137,24 +154,6 @@
         "decimals": 8,
         "sinceTimestamp": 1722394995
       }
-    },
-    {
-      "mode": "auto",
-      "id": "cronoszkevm-zkCRO",
-      "priceId": "cronos-zkevm-cro",
-      "symbol": "zkCRO",
-      "name": "Cronos zkEVM CRO",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
-        "chain": "ethereum",
-        "escrowAddress": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-        "decimals": 18,
-        "sinceTimestamp": 1724803200
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": true
     }
   ]
 }

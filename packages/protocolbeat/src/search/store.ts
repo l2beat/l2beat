@@ -15,10 +15,7 @@ export const useSearchStore = create<SearchState>((set) => ({
   searchTerm: '',
   selectedIndex: 0,
 
-  setOpen: (opened: boolean) =>
-    set(() => {
-      return !opened ? { opened, searchTerm: '', selectedIndex: 0 } : { opened }
-    }),
+  setOpen: (opened: boolean) => set(() => ({ opened })),
   setSearchTerm: (searchTerm: string) =>
     set(() => ({ searchTerm, selectedIndex: 0 })),
   setSelectedIndex: (selectedIndex: number) => set(() => ({ selectedIndex })),

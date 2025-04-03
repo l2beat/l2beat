@@ -4,10 +4,9 @@
   "tokens": [
     {
       "mode": "auto",
-      "id": "starknet-DAI.ext",
+      "id": "starknet-DAI",
       "priceId": "dai",
-      "symbol": "DAI.ext",
-      "displaySymbol": "DAI",
+      "symbol": "DAI",
       "name": "Dai Stablecoin",
       "amount": {
         "type": "balanceOfEscrow",
@@ -257,10 +256,9 @@
     },
     {
       "mode": "auto",
-      "id": "starknet-wstETH.ext",
+      "id": "starknet-wstETH",
       "priceId": "wrapped-steth",
-      "symbol": "wstETH.ext",
-      "displaySymbol": "wstETH",
+      "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
       "amount": {
         "type": "balanceOfEscrow",

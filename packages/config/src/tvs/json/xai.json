@@ -16,7 +16,7 @@
         "decimals": 18,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -44,7 +44,7 @@
         "decimals": 18,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -72,7 +72,7 @@
         "decimals": 18,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -100,7 +100,7 @@
         "decimals": 18,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -128,7 +128,7 @@
         "decimals": 6,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -156,7 +156,7 @@
         "decimals": 6,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -184,7 +184,7 @@
         "decimals": 6,
         "sinceTimestamp": 1706918400
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -212,7 +212,7 @@
         "decimals": 18,
         "sinceTimestamp": 1704476020
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -254,15 +254,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1704758400
-        },
-        "priceId": "xai-blockchain"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1704758400
+            },
+            "priceId": "xai-blockchain"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1704758400
+            },
+            "priceId": "xai-blockchain"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",

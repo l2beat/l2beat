@@ -105,7 +105,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
   //     'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/11_compression.md).',
   //   genesisState: 'There have been neither genesis states nor regenesis.',
   //   dataFormat:
-  //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/09_pubdata.md).',
+  //     'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/09_pubdata.md).',
   // },
   milestones: [
     {

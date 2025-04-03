@@ -16,7 +16,7 @@
         "decimals": 18,
         "sinceTimestamp": 1707462976
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BalanceOfEscrowAmountFormula } from '@l2beat/config'
-import type { BlockProvider } from '@l2beat/shared'
+import type { BlockProvider, BlockTimestampProvider } from '@l2beat/shared'
 import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { BalanceProvider } from '../providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
@@ -20,6 +20,7 @@ export class DataFormulaExecutor {
     private priceProvider: PriceProvider,
     private circulatingSupplyProvider: CirculatingSupplyProvider,
     private blockProviders: Map<string, BlockProvider>,
+    private blockTimestampProvider: BlockTimestampProvider,
     private totalSupplyProvider: TotalSupplyProvider,
     private balanceProvider: BalanceProvider,
     private logger: Logger,
@@ -262,60 +263,6 @@ export class DataFormulaExecutor {
     }
   }
 
-  async getLatestBlockNumbers(chains: string[], timestamp: UnixTime) {
-    const result = new Map<string, number>()
-
-    for (const chain of chains) {
-      const block = this.blockProviders.get(chain)
-      assert(block, `${chain}: No BlockProvider configured`)
-      this.logger.debug(
-        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
-      )
-      const latestBlock = await block.getLatestBlockNumber()
-      result.set(chain, latestBlock)
-    }
-
-    return new Map([[timestamp, result]])
-  }
-
-  async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
-    const result = new Map<number, Map<string, number>>()
-
-    for (const timestamp of timestamps) {
-      result.set(
-        timestamp,
-        await this.getTimestampToBlockNumbersMapping(chains, timestamp),
-      )
-    }
-
-    return result
-  }
-
-  async getTimestampToBlockNumbersMapping(
-    chains: string[],
-    timestamp: UnixTime,
-  ) {
-    const result = new Map<string, number>()
-
-    for (const chain of chains) {
-      const cached = await this.storage.getBlockNumber(chain, timestamp)
-      if (cached) {
-        result.set(chain, cached)
-        continue
-      }
-      const block = this.blockProviders.get(chain)
-      assert(block, `${chain}: No BlockProvider configured`)
-      this.logger.info(
-        `Fetching block number for timestamp ${timestamp} on ${chain}`,
-      )
-      const blockNumber = await block.getBlockNumberAtOrBefore(timestamp)
-      result.set(chain, blockNumber)
-      await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
-    }
-
-    return result
-  }
-
   async getBlockNumbers(
     chains: string[],
     timestamps: UnixTime[],
@@ -336,6 +283,52 @@ export class DataFormulaExecutor {
     }
     assert(blockNumbersToTimestamps)
     return blockNumbersToTimestamps
+  }
+
+  async getLatestBlockNumbers(chains: string[], timestamp: UnixTime) {
+    const result = new Map<string, number>()
+
+    for (const chain of chains) {
+      const block = this.blockProviders.get(chain)
+      assert(block, `${chain}: No BlockProvider configured`)
+      this.logger.info(
+        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
+      )
+      const latestBlock = await block.getLatestBlockNumber()
+      result.set(chain, latestBlock)
+    }
+
+    return new Map([[timestamp, result]])
+  }
+
+  async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
+    const result = new Map<number, Map<string, number>>()
+
+    for (const timestamp of timestamps) {
+      const timestampMapping = new Map<string, number>()
+      result.set(timestamp, timestampMapping)
+
+      for (const chain of chains) {
+        const cached = await this.storage.getBlockNumber(chain, timestamp)
+        if (cached) {
+          timestampMapping.set(chain, cached)
+          continue
+        }
+
+        this.logger.info(
+          `Fetching block number for timestamp ${timestamp} on ${chain}`,
+        )
+        const blockNumber =
+          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            chain,
+          )
+        timestampMapping.set(chain, blockNumber)
+        await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
+      }
+    }
+
+    return result
   }
 }
 

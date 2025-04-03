@@ -491,7 +491,7 @@ ZKsync Era's ChainAdmin differs from the others as it also has the above *Elasti
             genesisState:
               'There have been neither genesis states nor regenesis.',
             dataFormat:
-              'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/09_pubdata.md).',
+              'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/09_pubdata.md).',
           },
     stateValidation: {
       description:

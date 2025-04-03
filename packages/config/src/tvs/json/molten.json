@@ -30,15 +30,31 @@
           }
         ]
       },
-      "valueForTotal": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1712102400
-        },
-        "priceId": "molten-2"
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712102400
+            },
+            "priceId": "molten-2"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1712102400
+            },
+            "priceId": "molten-2"
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -58,7 +74,7 @@
         "decimals": 6,
         "sinceTimestamp": 1712019098
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",
@@ -86,7 +102,7 @@
         "decimals": 18,
         "sinceTimestamp": 1712019098
       },
-      "valueForTotal": {
+      "valueForSummary": {
         "type": "value",
         "amount": {
           "type": "const",

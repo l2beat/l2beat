@@ -40,7 +40,7 @@ export function getTokenSyncRange(token: TvsToken): {
 
   getSyncRangeRecursive(token.amount)
   getSyncRangeRecursive(token.valueForProject)
-  getSyncRangeRecursive(token.valueForTotal)
+  getSyncRangeRecursive(token.valueForSummary)
 
   return { sinceTimestamp, untilTimestamp }
 }
