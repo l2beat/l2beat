@@ -19,7 +19,7 @@ import { getChartRange } from '~/components/core/chart/utils/get-chart-range-fro
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { Skeleton } from '~/components/core/skeleton'
 import { EM_DASH } from '~/consts/characters'
-import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
+import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -28,14 +28,9 @@ import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 export function EcosystemsTvsChart({
   name,
   entries,
-  color,
 }: {
   name: string
-  entries: EcosystemProjectEntry['projects']
-  color: {
-    primary: string
-    secondary: string
-  }
+  entries: EcosystemEntry['projects']
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
@@ -62,12 +57,12 @@ export function EcosystemsTvsChart({
   const chartMeta = useMemo(() => {
     return {
       value: {
-        color: color?.primary ?? 'hsl(var(--chart-pink))',
+        color: 'var(--ecosystem-primary)',
         indicatorType: { shape: 'line' },
         label: name,
       },
     } satisfies ChartMeta
-  }, [color, name])
+  }, [name])
 
   const stats = getStats(chartData)
   const range = getChartRange(chartData)
@@ -80,17 +75,22 @@ export function EcosystemsTvsChart({
         data={chartData}
         isLoading={isLoading}
         className="!h-44 !min-h-44"
-        milestones={[]}
       >
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
           <defs>
-            <CustomFillGradientDef id="fill" colors={color} />
+            <CustomFillGradientDef
+              id="fill"
+              colors={{
+                primary: 'var(--ecosystem-primary)',
+                secondary: 'var(--ecosystem-secondary)',
+              }}
+            />
           </defs>
           <Area
             dataKey="value"
             fill="url(#fill)"
             fillOpacity={1}
-            stroke={color.primary}
+            stroke="var(--ecosystem-primary)"
             strokeWidth={2}
             isAnimationActive={false}
           />

@@ -27,7 +27,7 @@ import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
+import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
@@ -36,14 +36,9 @@ import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 export function EcosystemsActivityChart({
   name,
   entries,
-  colors,
 }: {
   name: string
-  entries: EcosystemProjectEntry['projects']
-  colors: {
-    primary: string
-    secondary: string
-  }
+  entries: EcosystemEntry['projects']
 }) {
   const isClient = useIsClient()
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
@@ -65,7 +60,7 @@ export function EcosystemsActivityChart({
     return {
       projects: {
         label: name,
-        color: colors.primary,
+        color: 'var(--ecosystem-primary)',
         indicatorType: {
           shape: 'line',
         },
@@ -78,7 +73,7 @@ export function EcosystemsActivityChart({
         },
       },
     } satisfies ChartMeta
-  }, [colors, name])
+  }, [name])
 
   const chartData = useMemo(
     () =>
@@ -103,7 +98,6 @@ export function EcosystemsActivityChart({
         meta={chartMeta}
         isLoading={isLoading}
         className="!h-44 !min-h-44"
-        milestones={[]}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
@@ -116,7 +110,7 @@ export function EcosystemsActivityChart({
               },
               {
                 dataKey: 'projects',
-                stroke: colors.primary,
+                stroke: 'var(--ecosystem-primary)',
                 fill: 'url(#fillProjects)',
               },
             ]),
@@ -136,7 +130,13 @@ export function EcosystemsActivityChart({
             content={<ActivityCustomTooltip syncedUntil={undefined} />}
           />
           <defs>
-            <CustomFillGradientDef id="fillProjects" colors={colors} />
+            <CustomFillGradientDef
+              id="fillProjects"
+              colors={{
+                primary: 'var(--ecosystem-primary)',
+                secondary: 'var(--ecosystem-secondary)',
+              }}
+            />
             <EthereumFillGradientDef id="fillEthereum" />
             <EthereumStrokeGradientDef id="strokeEthereum" />
           </defs>

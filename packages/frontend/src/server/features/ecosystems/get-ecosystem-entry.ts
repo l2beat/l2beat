@@ -1,4 +1,9 @@
-import type { Milestone, Project, ProjectEcosystemConfig } from '@l2beat/config'
+import type {
+  Milestone,
+  Project,
+  ProjectEcosystemConfig,
+  ProjectEcosystemInfo,
+} from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
@@ -17,7 +22,7 @@ import {
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 
-export interface EcosystemProjectEntry {
+export interface EcosystemEntry {
   slug: string
   name: string
   logo: {
@@ -27,14 +32,19 @@ export interface EcosystemProjectEntry {
   }
   badges: BadgeWithParams[]
   colors: ProjectEcosystemConfig['colors']
-  projects: ScalingSummaryEntry[]
+  projects: EcosystemProjectEntry[]
+  allScalingProjectsCount: number
   links: ProjectLink[]
   milestones: Milestone[]
 }
 
-export async function getEcosystemProjectEntry(
+export interface EcosystemProjectEntry extends ScalingSummaryEntry {
+  ecosystemInfo: ProjectEcosystemInfo
+}
+
+export async function getEcosystemEntry(
   slug: string,
-): Promise<EcosystemProjectEntry | undefined> {
+): Promise<EcosystemEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
     select: ['ecosystemConfig', 'display'],
@@ -44,6 +54,10 @@ export async function getEcosystemProjectEntry(
   if (!ecosystem) {
     return undefined
   }
+
+  const allScalingProjects = await ps.getProjects({
+    where: ['isScaling'],
+  })
 
   const projects = await ps.getProjects({
     select: [
@@ -81,15 +95,17 @@ export async function getEcosystemProjectEntry(
       .map((badge) => getBadgeWithParams(badge, ecosystem))
       .filter((badge) => badge !== undefined),
     links: getProjectLinks(ecosystem.display.links),
+    allScalingProjectsCount: allScalingProjects.length,
     projects: ecosystemProjects
-      .map((project) =>
-        getScalingSummaryEntry(
+      .map((project) => ({
+        ...getScalingSummaryEntry(
           project,
           projectsChangeReport.getChanges(project.id),
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
         ),
-      )
+        ecosystemInfo: project.ecosystemInfo,
+      }))
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
   }

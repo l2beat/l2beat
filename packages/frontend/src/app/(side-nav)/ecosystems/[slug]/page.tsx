@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { getEcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
+import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
+import { EcosystemsProjectsChart } from '../_components/charts/ecosystems-projects-chart'
 import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
@@ -14,7 +15,7 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params
-  const ecosystem = await getEcosystemProjectEntry(slug)
+  const ecosystem = await getEcosystemEntry(slug)
 
   if (!ecosystem) {
     return notFound()
@@ -44,17 +45,21 @@ export default async function Page({ params }: Props) {
               <EcosystemsTvsChart
                 name={ecosystem.name}
                 entries={ecosystem.projects}
-                color={ecosystem.colors}
               />
             </PrimaryCard>
             <PrimaryCard>
               <EcosystemsActivityChart
                 name={ecosystem.name}
                 entries={ecosystem.projects}
-                colors={ecosystem.colors}
               />
             </PrimaryCard>
           </div>
+          <PrimaryCard>
+            <EcosystemsProjectsChart
+              entries={ecosystem.projects}
+              allScalingProjectsCount={ecosystem.allScalingProjectsCount}
+            />
+          </PrimaryCard>
           <PrimaryCard>
             <EcosystemProjectsTable entries={ecosystem.projects} />
           </PrimaryCard>

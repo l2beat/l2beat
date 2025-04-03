@@ -4,12 +4,12 @@ import {
   type BadgeWithParams,
   ProjectBadge,
 } from '~/components/projects/project-badge'
-import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
+import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 
 interface Props {
-  logo: EcosystemProjectEntry['logo']
+  logo: EcosystemEntry['logo']
   badges: BadgeWithParams[]
-  links: EcosystemProjectEntry['links']
+  links: EcosystemEntry['links']
 }
 
 export function EcosystemPageHeader({ logo, badges, links }: Props) {
