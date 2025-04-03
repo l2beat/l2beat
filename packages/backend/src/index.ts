@@ -71,7 +71,7 @@ function createLogger(env: Env): Logger {
     logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
     utc: isLocal ? false : true,
     transports: loggerTransports,
-    metricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', !isLocal),
+    metricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', esEnabled),
   }
 
   return new Logger(options)
