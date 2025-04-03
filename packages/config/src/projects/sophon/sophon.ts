@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -45,6 +45,11 @@ export const sophon: ScalingProject = zkStackL2({
     },
   },
   associatedTokens: ['SOPH'],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1633046400), // 2021-10-01T00:00:00Z
+  },
   chainConfig: {
     name: 'sophon',
     chainId: 50104,

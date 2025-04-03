@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -101,6 +106,11 @@ export const zksync2: ScalingProject = zkStackL2({
     ],
   },
   associatedTokens: ['ZK'],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1725314400), // 2024-09-03T00:00:00Z
+  },
   nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,

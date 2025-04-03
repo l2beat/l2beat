@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -39,6 +39,11 @@ export const zeronetwork: ScalingProject = zkStackL2({
         'https://youtube.com/@ZERO-Network-L2',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1656633600), // 2022-07-01T00:00:00Z
   },
   chainConfig: {
     name: 'zeronetwork',

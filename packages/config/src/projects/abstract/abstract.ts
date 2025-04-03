@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -35,6 +35,11 @@ export const abstract: ScalingProject = zkStackL2({
         'https://youtube.com/@AbstractBlockchain',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1617235200), // 2021-04-01T00:00:00Z
   },
   chainConfig: {
     name: 'abstract',

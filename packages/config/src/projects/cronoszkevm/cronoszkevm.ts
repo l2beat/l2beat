@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -41,6 +41,11 @@ export const cronoszkevm: ScalingProject = zkStackL2({
     },
   },
   associatedTokens: ['zkCRO'],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1672531200), // 2023-01-01T00:00:00Z
+  },
   chainConfig: {
     name: 'cronoszkevm',
     chainId: 388,
