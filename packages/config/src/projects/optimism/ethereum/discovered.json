@@ -66,6 +66,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1716902219,
       "sinceBlock": 19968607,
@@ -274,7 +280,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "14h 20m",
+        "timeSinceLastL2beatInteraction": "14h 51m",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -283,11 +289,13 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
       "type": "Contract",
+      "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
         "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7",
         "0xfaa50769db48b1d2c04c06a8a0a4771b87b3c0ff20a508115bfdb2b576fdb454"
       ],
       "proxyType": "resolved delegate proxy",
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1624400997,
       "sinceBlock": 12686757,
@@ -374,25 +382,11 @@
       "derivedName": "L1CrossDomainMessenger",
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
-      ]
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x4200000000000000000000000000000000000007",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x4200000000000000000000000000000000000010",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x4200000000000000000000000000000000000014",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -501,7 +495,8 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+          "from": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         },
         {
           "permission": "upgrade",
@@ -562,6 +557,7 @@
         {
           "permission": "upgrade",
           "from": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         },
         {
@@ -605,11 +601,13 @@
       "name": "L1ERC721Bridge",
       "address": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
       "type": "Contract",
+      "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
         "0x9de28f19e0d1200bf0afda5ab90c9d2dffa44a775e71cfe9232ee1808338996c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -671,7 +669,8 @@
       "derivedName": "L1ERC721Bridge",
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
-      ]
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "SynthetixBridgeEscrow",
@@ -870,6 +869,20 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            {
+              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -912,12 +925,42 @@
       "name": "SuperchainConfig",
       "address": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
       "type": "Contract",
+      "template": "opstack/SuperchainConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
       "issuedPermissions": [
+        {
+          "permission": "guard",
+          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+          "via": [
+            {
+              "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            },
+            { "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
+          ]
+        },
+        {
+          "permission": "guard",
+          "to": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+          "via": [
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "not revoked by the Security Council"
+            },
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
+          ]
+        },
+        {
+          "permission": "guard",
+          "to": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
+        },
         {
           "permission": "upgrade",
           "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
@@ -958,21 +1001,25 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.2.0"
       },
-      "derivedName": "SuperchainConfig"
+      "derivedName": "SuperchainConfig",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "L1StandardBridge",
       "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
       "type": "Contract",
+      "template": "opstack/L1StandardBridge",
       "sourceHashes": [
         "0x18e98a64fbfe011a7514d7a547900c02a3e0f9a49ab3413d517fd7e0e3c539dd",
         "0x4a2d83507f25be218f504b76815e4494138af88734cc54d34666c631aea88af5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
           "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         }
       ],
@@ -995,7 +1042,8 @@
       "derivedName": "L1StandardBridge",
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "optimism" } }
-      ]
+      ],
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "OpFoundationOperationsSafe",
@@ -1007,6 +1055,19 @@
         "0x263aadde480629cd3ca5704cc7d4e7df809d437e68f8d9864039801ddf820367"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [
+            { "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            {
+              "address": "0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "not revoked by the Security Council"
+            }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1212,6 +1273,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "via": [{ "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }]
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420419,
       "sinceBlock": 19185517,
@@ -1326,11 +1394,13 @@
       "name": "DisputeGameFactory",
       "address": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
       "type": "Contract",
+      "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1370,7 +1440,8 @@
         "permissionedGamesTotal": 617,
         "version": "1.0.1"
       },
-      "derivedName": "DisputeGameFactory"
+      "derivedName": "DisputeGameFactory",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2051,6 +2122,11 @@
     "lido/L1LidoTokensBridge": "0x75a3f618032de75b98f976e42bbdd2c2503a6a641857f03b266a2234798a6800",
     "maker/L1Escrow": "0x87c1d15632c3136185601f5c6e886055b0dfd744dab40ee4f9c37bcd39cfb254",
     "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
-    "opstack/OptimismPortal2": "0x765a88a0b62cb0291f85d5f300102de3b4e8fec9e2c026f6d3912c499d03e056"
+    "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
+    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
+    "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
+    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
+    "opstack/OptimismPortal2": "0x765a88a0b62cb0291f85d5f300102de3b4e8fec9e2c026f6d3912c499d03e056",
+    "opstack/SuperchainConfig": "0xe9ed91e5df551d67902341d4abcc2662a5637682f18b2606eb518c434c0f9c26"
   }
 }
