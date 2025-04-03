@@ -82,17 +82,11 @@ jobs:
           mkdir -p "$REPORT_DIR"
           cp /tmp/compare/diff.html "$REPORT_DIR/index.html"
 
-      - name: Upload GitHub Pages artifact
-        if: steps.diff.outputs.has_changes != '1'
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to github pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: pages-output
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        if: steps.diff.outputs.has_changes != '1'
-        uses: actions/deploy-pages@v4
-        with:
+          branch: config-diffs
+          folder: pages-output
           clean: false
 
       - name: Find Comment
@@ -118,7 +112,7 @@ jobs:
             
             Config changes have been detected between main and this PR.
             
-            [View Full Report](${{ steps.deployment.outputs.page_url }}pr-${{ github.event.pull_request.number }})
+            [View Full Report](https://l2beat.github.io/l2beat/pr-${{ github.event.pull_request.number }})
             
             *Last updated: ${{ steps.timestamp.outputs.value }}*
           edit-mode: replace
