@@ -14,7 +14,15 @@ import {
 } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
-import { boolean, command, flag, optional, positional, run, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  optional,
+  positional,
+  run,
+  string,
+} from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
@@ -83,6 +91,8 @@ const cmd = command({
       const tvsConfig = await generateConfigForProject(project, chains, logger)
 
       let newConfig: TvsToken[] = []
+      const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
+
       if (tvsConfig.tokens.length > 0) {
         logger.info('Executing TVS to exclude zero-valued tokens')
         const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
@@ -111,10 +121,12 @@ const cmd = command({
           })
       } else {
         logger.info('No tokens found')
+        if (fs.existsSync(filePath)) {
+          logger.info(`Deleting file: ${filePath}`)
+          fs.unlinkSync(filePath)
+        }
       }
 
-      // TODO when old TVL will be removed script should be moved to config package
-      const filePath = `./../config/src/tvs/json/${project.id.replace('=', '').replace(';', '')}.json`
       const currentConfig = readFromFile(filePath)
       const mergedTokens = mergeWithExistingConfig(
         newConfig,
@@ -144,16 +156,16 @@ async function generateConfigForProject(
   const rpcApi = project.chainConfig?.apis.find((a) => a.type === 'rpc')
   const rpc = rpcApi
     ? new RpcClient({
-      http: new HttpClient(),
-      callsPerMinute: env.integer(
-        `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi.callsPerMinute ?? 120,
-      ),
-      retryStrategy: 'RELIABLE',
-      logger,
-      url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
-      sourceName: project.id,
-    })
+        http: new HttpClient(),
+        callsPerMinute: env.integer(
+          `${project.id.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
+          rpcApi.callsPerMinute ?? 120,
+        ),
+        retryStrategy: 'RELIABLE',
+        logger,
+        url: env.string(`${project.id.toUpperCase()}_RPC_URL`, rpcApi.url),
+        sourceName: project.id,
+      })
     : undefined
 
   return mapConfig(project, chains, logger, rpc)

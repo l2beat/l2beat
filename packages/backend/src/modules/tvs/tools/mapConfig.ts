@@ -150,12 +150,12 @@ function mergeTokensWithSameId(
     },
     ...(customValueForSummaryExists
       ? {
-        valueForSummary: {
-          type: 'calculation',
-          operator: 'sum',
-          arguments: valueForSummary,
-        },
-      }
+          valueForSummary: {
+            type: 'calculation',
+            operator: 'sum',
+            arguments: valueForSummary,
+          },
+        }
       : {}),
   }
 }
