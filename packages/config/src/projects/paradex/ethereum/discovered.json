@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22166267,
+  "blockNumber": 22187409,
   "configHash": "0xa7f64ef9ee5af9f6012eb30b7fb837810cc5b97cf7fa66704642dd78d8ef9245",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -211,6 +211,24 @@
           "via": []
         },
         {
+          "permission": "interact",
+          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+          "description": "disable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+          "description": "enable the withdrawal limit.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
+          "description": "manage critical access control roles and the role that can upgrade the implementation.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
           "via": []
@@ -249,7 +267,8 @@
             "adminRole": "GOVERNANCE_ADMIN",
             "members": [
               "0x0000000000000000000000000000000000000020",
-              "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+              "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+              "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
             ]
           },
           "APP_GOVERNOR": {
@@ -267,7 +286,7 @@
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": []
+            "members": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
@@ -286,7 +305,8 @@
         "getUpgradeActivationDelay": 0,
         "govAdminAC": [
           "0x0000000000000000000000000000000000000020",
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
         ],
         "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
         "implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
@@ -301,11 +321,13 @@
         "PROXY_VERSION": "3.0.1",
         "secAdminAC": [
           "0x0000000000000000000000000000000000000020",
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
         ],
         "secAgentAC": [
           "0x0000000000000000000000000000000000000020",
-          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+          "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+          "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
         ],
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
@@ -442,7 +464,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 6963,
+        "l1ToL2MessageNonce": 7223,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -458,9 +480,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2931927190372238366527745965182287519461111197008892262130307570950847716470",
-        "stateBlockNumber": 535245,
-        "stateRoot": "1662927082891669134087650812988875994884240389781425012250531072952233643322",
+        "stateBlockHash": "2827848139522945842317937641818767214814096618211012288741502899897149121093",
+        "stateBlockNumber": 546045,
+        "stateRoot": "950281191667091258391444875379188062658753294880392121829940720388342048335",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -512,6 +534,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Paradex Multisig 2",
       "address": "0xFF57A3bB6465501c993acF8f3b29125a862661C0",
       "type": "Contract",
@@ -521,6 +548,23 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "disable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "enable the withdrawal limit."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "description": "manage critical access control roles and the role that can upgrade the implementation."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1743136259,
       "sinceBlock": 22143036,
@@ -528,6 +572,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
           "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
           "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
           "0xd123e24C318a14BaF01f487d59D8Ce3F8E1aeE5C",
@@ -537,8 +582,8 @@
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 2,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
