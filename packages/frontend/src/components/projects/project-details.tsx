@@ -1,6 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 
-import { ChartSection } from './sections/chart-section'
+import { ActivitySection } from './sections/activity-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
 import { CostsSection } from './sections/costs/costs-section'
 import { DaRiskSummarySection } from './sections/da-risk-summary-section'
@@ -14,11 +14,13 @@ import { PermissionsSection } from './sections/permissions/permissions-section'
 import { RiskAnalysisSection } from './sections/risk-analysis-section'
 import { RiskSummarySection } from './sections/risk-summary-section'
 import { SequencingSection } from './sections/sequencing-section'
+import { StackedTvsSection } from './sections/stacked-tvs-section'
 import { StageSection } from './sections/stage-section'
 import { StateDerivationSection } from './sections/state-derivation-section'
 import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
 import { ThroughputSection } from './sections/throughput/throughput-section'
+import { TvsSection } from './sections/tvs-section'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 
@@ -39,9 +41,25 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
-          case 'ChartSection':
+          case 'StackedTvsSection':
             return (
-              <ChartSection
+              <StackedTvsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'TvsSection':
+            return (
+              <TvsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ActivitySection':
+            return (
+              <ActivitySection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

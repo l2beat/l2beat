@@ -8338,6 +8338,20 @@
       }
     },
     {
+      "name": "Neemo Staked Astar",
+      "coingeckoId": "neemo-staked-astar",
+      "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+      "symbol": "nsASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1736732671,
+      "coingeckoListingTimestamp": 1737676800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53907/large/nsASTR_2x.png?1737707599",
+      "chainId": 1868,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Pipo",
       "coingeckoId": "pipo-2",
       "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
@@ -8426,6 +8440,27 @@
       }
     },
     {
+      "name": "SolvBTC Jupiter",
+      "coingeckoId": "solv-protocol-solvbtc-jupiter",
+      "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+      "symbol": "SolvBTC.JUP",
+      "decimals": 18,
+      "deploymentTimestamp": 1741955217,
+      "coingeckoListingTimestamp": 1743033600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54834/large/solvBTC_Jupiter.png?1741969449",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -8443,6 +8478,28 @@
           {
             "name": "Layer Zero",
             "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Warpped stASTR",
+      "coingeckoId": "wrapped-stastr",
+      "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+      "symbol": "wstASTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1739152051,
+      "coingeckoListingTimestamp": 1741564800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54782/large/wstASTR.png?1741570094",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
           }
         ]
       }
@@ -11536,7 +11593,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1638300979,
       "coingeckoListingTimestamp": 1662595200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/27205/large/creal.png?1696526254",
       "chainId": 42220,
       "source": "native",
@@ -11550,7 +11607,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1587586843,
       "coingeckoListingTimestamp": 1605744000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/13161/large/icon-celo-dollar-color-1000-circle-cropped.png?1696512945",
       "chainId": 42220,
       "source": "native",
@@ -11564,7 +11621,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1615767215,
       "coingeckoListingTimestamp": 1624924800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16756/large/CEUR.png?1696516329",
       "chainId": 42220,
       "source": "native",
@@ -11578,7 +11635,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715069719,
       "coingeckoListingTimestamp": 1716508800,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38052/large/cKES_200x200.png?1716403445",
       "chainId": 42220,
       "source": "native",
@@ -11619,6 +11676,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Glo Dollar",
+      "coingeckoId": "glo-dollar",
+      "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
+      "symbol": "USDGLO",
+      "decimals": 18,
+      "deploymentTimestamp": 1690275387,
+      "coingeckoListingTimestamp": 1678060800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29319/large/GLO_logo_pine_on_cyan_1_3.png?1716971065",
+      "chainId": 42220,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "PLASTIK Token",
@@ -11671,7 +11742,7 @@
       "decimals": 6,
       "deploymentTimestamp": 1704729697,
       "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 42220,
       "source": "native",

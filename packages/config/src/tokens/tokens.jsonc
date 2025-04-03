@@ -5995,6 +5995,39 @@
   ],
   "soneium": [
     {
+      "symbol": "nsASTR",
+      "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+      "source": "native",
+      "supply": "totalSupply" // lower than circulating, and circulating might pump since it can also be minted on astar
+    },
+    {
+      "symbol": "wstASTR",
+      "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC.JUP",
+      "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "STONE",
       "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -6322,6 +6355,13 @@
   ],
   "celo": [
     {
+      "symbol": "USDGLO",
+      "address": "0x4F604735c1cF31399C6E711D5962b2B3E0225AD3",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "CELO",
       "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
       "source": "native",
@@ -6330,24 +6370,28 @@
     {
       "symbol": "cUSD",
       "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+      "category": "stablecoin",
       "source": "native",
       "supply": "circulatingSupply"
     },
     {
       "symbol": "cEURO",
       "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+      "category": "stablecoin",
       "source": "native",
       "supply": "circulatingSupply"
     },
     {
       "symbol": "cREAL",
       "address": "0xe8537a3d056DA446677B9E9d6c5dB704EaAb4787",
+      "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
     },
     {
       "symbol": "cKES",
       "address": "0x456a3D042C0DbD3db53D5489e98dFb038553B0d0",
+      "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
     },
@@ -6361,6 +6405,7 @@
     {
       "symbol": "USDC",
       "address": "0xcebA9300f2b948710d2653dD7B07f33A8B32118C",
+      "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
     },
