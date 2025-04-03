@@ -270,23 +270,29 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (
+    !project.isUpcoming &&
+    !isTvsChartDataEmpty(tvsChartData) &&
+    tvsProjectStats
+  ) {
     sections.push({
-      type: 'ChartSection',
+      type: 'StackedTvsSection',
       props: {
         id: 'tvs',
-        stacked: true,
         title: 'Value Secured',
         projectId: project.id,
+        tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
+        tvsProjectStats,
+        tvlInfo: project.tvlInfo,
       },
     })
   }
 
   if (!isActivityChartDataEmpty(activityChartData)) {
     sections.push({
-      type: 'ChartSection',
+      type: 'ActivitySection',
       props: {
         id: 'activity',
         title: 'Activity',

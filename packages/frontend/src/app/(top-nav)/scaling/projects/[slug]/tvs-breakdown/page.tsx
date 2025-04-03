@@ -103,7 +103,6 @@ export default async function Page(props: Props) {
             projectId={project.id}
             milestones={project.milestones ?? []}
             tokens={tokens}
-            isBridge={false}
           />
           <HorizontalSeparator className="my-4" />
           <TvsBreakdownSummaryBox
@@ -123,7 +122,7 @@ export default async function Page(props: Props) {
               value: project7dData.breakdown.native,
               change: project7dData.change.native,
             }}
-            warning={project.tvlInfo.warnings[0]}
+            warning={project.tvlInfo?.warnings[0]}
           />
         </PrimaryCard>
 
