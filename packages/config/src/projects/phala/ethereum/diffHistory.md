@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xac1ed01ddbc38f1eb1b7f2c37c5c8b355a1ed405
+
+# Diff at Thu, 03 Apr 2025 14:06:19 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 22046074
+- current block number: 22188866
+
+## Description
+
+Renamed SP1SuccinctGateway to SP1VerifierGateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046074 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      template:
+-        "succinct/SP1SuccinctGateway"
++        "succinct/SP1VerifierGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xebb7a52724301b02d6933d04aa529f7f0dfdd4fc
 
 # Diff at Thu, 27 Mar 2025 11:14:53 GMT:

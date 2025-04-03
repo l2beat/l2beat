@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8b5bd68b3dcea0ce7c2bbf038ad32cff170ac4e6
+Generated with discovered.json: 0xa929132b07f7637f49fda48db6103569a686c1d6
 
-# Diff at Thu, 03 Apr 2025 11:27:03 GMT:
+# Diff at Thu, 03 Apr 2025 13:56:26 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 25417811
-- current block number: 28445116
+- current block number: 28449617
 
 ## Description
 
@@ -23,6 +23,18 @@ discovery. Values are for block 25417811 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SuccinctGatewaySP1"
++        "SP1VerifierGateway"
+      template:
+-        "succinct/SP1SuccinctGateway"
++        "succinct/SP1VerifierGateway"
+    }
+```
+
+```diff
 -   Status: DELETED
     contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776)
     +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
@@ -34,6 +46,12 @@ discovery. Values are for block 25417811 (main branch discovery), not current.
       values.gateway_deprecated:
 -        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
 ```
 
 ```diff

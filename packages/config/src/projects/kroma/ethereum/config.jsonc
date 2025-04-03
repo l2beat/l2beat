@@ -63,7 +63,8 @@
     },
     "0x339208824010425cBE73201ceD4372308ACD610B": {
       // ZKMerkleTrie
-      "description": "Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal."
+      "description": "Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.",
+      "ignoreRelatives": ["POSEIDON2"]
     },
     "0xFd234971881a7c72965175fA8E438c97B2Dcd273": {
       // Poseidon2

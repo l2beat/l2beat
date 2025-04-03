@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 322478616,
-  "configHash": "0x2a00fb16ecaaf02ef949395382c9e8b0d0e1b04af996c9b30e8ab4f799f06206",
+  "blockNumber": 322514614,
+  "configHash": "0xb683fe33d2319578bfedfd33b8cd4a2766c9d69e89545ca1f0796bd74efa5cd9",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -27,10 +27,10 @@
       ]
     },
     {
-      "name": "SuccinctGatewaySP1",
+      "name": "SP1VerifierGateway",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
-      "template": "succinct/SP1SuccinctGateway",
+      "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
@@ -261,13 +261,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 4739200,
+        "latestBlock": 4740800,
         "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
         "relayers": [
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ],
-        "state_proofNonce": 10470,
+        "state_proofNonce": 10472,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
@@ -316,17 +316,6 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1729727170,
-      "sinceBlock": 266979384,
-      "values": { "$immutable": true },
-      "derivedName": ""
     },
     {
       "name": "",
@@ -536,6 +525,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "succinct/SP1Blobstream": "0x02756e6ddd521ab8a6e504462ea813ffa8f5a9dd17c7b583cb8b8a0f7ec1f292",
-    "succinct/SP1SuccinctGateway": "0x2b1d17343f6cd8f25c32002ecd089a7f0e7a0d38c6c48fe7e47e2610e4ecec2e"
+    "succinct/SP1VerifierGateway": "0xa6ef4e174fae92ed8267688f483cb32f0f59ba89da1a6d7c463cb99cd21b5424"
   }
 }
