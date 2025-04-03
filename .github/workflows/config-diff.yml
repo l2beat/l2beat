@@ -85,7 +85,7 @@ jobs:
       - name: Deploy to github pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: config-diffs
+          branch: diff-pages
           folder: pages-output
           clean: false
 
