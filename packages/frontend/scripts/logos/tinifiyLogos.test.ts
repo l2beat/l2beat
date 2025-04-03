@@ -3,6 +3,8 @@ import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { ProjectService } from '@l2beat/config'
 import { expect } from 'earl'
+import { assert } from '@l2beat/shared-pure'
+import { getImageDimensions } from '~/utils/project/get-image-params'
 
 describe('icons', () => {
   const icons = readdirSync(path.join(__dirname, `../../public/icons`), {
@@ -35,8 +37,9 @@ describe('icons', () => {
         const buffer = readFileSync(
           path.join(__dirname, `../../public/icons/${slug}.png`),
         )
-        const width = buffer.readUInt32BE(16)
-        const height = buffer.readUInt32BE(20)
+        const dimensions = getImageDimensions(buffer)
+        assert(dimensions, `No dimensions for ${slug}`)
+        const { width, height } = dimensions
         const size = buffer.length
         const hash = crypto.createHash('md5').update(buffer).digest('hex')
 
