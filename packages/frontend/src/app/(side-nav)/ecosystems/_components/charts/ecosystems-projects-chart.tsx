@@ -105,7 +105,7 @@ function Header({
       <div className="text-right">
         <div className="text-xl font-bold">{stats.projectCount} Projects</div>
         <div className="text-xs font-medium text-[--ecosystem-primary]">
-          {formatPercent(stats.domination)} L2 market share
+          {formatPercent(stats.domination)} market share
         </div>
       </div>
     </div>

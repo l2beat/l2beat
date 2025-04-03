@@ -144,7 +144,7 @@ function Header({
         )}
         <div className="text-xs font-medium text-[--ecosystem-primary]">
           {stats?.domination ? (
-            `${formatPercent(stats.domination)} L2 market share`
+            `${formatPercent(stats.domination)} market share`
           ) : (
             <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
           )}

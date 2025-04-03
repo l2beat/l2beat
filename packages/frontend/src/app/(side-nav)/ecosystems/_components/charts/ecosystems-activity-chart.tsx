@@ -192,7 +192,7 @@ function Header({
           <Skeleton className="my-[5px] ml-auto h-5 w-32" />
         )}
         <div className="text-xs font-medium text-[--ecosystem-primary]">
-          {stats?.domination ?? EM_DASH}% L2 market share
+          {stats?.domination ?? EM_DASH}% market share
         </div>
       </div>
     </div>
