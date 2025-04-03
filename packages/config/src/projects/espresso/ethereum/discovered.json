@@ -2,7 +2,7 @@
   "name": "espresso",
   "chain": "ethereum",
   "blockNumber": 21372994,
-  "configHash": "0x3cb9bbd4b10aaac4a932c61b21c0b517ca4d1c8cfd993f4ce528f236840c1e8a",
+  "configHash": "0xb2757b6344acb9f2af055adc79376007f7d7e31b67626817116637ec527dcb0d",
   "entries": [
     {
       "name": "EspressoMultisig",

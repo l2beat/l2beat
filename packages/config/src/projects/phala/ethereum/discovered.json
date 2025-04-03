@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0x22f5f6c5dc098cd82dace3139b9f2f93cd1e50da4b5f1b7f8f6e620a3137eb80",
+  "configHash": "0xf95fa493794f1798387c268b51b4e39fa3470e767a6083e908b0726e8621eeb2",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

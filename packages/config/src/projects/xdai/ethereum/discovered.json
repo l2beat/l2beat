@@ -2,7 +2,7 @@
   "name": "xdai",
   "chain": "ethereum",
   "blockNumber": 21778563,
-  "configHash": "0x72198711abdb82b06a353cbddc22949f380c343f418b196c865441310a52a81c",
+  "configHash": "0x96626d8e319ea12b5e91cbcf19a4ce72b93cd741344569d80da890346fc3dd94",
   "entries": [
     {
       "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",

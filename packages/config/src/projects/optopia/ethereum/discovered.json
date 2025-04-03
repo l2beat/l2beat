@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 21184911,
-  "configHash": "0x36f572899d2beca88ebf8f36267802ade047bfcfb764356cfb93582ec037354a",
+  "configHash": "0x8b545bbc5c72a7140855c12bc5b82ff30e2a88ff3bc272c836a944ad8000ae12",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -2,7 +2,7 @@
   "name": "xterio",
   "chain": "ethereum",
   "blockNumber": 21235438,
-  "configHash": "0x7c4f48cd77e39e9efae71a65ff0bf275245c2503f0f37d8f2d69689ce45d3ed7",
+  "configHash": "0x9e092a750a97780a3de3aa8c10f61e6f65d1e7c5f5adf3327ef613a83c0474b4",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

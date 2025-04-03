@@ -2,7 +2,7 @@
   "name": "ethernity",
   "chain": "ethereum",
   "blockNumber": 21802884,
-  "configHash": "0xcefa922b4d1343107a67e613fb7c9456ff523f8d1438ac44e63c2568232600da",
+  "configHash": "0x119f47e4bafd6e1a009dc4903954cb56d898805f8c6adfccf0c684c6ed9cfebc",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

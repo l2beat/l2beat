@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0x3d023ecccc59c9c90d3a2fa28653eb1e6d671425a18ca4a284619c454f7d9118",
+  "configHash": "0x710cf2b08e60d47476bf612b681c5c4e6bd38caf69f1f257e88e8d3c722cec0d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -2,7 +2,7 @@
   "name": "transporter",
   "chain": "ethereum",
   "blockNumber": 21387870,
-  "configHash": "0x363e812af52590ad7587599652d67d0071c1bb754d0a7b440cd1173243bcc077",
+  "configHash": "0x2daff3612928b8835feee7fe19835d6a4384da615e02e1fd17eb31d223ed1d2a",
   "entries": [
     {
       "address": "0x00E64619Bb29f7E1d4E1CC9f21ecEA05189fd8ab",

@@ -2,7 +2,7 @@
   "name": "popapex",
   "chain": "arbitrum",
   "blockNumber": 315644682,
-  "configHash": "0x7e965cfd0b06f9b5d5a1869840b25eaea0663fcd2e7b7378280e0a77b4a39a19",
+  "configHash": "0x5cde7b0fbf4d92ff0812de0b3168e78b9ac82ca30a27c2b1d184819c3c9147d9",
   "entries": [
     {
       "name": "Bridge",

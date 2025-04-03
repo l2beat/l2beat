@@ -2,7 +2,7 @@
   "name": "hypr",
   "chain": "ethereum",
   "blockNumber": 22046063,
-  "configHash": "0x7c9f5abfa9f8fca2edb4df71cec423368ee01357cf08364dbb81e72c9af9d444",
+  "configHash": "0xe126955dbde705082f5b8b7e257bdbb2aef21f5c129c56b59eb76da2146dd54d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

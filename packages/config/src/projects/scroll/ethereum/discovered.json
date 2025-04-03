@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22123508,
-  "configHash": "0x12bd7a46339ed68761c68ec258ae504d32629da1b9e57277ea6b3503284f2b12",
+  "configHash": "0x61256f077c6a87a0f08151ac5b2a014222414820aac52c8085e503d617caa398",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
