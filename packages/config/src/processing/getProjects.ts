@@ -26,6 +26,7 @@ import {
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
 import { bridges } from './bridges'
+import { ecosystems } from './ecosystems'
 import { isVerified } from './isVerified'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -36,7 +37,6 @@ import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 import { isUnderReview } from './utils/isUnderReview'
-import { ecosystems } from './ecosystems'
 
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
