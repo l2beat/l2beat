@@ -15,10 +15,6 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 
 const discovery = new ProjectDiscovery('lightlink')
 
-const upgradesLightLink = {
-  upgradableBy: [{ name: 'LightLinkMultisig2', delay: 'no' }],
-}
-
 const validators = discovery.getContractValue<
   { addr: string; power: number }[]
 >('L1BridgeRegistry', 'getValidators')
@@ -211,13 +207,11 @@ export const lightlink: ScalingProject = {
   permissions: {
     [discovery.chain]: {
       ...discovery.getDiscoveredPermissions(),
-      actors: [
-        discovery.getPermissionDetails(
-          'Validators',
-          discovery.formatPermissionedAccounts(validatorAddresses),
-          `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-        ),
-      ],
+      ...discovery.getPermissionDetails(
+        'Validators',
+        discovery.formatPermissionedAccounts(validatorAddresses),
+        `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+      ),
     },
   },
 }
