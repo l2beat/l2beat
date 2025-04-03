@@ -1,8 +1,8 @@
-import { ProjectService } from '@l2beat/config'
 import crypto from 'crypto'
-import { expect } from 'earl'
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
+import { ProjectService } from '@l2beat/config'
+import { expect } from 'earl'
 
 describe('icons', () => {
   const icons = readdirSync(path.join(__dirname, `../../public/icons`), {

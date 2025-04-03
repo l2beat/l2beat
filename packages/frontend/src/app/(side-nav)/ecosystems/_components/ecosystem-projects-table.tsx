@@ -2,8 +2,8 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
-import { scalingSummaryColumns } from '../../scaling/summary/_components/table/columns'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { scalingSummaryColumns } from '../../scaling/summary/_components/table/columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]

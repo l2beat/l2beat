@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import {
-  ProjectBadge,
   type BadgeWithParams,
+  ProjectBadge,
 } from '~/components/projects/project-badge'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
 

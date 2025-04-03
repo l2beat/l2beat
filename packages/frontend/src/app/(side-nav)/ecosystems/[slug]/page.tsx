@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getEcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
-import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { getEcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
+import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 
 interface Props {
   params: Promise<{

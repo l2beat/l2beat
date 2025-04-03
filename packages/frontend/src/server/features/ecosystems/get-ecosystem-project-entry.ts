@@ -1,21 +1,21 @@
-import { ps } from '~/server/projects'
-import {
-  getScalingSummaryEntry,
-  type ScalingSummaryEntry,
-} from '../scaling/summary/get-scaling-summary-entries'
-import { getActivityLatestUops } from '../scaling/activity/get-activity-latest-tps'
-import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
-import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
-import type { ProjectEcosystemConfig } from '@l2beat/config'
-import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
-import { getImageDimensions } from '~/utils/project/get-image-params'
 import { readFileSync } from 'fs'
 import path from 'path'
+import type { ProjectEcosystemConfig } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import type { BadgeWithParams } from '~/components/projects/project-badge'
-import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
+import { ps } from '~/server/projects'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
+import { getImageDimensions } from '~/utils/project/get-image-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import { getActivityLatestUops } from '../scaling/activity/get-activity-latest-tps'
+import {
+  type ScalingSummaryEntry,
+  getScalingSummaryEntry,
+} from '../scaling/summary/get-scaling-summary-entries'
+import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
+import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 
 export interface EcosystemProjectEntry {
   slug: string
