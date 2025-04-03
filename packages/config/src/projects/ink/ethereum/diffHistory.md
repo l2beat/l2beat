@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x67a5f98271fa82488f335e016df752b82031e42d
+
+# Diff at Thu, 27 Mar 2025 11:14:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22073248
+- current block number: 22073248
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22073248 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x9b7C9BbD6d540A8A4dEDd935819fC4408Ba71153) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0xeb20e73b6fbfe13bf9aeddf2a86166cd7da165ea
 
 # Diff at Tue, 18 Mar 2025 10:45:54 GMT:

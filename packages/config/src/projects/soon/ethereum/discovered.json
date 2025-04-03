@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 21995453,
-  "configHash": "0xb9162fece5395dd2aa6c1bab7c7295d515d1fdb0c21b9143eef4fa4859785975",
+  "configHash": "0x8345721760c5a62ae7901ff9a7e5aff39d0743d37f28e695875d53f36417bda3",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -430,7 +430,8 @@
         "$immutable": true,
         "owner": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
@@ -1065,7 +1066,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
     "opstack/L1StandardBridge_soon": "0xe2cb98ed20855b5027c9a9c9a2935be314129eafe0ba56ab7b7b07cfce58be5e",

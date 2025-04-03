@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0x0ec13db30b4c6aee3a887a1e2828e1eb77475519136af5f6914f234448f30343",
+  "configHash": "0x508fcd25599c862c7eb5f757a262c22e2ca1d48e862bda6b930870170ffad8e5",
   "entries": [
     {
       "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",

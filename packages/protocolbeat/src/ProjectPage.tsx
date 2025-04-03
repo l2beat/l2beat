@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from './api/api'
+import { isReadOnly } from './config'
 import { MultiView } from './multi-view/MultiView'
 import type { PanelId } from './multi-view/store'
 import { CodePanel } from './panel-code/CodePanel'
@@ -41,7 +42,21 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   terminal: TerminalPanel,
 }
 
+const READONLY_PANELS: Record<
+  Exclude<PanelId, 'terminal' | 'code'>,
+  () => JSX.Element
+> = {
+  list: ListPanel,
+  values: ValuesPanel,
+  nodes: NodesPanel,
+  preview: PreviewPanel,
+}
+
 function Panel(props: { kind: PanelId }) {
-  const Component = PANELS[props.kind]
+  const Component = isReadOnly
+    ? props.kind in READONLY_PANELS
+      ? READONLY_PANELS[props.kind as Exclude<PanelId, 'terminal' | 'code'>]
+      : ListPanel
+    : PANELS[props.kind]
   return <Component />
 }

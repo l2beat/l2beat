@@ -1,8 +1,8 @@
 {
   "name": "celo",
   "chain": "ethereum",
-  "blockNumber": 22131469,
-  "configHash": "0x25404cf4dce26b77c7eeffc2da993a51e354a3423b70b170dac767c4e3e8097d",
+  "blockNumber": 22166253,
+  "configHash": "0x9a5d1ca1fd36f69903b8e27ccbd2c6f09b5bea4c3822f06257013e0ffa5360a3",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -159,7 +159,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619783",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619788",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -232,6 +232,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1742960075,
       "sinceBlock": 22128421,
       "values": {
@@ -583,7 +584,8 @@
         "$immutable": true,
         "owner": "0x783A434532Ee94667979213af1711505E8bFE374"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SuperchainProxyAdminOwner",
@@ -1637,7 +1639,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 492334,
-          "prevBlockNum": 22131363
+          "prevBlockNum": 22158825
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1717,6 +1719,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x4092A77bAF58fef0309452cEaCb09221e556E112",
           "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564",
           "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
         ],
@@ -1724,8 +1727,8 @@
         "domainSeparator": "0xb889fe0bca2c1159d0891cdc881184aad05e5f55c5cf93ef3be10360d179694f",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 1,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe",
@@ -1765,7 +1768,8 @@
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xE0024dCadff414fCb0AAfBB475e92Ccc367E1A84",
@@ -1840,7 +1844,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 4,
+        "gameCount": 42,
         "gameImpls": [
           "0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC",
           "0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755",
@@ -1850,7 +1854,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "permissionedGamesTotal": 4,
+        "permissionedGamesTotal": 42,
         "version": "1.0.1-beta.3"
       },
       "derivedName": "DisputeGameFactory",
@@ -2810,7 +2814,7 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "gnosisSafeModules/DeputyGuardianModule": "0x5f298bc59cbf29e7b1e8d20a3b4f84589941f57f29331cecd5aad842af268195",
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",

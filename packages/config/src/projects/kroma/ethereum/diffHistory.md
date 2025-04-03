@@ -1,4 +1,33 @@
-Generated with discovered.json: 0x538af7fc15debe79ef87abe9aba51930014f9dab
+Generated with discovered.json: 0x41709762830ca7f85d38f855f7c24a2bf7521f8e
+
+# Diff at Mon, 31 Mar 2025 10:20:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22094602
+- current block number: 22166261
+
+## Description
+
+sc signer rotated.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      issuedPermissions.6.to:
+-        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
++        "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
+      values.tokenOwners.3:
+-        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
++        "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
+      values.tokens.5:
+-        15
++        16
+    }
+```
+
+Generated with discovered.json: 0x208836242ac06471f93a8a243644f420db75973d
 
 # Diff at Fri, 21 Mar 2025 10:19:41 GMT:
 

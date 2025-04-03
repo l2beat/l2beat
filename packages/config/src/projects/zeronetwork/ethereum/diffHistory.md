@@ -1,4 +1,36 @@
-Generated with discovered.json: 0x8f6a436abe19043361791a7db6edc4afee4cd846
+Generated with discovered.json: 0xda250aeb147e2d12030fdd14d0d65e0e459ab755
+
+# Diff at Mon, 31 Mar 2025 11:41:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22123319
+- current block number: 22166665
+
+## Description
+
+upgrade to v26 complete.
+
+## Watched changes
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        763
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        763
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xdf9f31f2c741079bb3163405a2cf374b4d6537a0a32bdd5262211d30091b51f1"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.isPriorityQueueActive:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xd9cec0387d7aa8f0f5200233a97ab531d0459ac8
 
 # Diff at Tue, 25 Mar 2025 10:42:40 GMT:
 

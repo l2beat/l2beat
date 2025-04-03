@@ -2,7 +2,7 @@
   "name": "soneium",
   "chain": "ethereum",
   "blockNumber": 21995440,
-  "configHash": "0xf8e4605056ed0f645ab61faf62961aec429d279cd832bed6bf912220ca149b91",
+  "configHash": "0x077fa25394cd9c29eff35af7a0a4ce5db41bb469515028a9401347bad5b86b60",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1311,7 +1311,8 @@
         "$immutable": true,
         "owner": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"
       },
-      "derivedName": "AddressManager"
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xb9269f274E7Edc73bf3d923E347d0784e4a5e452",
@@ -1529,7 +1530,8 @@
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2546,7 +2548,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0x5f298bc59cbf29e7b1e8d20a3b4f84589941f57f29331cecd5aad842af268195",
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
     "lido/L1LidoTokensBridge": "0x75a3f618032de75b98f976e42bbdd2c2503a6a641857f03b266a2234798a6800",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",

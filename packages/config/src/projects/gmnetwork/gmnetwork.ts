@@ -30,6 +30,7 @@ const daResolveWindow = formatSeconds(
 )
 
 export const gmnetwork: ScalingProject = opStackL2({
+  isArchived: true,
   addedAt: UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
   additionalBadges: [BADGES.RaaS.AltLayer],
@@ -60,6 +61,15 @@ export const gmnetwork: ScalingProject = opStackL2({
       ],
     },
   },
+  milestones: [
+    {
+      title: 'GM Network sunsets',
+      url: 'https://x.com/GMNetwork_AI/status/1894592894893527317',
+      date: '2025-03-31',
+      description: 'GM Network has officially sunset.',
+      type: 'general',
+    },
+  ],
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
     daResolveWindow,

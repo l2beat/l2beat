@@ -1,4 +1,51 @@
-Generated with discovered.json: 0x6df69cf2f82e16aeacde150e9ab16ff33e7d58d0
+Generated with discovered.json: 0x551ff185f214dfd0a60d5839f3e11d960e3f4a69
+
+# Diff at Mon, 31 Mar 2025 12:32:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 25463362
+- current block number: 28317508
+
+## Description
+
+Alchemy MS signer change.
+
+## Watched changes
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.7:
++        "0x001271c57AeC639952B5201D052767c316755512"
+      values.$members.6:
++        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
+      values.$members.5:
++        "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca"
+      values.$members.4:
+-        "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01"
++        "0x0a214444613E3970049BD74a8d72d5bF9EF0094c"
+      values.$members.3:
+-        "0x39CF304731099e756204219BF0a8cCc4738dE9dD"
++        "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
+      values.$members.2:
+-        "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"
++        "0xeD9919D57162D518014C391a687AA8fb9DB55654"
+      values.$members.1:
+-        "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6"
++        "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7"
+      values.$members.0:
+-        "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21"
++        "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670"
+      values.$threshold:
+-        3
++        5
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "5 of 8 (63%)"
+    }
+```
+
+Generated with discovered.json: 0x3f0fcdce564dcff2358190f8a0aa4e401b02e3d5
 
 # Diff at Thu, 06 Mar 2025 14:26:52 GMT:
 

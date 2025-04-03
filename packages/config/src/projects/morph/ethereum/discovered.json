@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0x5a595c791f2818cc3174e20b55d266f674e80495e7e8b55e680f004bd97a851e",
+  "configHash": "0xe47e01b3f0196331245e1689abedec2c8b3b250c11ed4e6187483b276a9c180a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

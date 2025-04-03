@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x1cab0e4e4f18e701e0a32f789fe45b838ece6395
+
+# Diff at Mon, 31 Mar 2025 11:27:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22073412
+- current block number: 22166595
+
+## Description
+
+ms signer changes.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.7:
++        "0x001271c57AeC639952B5201D052767c316755512"
+      values.$members.6:
++        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
+      values.$members.5:
+-        "0x5EABE7f6673311EdD1Ad17A76ce148c2Bb56aF01"
++        "0xFB00073F931A817b244bF211aA2E5DCBfff8B1ca"
+      values.$members.4:
+-        "0x39CF304731099e756204219BF0a8cCc4738dE9dD"
++        "0x0a214444613E3970049BD74a8d72d5bF9EF0094c"
+      values.$members.3:
+-        "0xaCEF7482b54a57F50b1CD8c99d1dC1964202A063"
++        "0xA351A874b48dCEdf1883dD4F4049bE3d9923700a"
+      values.$members.2:
+-        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
++        "0xeD9919D57162D518014C391a687AA8fb9DB55654"
+      values.$members.1:
+-        "0x3f0030b9Ca695Abd41b2B619F3298e172e4FCAD6"
++        "0x35A2079110aa30d1De381cf75aCd1836b6dEE1d7"
+      values.$members.0:
+-        "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21"
++        "0xd1447Dd15D9e24ddFF99f0fE3C88Bf64d23D1670"
+      values.$threshold:
+-        3
++        5
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "5 of 8 (63%)"
+    }
+```
+
+Generated with discovered.json: 0xa4947940206d53ddf0dee0c33860e6071cccb1ef
+
+# Diff at Thu, 27 Mar 2025 11:15:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22073412
+- current block number: 22073412
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22073412 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xcee78437aE9e15cee9c78E63757E0153c0FD7479) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0x8b5fbd90b33b2314754f4d9a684603fc02480374
 
 # Diff at Tue, 18 Mar 2025 11:17:59 GMT:

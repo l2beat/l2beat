@@ -1,4 +1,37 @@
-Generated with discovered.json: 0x677b0f4044d23934532302f5df65ba18ca850d51
+Generated with discovered.json: 0xa823edac168c00b02b4121bc13bffaef6e3f1618
+
+# Diff at Mon, 31 Mar 2025 10:23:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22029694
+- current block number: 22166274
+
+## Description
+
+[Double upgrade of the bridge](https://app.blocksec.com/explorer/tx/eth/0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381) with 26 ETH profit. Parallel is inactive/closed (see L2BEAT page).
+
+## Watched changes
+
+```diff
+    contract Bridge (0x5a961c7D162195a9Dc5a357Cc168b0694283382E) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      values.$pastUpgrades.2:
++        ["2025-03-30T02:36:11.000Z","0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381",["0xC03cF2ec47426C2318F91496316c62e5FAf413f3"]]
+      values.$pastUpgrades.1:
++        ["2024-01-01T16:18:59.000Z","0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df",["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]]
+      values.$pastUpgrades.0.2:
+-        "2024-01-01T16:18:59.000Z"
++        "0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381"
+      values.$pastUpgrades.0.0:
+-        "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df"
++        "2025-03-30T02:36:11.000Z"
+      values.$upgradeCount:
+-        1
++        3
+    }
+```
+
+Generated with discovered.json: 0xa225e4454fc7bbc9d86c2b3c4c2a8807bee8d8d3
 
 # Diff at Wed, 12 Mar 2025 08:49:35 GMT:
 

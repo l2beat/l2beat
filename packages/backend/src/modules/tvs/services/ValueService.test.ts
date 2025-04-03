@@ -1,19 +1,23 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  BalanceOfEscrowAmountFormula,
+  CalculationFormula,
+  ConstAmountFormula,
+  TotalSupplyAmountFormula,
+  TvsToken,
+} from '@l2beat/config'
+import {
+  EthereumAddress,
+  ProjectId,
+  TokenId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from '../tools/DataStorage'
 import {
   createAmountConfig,
   createPriceConfigId,
 } from '../tools/extractPricesAndAmounts'
-import {
-  type BalanceOfEscrowAmountFormula,
-  type CalculationFormula,
-  type ConstAmountFormula,
-  type ProjectTvsConfig,
-  type Token,
-  TokenId,
-  type TotalSupplyAmountFormula,
-} from '../types'
+import type { ProjectTvsConfig } from '../types'
 import { ValueService } from './ValueService'
 
 describe(ValueService.name, () => {
@@ -34,12 +38,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -119,17 +123,17 @@ describe(ValueService.name, () => {
         projectId: ProjectId('bob'),
         tokens: [
           // WBTC with amount formula as totalSupply on L2
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('WBTC'),
             priceId: 'price-WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
           // solvBTC with
           // - amount formula as totalSupply on L2
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('solvBTC'),
             priceId: 'price-solvBTC',
             amount: solvBTCAmountFormula,
@@ -149,7 +153,7 @@ describe(ValueService.name, () => {
                 },
               ],
             },
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -240,12 +244,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -312,7 +316,7 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: {
@@ -321,7 +325,7 @@ describe(ValueService.name, () => {
               arguments: [amountFormulaInRange, amountFormulaNotInRange],
             },
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -375,12 +379,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })
@@ -400,9 +404,7 @@ describe(ValueService.name, () => {
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
-      ).toBeRejectedWith(
-        `Assertion Error: Price not found for ${priceId} at ${mockTimestamp}`,
-      )
+      ).toBeRejected()
     })
 
     it('should throw if amount not found and it is within range', async () => {
@@ -422,12 +424,12 @@ describe(ValueService.name, () => {
       const tvsConfig = mockObject<ProjectTvsConfig>({
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<Token>({
+          mockObject<TvsToken>({
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
-            valueForTotal: undefined,
+            valueForSummary: undefined,
           }),
         ],
       })

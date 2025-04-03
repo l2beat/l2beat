@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+import path from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
@@ -16,6 +18,7 @@ import type {
   ProjectLivenessInfo,
   ProjectTvlConfig,
   ProjectTvlEscrow,
+  TvsToken,
 } from '../types'
 import {
   areContractsDiscoveryDriven,
@@ -28,8 +31,10 @@ import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
 import { getHostChain } from './utils/getHostChain'
+import { getInfrastructure } from './utils/getInfrastructure'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
+import { getVM } from './utils/getVM'
 import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
@@ -40,15 +45,19 @@ export function getProjects(): BaseProject[] {
     .filter((c) => c !== undefined)
   const tokenList = getTokenList(chains)
 
+  const daBridges = refactored.filter((p) => p.daBridge)
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], tokenList)))
-    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, tokenList)))
+    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], daBridges, tokenList)))
+    .concat(
+      layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges, tokenList)),
+    )
     .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
 }
 
 function layer2Or3ToProject(
   p: ScalingProject,
   layer2s: ScalingProject[],
+  daBridges: BaseProject[],
   tokenList: Token[],
 ): BaseProject {
   return {
@@ -62,7 +71,7 @@ function layer2Or3ToProject(
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
       isUnderReview: isUnderReview(p),
-      isUnverified: !isVerified(p),
+      isUnverified: !isVerified(p, daBridges),
       // countdowns
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'
@@ -93,6 +102,8 @@ function layer2Or3ToProject(
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,
       raas: getRaas(p.badges),
+      infrastructure: getInfrastructure(p.badges),
+      vm: getVM(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
@@ -127,6 +138,7 @@ function layer2Or3ToProject(
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     tvlConfig: getTvlConfig(p, tokenList),
+    tvsConfig: getTvsConfig(p),
     activityConfig: p.config.activityConfig,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
@@ -359,4 +371,17 @@ function toProjectEscrow(
         isPreminted: !!escrow.premintedTokens?.includes(token.symbol),
       })),
   }
+}
+
+function getTvsConfig(project: ScalingProject): TvsToken[] | undefined {
+  const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
+  const filePath = path.join(__dirname, `../../src/tvs/json/${fileName}`)
+
+  if (!fs.existsSync(filePath)) {
+    return undefined
+  }
+
+  const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+
+  return json.tokens as TvsToken[]
 }

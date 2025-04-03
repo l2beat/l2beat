@@ -182,6 +182,7 @@ function contractFromDiscovery(
       address: toAddress(chain, address),
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
+    sources: [],
   }
 }
 

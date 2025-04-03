@@ -1,8 +1,8 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 22029694,
-  "configHash": "0x98f06ef0ddb5ad992b4f641d36506d04b44d0393d8d8fd83e5c36cab3bb9f860",
+  "blockNumber": 22166274,
+  "configHash": "0x27d680940f2e6c625e41ed050336da47b3aeee8997d94f84d39a697e841dd409",
   "entries": [
     {
       "address": "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",
@@ -263,7 +263,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 225,
+        "nonce": 234,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -478,9 +478,19 @@
             "2024-01-01T16:18:59.000Z",
             "0x56a0bbc36c0e79b2338cddce3f80c7998dd0f526d885a6b1aa827543769619df",
             ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+          ],
+          [
+            "2025-03-30T02:36:11.000Z",
+            "0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381",
+            ["0xC03cF2ec47426C2318F91496316c62e5FAf413f3"]
+          ],
+          [
+            "2025-03-30T02:36:11.000Z",
+            "0x41c445bc5da5e4a440aeab5914ef6154a1a8e761336500e51868ca7595a99381",
+            ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
@@ -1012,7 +1022,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1704125939,
       "sinceBlock": 18913722,
       "values": {
@@ -2108,7 +2123,7 @@
     "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
     "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
     "orbitstack/RollupProxy": "0xe63a9a0b0c6e99c11e84a68e2508b9c630918a71f31d300638d43ca02ef76b31",
-    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
+    "orbitstack/SequencerInbox": "0x6c9fb56a71e6c16fcf572638338a9ca472776731ab17ec214ed873a63f006223",
     "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19",
     "orbitstack/ValidatorUtils": "0x6da1a099d095b1ed59b7e8c0ae9c2494104c73fb1d73560be6733faacdb84f6f"
   }

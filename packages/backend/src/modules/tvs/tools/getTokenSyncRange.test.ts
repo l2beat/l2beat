@@ -1,10 +1,10 @@
+import type { AmountFormula, TvsToken } from '@l2beat/config'
 import { expect, mockObject } from 'earl'
-import type { AmountFormula, Token } from '../types'
 import { getTokenSyncRange } from './getTokenSyncRange'
 
 describe(getTokenSyncRange.name, () => {
   it('should return sync range', async () => {
-    const token: Token = mockObject<Token>({
+    const token: TvsToken = mockObject<TvsToken>({
       amount: mockAmountFormula(20, 40),
       valueForProject: {
         type: 'calculation',
@@ -22,7 +22,7 @@ describe(getTokenSyncRange.name, () => {
           },
         ],
       },
-      valueForTotal: {
+      valueForSummary: {
         type: 'calculation',
         operator: 'sum',
         arguments: [

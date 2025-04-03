@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xb772550f6323acde094961a91b201b34afcfc19d
+
+# Diff at Mon, 31 Mar 2025 10:19:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22131469
+- current block number: 22166253
+
+## Description
+
+sub safe signer change.
+
+## Watched changes
+
+```diff
+    contract Safe (0xD1C635987B6Aa287361d08C6461491Fa9df087f2) {
+    +++ description: None
+      values.$members.2:
++        "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564"
+      values.$members.1:
+-        "0xD8091Ded796FE12A4D202Ca7Ab4DA6212BadC564"
++        "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
+      values.$members.0:
+-        "0xc963AE163C7d1DD4d452EA8d9684c4C24655E1E8"
++        "0x4092A77bAF58fef0309452cEaCb09221e556E112"
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        4
++        42
+    }
+```
+
+Generated with discovered.json: 0x6a48b27ed7f493a8bcfa78e134c2a69f80ad426b
+
+# Diff at Thu, 27 Mar 2025 11:14:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22131469
+- current block number: 22131469
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22131469 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x55093104b76FAA602F9d6c35A5FFF576bE78d753) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
 Generated with discovered.json: 0xae68a60ee89a55da5e8077e39e70b0cc59ac096c
 
 # Diff at Wed, 26 Mar 2025 13:47:13 GMT:

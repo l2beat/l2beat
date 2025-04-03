@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { ActivityRecord } from '@l2beat/database'
 import type { BlockProvider } from '@l2beat/shared'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -10,6 +11,7 @@ interface Dependencies {
   projectId: ProjectId
   uopsAnalyzer?: UopsAnalyzer
   assessCount: (count: number, blockNumber: number) => number
+  logger: Logger
 }
 
 export class BlockTxsCountService {
@@ -20,12 +22,29 @@ export class BlockTxsCountService {
       const block = await this.$.provider.getBlockWithTransactions(blockNumber)
 
       const txs = block.transactions.length
-      const txsCount = this.$.assessCount(txs, blockNumber)
+      let txsCount = this.$.assessCount(txs, blockNumber)
+
+      if (txsCount < 0) {
+        this.$.logger.warn('txsCount is negative', {
+          projectId: this.$.projectId,
+          blockNumber,
+          txsCount,
+        })
+        txsCount = 0
+      }
 
       let uopsCount: number | null = null
       if (this.$.uopsAnalyzer) {
         const uops = this.$.uopsAnalyzer.calculateUops(block)
         uopsCount = this.$.assessCount(uops, blockNumber)
+        if (uopsCount < 0) {
+          this.$.logger.warn('uopsCount is negative', {
+            projectId: this.$.projectId,
+            blockNumber,
+            uopsCount,
+          })
+          uopsCount = 0
+        }
       }
 
       return {

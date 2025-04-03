@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x72b966fd654f3c04957050dd1efc4246d1edaace
+Generated with discovered.json: 0xbc6c1020997177fcae7c886338b240cae2090507
+
+# Diff at Mon, 31 Mar 2025 11:40:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21764788
+- current block number: 22166659
+
+## Description
+
+Sequencer changed.
+
+## Watched changes
+
+```diff
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions.2.to:
+-        "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1"
++        "0x610DE9141a2c51A9A9624278AA97fbE54b27c102"
+      values.trustedSequencer:
+-        "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1"
++        "0x610DE9141a2c51A9A9624278AA97fbE54b27c102"
+    }
+```
+
+Generated with discovered.json: 0x695d1a4218eaba227385e79e6fc9fa9704e95fb7
 
 # Diff at Wed, 19 Mar 2025 13:05:55 GMT:
 

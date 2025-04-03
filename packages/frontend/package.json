@@ -53,6 +53,7 @@
     "dotenv": "^16.4.5",
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",
+    "image-size": "^2.0.1",
     "js-cookie": "^3.0.5",
     "kysely": "^0.27.3",
     "lodash": "^4.17.21",

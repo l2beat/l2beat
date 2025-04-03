@@ -1,14 +1,14 @@
 import type {
   AmountFormula,
   CalculationFormula,
-  Token,
+  TvsToken,
   ValueFormula,
-} from '../types'
+} from '@l2beat/config'
 
 export function getEffectiveConfig(
-  tokens: Token[],
+  tokens: TvsToken[],
   timestamp: number,
-): Token[] {
+): TvsToken[] {
   const tokensInRange = []
 
   for (const token of tokens) {
@@ -27,9 +27,12 @@ export function getEffectiveConfig(
         : undefined
     }
 
-    if (token.valueForTotal) {
-      token.valueForTotal = isInRangeRecursive(token.valueForTotal, timestamp)
-        ? token.valueForTotal
+    if (token.valueForSummary) {
+      token.valueForSummary = isInRangeRecursive(
+        token.valueForSummary,
+        timestamp,
+      )
+        ? token.valueForSummary
         : undefined
     }
 

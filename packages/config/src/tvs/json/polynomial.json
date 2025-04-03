@@ -1,0 +1,110 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "polynomial",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "polynomial-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x034cbb620d1e0e4C2E29845229bEAc57083b04eC",
+            "decimals": 18,
+            "sinceTimestamp": 1718038307
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
+            "decimals": 18,
+            "sinceTimestamp": 1718038307
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-sDAI",
+      "priceId": "savings-dai",
+      "symbol": "sDAI",
+      "name": "Savings Dai",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
+        "decimals": 18,
+        "sinceTimestamp": 1718038307
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-sUSDe",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "chain": "ethereum",
+        "escrowAddress": "0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
+        "decimals": 18,
+        "sinceTimestamp": 1718038307
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-USD0++",
+      "priceId": "usd0-liquid-bond",
+      "symbol": "USD0++",
+      "name": "USD0 Liquid Bond",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
+        "chain": "ethereum",
+        "escrowAddress": "0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
+        "decimals": 18,
+        "sinceTimestamp": 1721952000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynomial-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
+        "decimals": 6,
+        "sinceTimestamp": 1718038307
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

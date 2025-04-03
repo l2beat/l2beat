@@ -13,6 +13,7 @@ const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 export const l3x: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718370384), // 2024-06-14T13:06:24Z
   discovery,
+  isArchived: true,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

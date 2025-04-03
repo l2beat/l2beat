@@ -1,7 +1,9 @@
-import type { Env, Logger } from '@l2beat/backend-tools'
-import { type ChainConfig, ProjectService } from '@l2beat/config'
+import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { ChainConfig, ProjectService } from '@l2beat/config'
 import {
+  BlockIndexerClient,
   BlockProvider,
+  BlockTimestampProvider,
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
@@ -37,10 +39,7 @@ export class LocalExecutor {
     timestamps: UnixTime[],
     latestMode: boolean,
   ): Promise<TokenValue[]> {
-    const chainConfigs = await new ProjectService().getProjects({
-      select: ['chainConfig'],
-    })
-    const { prices, amounts } = extractPricesAndAmounts(config, chainConfigs)
+    const { prices, amounts } = extractPricesAndAmounts(config.tokens)
 
     const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
 
@@ -52,7 +51,8 @@ export class LocalExecutor {
   private async initDataFormulaExecutor(amounts: AmountConfig[]) {
     const http = new HttpClient()
     const coingeckoQueryService = this.initCoingecko(http)
-    const { rpcs, blockProviders } = await this.initChains(http, amounts)
+    const { rpcs, blockProviders, blockTimestampProvider } =
+      await this.initChains(http, amounts)
 
     const priceProvider = new PriceProvider(coingeckoQueryService)
     const circulatingSupplyProvider = new CirculatingSupplyProvider(
@@ -67,6 +67,7 @@ export class LocalExecutor {
       priceProvider,
       circulatingSupplyProvider,
       blockProviders,
+      blockTimestampProvider,
       totalSupplyProvider,
       balanceProvider,
       this.logger,
@@ -111,6 +112,7 @@ export class LocalExecutor {
 
     const rpcs = new Map<string, RpcClientPOC>()
     const blockProviders = new Map<string, BlockProvider>()
+    const indexerClients: BlockIndexerClient[] = []
 
     for (const chainConfig of chainConfigs) {
       const rpcApi = chainConfig.apis.find((api) => api.type === 'rpc')
@@ -152,7 +154,48 @@ export class LocalExecutor {
         chainConfig.name,
         new BlockProvider(chainConfig.name, [rpc]),
       )
+      const etherscanApi = chainConfig.apis.find(
+        (api) => api.type === 'etherscan',
+      )
+      if (etherscanApi) {
+        indexerClients.push(
+          new BlockIndexerClient(
+            http,
+            new RateLimiter({ callsPerMinute: 120 }),
+            {
+              type: etherscanApi.type,
+              url: etherscanApi.url,
+              apiKey: this.env.string(
+                Env.key(chainConfig.name, 'ETHERSCAN_API_KEY'),
+              ),
+              chain: chainConfig.name,
+            },
+          ),
+        )
+      }
+
+      const blockscoutApi = chainConfig.apis.find(
+        (api) => api.type === 'blockscout',
+      )
+      if (blockscoutApi) {
+        indexerClients.push(
+          new BlockIndexerClient(
+            http,
+            new RateLimiter({ callsPerMinute: 120 }),
+            {
+              type: blockscoutApi.type,
+              url: blockscoutApi.url,
+              chain: chainConfig.name,
+            },
+          ),
+        )
+      }
     }
-    return { rpcs, blockProviders }
+
+    const blockTimestampProvider = new BlockTimestampProvider({
+      indexerClients,
+      blockProviders: Array.from(blockProviders.values()),
+    })
+    return { rpcs, blockProviders, blockTimestampProvider }
   }
 }

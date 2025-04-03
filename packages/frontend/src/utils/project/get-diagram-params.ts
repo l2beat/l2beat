@@ -1,5 +1,4 @@
-import fs from 'fs'
-import path from 'path'
+import { getImageParams } from './get-image-params'
 
 export type DiagramType =
   | 'architecture'
@@ -22,8 +21,16 @@ const diagramTypeToCaption: Record<DiagramType, string> = {
 
 export interface DiagramParams {
   src: {
-    light: string
-    dark?: string
+    light: {
+      src: string
+      width: number
+      height: number
+    }
+    dark?: {
+      src: string
+      width: number
+      height: number
+    }
   }
   caption: string
 }
@@ -31,21 +38,16 @@ export interface DiagramParams {
 export function getDiagramParams(
   type: DiagramType,
   fileName: string,
-  _fs = { existsSync: fs.existsSync },
 ): DiagramParams | undefined {
   const imagePaths = {
     light: `/images/${type}/${fileName}.png`,
     dark: `/images/${type}/${fileName}.dark.png`,
   }
-  const paths: {
-    light?: string
-    dark?: string
-  } = Object.fromEntries(
+
+  const paths = Object.fromEntries(
     Object.entries(imagePaths).map(([key, filePath]) => [
       key,
-      _fs.existsSync(path.join(process.cwd(), './public', filePath))
-        ? filePath
-        : undefined,
+      getImageParams(filePath),
     ]),
   )
 

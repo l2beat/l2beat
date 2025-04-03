@@ -1,0 +1,494 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "lyra",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "lyra-cbBTC",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 8,
+        "sinceTimestamp": 1726099200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-eBTC",
+      "priceId": "ether-fi-staked-btc",
+      "symbol": "eBTC",
+      "name": "ether.fi BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 8,
+        "sinceTimestamp": 1727654400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8",
+            "decimals": 18,
+            "sinceTimestamp": 1700021675
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+            "decimals": 18,
+            "sinceTimestamp": 1700021675
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-LBTC",
+      "priceId": "lombard-staked-btc",
+      "symbol": "LBTC",
+      "name": "Lombard Staked Bitcoin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8236a87084f8B84306f72007F36F2618A5634494",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 8,
+        "sinceTimestamp": 1724889600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-rsETH",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "rsETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1705017600
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-rswETH",
+      "priceId": "restaked-swell-eth",
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1706572800
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-sDAI",
+      "priceId": "savings-dai",
+      "symbol": "sDAI",
+      "name": "Savings Dai",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-SNX",
+      "priceId": "havven",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-sUSDe",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1710979200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 6,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDC-2",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 6,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDC.e-1",
+      "priceId": "bridged-usd-coin-optimism",
+      "symbol": "USDC.e",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+        "chain": "optimism",
+        "escrowAddress": "0xBb9CF28Bc1B41c5c7c76Ee1B2722C33eBB8fbD8C",
+        "decimals": 6,
+        "sinceTimestamp": 1704715597
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1704715597
+        },
+        "priceId": "bridged-usd-coin-optimism"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDC.e-2",
+      "priceId": "bridged-usd-coin-optimism",
+      "symbol": "USDC.e",
+      "name": "USD Coin",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+        "chain": "optimism",
+        "escrowAddress": "0xBb9CF28Bc1B41c5c7c76Ee1B2722C33eBB8fbD8C",
+        "decimals": 6,
+        "sinceTimestamp": 1704715597
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1704715597
+        },
+        "priceId": "bridged-usd-coin-optimism"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDe",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1702512000
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDT-1",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 6,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-USDT-2",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 6,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-wBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "wBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+            "chain": "optimism",
+            "escrowAddress": "0xE5967877065f111a556850d8f05b8DaD88edCEc9",
+            "decimals": 8,
+            "sinceTimestamp": 1704715873
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+            "chain": "arbitrum",
+            "escrowAddress": "0x3D20c6A2b719129af175E0ff7B1875DEb360896f",
+            "decimals": 8,
+            "sinceTimestamp": 1704715871
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1704715873
+            },
+            "priceId": "wrapped-bitcoin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1704715871
+            },
+            "priceId": "wrapped-bitcoin"
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-WBTC-1",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 8,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-WBTC-2",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 8,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1701648000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lyra-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+        "decimals": 18,
+        "sinceTimestamp": 1700021675
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

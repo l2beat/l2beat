@@ -1,4 +1,5 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
+import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -15,10 +16,9 @@ import {
   extractPricesAndAmounts,
   generateConfigurationId,
 } from '../tools/extractPricesAndAmounts'
-import type { Token } from '../types'
 
 interface TokenValueIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<Token>, 'name'> {
+  extends Omit<ManagedMultiIndexerOptions<TvsToken>, 'name'> {
   syncOptimizer: SyncOptimizer
   dbStorage: DBStorage
   valueService: ValueService
@@ -26,7 +26,7 @@ interface TokenValueIndexerDeps
   maxTimestampsToProcessAtOnce: number
 }
 
-export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
+export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
   constructor(private readonly $: TokenValueIndexerDeps) {
     super({
       ...$,
@@ -42,7 +42,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<Token>[],
+    configurations: Configuration<TvsToken>[],
   ) {
     const timestamps = this.$.syncOptimizer.getTimestampsToSync(
       from,
@@ -58,10 +58,9 @@ export class TokenValueIndexer extends ManagedMultiIndexer<Token> {
       return () => Promise.resolve(to)
     }
 
-    const { prices, amounts } = extractPricesAndAmounts({
-      projectId: this.$.project,
-      tokens: configurations.map((c) => c.properties),
-    })
+    const { prices, amounts } = extractPricesAndAmounts(
+      configurations.map((c) => c.properties),
+    )
 
     await this.$.dbStorage.preloadPrices(
       prices.map((p) => p.id),

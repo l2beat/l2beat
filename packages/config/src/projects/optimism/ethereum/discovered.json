@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 21829671,
-  "configHash": "0xd86185f930eff3a38ab9a39479dc1a1d98b54144a40cfe95ec4f3000a6bd7200",
+  "configHash": "0x0a2c8cd4417ace9f0113d358be61e1733cfe2e8034dad6e7d7701541b061fe4a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -379,7 +379,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "43d 23h",
+        "timeSinceLastL2beatInteraction": "44d 20h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -1749,7 +1749,8 @@
         "Proxy__OVM_L1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "Proxy__OVM_L1StandardBridge": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "DisputeGameFactory",
@@ -2777,7 +2778,7 @@
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
     "lido/L1LidoTokensBridge": "0x75a3f618032de75b98f976e42bbdd2c2503a6a641857f03b266a2234798a6800",
     "maker/L1Escrow": "0x87c1d15632c3136185601f5c6e886055b0dfd744dab40ee4f9c37bcd39cfb254",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
