@@ -1,6 +1,5 @@
-import type { Change } from 'diff'
-import type { FieldDiff, ProjectDiff } from './diff'
 import { readFileSync } from 'fs'
+import type { FieldDiff, LineChange, ProjectDiff } from './diff'
 
 export function diffsToHtml(props: {
   diffs: ProjectDiff[]
@@ -42,7 +41,7 @@ function diffToHtml(diff: ProjectDiff, _index: number, diffs: ProjectDiff[]) {
   <h2>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <span>${diff.id}</span>
-    <span class="${diff.type}">${diff.type}<span>
+    <code><span class="added">+${diff.added}</span> <span class="removed">-${diff.removed}</span></code>
   </h2>
   <ul class="field" x-show="open">${diff.fields.map(fieldDiffToHtml).join('')}</ul>
 </li>`
@@ -54,25 +53,28 @@ function fieldDiffToHtml(
   fields: FieldDiff[],
 ) {
   const initialOpen = fields.length === 1
+  const hasFull = field.diff.some((x) => x.type === 'full')
 
-  return `<li x-data="{ open: ${initialOpen} }">
+  const expandButton = `<button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>`
+
+  return `<li x-data="{ open: ${initialOpen}, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    ${hasFull ? expandButton : ''}
     <span>${field.field}</span>
+    <code><span class="added">+${field.added}</span> <span class="removed">-${field.removed}</span></code>
   </h3>
-  <pre x-show="open"><code>${field.diff.map(changeToHtml).join('')}</code></pre>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code>${field.diff.map(lineToHtml).join('')}</code></pre>
 </li>`
 }
 
-function changeToHtml(change: Change) {
-  let className = 'unmodified'
-  if (change.added) {
-    className = 'added'
+function lineToHtml(line: LineChange, i: number, lines: LineChange[]) {
+  const separator = i === lines.length - 1 ? '' : '\n'
+  let className = line.type
+  if (line.type === 'full' && lines[i - 1]?.type !== line.type) {
+    className += ' indicator'
   }
-  if (change.removed) {
-    className = 'removed'
-  }
-  return `<span class="${className}">${change.value}</span>`
+  return `<span class="line ${className}">${line.value}${separator}</span>`
 }
 
 function getStyles() {
@@ -86,7 +88,21 @@ body {
   color: white;
   font-family: var(--font-sans);
 }
-.unmodified {
+.lines:not(.expand) .full {
+  display: none;
+}
+.lines:not(.expand) .full.indicator {
+  display: block;
+  font-size: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    #111,
+    #111 8px,
+    #555 8px,
+    #555 16px
+  );
+}
+.lines {
   color: #999;
 }
 .modified {
@@ -117,6 +133,9 @@ pre {
   padding: 8px;
   font-weight: normal;
   font-size: 12px;
+  line-height: 14px;
+  max-width: 100%;
+  overflow: auto;
 }
 h1 {
   font-size: 24px;
