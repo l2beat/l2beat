@@ -23,6 +23,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { Checkbox } from '~/components/core/checkbox'
 import { Skeleton } from '~/components/core/skeleton'
+import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -91,12 +92,12 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
-  const latestUops = getLatestUops(chartData)
+  const stats = getStats(chartData)
   const range = getChartRange(chartData)
 
   return (
     <div>
-      <Header range={range} latestUops={latestUops} />
+      <Header range={range} stats={stats} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
@@ -168,8 +169,11 @@ export function EcosystemsActivityChart({
 
 function Header({
   range,
-  latestUops,
-}: { range: [number, number] | undefined; latestUops: number | undefined }) {
+  stats,
+}: {
+  range: [number, number] | undefined
+  stats: { latestUops: number; domination: number } | undefined
+}) {
   return (
     <div className="mb-3 flex items-center justify-between">
       <div>
@@ -179,22 +183,22 @@ function Header({
         </div>
       </div>
       <div className="text-right">
-        {latestUops !== undefined ? (
+        {stats?.latestUops !== undefined ? (
           <div className="text-xl font-bold">
-            {formatActivityCount(latestUops)} UOPS
+            {formatActivityCount(stats.latestUops)} UOPS
           </div>
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-32" />
         )}
         <div className="text-xs font-medium text-[--ecosystem-primary]">
-          65% L2 market share
+          {stats?.domination ?? EM_DASH}% L2 market share
         </div>
       </div>
     </div>
   )
 }
 
-function getLatestUops(chartData: { projects: number }[] | undefined) {
+function getStats(chartData: { projects: number }[] | undefined) {
   if (!chartData) {
     return undefined
   }
@@ -203,5 +207,8 @@ function getLatestUops(chartData: { projects: number }[] | undefined) {
     return undefined
   }
 
-  return last.projects
+  return {
+    latestUops: last.projects,
+    domination: 65,
+  }
 }
