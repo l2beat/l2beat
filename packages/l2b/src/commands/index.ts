@@ -18,6 +18,7 @@ import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
+import { Migrate } from './Migrate'
 import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
@@ -47,6 +48,7 @@ export function getSubcommands() {
     FindCelestiaNamespace,
     GetTokenMinters,
     MatchFlat,
+    Migrate,
     OPConfigs,
     Powerdiff,
     RefreshDiscovery,
