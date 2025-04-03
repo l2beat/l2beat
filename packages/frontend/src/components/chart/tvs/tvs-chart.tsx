@@ -18,6 +18,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../types'
+import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradient-def'
 
 export interface TvsChartDataPoint {
   timestamp: number
@@ -29,12 +30,16 @@ interface Props {
   unit: ChartUnit
   isLoading: boolean
   milestones: Milestone[] | undefined
+  color?: {
+    primary: string
+    secondary: string
+  }
 }
 
-export function TvsChart({ data, unit, isLoading, milestones }: Props) {
+export function TvsChart({ data, unit, isLoading, milestones, color }: Props) {
   const chartMeta = {
     value: {
-      color: 'hsl(var(--chart-pink))',
+      color: color?.primary ?? 'hsl(var(--chart-pink))',
       indicatorType: { shape: 'line' },
       label: unit.toUpperCase(),
     },
@@ -49,14 +54,22 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
     >
       <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>
         <defs>
-          <PinkFillGradientDef id="fill" />
-          <PinkStrokeGradientDef id="stroke" />
+          {color ? (
+            <>
+              <CustomFillGradientDef id="fill" colors={color} />
+            </>
+          ) : (
+            <>
+              <PinkFillGradientDef id="fill" />
+              <PinkStrokeGradientDef id="stroke" />
+            </>
+          )}
         </defs>
         <Area
           dataKey="value"
           fill="url(#fill)"
           fillOpacity={1}
-          stroke="url(#stroke)"
+          stroke={color?.secondary ?? 'url(#stroke)'}
           strokeWidth={2}
           isAnimationActive={false}
         />

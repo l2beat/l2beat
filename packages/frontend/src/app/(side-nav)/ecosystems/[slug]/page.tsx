@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getEcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
+import { EcosystemsStackedTvsChart } from '../_components/charts/ecosystems-stacked-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 
@@ -25,17 +26,27 @@ export default async function Page({ params }: Props) {
         {
           '--ecosystem-primary': ecosystem.colors.primary,
           '--ecosystem-secondary': ecosystem.colors.secondary,
+          '--spacing': '0.75rem',
         } as React.CSSProperties
       }
     >
-      <div className="fixed right-[20%] top-44 -z-1 h-[2400px] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-ecosystem-primary via-ecosystem-secondary via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
+      <div className="absolute right-0 top-20 -z-1 h-[2400px] w-[calc(100vw_-_15rem)] -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-ecosystem-primary via-ecosystem-secondary via-25% to-transparent"></div>
       <div>
         <EcosystemPageHeader
           logo={ecosystem.logo}
           badges={ecosystem.badges}
           links={ecosystem.links}
         />
-        <main className="mt-3">
+        <main className="mt-3 space-y-[--spacing]">
+          <div className="grid grid-cols-2 gap-[--spacing]">
+            <PrimaryCard>
+              <EcosystemsStackedTvsChart
+                entries={ecosystem.projects}
+                color={ecosystem.colors}
+              />
+            </PrimaryCard>
+            <PrimaryCard></PrimaryCard>
+          </div>
           <PrimaryCard>
             <EcosystemProjectsTable entries={ecosystem.projects} />
           </PrimaryCard>
