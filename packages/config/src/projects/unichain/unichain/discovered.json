@@ -1,14 +1,9 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 9916035,
-  "configHash": "0x03b1804d05fa169fd71750b3bcfb0c949fb3cd48f3846f99f858af90ba2e46b1",
+  "blockNumber": 16835938,
+  "configHash": "0xb1d5341768408dca2475006c578db076340538cfb845ddd555b56629142fd872",
   "entries": [
-    {
-      "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "DeployerWhitelist",
       "address": "0x4200000000000000000000000000000000000002",
@@ -22,7 +17,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -52,7 +47,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -64,14 +59,14 @@
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+        "l1CrossDomainMessenger": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620041",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201294165359",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
-        "otherMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+        "OTHER_MESSENGER": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
+        "otherMessenger": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
         "paused": false,
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
@@ -95,7 +90,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -109,14 +104,14 @@
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 1612334258,
+        "blobBaseFee": 27,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 1033347168,
+        "l1BaseFee": 3388622762,
         "version": "1.3.1-beta.1"
       },
       "derivedName": "GasPriceOracle"
@@ -135,7 +130,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -146,31 +141,26 @@
         "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l1TokenBridge": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "l1TokenBridge": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-        "otherBridge": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "OTHER_BRIDGE": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
+        "otherBridge": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
         "paused": false,
         "version": "1.11.1-beta.1"
       },
       "derivedName": "L2StandardBridge"
     },
     {
-      "name": "SequencerFeeVault",
+      "name": "",
       "address": "0x4200000000000000000000000000000000000011",
       "type": "Contract",
-      "template": "opstack/Layer2/SequencerFeeVault",
-      "sourceHashes": [
-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0xbf16b8057a2beae4130302910e769f47307e0e0e5afd365093b06effa159019c"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -178,25 +168,17 @@
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
+        "$implementation": "0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0",
         "$pastUpgrades": [
           [
-            "2024-12-05T19:19:37.000Z",
+            "2024-10-21T17:07:26.000Z",
             "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
             ["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
           ]
         ],
-        "$upgradeCount": 1,
-        "l1FeeWallet": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "MIN_WITHDRAWAL_AMOUNT": 1,
-        "minWithdrawalAmount": 1,
-        "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "RECIPIENT": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "version": "1.5.0-beta.2",
-        "WITHDRAWAL_NETWORK": 1,
-        "withdrawalNetwork": 1
+        "$upgradeCount": 1
       },
-      "derivedName": "SequencerFeeVault"
+      "derivedName": ""
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -212,7 +194,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -243,7 +225,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -272,7 +254,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -285,8 +267,8 @@
         "$upgradeCount": 0,
         "messenger": "0x4200000000000000000000000000000000000007",
         "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
-        "otherBridge": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
+        "OTHER_BRIDGE": "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe",
+        "otherBridge": "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe",
         "paused": false,
         "version": "1.7.1-beta.2"
       },
@@ -306,7 +288,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -325,10 +307,10 @@
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 1033347168,
+        "basefee": 3388622762,
         "baseFeeScalar": 2000,
-        "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 1612334258,
+        "batcherHash": "0x0000000000000000000000004ab3387810ef500bfe05a49dc53a44c222cbab3e",
+        "blobBaseFee": 27,
         "blobBaseFeeScalar": 900000,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -337,13 +319,13 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x911d24753ff56c5048d50ba9c1735e0bb32a1a184c20929f8fc9a0580e22763f",
+        "hash": "0x5db8810bdd8ae14e4d61e4bb1b6f95ddef135c4b0f493f1f577e9b362d3fa012",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 21938092,
-        "sequenceNumber": 11,
-        "timestamp": 1740664331,
+        "number": 8042451,
+        "sequenceNumber": 7,
+        "timestamp": 1743688308,
         "version": "1.5.1-beta.1"
       },
       "derivedName": "L1Block"
@@ -362,7 +344,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -392,7 +374,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -404,7 +386,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000014",
-        "REMOTE_CHAIN_ID": 1,
+        "REMOTE_CHAIN_ID": 11155111,
         "version": "1.4.1-beta.1"
       },
       "derivedName": "OptimismMintableERC721Factory"
@@ -423,7 +405,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -502,25 +484,20 @@
         "$upgradeCount": 0,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
-        "owner": "0x7E6c183F538abb8572F5cd17109C617b994d6944"
+        "owner": "0xe474339ee47775888df411A163c586a8bDEaaEd0"
       },
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "BaseFeeVault",
+      "name": "",
       "address": "0x4200000000000000000000000000000000000019",
       "type": "Contract",
-      "template": "opstack/Layer2/BaseFeeVault",
-      "sourceHashes": [
-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0x0706f7ff4b2f4c1e03bff710e9b98afa6f716ae6ac7b5e61797f9cb40a58221a"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "description": "Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -528,40 +505,28 @@
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
+        "$implementation": "0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e",
         "$pastUpgrades": [
           [
-            "2024-12-05T19:19:37.000Z",
+            "2024-10-21T17:07:26.000Z",
             "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
             ["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
           ]
         ],
-        "$upgradeCount": 1,
-        "MIN_WITHDRAWAL_AMOUNT": 1,
-        "minWithdrawalAmount": 1,
-        "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "RECIPIENT": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "version": "1.5.0-beta.2",
-        "WITHDRAWAL_NETWORK": 1,
-        "withdrawalNetwork": 1
+        "$upgradeCount": 1
       },
-      "derivedName": "BaseFeeVault"
+      "derivedName": ""
     },
     {
-      "name": "L1FeeVault",
+      "name": "",
       "address": "0x420000000000000000000000000000000000001A",
       "type": "Contract",
-      "template": "opstack/Layer2/L1FeeVault",
-      "sourceHashes": [
-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0x6cd48142610d7634a3e49c7a9f181be68c6ca47b0ed2777c884a26a219ebb034"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -569,24 +534,17 @@
       "sinceBlock": 0,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
+        "$implementation": "0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15",
         "$pastUpgrades": [
           [
-            "2024-12-05T19:19:37.000Z",
+            "2024-10-21T17:07:26.000Z",
             "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
             ["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
           ]
         ],
-        "$upgradeCount": 1,
-        "MIN_WITHDRAWAL_AMOUNT": 1,
-        "minWithdrawalAmount": 1,
-        "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "RECIPIENT": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-        "version": "1.5.0-beta.2",
-        "WITHDRAWAL_NETWORK": 1,
-        "withdrawalNetwork": 1
+        "$upgradeCount": 1
       },
-      "derivedName": "L1FeeVault"
+      "derivedName": ""
     },
     {
       "name": "SchemaRegistry",
@@ -602,7 +560,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -631,7 +589,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "to": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
           "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
@@ -643,7 +601,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getAttestTypeHash": "0xfeb2925a02bae3dae48d424a0437a2b6ac939aa9230ddc55a1a76f065d988076",
-        "getDomainSeparator": "0xd940a73236ef2df8e7b3d43c8c02045c7ebbbb3aeeedcd94a46d96d33838769c",
+        "getDomainSeparator": "0x5a5284068d55c22c45565d9f13b18a7979b2266f8aaa214632769fda54ccc456",
         "getName": "EAS",
         "getRevokeTypeHash": "0xb5d556f07587ec0f08cf386545cc4362c702a001650c2058002615ee5c9d1e75",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
@@ -657,81 +615,22 @@
       "proxyType": "EOA"
     },
     {
-      "name": "FeeSplitter",
-      "address": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1f2b6fc2c60f9146209fc5eb2dacd47f042450f4348d6656802b5b561c6325ea"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1730748360,
-      "sinceBlock": 0,
-      "values": {
-        "$immutable": true,
-        "L1_FEE_RECIPIENT": "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003",
-        "NET_FEE_RECIPIENT": "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004",
-        "OPTIMISM_WALLET": "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002"
-      },
-      "derivedName": "FeeSplitter"
+      "address": "0x448A37330A60494E666F6DD60aD48d930AEbA381",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "name": "L1Splitter",
-      "address": "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1730748360,
-      "sinceBlock": 0,
-      "values": {
-        "$immutable": true,
-        "feeDisbursementInterval": 86400,
-        "l1Recipient": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "lastDisbursementTime": 0,
-        "minWithdrawalAmount": "10000000000000000000",
-        "owner": "0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1Splitter"
+      "address": "0x4696b5e042755103fe558738Bcd1ecEe7A45eBfe",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "name": "L1Splitter",
-      "address": "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x4463f100e9cf9f75c48ce2bdf395baea65cffbcfc47d7b49c54ac49deb99fb09"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1730748360,
-      "sinceBlock": 0,
-      "values": {
-        "$immutable": true,
-        "feeDisbursementInterval": 86400,
-        "l1Recipient": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
-        "lastDisbursementTime": 0,
-        "minWithdrawalAmount": "10000000000000000000",
-        "owner": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "L1Splitter"
+      "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
-      "name": "NetFeeSplitter",
-      "address": "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3ce35b9a968810e9a9f15e947ea37fd6403fb3feb01252004814d90926556ea1"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1730748360,
-      "sinceBlock": 0,
-      "values": { "$immutable": true },
-      "derivedName": "NetFeeSplitter"
-    },
-    {
-      "name": "UnichainProxyAdminOwner_L2Alias",
-      "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+      "address": "0xe474339ee47775888df411A163c586a8bDEaaEd0",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -824,37 +723,7 @@
       ]
     },
     {
-      "address": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xb4E696eAFAB6B13AB18D40fAE1a962700C84BefB",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "address": "0xea58fcA6849d79EAd1f26608855c2D6407d54Ce2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1025,103 +894,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001": [
-      "constructor(address optimismWallet, address l1FeeRecipient, address netFeeRecipient)",
-      "error AddressZero()",
-      "error Locked()",
-      "error MustWithdrawToFeeSplitter()",
-      "error MustWithdrawToL2()",
-      "error OnlyVaults()",
-      "error TransferFailed()",
-      "event FeesDistributed(uint256 optimismShare, uint256 l1Fees, uint256 netShare)",
-      "event NoFeesCollected()",
-      "function L1_FEE_RECIPIENT() view returns (address)",
-      "function NET_FEE_RECIPIENT() view returns (address)",
-      "function OPTIMISM_WALLET() view returns (address)",
-      "function distributeFees() returns (bool feesDistributed)"
-    ],
-    "0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002": [
-      "constructor(address initialOwner, address l1Wallet, uint48 feeDisbursementInterval_, uint256 minWithdrawalAmount_)",
-      "error AddressZero()",
-      "error DisbursementIntervalNotReached()",
-      "error InsufficientWithdrawalAmount()",
-      "error MinDisbursementInterval()",
-      "error MinWithdrawalAmount()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event FeeDisbursementIntervalUpdated(uint48 oldInterval, uint48 newInterval)",
-      "event L1RecipientUpdated(address indexed oldRecipient, address indexed newRecipient)",
-      "event MinWithdrawalAmountUpdated(uint256 oldAmount, uint256 newAmount)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Withdrawal(address indexed recipient, uint256 amount)",
-      "function acceptOwnership()",
-      "function feeDisbursementInterval() view returns (uint48)",
-      "function l1Recipient() view returns (address)",
-      "function lastDisbursementTime() view returns (uint48)",
-      "function minWithdrawalAmount() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function updateFeeDisbursementInterval(uint48 newInterval)",
-      "function updateL1Recipient(address newRecipient)",
-      "function updateMinWithdrawalAmount(uint256 newAmount)",
-      "function withdraw() returns (uint256 balance)"
-    ],
-    "0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003": [
-      "constructor(address initialOwner, address l1Wallet, uint48 feeDisbursementInterval_, uint256 minWithdrawalAmount_)",
-      "error AddressZero()",
-      "error DisbursementIntervalNotReached()",
-      "error InsufficientWithdrawalAmount()",
-      "error MinDisbursementInterval()",
-      "error MinWithdrawalAmount()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event FeeDisbursementIntervalUpdated(uint48 oldInterval, uint48 newInterval)",
-      "event L1RecipientUpdated(address indexed oldRecipient, address indexed newRecipient)",
-      "event MinWithdrawalAmountUpdated(uint256 oldAmount, uint256 newAmount)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Withdrawal(address indexed recipient, uint256 amount)",
-      "function acceptOwnership()",
-      "function feeDisbursementInterval() view returns (uint48)",
-      "function l1Recipient() view returns (address)",
-      "function lastDisbursementTime() view returns (uint48)",
-      "function minWithdrawalAmount() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function updateFeeDisbursementInterval(uint48 newInterval)",
-      "function updateL1Recipient(address newRecipient)",
-      "function updateMinWithdrawalAmount(uint256 newAmount)",
-      "function withdraw() returns (uint256 balance)"
-    ],
-    "0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004": [
-      "constructor(address[] initialRecipients, tuple(address setter, uint256 allocation)[] recipientData)",
-      "error AllocationZero()",
-      "error DuplicateRecipient()",
-      "error InsufficientAllocation()",
-      "error InvalidRecipients()",
-      "error InvalidTotalAllocation()",
-      "error RecipientZero()",
-      "error SetterAlreadySet()",
-      "error SetterZero()",
-      "error Unauthorized()",
-      "error WithdrawalFailed()",
-      "event AllocationTransferred(address indexed setter, address indexed from, address indexed to, uint256 allocation)",
-      "event SetterTransferred(address indexed recipient, address indexed previousSetter, address indexed newSetter)",
-      "event Withdrawn(address indexed recipient, address indexed to, uint256 amount)",
-      "function balanceOf(address recipient) view returns (uint256)",
-      "function earnedFees(address account) view returns (uint256)",
-      "function recipients(address recipient) view returns (address setter, uint256 allocation)",
-      "function setterOf(address recipient) view returns (address)",
-      "function transferAllocation(address oldRecipient, address newRecipient, uint256 allocation)",
-      "function transferAllocationAndSetSetter(address oldRecipient, address newRecipient, address newSetter, uint256 allocation)",
-      "function transferSetter(address recipient, address newSetter)",
-      "function withdrawFees(address to) returns (uint256 amount)"
-    ],
     "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
       "event OwnerChanged(address oldOwner, address newOwner)",
       "event WhitelistDisabled(address oldOwner)",
@@ -1209,21 +981,6 @@
       "function version() pure returns (string)",
       "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
       "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
-    ],
-    "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011": [
-      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
-      "event Withdrawal(uint256 value, address to, address from)",
-      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
-      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
-      "function RECIPIENT() view returns (address)",
-      "function WITHDRAWAL_NETWORK() view returns (uint8)",
-      "function l1FeeWallet() view returns (address)",
-      "function minWithdrawalAmount() view returns (uint256 amount_)",
-      "function recipient() view returns (address recipient_)",
-      "function totalProcessed() view returns (uint256)",
-      "function version() view returns (string)",
-      "function withdraw()",
-      "function withdrawalNetwork() view returns (uint8 network_)"
     ],
     "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012": [
       "constructor()",
@@ -1323,34 +1080,6 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019": [
-      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
-      "event Withdrawal(uint256 value, address to, address from)",
-      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
-      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
-      "function RECIPIENT() view returns (address)",
-      "function WITHDRAWAL_NETWORK() view returns (uint8)",
-      "function minWithdrawalAmount() view returns (uint256 amount_)",
-      "function recipient() view returns (address recipient_)",
-      "function totalProcessed() view returns (uint256)",
-      "function version() view returns (string)",
-      "function withdraw()",
-      "function withdrawalNetwork() view returns (uint8 network_)"
-    ],
-    "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A": [
-      "constructor(address _recipient, uint256 _minWithdrawalAmount, uint8 _withdrawalNetwork)",
-      "event Withdrawal(uint256 value, address to, address from)",
-      "event Withdrawal(uint256 value, address to, address from, uint8 withdrawalNetwork)",
-      "function MIN_WITHDRAWAL_AMOUNT() view returns (uint256)",
-      "function RECIPIENT() view returns (address)",
-      "function WITHDRAWAL_NETWORK() view returns (uint8)",
-      "function minWithdrawalAmount() view returns (uint256 amount_)",
-      "function recipient() view returns (address recipient_)",
-      "function totalProcessed() view returns (uint256)",
-      "function version() view returns (string)",
-      "function withdraw()",
-      "function withdrawalNetwork() view returns (uint8 network_)"
-    ],
     "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020": [
       "error AlreadyExists()",
       "event Registered(bytes32 indexed uid, address indexed registerer, tuple(bytes32 uid, address resolver, bool revocable, string schema) schema)",
@@ -1414,12 +1143,10 @@
     ]
   },
   "usedTemplates": {
-    "opstack/Layer2/BaseFeeVault": "0x8ac3d4d02e60f9d0fc5d1b3bb4d0fd144402bddf02d54e01810b634978000c62",
     "opstack/Layer2/EAS": "0x544625cb6730381fe1dd5389cefeed7886901b154fbf10f9a3cb134e42ff2173",
     "opstack/Layer2/GasPriceOracle": "0x98613b8b76dab2084336195d79927dfe87cab8bf2c7f92b855fdb25500c0e63f",
     "opstack/Layer2/L1Block": "0xae883e6710bcb5f0f7074b3d7666d33f74f8adcd1ec572b0758104af1ac24246",
     "opstack/Layer2/L1BlockNumber": "0x09a7d99039caa076ae26fc79331e2653bbefdf9a9efe083f3428ecf6df6e2220",
-    "opstack/Layer2/L1FeeVault": "0xbe152bc5a515a30943a5d439fad723b9fd4ee04d68882526043248db73c61847",
     "opstack/Layer2/L2CrossDomainMessenger": "0x05066a856424429898e25025458ca628bf5303d5522f22f706e1df91aa16f0b3",
     "opstack/Layer2/L2ERC721Bridge": "0x644697262bc7ef1d94db87e01ff4b4e29d630d90b37a33b34ef22c611a333661",
     "opstack/Layer2/L2ProxyAdmin": "0xe1da3bb7340074b7a35f28ceedc964c6860a07d9911440e5c498aaee0cdae276",
@@ -1427,7 +1154,6 @@
     "opstack/Layer2/L2ToL1MessagePasser": "0xf46a7ab8a1471c982b2994a70ac0e6503118d153e19b6fd4d0cdaf4037964408",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x9d5a3f4adcea192ed605c14cd14a034f2fcb5cfd3d6620a0202dcf010499fa33",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x051481764ef505e8cdcd9bc207d1e9374219d23ef8541bc4bc409e29d9a5b678",
-    "opstack/Layer2/SchemaRegistry": "0x2b2e5b40b1ba5e7d9d13df6e72a7803eab26ed8d0860160fc9271f33b88e0978",
-    "opstack/Layer2/SequencerFeeVault": "0x305f40bd865fb7d166ae19b5fae4b12eb9ee28180718da92aacbfe7d9c91f789"
+    "opstack/Layer2/SchemaRegistry": "0x2b2e5b40b1ba5e7d9d13df6e72a7803eab26ed8d0860160fc9271f33b88e0978"
   }
 }
