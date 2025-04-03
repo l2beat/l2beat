@@ -73,7 +73,7 @@ export interface ScalingProject {
   /** Rollup stage */
   stage: ProjectScalingStage
   /** Deep dive into project technology */
-  technology: ProjectScalingTechnology
+  technology?: ProjectScalingTechnology
   /** Open-source node details */
   stateDerivation?: ProjectScalingStateDerivation
   /** Explains how project validates state */

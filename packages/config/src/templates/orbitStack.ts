@@ -1245,7 +1245,7 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(
-    hostChain.technology.dataAvailability !== undefined,
+    hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
   assert(
