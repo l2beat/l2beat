@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21635855,
-  "configHash": "0x2981bd49bd989f02d4cc483850d9bf0adaa8becb95a3be804a5594e1ec043148",
+  "blockNumber": 22187454,
+  "configHash": "0xe5aa759b2a5131877f318ee3ed6f9f8a28b37d03fd2c53ba146af45528464c5a",
   "entries": [
     {
       "name": "Vector",
@@ -79,13 +79,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 210,
-        "latestBlock": 846480,
+        "latestAuthoritySetId": 304,
+        "latestBlock": 1179120,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x00d0279ddadaccdbdb6142981d3830f9ada20ed4e2925ed186ae2be5806e3402",
+        "vectorXProgramVkey": "0x00e9bba2a9360f570b9ba99e5186825ac723bedebd486b6a818870c44e3e4d4f",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -210,7 +210,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

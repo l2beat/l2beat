@@ -1,4 +1,33 @@
-Generated with discovered.json: 0x2bf2febef51645a2535b8f726d9695b1c02e13d5
+Generated with discovered.json: 0x04a5932884c838d8bce0a074f9521e9c6e6bb4b8
+
+# Diff at Thu, 03 Apr 2025 10:05:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 22094600
+- current block number: 22187675
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.3:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.2:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    }
+```
+
+Generated with discovered.json: 0x1642a14c35d3286823a799f09748ecd7d715865b
 
 # Diff at Thu, 27 Mar 2025 11:14:03 GMT:
 

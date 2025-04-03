@@ -1,8 +1,8 @@
 {
   "name": "wirex",
   "chain": "ethereum",
-  "blockNumber": 21766767,
-  "configHash": "0xb61cbd5f8fc2643475338031c61fb28758ba86cf75e334b51b68866980c8d379",
+  "blockNumber": 22187530,
+  "configHash": "0x639da71ca57238cfe7d58b10c86ca13fd53e2326fffce9791f2dc6dd3f99514b",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -20,6 +20,17 @@
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -45,15 +56,9 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "address": "0x49a191471F248f7c86cA29477e6E969970BaEAdA",
+      "address": "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "PolygonDataCommittee",
@@ -69,7 +74,7 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+          "to": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "via": []
         },
@@ -92,20 +97,20 @@
           ]
         ],
         "$upgradeCount": 1,
-        "committeeHash": "0xe6f885fcfef296a71bcc466caa039d3a8e72b1c43f5b110d5045776b5680750b",
+        "committeeHash": "0xe27c1d4c1b3048b06294d26a28223926b5bdc4efe8e725b8c59e95a92c88b397",
         "getAmountOfMembers": 2,
         "getProcotolName": "DataAvailabilityCommittee",
         "members": [
           [
-            "https://pay-chain-da-2.eu-central-6.gateway.fm/",
-            "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1"
+            "https://dac.wirexpaychain.zeeve.online",
+            "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
           ],
           [
-            "https://pay-chain-da-1.eu-central-6.gateway.fm/",
-            "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8"
+            "https://dac2.wirexpaychain.zeeve.online",
+            "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
           ]
         ],
-        "owner": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+        "owner": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
         "requiredAmountOfSignatures": 1
       },
       "derivedName": "PolygonDataCommittee",
@@ -126,7 +131,7 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+          "to": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "via": []
         },
@@ -138,7 +143,7 @@
         },
         {
           "permission": "sequence",
-          "to": "0x49a191471F248f7c86cA29477e6E969970BaEAdA",
+          "to": "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
           "via": []
         }
       ],
@@ -156,7 +161,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "admin": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+        "admin": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
         "dataAvailabilityProtocol": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
@@ -175,19 +180,19 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x56fb12d42018a564ff91b7744464bf13f8c5247b94701d4dd2820fd77415b8ac",
+        "lastAccInputHash": "0xab34a2a5393c8ddae1a7851478114360d330fef253b4f0f85c849a2bc3eb785e",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "pay-chain",
-        "pendingAdmin": "0x0000000000000000000000000000000000000000",
+        "pendingAdmin": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0x49a191471F248f7c86cA29477e6E969970BaEAdA",
-        "trustedSequencerURL": "https://pay-chain-sequencer.eu-central-6.gateway.fm/"
+        "trustedSequencer": "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
+        "trustedSequencerURL": "https://rpc.wirexpaychain.com"
       },
       "fieldMeta": {
         "forceBatchAddress": {
@@ -217,17 +222,7 @@
       ]
     },
     {
-      "address": "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+      "address": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -240,13 +235,25 @@
           "permission": "interact",
           "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-        },
+        }
+      ]
+    },
+    {
+      "address": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "description": "sole address that can force batches."
         }
       ]
+    },
+    {
+      "address": "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
