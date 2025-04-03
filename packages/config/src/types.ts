@@ -483,6 +483,7 @@ export interface ProjectScalingTechnology {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
+  isUnderReview?: boolean
 }
 
 export interface ProjectScalingStateDerivation {
