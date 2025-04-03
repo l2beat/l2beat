@@ -29,7 +29,7 @@ type Action = {
   ensurePanel: (panelId: PanelId) => void
   setActivePanel: (id: PanelId | undefined) => void
   removePanel: (id?: PanelId) => void
-  toggleFullScren: (id?: PanelId) => void
+  toggleFullScreen: (id?: PanelId) => void
   resize: (id: PanelId, fraction: number) => void
   resizeAll: () => void
   mouseMove: (x: number, y: number) => void
@@ -166,7 +166,7 @@ export const useMultiViewStore = create<State & Action>((set) => ({
       }
     }),
   setActivePanel: (id) => set(() => ({ active: id })),
-  toggleFullScren: (id) =>
+  toggleFullScreen: (id) =>
     set((state) => {
       const targetId = id ?? state.active
       return {
