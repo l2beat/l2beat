@@ -21,10 +21,10 @@ import { Skeleton } from '~/components/core/skeleton'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
+import { EcosystemsMarketShare } from './ecosystems-market-share'
 
 export function EcosystemsTvsChart({
   name,
@@ -142,13 +142,7 @@ function Header({
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
-        <div className="text-xs font-medium text-[--ecosystem-primary]">
-          {stats?.domination ? (
-            `${formatPercent(stats.domination)} market share`
-          ) : (
-            <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
-          )}
-        </div>
+        <EcosystemsMarketShare marketShare={stats?.domination} />
       </div>
     </div>
   )

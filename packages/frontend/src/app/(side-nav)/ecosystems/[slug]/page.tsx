@@ -49,6 +49,7 @@ export default async function Page({ params }: Props) {
             <EcosystemsActivityChart
               name={ecosystem.name}
               entries={ecosystem.projects}
+              allScalingProjectsUops={ecosystem.allScalingProjects.uops}
             />
           </div>
           <div className="grid grid-cols-3 gap-[--spacing]">

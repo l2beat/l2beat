@@ -18,10 +18,10 @@ import { getChartRange } from '~/components/core/chart/utils/get-chart-range-fro
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatTimestamp } from '~/utils/dates'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
+import { EcosystemsMarketShare } from './ecosystems-market-share'
 
 interface Props {
   entries: EcosystemEntry['projects']
@@ -104,9 +104,7 @@ function Header({
       </div>
       <div className="text-right">
         <div className="text-xl font-bold">{stats.projectCount} Projects</div>
-        <div className="text-xs font-medium text-[--ecosystem-primary]">
-          {formatPercent(stats.domination)} market share
-        </div>
+        <EcosystemsMarketShare marketShare={stats.domination} />
       </div>
     </div>
   )

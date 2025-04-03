@@ -35,6 +35,7 @@ export interface EcosystemEntry {
   projects: EcosystemProjectEntry[]
   allScalingProjects: {
     tvs: number
+    uops: number
     count: number
   }
   daLayersUsed: Record<string, number>
@@ -85,12 +86,18 @@ export async function getEcosystemEntry(
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
-    getActivityLatestUops(projects),
+    getActivityLatestUops(allScalingProjects),
   ])
 
   const ecosystemProjects = projects.filter(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
+  const allScalingProjectsUops = allScalingProjects.reduce(
+    (acc, curr) =>
+      acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
+    0,
+  )
+  console.log(allScalingProjectsUops)
 
   return {
     ...ecosystem,
@@ -102,6 +109,7 @@ export async function getEcosystemEntry(
     links: getProjectLinks(ecosystem.display.links),
     allScalingProjects: {
       tvs: tvs.total,
+      uops: allScalingProjectsUops,
       count: allScalingProjects.length,
     },
     daLayersUsed: getDaLayersUsed(ecosystemProjects),

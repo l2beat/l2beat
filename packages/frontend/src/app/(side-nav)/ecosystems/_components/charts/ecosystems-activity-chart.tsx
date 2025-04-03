@@ -23,7 +23,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { Checkbox } from '~/components/core/checkbox'
 import { Skeleton } from '~/components/core/skeleton'
-import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
@@ -33,13 +32,16 @@ import { api } from '~/trpc/react'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
+import { EcosystemsMarketShare } from './ecosystems-market-share'
 
 export function EcosystemsActivityChart({
   name,
   entries,
+  allScalingProjectsUops,
 }: {
   name: string
   entries: EcosystemEntry['projects']
+  allScalingProjectsUops: number
 }) {
   const isClient = useIsClient()
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
@@ -88,7 +90,7 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
-  const stats = getStats(chartData)
+  const stats = getStats(chartData, allScalingProjectsUops)
   const range = getChartRange(chartData)
 
   return (
@@ -191,15 +193,16 @@ function Header({
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-32" />
         )}
-        <div className="text-xs font-medium text-[--ecosystem-primary]">
-          {stats?.domination ?? EM_DASH}% market share
-        </div>
+        <EcosystemsMarketShare marketShare={stats?.domination} />
       </div>
     </div>
   )
 }
 
-function getStats(chartData: { projects: number }[] | undefined) {
+function getStats(
+  chartData: { projects: number }[] | undefined,
+  allScalingProjectsUops: number,
+) {
   if (!chartData) {
     return undefined
   }
@@ -210,6 +213,6 @@ function getStats(chartData: { projects: number }[] | undefined) {
 
   return {
     latestUops: last.projects,
-    domination: 65,
+    domination: last.projects / allScalingProjectsUops,
   }
 }
