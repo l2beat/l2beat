@@ -2,7 +2,7 @@
   "name": "playblock",
   "chain": "nova",
   "blockNumber": 82973305,
-  "configHash": "0xf94aded8e29f42a6b2bbfa56d48b354ee3edf597c43c1abbef1308561b7c9a16",
+  "configHash": "0xb69846631e7b3a8226da6bf2a31250a863853e0536d39fd96b32969e259d6dda",
   "entries": [
     {
       "name": "RollupProxy",
