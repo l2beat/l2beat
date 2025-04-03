@@ -11,14 +11,5 @@
   "names": {
     "0x571D6CA61B979A967E055696c822CF8C928d3556": "Blessnet Multisig 1",
     "0x089E12e795b3292BcC16f29817bE124C720615b0": "Blessnet Multisig 2"
-  },
-  "overrides": {
-    "0xF9327276c0E0d255543C095AC6D243B555e645D9": {
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestNodeCreated",
-        "currentRequiredStake" // spammy
-      ]
-    }
   }
 }

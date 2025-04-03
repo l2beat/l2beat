@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x03d3c49cc13e4aca5681486214828592274910c5
+
+# Diff at Thu, 03 Apr 2025 09:11:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad19dfb413ff34348157f743c194a146b6447e05 block: 22166267
+- current block number: 22187409
+
+## Description
+
+Gov roles granted in the USDC bridge.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.9:
++        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.8:
++        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.7:
++        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.6.description:
++        "disable the withdrawal limit."
+      issuedPermissions.5.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0x0000000000000000000000000000000000000020"
+      issuedPermissions.4.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.4.description:
+-        "disable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      values.accessControl.GOVERNANCE_ADMIN.members.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.2:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.4:
++        "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+      receivedPermissions:
++        [{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"manage critical access control roles and the role that can upgrade the implementation."}]
+    }
+```
+
 Generated with discovered.json: 0x84361864b63573b6658527d315c9d1b42f887e2c
 
 # Diff at Mon, 31 Mar 2025 10:22:31 GMT:
