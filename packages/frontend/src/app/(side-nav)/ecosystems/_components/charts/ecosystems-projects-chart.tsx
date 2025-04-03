@@ -94,7 +94,7 @@ function Header({
   stats,
 }: {
   range: [number, number]
-  stats: { projectCount: number; domination: number }
+  stats: { projectCount: number; marketShare: number }
 }) {
   return (
     <div className="mb-3 flex items-center justify-between">
@@ -104,7 +104,7 @@ function Header({
       </div>
       <div className="text-right">
         <div className="text-xl font-bold">{stats.projectCount} Projects</div>
-        <EcosystemsMarketShare marketShare={stats.domination} />
+        <EcosystemsMarketShare marketShare={stats.marketShare} />
       </div>
     </div>
   )
@@ -162,7 +162,7 @@ function getStats(
 
   return {
     projectCount: total,
-    domination: total / allScalingProjectsCount,
+    marketShare: total / allScalingProjectsCount,
   }
 }
 
@@ -184,7 +184,7 @@ function getChartData(
     return {
       timestamp,
       projectCount: projects.length,
-      domination: projects.length / allScalingProjectsCount,
+      marketShare: projects.length / allScalingProjectsCount,
     }
   })
 

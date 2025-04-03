@@ -175,7 +175,7 @@ function Header({
   stats,
 }: {
   range: [number, number] | undefined
-  stats: { latestUops: number; domination: number } | undefined
+  stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
     <div className="mb-3 flex items-center justify-between">
@@ -193,7 +193,7 @@ function Header({
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-32" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.domination} />
+        <EcosystemsMarketShare marketShare={stats?.marketShare} />
       </div>
     </div>
   )
@@ -213,6 +213,6 @@ function getStats(
 
   return {
     latestUops: last.projects,
-    domination: last.projects / allScalingProjectsUops,
+    marketShare: last.projects / allScalingProjectsUops,
   }
 }

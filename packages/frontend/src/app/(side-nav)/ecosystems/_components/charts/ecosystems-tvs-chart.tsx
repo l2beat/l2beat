@@ -125,7 +125,7 @@ function Header({
   unit,
 }: {
   range: [number, number] | undefined
-  stats: { total: number; domination: number } | undefined
+  stats: { total: number; marketShare: number } | undefined
   unit: string
 }) {
   return (
@@ -142,7 +142,7 @@ function Header({
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.domination} />
+        <EcosystemsMarketShare marketShare={stats?.marketShare} />
       </div>
     </div>
   )
@@ -163,6 +163,6 @@ function getStats(
 
   return {
     total: last.value,
-    domination: last.value / allScalingProjectsTvs,
+    marketShare: last.value / allScalingProjectsTvs,
   }
 }
