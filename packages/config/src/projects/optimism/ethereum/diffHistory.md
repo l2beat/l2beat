@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf54229eb4484c77e95b2956e45d292cfc8e09ee2
+Generated with discovered.json: 0x15d211c82e528edb58441742f41ee22c091241ab
 
-# Diff at Thu, 03 Apr 2025 07:35:38 GMT:
+# Diff at Thu, 03 Apr 2025 09:13:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@390dc72872cb4dce4017ada9ab709f2c51c936e3 block: 21829671
-- current block number: 22186645
+- current block number: 22187417
 
 ## Description
 
@@ -26,31 +26,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
-    +++ description: None
-      template:
--        "opstack/SystemConfig"
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       sourceHashes.1:
 -        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
 +        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f"
       sourceHashes.0:
 -        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f"
 +        "0x6e293d82eb36a83fb5d8b06268cd4fbf46027b87eea77fcc68f78e4b010a3774"
-      description:
--        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
-      issuedPermissions.2:
--        {"permission":"upgrade","to":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
-      issuedPermissions.1:
--        {"permission":"sequence","to":"0x6887246668a3b87F54DeB3b94Ba47a6f63F32985","via":[]}
-      issuedPermissions.0.permission:
--        "interact"
-+        "upgrade"
-      issuedPermissions.0.to:
--        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
-+        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      issuedPermissions.0.description:
--        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-      issuedPermissions.0.via.0:
-+        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}
       values.$implementation:
 -        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
 +        "0x760C48C62A85045A6B69f07F4a9f22868659CbCc"
@@ -96,8 +78,6 @@ Provide description of changes. This section will be preserved.
 +        "2.4.0"
       values.getAddresses:
 +        {"l1CrossDomainMessenger":"0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1","l1ERC721Bridge":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","l1StandardBridge":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","disputeGameFactory":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","optimismPortal":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","optimismMintableERC20Factory":"0x75505a97BD334E7BD3C476893285569C4136Fa0F"}
-      category:
--        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -237,23 +217,11 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
-    contract undefined (0x6887246668a3b87F54DeB3b94Ba47a6f63F32985) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"sequence","from":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"}]
-    }
-```
-
-```diff
     contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
-    +++ description: None
-      template:
--        "opstack/OptimismMintableERC20Factory"
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
       sourceHashes.0:
 -        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
 +        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
-      description:
--        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
       values.$implementation:
 -        "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
 +        "0x5493f4677A186f64805fe7317D6993ba4863988F"
@@ -274,24 +242,6 @@ Provide description of changes. This section will be preserved.
       values.version:
 -        "1.9.0"
 +        "1.10.1"
-    }
-```
-
-```diff
-    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
-    +++ description: None
-      receivedPermissions.1:
--        {"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]}
-      receivedPermissions.0.permission:
--        "interact"
-+        "guard"
-      receivedPermissions.0.from:
--        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
-+        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
-      receivedPermissions.0.description:
--        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-      receivedPermissions.0.via:
-+        [{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]
     }
 ```
 

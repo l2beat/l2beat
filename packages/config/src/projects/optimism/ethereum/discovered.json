@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 22186645,
+  "blockNumber": 22187417,
   "configHash": "0x0a2c8cd4417ace9f0113d358be61e1733cfe2e8034dad6e7d7701541b061fe4a",
   "entries": [
     {
@@ -125,19 +125,32 @@
       "name": "SystemConfig",
       "address": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
       "type": "Contract",
+      "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0x6e293d82eb36a83fb5d8b06268cd4fbf46027b87eea77fcc68f78e4b010a3774"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         }
       ],
-      "ignoreInWatchMode": ["scalar"],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1685377403,
       "sinceBlock": 17365804,
       "values": {
@@ -256,7 +269,8 @@
           "description": "Gas limit for blocks on L2."
         }
       },
-      "derivedName": "SystemConfig"
+      "derivedName": "SystemConfig",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "LivenessGuard",
@@ -280,7 +294,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "14h 51m",
+        "timeSinceLastL2beatInteraction": "16h 29m",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -361,7 +375,7 @@
         ],
         "$upgradeCount": 11,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292787617",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292787687",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -703,17 +717,25 @@
     {
       "address": "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+        }
+      ]
     },
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x75505a97BD334E7BD3C476893285569C4136Fa0F",
       "type": "Contract",
+      "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -881,6 +903,11 @@
               "condition": "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
             }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
       ],
       "directlyReceivedPermissions": [
@@ -1226,8 +1253,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22186611
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 22187400
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1427,7 +1454,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 7125,
+        "gameCount": 7128,
         "gameImpls": [
           "0xbA94955CA3422fC57f9D982a0BaD2a9c88e2a9D0",
           "0xd113ad136a0dF1c7FfB7F1606Be1c778bCfE2f3b",
@@ -2126,7 +2153,9 @@
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
+    "opstack/OptimismMintableERC20Factory": "0xd3169a0737182f43695ebece6a1d938818fd109666348266ac11025c63621ed0",
     "opstack/OptimismPortal2": "0x765a88a0b62cb0291f85d5f300102de3b4e8fec9e2c026f6d3912c499d03e056",
-    "opstack/SuperchainConfig": "0xe9ed91e5df551d67902341d4abcc2662a5637682f18b2606eb518c434c0f9c26"
+    "opstack/SuperchainConfig": "0xe9ed91e5df551d67902341d4abcc2662a5637682f18b2606eb518c434c0f9c26",
+    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
   }
 }
