@@ -90,7 +90,7 @@ export function EcosystemsTvsChart({
             dataKey="value"
             fill="url(#fill)"
             fillOpacity={1}
-            stroke={color?.secondary ?? 'url(#stroke)'}
+            stroke={color.primary}
             strokeWidth={2}
             isAnimationActive={false}
           />
