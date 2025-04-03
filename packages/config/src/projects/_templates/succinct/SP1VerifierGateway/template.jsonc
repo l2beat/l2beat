@@ -5,7 +5,8 @@
     "oldVerifier",
     "oldVerifier2",
     "oldVerifier3",
-    "oldVerifier4"
+    "oldVerifier4",
+    "oldVerifier5"
   ],
   "fields": {
     "oldVerifier": {
@@ -72,13 +73,7 @@
           // first 4 bytes of the blobstream proof are used as identifier
           "0x1b34fe11"
         ]
-      },
-      "permissions": [
-        {
-          "type": "interact",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ]
+      }
     },
     "owner": {
       "permissions": [

@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22166261,
-  "configHash": "0x7aeecd653766e1d698d32d46cdcf486d34fc676875779bec477f0a6e11029d77",
+  "blockNumber": 22188901,
+  "configHash": "0x2c22a3db294155abbc5295ff982f6eae1e4b4a9e7daf468d825e78cb150a395e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -119,12 +119,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 24766200,
-        "latestOutputIndex": 13759,
-        "nextBlockNumber": 24768000,
-        "nextFinalizeOutputIndex": 13592,
-        "nextOutputIndex": 13760,
-        "nextOutputMinL2Timestamp": 1743416389,
+        "latestBlockNumber": 24903000,
+        "latestOutputIndex": 13835,
+        "nextBlockNumber": 24904800,
+        "nextFinalizeOutputIndex": 13667,
+        "nextOutputIndex": 13836,
+        "nextOutputMinL2Timestamp": 1743689989,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -322,7 +322,7 @@
         ],
         "$upgradeCount": 2,
         "activatedValidatorCount": 9,
-        "activatedValidatorTotalWeight": "31707302836246736260425743",
+        "activatedValidatorTotalWeight": "31723384761745083215624839",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -336,7 +336,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
+        "nextValidator": "0x16876e5c608cec36968517A9Eb345269D308D94a",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -408,7 +408,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 22164258
+          "prevBlockNum": 22187836
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -549,7 +549,7 @@
       "name": "SP1VerifierGateway",
       "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
-      "template": "succinct/SP1SuccinctGateway",
+      "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
@@ -738,7 +738,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4345,
+        "messageNonce": 4346,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1281,7 +1281,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22166261,
+        "clock": 22188901,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1354,23 +1354,6 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1729727135,
-      "sinceBlock": 21031662,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
-        "VERSION": "v3.0.0"
-      },
-      "derivedName": "SP1Verifier"
     },
     {
       "address": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
@@ -1687,7 +1670,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22166261,
+        "clock": 22188901,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1777,26 +1760,6 @@
       "address": "0xF5624B7E74C4Ed876C9793C7895184747a8D2310",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Poseidon2",
-      "address": "0xFd234971881a7c72965175fA8E438c97B2Dcd273",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xa3600b2900d8b1fef0f3e6e58b0a56f5639eee39776eb2d7bce841b245fdf288"
-      ],
-      "proxyType": "immutable",
-      "description": "Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.",
-      "sinceTimestamp": 1693288007,
-      "sinceBlock": 18018289,
-      "values": { "$immutable": true },
-      "derivedName": "",
-      "references": [
-        {
-          "text": "Source Code",
-          "href": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"
-        }
-      ]
     },
     {
       "name": "ValidatorPool",
@@ -2515,15 +2478,6 @@
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
-    "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -2765,6 +2719,6 @@
     "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
     "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1",
-    "succinct/SP1SuccinctGateway": "0x2b1d17343f6cd8f25c32002ecd089a7f0e7a0d38c6c48fe7e47e2610e4ecec2e"
+    "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
   }
 }
