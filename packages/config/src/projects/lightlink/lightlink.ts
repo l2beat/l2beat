@@ -135,52 +135,62 @@ export const lightlink: ScalingProject = {
     ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description: `
-      LightLink chain state roots are periodically posted to Ethereum through a CanonicalStateChain contract on L1. After the challenge window of ${formatSeconds(
-        CHALLENGE_WINDOW_SECONDS,
-      )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
+  stateValidation: {
+    description:
+      'The project implements an incomplete and non-funcional proof system.',
+    categories: [
+      {
+        title: 'Challenges',
+        description: `
+      LightLink chain state roots are periodically posted to Ethereum through a CanonicalStateChain contract on L1 as block headers that also contain Celestia data pointers. After the challenge window of ${formatSeconds(
+          CHALLENGE_WINDOW_SECONDS,
+        )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
       Once challenged, the permissioned defender can respond within ${formatSeconds(
-        CHALLENGE_PERIOD_SECONDS,
-      )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
+          CHALLENGE_PERIOD_SECONDS,
+        )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
       the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
       Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots. Moreover, state roots are not used for ERC20 withdrawals from the LightLinkERC20Bridge.
-      Users can deposit tokens on the LightLink chain by sending them to the L1BridgeRegistry contract on Ethereum L1. On the LightLink chain, token minting is then authorized by a permissioned set of signers providing signatures as input to the syncDeposit() function on the L2ERC20Predicate contract.
+      Users can deposit tokens on the LightLink chain by sending them to the L1BridgeRegistry contract on Ethereum L1. On the LightLink chain, ERC20 token minting is then authorized by a permissioned set of signers providing signatures as input to the syncDeposit() function on the L2ERC20Predicate contract.
       Users can withdraw their funds by submitting a withdraw() transaction to the L2ERC20Predicate contract, which will burn the tokens on the LightLink chain. To then unlock tokens from the bridge on L1, a validator multisig needs to validate the withdrawal based on off-chain validity checks. 
       Users can exit the network once enough validators have signed off on the withdrawal.
-      Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
-      references: [
-        {
-          title: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
-          url: 'https://phoenix.lightlink.io/address/0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9?tab=contract_code',
-        },
-        {
-          title: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
-          url: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
-        },
-      ],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: "validators relay a withdraw request that wasn't originated on the source chain.",
-        },
-      ],
-    },
+      Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal. To deposit the gas token, i.e. ETH, the LightLinkPortal is used which uses the CanonicalStateChain as the source for the state root, and withdrawals follow the usual OP stack process.`,
+        references: [
+          {
+            title: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
+            url: 'https://phoenix.lightlink.io/address/0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9?tab=contract_code',
+          },
+          {
+            title: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
+            url: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
+          },
+        ],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: "validators relay a withdraw request that wasn't originated on the source chain.",
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the publisher posts an invalid block header on Ethereum.',
+          },
+        ],
+      },
+    ],
+  },
+  technology: {
     otherConsiderations: [
       {
         name: 'Destination tokens are upgradable',
         description:
-          'Tokens on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
+          'ERC20 tokens through the L1ERC20Predicate on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
         references: [
           {
             title: 'Token Implementation - requireMultisig()',
