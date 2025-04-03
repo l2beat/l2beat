@@ -81,7 +81,7 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
 
     const records: TokenValueRecord[] = tvs.map((t) => {
       const token = configurations.find((c) => c.properties.id === t.tokenId)
-      assert(token)
+      assert(token, `${t.tokenId}: no token found`)
       return {
         ...t,
         configurationId: TokenValueIndexer.idToConfigurationId(
