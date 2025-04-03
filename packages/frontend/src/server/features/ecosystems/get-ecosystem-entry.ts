@@ -34,6 +34,7 @@ export interface EcosystemEntry {
   colors: ProjectEcosystemConfig['colors']
   projects: EcosystemProjectEntry[]
   allScalingProjectsCount: number
+  daLayersUsed: Record<string, number>
   links: ProjectLink[]
   milestones: Milestone[]
 }
@@ -77,6 +78,7 @@ export async function getEcosystemEntry(
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
+
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
@@ -87,6 +89,21 @@ export async function getEcosystemEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
+  const daLayersUsed = ecosystemProjects
+    .map((p) => p.scalingInfo.daLayer)
+    .reduce(
+      (acc, curr) => {
+        const record = acc[curr]
+        if (record) {
+          acc[curr] = record + 1
+        } else {
+          acc[curr] = 1
+        }
+        return acc
+      },
+      {} as Record<string, number>,
+    )
+
   return {
     ...ecosystem,
     colors: ecosystem.ecosystemConfig.colors,
@@ -96,6 +113,7 @@ export async function getEcosystemEntry(
       .filter((badge) => badge !== undefined),
     links: getProjectLinks(ecosystem.display.links),
     allScalingProjectsCount: allScalingProjects.length,
+    daLayersUsed,
     projects: ecosystemProjects
       .map((project) => ({
         ...getScalingSummaryEntry(

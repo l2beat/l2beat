@@ -6,6 +6,7 @@ import { EcosystemsProjectsChart } from '../_components/charts/ecosystems-projec
 import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
+import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
 
 interface Props {
   params: Promise<{
@@ -53,6 +54,11 @@ export default async function Page({ params }: Props) {
                 entries={ecosystem.projects}
               />
             </PrimaryCard>
+          </div>
+          <div className="grid grid-cols-3 gap-[--spacing]">
+            <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
+            <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
+            <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
           </div>
           <PrimaryCard>
             <EcosystemsProjectsChart
