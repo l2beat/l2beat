@@ -92,6 +92,8 @@ jobs:
         id: deployment
         if: steps.diff.outputs.has_changes != '1'
         uses: actions/deploy-pages@v4
+        with:
+          clean: false
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
