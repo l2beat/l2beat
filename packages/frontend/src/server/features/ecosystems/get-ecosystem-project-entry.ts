@@ -1,7 +1,7 @@
+import type { Milestone, Project, ProjectEcosystemConfig } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
-import type { ProjectEcosystemConfig } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { ps } from '~/server/projects'
@@ -29,6 +29,7 @@ export interface EcosystemProjectEntry {
   colors: ProjectEcosystemConfig['colors']
   projects: ScalingSummaryEntry[]
   links: ProjectLink[]
+  milestones: Milestone[]
 }
 
 export async function getEcosystemProjectEntry(
@@ -37,6 +38,7 @@ export async function getEcosystemProjectEntry(
   const ecosystem = await ps.getProject({
     slug,
     select: ['ecosystemConfig', 'display'],
+    optional: ['milestones'],
   })
 
   if (!ecosystem) {
@@ -51,7 +53,13 @@ export async function getEcosystemProjectEntry(
       'display',
       'ecosystemInfo',
     ],
-    optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
+    optional: [
+      'tvlInfo',
+      'scalingDa',
+      'scalingStage',
+      'chainConfig',
+      'milestones',
+    ],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -65,12 +73,10 @@ export async function getEcosystemProjectEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
-  const logo = getEcosystemLogo(slug)
-
   return {
     ...ecosystem,
     colors: ecosystem.ecosystemConfig.colors,
-    logo,
+    logo: getEcosystemLogo(slug),
     badges: ecosystem.display.badges
       .map((badge) => getBadgeWithParams(badge, ecosystem))
       .filter((badge) => badge !== undefined),
@@ -85,6 +91,7 @@ export async function getEcosystemProjectEntry(
         ),
       )
       .sort(compareStageAndTvs),
+    milestones: getMilestones([ecosystem, ...ecosystemProjects]),
   }
 }
 
@@ -95,4 +102,10 @@ function getEcosystemLogo(slug: string) {
   const dimensions = getImageDimensions(imgBuffer)
   assert(dimensions, 'Ecosystem logo not found')
   return { ...dimensions, src: `/ecosystems/${slug}.png` }
+}
+
+function getMilestones(projects: Project<never, 'milestones'>[]) {
+  return projects.flatMap((project) => {
+    return project.milestones ?? []
+  })
 }
