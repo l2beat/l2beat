@@ -22,7 +22,7 @@ export const settlus: ScalingProject = underReviewL2({
       explorers: ['https://mainnet.settlus.network/'],
       documentation: ['https://docs.settlus.org/'],
       socialMedia: [
-        'https://twitter.com/Settlus_meta',
+        'https://x.com/Settlusofficial',
         'https://github.com/settlus',
       ],
     },
