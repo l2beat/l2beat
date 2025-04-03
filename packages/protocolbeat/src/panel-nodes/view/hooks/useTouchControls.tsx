@@ -1,10 +1,8 @@
 import { useRef, useState } from 'react'
 import type { MouseControls } from './useMouseControls'
 
-// Track touch interaction mode
 type TouchMode = 'none' | 'select' | 'pan' | 'zoom'
 
-// Constants for touch gesture detection
 const PINCH_DISTANCE_THRESHOLD = 35 // Minimum distance change to consider as pinch
 const MODE_SWITCH_COOLDOWN_MS = 150 // Minimum time between mode switches to prevent jitter
 
@@ -20,10 +18,9 @@ export function useTouchControls({
   containerRef,
   mouseControls,
 }: Props) {
-  // Track the current touch interaction mode
   const [touchMode, setTouchMode] = useState<TouchMode>('none')
 
-  // Track initial distance between fingers for pinch detection
+  // Tracking the distance between fingers for pinch detection
   const touchStateRef = useRef({
     initialDistance: 0,
     lastDistance: 0,
@@ -48,7 +45,6 @@ export function useTouchControls({
       const touch2 = event.touches[1]
 
       if (touch1 && touch2) {
-        // Record initial state for pinch detection
         const distance = getTouchDistance(touch1, touch2)
         const center = getTouchCenter(touch1, touch2)
 
@@ -98,14 +94,14 @@ export function useTouchControls({
     if (!containerRef.current) return
 
     // Handle changes in the number of touches
-    if (
-      event.touches.length !==
-      (touchMode === 'select'
+    const expectedTouches =
+      touchMode === 'select'
         ? 1
         : touchMode === 'pan' || touchMode === 'zoom'
           ? 2
-          : 0)
-    ) {
+          : 0
+
+    if (event.touches.length !== expectedTouches) {
       // Number of touches changed - reset and restart
       handleTouchEnd(event)
       handleTouchStart(event)
@@ -119,6 +115,7 @@ export function useTouchControls({
     ) {
       const touch1 = event.touches[0]
       const touch2 = event.touches[1]
+
       if (!touch1 || !touch2) return
 
       const currentDistance = getTouchDistance(touch1, touch2)
@@ -179,7 +176,9 @@ export function useTouchControls({
         if (viewRef.current) {
           mouseControls.onWheel(wheelEvent)
         }
-      } else if (touchMode === 'pan') {
+      }
+
+      if (touchMode === 'pan') {
         // Continue with the panning using the center point
         const mouseEvent = new MouseEvent('mousemove', {
           clientX: center.x,
