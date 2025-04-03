@@ -74,7 +74,7 @@ function addedOrRemoved(
   return {
     id: project.id,
     type,
-    fields: Object.entries(after).map(([key, value]) => {
+    fields: Object.entries(project).map(([key, value]) => {
       const lines = JSON.stringify(toCanonicalJson(value), null, 2).split('\n')
       return {
         field: key,
