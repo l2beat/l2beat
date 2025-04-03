@@ -4,6 +4,7 @@ import type {
   StageUnderReview,
 } from '@l2beat/config'
 import Image from 'next/image'
+import { UnderReviewBadge } from '~/components/badge/under-review-badge'
 import {
   Accordion,
   AccordionContent,
@@ -60,21 +61,16 @@ export function StageSection({
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
     return (
       <ProjectSection {...sectionProps} isUnderReview>
-        <div className="mb-6 flex flex-wrap items-center font-medium">
+        <div className="mb-6 flex flex-wrap items-center gap-2 font-medium">
           <Image
             src={icon}
             alt={name}
             width={18}
             height={18}
-            className="relative -top-0.5 mr-2 inline-block size-[18px]"
+            className="relative -top-px inline-block size-[18px]"
           />
-          {name} is currently
-          <StageBadge
-            stage={stageConfig.stage}
-            className="mx-1 md:mx-1.5"
-            isAppchain={isAppchain}
-          />
-          for stage assignment.
+          <p>{name}&apos;s stage is currently</p>
+          <UnderReviewBadge />
         </div>
       </ProjectSection>
     )
