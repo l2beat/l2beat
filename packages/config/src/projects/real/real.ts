@@ -57,9 +57,8 @@ export const real: ScalingProject = orbitStackL2({
       {
         type: 'rpc',
         url: 'https://tangible-real.gateway.tenderly.co/',
-        callsPerMinute: 1500,
+        callsPerMinute: 3000,
       },
-      { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },
       { type: 'blockscout', url: 'https://explorer.re.al/api' },
     ],
   },
