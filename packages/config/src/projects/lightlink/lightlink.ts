@@ -54,7 +54,6 @@ const CHALLENGE_FEE = utils.formatEther(
 )
 
 export const lightlink: ScalingProject = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('lightlink'),
   capability: 'universal',
