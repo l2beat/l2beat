@@ -7,7 +7,7 @@ type Props = {
   containerRef: React.RefObject<HTMLElement | null>
 }
 
-export type MouseControls = {
+export type DesktopControls = {
   onWheel: (event: WheelEvent) => void
   onMouseDown: (event: MouseEvent) => void
   onMouseMove: (event: MouseEvent) => void
@@ -17,10 +17,10 @@ export type MouseControls = {
   isResizing: boolean
 }
 
-export function useMouseControls({
+export function useDesktopControls({
   viewRef,
   containerRef,
-}: Props): MouseControls {
+}: Props): DesktopControls {
   const currentPanel = useMultiViewStore((state) => state.active)
   const searchOpened = useSearchStore((state) => state.opened)
 

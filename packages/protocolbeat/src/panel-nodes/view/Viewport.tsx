@@ -5,14 +5,14 @@ import { useSearchStore } from '../../search/store'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
 import { ScalableView } from './ScalableView'
-import { useMouseControls } from './hooks/useMouseControls'
+import { useDesktopControls } from './hooks/useDesktopControls'
 import { useTouchControls } from './hooks/useTouchControls'
 
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
 
-  const mouseControls = useMouseControls({
+  const desktopControls = useDesktopControls({
     containerRef,
     viewRef,
   })
@@ -20,7 +20,7 @@ export function Viewport() {
   const touchControls = useTouchControls({
     containerRef,
     viewRef,
-    mouseControls,
+    desktopControls,
   })
 
   const currentPanel = useMultiViewStore((state) => state.active)
@@ -31,8 +31,10 @@ export function Viewport() {
 
   useEffect(() => {
     const target = containerRef.current
-    target?.addEventListener('wheel', mouseControls.onWheel, { passive: false })
-    target?.addEventListener('mousedown', mouseControls.onMouseDown)
+    target?.addEventListener('wheel', desktopControls.onWheel, {
+      passive: false,
+    })
+    target?.addEventListener('mousedown', desktopControls.onMouseDown)
     target?.addEventListener('touchstart', touchControls.onTouchStart, {
       passive: false,
     })
@@ -43,32 +45,32 @@ export function Viewport() {
       passive: false,
     })
 
-    window.addEventListener('mousemove', mouseControls.onMouseMove)
-    window.addEventListener('mouseup', mouseControls.onMouseUp)
+    window.addEventListener('mousemove', desktopControls.onMouseMove)
+    window.addEventListener('mouseup', desktopControls.onMouseUp)
     window.addEventListener('touchmove', touchControls.onTouchMove, {
       passive: false,
     })
     window.addEventListener('touchend', touchControls.onTouchEnd, {
       passive: false,
     })
-    window.addEventListener('keydown', mouseControls.onKeyDown)
-    window.addEventListener('keyup', mouseControls.onKeyUp)
+    window.addEventListener('keydown', desktopControls.onKeyDown)
+    window.addEventListener('keyup', desktopControls.onKeyUp)
 
     return () => {
-      target?.removeEventListener('wheel', mouseControls.onWheel)
-      target?.removeEventListener('mousedown', mouseControls.onMouseDown)
+      target?.removeEventListener('wheel', desktopControls.onWheel)
+      target?.removeEventListener('mousedown', desktopControls.onMouseDown)
       target?.removeEventListener('touchstart', touchControls.onTouchStart)
       target?.removeEventListener('touchmove', touchControls.onTouchMove)
       target?.removeEventListener('touchend', touchControls.onTouchEnd)
 
-      window.removeEventListener('mousemove', mouseControls.onMouseMove)
-      window.removeEventListener('mouseup', mouseControls.onMouseUp)
+      window.removeEventListener('mousemove', desktopControls.onMouseMove)
+      window.removeEventListener('mouseup', desktopControls.onMouseUp)
       window.removeEventListener('touchmove', touchControls.onTouchMove)
       window.removeEventListener('touchend', touchControls.onTouchEnd)
-      window.removeEventListener('keydown', mouseControls.onKeyDown)
-      window.removeEventListener('keyup', mouseControls.onKeyUp)
+      window.removeEventListener('keydown', desktopControls.onKeyDown)
+      window.removeEventListener('keyup', desktopControls.onKeyUp)
     }
-  }, [mouseControls, touchControls, shouldCapture])
+  }, [desktopControls, touchControls, shouldCapture])
 
   return (
     <div
@@ -76,7 +78,7 @@ export function Viewport() {
       className={clsx(
         'relative h-full w-full overflow-hidden bg-coffee-800',
         'touch-none', // Prevent browser handling of touch events
-        mouseControls.isResizing && 'cursor-col-resize',
+        desktopControls.isResizing && 'cursor-col-resize',
       )}
     >
       <ScalableView ref={viewRef}>

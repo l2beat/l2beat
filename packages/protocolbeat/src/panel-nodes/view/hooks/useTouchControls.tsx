@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import type { MouseControls } from './useMouseControls'
+import type { DesktopControls } from './useDesktopControls'
 
 type TouchMode = 'none' | 'select' | 'pan' | 'zoom'
 
@@ -10,7 +10,7 @@ type Props = {
   viewRef: React.RefObject<HTMLElement | null>
   containerRef: React.RefObject<HTMLElement | null>
   // We need it since we remap touch events to mouse events
-  mouseControls: MouseControls
+  desktopControls: DesktopControls
 }
 
 // We could use store, but at the end of the day
@@ -19,7 +19,7 @@ type Props = {
 export function useTouchControls({
   viewRef,
   containerRef,
-  mouseControls,
+  desktopControls,
 }: Props) {
   const [touchMode, setTouchMode] = useState<TouchMode>('none')
 
@@ -40,7 +40,7 @@ export function useTouchControls({
 
     // Force end any current interactions
     const endEvent = new MouseEvent('mouseup', { bubbles: true })
-    mouseControls.onMouseUp(endEvent)
+    desktopControls.onMouseUp(endEvent)
 
     // Exactly two fingers = multi-touch mode (either pan or zoom)
     if (event.touches.length === 2) {
@@ -70,7 +70,7 @@ export function useTouchControls({
           bubbles: true,
         })
 
-        mouseControls.onMouseDown(mouseEvent)
+        desktopControls.onMouseDown(mouseEvent)
       }
       return
     }
@@ -89,7 +89,7 @@ export function useTouchControls({
         bubbles: true,
       })
 
-      mouseControls.onMouseDown(mouseEvent)
+      desktopControls.onMouseDown(mouseEvent)
     }
   }
 
@@ -140,7 +140,7 @@ export function useTouchControls({
 
           // Send mouseup to cancel any panning
           const cancelEvent = new MouseEvent('mouseup', { bubbles: true })
-          mouseControls.onMouseUp(cancelEvent)
+          desktopControls.onMouseUp(cancelEvent)
         }
         // If distance is relatively stable and we're moving from initial position, ensure we're in pan mode
         else if (
@@ -158,7 +158,7 @@ export function useTouchControls({
             bubbles: true,
           })
 
-          mouseControls.onMouseDown(mouseEvent)
+          desktopControls.onMouseDown(mouseEvent)
         }
       }
 
@@ -177,7 +177,7 @@ export function useTouchControls({
         })
 
         if (viewRef.current) {
-          mouseControls.onWheel(wheelEvent)
+          desktopControls.onWheel(wheelEvent)
         }
       }
 
@@ -190,7 +190,7 @@ export function useTouchControls({
           bubbles: true,
         })
 
-        mouseControls.onMouseMove(mouseEvent)
+        desktopControls.onMouseMove(mouseEvent)
       }
 
       // Update last distance
@@ -210,7 +210,7 @@ export function useTouchControls({
         bubbles: true,
       })
 
-      mouseControls.onMouseMove(mouseEvent)
+      desktopControls.onMouseMove(mouseEvent)
     }
   }
 
@@ -220,7 +220,7 @@ export function useTouchControls({
       bubbles: true,
     })
 
-    mouseControls.onMouseUp(mouseEvent)
+    desktopControls.onMouseUp(mouseEvent)
 
     // Reset mode if all fingers are lifted
     if (event.touches.length === 0) {
