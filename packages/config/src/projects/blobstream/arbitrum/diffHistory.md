@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x81af0cbea5bcc72f2bd6d8f5a8442f5add9e8bb7
+Generated with discovered.json: 0x561eb495e0f3d45d1e404c545ad36d9dad53c0b3
 
-# Diff at Thu, 03 Apr 2025 13:56:22 GMT:
+# Diff at Thu, 03 Apr 2025 14:34:05 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 305996466
@@ -31,6 +31,8 @@ discovery. Values are for block 305996466 (main branch discovery), not current.
       template:
 -        "succinct/SP1SuccinctGateway"
 +        "succinct/SP1VerifierGateway"
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","description":"can verify proofs for the header range [latestBlock, targetBlock] proof.","via":[]}
     }
 ```
 
@@ -64,6 +66,14 @@ discovery. Values are for block 305996466 (main branch discovery), not current.
 -   Status: DELETED
     contract SuccinctGatewayMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3)
     +++ description: None
+```
+
+```diff
+    contract  (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+    }
 ```
 
 ```diff

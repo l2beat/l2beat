@@ -42,12 +42,6 @@
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
-          "via": []
         }
       ],
       "sinceTimestamp": 1719523665,
@@ -323,13 +317,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ],
       "sinceTimestamp": 1735949706,
       "sinceBlock": 291720238,
       "values": { "$immutable": true },
@@ -525,6 +512,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "succinct/SP1Blobstream": "0x02756e6ddd521ab8a6e504462ea813ffa8f5a9dd17c7b583cb8b8a0f7ec1f292",
-    "succinct/SP1VerifierGateway": "0xa6ef4e174fae92ed8267688f483cb32f0f59ba89da1a6d7c463cb99cd21b5424"
+    "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
   }
 }

@@ -2719,6 +2719,6 @@
     "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
     "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1",
-    "succinct/SP1VerifierGateway": "0xa6ef4e174fae92ed8267688f483cb32f0f59ba89da1a6d7c463cb99cd21b5424"
+    "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
   }
 }

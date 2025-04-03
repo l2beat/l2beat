@@ -138,12 +138,6 @@
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
-          "via": []
         }
       ],
       "sinceTimestamp": 1720099223,
@@ -737,13 +731,6 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ],
       "sinceTimestamp": 1735949699,
       "sinceBlock": 21547470,
       "values": {
@@ -1484,6 +1471,6 @@
     "opstack/SuperchainConfigFake": "0xa8539434f587c9fec49a34272ebeff775ad6e86d4f42aa5fc396f5679d53b900",
     "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x7ba889481577841b6fd45770a923c18e4c8b58a1937da6889aa5a533b7d939ab",
-    "succinct/SP1VerifierGateway": "0xa6ef4e174fae92ed8267688f483cb32f0f59ba89da1a6d7c463cb99cd21b5424"
+    "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
   }
 }
