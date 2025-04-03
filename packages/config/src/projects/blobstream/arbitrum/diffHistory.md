@@ -8,7 +8,7 @@ Generated with discovered.json: 0x323c9fa17f2ae0e29e0318d475c6ced6c10996b5
 
 ## Description
 
-Updated the blobstream template to ignore outdated gateway_deprecated method.
+Updated the blobstream template to ignore outdated gateway.
 
 ## Config/verification related changes
 

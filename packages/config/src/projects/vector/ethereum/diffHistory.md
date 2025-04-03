@@ -8,7 +8,7 @@ Generated with discovered.json: 0xb02be807fb5432c624e34feda6e98494354cebd1
 
 ## Description
 
-Renamed SP1SuccinctGateway to SP1VerifierGateway.
+Renamed SP1SuccinctGateway to SP1VerifierGateway. vectorXProgramVkey changed.
 
 ## Watched changes
 
