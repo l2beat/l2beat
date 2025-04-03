@@ -17,12 +17,7 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
     <header className="flex items-center">
       <div>
         <div className="flex h-20 items-center gap-2">
-          <Image
-            {...logo}
-            alt="Ecosystem logo"
-            priority
-            className="h-5 w-auto"
-          />
+          <Image {...logo} alt="Ecosystem logo" priority />
         </div>
         <DesktopProjectLinks projectLinks={links} variant="primary" />
       </div>
