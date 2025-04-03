@@ -11,10 +11,10 @@ export function HomePage() {
   return (
     <div className="mx-auto max-w-screen-md p-4">
       <h1 className="my-8 flex justify-center">
-        <img className="w-[400px]" src="/logo.svg" alt="DSCVRY" />
+        <img className="w-[200px] md:w-[400px]" src="/logo.svg" alt="DSCVRY" />
       </h1>
       <input
-        className="mx-auto mb-8 block w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
+        className="mx-auto mb-8 block w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400 "
         placeholder="Filter projects"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -109,11 +109,11 @@ function ProjectList(props: {
   favorites?: boolean
 }) {
   return (
-    <ol className="mb-8 grid grid-cols-4 gap-x-1 gap-y-2">
+    <ol className="mb-8 grid grid-cols-2 gap-x-1 gap-y-2 md:grid-cols-4">
       {props.entries.map((entry, i) => (
         <li className="group flex items-center gap-2" key={i}>
           <button
-            className="opacity-0 group-hover:opacity-100"
+            className="opacity-25 md:opacity-0 md:group-hover:opacity-100"
             onClick={() => props.toggleFavorite(entry.name)}
           >
             {props.favorites ? (
