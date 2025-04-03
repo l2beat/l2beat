@@ -84,8 +84,9 @@ jobs:
       - name: Deploy to github pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: diff-pages
+          branch: gh-pages
           folder: pages-output
+          single-commit: true
           clean: false
 
       - name: Find Comment
