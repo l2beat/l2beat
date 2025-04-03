@@ -15,7 +15,7 @@ type Props = {
 
 // We could use store, but at the end of the day
 // we still treat mouse events as primary ones.
-// Touch controls are just wrapper around mouse events.
+// Touch controls are just wrappers around mouse events.
 export function useTouchControls({
   viewRef,
   containerRef,
