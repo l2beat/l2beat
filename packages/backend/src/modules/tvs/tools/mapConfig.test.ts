@@ -31,10 +31,10 @@ describe(mapConfig.name, () => {
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(
-      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH'),
+      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH-1'),
     ).toEqual({
       mode: 'auto',
-      id: TokenId('arbitrum-ETH'),
+      id: TokenId('arbitrum-ETH-1'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
@@ -82,11 +82,11 @@ describe(mapConfig.name, () => {
     expect(
       result.tokens.find(
         (t: TvsToken) =>
-          t.id === 'arbitrum-ARB' && t.amount.type === 'circulatingSupply',
+          t.id === 'arbitrum-ARB-1' && t.amount.type === 'circulatingSupply',
       ),
     ).toEqual({
       mode: 'auto',
-      id: TokenId('arbitrum-ARB'),
+      id: TokenId('arbitrum-ARB-1'),
       symbol: 'ARB',
       name: 'Arbitrum',
       priceId: 'arbitrum',
