@@ -34,11 +34,6 @@ export function MultiView(props: MultiViewProps) {
     if (isMobileOrTablet && !fullScreen && firstPanel) {
       toggleFullScreen(firstPanel.id)
     }
-
-    // Naive switch-back on desktop
-    if (!isMobileOrTablet && fullScreen) {
-      toggleFullScreen(fullScreen)
-    }
   }, [isMobileOrTablet, fullScreen, panels, toggleFullScreen])
 
   function getPanelElements() {
