@@ -67,8 +67,6 @@ export const lightlink: ScalingProject = {
   display: {
     name: 'LightLink',
     slug: 'lightlink',
-    headerWarning:
-      'The old ETH bridge is paused and funds have been [moved to a multisig](https://etherscan.io/tx/0x416221c8a6e0454762409735f01d3b9c8bb0e894c36ccd1e3e80e4a69b5bb923). New infra is under review.',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
     category: 'Optimium',
