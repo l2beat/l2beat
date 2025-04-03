@@ -79,7 +79,7 @@ export interface ScalingProject {
   /** Explains how project validates state */
   stateValidation?: ProjectScalingStateValidation
   /** List of smart contracts used in the project */
-  contracts: ProjectContracts
+  contracts?: ProjectContracts
   /** List of permissioned addresses on a given chain */
   permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */

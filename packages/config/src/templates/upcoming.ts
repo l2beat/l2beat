@@ -1,5 +1,5 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS, UPCOMING_RISK_VIEW } from '../common'
+import { UPCOMING_RISK_VIEW } from '../common'
 import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
 import type { Badge, ChainConfig, ProjectScalingCapability } from '../types'
 
@@ -37,7 +37,6 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     },
     chainConfig: templateVars.chainConfig,
     riskView: UPCOMING_RISK_VIEW,
-    contracts: CONTRACTS.EMPTY,
     badges: templateVars.badges,
   }
 }
@@ -59,7 +58,6 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
     stage: { stage: 'NotApplicable' },
     riskView: UPCOMING_RISK_VIEW,
     stackedRiskView: UPCOMING_RISK_VIEW,
-    contracts: CONTRACTS.EMPTY,
     badges: templateVars.badges,
   }
 }
