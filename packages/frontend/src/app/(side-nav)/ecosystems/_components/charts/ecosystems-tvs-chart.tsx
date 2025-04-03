@@ -18,10 +18,10 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradi
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { Skeleton } from '~/components/core/skeleton'
-import { EM_DASH } from '~/consts/characters'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
+import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
@@ -29,9 +29,11 @@ import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 export function EcosystemsTvsChart({
   name,
   entries,
+  allScalingProjectsTvs,
 }: {
   name: string
   entries: EcosystemEntry['projects']
+  allScalingProjectsTvs: number
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
@@ -65,7 +67,7 @@ export function EcosystemsTvsChart({
     } satisfies ChartMeta
   }, [name])
 
-  const stats = getStats(chartData)
+  const stats = getStats(chartData, allScalingProjectsTvs)
   const range = getChartRange(chartData)
 
   return (
@@ -141,14 +143,21 @@ function Header({
           <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
         <div className="text-xs font-medium text-[--ecosystem-primary]">
-          {stats?.domination ?? EM_DASH}% L2 market share
+          {stats?.domination ? (
+            `${formatPercent(stats.domination)} L2 market share`
+          ) : (
+            <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
+          )}
         </div>
       </div>
     </div>
   )
 }
 
-function getStats(chartData: TvsChartDataPoint[] | undefined) {
+function getStats(
+  chartData: TvsChartDataPoint[] | undefined,
+  allScalingProjectsTvs: number,
+) {
   if (!chartData) {
     return undefined
   }
@@ -160,6 +169,6 @@ function getStats(chartData: TvsChartDataPoint[] | undefined) {
 
   return {
     total: last.value,
-    domination: 65,
+    domination: last.value / allScalingProjectsTvs,
   }
 }

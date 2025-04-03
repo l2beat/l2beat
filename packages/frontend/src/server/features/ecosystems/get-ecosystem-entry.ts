@@ -33,7 +33,10 @@ export interface EcosystemEntry {
   badges: BadgeWithParams[]
   colors: ProjectEcosystemConfig['colors']
   projects: EcosystemProjectEntry[]
-  allScalingProjectsCount: number
+  allScalingProjects: {
+    tvs: number
+    count: number
+  }
   daLayersUsed: Record<string, number>
   links: ProjectLink[]
   milestones: Milestone[]
@@ -97,7 +100,10 @@ export async function getEcosystemEntry(
       .map((badge) => getBadgeWithParams(badge, ecosystem))
       .filter((badge) => badge !== undefined),
     links: getProjectLinks(ecosystem.display.links),
-    allScalingProjectsCount: allScalingProjects.length,
+    allScalingProjects: {
+      tvs: tvs.total,
+      count: allScalingProjects.length,
+    },
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projects: ecosystemProjects
       .map((project) => ({

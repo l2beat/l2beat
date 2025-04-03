@@ -44,6 +44,7 @@ export default async function Page({ params }: Props) {
             <EcosystemsTvsChart
               name={ecosystem.name}
               entries={ecosystem.projects}
+              allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
             />
             <EcosystemsActivityChart
               name={ecosystem.name}
@@ -57,7 +58,7 @@ export default async function Page({ params }: Props) {
           </div>
           <EcosystemsProjectsChart
             entries={ecosystem.projects}
-            allScalingProjectsCount={ecosystem.allScalingProjectsCount}
+            allScalingProjectsCount={ecosystem.allScalingProjects.count}
           />
           <EcosystemProjectsTable entries={ecosystem.projects} />
         </main>
