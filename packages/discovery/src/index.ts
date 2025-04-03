@@ -84,3 +84,4 @@ export {
   getDiscoveryPaths,
   type DiscoveryPaths,
 } from './discovery/config/getDiscoveryPaths'
+export { ShapeSchema } from './discovery/config/ShapeSchema'
