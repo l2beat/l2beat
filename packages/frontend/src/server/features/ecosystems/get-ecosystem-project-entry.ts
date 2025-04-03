@@ -8,12 +8,27 @@ import { getProjectsChangeReport } from '../projects-change-report/get-projects-
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import type { ProjectEcosystemConfig } from '@l2beat/config'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
+import { getImageDimensions } from '~/utils/project/get-image-params'
+import { readFileSync } from 'fs'
+import path from 'path'
+import { assert } from '@l2beat/shared-pure'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
+import type { ProjectLink } from '~/components/projects/links/types'
+import { getProjectLinks } from '~/utils/project/get-project-links'
 
 export interface EcosystemProjectEntry {
   slug: string
   name: string
+  logo: {
+    src: string
+    width: number
+    height: number
+  }
+  badges: BadgeWithParams[]
   colors: ProjectEcosystemConfig['colors']
   projects: ScalingSummaryEntry[]
+  links: ProjectLink[]
 }
 
 export async function getEcosystemProjectEntry(
@@ -21,7 +36,7 @@ export async function getEcosystemProjectEntry(
 ): Promise<EcosystemProjectEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
-    select: ['ecosystemConfig'],
+    select: ['ecosystemConfig', 'display'],
   })
 
   if (!ecosystem) {
@@ -50,9 +65,16 @@ export async function getEcosystemProjectEntry(
     (p) => p.ecosystemInfo.id === ecosystem.id,
   )
 
+  const logo = getEcosystemLogo(slug)
+
   return {
     ...ecosystem,
     colors: ecosystem.ecosystemConfig.colors,
+    logo,
+    badges: ecosystem.display.badges
+      .map((badge) => getBadgeWithParams(badge, ecosystem))
+      .filter((badge) => badge !== undefined),
+    links: getProjectLinks(ecosystem.display.links),
     projects: ecosystemProjects
       .map((project) =>
         getScalingSummaryEntry(
@@ -64,4 +86,13 @@ export async function getEcosystemProjectEntry(
       )
       .sort(compareStageAndTvs),
   }
+}
+
+function getEcosystemLogo(slug: string) {
+  const imgBuffer = readFileSync(
+    path.join(process.cwd(), './public', `/ecosystems/${slug}.png`),
+  )
+  const dimensions = getImageDimensions(imgBuffer)
+  assert(dimensions, 'Ecosystem logo not found')
+  return { ...dimensions, src: `/ecosystems/${slug}.png` }
 }
