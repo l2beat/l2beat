@@ -4,6 +4,8 @@ on:
   pull_request:
 
 permissions:
+  pages: write # For GitHub Pages deployment
+  id-token: write # For authentication with GitHub Pages
   contents: write # For GitHub Pages deployment
   pull-requests: write # For commenting on PRs
 
@@ -96,14 +98,14 @@ jobs:
 
       - name: Upload GitHub Pages artifact
         if: steps.diff.outputs.has_changes != '1'
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: gh-pages
 
       - name: Deploy to GitHub Pages
         id: deployment
         if: steps.diff.outputs.has_changes != '1'
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
