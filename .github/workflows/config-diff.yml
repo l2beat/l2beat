@@ -81,13 +81,29 @@ jobs:
           mkdir -p "$REPORT_DIR"
           cp /tmp/compare/diff.html "$REPORT_DIR/index.html"
 
-      - name: Deploy to github pages
+      - name: Save gh-pages files
+        if: steps.diff.outputs.has_changes != '1'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: pages-output
           single-commit: true
           clean: false
+
+      - name: Add gh-pages to worktree
+        if: steps.diff.outputs.has_changes != '1'
+        run: git worktree add gh-pages gh-pages
+
+      - name: Upload GitHub Pages artifact
+        if: steps.diff.outputs.has_changes != '1'
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: gh-pages
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: steps.diff.outputs.has_changes != '1'
+        uses: actions/deploy-pages@v2
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
