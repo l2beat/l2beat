@@ -1,8 +1,8 @@
+import { ProjectService } from '@l2beat/config'
 import crypto from 'crypto'
+import { expect } from 'earl'
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
-import { ProjectService } from '@l2beat/config'
-import { expect } from 'earl'
 
 describe('icons', () => {
   const icons = readdirSync(path.join(__dirname, `../../public/icons`), {
@@ -14,7 +14,10 @@ describe('icons', () => {
 
   it('every project has an icon', async () => {
     const ps = new ProjectService()
-    const projects = await ps.getProjects({})
+    const projects = await ps.getProjects({
+      // We handle ecosystem logos in a different way
+      whereNot: ['ecosystemConfig'],
+    })
     const uniqueSlugs = projects
       .map((x) => x.slug)
       .filter((x, i, a) => a.indexOf(x) === i) // unique
