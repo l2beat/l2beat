@@ -1,19 +1,10 @@
 'use client'
 import { UnixTime } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import { useMemo, useState } from 'react'
-import { ActivityCustomTooltip } from '~/components/chart/activity/activity-chart'
-import { Checkbox } from '~/components/core/checkbox'
-import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
-import { useIsClient } from '~/hooks/use-is-client'
-import { useLocalStorage } from '~/hooks/use-local-storage'
-import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
-import { api } from '~/trpc/react'
-import { Skeleton } from '~/components/core/skeleton'
+import { AreaChart } from 'recharts'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
-import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
-import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import { ActivityCustomTooltip } from '~/components/chart/activity/activity-chart'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -21,15 +12,25 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/chart'
-import { AreaChart } from 'recharts'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
-import { compact } from 'lodash'
-import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
+import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradient-def'
 import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/ethereum-gradient-def'
-import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradient-def'
+import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
+import { Checkbox } from '~/components/core/checkbox'
+import { Skeleton } from '~/components/core/skeleton'
+import { useIsClient } from '~/hooks/use-is-client'
+import { useLocalStorage } from '~/hooks/use-local-storage'
+import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
+import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
+import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import { api } from '~/trpc/react'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 
 export function EcosystemsActivityChart({
   name,
@@ -59,22 +60,24 @@ export function EcosystemsActivityChart({
     previewRecategorisation: false,
   })
 
-  const chartMeta = {
-    projects: {
-      label: name,
-      color: colors.primary,
-      indicatorType: {
-        shape: 'line',
+  const chartMeta = useMemo(() => {
+    return {
+      projects: {
+        label: name,
+        color: colors.primary,
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-    ethereum: {
-      label: 'Ethereum',
-      color: 'hsl(var(--chart-ethereum))',
-      indicatorType: {
-        shape: 'line',
+      ethereum: {
+        label: 'Ethereum',
+        color: 'hsl(var(--chart-ethereum))',
+        indicatorType: {
+          shape: 'line',
+        },
       },
-    },
-  } satisfies ChartMeta
+    } satisfies ChartMeta
+  }, [colors, name])
 
   const chartData = useMemo(
     () =>
@@ -88,28 +91,17 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
+  const latestUops = getLatestUops(chartData)
   const range = getChartRange(chartData)
 
   return (
     <div>
-      <div className="mb-3 flex items-center justify-between">
-        <div>
-          <div className="text-xl font-bold">Activity</div>
-          <div className="text-xs font-medium text-secondary">
-            <ChartTimeRange range={range} />
-          </div>
-        </div>
-        <div className="text-right">
-          <div className="text-xl font-bold">123 UOPS</div>
-          <div className="text-xs font-medium text-[--ecosystem-primary]">
-            65% L2 market share
-          </div>
-        </div>
-      </div>
+      <Header range={range} latestUops={latestUops} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
+        className="!h-44 !min-h-44"
         milestones={[]}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
@@ -172,4 +164,44 @@ export function EcosystemsActivityChart({
       </ChartControlsWrapper>
     </div>
   )
+}
+
+function Header({
+  range,
+  latestUops,
+}: { range: [number, number] | undefined; latestUops: number | undefined }) {
+  return (
+    <div className="mb-3 flex items-center justify-between">
+      <div>
+        <div className="text-xl font-bold">Activity</div>
+        <div className="text-xs font-medium text-secondary">
+          <EcosystemChartTimeRange range={range} />
+        </div>
+      </div>
+      <div className="text-right">
+        {latestUops !== undefined ? (
+          <div className="text-xl font-bold">
+            {formatActivityCount(latestUops)} UOPS
+          </div>
+        ) : (
+          <Skeleton className="my-[5px] ml-auto h-5 w-32" />
+        )}
+        <div className="text-xs font-medium text-[--ecosystem-primary]">
+          65% L2 market share
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function getLatestUops(chartData: { projects: number }[] | undefined) {
+  if (!chartData) {
+    return undefined
+  }
+  const last = chartData.at(-1)
+  if (!last) {
+    return undefined
+  }
+
+  return last.projects
 }

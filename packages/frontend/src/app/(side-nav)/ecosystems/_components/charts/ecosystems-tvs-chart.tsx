@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/tvs-chart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/tvs-chart'
@@ -14,7 +14,6 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/chart'
 import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
-import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradient-def'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
@@ -24,6 +23,7 @@ import type { EcosystemProjectEntry } from '~/server/features/ecosystems/get-eco
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 
 export function EcosystemsTvsChart({
   name,
@@ -59,43 +59,27 @@ export function EcosystemsTvsChart({
     },
   )
 
-  const chartMeta = {
-    value: {
-      color: color?.primary ?? 'hsl(var(--chart-pink))',
-      indicatorType: { shape: 'line' },
-      label: name,
-    },
-  } satisfies ChartMeta
+  const chartMeta = useMemo(() => {
+    return {
+      value: {
+        color: color?.primary ?? 'hsl(var(--chart-pink))',
+        indicatorType: { shape: 'line' },
+        label: name,
+      },
+    } satisfies ChartMeta
+  }, [color, name])
 
   const stats = getStats(chartData)
   const range = getChartRange(chartData)
 
   return (
     <div>
-      <div className="mb-3 flex items-center justify-between">
-        <div>
-          <div className="text-xl font-bold">TVS</div>
-          <div className="text-xs font-medium text-secondary">
-            <ChartTimeRange range={range} />
-          </div>
-        </div>
-        <div className="text-right">
-          {stats?.total ? (
-            <div className="text-xl font-bold">
-              {formatCurrency(stats?.total, unit)}
-            </div>
-          ) : (
-            <Skeleton className="my-[5px] ml-auto h-5 w-20" />
-          )}
-          <div className="text-xs font-medium text-[--ecosystem-primary]">
-            {stats?.domination ?? EM_DASH}% L2 market share
-          </div>
-        </div>
-      </div>
+      <Header range={range} stats={stats} unit={unit} />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
+        className="!h-44 !min-h-44"
         milestones={[]}
       >
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
@@ -128,6 +112,37 @@ export function EcosystemsTvsChart({
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
+    </div>
+  )
+}
+
+function Header({
+  range,
+  stats,
+  unit,
+}: {
+  range: [number, number] | undefined
+  stats: { total: number; domination: number } | undefined
+  unit: string
+}) {
+  return (
+    <div className="mb-3 flex items-center justify-between">
+      <div>
+        <div className="text-xl font-bold">TVS</div>
+        <EcosystemChartTimeRange range={range} />
+      </div>
+      <div className="text-right">
+        {stats?.total ? (
+          <div className="text-xl font-bold">
+            {formatCurrency(stats?.total, unit)}
+          </div>
+        ) : (
+          <Skeleton className="my-[5px] ml-auto h-5 w-20" />
+        )}
+        <div className="text-xs font-medium text-[--ecosystem-primary]">
+          {stats?.domination ?? EM_DASH}% L2 market share
+        </div>
+      </div>
     </div>
   )
 }
