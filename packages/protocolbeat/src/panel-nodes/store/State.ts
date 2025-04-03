@@ -44,6 +44,7 @@ export interface Node {
   readonly addressType: ApiAddressType
   readonly name: string
   readonly fields: Field[]
+  readonly hiddenFields: string[]
   readonly box: Box
   readonly color: number
   readonly hueShift: number
