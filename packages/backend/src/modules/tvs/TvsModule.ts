@@ -177,7 +177,7 @@ export function initTvsModule(
       indexerService,
       configurations: tokensWithRanges.map((t) => {
         return {
-          id: TokenValueIndexer.idToConfigurationId(t.id),
+          id: TokenValueIndexer.idToConfigurationId(t),
           minHeight: t.sinceTimestamp,
           maxHeight: t.untilTimestamp ?? null,
           properties: t,
@@ -209,7 +209,7 @@ export function initTvsModule(
       [...tokensWithRanges]
         .sort((a, b) => a.id.localeCompare(b.id))
         .flatMap((t) => [
-          t.id,
+          TokenValueIndexer.idToConfigurationId(t),
           t.sinceTimestamp.toString(),
           t.untilTimestamp?.toString() ?? 'undefined',
         ]),
