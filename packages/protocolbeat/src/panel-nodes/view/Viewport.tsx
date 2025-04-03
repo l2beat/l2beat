@@ -30,7 +30,6 @@ export function Viewport() {
     (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
 
   useEffect(() => {
-    // Set up all event listeners
     const target = containerRef.current
     target?.addEventListener('wheel', mouseControls.onWheel, { passive: false })
     target?.addEventListener('mousedown', mouseControls.onMouseDown)
