@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L1BridgeRegistry",
+  "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
+  "fields": {
+    "multisig": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can remove and add validators, update their voting power, and change the required threshold."
+        }
+      ]
+    }
+  },
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreInWatchMode": []
+}
