@@ -125,6 +125,8 @@ const toClipboard = async (
             let abi = e.value
             if (e.signature) {
               abi += ` //${e.signature}`
+            } else if (e.value.startsWith('event') && e.topic) {
+              abi += ` //${e.topic}`
             }
             abis.push(abi)
           }
