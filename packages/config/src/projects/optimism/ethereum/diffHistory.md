@@ -1,3 +1,539 @@
+Generated with discovered.json: 0xbf2a57d64648111557f93285695a6139f5aed65b
+
+# Diff at Thu, 03 Apr 2025 07:05:20 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@390dc72872cb4dce4017ada9ab709f2c51c936e3 block: 21829671
+- current block number: 22186645
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AnchorStateRegistry (0x18DAc71c228D1C32c99489B7323d441E1175e443)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH_PermissionedGames (0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      template:
+-        "opstack/SystemConfig"
+      sourceHashes.1:
+-        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
++        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f"
+      sourceHashes.0:
+-        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f"
++        "0x6e293d82eb36a83fb5d8b06268cd4fbf46027b87eea77fcc68f78e4b010a3774"
+      description:
+-        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      issuedPermissions.1:
+-        {"permission":"sequence","to":"0x6887246668a3b87F54DeB3b94Ba47a6f63F32985","via":[]}
+      issuedPermissions.0.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      issuedPermissions.0.via.0:
++        {"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}
+      values.$implementation:
+-        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "0x760C48C62A85045A6B69f07F4a9f22868659CbCc"
+      values.$pastUpgrades.9:
++        ["2025-01-24T14:41:35.000Z","0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.8.1:
+-        ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
++        "0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350"
+      values.$pastUpgrades.8.0:
+-        "0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350"
++        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+      values.$pastUpgrades.7.2:
+-        "2025-01-24T14:41:35.000Z"
++        ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
+      values.$pastUpgrades.7.1:
+-        "0x86da7386a26978c3db89e97c1f4feee613a8a0c07bbe4640624b05276f49c350"
++        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
+      values.$pastUpgrades.7.0:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "2024-04-11T20:49:59.000Z"
+      values.$pastUpgrades.6.2:
+-        ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
++        "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29"
+      values.$pastUpgrades.6.1:
+-        "0x4758bd62359bc69d7e8a0faaf5308d826379c23258d689a7430d5c0ad0361ad2"
++        "2025-04-02T16:50:23.000Z"
+      values.$pastUpgrades.6.0:
+-        "2024-04-11T20:49:59.000Z"
++        ["0x760C48C62A85045A6B69f07F4a9f22868659CbCc"]
+      values.$upgradeCount:
+-        9
++        10
+      values.gasPayingToken:
+-        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
+-        "Ether"
+      values.gasPayingTokenSymbol:
+-        "ETH"
+      values.isCustomGasToken:
+-        false
+      values.version:
+-        "2.3.0"
++        "2.4.0"
+      values.getAddresses:
++        {"l1CrossDomainMessenger":"0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1","l1ERC721Bridge":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","l1StandardBridge":"0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1","disputeGameFactory":"0xe5965Ab5962eDc7477C8520243A95517CD252fA9","optimismPortal":"0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","optimismMintableERC20Factory":"0x75505a97BD334E7BD3C476893285569C4136Fa0F"}
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: None
+      template:
+-        "opstack/L1CrossDomainMessenger"
+      sourceHashes.1:
+-        "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7"
++        "0xfaa50769db48b1d2c04c06a8a0a4771b87b3c0ff20a508115bfdb2b576fdb454"
+      sourceHashes.0:
+-        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
++        "0x6e4b297b822bdda2bb8bbf4dde360ee51379af5a0de55c0d726a2d7b68791bf7"
+      description:
+-        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+      values.$implementation:
+-        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
++        "0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"
+      values.$pastUpgrades.10:
++        ["2023-06-06T18:24:11.000Z","0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",["0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"]]
+      values.$pastUpgrades.9.2:
+-        "2023-06-06T18:24:11.000Z"
++        "0x2625aa2013fd1a650fb0264d2746be597e12f846baa48a68fe14539c200ed6dc"
+      values.$pastUpgrades.9.1:
+-        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
++        "2021-11-11T17:37:56.000Z"
+      values.$pastUpgrades.9.0.0:
+-        "0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.8.2:
+-        "0x2625aa2013fd1a650fb0264d2746be597e12f846baa48a68fe14539c200ed6dc"
++        "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29"
+      values.$pastUpgrades.8.1:
+-        "2021-11-11T17:37:56.000Z"
++        ["0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"]
+      values.$pastUpgrades.8.0:
+-        ["0x0000000000000000000000000000000000000000"]
++        "2025-04-02T16:50:23.000Z"
+      values.$upgradeCount:
+-        10
++        11
+      values.version:
+-        "2.3.0"
++        "2.5.0"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x27B81db41F586016694632193b99E45b1a27B8f8)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH_PermissionlessGames (0x323dFC63c9B83CB83f40325AaB74b245937cbdF0)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.10:
+-        {"permission":"upgrade","from":"0x18DAc71c228D1C32c99489B7323d441E1175e443"}
+      directlyReceivedPermissions.9:
+-        {"permission":"upgrade","from":"0x323dFC63c9B83CB83f40325AaB74b245937cbdF0"}
+      directlyReceivedPermissions.8:
+-        {"permission":"upgrade","from":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"}
+      directlyReceivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.7.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      directlyReceivedPermissions.7.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.6.from:
+-        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.5.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.4.from:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      directlyReceivedPermissions.3.from:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      directlyReceivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"0x18DAc71c228D1C32c99489B7323d441E1175e443","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"0x323dFC63c9B83CB83f40325AaB74b245937cbdF0","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"0x5a7749f83b81B301cAb5f48EB8516B986DAef23D","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.7.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      receivedPermissions.7.description:
+-        "set and change address mappings."
+      receivedPermissions.6.from:
+-        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.5.description:
++        "set and change address mappings."
+      receivedPermissions.4.from:
+-        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
++        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"
+      receivedPermissions.3.from:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "0x75505a97BD334E7BD3C476893285569C4136Fa0F"
+      receivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5a7749f83b81B301cAb5f48EB8516B986DAef23D) {
+    +++ description: None
+      template:
+-        "opstack/L1ERC721Bridge"
+      sourceHashes.1:
+-        "0x482ec6e91304ac39a3fb4505634427bddfddee23b8e93a4f7f995ca5083ae3c3"
++        "0x9de28f19e0d1200bf0afda5ab90c9d2dffa44a775e71cfe9232ee1808338996c"
+      description:
+-        "Used to bridge ERC-721 tokens from host chain to this chain."
+      values.$implementation:
+-        "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
++        "0x276d3730f219f7ec22274f7263180b8452B46d47"
+      values.$pastUpgrades.6:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x276d3730f219f7ec22274f7263180b8452B46d47"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.version:
+-        "2.1.0"
++        "2.3.1"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract undefined (0x6887246668a3b87F54DeB3b94Ba47a6f63F32985) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290"}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x75505a97BD334E7BD3C476893285569C4136Fa0F) {
+    +++ description: None
+      template:
+-        "opstack/OptimismMintableERC20Factory"
+      sourceHashes.0:
+-        "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
++        "0x9650b4bba6299e410f01a369a95a2c57e1c3ca35f0d80c13f4f59fc468f370e5"
+      description:
+-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+      values.$implementation:
+-        "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
++        "0x5493f4677A186f64805fe7317D6993ba4863988F"
+      values.$pastUpgrades.5:
++        ["2023-06-06T18:24:11.000Z","0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",["0xaE849EFA4BcFc419593420e14707996936E365E2"]]
+      values.$pastUpgrades.4.2:
+-        "2023-06-06T18:24:11.000Z"
++        "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29"
+      values.$pastUpgrades.4.1:
+-        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
++        "2025-04-02T16:50:23.000Z"
+      values.$pastUpgrades.4.0.0:
+-        "0xaE849EFA4BcFc419593420e14707996936E365E2"
++        "0x5493f4677A186f64805fe7317D6993ba4863988F"
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.9.0"
++        "1.10.1"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]},{"permission":"interact","from":"0x229047fed2591dbec1eF1118d64F7aF3dB9EB290","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x91a661891248d8C4916FB4a1508492a5e2CBcb87)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      template:
+-        "opstack/SuperchainConfig"
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      description:
+-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      issuedPermissions.3:
+-        {"permission":"guard","to":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      issuedPermissions.1:
+-        {"permission":"guard","to":"0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A","via":[{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"},{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      issuedPermissions.0.via.2:
+-        {"address":"0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"}
+      issuedPermissions.0.via.1:
+-        {"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}
+      issuedPermissions.0.via.0.address:
+-        "0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      issuedPermissions.0.via.0.condition:
+-        "the number of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+      values.$implementation:
+-        "0x53c165169401764778F780a69701385eb0FF19B7"
++        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+      category:
+-        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1) {
+    +++ description: None
+      template:
+-        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
++        "0x4a2d83507f25be218f504b76815e4494138af88734cc54d34666c631aea88af5"
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+      issuedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      values.$implementation:
+-        "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
++        "0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6"
+      values.version:
+-        "2.1.0"
++        "2.2.2"
+      category:
+-        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"not revoked by the Security Council"}]}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      sourceHashes.1:
+-        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f"
++        "0x67ee16b5b6c32cdcc862bea390e45017908e6945cfaa01d3ef75dc9de7c9d946"
+      sourceHashes.0:
+-        "0x41be46bdb67af1b7af90e1bd70a1fcd31a3352282beb83b846a5189675c37ac1"
++        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f"
+      values.$implementation:
+-        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
++        "0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"
+      values.$pastUpgrades.7:
++        ["2024-06-10T16:42:59.000Z","0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61",["0xe2F826324b2faf99E513D16D266c3F80aE87832B"]]
+      values.$pastUpgrades.6.2.0:
+-        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
++        "0x28a55488fef40005309e2DA0040DbE9D300a64AB"
+      values.$pastUpgrades.6.1:
+-        "0xbe810ed6e1e827930bd46cde42c4883662ddb6d244a26af2f0409cc2782bee61"
++        "2023-06-06T18:24:11.000Z"
+      values.$pastUpgrades.6.0:
+-        "2024-06-10T16:42:59.000Z"
++        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
+      values.$pastUpgrades.5.2:
+-        ["0x28a55488fef40005309e2DA0040DbE9D300a64AB"]
++        "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29"
+      values.$pastUpgrades.5.1:
+-        "2023-06-06T18:24:11.000Z"
++        "2025-04-02T16:50:23.000Z"
+      values.$pastUpgrades.5.0:
+-        "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268"
++        ["0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"]
+      values.$upgradeCount:
+-        7
++        8
+      values.version:
+-        "3.10.0"
++        "3.13.0"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"0x95703e0982140D16f8ebA6d158FccEde42f04a4C","via":[{"address":"0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      template:
+-        "opstack/DisputeGameFactory"
+      sourceHashes.1:
+-        "0x7f307d6191215a72b6c24c01b3c2fc87c84f7fb346790132e58736caa2d1dd14"
++        "0x85ca17941ef36ac6b28a4f8f89803d0d41ef419c47586dcd3acdb47ee9617285"
+      description:
+-        "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them."
+      values.$implementation:
+-        "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
++        "0x4bbA758F006Ef09402eF31724203F316ab74e4a0"
+      values.$pastUpgrades.1:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4bbA758F006Ef09402eF31724203F316ab74e4a0"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.gameImpls.4:
+-        "0x27B81db41F586016694632193b99E45b1a27B8f8"
++        "0xbA94955CA3422fC57f9D982a0BaD2a9c88e2a9D0"
+      values.gameImpls.3:
+-        "0x91a661891248d8C4916FB4a1508492a5e2CBcb87"
++        "0xd113ad136a0dF1c7FfB7F1606Be1c778bCfE2f3b"
+      values.version:
+-        "1.0.0"
++        "1.0.1"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xbA94955CA3422fC57f9D982a0BaD2a9c88e2a9D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xd113ad136a0dF1c7FfB7F1606Be1c778bCfE2f3b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry.sol => /dev/null           |  448 ---
+ .../AnchorStateRegistry/Proxy.p.sol => /dev/null   |  200 -
+ .../DelayedWETH.sol => /dev/null                   |  651 ----
+ .../Proxy.p.sol => /dev/null                       |  200 -
+ .../DelayedWETH.sol => /dev/null                   |  651 ----
+ .../Proxy.p.sol => /dev/null                       |  200 -
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  240 +-
+ .../FaultDisputeGame.sol => /dev/null              | 3921 -------------------
+ .../L1CrossDomainMessenger.sol                     |  400 +-
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  413 +-
+ .../L1StandardBridge/L1StandardBridge.sol          |  503 ++-
+ .../ethereum/.flat@21829671/MIPS.sol => /dev/null  | 1717 ---------
+ .../OptimismMintableERC20Factory.sol               |   30 +-
+ .../OptimismPortal/OptimismPortal2.sol             |  439 ++-
+ .../PermissionedDisputeGame.sol => /dev/null       | 4036 --------------------
+ .../.flat@21829671/PreimageOracle.sol => /dev/null | 1353 -------
+ .../SuperchainConfig/SuperchainConfig.sol          |    8 +-
+ .../SystemConfig/SystemConfig.sol                  | 1414 +------
+ 18 files changed, 1301 insertions(+), 15523 deletions(-)
+```
+
 Generated with discovered.json: 0x87539add223f50b5a7c6a7d779aa1008d664cae3
 
 # Diff at Thu, 27 Mar 2025 11:14:47 GMT:
