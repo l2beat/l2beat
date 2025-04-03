@@ -15,10 +15,9 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      - name: Checkout code (main)
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
@@ -31,6 +30,12 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
+
+      - name: Find merge-base between HEAD and main
+        run: echo "MERGE_BASE_SHA=$(git merge-base HEAD origin/main)" >> $GITHUB_ENV
+      
+      - name: Checkout code (main)
+        run: git checkout $MERGE_BASE_SHA
 
       - name: Install dependencies (main)
         run: pnpm install
