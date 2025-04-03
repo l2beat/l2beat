@@ -68,7 +68,7 @@ export const lightlink: ScalingProject = {
     name: 'LightLink',
     slug: 'lightlink',
     description:
-      'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
+      'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions.',
     category: 'Optimium',
     purposes: ['Universal'],
     links: {
