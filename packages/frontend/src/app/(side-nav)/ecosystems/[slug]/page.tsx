@@ -6,6 +6,7 @@ import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
+import { EcosystemTvsByStage } from '../_components/widgets/ecosystem-tvs-by-stage'
 
 interface Props {
   params: Promise<{
@@ -52,9 +53,8 @@ export default async function Page({ params }: Props) {
               allScalingProjectsUops={ecosystem.allScalingProjects.uops}
             />
           </div>
-          <div className="grid grid-cols-3 gap-[--spacing]">
-            <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
-            <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
+          <div className="grid grid-cols-2 gap-[--spacing]">
+            <EcosystemTvsByStage tvsByStage={ecosystem.tvsByStage} />
             <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
           </div>
           <EcosystemsProjectsChart

@@ -3,6 +3,7 @@ import type {
   Project,
   ProjectEcosystemConfig,
   ProjectEcosystemInfo,
+  Stage,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
@@ -19,6 +20,7 @@ import {
   type ScalingSummaryEntry,
   getScalingSummaryEntry,
 } from '../scaling/summary/get-scaling-summary-entries'
+import type { SevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 
@@ -38,6 +40,7 @@ export interface EcosystemEntry {
     uops: number
     count: number
   }
+  tvsByStage: Record<Stage, number>
   daLayersUsed: Record<string, number>
   links: ProjectLink[]
   milestones: Milestone[]
@@ -97,7 +100,8 @@ export async function getEcosystemEntry(
       acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
   )
-  console.log(allScalingProjectsUops)
+
+  const tvsByStage = getTvsByStage(ecosystemProjects, tvs)
 
   return {
     ...ecosystem,
@@ -112,6 +116,7 @@ export async function getEcosystemEntry(
       uops: allScalingProjectsUops,
       count: allScalingProjects.length,
     },
+    tvsByStage,
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projects: ecosystemProjects
       .map((project) => ({
@@ -126,6 +131,36 @@ export async function getEcosystemEntry(
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
   }
+}
+
+function getTvsByStage(
+  ecosystemProjects: Project<never, 'scalingStage'>[],
+  tvs: SevenDayTvsBreakdown,
+) {
+  return ecosystemProjects.reduce(
+    (acc, curr) => {
+      const projectTvs = tvs.projects[curr.id.toString()]
+      const stage = curr.scalingStage
+      if (
+        !stage ||
+        stage.stage === 'NotApplicable' ||
+        stage.stage === 'UnderReview'
+      ) {
+        return acc
+      }
+
+      const stageTvs = acc[stage.stage]
+      return {
+        ...acc,
+        [stage.stage]: stageTvs + (projectTvs?.breakdown.total ?? 0),
+      }
+    },
+    {
+      'Stage 0': 0,
+      'Stage 1': 0,
+      'Stage 2': 0,
+    },
+  )
 }
 
 function getDaLayersUsed(ecosystemProjects: Project<'scalingInfo'>[]) {
