@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getEcosystemProjectEntry } from '~/server/features/ecosystems/get-ecosystem-project-entry'
-import { EcosystemsStackedTvsChart } from '../_components/charts/ecosystems-stacked-tvs-chart'
+import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
+import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 
@@ -40,12 +41,19 @@ export default async function Page({ params }: Props) {
         <main className="mt-3 space-y-[--spacing]">
           <div className="grid grid-cols-2 gap-[--spacing]">
             <PrimaryCard>
-              <EcosystemsStackedTvsChart
+              <EcosystemsTvsChart
+                name={ecosystem.name}
                 entries={ecosystem.projects}
                 color={ecosystem.colors}
               />
             </PrimaryCard>
-            <PrimaryCard></PrimaryCard>
+            <PrimaryCard>
+              <EcosystemsActivityChart
+                name={ecosystem.name}
+                entries={ecosystem.projects}
+                colors={ecosystem.colors}
+              />
+            </PrimaryCard>
           </div>
           <PrimaryCard>
             <EcosystemProjectsTable entries={ecosystem.projects} />
