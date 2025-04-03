@@ -1,8 +1,8 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 21635855,
-  "configHash": "0x2981bd49bd989f02d4cc483850d9bf0adaa8becb95a3be804a5594e1ec043148",
+  "blockNumber": 22187454,
+  "configHash": "0xe5aa759b2a5131877f318ee3ed6f9f8a28b37d03fd2c53ba146af45528464c5a",
   "entries": [
     {
       "name": "Vector",
@@ -80,7 +80,7 @@
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
         "latestAuthoritySetId": 304,
-        "latestBlock": 1179840,
+        "latestBlock": 1179120,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
