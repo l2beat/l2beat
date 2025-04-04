@@ -113,6 +113,12 @@
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": [{ "address": "0xf758e2272FCe1330d8a1De38D5128A47B4041752" }]
+        },
+        {
           "permission": "upgrade",
           "to": "0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
           "via": [
@@ -425,12 +431,10 @@
       "name": "MIPS",
       "address": "0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
       "type": "Contract",
-      "template": "opstack/MIPS",
       "sourceHashes": [
         "0xaac82ba0947c8928e2d00f2d5343a95f7e494fe1cb792814cc4875a689952f15"
       ],
       "proxyType": "immutable",
-      "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
       "sinceTimestamp": 1728285587,
       "sinceBlock": 20912145,
       "values": {
@@ -768,6 +772,12 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": [{ "address": "0xf758e2272FCe1330d8a1De38D5128A47B4041752" }]
+        },
+        {
+          "permission": "interact",
           "from": "0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
           "description": "set and change address mappings.",
           "via": [
@@ -1023,6 +1033,11 @@
         {
           "permission": "act",
           "from": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
+        },
+        {
+          "permission": "interact",
+          "from": "0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "description": "can pull funds from the contract in case of emergency."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1851,14 +1866,13 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
-    "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
+    "opstack/DelayedWETH": "0x698d758bb7eabad7aba68b8a9da310c6f6cf2176978d24bf5e136e673bf28921",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
     "opstack/FaultDisputeGame": "0xc3420a1d7f361a33032b17c841737647c20c55c5387c7da1049264a131cd6d3f",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
     "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
     "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
     "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",
-    "opstack/MIPS": "0x35b078559035a7f0d1a0b572ee90e86975d972a54e54e063ec43689711b90b24",
     "opstack/OptimismMintableERC20Factory": "0xd3169a0737182f43695ebece6a1d938818fd109666348266ac11025c63621ed0",
     "opstack/OptimismPortal": "0x86dc78550214d6e43fda82cc0465fa27db3db49de0104c52918b711d004f7665",
     "opstack/PermissionedDisputeGame": "0x8cd96f8de5cf042b7416ad54aebeee74fa507bac86b2c612ffdb15f13588a9d2",

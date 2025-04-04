@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x939e5394654ce87b41cc2c3c198a77d7942bc576
+Generated with discovered.json: 0x1a358b4ad16998efba9a90feabfbe6ca90f1db52
 
-# Diff at Fri, 04 Apr 2025 11:13:51 GMT:
+# Diff at Fri, 04 Apr 2025 11:53:00 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22195184
@@ -62,7 +62,7 @@ Standard op chain.
 ```diff
 +   Status: CREATED
     contract MIPS (0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6)
-    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+    +++ description: None
 ```
 
 ```diff
