@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @7a082c5a</title>
+  <title>Diff @901dd946</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,7 +105,7 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/d370dc41f906195b32064913cc69fe70f96b3c7c"><code class="removed">d370dc41</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/d370dc41f906195b32064913cc69fe70f96b3c7c"><code class="added">7a082c5a</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/d370dc41f906195b32064913cc69fe70f96b3c7c"><code class="added">901dd946</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
   <h2>
@@ -911,7 +911,7 @@ ${r?'Expression: "'+r+`"
     
     
     <span>settlus</span>
-    <code><span class="added">+1280</span> <span class="removed">-39</span></code>
+    <code><span class="added">+1281</span> <span class="removed">-40</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
@@ -942,7 +942,7 @@ ${r?'Expression: "'+r+`"
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>display</span>
-    <code><span class="added">+21</span> <span class="removed">-0</span></code>
+    <code><span class="added">+22</span> <span class="removed">-1</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "badges": [
@@ -996,19 +996,20 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">      "description": "This project was deployed via the rollup-as-a-service provider Alchemy",
 </span><span class="line ctx">      "action": {
 </span><span class="line ctx">        "type": "scalingFilter",
-</span><span class="line full indicator">        "id": "raas",
-</span><span class="line full">        "value": "Alchemy"
-</span><span class="line full">      }
-</span><span class="line full">    }
-</span><span class="line full">  ],
-</span><span class="line full">  "description": "Settlus is an OP stack L2 Settlus designed to provide transparent settlement system for the creator economy.",
-</span><span class="line full">  "links": {
-</span><span class="line full">    "websites": [
-</span><span class="line full">      "https://settlus.org/"
-</span><span class="line full">    ],
-</span><span class="line full">    "apps": [
-</span><span class="line full">      "https://settlus-mainnet.bridge.alchemy.com/"
-</span><span class="line full">    ],
+</span><span class="line ctx">        "id": "raas",
+</span><span class="line ctx">        "value": "Alchemy"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    }
+</span><span class="line ctx">  ],
+</span><span class="line removed">  "description": "Settlus is an OP stack L2 Settlus designed to provide transparent settlement system for the creator economy.",
+</span><span class="line added">  "description": "Settlus is an OP stack L2 designed to provide transparent settlement system for the creator economy.",
+</span><span class="line ctx">  "links": {
+</span><span class="line ctx">    "websites": [
+</span><span class="line ctx">      "https://settlus.org/"
+</span><span class="line ctx">    ],
+</span><span class="line ctx">    "apps": [
+</span><span class="line ctx">      "https://settlus-mainnet.bridge.alchemy.com/"
+</span><span class="line full indicator">    ],
 </span><span class="line full">    "explorers": [
 </span><span class="line full">      "https://mainnet.settlus.network/"
 </span><span class="line full">    ],
