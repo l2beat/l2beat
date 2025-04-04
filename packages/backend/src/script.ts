@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, formatLargeNumber } from '@l2beat/shared-pure'
 
 async function main() {
   const env = getEnv()
@@ -15,29 +15,28 @@ async function main() {
     keepAlive: false,
   })
 
-  const timestamp = UnixTime.fromDate(new Date('2025-04-04 07:00:00.000000'))
+  const timestamp = UnixTime.fromDate(new Date('2025-04-04T07:00:00Z'))
 
   const records = await db.tvsProjectValue.getByTimestampAndType(
     timestamp,
     'SUMMARY',
   )
 
-  console.log(records.length)
-
   const ps = new ProjectService()
 
-  const scalingProjects = ps.getProjects({
+  const scalingProjects = await ps.getProjects({
     select: ['tvsConfig', 'isScaling'],
     whereNot: ['isArchived'],
   })
 
-  console.log((await scalingProjects).length)
+  const ids = new Set(scalingProjects.map((p) => p.id.toString()))
 
-  function newFunction(): number {
-    return UnixTime.fromDate(new Date('2025-04-04 07:00:00.000000'))
-  }
+  const summaryTvs = records
+    .filter((r) => ids.has(r.project))
+    .reduce((acc, curr) => (acc += curr.value), 0)
 
-  // add logic here
+  console.log(`TVS RAW: ${summaryTvs}`)
+  console.log(`TVS FORMATTED: $ ${formatLargeNumber(summaryTvs)}`)
 }
 
 main().catch((e: unknown) => {
