@@ -17,7 +17,7 @@ export const superchain: BaseProject = {
   },
   ecosystemConfig: {
     colors: {
-      primary: '#F00',
+      primary: '#F00000',
       secondary: '#F93E3F',
     },
     ecosystemToken: {

@@ -41,6 +41,7 @@ export interface EcosystemEntry {
     count: number
   }
   tvsByStage: Record<Stage, number>
+  tvsByTokenType: TvsByTokenType
   daLayersUsed: Record<string, number>
   links: ProjectLink[]
   milestones: Milestone[]
@@ -101,8 +102,6 @@ export async function getEcosystemEntry(
     0,
   )
 
-  const tvsByStage = getTvsByStage(ecosystemProjects, tvs)
-
   return {
     ...ecosystem,
     colors: ecosystem.ecosystemConfig.colors,
@@ -116,7 +115,8 @@ export async function getEcosystemEntry(
       uops: allScalingProjectsUops,
       count: allScalingProjects.length,
     },
-    tvsByStage,
+    tvsByStage: getTvsByStage(ecosystemProjects, tvs),
+    tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projects: ecosystemProjects
       .map((project) => ({
@@ -131,6 +131,39 @@ export async function getEcosystemEntry(
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
   }
+}
+
+interface TvsByTokenType {
+  ether: number
+  stablecoins: number
+  other: number
+}
+
+function getTvsByTokenType(
+  ecosystemProjects: Project[],
+  tvs: SevenDayTvsBreakdown,
+): TvsByTokenType {
+  return ecosystemProjects.reduce(
+    (acc, curr) => {
+      const projectTvs = tvs.projects[curr.id.toString()]
+
+      const other =
+        (projectTvs?.breakdown.total ?? 0) -
+        (projectTvs?.breakdown.ether ?? 0) -
+        (projectTvs?.breakdown.stablecoin ?? 0)
+
+      return {
+        ether: acc.ether + (projectTvs?.breakdown.ether ?? 0),
+        stablecoins: acc.stablecoins + (projectTvs?.breakdown.stablecoin ?? 0),
+        other: acc.other + other,
+      }
+    },
+    {
+      ether: 0,
+      stablecoins: 0,
+      other: 0,
+    },
+  )
 }
 
 function getTvsByStage(
