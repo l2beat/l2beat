@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x864231a8c3398782ba012a823a5019de345e42f9
+
+# Diff at Fri, 04 Apr 2025 09:34:38 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a21404a14e50e9f638ddf1e6cb431ede2d3cc07a block: 28449617
+- current block number: 28449617
+
+## Description
+
+Renamed SP1VerifierGatewayMultisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 28449617 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "SP1VerifierGatewayMultisig"
+    }
+```
+
 Generated with discovered.json: 0xe6b6d1fb25319c5ca8c0a9eea5285a2c2395a206
 
 # Diff at Thu, 03 Apr 2025 14:55:24 GMT:

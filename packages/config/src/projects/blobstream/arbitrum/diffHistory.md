@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xf0515fe67b5f292c7457195170547c829378e992
+
+# Diff at Fri, 04 Apr 2025 09:34:37 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a21404a14e50e9f638ddf1e6cb431ede2d3cc07a block: 322514614
+- current block number: 322514614
+
+## Description
+
+Renamed SP1VerifierGatewayMultisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 322514614 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "SP1VerifierGatewayMultisig"
+    }
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      unverified:
+-        true
+      values.VERIFIER_HASH:
++        "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d"
+      values.VERSION:
++        "v4.0.0-rc.3"
+      template:
++        "succinct/SP1Verifier"
+      sourceHashes:
++        ["0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"]
+      description:
++        "SP1Verifier is a contract used to verify proofs given public values and verification key."
+    }
+```
+
 Generated with discovered.json: 0x323c9fa17f2ae0e29e0318d475c6ced6c10996b5
 
 # Diff at Thu, 03 Apr 2025 14:59:46 GMT:
