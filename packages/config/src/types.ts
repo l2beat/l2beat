@@ -513,6 +513,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
+    | 'Pessimistic Proofs'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]

@@ -1,8 +1,6 @@
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   ESCROW,
-  NEW_CRYPTOGRAPHY,
-  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -154,38 +152,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
   ],
-  nonTemplateTechnology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-      references: [
-        {
-          title:
-            'PolygonZkEVM.sol - Etherscan source code, verifyBatches function',
-          url: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-        },
-      ],
-    },
-    dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
-      references: [
-        {
-          title:
-            'PolygonZkEVM.sol - Etherscan source code, sequenceBatches function',
-          url: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-        },
-      ],
-    },
-  },
   isForcedBatchDisallowed,
-  stateDerivation: {
-    nodeSoftware:
-      'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
-    compressionScheme: 'No compression scheme yet.',
-    genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the [`_legacyBatchNumToStateRoot`](https://evm.storage/eth/19489007/0x5132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2/_legacyBatchNumToStateRoot#map) variable of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
-    dataFormat:
-      'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
-  },
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -198,7 +165,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
       {
         title: 'ZK Circuits',
         description:
-          'Polygon zkEVM circuits are built from PIL and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
+          'Polygon zkEVM circuits are built from PIL (polynomial identity language) and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
         risks: [
           {
             category: 'Funds can be lost if',
@@ -210,6 +177,11 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         title: 'Verification Keys Generation',
         description:
           'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this guide](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/verifyMainnetDeployment/verifyMainnetProofVerifier.md). The system requires a trusted setup.',
+      },
+      {
+        title: 'Pessimistic Proofs',
+        description:
+          'The pessimistic proofs that are used to prove correct accounting in the shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
       },
     ],
     proofVerification: {
