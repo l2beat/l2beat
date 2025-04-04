@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "r0ar",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": ["0x2c6af306f8d0cd6d9e76d43b2dc9a4e60a7f446e"]
+}
