@@ -46,6 +46,17 @@ describe('getProjects', () => {
     }
   })
 
+  it('every project has statuses and display', () => {
+    for (const project of projects) {
+      if (project.statuses === undefined) {
+        throw new Error(`${project.id}: missing statuses`)
+      }
+      if (project.display === undefined) {
+        throw new Error(`${project.id}: missing display`)
+      }
+    }
+  })
+
   it('every project can be serialized', () => {
     function findNonSerializable(
       value: unknown,
