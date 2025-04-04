@@ -45,6 +45,8 @@ function diffToHtml(diff: ProjectDiff, _index: number, diffs: ProjectDiff[]) {
   return `<li x-data="{ open: ${initialOpen} }">
   <h2>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    ${diff.type === 'removed' ? `<code class="removed">[REMOVED]</code>` : ''}
+    ${diff.type === 'added' ? `<code class="added">[ADDED]</code>` : ''}
     <span>${diff.id}</span>
     <code><span class="added">+${diff.added}</span> <span class="removed">-${diff.removed}</span></code>
   </h2>
