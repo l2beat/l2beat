@@ -5,6 +5,18 @@ import type {
   ValueFormula,
 } from '@l2beat/config'
 
+/**
+ * Function used to filter out configurations that end before given timestamp.
+ *
+ * @param tokens
+ * "raw" tvs tokens configuration
+ * @param timestamp
+ * up until which point to filter out configurations
+ * @param includeStartingInFuture
+ * should the script also return configurations with sinceTimestamp after given timestamp
+ * @returns
+ */
+
 export function getEffectiveConfig(
   tokens: TvsToken[],
   timestamp: number,
