@@ -38,6 +38,9 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       return undefined
     }
 
+    const lastDataPosted = data.chart.findLast((d) => d[13])
+    const allDataPostedSynced = data.chart.at(-1)?.[0] === lastDataPosted?.[0]
+
     return data.chart.map(
       ([
         timestamp,
@@ -78,6 +81,12 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
                 ? overheadEth
                 : overheadGas,
           posted: posted ?? null,
+          notSyncedPosted:
+            !allDataPostedSynced &&
+            lastDataPosted &&
+            timestamp >= lastDataPosted[0]
+              ? lastDataPosted[13]
+              : null,
         }
       },
     )
