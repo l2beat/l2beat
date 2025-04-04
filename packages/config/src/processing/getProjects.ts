@@ -36,7 +36,6 @@ import { getInfrastructure } from './utils/getInfrastructure'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
-import { isUnderReview } from './utils/isUnderReview'
 
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
@@ -72,7 +71,7 @@ function layer2Or3ToProject(
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
-      isUnderReview: isUnderReview(p),
+      isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p, daBridges),
       // countdowns
       otherMigration:
@@ -212,7 +211,7 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     statuses: {
       yellowWarning: p.display.warning,
       redWarning: undefined,
-      isUnderReview: isUnderReview(p),
+      isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p),
     },
     display: {
