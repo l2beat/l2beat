@@ -47,7 +47,8 @@
         "token": "0x420000000000000000000000000000000000000A",
         "treasuryFee": 5282956,
         "tvl": "129646152000000000000"
-      }
+      },
+      "derivedName": "StargatePool"
     },
     {
       "name": "StargatePoolMigratable",
@@ -94,7 +95,8 @@
         "token": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
         "treasuryFee": 23237486873,
         "tvl": 332651386362
-      }
+      },
+      "derivedName": "StargatePoolMigratable"
     },
     {
       "name": "TokenMessaging",
@@ -143,7 +145,8 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      }
+      },
+      "derivedName": "TokenMessaging"
     },
     {
       "name": "StargatePool",
@@ -188,7 +191,8 @@
         "token": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "treasuryFee": 0,
         "tvl": "9354386000000000000"
-      }
+      },
+      "derivedName": "StargatePool"
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",

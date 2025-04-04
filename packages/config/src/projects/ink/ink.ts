@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -37,6 +37,11 @@ export const ink: ScalingProject = opStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  },
   finality: {
     type: 'OPStack',
     minTimestamp: UnixTime(1733502012),
@@ -49,14 +54,14 @@ export const ink: ScalingProject = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('INK'),
   isNodeAvailable: true,
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
 
   stage: getStage(

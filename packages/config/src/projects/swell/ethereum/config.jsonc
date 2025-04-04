@@ -11,7 +11,23 @@
     "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": {
       // permissionedGamesTotal from the template ignored as they are using permissioned games by default
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
-      "extends": "opstack/DisputeGameFactory"
+      "fields": {
+        // manual override while permissioned game is used
+        "proposer": {
+          "permissions": [
+            {
+              "type": "propose"
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "challenge"
+            }
+          ]
+        }
+      }
     }
   }
 }

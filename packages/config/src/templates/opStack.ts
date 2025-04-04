@@ -41,6 +41,7 @@ import type {
   ProjectActivityConfig,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -126,6 +127,7 @@ interface OpStackConfigCommon {
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
+  optimismPortalPremintedTokens?: string[]
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
   finality?: ProjectFinalityConfig
@@ -140,6 +142,7 @@ interface OpStackConfigCommon {
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
+  nonTemplateContractRisks?: ProjectRisk
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -151,9 +154,10 @@ interface OpStackConfigCommon {
   additionalBadges?: Badge[]
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
-  riskView?: ProjectScalingRiskView
+  nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  ecosystemInfo?: ProjectEcosystemInfo
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
   }
@@ -240,12 +244,13 @@ function opStackCommon(
   }
 
   const nativeContractRisks: ProjectRisk[] = [
-    partOfSuperchain
-      ? ({
-          category: 'Funds can be stolen if',
-          text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
-        } satisfies ProjectRisk)
-      : CONTRACTS.UPGRADE_NO_DELAY_RISK,
+    templateVars.nonTemplateContractRisks ??
+      (partOfSuperchain
+        ? ({
+            category: 'Funds can be stolen if',
+            text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
+          } satisfies ProjectRisk)
+        : CONTRACTS.UPGRADE_NO_DELAY_RISK),
   ]
 
   const allDiscoveries = [
@@ -299,6 +304,7 @@ function opStackCommon(
           includeInTotal: type === 'layer2',
           address: portal.address,
           tokens: optimismPortalTokens,
+          premintedTokens: templateVars.optimismPortalPremintedTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(
             ', ',
           )}.`,
@@ -318,6 +324,7 @@ function opStackCommon(
       ],
       daTracking: getDaTracking(templateVars),
     },
+    ecosystemInfo: templateVars.ecosystemInfo,
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {
@@ -330,7 +337,7 @@ function opStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
-    riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider),
     stage:
       templateVars.stage ??
       computedStage(templateVars, postsToEthereum(templateVars)),
@@ -659,15 +666,21 @@ function getRiskView(
   daProvider: DAProvider | undefined,
 ): ProjectScalingRiskView {
   return {
-    stateValidation: getRiskViewStateValidation(templateVars),
-    exitWindow: getRiskViewExitWindow(templateVars),
-    proposerFailure: getRiskViewProposerFailure(templateVars),
-    dataAvailability: {
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      getRiskViewStateValidation(templateVars),
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      getRiskViewExitWindow(templateVars),
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      getRiskViewProposerFailure(templateVars),
+    dataAvailability: templateVars.nonTemplateRiskView?.dataAvailability ?? {
       ...(daProvider === undefined
         ? RISK_VIEW.DATA_ON_CHAIN
         : daProvider.riskView),
     },
-    sequencerFailure: {
+    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       // the value is inside the node config, but we have no reference to it
       // so we assume it to be the same value as in other op stack chains
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(

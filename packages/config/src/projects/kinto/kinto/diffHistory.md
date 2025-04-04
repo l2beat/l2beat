@@ -1,3 +1,2329 @@
+Generated with discovered.json: 0x349bfe68409185343c32d2813aff54cf2541aa22
+
+# Diff at Mon, 31 Mar 2025 09:21:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 783310
+- current block number: 788507
+
+## Description
+
+Kinto KYC providers sanction 229 addresses (none confirmed by SC so far).
+
+New operations scheduled in the AccessManager:
+- SANCTIONER_ROLE added: can confirm sanctions, is scheduled to be granted to the SC with 0 delay
+- RECOVERY_APPROVER_ROLE added: can approve recoveries, is scheduled to be granted to the KintoMultisig2 with 0 delay (does not affect recovery time or cancelling a recovery)
+
+## Watched changes
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.12:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.11:
++        {"operationId":"0xdc3e209a2fe4bae73e8fa0e602f61b887a4e123a18319283c3535622c64980f9","nonce":1,"schedule":1744220010,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000273c0248976abc550000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a0000000000000000000000000000000000000000000000000000000000000000"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.10:
++        {"operationId":"0xdd5ae826ce8969e1e28b47bfb52c2ece6c9b94f3777698c30894e55dbc6fe8a0","nonce":1,"schedule":1744220006,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x853551b8000000000000000000000000000000000000000000000000273c0248976abc55000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000165245434f564552595f415050524f5645525f524f4c4500000000000000000000"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.9:
++        {"operationId":"0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1","nonce":1,"schedule":1743905986,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.8:
++        {"operationId":"0x62d4f9252894204088abbb251d9eb3f66b47459f8151390f3152ce5d0d0b189f","nonce":1,"schedule":1744220007,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x853551b800000000000000000000000000000000000000000000000007d8641643fe2cba0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000f53414e4354494f4e45525f524f4c450000000000000000000000000000000000"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.7:
++        {"operationId":"0x1180e76c68ad305ca046e644a97adb50f9b79684c420e10fbd71a5b941badea5","nonce":1,"schedule":1744220008,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x08d6122d000000000000000000000000f369f78e3a0492cc4e96a90dae0728a38498e9c7000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000007d8641643fe2cba0000000000000000000000000000000000000000000000000000000000000001fb0b294000000000000000000000000000000000000000000000000000000000"}
+      values.OperationScheduled.6.operationId:
+-        "0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8"
++        "0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d"
+      values.OperationScheduled.6.schedule:
+-        1743464541
++        1743905137
+      values.OperationScheduled.6.data:
+-        "0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"
++        "0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"
+      values.OperationScheduled.5.operationId:
+-        "0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1"
++        "0xa148a26d04bda6140c756b460fb9e37aecd93c69443af9f523d113d8593f8163"
+      values.OperationScheduled.5.schedule:
+-        1743905986
++        1744220011
+      values.OperationScheduled.5.data:
+-        "0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"
++        "0x25c471a000000000000000000000000000000000000000000000000007d8641643fe2cba00000000000000000000000028fc10e12a78f986c78f973fc70ed88072b34c8e0000000000000000000000000000000000000000000000000000000000000000"
+      values.OperationScheduled.4.operationId:
+-        "0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d"
++        "0x18198983d32863dcc0dbdc5fbaf362b9e46652dae6c457956e761db4b87b8e4e"
+      values.OperationScheduled.4.schedule:
+-        1743905137
++        1744220008
+      values.OperationScheduled.4.data:
+-        "0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"
++        "0x08d6122d0000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d750000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000273c0248976abc550000000000000000000000000000000000000000000000000000000000000001456cf49200000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.323:
++        {"_to":"0x19CC0e919b58e0d0eF7BaeBb103f72dee1031978","_timestamp":1706580004}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.322:
++        {"_to":"0x467Fa5244cd8386581635646F12E13C05Ad0f41F","_timestamp":1718846703}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.321:
++        {"_to":"0x70E21B6fB6835652642568Dd0143C2821e7EBC01","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.320:
++        {"_to":"0x3CfA8C0e6eEb1e601f76355A82f583232b186a7D","_timestamp":1706580004}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.319:
++        {"_to":"0x275edFf82EB0c3845edaBa411D7A5bE31486C2B6","_timestamp":1710367221}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.318:
++        {"_to":"0x5718c0f092Da70702A0fC284d5C86C3EeDa218Ae","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.317:
++        {"_to":"0x83cCA28493b1940a16b6c22B77C7146C40463eD2","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.316:
++        {"_to":"0xC62595F9ec07A7b8FBE9BdC64926a80f1a7115bD","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.315:
++        {"_to":"0x685d6B0088397A00790DBDE7B3Ab8fAA7841a809","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.314:
++        {"_to":"0x5cCF7b5170F0292106A6df1F111958ff62e8Edd3","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.313:
++        {"_to":"0x81eEd39FC79B50DeBBcaEfc05221e9631Fb3b20f","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.312:
++        {"_to":"0x9961e674Dc623dc69f6AF4fBF4E2F1FAbcbc44Ce","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.311:
++        {"_to":"0x8631D1Aa293c92A79C7717d933B785EcCF61b1ae","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.310:
++        {"_to":"0xBD85550C39dE4844E501A278D6b632FbE68cF70F","_timestamp":1716580853}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.309:
++        {"_to":"0x4C2eEe16F3b55D45650c1a97bF329Fe810A517a2","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.308:
++        {"_to":"0x3Ee9cE9503bAa9a3CD4807Fa0146F848e3120b50","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.307:
++        {"_to":"0x3bB7Ff827729EB2F3cd419c67Fc3B151f22deDe7","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.306:
++        {"_to":"0x5Da354DC30613Be81557323729b2bbE3D3D506d7","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.305:
++        {"_to":"0x5383b0425760763baaa92677464C4E723Cdba191","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.304:
++        {"_to":"0x79e0F3d1DCEab60D446D9296adA1c5c0D3368d0b","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.303:
++        {"_to":"0x4E56569186083eacEC60e38b9B76F1d7C6A03694","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.302:
++        {"_to":"0x90231e5318110108B4748c67c9119CD8Ef28D0f0","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.301:
++        {"_to":"0x9E339388d44B21E9d027ba95D71E08E75736CE0E","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.300:
++        {"_to":"0xE9D67E87DD59b29876CF0E1ace667cAE39210fa8","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.299:
++        {"_to":"0x504a1ef47bF87a550bebfBA6ffe58a3a57bADeB7","_timestamp":1707652818}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.298:
++        {"_to":"0x6100c3fE678800EB6809DE473688b433eB081a5F","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.297:
++        {"_to":"0x9c41f1FB592aFE978726FCa785a8fD2b1c836006","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.296:
++        {"_to":"0x9E292AFD2492f4ecBA6c1eb8B73BC87A5650eB8F","_timestamp":1718846645}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.295:
++        {"_to":"0xB1bEaC3a3472436d9AA1f2D36aEaA2c215b66b9a","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.294:
++        {"_to":"0x89Ea92eF445cC8EC1055C8d243Ed50A2eF5FD77C","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.293:
++        {"_to":"0xE01874E2F6C78990F6a55Cb86B49ECCe070aEb0d","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.292:
++        {"_to":"0xE459e4bE9844131F5b26544cA60D56A034D26A3c","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.291:
++        {"_to":"0xE65a2Dee17190786c76f83e36F489a085690686C","_timestamp":1707840030}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.290:
++        {"_to":"0x4b2E0fDA7DB5Ab4f7471776F3A0e7E0D85444bFF","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.289:
++        {"_to":"0xf685Ca101dd7598Ec26244d8ff0f5abEa0F23509","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.288:
++        {"_to":"0xD3Af5EAb05E1882439E8626F9102a0A0bDCa21DB","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.287:
++        {"_to":"0xbf3fBce48ff8a49918dD8578290814ea466aB79F","_timestamp":1718846587}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.286:
++        {"_to":"0x91aDe5800dB3eBE7E103CFc05069487B00AE45ba","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.285:
++        {"_to":"0xA211445157D68B451006f8452eB7309A2313DC7a","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.284:
++        {"_to":"0x81bb2B25eA1A01BADA25d41C67A34d81C9684712","_timestamp":1718846645}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.283:
++        {"_to":"0xDe2918Cb894ecC8BfD81eeD617DFF2a461700312","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.282:
++        {"_to":"0x533efF0d6Ee8cd7dEF21ea27BeC421Ef7b8cE796","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.281:
++        {"_to":"0xF53eEd3bD238d4038e8e2699e832323A03500D0e","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.280:
++        {"_to":"0x8d2635Da6aB707E0370E2F55Bdd2D0b8dA0596A4","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.279:
++        {"_to":"0x962C00Ebc894Fb3e9B32AfE1dd1fa31A076e50e5","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.278:
++        {"_to":"0xcD984AD7eBB2ab7B2aE0afd967F371c6E24a4Bc6","_timestamp":1718846587}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.277:
++        {"_to":"0xBa5F9be8C94E2955deD0982Dc276023051bED0AA","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.276:
++        {"_to":"0x483090b7B8AFBf4F9e650E5a45dbD013959d4867","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.275:
++        {"_to":"0x99758a8519691B6bffEeD3976080c943634B7364","_timestamp":1718846645}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.274:
++        {"_to":"0x4506633D9bBB3EA73c89ff4829695D67896104d4","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.273:
++        {"_to":"0x1075d13CE70F8F4eB840c4c264b6c84C2CD4E785","_timestamp":1708034428}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.272:
++        {"_to":"0xC44F5CA2F187D5ece6864b8a31174C36dEFdC29c","_timestamp":1706139865}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.271:
++        {"_to":"0xC10730513A843fa0E2Fc223eC2AE3B6d3d002294","_timestamp":1719715565}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.270:
++        {"_to":"0x72F50cBB3D4189179b1cC55435993eB3d0bF772C","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.269:
++        {"_to":"0x505D435C8B66a7511dbec7f3C8DA6F1e67D50dDA","_timestamp":1706148032}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.268:
++        {"_to":"0xaE8C34b3eB7bcc21085eB819d23afF8687B449fE","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.267:
++        {"_to":"0x01e523cC67e5d3459bE930837d89bccEA85Fd1DC","_timestamp":1719715623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.266:
++        {"_to":"0xaB769943901Bb757cf5048B122f4A2D5D0aEE957","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.265:
++        {"_to":"0xDABa2f9fdEc6Bada2902B4453239332FE591d9ee","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.264:
++        {"_to":"0xD91110Bb87AEEFa8D74A274930804F7D61324f0E","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.263:
++        {"_to":"0xD4a998c38f016cC342b7Abd9796113D596201be3","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.262:
++        {"_to":"0xE174390679C9Cb86e64131f9AA173FdC9C10b8af","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.261:
++        {"_to":"0x4d38B797655D0B8F5E61a01A5a71A0346B98A3DD","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.260:
++        {"_to":"0x5579CA784CdC93776b9c030618548f1317AB4c39","_timestamp":1706148032}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.259:
++        {"_to":"0x74a6001A9b9f9AAb26A4eDEe55DB40413569255A","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.258:
++        {"_to":"0xFff5B9B7bf09DfC42865cDaDAA161f14Fd54498d","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.257:
++        {"_to":"0xb2F1d7867fD8d1501f5747676823f8d27a6a12f2","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.256:
++        {"_to":"0x414ded65867BdD1a2DcEcf730fBF4F92a72Ec55a","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.255:
++        {"_to":"0x917A716dA88cE955f56A2C61313eeB1a1C80eC5b","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.254:
++        {"_to":"0x49EbC2b33a410955D6291828af3f8EBeD3A1540e","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.253:
++        {"_to":"0xaEB8b6bB09c44c6eE9524Bf6a7842531e8870217","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.252:
++        {"_to":"0x72d47E7F0E341129Fd8815e84e396e86AF88484b","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.251:
++        {"_to":"0xaBA02c3024E1b5A8dfA53f7bD82d6B75B8C7Fea2","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.250:
++        {"_to":"0x75D9312845d38764229455Ea8d526A122b37768D","_timestamp":1719718623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.249:
++        {"_to":"0x96aA815610caed4095B525042156560Ac5dBC8e9","_timestamp":1743394746}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.248:
++        {"_to":"0xe12BcEe0219f3c80FFF8C271D29e343bA42B814d","_timestamp":1707483639}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.247:
++        {"_to":"0xC34bd93d87AB32D8fbb966A0666dAa1021A698c2","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.246:
++        {"_to":"0xe0d359F0f36d5eF22E1ee64135c572a076AaA826","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.245:
++        {"_to":"0xFD357B4975C97d48DfC8C5D5E3130a5634b89B8D","_timestamp":1743394746}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.244:
++        {"_to":"0x933b0f5e531648Bef764b58Ff7782AfB13AB06D0","_timestamp":1718846703}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.243:
++        {"_to":"0xA56c58a135fcE29642f7Fb8Cd4Df826Ee4f35528","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.242:
++        {"_to":"0x2a14E7B96D2362bdf1Df8C0bB4544714e7601Af0","_timestamp":1734246668}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.241:
++        {"_to":"0x52f6755e5b4dcf8a51B8E161B1D32038b3460BD9","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.240:
++        {"_to":"0xFDFEb1b9F613E2CB841E493B5359c124De59499e","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.239:
++        {"_to":"0x7C92dEf48191e751C61F96d1B9A058546F8fc5bd","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.238:
++        {"_to":"0x65E24c0623336b5dae5b566Bb996863ffC36e877","_timestamp":1743394986}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.237:
++        {"_to":"0x493ff963FAAbbBeDBA2Aa19378bF8d8a0F0e2C5E","_timestamp":1718846587}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.236:
++        {"_to":"0x3bFD323C9D44625D0B8A77ac19b13e75b9A0f2E4","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.235:
++        {"_to":"0xFCF53d74a16e899b576eb86FDBb76006854Ef763","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.234:
++        {"_to":"0xA4EcEAB6C954C3b967cF18e947879A6708A96D5e","_timestamp":1719715444}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.233:
++        {"_to":"0x89F6188006a35b9D0407c37f01FCa27AeD48CA3B","_timestamp":1719718683}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.232:
++        {"_to":"0xeeAdb06d44f927b77C0bA23B257A4CfEa60EDfB7","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.231:
++        {"_to":"0xeF4D08EbDAa2373Df18C12173898Ef09beb1Cd45","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.230:
++        {"_to":"0xE32AfFACe8f8f0f5A867FDe3d2C5ea1321dB83e8","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.229:
++        {"_to":"0x2A2ad91467443Ef61c49d5957546554EDb90Fe8a","_timestamp":1743394746}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.228:
++        {"_to":"0x985540465088C9c667690cC17BFf732fC703D2E5","_timestamp":1719718623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.227:
++        {"_to":"0xe3f7A57629a00558EBD24100A9D26A66FD4EbAc3","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.226:
++        {"_to":"0xA3a0A02e0866a95685062d7a1053912d6eda3E8B","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.225:
++        {"_to":"0xBbaEb862386383C67045cF2e538b6f3BfA1e8f5a","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.224:
++        {"_to":"0x1f16335Fd1dD3e8DCC8b401f5ae8BA57F8AD76a8","_timestamp":1706580004}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.223:
++        {"_to":"0x2955ca0D791C30C16e7298B803BB116bED5d7269","_timestamp":1706580004}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.222:
++        {"_to":"0x92c248622427367b4cfa70e60C038c63B148C748","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.221:
++        {"_to":"0x6E6E2044A4cfeA057E02d6FB72c33Fc893A9B788","_timestamp":1718846703}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.220:
++        {"_to":"0xf30BF377b3C4ed1f111E6E28CF26003CE5a682Cf","_timestamp":1706580004}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.219:
++        {"_to":"0xdCfA8062948095423c6117a327949198519741b0","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.218:
++        {"_to":"0xd138D5DBA662DE76F6Ce4EB60CA486313Ab7d15C","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.217:
++        {"_to":"0x326d76c60952e8a6A1c0af55D0F592E8c4E9597a","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.216:
++        {"_to":"0xD09E358552fC7Ce6F7E7BDDCE40e52fF1fE0745c","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.215:
++        {"_to":"0x60C460346394178b79CC9254D397B44a074e1dbD","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.214:
++        {"_to":"0x7CB6AfA77bb4E67b4c24293D3B5C5052851b5EB0","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.213:
++        {"_to":"0x8e31D4A303eDEeE7ca509CCC8D5965f50D6B25D8","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.212:
++        {"_to":"0x8006D189F5311E28E7A43E843c9AF675CEBef4AF","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.211:
++        {"_to":"0x894341e79e60b06C5D64684200BAb31C3c77AeF7","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.210:
++        {"_to":"0x9a46f537e8eA30BCCeDB0B7A2EBE03b16Df1170C","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.209:
++        {"_to":"0x3C9A0d73EF1a155e0b94CCc498068C1DB85fbEb5","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.208:
++        {"_to":"0xE9Cb04a602cAA9D2C649dDE854Ab7389C98CF912","_timestamp":1706139865}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.207:
++        {"_to":"0x459A9b243DE7aab18c60E25Ab0D6c99A445faC12","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.206:
++        {"_to":"0x3dec956335f3E48DC1Fb99DC9A2d21350a30e245","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.205:
++        {"_to":"0xaa7Fc1a0c9fcb6721a082740d7E4BC0885951d7a","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.204:
++        {"_to":"0x2B5CA5A2ABd55846C02439Dd268Ae733F104C866","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.203:
++        {"_to":"0x73fcfBefa7e9650049c7BcA3c76F99D085Eaf462","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.202:
++        {"_to":"0x45Ace2D41040B7267a465A4dF8733F3327EEFBb5","_timestamp":1719715444}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.201:
++        {"_to":"0xCf4b2B67e584F71f0a888817Eab97061e0CcC139","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.200:
++        {"_to":"0x579e88fF20811E8B7327A1b81d324E2302337E3B","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.199:
++        {"_to":"0x76De7fC28E69bb78e6475C8Fd71B71793B663E31","_timestamp":1707346822}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.198:
++        {"_to":"0x4C403211d9BcAC321b683e0161CED2cE749FF0A4","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.197:
++        {"_to":"0x7B31BC4FD8A00f734690AD0607903AA2C770a802","_timestamp":1718846645}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.196:
++        {"_to":"0x4E5c14bc3E148C01d02f9086c889f6a7854eEa42","_timestamp":1743394746}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.195:
++        {"_to":"0x2bD3B86856EEeC97CbC01150833aCc0771491049","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.194:
++        {"_to":"0x463d21B0620C77620aeD87A769e5836132158855","_timestamp":1707627639}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.193:
++        {"_to":"0x4fc472c29A8cBED38ce871a4Caf6CbDd1Cfd3369","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.192:
++        {"_to":"0xA911DDC91FDBDBBe22dD219CA05DC8634e9255d2","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.191:
++        {"_to":"0xB84a63047b0E7b6e1C670479C5ae682e6386d423","_timestamp":1743394986}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.190:
++        {"_to":"0xD0aC63a724dCb105561F981c3D9dda033570193e","_timestamp":1718846587}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.189:
++        {"_to":"0x81c0d080426CbEa108c1e74C712a6A2ceDAB89e1","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.188:
++        {"_to":"0xfb02369649FABe532c600983C41840d54F4592a7","_timestamp":1743368523}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.187:
++        {"_to":"0x660dD692777AF51FBFE15C5B47178994d825911a","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.186:
++        {"_to":"0xb4696a1465286802b7Bc8E39120B10F951E07C4d","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.185:
++        {"_to":"0xfB474dDfDc91293aD2a37A58DC94D6505d2c88dF","_timestamp":1738203485}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.184:
++        {"_to":"0xd382432B50d12b5803A7D666662320ceEe22313f","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.183:
++        {"_to":"0x298805bE3bbe036224BB11cE5007636423ca46F6","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.182:
++        {"_to":"0xdFc1f20b21259ee313d20D33D46D54691E4371CB","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.181:
++        {"_to":"0xC2068323986708a8b2480Bf491B4ad5921234EF7","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.180:
++        {"_to":"0xf2670E8C64430F10163e53BD38e71741d18D7840","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.179:
++        {"_to":"0xb064e41602F2EA83741161A27DC045A6dD7F6b93","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.178:
++        {"_to":"0xdE2c001797a4a6e8784743FB1835F82efb95b18f","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.177:
++        {"_to":"0x80c5A724E484B2b96c61c45e06918D7B68dB256B","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.176:
++        {"_to":"0x8Cf85f74408Cb7e27cF0f52493c93fF6E150BAFa","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.175:
++        {"_to":"0x927491618ECd06afBCEDeA84a2fEF71c991f00Eb","_timestamp":1707354023}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.174:
++        {"_to":"0x8862Dd4657aBCdf04c96402cD4C3007511538500","_timestamp":1719718683}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.173:
++        {"_to":"0x28c6fFE7b230F54510247FE09e5CbaaAB314ee82","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.172:
++        {"_to":"0x2ed2A34623aF70467ef88E473a693F879176B5a2","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.171:
++        {"_to":"0x6402119871Cc942Edc26e4815B99711750B87DBB","_timestamp":1719718623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.170:
++        {"_to":"0x437415907a0FdB07aeDCaBC085Cf940D370cfA6c","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.169:
++        {"_to":"0x773d712C230654121bE68D09C4ccaA9011d20895","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.168:
++        {"_to":"0x4813eD84135cB27eC096d8b86eE35B8d62402c07","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.167:
++        {"_to":"0xc3106dd6f982d4269a6618E77f49927d44BCCafD","_timestamp":1706580004}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.166:
++        {"_to":"0x3EA0B857a9579259096F067b6Dd914D1ae75C338","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.165:
++        {"_to":"0xA74B09B9f886ac101FDB1091147f4a67FE7c19e7","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.164:
++        {"_to":"0x96D4FD6006d1BBAF629feeAec1ddDB9D13bd5778","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.163:
++        {"_to":"0x4DF0384CA53D96bbED7452f10b9dDC325AF037c0","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.162:
++        {"_to":"0x6e77aE496c67441Ee772f88471b27Bf62Ef04d07","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.161:
++        {"_to":"0xC6235424501FF4dCEf8fC7C96DFD9474b40E95E6","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.160:
++        {"_to":"0xf152EBa9da07Bec19fbd6078D9dB047E74687A6a","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.159:
++        {"_to":"0x9b70559E61949033dE5a90F58fD4ed051470B851","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.158:
++        {"_to":"0x59ED194974A49f7D817EC46bCE8E00A6F24133E1","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.157:
++        {"_to":"0x015374c2Dc040eE1c40739936C72D5F035186f0f","_timestamp":1706662831}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.156:
++        {"_to":"0xbd0e49D0dA6F10e8A74964e8282B86900396f7A3","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.155:
++        {"_to":"0xB92293Fd1D65c09361f863bF4d202cff763CE9e4","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.154:
++        {"_to":"0x585E38F443aFEA52D5DB05A273d0145Bd17887be","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.153:
++        {"_to":"0x95263Dab911Dd8B05ED1713f2549E9C8cf574323","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.152:
++        {"_to":"0x8cc7888b6C9B9EF917CdE097210a7eB12ca8441e","_timestamp":1743368167}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.151:
++        {"_to":"0x10888fc193ec8a5b9ce29a0213473B2ceFA1E707","_timestamp":1719715565}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.150:
++        {"_to":"0x9868A6E272365Ec421C3aF0690F5aa97121B91c4","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.149:
++        {"_to":"0x61C81bBa4D9b4cc3BB109Fcf1482cb5Ce4b87205","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.148:
++        {"_to":"0x9E33F1333587Ee7f96772523821187de185d2ead","_timestamp":1719715565}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.147:
++        {"_to":"0x23C1c317368AB6Dc5F92a496e08A79ceE6f90392","_timestamp":1719718683}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.146:
++        {"_to":"0xfd1dCf92A221f333061575FD8B7D02b6E3A5957D","_timestamp":1710867621}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.145:
++        {"_to":"0x3b2E6A063125c95f327aE214eD1F20B901801059","_timestamp":1719715506}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.144:
++        {"_to":"0xAb96909d9a35150a249a55670e0bB8B8C583565b","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.143:
++        {"_to":"0x9381d90765A0cE4BE62e4cE9f115291C6244862E","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.142:
++        {"_to":"0xbDbb9De0ee5c3CC100bf0DcF0e11881Ea568307D","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.141:
++        {"_to":"0x41b6cBA6EDf1bD2BC61b80B228104bb27db3e504","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.140:
++        {"_to":"0xB907Fd315C94FE2D2484B426f293D9980Da40A3d","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.139:
++        {"_to":"0xF936497C1E9215fdf91E0332c6D6D50b528Df14d","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.138:
++        {"_to":"0xc77D572231C4b8bfe3c4DB4aF478ad17FEBA0648","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.137:
++        {"_to":"0x69E657BD35BA291D6A299F47d10249F24C86edD8","_timestamp":1743394623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.136:
++        {"_to":"0xE6f4103fCbdae587756C8273a440DFf8BA4Bb21a","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.135:
++        {"_to":"0xAE932423eb4c00139dF70b2644CfF269b110E130","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.134:
++        {"_to":"0x3C43b337a56c5c9387614ebfAC01d3b5d0734Fcc","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.133:
++        {"_to":"0x9991bCFde3f20Cc14A893CcC3a32b81801C80253","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.132:
++        {"_to":"0x7Faf6f69caD10Eaf3903847434bF92b4Bb6fC955","_timestamp":1719718623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.131:
++        {"_to":"0xC6138fB05b8c0536EB2Ea791D2504eA72420d7d7","_timestamp":1743394623}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.130:
++        {"_to":"0x5F0d5D4DA8692787F5267415DCc2494526E1C507","_timestamp":1743368131}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.129:
++        {"_to":"0x127917d1A8308Da2a1400dB50346B4a3F17813d3","_timestamp":1743394565}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.128:
++        {"_to":"0xB7522F061afb810b411a858769e2295A10080a32","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.127:
++        {"_to":"0xA98522A6a33c97af048aB966460e3C57Cd44eB17","_timestamp":1743368207}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.126:
++        {"_to":"0x2548e483ceeFBe4de727f2F853AF0124869Ae75E","_timestamp":1707566427}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.125:
++        {"_to":"0xc2811Dfd12FF70b229d26E465359664f9e60b9D2","_timestamp":1706148032}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.124:
++        {"_to":"0xD823abbe3EdAB9A7175EBbE13b2891A3356F06ab","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.123:
++        {"_to":"0x07B69c2e2dE1e41EA60F6E5e382012774A61A80a","_timestamp":1743367391}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.122:
++        {"_to":"0xC7370caAfFE87e1089b1E86f3D6dc6283effdb3E","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.121:
++        {"_to":"0xcd82cdd2023BCc783bef35fDb86a70baA368c2c3","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.120:
++        {"_to":"0x9baE98859a9D5Ba64AD43E0C22F99d8BAd7FB554","_timestamp":1710363512}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.119:
++        {"_to":"0x0828b8Fe631347dA81a46E3D23394C3b18395aD4","_timestamp":1707498031}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.118:
++        {"_to":"0x30096fdCc337A5395d275ecba9d0558484baad31","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.117:
++        {"_to":"0x3787445aa612a19D140840862cEf99694d9EA3De","_timestamp":1743368100}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.116:
++        {"_to":"0xdF45DcC1C326Af55ac389D09327d79699839E31b","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.115:
++        {"_to":"0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F","_timestamp":1710533543}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.114:
++        {"_to":"0x47c33fd0772e8B103aBEe763d1C2FB864b665B3B","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.113:
++        {"_to":"0xda250570f0DBf9650C8f80989390e71118A64B51","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.112:
++        {"_to":"0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477","_timestamp":1707401778}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.111:
++        {"_to":"0x9568D407b9BD55F20d20982306C6Feca5e43eb47","_timestamp":1743368190}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.110:
++        {"_to":"0xD32f6b08314E52744d244c764d1DA85c04514f34","_timestamp":1743368220}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.109:
++        {"_to":"0x6E944c6B214B215dfe053e7287f04f700a467DA8","_timestamp":1743368147}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.108:
++        {"_to":"0x1d9E490938feD3dF12A09528aa25ff6620d69d1b","_timestamp":1743367401}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.107:
++        {"_to":"0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F","_timestamp":1710533376}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.106:
++        {"_to":"0x09A95021fB4E9C7e391B3e7D4726748251C5d970","_timestamp":1743367391}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.105:
++        {"_to":"0xF8e3A7C50095B105dd049643f32531cDE57eBDA7","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.104:
++        {"_to":"0xaACA709AaD0E99891A16c4e2028Ad5053cEeB2b0","_timestamp":1743368286}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.103:
++        {"_to":"0x1695b31503e1C49123c000ab24626750b858E972","_timestamp":1743367401}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.102:
++        {"_to":"0x42AAd1F0E18C9867Dd1bE8FB7E6f4119BAC62740","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.101:
++        {"_to":"0xb2c54B111705B23BCB4cf584C396982c3B613F99","_timestamp":1707739213}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.100:
++        {"_to":"0x3c500E160EaB2CD26027a3389b70ED4e17cd9544","_timestamp":1743368117}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.99:
++        {"_to":"0xa5AFC38dDBE6e2dda8dC7A4fdae380a9Dbe12a06","_timestamp":1707472806}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.98:
++        {"_to":"0xac2ec1ec2E53098Ebbd36753187CDDf7E3d438AB","_timestamp":1743368466}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.97:
++        {"_to":"0x0E00e97FefD00F71b54E038899a97b470D6f662F","_timestamp":1719718683}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.96:
++        {"_to":"0xd9E77167C8b13b9D1AFF04CC469Ad55BEeB78358","_timestamp":1743368491}
++++ description: addresses sanctioned by any KYC_PROVIDER role.
+      values.pendingSanctions.95:
++        {"_to":"0x4F5D61De15F7D9C933f78937295402b3E0D9AA6f","_timestamp":1708077610}
+      values.pendingSanctions.94._to:
+-        "0x19CC0e919b58e0d0eF7BaeBb103f72dee1031978"
++        "0xcf011278736204F57B343568A8A8DC09f266a834"
+      values.pendingSanctions.93._to:
+-        "0x467Fa5244cd8386581635646F12E13C05Ad0f41F"
++        "0x63b6bbBcab97d26d87abfb2E68E63ebd7772C0cb"
+      values.pendingSanctions.93._timestamp:
+-        1718846703
++        1743368147
+      values.pendingSanctions.92._to:
+-        "0x3CfA8C0e6eEb1e601f76355A82f583232b186a7D"
++        "0xf6f06e71eFB2671eAaBcf6E2C090357c995C495D"
+      values.pendingSanctions.92._timestamp:
+-        1706580004
++        1718846587
+      values.pendingSanctions.91._to:
+-        "0x275edFf82EB0c3845edaBa411D7A5bE31486C2B6"
++        "0x1971eB33A28eCFa6BF701a6efec4255633F338FB"
+      values.pendingSanctions.91._timestamp:
+-        1710367221
++        1718846645
+      values.pendingSanctions.90._to:
+-        "0xBD85550C39dE4844E501A278D6b632FbE68cF70F"
++        "0xfF4a476cf39589be4b6Ad7e4b36d7156710b5c3e"
+      values.pendingSanctions.90._timestamp:
+-        1716580853
++        1743368523
+      values.pendingSanctions.89._to:
+-        "0x504a1ef47bF87a550bebfBA6ffe58a3a57bADeB7"
++        "0x62671619ccb07Db5f94A8381A308989C953A0Cc9"
+      values.pendingSanctions.89._timestamp:
+-        1707652818
++        1743368147
+      values.pendingSanctions.88._to:
+-        "0x9E292AFD2492f4ecBA6c1eb8B73BC87A5650eB8F"
++        "0xb6753e1DEbD7e615bC9c89aF2D2b8580F6B06b13"
+      values.pendingSanctions.88._timestamp:
+-        1718846645
++        1743368466
+      values.pendingSanctions.87._to:
+-        "0xE65a2Dee17190786c76f83e36F489a085690686C"
++        "0xcb1fb203B40de4EC7B685907D8901B249480e534"
+      values.pendingSanctions.87._timestamp:
+-        1707840030
++        1743395045
+      values.pendingSanctions.86._to:
+-        "0xbf3fBce48ff8a49918dD8578290814ea466aB79F"
++        "0x2AC29F4a5bA804844fCb72c2E1d739C7F24fC749"
+      values.pendingSanctions.86._timestamp:
+-        1718846587
++        1743368100
+      values.pendingSanctions.85._to:
+-        "0x81bb2B25eA1A01BADA25d41C67A34d81C9684712"
++        "0x9C31138FDb4baC14eAC4dbc0C4Ec8F1ea77E9682"
+      values.pendingSanctions.85._timestamp:
+-        1718846645
++        1743368190
+      values.pendingSanctions.84._to:
+-        "0xcD984AD7eBB2ab7B2aE0afd967F371c6E24a4Bc6"
++        "0xCD856EfFC6ee06b8395bCD81d46884356680D658"
+      values.pendingSanctions.84._timestamp:
+-        1718846587
++        1743368220
+      values.pendingSanctions.83._to:
+-        "0x99758a8519691B6bffEeD3976080c943634B7364"
++        "0xEA240C87B28a5074abbb34058935AD26391e6126"
+      values.pendingSanctions.83._timestamp:
+-        1718846645
++        1743368286
+      values.pendingSanctions.82._to:
+-        "0x1075d13CE70F8F4eB840c4c264b6c84C2CD4E785"
++        "0xf5B0cF796D4E58c74480Ddc20A701d7d159D7C70"
+      values.pendingSanctions.82._timestamp:
+-        1708034428
++        1743395045
+      values.pendingSanctions.81._to:
+-        "0xC44F5CA2F187D5ece6864b8a31174C36dEFdC29c"
++        "0x634D84AFE8Bed2f308F99bdE4677A6D1F8DBfC6D"
+      values.pendingSanctions.81._timestamp:
+-        1706139865
++        1743368147
+      values.pendingSanctions.80._to:
+-        "0xC10730513A843fa0E2Fc223eC2AE3B6d3d002294"
++        "0xca3E2E5c75121Cb46360E4459F6F94dCA6D868f4"
+      values.pendingSanctions.80._timestamp:
+-        1719715565
++        1707462016
+      values.pendingSanctions.79._to:
+-        "0x505D435C8B66a7511dbec7f3C8DA6F1e67D50dDA"
++        "0x8F14A1990cB5D327E545be6aF2a03B517aC58259"
+      values.pendingSanctions.79._timestamp:
+-        1706148032
++        1706074667
+      values.pendingSanctions.78._to:
+-        "0x01e523cC67e5d3459bE930837d89bccEA85Fd1DC"
++        "0xfafdcA2FfEE318eaA4463003F6a99A16B8FEe45c"
+      values.pendingSanctions.78._timestamp:
+-        1719715623
++        1743368523
+      values.pendingSanctions.77._to:
+-        "0x5579CA784CdC93776b9c030618548f1317AB4c39"
++        "0x3e8c3aB6C952d626A48EdBCA0fd86c891Ab3c63f"
+      values.pendingSanctions.77._timestamp:
+-        1706148032
++        1743368117
+      values.pendingSanctions.76._to:
+-        "0x75D9312845d38764229455Ea8d526A122b37768D"
++        "0x6dc56C56e81EE1D496274f9349696657Dd005B0a"
+      values.pendingSanctions.76._timestamp:
+-        1719718623
++        1743368147
+      values.pendingSanctions.75._to:
+-        "0xe12BcEe0219f3c80FFF8C271D29e343bA42B814d"
++        "0xC3124240b6faAC99FaCeaC43E9698efFc5A997ad"
+      values.pendingSanctions.75._timestamp:
+-        1707483639
++        1743368220
+      values.pendingSanctions.74._to:
+-        "0x933b0f5e531648Bef764b58Ff7782AfB13AB06D0"
++        "0x403fA81DB3CB6095007E8377500E676cB7dbFcB9"
+      values.pendingSanctions.74._timestamp:
+-        1718846703
++        1743368117
+      values.pendingSanctions.73._to:
+-        "0x2a14E7B96D2362bdf1Df8C0bB4544714e7601Af0"
++        "0x6CDB95f68B61922d4fE0708e55792390D8c669e4"
+      values.pendingSanctions.73._timestamp:
+-        1734246668
++        1719718623
+      values.pendingSanctions.72._to:
+-        "0x493ff963FAAbbBeDBA2Aa19378bF8d8a0F0e2C5E"
++        "0x574CFb5AA6F7A05B111Cd298b73A4123AAfdF97f"
+      values.pendingSanctions.72._timestamp:
+-        1718846587
++        1710932425
+      values.pendingSanctions.71._to:
+-        "0xA4EcEAB6C954C3b967cF18e947879A6708A96D5e"
++        "0x2c0c5825cD05B58d504E76d0e0571b9Bc07DF2A3"
+      values.pendingSanctions.71._timestamp:
+-        1719715444
++        1743368100
+      values.pendingSanctions.70._to:
+-        "0x89F6188006a35b9D0407c37f01FCa27AeD48CA3B"
++        "0x1E25292Ed119b1ca6aEaaF11F520ff0bCb638740"
+      values.pendingSanctions.70._timestamp:
+-        1719718683
++        1743367401
+      values.pendingSanctions.69._to:
+-        "0x985540465088C9c667690cC17BFf732fC703D2E5"
++        "0xCfcB156E4EB3f85A6FE1cec2DC83FBFEcF8Ee7FC"
+      values.pendingSanctions.69._timestamp:
+-        1719718623
++        1743368220
+      values.pendingSanctions.68._to:
+-        "0x1f16335Fd1dD3e8DCC8b401f5ae8BA57F8AD76a8"
++        "0x4996Ea58A0E3cAB8A324366E9684d1E2e679ce67"
+      values.pendingSanctions.68._timestamp:
+-        1706580004
++        1743368117
+      values.pendingSanctions.67._to:
+-        "0x2955ca0D791C30C16e7298B803BB116bED5d7269"
++        "0x9bfAd309FA457804B60FBec15Ec6D174111587f5"
+      values.pendingSanctions.67._timestamp:
+-        1706580004
++        1743368207
+      values.pendingSanctions.66._to:
+-        "0x6E6E2044A4cfeA057E02d6FB72c33Fc893A9B788"
++        "0x1B2888e792e82fe352FC9D1E73cdc91C6217F55c"
+      values.pendingSanctions.66._timestamp:
+-        1718846703
++        1717533287
+      values.pendingSanctions.65._to:
+-        "0xf30BF377b3C4ed1f111E6E28CF26003CE5a682Cf"
++        "0x615E981442C93325449cB379d991237a01c06b15"
+      values.pendingSanctions.65._timestamp:
+-        1706580004
++        1719715389
+      values.pendingSanctions.64._to:
+-        "0xE9Cb04a602cAA9D2C649dDE854Ab7389C98CF912"
++        "0xB3902654321D214d2B7Ca531832d0EF19780fDef"
+      values.pendingSanctions.64._timestamp:
+-        1706139865
++        1719718623
+      values.pendingSanctions.63._to:
+-        "0x45Ace2D41040B7267a465A4dF8733F3327EEFBb5"
++        "0x2bf871ca38EbF4D6Ce0124d8551F236BA33F6e8A"
+      values.pendingSanctions.63._timestamp:
+-        1719715444
++        1742239091
+      values.pendingSanctions.62._to:
+-        "0x76De7fC28E69bb78e6475C8Fd71B71793B663E31"
++        "0x3365dB4c3490AC6A43986Cfe2c26FE61B22aA917"
+      values.pendingSanctions.62._timestamp:
+-        1707346822
++        1707494421
+      values.pendingSanctions.61._to:
+-        "0x7B31BC4FD8A00f734690AD0607903AA2C770a802"
++        "0x6baa2c84A37999D264DA7bEe9639cDd3171c1397"
+      values.pendingSanctions.61._timestamp:
+-        1718846645
++        1719718683
+      values.pendingSanctions.60._to:
+-        "0x463d21B0620C77620aeD87A769e5836132158855"
++        "0x258DcCC0802232B7C9BC9ee71fde382Ed88d7Ce0"
+      values.pendingSanctions.60._timestamp:
+-        1707627639
++        1743367401
+      values.pendingSanctions.59._to:
+-        "0xD0aC63a724dCb105561F981c3D9dda033570193e"
++        "0xfD73361D700410FC1513e91acf5E138d00a3dBe3"
+      values.pendingSanctions.59._timestamp:
+-        1718846587
++        1743368523
+      values.pendingSanctions.58._to:
+-        "0xfB474dDfDc91293aD2a37A58DC94D6505d2c88dF"
++        "0xbafC930Eff179386813D17AF4f70A7d367f37E55"
+      values.pendingSanctions.58._timestamp:
+-        1738203485
++        1743394986
+      values.pendingSanctions.57._to:
+-        "0x927491618ECd06afBCEDeA84a2fEF71c991f00Eb"
++        "0x0E084652CDc1a68f42218522b9A8a68FC4e6619f"
+      values.pendingSanctions.57._timestamp:
+-        1707354023
++        1743367391
+      values.pendingSanctions.56._to:
+-        "0x8862Dd4657aBCdf04c96402cD4C3007511538500"
++        "0x73163b73F526F436DD3234a439c4b691f5Db6F0c"
+      values.pendingSanctions.56._timestamp:
+-        1719718683
++        1743394746
+      values.pendingSanctions.55._to:
+-        "0x6402119871Cc942Edc26e4815B99711750B87DBB"
++        "0x92D620d0279359727A0128cC19b84EEF89621Fb4"
+      values.pendingSanctions.55._timestamp:
+-        1719718623
++        1708164033
+      values.pendingSanctions.54._to:
+-        "0xc3106dd6f982d4269a6618E77f49927d44BCCafD"
++        "0x504CC21F6343F966E672ce27054f9b7e546cd918"
+      values.pendingSanctions.54._timestamp:
+-        1706580004
++        1719715623
+      values.pendingSanctions.53._to:
+-        "0x015374c2Dc040eE1c40739936C72D5F035186f0f"
++        "0x3C9959C3EfEC9674926D86D8CAA814A486bA047B"
+      values.pendingSanctions.53._timestamp:
+-        1706662831
++        1712740568
+      values.pendingSanctions.52._to:
+-        "0x10888fc193ec8a5b9ce29a0213473B2ceFA1E707"
++        "0x07bAA7EFD71836c440115add44f433B660cf61b8"
+      values.pendingSanctions.52._timestamp:
+-        1719715565
++        1743367391
+      values.pendingSanctions.51._to:
+-        "0x9E33F1333587Ee7f96772523821187de185d2ead"
++        "0x158B49eCD928000B49036a4B3dD1E45ad7FEcEBE"
+      values.pendingSanctions.51._timestamp:
+-        1719715565
++        1743367401
+      values.pendingSanctions.50._to:
+-        "0x23C1c317368AB6Dc5F92a496e08A79ceE6f90392"
++        "0xdD330d70F14AEa4Ce7b9E777fDCC117321c74124"
+      values.pendingSanctions.50._timestamp:
+-        1719718683
++        1722940629
+      values.pendingSanctions.49._to:
+-        "0xfd1dCf92A221f333061575FD8B7D02b6E3A5957D"
++        "0x49aEa6275e1D94Df2AC90c3ee4e4afd47e468d71"
+      values.pendingSanctions.49._timestamp:
+-        1710867621
++        1712710928
+      values.pendingSanctions.48._to:
+-        "0x3b2E6A063125c95f327aE214eD1F20B901801059"
++        "0x93402720154e26A044E8389D2733F281fF830c5c"
+      values.pendingSanctions.48._timestamp:
+-        1719715506
++        1717937047
+      values.pendingSanctions.47._to:
+-        "0x7Faf6f69caD10Eaf3903847434bF92b4Bb6fC955"
++        "0x32C4a3feAcff6592ed5a3878cFb839dD282f5807"
+      values.pendingSanctions.47._timestamp:
+-        1719718623
++        1743394623
+      values.pendingSanctions.46._to:
+-        "0x2548e483ceeFBe4de727f2F853AF0124869Ae75E"
++        "0x273DDd44f634c71112D2244B59999eD9A9Dd0562"
+      values.pendingSanctions.46._timestamp:
+-        1707566427
++        1743367401
+      values.pendingSanctions.45._to:
+-        "0xc2811Dfd12FF70b229d26E465359664f9e60b9D2"
++        "0xaE815562105d42a06D06ff31139A63eE3F72128a"
+      values.pendingSanctions.45._timestamp:
+-        1706148032
++        1743368466
+      values.pendingSanctions.44._to:
+-        "0x9baE98859a9D5Ba64AD43E0C22F99d8BAd7FB554"
++        "0x7498cF5863fd745eE79d7F07516725b87fE9C8FB"
+      values.pendingSanctions.44._timestamp:
+-        1710363512
++        1706148032
+      values.pendingSanctions.43._to:
+-        "0x0828b8Fe631347dA81a46E3D23394C3b18395aD4"
++        "0x1e9478A59d7182ddEd839bCc1aC7249D9c779003"
+      values.pendingSanctions.43._timestamp:
+-        1707498031
++        1743367401
+      values.pendingSanctions.42._to:
+-        "0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F"
++        "0x23c48DE9c94873Ca477871987c5a6C691517cc7C"
+      values.pendingSanctions.42._timestamp:
+-        1710533543
++        1743367401
+      values.pendingSanctions.41._to:
+-        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
++        "0xc884086a4e38a1072a0B4ED81054E9eEc92637ae"
+      values.pendingSanctions.41._timestamp:
+-        1707401778
++        1743368466
+      values.pendingSanctions.40._to:
+-        "0xdb563dA812f5d90727bb12a0959F5679B9a2Ea5F"
++        "0xe7e376c075D142f2b2A8de8708D723aC4a0d02aC"
+      values.pendingSanctions.40._timestamp:
+-        1710533376
++        1743368491
+      values.pendingSanctions.39._to:
+-        "0xb2c54B111705B23BCB4cf584C396982c3B613F99"
++        "0x03C1F121735Abf4B70645eFdc810Aa1721F13fBd"
+      values.pendingSanctions.39._timestamp:
+-        1707739213
++        1743367391
+      values.pendingSanctions.38._to:
+-        "0xa5AFC38dDBE6e2dda8dC7A4fdae380a9Dbe12a06"
++        "0x6C38A71C9bd2cb9A262C5503E8D9D3D095386C00"
+      values.pendingSanctions.38._timestamp:
+-        1707472806
++        1719718683
+      values.pendingSanctions.37._to:
+-        "0x0E00e97FefD00F71b54E038899a97b470D6f662F"
++        "0x02b308D92893E3d93a2cD1C6506a7935B369f2C9"
+      values.pendingSanctions.37._timestamp:
+-        1719718683
++        1719715506
+      values.pendingSanctions.36._to:
+-        "0x4F5D61De15F7D9C933f78937295402b3E0D9AA6f"
++        "0x2342Df696C6a3716315BFa4C07Bb8ee519D92289"
+      values.pendingSanctions.36._timestamp:
+-        1708077610
++        1743367401
+      values.pendingSanctions.35._to:
+-        "0xcf011278736204F57B343568A8A8DC09f266a834"
++        "0x0bF170f698a976ad14c79130aed5D3b0594B667E"
+      values.pendingSanctions.35._timestamp:
+-        1706580004
++        1743367391
+      values.pendingSanctions.34._to:
+-        "0xf6f06e71eFB2671eAaBcf6E2C090357c995C495D"
++        "0xd0FeC78B636fb50f4cBbf9408B5369f34A7E6060"
+      values.pendingSanctions.34._timestamp:
+-        1718846587
++        1743368466
+      values.pendingSanctions.33._to:
+-        "0x1971eB33A28eCFa6BF701a6efec4255633F338FB"
++        "0xa7E7870aFEe03C4768feDCb55db9bC11E1187356"
+      values.pendingSanctions.33._timestamp:
+-        1718846645
++        1719715506
+      values.pendingSanctions.32._to:
+-        "0xca3E2E5c75121Cb46360E4459F6F94dCA6D868f4"
++        "0x4D836F0f988424f32065086D9A32644a7695e248"
+      values.pendingSanctions.32._timestamp:
+-        1707462016
++        1719718509
+      values.pendingSanctions.31._to:
+-        "0x8F14A1990cB5D327E545be6aF2a03B517aC58259"
++        "0x24444de1eFf861197fd1393cF6081701237d3380"
+      values.pendingSanctions.31._timestamp:
+-        1706074667
++        1708048804
+      values.pendingSanctions.30._to:
+-        "0x6CDB95f68B61922d4fE0708e55792390D8c669e4"
++        "0x1a3042689f2999BbEfedD132338D819C9dD62e08"
+      values.pendingSanctions.30._timestamp:
+-        1719718623
++        1743367401
+      values.pendingSanctions.29._to:
+-        "0x574CFb5AA6F7A05B111Cd298b73A4123AAfdF97f"
++        "0x0d95E6D05dcF62443C6925d97D70697ce26298F4"
+      values.pendingSanctions.29._timestamp:
+-        1710932425
++        1743367391
+      values.pendingSanctions.28._to:
+-        "0x1B2888e792e82fe352FC9D1E73cdc91C6217F55c"
++        "0x2460b2b758ca5332725C9BebecAafd70eF004963"
+      values.pendingSanctions.28._timestamp:
+-        1717533287
++        1743394986
+      values.pendingSanctions.27._to:
+-        "0x615E981442C93325449cB379d991237a01c06b15"
++        "0x47DBDEe9AD57e48b9F9a0F867712357Ffb5B489f"
+      values.pendingSanctions.27._timestamp:
+-        1719715389
++        1719718623
+      values.pendingSanctions.26._to:
+-        "0xB3902654321D214d2B7Ca531832d0EF19780fDef"
++        "0x5420f6C9Bc0495d24f35Ba25Be8e259693615625"
+      values.pendingSanctions.26._timestamp:
+-        1719718623
++        1707343233
+      values.pendingSanctions.25._to:
+-        "0x2bf871ca38EbF4D6Ce0124d8551F236BA33F6e8A"
++        "0xC14051DBDc3459A6A353D887dDF68F2BE286FaD6"
+      values.pendingSanctions.25._timestamp:
+-        1742239091
++        1707998409
+      values.pendingSanctions.24._to:
+-        "0x3365dB4c3490AC6A43986Cfe2c26FE61B22aA917"
++        "0x60a05081683493b2932Df77eE5fac141D2329B89"
+      values.pendingSanctions.24._timestamp:
+-        1707494421
++        1736789115
+      values.pendingSanctions.23._to:
+-        "0x6baa2c84A37999D264DA7bEe9639cDd3171c1397"
++        "0x9bC8048273BBa88f36c81a94EBde7ab5E0322e22"
+      values.pendingSanctions.22._to:
+-        "0x92D620d0279359727A0128cC19b84EEF89621Fb4"
++        "0x08da15e0ab29A928b3fd02CbdDf44e14a1e9994d"
+      values.pendingSanctions.22._timestamp:
+-        1708164033
++        1743367391
+      values.pendingSanctions.21._to:
+-        "0x504CC21F6343F966E672ce27054f9b7e546cd918"
++        "0x2f3f40216112e54F8AC7668c364E459F156ed2af"
+      values.pendingSanctions.21._timestamp:
+-        1719715623
++        1734613992
+      values.pendingSanctions.20._to:
+-        "0x3C9959C3EfEC9674926D86D8CAA814A486bA047B"
++        "0x06dE06782E4626962b5aEF4958dBb3C6df105614"
+      values.pendingSanctions.20._timestamp:
+-        1712740568
++        1743367391
+      values.pendingSanctions.19._to:
+-        "0xdD330d70F14AEa4Ce7b9E777fDCC117321c74124"
++        "0x3e7b92D14dfA2A891B69d73A9912C7bea9C86bDB"
+      values.pendingSanctions.19._timestamp:
+-        1722940629
++        1710363512
+      values.pendingSanctions.18._to:
+-        "0x49aEa6275e1D94Df2AC90c3ee4e4afd47e468d71"
++        "0x60BF5eE1CBf2a18639412ce694FbCe1c8c3E6637"
+      values.pendingSanctions.18._timestamp:
+-        1712710928
++        1707346822
+      values.pendingSanctions.17._to:
+-        "0x93402720154e26A044E8389D2733F281fF830c5c"
++        "0x01A50003561fF26e57BaFF15e0B7A93122d7A7fA"
+      values.pendingSanctions.17._timestamp:
+-        1717937047
++        1743367391
+      values.pendingSanctions.16._to:
+-        "0x7498cF5863fd745eE79d7F07516725b87fE9C8FB"
++        "0x1FdC05572B108616bb4E6f21068D31cc08Ffaa98"
+      values.pendingSanctions.16._timestamp:
+-        1706148032
++        1743367401
+      values.pendingSanctions.15._to:
+-        "0x6C38A71C9bd2cb9A262C5503E8D9D3D095386C00"
++        "0x0D757815a1997F98c07d4ffD781732e9D456F3A2"
+      values.pendingSanctions.15._timestamp:
+-        1719718683
++        1743367391
+      values.pendingSanctions.14._to:
+-        "0x02b308D92893E3d93a2cD1C6506a7935B369f2C9"
++        "0x1aA28cd209E8a44273E9FD8053b3385cE4861BBe"
+      values.pendingSanctions.14._timestamp:
+-        1719715506
++        1743367401
+      values.pendingSanctions.13._to:
+-        "0xa7E7870aFEe03C4768feDCb55db9bC11E1187356"
++        "0x01fEC93Ec45adf224000d02Ccff75431ef064415"
+      values.pendingSanctions.13._timestamp:
+-        1719715506
++        1743367391
+      values.pendingSanctions.12._to:
+-        "0x4D836F0f988424f32065086D9A32644a7695e248"
++        "0x21C5cD61d92b610DB88426Be3eecB2c2E915693f"
+      values.pendingSanctions.12._timestamp:
+-        1719718509
++        1743367401
+      values.pendingSanctions.11._to:
+-        "0x24444de1eFf861197fd1393cF6081701237d3380"
++        "0x0008970a4F2AdEe393A8C399Af7032D690a780E8"
+      values.pendingSanctions.11._timestamp:
+-        1708048804
++        1743365649
+      values.pendingSanctions.10._to:
+-        "0x47DBDEe9AD57e48b9F9a0F867712357Ffb5B489f"
++        "0x08D43D53E1F92B16622c4Ba5a3862b280B6510c6"
+      values.pendingSanctions.10._timestamp:
+-        1719718623
++        1743367391
+      values.pendingSanctions.9._to:
+-        "0x5420f6C9Bc0495d24f35Ba25Be8e259693615625"
++        "0xCc946190D2F37497d21e10309a20D56CF240446B"
+      values.pendingSanctions.9._timestamp:
+-        1707343233
++        1710360415
+      values.pendingSanctions.8._to:
+-        "0xC14051DBDc3459A6A353D887dDF68F2BE286FaD6"
++        "0x5eD7850289599F6B2D54bEA67eBA966C4b7F0880"
+      values.pendingSanctions.8._timestamp:
+-        1707998409
++        1743395045
+      values.pendingSanctions.7._to:
+-        "0x60a05081683493b2932Df77eE5fac141D2329B89"
++        "0x05b66E614bb4E34F341f05811DcA098edA8dA168"
+      values.pendingSanctions.7._timestamp:
+-        1736789115
++        1743367391
+      values.pendingSanctions.6._to:
+-        "0x9bC8048273BBa88f36c81a94EBde7ab5E0322e22"
++        "0x043B9f49F00F91f49BcD545271236b12B5d7B371"
+      values.pendingSanctions.6._timestamp:
+-        1719718683
++        1743367391
+      values.pendingSanctions.5._to:
+-        "0x2f3f40216112e54F8AC7668c364E459F156ed2af"
++        "0x102C7CAF21c4B1EF75c5d3EEEbe673E73c1706D3"
+      values.pendingSanctions.5._timestamp:
+-        1734613992
++        1710363512
+      values.pendingSanctions.4._to:
+-        "0x3e7b92D14dfA2A891B69d73A9912C7bea9C86bDB"
++        "0x115E3390F450dee7B66C06631d8DaC7daC38C80D"
+      values.pendingSanctions.4._timestamp:
+-        1710363512
++        1743367391
+      values.pendingSanctions.3._to:
+-        "0x60BF5eE1CBf2a18639412ce694FbCe1c8c3E6637"
++        "0x26882fe190b0A5BF429A238a11A0e923BC23f7bc"
+      values.pendingSanctions.3._timestamp:
+-        1707346822
++        1743367401
+      values.pendingSanctions.2._to:
+-        "0xCc946190D2F37497d21e10309a20D56CF240446B"
++        "0x1d8A54B1781CA484068761Ef329eF14B82C9F811"
+      values.pendingSanctions.2._timestamp:
+-        1710360415
++        1743367401
+      values.pendingSanctions.1._to:
+-        "0x102C7CAF21c4B1EF75c5d3EEEbe673E73c1706D3"
++        "0x1Ff8724D557ab6A50dc240A2EFAd8adb23E12E25"
+      values.pendingSanctions.1._timestamp:
+-        1710363512
++        1743367401
+    }
+```
+
+Generated with discovered.json: 0x93bee956c70ecd4851466713c0456ac6a2688a62
+
+# Diff at Fri, 28 Mar 2025 10:29:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@279f845afa28d7cd0a0fe99f5744c0fe98cd5c86 block: 781473
+- current block number: 783310
+
+## Description
+
+Ignore RewardsDistributor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 781473 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87)
+    +++ description: KINTO token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293)
+    +++ description: Kinto Treasury.
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      directlyReceivedPermissions.9:
+-        {"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}
+      directlyReceivedPermissions.8:
+-        {"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"}
+      directlyReceivedPermissions.7.from:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.6.description:
+-        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
+      directlyReceivedPermissions.5.description:
++        "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
+      directlyReceivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.4.from:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      directlyReceivedPermissions.4.description:
+-        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+      directlyReceivedPermissions.3.from:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      directlyReceivedPermissions.3.description:
+-        "send tokens and ETH from the Treasury to any address without delay."
++        "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x7d8888dd37ac334ba78ec5c7615681fda27b20f9
+
+# Diff at Thu, 27 Mar 2025 09:06:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@73b1a8c5f50d6fe327eed98ba839c3eed6ab6280 block: 778850
+- current block number: 781473
+
+## Description
+
+BridgedKinto upgrade. AccessManager ready for stage 1 (incl queued transactions).
+- ADMIN_ROLE grant to Kinto Multisig 2 canceled.
+- 12d delays for execution and targetAdmin queued.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
++        "0x01f873ab58dfa85af89a14ea5940a5d2d59c6c300d113b8e78d3ff47dbf70e4d"
+      values.$implementation:
+-        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
++        "0xBe19941Dd429020A5B5d2704f953Fb0f7a3A3497"
+      values.$pastUpgrades.9:
++        ["2025-03-26T22:14:03.000Z","0x3aa9d1b48b5f3f5d8b445cd0d0f21fd7c774a0dc2e601f12609759c44b366a26",["0xBe19941Dd429020A5B5d2704f953Fb0f7a3A3497"]]
+      values.$upgradeCount:
+-        9
++        10
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.6:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.5:
++        {"operationId":"0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1","nonce":1,"schedule":1743905986,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.4:
++        {"operationId":"0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d","nonce":1,"schedule":1743905137,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b59890000000000000000000000008a4720488ca32f1223ccfe5a087e250fe3bc5d7500000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.3:
++        {"operationId":"0x8b8631e0ab585da013ce35fd8f3a27597f77e19c91ba1263b21cd7396f746d91","nonce":1,"schedule":1743955424,"caller":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","target":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","data":"0x3659cfe60000000000000000000000001d61772ae2e157f9f6a4127526ed86ab5801a477"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.2:
++        {"operationId":"0x7efe7055898bb49bcf4b4bac2964df4814ca5698c700d895f669b8da3b83443a","nonce":1,"schedule":1743905135,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b59890000000000000000000000005a2b641b84b0230c8e75f55d5afd27f4dbd59d5b00000000000000000000000000000000000000000000000000000000000fd200"}
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.1:
++        {"operationId":"0x4a05b6df1acce9e22cf008555fa8d477bd9f116f261f267f95c2b463047e016a","nonce":1,"schedule":1743905136,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0xd22b5989000000000000000000000000f369f78e3a0492cc4e96a90dae0728a38498e9c700000000000000000000000000000000000000000000000000000000000fd200"}
+      values.OperationScheduled.0.operationId:
+-        "0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8"
++        "0x256b4be01a33f01810d8b7c1bb0e70df24b98d9f174b45ea4ea9f9f13a04990e"
+      values.OperationScheduled.0.schedule:
+-        1743464541
++        1743955424
+      values.OperationScheduled.0.caller:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      values.OperationScheduled.0.target:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      values.OperationScheduled.0.data:
+-        "0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"
++        "0xf4f4b03a000000000000000000000000bfe260680514e0d669fdc5a5f7334b97a5513d9d"
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@778850 => .flat}/BridgedKinto/BridgedKinto.sol      | 5 +++++
+ 1 file changed, 5 insertions(+)
+```
+
+Generated with discovered.json: 0x860f798971ee9f8ca5c2bb906627f0511e59de44
+
+# Diff at Tue, 25 Mar 2025 11:49:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 773151
+- current block number: 778850
+
+## Description
+
+BridgedKinto upgrade.
+
+Current state of permissions in the AccessManager is unchanged.
+
+waiting for:
+queue operations for 12d values for:
+- executionDelays for all non-SC actors for the roles UPGRADER_ROLE, ADMIN_ROLE and SECURITY_COUNCIL role
+- targetAdminDelays for the 3 targets: KintoAppRegistry, KintoID, KintoWalletFactory
+- KintoWallet.RECOVERY_TIME
+- KintoID.EXIT_WINDOW_PERIOD
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x8afd4a6a4dce2fedf29d5a78d35edbb8101e74ea5e923aebda93db04b4f44121"
++        "0x7100558956c90af1deda7d8940594b34dfd14a466b66d3693f4219419308c9cd"
+      values.$implementation:
+-        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
++        "0xF22F907b74CAB91864B7bEEcAdf762F464a96140"
+      values.$pastUpgrades.8:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$pastUpgrades.7.2:
+-        "2025-02-21T21:13:41.000Z"
++        "2024-06-29T15:10:34.000Z"
+      values.$pastUpgrades.7.1.0:
+-        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
++        "0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"
+      values.$pastUpgrades.7.0:
+-        "0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb"
++        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
+      values.$pastUpgrades.6.2:
+-        "2024-06-29T15:10:34.000Z"
++        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
+      values.$pastUpgrades.6.1:
+-        ["0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"]
++        "2025-03-19T21:51:53.000Z"
+      values.$pastUpgrades.6.0:
+-        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
++        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
+      values.$pastUpgrades.5.2:
+-        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
++        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
+      values.$pastUpgrades.5.1:
+-        "2025-03-19T21:51:53.000Z"
++        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
+      values.$pastUpgrades.5.0:
+-        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
++        "2024-12-18T00:08:48.000Z"
+      values.$pastUpgrades.4.2:
+-        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
++        ["0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"]
+      values.$pastUpgrades.4.1:
+-        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
++        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
+      values.$pastUpgrades.4.0:
+-        "2024-12-18T00:08:48.000Z"
++        "2024-06-20T23:33:48.000Z"
+      values.$pastUpgrades.3.2.0:
+-        "0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"
++        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
+      values.$pastUpgrades.3.1:
+-        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
++        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
+      values.$pastUpgrades.3.0:
+-        "2024-06-20T23:33:48.000Z"
++        "2025-03-20T00:39:13.000Z"
+      values.$pastUpgrades.2.2:
+-        ["0x6af53F698b87809d98CeAAfa848c73e192400E61"]
++        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
+      values.$pastUpgrades.2.1:
+-        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
++        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
+      values.$pastUpgrades.2.0:
+-        "2025-03-20T00:39:13.000Z"
++        "2024-07-10T20:17:25.000Z"
+      values.$pastUpgrades.1.2:
+-        "0xb70427666e80d6b474e9f29949fda22eb4fb50c9b548295f6d3f1a6f8a465561"
++        "2025-03-25T01:46:55.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0xbE43c24500B855f0cc0D0F99361683B6C6ED73b8"]
++        "0x4c3e223697c1a08b1539359340534964303bba7cbc4519e70044c74ad19fd784"
+      values.$pastUpgrades.1.0:
+-        "2024-07-10T20:17:25.000Z"
++        ["0xF22F907b74CAB91864B7bEEcAdf762F464a96140"]
+      values.$upgradeCount:
+-        8
++        9
+      values.VAULT:
++        "0x3De040ef2Fbf9158BADF559C5606d7706ca72309"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl.roles.UPGRADER_ROLE.members.1:
+-        {"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1733181166,"executionDelay":604800}
++++ description: List of roles revoked from accounts.
+      values.RolesRevoked.8663528507529876195:
++        [{"roleId":"8663528507529876195","account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
+-        0
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
+-        604800
++        950400
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
+-        604800
++        950400
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@773151 => .flat}/BridgedKinto/BridgedKinto.sol     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x433020c537dbdf2e53a26994bff8c280032ed795
+
+# Diff at Fri, 21 Mar 2025 14:35:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0cd49f2bd1f57cf090a4f7b659b8eb18c9783869 block: 772987
+- current block number: 773151
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+Rediscovered to properly handle canActIndependently on AccessManager thanks
+to a source code fix.
+
+Config: rename KintoAdminMultisig, edit config to treat it natively as a MS
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 772987 (main branch discovery), not current.
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      name:
+-        "KintoAdminMultisig"
++        "Kinto Multisig 2"
+      values.getOwners:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x94561e98DD5E55271f91A103e4979aa6C493745E"]
+      values.$members:
++        ["0x94561e98DD5E55271f91A103e4979aa6C493745E","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"]
++++ description: Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes.
++++ severity: HIGH
+      values.$threshold:
++        2
+      fieldMeta:
++        {"$threshold":{"severity":"HIGH","description":"Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"1":1,"2":1,"3":1,"4":2}}]
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"send tokens and ETH from the Treasury to any address without delay.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      issuedPermissions:
+-        [{"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.","via":[]},{"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}]
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"}]
+      values.edKintoAdminMultisigADMIN:
+-        950400
+      values.edKintoAdminMultisigUPGRADER:
+-        604800
+      values.kintoAdminMultisigPermission:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoMultisig2ADMIN:
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoMultisig2UPGRADER:
++        604800
+      values.kintoMultisig2Permission:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      fieldMeta.edKintoAdminMultisigUPGRADER:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoAdminMultisigADMIN:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2UPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2ADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"transfer KYC NFTs to a different address."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."},{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."},{"permission":"interact","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293","description":"send tokens and ETH from the Treasury to any address without delay."},{"permission":"interact","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."},{"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"},{"permission":"interact","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b","description":"manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."},{"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"},{"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"},{"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}]
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      issuedPermissions.9:
+-        {"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}
+      issuedPermissions.8:
+-        {"permission":"interact","to":"0x6E31039abF8d248aBed57E307C9E1b7530c269E4","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.7:
+-        {"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.6:
+-        {"permission":"interact","to":"0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.5.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
+      issuedPermissions.5.description:
+-        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.4.to:
+-        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
++        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+      issuedPermissions.3.to:
+-        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
++        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+      issuedPermissions.2.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+      issuedPermissions.2.description:
+-        "transfer KYC NFTs to a different address."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+    }
+```
+
+Generated with discovered.json: 0x9c243f55a75514f7155771dc44fcfece48096fca
+
+# Diff at Fri, 21 Mar 2025 09:58:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 770292
+- current block number: 772987
+
+## Description
+
+KINTO token upgrade (staking) and gov changes:
+- KintoID.GOVERNANCE_ROLE removed from NioGovernor
+- AccessManager execution delays and target delays increased to 11d (SCHEDULED)
+- remove/change KintoAdminMultisig permissions (SCHEDULED)
+
+the l2 gov system will be ready for full stage 1 review on 2025-03-31T23:42. the config, when including the scheduled ops, is complete.
+
+```
+============= Queued Delay/Config Changes and Queued Actions =============
+
+Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:14.000Z
+
+Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
+  New targetAdminDelay: 604800 (7d) effective at 2025-03-23T23:34:54.000Z
+
+Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:13.000Z
+
+Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7) scheduled targetAdminDelay change:
+  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:12.000Z
+
+Queued Operations:
+
+Operation 0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8:
+    Nonce: 1
+    Scheduled for: 2025-03-31T23:42:21.000Z
+    Caller: KintoAdminMultisig (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: grantRole(UPGRADER_ROLE, KintoAdminMultisig (0x2e2b1c42e38f5af81771e65d87729e57abd1337a), 950400 (11d))
+```
+
+## Watched changes
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7","description":"permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."}]
+    }
+```
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0xe15912dcb541011cee29f6046afcf500542e3763f530012c1ce71e54abd96545"
++        "0x8afd4a6a4dce2fedf29d5a78d35edbb8101e74ea5e923aebda93db04b4f44121"
+      values.$implementation:
+-        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
++        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
+      values.$pastUpgrades.7:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$pastUpgrades.6:
++        ["2024-06-29T15:10:34.000Z","0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865",["0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"]]
+      values.$pastUpgrades.5.2:
+-        "2025-02-21T21:13:41.000Z"
++        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
+      values.$pastUpgrades.5.1:
+-        ["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]
++        "2025-03-19T21:51:53.000Z"
+      values.$pastUpgrades.5.0:
+-        "0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb"
++        "0x0e582739f5a4d9605c001b7e2000de6140e478098f664ca7c907d7886bfd96f3"
+      values.$pastUpgrades.4.2:
+-        "2024-06-29T15:10:34.000Z"
++        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
+      values.$pastUpgrades.4.1.0:
+-        "0x840670bC23d0f77474e43f8ee4A2Da617c7376F0"
++        "0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"
+      values.$pastUpgrades.4.0:
+-        "0xd8d8d68bef601e045e6b2bff422ebdb8857e554c568bece1148ee7a8bde6a865"
++        "2024-12-18T00:08:48.000Z"
+      values.$pastUpgrades.3.2:
+-        "0xb0828f7016e3452a4b32bf6d987b8a8e265c5bdf5fedbcc42b51940f17d18ab8"
++        ["0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"]
+      values.$pastUpgrades.3.1:
+-        ["0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"]
++        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
+      values.$pastUpgrades.3.0:
+-        "2024-12-18T00:08:48.000Z"
++        "2024-06-20T23:33:48.000Z"
+      values.$pastUpgrades.2.2.0:
+-        "0x2D8Cb3A6cE18F78e479bbC5079865993324C51BA"
++        "0x6af53F698b87809d98CeAAfa848c73e192400E61"
+      values.$pastUpgrades.2.1:
+-        "0x2ede5a1db2f802171ef91a7693dc8313c822592a555e36ae1506ec468c897dd1"
++        "0xe01e30073eae9d9b6eb56ffce85389dbcafd04dcbbf007e05c77351182a4850c"
+      values.$pastUpgrades.2.0:
+-        "2024-06-20T23:33:48.000Z"
++        "2025-03-20T00:39:13.000Z"
+      values.$upgradeCount:
+-        6
++        8
+      values.STAKING:
++        "0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10"
+    }
+```
+
+```diff
+    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions.1.delay:
+-        604800
++        950400
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.from:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.5.description:
+-        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.4.delay:
++        950400
+      receivedPermissions.4.description:
++        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      issuedPermissions.4.delay:
++        950400
+      issuedPermissions.2.delay:
+-        604800
++        950400
+      values.accessControl.roles.ADMIN_ROLE.members.1.member:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      values.accessControl.roles.ADMIN_ROLE.members.1.since:
+-        1729791296
++        1742341092
+      values.accessControl.roles.ADMIN_ROLE.members.1.executionDelay:
+-        0
++        604800
+      values.accessControl.roles.ADMIN_ROLE.members.0.member:
+-        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      values.accessControl.roles.ADMIN_ROLE.members.0.since:
+-        1742341092
++        1742514140
+      values.accessControl.roles.ADMIN_ROLE.members.0.executionDelay:
+-        604800
++        950400
+      values.accessControl.roles.SECURITY_COUNCIL_ROLE.members.0.since:
+-        1739472657
++        1742427194
+      values.accessControl.roles.SECURITY_COUNCIL_ROLE.members.0.executionDelay:
+-        604800
++        950400
+      values.accessControl.targets.0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75.adminDelay:
+-        604800
++        950400
+      values.accessControl.targets.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.adminDelay:
+-        604800
++        950400
+      values.accessControl.targets.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7.adminDelay:
+-        604800
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoAdminMultisigADMIN:
+-        0
++        950400
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScSECURITY_COUNCIL:
+-        604800
++        950400
++++ description: List of scheduled operations.
++++ severity: HIGH
+      values.OperationScheduled.0:
++        {"operationId":"0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8","nonce":1,"schedule":1743464541,"caller":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","target":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","data":"0x25c471a0000000000000000000000000000000000000000000000000783b0946b8c9d2e30000000000000000000000002e2b1c42e38f5af81771e65d87729e57abd1337a00000000000000000000000000000000000000000000000000000000000e8080"}
++++ description: List of roles granted to accounts.
+      values.RolesGranted.0.2:
++        {"account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":0,"since":1729791296,"newMember":true}
+      values.RolesGranted.0.1.delay:
+-        0
++        950400
+      values.RolesGranted.0.1.since:
+-        1729791296
++        1742514140
+      values.RolesGranted.0.1.newMember:
+-        true
++        false
++++ description: List of roles granted to accounts.
+      values.RolesGranted.14661544942390944024.1:
++        {"account":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"since":1742427194,"newMember":false}
+      values.TargetAdminDelayUpdated.0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75.delay:
+-        604800
++        950400
+      values.TargetAdminDelayUpdated.0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75.since:
+-        1733613166
++        1742859194
+      values.TargetAdminDelayUpdated.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7.delay:
+-        604800
++        950400
+      values.TargetAdminDelayUpdated.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7.since:
+-        1739904656
++        1742859192
+      values.TargetAdminDelayUpdated.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.delay:
+-        604800
++        950400
+      values.TargetAdminDelayUpdated.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.since:
+-        1742772894
++        1742859193
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      issuedPermissions.10:
+-        {"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}
+      issuedPermissions.9.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.9.to:
+-        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.9.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.8.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
+      issuedPermissions.7.to:
+-        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.6.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+      issuedPermissions.6.description:
+-        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.5.to:
+-        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.5.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+      issuedPermissions.4.to:
+-        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
++        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+      issuedPermissions.3.to:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+      issuedPermissions.3.description:
+-        "transfer KYC NFTs to a different address."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.2.to:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.2.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "transfer KYC NFTs to a different address."
+      issuedPermissions.1.to:
+-        "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.0.to:
+-        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
++        "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a"
+      issuedPermissions.0.description:
+-        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      values.accessControl.GOVERNANCE_ROLE.members.1:
+-        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
++++ severity: HIGH
+      values.GOVERNANCErs.1:
+-        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/{.flat@770292 => .flat}/BridgedKinto/BridgedKinto.sol      | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 770292 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd) {
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract EntryPoint (0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb) {
+    +++ description: Used as entrypoint to transact using smartwallets and UserOps.
+      description:
++        "Used as entrypoint to transact using smartwallets and UserOps."
+    }
+```
+
+```diff
+    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."},{"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."},{"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":604800,"description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."}]
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","via":[]}]
+      receivedPermissions.5:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"}
+      receivedPermissions.3.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
++        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
+      receivedPermissions.2.description:
++        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+      receivedPermissions.1.from:
+-        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.1.description:
+-        "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      receivedPermissions.0.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.0.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+      receivedPermissions.0.delay:
++        604800
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewayRouter (0x340487b92808B84c2bd97C87B590EE81267E04a7)
+    +++ description: None
+```
+
+```diff
+    contract Socket (0x3e9727470C66B1e77034590926CDe0242B5A3dCc) {
+    +++ description: Central contract for bridging via the external socket bridge.
+      description:
++        "Central contract for bridging via the external socket bridge."
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+      description:
+-        "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets."
++        "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet."
+      fieldMeta.getSystemContracts.description:
+-        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
++        "Target contracts that are exempt from the STF-enforced rule that EOAs cannot make transactions. Must include ArbRetryableTx `0x000000000000000000000000000000000000006E`, EntryPoint `0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb`, ArbSys `0x0000000000000000000000000000000000000064`."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x87799989341A07F495287B1433eea98398FD73aA)
+    +++ description: None
+```
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      description:
++        "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b)
+    +++ description: None
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      description:
+-        "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic."
++        "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract."
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract BundleBulker (0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9eC0253E4174a14C0536261888416451A407Bf79)
+    +++ description: None
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      description:
+-        "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
++        "Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts."
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoAdminMultisigADMIN:
++        0
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edKintoAdminMultisigUPGRADER:
++        604800
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScADMIN:
++        604800
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScSECURITY_COUNCIL:
++        604800
++++ description: Current execution delay for target calls.
++++ severity: HIGH
+      values.edScUPGRADER:
++        950400
+      values.kintoAdminMultisigPermission:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      values.securityCouncilPermission:
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
++        0
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
++        604800
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
++        604800
+      fieldMeta.tadKintoWalletFactory:
++        {"severity":"HIGH","description":"CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."}
+      fieldMeta.tadKintoAppRegistry:
++        {"severity":"HIGH","description":"CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."}
+      fieldMeta.tadKintoID:
++        {"severity":"HIGH","description":"CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."}
+      fieldMeta.edKintoAdminMultisigUPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoAdminMultisigADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edScADMIN:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edScUPGRADER:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edScSECURITY_COUNCIL:
++        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      issuedPermissions:
++        [{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":950400,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":604800,"description":"upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.","via":[]},{"permission":"interact","to":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.","via":[]},{"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","description":"change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.","via":[]}]
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RewardsDistributor (0xD157904639E89df05e89e0DabeEC99aE3d74F9AA) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      description:
+-        "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets."
++        "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check."
+      values.ownerOf:
+-        ["0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","0x0C1df30B4576A1A94D9528854516D4d425Cf9323","0x70E218164e6A59AE756107D0D6eC2c498110Bc2E"]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
 Generated with discovered.json: 0xc5ef443f6f124d5cf1f9731e023d2edb89bfe916
 
 # Diff at Wed, 19 Mar 2025 15:45:47 GMT:

@@ -1,5 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterable-value'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
@@ -24,6 +25,7 @@ export function getCommonScalingEntry({
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
+
   return {
     id: project.id,
     slug: project.slug,
@@ -72,9 +74,19 @@ export function getCommonScalingEntry({
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',
       },
+      {
+        id: 'infrastructure',
+        value: project.scalingInfo.infrastructure ?? 'No infrastructure',
+      },
+      ...project.scalingInfo.vm.map((vm) => ({
+        id: 'vm' as const,
+        value: vm,
+      })),
     ],
     description: project.display?.description,
-    badges: project.display.badges,
+    badges: project.display.badges
+      .map((badge) => getBadgeWithParams(badge, project))
+      .filter((b) => b !== undefined),
   }
 }
 

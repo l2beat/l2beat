@@ -10,13 +10,10 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('lightlink')
-
-const upgradesLightLink = {
-  upgradableBy: [{ name: 'LightLinkMultisig2', delay: 'no' }],
-}
 
 const validators = discovery.getContractValue<
   { addr: string; power: number }[]
@@ -57,7 +54,6 @@ const CHALLENGE_FEE = utils.formatEther(
 )
 
 export const lightlink: ScalingProject = {
-  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('lightlink'),
   capability: 'universal',
@@ -70,11 +66,9 @@ export const lightlink: ScalingProject = {
   display: {
     name: 'LightLink',
     slug: 'lightlink',
-    headerWarning:
-      'The old ETH bridge is paused and funds have been [moved to a multisig](https://etherscan.io/tx/0x416221c8a6e0454762409735f01d3b9c8bb0e894c36ccd1e3e80e4a69b5bb923). New infra is under review.',
     description:
-      'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions. It aims at becoming an Ethereum Layer 2.',
-    category: 'Other',
+      'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions.',
+    category: 'Optimium',
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
@@ -97,8 +91,8 @@ export const lightlink: ScalingProject = {
     associatedTokens: ['LL'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x3ca373F5ecB92ac762f9876f6e773082A4589995'),
-        sinceTimestamp: UnixTime(1692181067),
+        address: EthereumAddress('0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE'),
+        sinceTimestamp: UnixTime(1725540839),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
@@ -132,73 +126,59 @@ export const lightlink: ScalingProject = {
     ],
   },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_NONE,
-      description:
-        RISK_VIEW.STATE_NONE.description +
-        ` State updates must be signed by at least ${validatorThresholdPercentage}% of validators, which corresponds to a minimum of ${minValidatorsForConsensus} validators.`,
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_CELESTIA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, CHALLENGE_WINDOW_SECONDS),
-    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(false),
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+      HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+    ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description: `
-      LightLink chain state roots are periodically posted to Ethereum through a CanonicalStateChain contract on L1. After the challenge window of ${formatSeconds(
+  stateValidation: {
+    description:
+      'The project implements an incomplete and non-funcional proof system.',
+    categories: [
+      {
+        title: 'Challenges',
+        description: `
+      LightLink chain state roots are periodically posted to Ethereum through a CanonicalStateChain contract on L1 as block headers that also contain Celestia data pointers. After the challenge window of ${formatSeconds(
         CHALLENGE_WINDOW_SECONDS,
       )}, the published state root is assumed to be correct. During the challenge window, anyone can challenge a block header against some basic validity checks. The challenge fee required is ${CHALLENGE_FEE} ETH.
       Once challenged, the permissioned defender can respond within ${formatSeconds(
         CHALLENGE_PERIOD_SECONDS,
       )} to the challenge, by providing the L2 header and the previous L2 header. If the defender does not respond,
       the block header is considered invalid, the canonical state chain is rolled back to the previous state root, and the challenger can claim back the challenge fee. If the defender successfully responds, the challenger loses the challenge fee to the defender.
-      Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots. Moreover, state roots are not used for L1 bridge withdrawals.
-      Users can deposit tokens on the LightLink chain by sending them to the L1BridgeRegistry contract on Ethereum L1. On the LightLink chain, token minting is then authorized by a permissioned set of signers providing signatures as input to the syncDeposit() function on the L2ERC20Predicate contract.
+      Since only the block header can be challenged and not the state transition, the system is vulnerable to invalid state roots. Moreover, state roots are not used for ERC20 withdrawals from the LightLinkERC20Bridge.
+      Users can deposit tokens on the LightLink chain by sending them to the L1BridgeRegistry contract on Ethereum L1. On the LightLink chain, ERC20 token minting is then authorized by a permissioned set of signers providing signatures as input to the syncDeposit() function on the L2ERC20Predicate contract.
       Users can withdraw their funds by submitting a withdraw() transaction to the L2ERC20Predicate contract, which will burn the tokens on the LightLink chain. To then unlock tokens from the bridge on L1, a validator multisig needs to validate the withdrawal based on off-chain validity checks. 
       Users can exit the network once enough validators have signed off on the withdrawal.
-      Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
-      references: [
-        {
-          title: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
-          url: 'https://phoenix.lightlink.io/address/0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9?tab=contract_code',
-        },
-        {
-          title: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
-          url: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
-        },
-      ],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: "validators relay a withdraw request that wasn't originated on the source chain.",
-        },
-      ],
-    },
-    otherConsiderations: [
-      {
-        name: 'Destination tokens are upgradable',
-        description:
-          'Tokens on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
+      Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal. To deposit the gas token, i.e. ETH, the LightLinkPortal is used which uses the CanonicalStateChain as the source for the state root, and withdrawals follow the usual OP stack process.`,
         references: [
           {
-            title: 'Token Implementation - requireMultisig()',
-            url: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
+            title: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
+            url: 'https://phoenix.lightlink.io/address/0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9?tab=contract_code',
+          },
+          {
+            title: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
+            url: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
           },
         ],
         risks: [
           {
+            category: 'Users can be censored if',
+            text: 'validators decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
             category: 'Funds can be stolen if',
-            text: 'destination token contract is maliciously upgraded.',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: "validators relay a withdraw request that wasn't originated on the source chain.",
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the publisher posts an invalid block header on Ethereum.',
           },
         ],
       },
@@ -206,55 +186,21 @@ export const lightlink: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('CanonicalStateChain', {
-          description:
-            'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
-          ...upgradesLightLink,
-        }),
-        discovery.getContractDetails('Challenge', {
-          description:
-            'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
-          ...upgradesLightLink,
-        }),
-        discovery.getContractDetails('L1BridgeRegistry', {
-          description:
-            'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
-        }),
-        discovery.getContractDetails('ChainOracle', {
-          description:
-            'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
-          ...upgradesLightLink,
-        }),
-      ],
+      [discovery.chain]: [...discovery.getDiscoveredContracts()],
     },
     risks: [],
   },
   permissions: {
     [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Validators',
-          discovery.formatPermissionedAccounts(validatorAddresses),
-          `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-        ),
-        discovery.getPermissionDetails(
-          'Proposer',
-          discovery.getPermissionedAccounts('CanonicalStateChain', 'publisher'),
-          'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
-        ),
-        discovery.getPermissionDetails(
-          'LightLinkMultisig',
-          discovery.getPermissionedAccounts('L1BridgeRegistry', 'multisig'),
-          'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
-        ),
-        discovery.getMultisigPermission(
-          'LightLinkMultisig2',
-          'Owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
-        ),
-      ],
+      ...discovery.getDiscoveredPermissions(),
+      ...discovery.getPermissionDetails(
+        'Validators',
+        discovery.formatPermissionedAccounts(validatorAddresses),
+        `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+      ),
     },
   },
+  technology: {},
 }
 
 function getMinValidatorsForConsensus(

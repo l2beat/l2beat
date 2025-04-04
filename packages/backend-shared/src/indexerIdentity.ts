@@ -50,6 +50,8 @@ export const INDEXER_NAMES = {
   TVS_CHAIN_AMOUNT: 'tvs_chain_amount_indexer',
   TVS_PRICE: 'tvs_price_indexer',
   TVS_CIRCULATING_SUPPLY: 'tvs_circulating_supply_indexer',
+  TVS_TOKEN_VALUE: 'tvs_token_value',
+  TVS_PROJECT_VALUE: 'tvs_project_value',
 }
 
 export function getPremintedIndexerId(

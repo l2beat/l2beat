@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LightLinkPortal",
+  "description": "Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.",
+  "fields": {
+    "paused": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can pause the chain and update the gas token."
+        }
+      ]
+    }
+  },
+  "ignoreMethods": ["isOutputFinalized", "balance"],
+  "ignoreInWatchMode": ["params"]
+}

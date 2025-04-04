@@ -1,4 +1,35 @@
-Generated with discovered.json: 0xecf6809198a90abebd3edccb4b683b2a46f1e10f
+Generated with discovered.json: 0x6486614375f3b46085eaa9f94736e1522051aecf
+
+# Diff at Thu, 27 Mar 2025 11:15:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21981156
+- current block number: 21981156
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981156 (main branch discovery), not current.
+
+```diff
+    contract GpsFactRegistryAdapter (0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
+Generated with discovered.json: 0xf4dacb806e0cff2a32ef40086183809a2df56fba
 
 # Diff at Wed, 19 Mar 2025 13:05:40 GMT:
 

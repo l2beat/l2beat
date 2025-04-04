@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { resolveAnalysis } from './resolveAnalysis'
+import { buildGraph, resolveAnalysis } from './resolveAnalysis'
 import type { PathElement } from './resolvePermissions'
 
 const BASE_CONTRACT: AnalyzedContract = {
@@ -365,6 +365,62 @@ describe(resolveAnalysis.name, () => {
   it('empty returns empty', () => {
     const input: Analysis[] = []
     expect(resolveAnalysis(input)).toBeEmpty()
+  })
+
+  it("doesn't miss contract data when permission appears earlier", () => {
+    const contractAddress = EthereumAddress.random()
+    const contractAddress2 = EthereumAddress.random()
+    const input: Analysis[] = [
+      {
+        ...BASE_CONTRACT,
+        address: contractAddress,
+        combinedMeta: {
+          permissions: [
+            {
+              type: 'interact',
+              delay: 10,
+              target: contractAddress2,
+            },
+          ],
+        },
+      },
+      {
+        ...BASE_CONTRACT,
+        address: contractAddress2,
+        values: {
+          ...BASE_CONTRACT.values,
+          $threshold: 3,
+        },
+        combinedMeta: {
+          canActIndependently: false,
+        },
+      },
+    ]
+
+    expect(buildGraph(input)).toEqual({
+      [contractAddress.toString()]: {
+        address: contractAddress,
+        delay: 0,
+        threshold: 1,
+        edges: [],
+        canActIndependently: undefined,
+      },
+      [contractAddress2.toString()]: {
+        address: contractAddress2,
+        delay: 0,
+        threshold: 3,
+        edges: [
+          {
+            toNode: contractAddress,
+            delay: 10,
+            permission: 'interact',
+            description: undefined,
+            condition: undefined,
+          },
+        ],
+        canActIndependently: false,
+      },
+    })
   })
 })
 

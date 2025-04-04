@@ -106,10 +106,11 @@ export interface TvlConfig {
 }
 
 export interface TvsConfig {
-  readonly projects: ProjectTvsConfig[]
-  readonly amounts: (AmountConfig & { project: string; chain?: string })[]
+  readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
+  readonly amounts: AmountConfig[]
   readonly prices: PriceConfig[]
-  readonly chains: BlockTimestampConfig[]
+  readonly chains: string[]
+  readonly blockTimestamps: BlockTimestampConfig[]
 }
 
 export interface TrackedTxProject {

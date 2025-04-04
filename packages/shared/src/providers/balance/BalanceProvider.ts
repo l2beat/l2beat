@@ -10,10 +10,13 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
+  logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    _logger: Logger,
+  ) {
+    this.logger = _logger.for(this)
+  }
 
   async getBalances(
     queries: BalanceQuery[],
@@ -37,22 +40,33 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: queries.length })
+          const results = []
+          for (const { token, holder } of queries) {
+            if (token === 'native') {
+              const start = Date.now()
+              const balance = await client.getBalance(holder, blockNumber)
+              this.logger.tag({ chain }).info('Call duration', {
+                callDuration: (Date.now() - start) / 1000,
+                type: 'native',
+              })
+              results.push(balance)
+            } else {
+              const start = Date.now()
+              const res = await client.call(
+                encodeErc20Balance(token, holder),
+                blockNumber,
+              )
+              this.logger.tag({ chain }).info('Call duration', {
+                callDuration: (Date.now() - start) / 1000,
+                type: 'erc20',
+              })
 
-          return Promise.all(
-            queries.map(async ({ token, holder }) => {
-              if (token === 'native') {
-                return client.getBalance(holder, blockNumber)
-              } else {
-                const res = await client.call(
-                  encodeErc20Balance(token, holder),
-                  blockNumber,
-                )
-
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
-              }
-            }),
-          )
+              results.push(
+                res.toString() === '0x' ? 0n : BigInt(res.toString()),
+              )
+            }
+          }
+          return results
         }
       } catch (error) {
         if (index === this.rpcs.length - 1) throw error

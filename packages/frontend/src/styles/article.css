@@ -65,7 +65,7 @@
 }
 
 .article strong {
-  @apply text-opacity-100 text-primary;
+  @apply text-opacity-100 text-primary font-semibold;
 }
 
 .article code {

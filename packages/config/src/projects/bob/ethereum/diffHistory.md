@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x04a5932884c838d8bce0a074f9521e9c6e6bb4b8
+
+# Diff at Thu, 03 Apr 2025 10:05:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 22094600
+- current block number: 22187675
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.3:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.2:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    }
+```
+
+Generated with discovered.json: 0x1642a14c35d3286823a799f09748ecd7d715865b
+
+# Diff at Thu, 27 Mar 2025 11:14:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22094600
+- current block number: 22094600
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22094600 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xF2dc77c697e892542cC53336178a78Bb313DFDC7) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0xd346fe10524e27467500acc81c1f217d38963ad1
+
+# Diff at Fri, 21 Mar 2025 10:19:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 22045237
+- current block number: 22094600
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      values.$members.6:
+-        "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6"
+      values.$members.5:
+-        "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7"
++        "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6"
+      values.$members.4:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7"
+      values.$members.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.2:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.1:
+-        "0x56b73FA51e09D0BBFA3A5346aaB7576Edc9d0436"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.0:
+-        "0xC9D2c719d6C8Ba2876FC9B443c7d2690072F04ad"
++        "0x3C30D693b23F77d55e14b8e0CFB6C00075ff93aB"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 7 (71%)"
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x63c9a49658477c71d6d6915cf6c925a0881caac3
 
 # Diff at Tue, 18 Mar 2025 08:12:31 GMT:

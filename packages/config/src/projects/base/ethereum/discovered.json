@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 21880945,
-  "configHash": "0xe8ed7c2de65debbdef5104d8659bd5b9c617b77ea07c23a882d71baaed78d20b",
+  "configHash": "0xa7956670367d4244011f2eac230827a7d88e1aebc994ddfb4ece9db09f76a268",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -45,7 +45,8 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      }
+      },
+      "derivedName": "LivenessModule"
     },
     {
       "name": "ProxyAdmin",
@@ -107,7 +108,8 @@
         "addressManager": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
         "isUpgrading": false,
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -153,7 +155,8 @@
         "bridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
@@ -273,7 +276,8 @@
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "LivenessGuard"
     },
     {
       "address": "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b",
@@ -325,6 +329,7 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -408,7 +413,8 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 55,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "DisputeGameFactory",
@@ -455,6 +461,7 @@
         "permissionedGamesTotal": 0,
         "version": "1.0.0"
       },
+      "derivedName": "DisputeGameFactory",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -685,7 +692,8 @@
         "$immutable": true,
         "oracle": "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277",
         "version": "1.2.1"
-      }
+      },
+      "derivedName": "MIPS"
     },
     {
       "name": "L1ERC721Bridge",
@@ -736,6 +744,7 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -905,6 +914,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1022,7 +1032,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1728571115,
       "sinceBlock": 20935859,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Escrow"
     },
     {
       "name": "OpFoundationUpgradeSafe",
@@ -1140,6 +1151,7 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1175,7 +1187,9 @@
       "values": {
         "$immutable": true,
         "owner": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x92827223f6b397CE9F208eE352bacA710765cACb",
@@ -1262,6 +1276,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -1387,7 +1402,8 @@
         "proposalCount": 0,
         "proposals": [],
         "version": "1.1.2"
-      }
+      },
+      "derivedName": "PreimageOracle"
     },
     {
       "name": "wstETHEscrow",
@@ -1653,6 +1669,7 @@
           "description": "Prestate tag for known prestates."
         }
       },
+      "derivedName": "FaultDisputeGame",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1707,7 +1724,8 @@
         "safe": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
-      }
+      },
+      "derivedName": "DeputyGuardianModule"
     },
     {
       "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
@@ -1748,7 +1766,8 @@
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
-      }
+      },
+      "derivedName": "AnchorStateRegistry"
     },
     {
       "name": "AddressManager",
@@ -1774,7 +1793,8 @@
         "$immutable": true,
         "owner": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
       },
-      "derivedName": "Lib_AddressManager"
+      "derivedName": "Lib_AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xe32868ec7762650DdE723e945D638A05900974F4",
@@ -1849,6 +1869,7 @@
           "description": "Prestate tag for known prestates."
         }
       },
+      "derivedName": "PermissionedDisputeGame",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -2817,7 +2838,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0x5f298bc59cbf29e7b1e8d20a3b4f84589941f57f29331cecd5aad842af268195",
     "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
     "lido/L1ERC20TokenBridge": "0x44d20eeab0d047608977415a93b298af0794106bce88430721828b7aebb83626",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
+    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
     "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",

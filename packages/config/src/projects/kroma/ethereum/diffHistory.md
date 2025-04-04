@@ -1,3 +1,152 @@
+Generated with discovered.json: 0xa62506288a5e89088402962b6ce12c0da428c979
+
+# Diff at Thu, 03 Apr 2025 14:34:03 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 22166261
+- current block number: 22188901
+
+## Description
+
+Renamed SP1SuccinctGateway to SP1VerifierGateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166261 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      template:
+-        "succinct/SP1SuccinctGateway"
++        "succinct/SP1VerifierGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Poseidon2 (0xFd234971881a7c72965175fA8E438c97B2Dcd273)
+    +++ description: Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.
+```
+
+Generated with discovered.json: 0x41709762830ca7f85d38f855f7c24a2bf7521f8e
+
+# Diff at Mon, 31 Mar 2025 10:20:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 22094602
+- current block number: 22166261
+
+## Description
+
+sc signer rotated.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      issuedPermissions.6.to:
+-        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
++        "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
+      values.tokenOwners.3:
+-        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
++        "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
+      values.tokens.5:
+-        15
++        16
+    }
+```
+
+Generated with discovered.json: 0x208836242ac06471f93a8a243644f420db75973d
+
+# Diff at Fri, 21 Mar 2025 10:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4eed3e556a58bb9ab448d141c0407f67ca3ce31 block: 22022417
+- current block number: 22094602
+
+## Description
+
+SC signer change.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      issuedPermissions.10.to:
+-        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
++        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+      issuedPermissions.9.to:
+-        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+      issuedPermissions.8.to:
+-        "0x16876e5c608cec36968517A9Eb345269D308D94a"
++        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      issuedPermissions.7.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.7.to:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.7.description:
+-        "one of the signers of the KromaSecurityCouncil."
+      issuedPermissions.7.via.2:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.7.via.1:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.7.via.0:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.6.to:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
+      issuedPermissions.6.via.2:
+-        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.6.via.1:
+-        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.6.via.0:
+-        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.6.description:
++        "one of the signers of the KromaSecurityCouncil."
+      values.tokenOwners.3:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "0x70cd6F41651123eDbAF78CAB205d36D2d3bbAEf8"
+      values.tokenOwners.2:
+-        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
++        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.tokenOwners.1:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
+      values.tokenOwners.0:
+-        "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998"
++        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+      values.tokens.8:
+-        8
++        7
+      values.tokens.7:
+-        7
++        4
+      values.tokens.6:
+-        4
++        0
+      values.tokens.5:
+-        0
++        15
+    }
+```
+
 Generated with discovered.json: 0xeeff826e815f0d55b4d3b54943a618c4baa3edff
 
 # Diff at Tue, 18 Mar 2025 08:13:02 GMT:

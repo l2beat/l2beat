@@ -2,7 +2,7 @@
   "name": "zkswap2",
   "chain": "ethereum",
   "blockNumber": 16767881,
-  "configHash": "0xd53ef21d0fbf93e22f9997c13c4d62143bc42afa0e302fd8210e2dd5d1770aa9",
+  "configHash": "0x7ec7b7e920c1a6be06db2291e867688c524b712781d36bccf1f5c74a1a0bb259",
   "entries": [
     {
       "name": "UpgradeGatekeeper",
@@ -78,7 +78,8 @@
         "$upgradeCount": 0,
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0x94b9401945a9bc06CE5B69e6dB3c6B671aABc829"
-      }
+      },
+      "derivedName": "Verifier"
     },
     {
       "name": "ZkSync",
@@ -136,7 +137,8 @@
         "withdrawGasLimit": 350000,
         "zkSyncCommitBlockAddress": "0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4",
         "zkSyncExitAddress": "0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0"
-      }
+      },
+      "derivedName": "ZkSync"
     },
     {
       "name": "Governance",
@@ -168,7 +170,8 @@
         "totalFeeTokens": 10,
         "totalUserTokens": 45,
         "validators": ["0x38101ae98196C8BCf7dF1835Bf3983B384272ae4"]
-      }
+      },
+      "derivedName": "Governance"
     },
     {
       "address": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
@@ -202,7 +205,8 @@
         "tokenDecimalsLimit": 32,
         "tokenNameLimit": 64,
         "tokenSymbolLimit": 64
-      }
+      },
+      "derivedName": "ZkSwapListing"
     },
     {
       "name": "VerifierExit",
@@ -267,7 +271,8 @@
         "getMaster": "0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7",
         "getTarget": "0xB2639bA16c7A5b0C55cA22D77CdA3D7ED88A5c89",
         "zkSyncAddress": "0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
-      }
+      },
+      "derivedName": "UniswapV2Factory"
     },
     {
       "name": "ZkSyncCommitBlock",
@@ -298,7 +303,8 @@
         "withdrawGasLimit": 0,
         "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
         "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "ZkSyncCommitBlock"
     },
     {
       "name": "ZksToken",
@@ -316,7 +322,8 @@
         "name": "Zks",
         "symbol": "ZKS",
         "totalSupply": "1000000000000000000000000000"
-      }
+      },
+      "derivedName": "ZksToken"
     }
   ],
   "abis": {

@@ -1,4 +1,5 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
+import type { CirculatingSupplyAmountFormula } from '@l2beat/config'
 import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import {
@@ -13,22 +14,17 @@ import type {
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import type { CirculatingSupplyAmountFormula } from '../types'
-
-export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula & {
-  project: string
-}
 
 export interface CirculatingSupplyAmountIndexerDeps
   extends Omit<
-    ManagedMultiIndexerOptions<CirculatingSupplyAmountConfig>,
+    ManagedMultiIndexerOptions<CirculatingSupplyAmountFormula>,
     'name'
   > {
   syncOptimizer: SyncOptimizer
   circulatingSupplyProvider: CirculatingSupplyProvider
 }
 
-export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountConfig> {
+export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<CirculatingSupplyAmountFormula> {
   constructor(private readonly $: CirculatingSupplyAmountIndexerDeps) {
     super({
       ...$,
@@ -40,7 +36,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<CirculatingSupplyAmountConfig>[],
+    configurations: Configuration<CirculatingSupplyAmountFormula>[],
   ) {
     const adjustedTo = this.$.circulatingSupplyProvider.getAdjustedTo(from, to)
 
@@ -65,7 +61,6 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               configurationId: configuration.id,
               timestamp: p.timestamp,
               amount: BigInt(p.value * 10 ** configuration.properties.decimals),
-              project: configuration.properties.project,
             }))
 
             const optimizedRecords = supplyRecords.filter((p) =>
@@ -104,7 +99,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
     return async () => {
       await this.$.db.tvsAmount.insertMany(records)
 
-      this.logger.info('Saved prices into DB', {
+      this.logger.info('Saved amounts into DB', {
         from,
         to: adjustedTo,
         records: records.length,
@@ -123,12 +118,18 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
           UnixTime(configuration.to),
         )
 
-      this.logger.info('Deleted records', {
-        from: configuration.from,
-        to: configuration.to,
-        id: configuration.id,
-        deletedRecords,
-      })
+      if (deletedRecords > 0) {
+        this.logger.info('Deleted records for configuration', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          deletedRecords,
+        })
+      }
     }
+  }
+
+  static SOURCE() {
+    return 'l2b-circulating-supply'
   }
 }

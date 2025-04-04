@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainOracle",
+  "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",
+  "fields": {},
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreInWatchMode": []
+}

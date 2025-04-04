@@ -90,7 +90,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   gasTokens: string[] | undefined
 }
 
-function getScalingSummaryEntry(
+export function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'

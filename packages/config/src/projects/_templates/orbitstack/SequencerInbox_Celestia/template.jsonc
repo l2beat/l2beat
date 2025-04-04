@@ -3,7 +3,7 @@
   "displayName": "SequencerInbox",
   "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge.",
   "ignoreMethods": ["inboxAccs"],
-  "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+  "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "postsBlobs"],
   "ignoreRelatives": ["reader4844"],
   "category": "core",
   "fields": {

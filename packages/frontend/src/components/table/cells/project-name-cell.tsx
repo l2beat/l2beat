@@ -126,11 +126,14 @@ function NameWithProjectInfoTooltip({
       <TooltipContent className="flex max-w-[348px] flex-col gap-2 px-[14px]">
         <span className="text-lg font-bold">What is {projectName}?</span>
         <p className="text-wrap text-[13px]">{project.description}</p>
-        <div className="grid w-full grid-cols-5">
+        <div className="grid w-full grid-cols-6">
           {project.badges?.map((badge, key) => (
-            <div key={key} className="h-16 place-items-center">
-              <ProjectBadge badge={badge} hideTooltip className="lg:h-16" />
-            </div>
+            <ProjectBadge
+              badge={badge}
+              disableInteraction
+              className="!h-auto place-items-center"
+              key={key}
+            />
           ))}
         </div>
       </TooltipContent>

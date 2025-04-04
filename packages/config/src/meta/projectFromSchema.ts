@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES, badges, badgesCompareFn } from '../common/badges'
-import type * as Schema from './schema'
 import type * as Types from '../types'
+import type * as Schema from './schema'
 
 export function projectFromSchema(
   schema: Schema.Project,
@@ -169,5 +169,7 @@ function getScalingInfo(
     stage: 'Not applicable', // TODO: stage
     purposes: schema.scaling.purposes,
     scopeOfAssessment: undefined, // TODO: scopeOfAssessment
+    infrastructure: 'Unknown', // TODO: infrastructure
+    vm: [], // TODO: vm
   }
 }

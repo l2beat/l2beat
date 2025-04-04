@@ -63,8 +63,8 @@ export const fuelv1: ScalingProject = {
     ],
   },
   scopeOfAssessment: {
-    checked: [SOA.l1Contracts, SOA.gasToken],
-    notChecked: [SOA.specToSourceCode, SOA.nonGasTokens, SOA.derivationSpec],
+    inScope: [SOA.l1Contracts, SOA.gasToken],
+    notInScope: [SOA.specToSourceCode, SOA.nonGasTokens, SOA.derivationSpec],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,

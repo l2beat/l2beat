@@ -22,6 +22,7 @@ export interface Token {
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   excludeFromTotal?: true
   bridgedUsing?: TokenBridgedUsing
+  premint?: string
 }
 
 export interface TokenBridge {

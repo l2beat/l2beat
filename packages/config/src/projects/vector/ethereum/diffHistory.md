@@ -1,4 +1,74 @@
-Generated with discovered.json: 0xc06cda986ca2b9050317b63ff35015a9d59c8148
+Generated with discovered.json: 0x731f6b40346b400dd83e5a0898e48658eb3648d5
+
+# Diff at Thu, 03 Apr 2025 14:55:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 21635855
+- current block number: 22188870
+
+## Description
+
+Renamed SP1SuccinctGateway to SP1VerifierGateway. vectorXProgramVkey changed.
+
+## Watched changes
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.vectorXProgramVkey:
+-        "0x00d0279ddadaccdbdb6142981d3830f9ada20ed4e2925ed186ae2be5806e3402"
++        "0x00e9bba2a9360f570b9ba99e5186825ac723bedebd486b6a818870c44e3e4d4f"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635855 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SuccinctGatewaySP1"
++        "SP1VerifierGateway"
+      template:
+-        "succinct/SP1SuccinctGateway"
++        "succinct/SP1VerifierGateway"
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","description":"can verify proofs for the header range [latestBlock, targetBlock] proof.","via":[]}
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "SuccinctGatewaySP1Multisig"
++        "SP1VerifierGatewayMultisig"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "SP1Verifier is a contract used to verify proofs given public values and verification key."
+    }
+```
+
+Generated with discovered.json: 0xeb46411b3caad84170ba00ea3e1e21a9a6c1095b
 
 # Diff at Tue, 04 Mar 2025 10:40:11 GMT:
 

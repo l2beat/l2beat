@@ -20,13 +20,29 @@ export class TvsAmountRepository extends BaseRepository {
   ): Promise<TvsAmountRecord[]> {
     const rows = await this.db
       .selectFrom('TvsAmount')
-      .select(['timestamp', 'configurationId', 'project', 'amount'])
+      .select(['timestamp', 'configurationId', 'amount'])
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getLatestAmountBefore(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsAmountRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '<', UnixTime.toDate(timestamp))
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async deleteByConfigInTimeRange(
@@ -46,7 +62,7 @@ export class TvsAmountRepository extends BaseRepository {
   async getAll(): Promise<TvsAmountRecord[]> {
     const rows = await this.db
       .selectFrom('TvsAmount')
-      .select(['timestamp', 'configurationId', 'project', 'amount'])
+      .select(['timestamp', 'configurationId', 'amount'])
       .execute()
     return rows.map(toRecord)
   }

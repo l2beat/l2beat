@@ -11,8 +11,8 @@ import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
 import { sentimentToTransparentBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../warning-bar'
+import { RiskBanner } from '../risk-banner'
 import { ProjectSection } from './project-section'
-import { SingleRisk } from './risk-analysis-section'
 import type { ProjectSectionProps } from './types'
 
 export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
@@ -108,9 +108,11 @@ export function L3RiskAnalysisSection({
         The information below reflects{' '}
         {combined ? 'combined L2 & L3' : 'individual L3'} risks.
       </div>
-      {(combined ?? l3.risks).map((value) => (
-        <SingleRisk key={value.name} value={value} />
-      ))}
+      <div className="space-y-6">
+        {(combined ?? l3.risks).map((value) => (
+          <RiskBanner key={value.name} {...value} />
+        ))}
+      </div>
     </ProjectSection>
   )
 }

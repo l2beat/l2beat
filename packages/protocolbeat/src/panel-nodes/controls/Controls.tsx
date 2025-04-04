@@ -14,21 +14,29 @@ interface ControlsProps {
 export function Controls(props: ControlsProps) {
   return (
     <div className="-translate-x-1/2 absolute bottom-8 left-1/2 flex select-none items-center gap-1 rounded bg-black p-2 shadow-[0_10px_20px_-10px_#00000088]">
-      <ClusterLayoutButton />
-      <StackLayoutButton />
+      <div className="flex flex-col gap-2 md:flex-row">
+        <ClusterLayoutButton />
+        <StackLayoutButton />
+      </div>
       <span className="text-coffee-600">|</span>
-      <ShowButton />
-      <HideUnknownsButton />
-      {props.panelMode && <Settings />}
+      <div className="flex flex-col gap-2 md:flex-row">
+        <ShowButton />
+        <div className="flex gap-1">
+          <HideUnknownsButton />
+          {props.panelMode && <Settings />}
+        </div>
+      </div>
       <span className="text-coffee-600">|</span>
-      <HideButton />
-      <ColorButton />
-      {!props.panelMode && (
-        <>
-          <span className="text-coffee-600">|</span>
-          <ClearButton />
-        </>
-      )}
+      <div className="flex flex-col gap-2 md:flex-row">
+        <HideButton />
+        <ColorButton />
+        {!props.panelMode && (
+          <>
+            <span className="text-coffee-600">|</span>
+            <ClearButton />
+          </>
+        )}
+      </div>
     </div>
   )
 }

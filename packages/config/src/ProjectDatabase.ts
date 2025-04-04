@@ -49,6 +49,7 @@ const schema = {
 
   tvlInfo: 'TEXT',
   tvlConfig: 'TEXT',
+  tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
   livenessInfo: 'TEXT',
   livenessConfig: 'TEXT',
@@ -57,6 +58,8 @@ const schema = {
   finalityInfo: 'TEXT',
   finalityConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
+  ecosystemInfo: 'TEXT',
+  ecosystemConfig: 'TEXT',
 
   permissions: 'TEXT',
   contracts: 'TEXT',

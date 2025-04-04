@@ -2,7 +2,7 @@
   "name": "hop",
   "chain": "ethereum",
   "blockNumber": 19531595,
-  "configHash": "0xf96638b972a30cf95c85c7f6f06b015db5887667ec4b0f277b9a341f2864fe07",
+  "configHash": "0x2447a7ff21e0deec168276091e9570052c9dcc7eb1c546987af683746c99cae8",
   "entries": [
     {
       "name": "Hop Multisig",
@@ -77,7 +77,8 @@
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 86400,
         "pendingAdmin": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Timelock"
     },
     {
       "name": "USDC Bridge",

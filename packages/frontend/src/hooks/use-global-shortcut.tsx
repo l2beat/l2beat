@@ -2,7 +2,13 @@ import { useEventListener } from './use-event-listener'
 
 export function useGlobalShortcut(key: string, callback: () => void) {
   useEventListener('keydown', (event) => {
-    if (event.key.toLowerCase() === key.toLowerCase()) {
+    if (
+      event.key.toLowerCase() === key.toLowerCase() &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.shiftKey
+    ) {
       const isEnabled =
         [
           ...document.querySelectorAll('[data-radix-popper-content-wrapper]'),

@@ -111,6 +111,7 @@ export function getProject(
           }),
         )
         .sort(orderAddressEntries),
+      blockNumber: discovery.blockNumber,
     } satisfies ApiProjectChain
     response.entries.push(chainInfo)
   }
@@ -181,6 +182,7 @@ function contractFromDiscovery(
       address: toAddress(chain, address),
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
+    sources: [],
   }
 }
 

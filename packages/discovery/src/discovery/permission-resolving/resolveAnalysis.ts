@@ -6,24 +6,24 @@ import {
   resolvePermissions,
 } from './resolvePermissions'
 
-export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
+export function buildGraph(analyses: Analysis[]): Record<string, Node> {
   const graph: Record<string, Node> = {}
+  const nonZeroAnalyses = analyses.filter(
+    (a) => a.address !== EthereumAddress.ZERO,
+  )
 
-  for (const analysis of analyses) {
+  // add contract nodes
+  for (const analysis of nonZeroAnalyses) {
     let threshold = 1
     let multisigOwners: EthereumAddress[] = []
 
     if (analysis.type === 'Contract') {
-      threshold = Number(analysis.values['$threshold']) ?? 1
+      threshold = Number(analysis.values['$threshold'] ?? 1)
       multisigOwners = (analysis.values['$members'] as EthereumAddress[]) ?? []
     }
 
     const address = analysis.address
-    if (address === EthereumAddress.ZERO) {
-      continue
-    }
-
-    graph[address.toString()] ??= {
+    graph[address.toString()] = {
       address,
       delay: 0,
       threshold,
@@ -34,11 +34,11 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
       })),
       canActIndependently: analysis.combinedMeta?.canActIndependently,
     }
-    if (analysis.combinedMeta === undefined) {
-      continue
-    }
+  }
 
-    for (const entry of analysis.combinedMeta.permissions ?? []) {
+  // add permission edges
+  for (const analysis of nonZeroAnalyses) {
+    for (const entry of analysis.combinedMeta?.permissions ?? []) {
       const entryAddress = entry.target
       if (entryAddress === EthereumAddress.ZERO) {
         continue
@@ -47,12 +47,12 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
       graph[entryAddress.toString()] ??= {
         address: entry.target,
         delay: 0,
-        threshold,
+        threshold: 1,
         edges: [],
         canActIndependently: undefined,
       }
       graph[entryAddress.toString()]?.edges.push({
-        toNode: address,
+        toNode: analysis.address,
         delay: entry.delay,
         permission: entry.type,
         description: entry.description,
@@ -61,5 +61,10 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
     }
   }
 
+  return graph
+}
+
+export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
+  const graph = buildGraph(analyses)
   return resolvePermissions(Object.values(graph))
 }

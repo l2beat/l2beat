@@ -2,7 +2,7 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
-  "configHash": "0x9c83d3b8b49e5615192c8b7b8c2314a8aba50b997edb344816d4170e78d753c7",
+  "configHash": "0x76c714cf52065b92de1aa1a3c9b854d5b6c668221250387507ed4bfbc185f2c6",
   "entries": [
     {
       "address": "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
@@ -63,7 +63,8 @@
         "name": "nUSD",
         "owner": "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8",
         "symbol": "nUSD"
-      }
+      },
+      "derivedName": "LPToken"
     },
     {
       "address": "0x230A1AC45690B9Ae1176389434610B9526d2f21b",
@@ -178,7 +179,8 @@
           "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
           "type": "PERMISSION"
         }
-      }
+      },
+      "derivedName": "SynapseBridge"
     },
     {
       "name": "TimelockController",
@@ -214,7 +216,8 @@
           }
         },
         "getMinDelay": 180
-      }
+      },
+      "derivedName": "TimelockController"
     },
     {
       "name": "L1BridgeZap",
@@ -234,7 +237,8 @@
           "0xdAC17F958D2ee523a2206206994597C13D831ec7"
         ],
         "WETH_ADDRESS": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      }
+      },
+      "derivedName": "L1BridgeZap"
     },
     {
       "name": "Bridge Multisig",
@@ -286,7 +290,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3",
@@ -326,7 +331,8 @@
         "getChainId": 1,
         "NAME": "Allowance Module",
         "VERSION": "0.1.0"
-      }
+      },
+      "derivedName": "AllowanceModule"
     }
   ],
   "abis": {

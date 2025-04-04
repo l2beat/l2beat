@@ -322,15 +322,20 @@ export const optimism: ScalingProject = {
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1725314400), // 2024-09-03T00:00:00Z
+  },
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

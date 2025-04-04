@@ -1,5 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import Link from 'next/link'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -20,6 +21,8 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
     | {
         name: string
         percentage: number
+        totalPosted: number
+        href: string
       }
     | undefined
   totalPosted: number
@@ -80,9 +83,11 @@ export function ThroughputSection({
           label="Past day largest poster"
           isSynced={syncStatus.isSynced}
         >
-          {largestPoster
-            ? `${largestPoster.name} (${largestPoster.percentage}%)`
-            : undefined}
+          {largestPoster ? (
+            <Link href={largestPoster.href}>
+              {largestPoster.name} ({largestPoster.percentage}%)
+            </Link>
+          ) : undefined}
         </ChartStatsItem>
         <ChartStatsItem
           label="Past day total data posted"
