@@ -210,7 +210,7 @@ function PreviewItem(props: {
       )}
       {props.description.split('\n').map((a, idx) => (
         <div key={idx} className="ml-2">
-          {a}
+          <span className="whitespace-pre-wrap">{a}</span>
         </div>
       ))}
       {props.upgradableBy && (
