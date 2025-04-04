@@ -7,7 +7,7 @@ interface ClosedSearchProps {
 export function ClosedSearch({ onClick }: ClosedSearchProps) {
   return (
     <div
-      className="flex min-w-[30rem] cursor-pointer justify-center rounded border bg-coffee-700"
+      className="flex min-w-[20rem] cursor-pointer justify-center rounded border bg-coffee-700"
       onClick={onClick}
     >
       <div className="flex items-center gap-1">

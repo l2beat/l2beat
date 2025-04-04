@@ -83,7 +83,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             retryStrategy: blockApi.retryStrategy,
             logger,
             multicallClient,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           blockClients.push(rpcClient)
           rpcClients.push(rpcClient)
@@ -101,7 +100,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           blockClients.push(zksyncLiteClient)
           break
@@ -115,7 +113,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           blockClients.push(client)
           starknetClients.push(client)
@@ -131,7 +128,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           blockClients.push(client)
           blockApi.type === 'loopring'
@@ -147,7 +143,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             callsPerMinute: blockApi.callsPerMinute,
             retryStrategy: blockApi.retryStrategy,
             logger,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           blockClients.push(fuelClient)
           break
@@ -160,7 +155,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             retryStrategy: blockApi.retryStrategy,
             logger,
             callsPerMinute: blockApi.callsPerMinute,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           break
         }
@@ -181,7 +175,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: layer.name,
             logger,
             http,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           blobscan.push({ daLayer: layer.name, client })
           break
@@ -195,7 +188,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: layer.name,
             logger,
             http,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           celestia.push({ daLayer: layer.name, client })
           blockClients.push(client)
@@ -210,7 +202,6 @@ export function initClients(config: Config, logger: Logger): Clients {
             sourceName: layer.name,
             logger,
             http,
-            metricsEnabled: config.clientMetricsEnabled,
           })
           avail.push({ daLayer: layer.name, client })
           blockClients.push(client)
@@ -226,7 +217,6 @@ export function initClients(config: Config, logger: Logger): Clients {
     logger,
     callsPerMinute: config.coingeckoApiKey ? 400 : 10,
     retryStrategy: 'RELIABLE',
-    metricsEnabled: config.clientMetricsEnabled,
   })
 
   if (ethereumClient && config.beaconApi.url) {
@@ -239,7 +229,6 @@ export function initClients(config: Config, logger: Logger): Clients {
       callsPerMinute: config.beaconApi.callsPerMinute,
       timeout: config.beaconApi.timeout,
       retryStrategy: 'RELIABLE',
-      metricsEnabled: config.clientMetricsEnabled,
     })
   }
 

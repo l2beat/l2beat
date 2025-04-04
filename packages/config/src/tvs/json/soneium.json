@@ -53,6 +53,23 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-nsASTR",
+      "priceId": "neemo-staked-astar",
+      "symbol": "nsASTR",
+      "name": "Neemo Staked Astar",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1737676800
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-PIPO",
       "priceId": "pipo-2",
       "symbol": "PIPO",
@@ -70,7 +87,7 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-pufETH",
+      "id": "soneium-pufETH-1",
       "priceId": "pufeth",
       "symbol": "pufETH",
       "name": "pufETH",
@@ -87,7 +104,7 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-SolvBTC",
+      "id": "soneium-SolvBTC-1",
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
@@ -104,7 +121,7 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-SolvBTC.BBN",
+      "id": "soneium-SolvBTC.BBN-1",
       "priceId": "solv-protocol-solvbtc-bbn",
       "symbol": "SolvBTC.BBN",
       "name": "SolvBTC Babylon",
@@ -121,7 +138,24 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-STONE",
+      "id": "soneium-SolvBTC.JUP",
+      "priceId": "solv-protocol-solvbtc-jupiter",
+      "symbol": "SolvBTC.JUP",
+      "name": "SolvBTC Jupiter",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1743033600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-STONE-1",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -138,7 +172,7 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-USDC",
+      "id": "soneium-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -146,12 +180,12 @@
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
-        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "escrowAddress": "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb",
         "decimals": 6,
-        "sinceTimestamp": 1733134751
+        "sinceTimestamp": 1735038311
       },
       "category": "stablecoin",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -191,7 +225,7 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-WBTC",
+      "id": "soneium-WBTC-1",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -226,7 +260,24 @@
     },
     {
       "mode": "auto",
-      "id": "soneium-wstETH",
+      "id": "soneium-wstASTR",
+      "priceId": "wrapped-stastr",
+      "symbol": "wstASTR",
+      "name": "Warpped stASTR",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1741564800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-wstETH-2",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
@@ -234,12 +285,12 @@
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
-        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "escrowAddress": "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a",
         "decimals": 18,
-        "sinceTimestamp": 1733134751
+        "sinceTimestamp": 1737366215
       },
       "category": "ether",
-      "source": "canonical",
+      "source": "external",
       "isAssociated": false
     },
     {

@@ -95,7 +95,7 @@ export async function mapConfig(
 
   return {
     projectId: project.id,
-    tokens,
+    tokens: deduplicateTokens(tokens),
   }
 }
 
@@ -314,4 +314,23 @@ function getChain(name: string, chains: Map<string, ChainConfig>): ChainConfig {
   const chain = chains.get(name)
   assert(chain)
   return chain
+}
+
+function deduplicateTokens(tokens: TvsToken[]) {
+  const byId = groupBy(tokens, 'id')
+
+  const deduplicatedTokens: TvsToken[] = []
+
+  for (const [id, tokensWithSameId] of Object.entries(byId)) {
+    if (tokensWithSameId.length > 1) {
+      tokensWithSameId.forEach((token, index) => {
+        const newToken = { ...token }
+        newToken.id = TokenId(`${id}-${index + 1}`)
+        deduplicatedTokens.push(newToken)
+      })
+    } else {
+      deduplicatedTokens.push(tokensWithSameId[0])
+    }
+  }
+  return deduplicatedTokens
 }

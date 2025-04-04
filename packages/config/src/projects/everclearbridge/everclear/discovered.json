@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 938182,
+  "blockNumber": 1041412,
   "configHash": "0x03c6ae0f420939feef4cbb3555de358586f7ea6a563a56c446f6390f752b5a54",
   "entries": [
     {
@@ -94,7 +94,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 196346,
+        "getCurrentEpoch": 199402,
         "hubGateway": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -108,7 +108,7 @@
         "proposedOwnershipTimestamp": 1731649154,
         "supportedDomains": [
           1, 56, 10, 42161, 8453, 48900, 81457, 59144, 137, 43114, 534352,
-          167000, 33139, 34443, 130, 324, 2020
+          167000, 33139, 34443, 130, 324, 2020, 100
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "0x6281ea3060B26352b558C4F45767C90db482c4fd"
@@ -128,6 +128,10 @@
         {
           "permission": "upgrade",
           "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
         }
       ],
       "sinceTimestamp": 1731646546,
@@ -141,7 +145,7 @@
           "0x5d334979C6f565b9646975AEdD2358D01f3db4c1",
           "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
-          "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044"
+          "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
         ],
         "$threshold": 2,
         "GnosisSafe_modules": [],
@@ -157,21 +161,10 @@
     {
       "address": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
-        }
-      ]
-    },
-    {
-      "address": "0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874",
-      "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xeb19B3Bdad53A775EB2d94d57D5a46c5260B0044",
+      "address": "0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -184,14 +177,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
+          "to": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
           "via": []
         }
       ],
       "sinceTimestamp": 1726461025,
       "sinceBlock": 388,
       "values": {
-        "$admin": "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837",
+        "$admin": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
         "$implementation": "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4",
         "$pastUpgrades": [
           [

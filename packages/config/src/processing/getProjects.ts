@@ -26,6 +26,7 @@ import {
 } from '../utils/discoveryDriven'
 import { runConfigAdjustments } from './adjustments'
 import { bridges } from './bridges'
+import { ecosystems } from './ecosystems'
 import { isVerified } from './isVerified'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -52,6 +53,7 @@ export function getProjects(): BaseProject[] {
       layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges, tokenList)),
     )
     .concat(bridges.map((p) => bridgeToProject(p, tokenList)))
+    .concat(ecosystems)
 }
 
 function layer2Or3ToProject(
@@ -152,6 +154,7 @@ function layer2Or3ToProject(
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
+    ecosystemInfo: p.ecosystemInfo,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,

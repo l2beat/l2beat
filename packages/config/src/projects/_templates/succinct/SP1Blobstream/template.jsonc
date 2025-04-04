@@ -1,6 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
+  "ignoreMethods": [
+    "state_dataCommitments",
+    "proxiableUUID",
+    "gateway_deprecated"
+  ],
   "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
   "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
   "fields": {

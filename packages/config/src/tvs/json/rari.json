@@ -274,21 +274,62 @@
       "id": "rari-USDC.e-2",
       "priceId": "usd-coin",
       "symbol": "USDC.e",
-      "name": "Bridged USDC (Stargate)",
+      "name": "USD Coin (Arb1)",
       "amount": {
-        "type": "totalSupply",
-        "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
-        "chain": "rari",
-        "decimals": 6,
-        "sinceTimestamp": 1716939237
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "chain": "arbitrum",
+            "escrowAddress": "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
+            "decimals": 6,
+            "sinceTimestamp": 1705716148
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "chain": "arbitrum",
+            "escrowAddress": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
+            "decimals": 6,
+            "sinceTimestamp": 1705716148
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "usd-coin"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1705716148
+            },
+            "priceId": "usd-coin"
+          }
+        ]
       },
       "category": "stablecoin",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "rari-USDT",
+      "id": "rari-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",

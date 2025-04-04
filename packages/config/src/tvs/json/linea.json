@@ -285,7 +285,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-ezETH",
+      "id": "linea-ezETH-1",
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
@@ -735,7 +735,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-STONE",
+      "id": "linea-STONE-1",
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
@@ -752,7 +752,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-sUSDe",
+      "id": "linea-sUSDe-1",
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
@@ -841,7 +841,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-USDC",
+      "id": "linea-USDC-1",
       "priceId": "bridged-usd-coin-linea",
       "symbol": "USDC",
       "name": "USDC",
@@ -858,7 +858,7 @@
     },
     {
       "mode": "auto",
-      "id": "linea-USDe",
+      "id": "linea-USDe-1",
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
@@ -951,14 +951,15 @@
       "symbol": "weETH",
       "name": "Wrapped eETH",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
-        "chain": "linea",
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "decimals": 18,
-        "sinceTimestamp": 1712853058
+        "sinceTimestamp": 1701648000
       },
       "category": "ether",
-      "source": "external",
+      "source": "canonical",
       "isAssociated": false
     },
     {

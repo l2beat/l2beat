@@ -1314,7 +1314,7 @@
     },
     {
       "mode": "auto",
-      "id": "portal-mETH",
+      "id": "portal-mETH-1",
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",

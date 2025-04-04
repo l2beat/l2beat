@@ -345,82 +345,30 @@
     {
       "mode": "auto",
       "id": "allbridge-USDT-2",
-      "priceId": "tether",
+      "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-            "chain": "ethereum",
-            "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
-            "decimals": 6,
-            "sinceTimestamp": 1636635220
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-            "chain": "ethereum",
-            "escrowAddress": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
-            "decimals": 6,
-            "sinceTimestamp": 1662596190
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-            "chain": "arbitrum",
-            "escrowAddress": "0x47235cB71107CC66B12aF6f8b8a9260ea38472c7",
-            "decimals": 6,
-            "sinceTimestamp": 1706918400
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+        "chain": "optimism",
+        "escrowAddress": "0xb24A05d54fcAcfe1FC00c59209470d4cafB0deEA",
+        "decimals": 6,
+        "sinceTimestamp": 1706918400
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1706918400
+        },
+        "priceId": "bridged-usdt"
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "valueForSummary": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "tether",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-              "chain": "ethereum",
-              "escrowAddress": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
-              "decimals": 6,
-              "sinceTimestamp": 1636635220
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "tether",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-              "chain": "ethereum",
-              "escrowAddress": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
-              "decimals": 6,
-              "sinceTimestamp": 1662596190
-            }
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1706918400
-            },
-            "priceId": "tether"
-          }
-        ]
-      }
+      "isAssociated": false
     },
     {
       "mode": "auto",

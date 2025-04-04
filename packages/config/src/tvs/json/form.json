@@ -36,7 +36,7 @@
     },
     {
       "mode": "auto",
-      "id": "form-USDC",
+      "id": "form-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",
@@ -53,7 +53,7 @@
     },
     {
       "mode": "auto",
-      "id": "form-USDT",
+      "id": "form-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
