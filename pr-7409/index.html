@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @2a8b6ffb</title>
+  <title>Diff @7a082c5a</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,9 +105,332 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/d370dc41f906195b32064913cc69fe70f96b3c7c"><code class="removed">d370dc41</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/d370dc41f906195b32064913cc69fe70f96b3c7c"><code class="added">2a8b6ffb</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/d370dc41f906195b32064913cc69fe70f96b3c7c"><code class="added">7a082c5a</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>arenaz</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-rollup-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "All data required for proofs is published on chain",
+</span><span class="line ctx">    "description": "All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line full indicator">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 7d period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x227882E5972EbAd990dcF04E2dbe2fC84094E146#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "stateDerivation": {
+</span><span class="line full">    "nodeSoftware": "The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/arena-z.toml).",
+</span><span class="line ctx">    "compressionScheme": "Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.",
+</span><span class="line ctx">    "genesisState": "The genesis file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/arena-z.json.zst).",
+</span><span class="line ctx">    "dataFormat": "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/)."
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line ctx">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>celo</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-optimium-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "Data is posted to EigenDA",
+</span><span class="line ctx">    "description": "Transactions roots are posted onchain and the full data is posted on EigenDA.  Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that the Sequencer can single-handedly publish unavailable commitments.",
+</span><span class="line ctx">    "risks": [
+</span><span class="line full indicator">      {
+</span><span class="line full">        "category": "Funds can be lost if",
+</span><span class="line full">        "text": "the sequencer posts an unavailable transaction root.",
+</span><span class="line full">        "isCritical": true
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be lost if",
+</span><span class="line full">        "text": "the data is not available on the external provider.",
+</span><span class="line full">        "isCritical": true
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "EigenDA Docs - Overview",
+</span><span class="line full">        "url": "https://docs.eigenda.xyz/overview"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xff00000000000000000000000000000000042220#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 7d period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe8b013bEE7Bd603e2f0B4825638559d645A4C4CB#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line ctx">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
   <h2>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     
@@ -423,6 +746,163 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">      "slug": "zora"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  ]
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>hashkey</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-rollup-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "All data required for proofs is published on chain",
+</span><span class="line ctx">    "description": "All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line full indicator">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x18A7868ECe35A45aC9138108E5b6e021aD1038d1#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 3d 12h period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0x18A7868ECe35A45aC9138108E5b6e021aD1038d1#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0x18A7868ECe35A45aC9138108E5b6e021aD1038d1#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x18A7868ECe35A45aC9138108E5b6e021aD1038d1#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x71442A5586bde0f5EfD6588D01c2B2820D9D236D#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x3fEF4F3e99936E89A8bBdD9E08D83c471D5E152D#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "stateDerivation": {
+</span><span class="line full">    "nodeSoftware": "The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/hashkeychain.toml).",
+</span><span class="line ctx">    "compressionScheme": "Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.",
+</span><span class="line ctx">    "genesisState": "The genesis file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/hashkeychain.json.zst).",
+</span><span class="line ctx">    "dataFormat": "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/)."
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line ctx">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
 </span><span class="line ctx">}</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
@@ -900,7 +1380,7 @@ ${r?'Expression: "'+r+`"
 </span><span class="line added">    ]
 </span><span class="line added">  },
 </span><span class="line added">  "stateValidation": {
-</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
 </span><span class="line added">    "categories": [
 </span><span class="line added">      {
 </span><span class="line added">        "title": "State root proposals",
@@ -10694,6 +11174,635 @@ ${r?'Expression: "'+r+`"
 </span><span class="line added">      "text": "a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades."
 </span><span class="line added">    }
 </span><span class="line added">  ]
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>shape</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-rollup-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "All data required for proofs is published on chain",
+</span><span class="line ctx">    "description": "All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line full indicator">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xfF00000000000000000000000000000000000360#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 7d period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "stateDerivation": {
+</span><span class="line full">    "nodeSoftware": "The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/shape.toml).",
+</span><span class="line ctx">    "compressionScheme": "Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.",
+</span><span class="line ctx">    "genesisState": "The genesis file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/shape.json.zst).",
+</span><span class="line ctx">    "dataFormat": "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/)."
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line ctx">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>soneium</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-rollup-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "All data required for proofs is published on chain",
+</span><span class="line ctx">    "description": "All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line full indicator">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 7d period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x4bbA758F006Ef09402eF31724203F316ab74e4a0#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x1661af719956198628F7e67087F19f8A79524a1d#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "stateDerivation": {
+</span><span class="line full">    "nodeSoftware": "The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/soneium.toml).",
+</span><span class="line ctx">    "compressionScheme": "Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.",
+</span><span class="line ctx">    "genesisState": "The genesis file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/soneium.json.zst).",
+</span><span class="line ctx">    "dataFormat": "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/)."
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidationImage": "opfp"
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>swell</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-rollup-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "All data required for proofs is published on chain",
+</span><span class="line ctx">    "description": "All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line full indicator">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 7d period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "stateDerivation": {
+</span><span class="line full">    "nodeSoftware": "The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/swell.toml).",
+</span><span class="line ctx">    "compressionScheme": "Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.",
+</span><span class="line ctx">    "genesisState": "The genesis file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/swell.json.zst).",
+</span><span class="line ctx">    "dataFormat": "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/)."
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line ctx">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
+</span><span class="line ctx">}</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>worldchain</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>scalingTechnology</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "architectureImage": "opstack-rollup-superchain-opfp",
+</span><span class="line ctx">  "dataAvailability": {
+</span><span class="line ctx">    "name": "All data required for proofs is published on chain",
+</span><span class="line ctx">    "description": "All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line full indicator">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Derivation: Batch submission - OP Mainnet specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "BatchInbox - address",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xff00000000000000000000000000000000000480#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "exitMechanisms": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Regular exits",
+</span><span class="line full">      "description": "The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after 3d 12h. Withdrawal inclusion can be proven before state root settlement, but a 7d period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least 3d 12h to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, proveWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "title": "OptimismPortal2.sol - Etherscan source code, finalizeWithdrawalTransaction function",
+</span><span class="line full">          "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    {
+</span><span class="line full">      "name": "Forced messaging",
+</span><span class="line full">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Forced withdrawal from an OP Stack blockchain",
+</span><span class="line full">          "url": "https://stack.optimism.io/docs/security/forced-withdrawal/"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "forceTransactions": {
+</span><span class="line full">    "name": "Users can force any transaction",
+</span><span class="line full">    "description": "Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.",
+</span><span class="line full">    "risks": [],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Sequencing Window - OP Mainnet Specs",
+</span><span class="line full">        "url": "https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "OptimismPortal2.sol - source code, depositTransaction function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xe2F826324b2faf99E513D16D266c3F80aE87832B#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "operator": {
+</span><span class="line full">    "name": "The system has a centralized operator",
+</span><span class="line full">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "MEV can be extracted if",
+</span><span class="line full">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": []
+</span><span class="line full">  },
+</span><span class="line full">  "otherConsiderations": [
+</span><span class="line full">    {
+</span><span class="line full">      "name": "EVM compatible smart contracts are supported",
+</span><span class="line full">      "description": "OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.",
+</span><span class="line full">      "risks": [],
+</span><span class="line full">      "references": [
+</span><span class="line full">        {
+</span><span class="line full">          "title": "Introducing EVM Equivalence",
+</span><span class="line full">          "url": "https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    }
+</span><span class="line full">  ],
+</span><span class="line full">  "stateCorrectness": {
+</span><span class="line full">    "name": "Fraud proofs ensure state correctness",
+</span><span class="line full">    "description": "After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect.",
+</span><span class="line full">    "risks": [
+</span><span class="line full">      {
+</span><span class="line full">        "category": "Funds can be stolen if",
+</span><span class="line full">        "text": "no validator checks the published state. Fraud proofs assume at least one honest and able validator."
+</span><span class="line full">      }
+</span><span class="line full">    ],
+</span><span class="line full">    "references": [
+</span><span class="line full">      {
+</span><span class="line full">        "title": "DisputeGameFactory.sol - Etherscan source code, create() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code"
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "PermissionedDisputeGame.sol - Etherscan source code, attack() function",
+</span><span class="line full">        "url": "https://etherscan.io/address/0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9#code"
+</span><span class="line full">      }
+</span><span class="line full">    ]
+</span><span class="line full">  },
+</span><span class="line full">  "stateDerivation": {
+</span><span class="line full">    "nodeSoftware": "The rollup node is composed of two software components: [op-node](https://github.com/ethereum-optimism/optimism/tree/develop/op-node), implementing consensus related logic, and [op-geth](https://github.com/ethereum-optimism/op-geth), implementing execution logic. The configuration file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/worldchain.toml).",
+</span><span class="line ctx">    "compressionScheme": "Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.",
+</span><span class="line ctx">    "genesisState": "The genesis file can be found [here](https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/worldchain.json.zst).",
+</span><span class="line ctx">    "dataFormat": "The format specification of Sequencer's data batches can be found [here](https://blog.oplabs.co/reproduce-bedrock-migration/)."
+</span><span class="line ctx">  },
+</span><span class="line ctx">  "stateValidation": {
+</span><span class="line removed">    "description": "Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line added">    "description": "Updates to the system state can be proposed and challenged by permissioned operators only. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.",
+</span><span class="line ctx">    "categories": [
+</span><span class="line ctx">      {
+</span><span class="line ctx">        "title": "State root proposals",
+</span><span class="line ctx">        "description": "Proposers submit state roots as children of the latest confirmed state root (called anchor state), by calling the `create` function in the DisputeGameFactory. A state root can have multiple conflicting children. Each proposal requires a stake, currently set to 0.0 ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.",
+</span><span class="line ctx">        "references": [
+</span><span class="line ctx">          {
+</span><span class="line full indicator">            "title": "OP stack specification: Fault Dispute Game",
+</span><span class="line full">            "url": "https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game"
+</span><span class="line full">          }
+</span><span class="line full">        ]
+</span><span class="line full">      },
+</span><span class="line full">      {
+</span><span class="line full">        "title": "Challenges",
+</span><span class="line full">        "description": "Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of 1.09493. The maximum depth is 73, and reaching it therefore requires a cumulative stake of 0.00 ETH from depth 0. Actors can participate in any challenge by calling the `defend` or `attack` functions, depending whether they agree or disagree with the latest claim and want to move the bisection game forward. Actors that disagree with the top-level claim are called challengers, and actors that agree are called defenders. Each actor might be involved in multiple (sub-)challenges at the same time, meaning that the protocol operates with [full concurrency](https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a). Challengers and defenders alternate in the bisection game, and they pass each other a clock that starts with 3d 12h. If a clock expires, the claim is considered defeated if it was countered, or it gets confirmed if uncountered. Since honest parties can inherit clocks from malicious parties that play both as challengers and defenders (see [freeloader claims](https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#freeloader-claims)), if a clock gets inherited with less than 3h, it generally gets extended by 3h with the exception of 6h right before depth 30, and 1d right before the last depth. The maximum clock extension that a top level claim can get is therefore 10d. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).",
+</span><span class="line full">        "references": [
+</span><span class="line full">          {
+</span><span class="line full">            "title": "Fraud Proof Wars: OPFP",
+</span><span class="line full">            "url": "https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a"
+</span><span class="line full">          }
+</span><span class="line ctx">        ]
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
 </span><span class="line ctx">}</span></code></pre>
 </li></ul>
 </li></ul>
