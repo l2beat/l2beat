@@ -19,6 +19,7 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
 export const bugbuster: ScalingProject = {
+  isArchived: true,
   type: 'layer3',
   id: ProjectId('bugbuster'),
   capability: 'appchain',
