@@ -1,54 +1,184 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
-import { createDatabase } from '@l2beat/database'
-import { UnixTime, formatLargeNumber } from '@l2beat/shared-pure'
+import {
+  type ProjectValueRecord,
+  type ValueRecord,
+  createDatabase,
+} from '@l2beat/database'
+import {
+  assert,
+  ProjectId,
+  UnixTime,
+  asNumber,
+  formatLargeNumber,
+} from '@l2beat/shared-pure'
 
 async function main() {
-  const env = getEnv()
+  try {
+    const env = getEnv()
+    const timestamp = UnixTime.toStartOf(
+      UnixTime.now() - 2 * UnixTime.HOUR,
+      'hour',
+    )
 
-  const db = createDatabase({
-    connectionString: env.string('TVS_STAGING_URL'),
-    application_name: 'DIFF-SCRIPT',
-    ssl: { rejectUnauthorized: false },
-    min: 2,
-    max: 10,
-    keepAlive: false,
-  })
-
-  const timestamp = UnixTime.toStartOf(
-    UnixTime.now() - 2 * UnixTime.HOUR,
-    'hour',
-  )
-
-  const records = await db.tvsProjectValue.getByTimestampAndType(
-    timestamp,
-    'SUMMARY',
-  )
-
-  const ps = new ProjectService()
-
-  const scalingProjects = await ps.getProjects({
-    select: ['tvsConfig', 'isScaling'],
-    whereNot: ['isArchived'],
-  })
-
-  const ids = new Set(scalingProjects.map((p) => p.id.toString()))
-
-  const summaryTvs = records
-    .filter((r) => ids.has(r.project))
-    .reduce((acc, curr) => (acc += curr.value), 0)
-
-  console.log(`TVS RAW: ${summaryTvs}`)
-  console.log(`TVS FORMATTED: $ ${formatLargeNumber(summaryTvs)}`)
-
-  records
-    .filter((r) => ids.has(r.project))
-    .sort((a, b) => b.value - a.value)
-    .forEach((r) => {
-      console.log(r.project, `$ ${formatLargeNumber(r.value)}`)
+    const projectService = new ProjectService()
+    const scalingProjects = await projectService.getProjects({
+      select: ['tvsConfig', 'isScaling'],
+      whereNot: ['isArchived'],
     })
+    const projectIds = new Set(scalingProjects.map((p) => p.id.toString()))
+    const projectIdArray = Array.from(projectIds.values()).map((p) =>
+      ProjectId(p),
+    )
+
+    const tvsDb = createDatabase({
+      connectionString: env.string('TVS_STAGING_URL'),
+      application_name: 'DIFF-SCRIPT',
+      ssl: { rejectUnauthorized: false },
+      min: 2,
+      max: 10,
+      keepAlive: false,
+    })
+
+    const tvsRecords = await tvsDb.tvsProjectValue.getByTimestampAndType(
+      timestamp,
+      'SUMMARY',
+    )
+
+    const filteredTvsRecords = tvsRecords.filter((r) =>
+      projectIds.has(r.project),
+    )
+    const totalTvs = filteredTvsRecords.reduce(
+      (acc, curr) => acc + curr.value,
+      0,
+    )
+
+    const tvlDb = createDatabase({
+      connectionString: env.string('TVL_STAGING_URL'),
+      application_name: 'DIFF-SCRIPT',
+      ssl: { rejectUnauthorized: false },
+      min: 2,
+      max: 10,
+      keepAlive: false,
+    })
+
+    const tvlRecords = await tvlDb.value.getValuesByProjectIdsAndTimeRange(
+      projectIdArray,
+      [timestamp, timestamp],
+    )
+
+    const totalTvl = asNumber(
+      tvlRecords.reduce(
+        (acc, curr) =>
+          acc +
+          curr.nativeForTotal +
+          curr.externalForTotal +
+          curr.canonicalForTotal,
+        0n,
+      ),
+      2,
+    )
+
+    printResults(totalTvs, totalTvl)
+    printProjectDiffs(filteredTvsRecords, tvlRecords)
+  } catch (error) {
+    console.error('Error in main function:', error)
+    process.exit(1)
+  }
 }
 
-main().catch((e: unknown) => {
-  console.error(e)
+function printResults(totalTvs: number, totalTvl: number) {
+  console.log(`\nTVS`)
+  console.log(`raw: ${totalTvs}`)
+  console.log(`formatted: $ ${formatLargeNumber(totalTvs)}`)
+
+  console.log(`\nTVL`)
+  console.log(`raw: ${totalTvl}`)
+  console.log(`formatted: $ ${formatLargeNumber(totalTvl)}`)
+
+  const absoluteDiff = totalTvs - totalTvl
+  const percentageRatio = ((totalTvs / totalTvl) * 100).toFixed(2)
+
+  console.log(`\nDIFF`)
+  console.log('Absolute (TVS - TVL):', formatLargeNumber(absoluteDiff))
+  console.log(`Correlation (TVS/TVL): ${percentageRatio}%`)
+}
+
+function printProjectDiffs(
+  tvsRecords: ProjectValueRecord[],
+  tvlRecords: ValueRecord[],
+) {
+  console.log('\nPER PROJECT DIFFERENCES:')
+  console.log('------------------------')
+
+  // Create a map to aggregate TVL values by project
+  const projectTvlMap = new Map<string, number>()
+
+  for (const record of tvlRecords) {
+    const projectId = record.projectId.toString()
+    const value = asNumber(
+      record.nativeForTotal +
+        record.externalForTotal +
+        record.canonicalForTotal,
+      2,
+    )
+
+    if (!projectTvlMap.has(projectId)) {
+      projectTvlMap.set(projectId, 0)
+    }
+
+    const previous = projectTvlMap.get(projectId)
+    assert(previous)
+    projectTvlMap.set(projectId, previous + value)
+  }
+
+  // Create a map for TVS values
+  const projectTvsMap = new Map<string, number>()
+  for (const record of tvsRecords) {
+    projectTvsMap.set(record.project, record.value)
+  }
+
+  // Create a combined list of all project IDs
+  const allProjectIds = new Set([
+    ...projectTvlMap.keys(),
+    ...projectTvsMap.keys(),
+  ])
+
+  const projectDiffs = []
+
+  for (const projectId of allProjectIds) {
+    const tvsValue = projectTvsMap.get(projectId) || 0
+    const tvlValue = projectTvlMap.get(projectId) || 0
+
+    const absoluteDiff = tvsValue - tvlValue
+    const percentageDiff =
+      tvlValue > 0 ? ((tvsValue / tvlValue) * 100).toFixed(2) + '%' : 'N/A'
+
+    projectDiffs.push({
+      projectId,
+      tvsValue,
+      tvlValue,
+      absoluteDiff,
+      percentageDiff,
+    })
+  }
+
+  // Sort projects by absolute difference (descending)
+  projectDiffs.sort(
+    (a, b) => Math.abs(b.absoluteDiff) - Math.abs(a.absoluteDiff),
+  )
+
+  for (const diff of projectDiffs) {
+    console.log(`Project: ${diff.projectId}`)
+    console.log(`  TVS: $${formatLargeNumber(diff.tvsValue)}`)
+    console.log(`  TVL: $${formatLargeNumber(diff.tvlValue)}`)
+    console.log(`  Absolute Diff: $${formatLargeNumber(diff.absoluteDiff)}`)
+    console.log(`  Percentage (TVS/TVL): ${diff.percentageDiff}`)
+    console.log('------------------------')
+  }
+}
+
+main().catch((error) => {
+  console.error('Unhandled error:', error)
+  process.exit(1)
 })
