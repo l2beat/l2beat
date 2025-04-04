@@ -96,7 +96,6 @@ export function EcosystemTvsByStage({
             >
               <Label
                 content={({ viewBox }) => {
-                  console.log(viewBox)
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
                       <text
