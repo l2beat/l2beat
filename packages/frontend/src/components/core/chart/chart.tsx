@@ -128,30 +128,28 @@ function ChartContainer<T extends { timestamp: number }>({
 }
 ChartContainer.displayName = 'Chart'
 
-const PieChartContainer = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & {
-    meta: ChartMeta
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >['children']
-  }
->(({ className, children, meta, ...props }, ref) => {
+function SimpleChartContainer({
+  className,
+  children,
+  meta,
+  ...props
+}: React.ComponentProps<'div'> & {
+  meta: ChartMeta
+  children: React.ComponentProps<
+    typeof RechartsPrimitive.ResponsiveContainer
+  >['children']
+}) {
   return (
     <ChartContext.Provider value={{ meta }}>
-      <div
-        ref={ref}
-        className={cn(chartContainerClassNames, className)}
-        {...props}
-      >
+      <div className={cn(chartContainerClassNames, className)} {...props}>
         <RechartsPrimitive.ResponsiveContainer>
           {children}
         </RechartsPrimitive.ResponsiveContainer>
       </div>
     </ChartContext.Provider>
   )
-})
-PieChartContainer.displayName = 'Chart'
+}
+SimpleChartContainer.displayName = 'Chart'
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
@@ -259,5 +257,5 @@ export {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
-  PieChartContainer,
+  SimpleChartContainer as PieChartContainer,
 }

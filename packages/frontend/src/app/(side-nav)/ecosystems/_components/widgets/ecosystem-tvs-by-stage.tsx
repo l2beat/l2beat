@@ -1,11 +1,18 @@
 'use client'
 import type { Stage } from '@l2beat/config'
+import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
 import { StageBadge } from '~/components/badge/stage-badge'
 import type { ChartMeta } from '~/components/core/chart/chart'
-import { PieChartContainer } from '~/components/core/chart/chart'
+import {
+  ChartTooltip,
+  ChartTooltipWrapper,
+  PieChartContainer,
+  useChart,
+} from '~/components/core/chart/chart'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { formatPercent } from '~/utils/calculate-percentage-change'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 const chartMeta = {
@@ -76,6 +83,8 @@ export function EcosystemTvsByStage({
           className="aspect-square h-[140px] min-h-[140px]"
         >
           <PieChart>
+            <ChartTooltip cursor={false} content={<CustomTooltip />} />
+
             <Pie
               data={chartData}
               dataKey="tvs"
@@ -113,5 +122,36 @@ export function EcosystemTvsByStage({
         </PieChartContainer>
       </div>
     </EcosystemWidget>
+  )
+}
+
+export function CustomTooltip({
+  active,
+  payload,
+}: TooltipProps<number, string>) {
+  const { meta } = useChart()
+  if (!active || !payload) return null
+  return (
+    <ChartTooltipWrapper>
+      <div className="flex min-w-28 flex-col gap-1">
+        {payload.map((entry) => {
+          if (entry.value === undefined) return null
+          const config = meta[entry.name!]!
+          return (
+            <div
+              key={entry.name}
+              className="flex items-center justify-between gap-x-3"
+            >
+              <span className="w-20 whitespace-nowrap leading-none sm:w-fit">
+                {config.label}
+              </span>
+              <span className="whitespace-nowrap font-medium leading-none">
+                {formatCurrency(entry.value, 'usd')}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </ChartTooltipWrapper>
   )
 }
