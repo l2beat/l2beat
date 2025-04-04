@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x170d8c6dd294e7bb47554cb21d72bee23f02ee07
+
+# Diff at Fri, 04 Apr 2025 09:24:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 21880945
+- current block number: 21880945
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21880945 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x3E8a0B63f57e975c268d610ece93da5f78c01321) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract Base Multisig 3 (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"interact","from":"0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8","description":"can pull funds from the contract in case of emergency."}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.9.from:
+-        "0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf"
++        "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
+      receivedPermissions.8.from:
+-        "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
++        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
++        "0x3E8a0B63f57e975c268d610ece93da5f78c01321"
+      receivedPermissions.7.via:
+-        [{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]
+      receivedPermissions.7.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
 Generated with discovered.json: 0xc0c8c6eb3bbcebd74d3d6347c458494caadecbd7
 
 # Diff at Thu, 27 Mar 2025 11:14:02 GMT:

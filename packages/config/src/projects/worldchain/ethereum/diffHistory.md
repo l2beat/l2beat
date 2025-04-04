@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x574c204fd8c363f25cd0f9da4884770aabbca7e0
+
+# Diff at Fri, 04 Apr 2025 09:24:38 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22166596
+- current block number: 22166596
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166596 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH (0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d","via":[{"address":"0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
++        "0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d"
+      issuedPermissions.0.via.0:
+-        {"address":"0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract undefined (0xB2aa0C2C4fD6BFCBF699d4c787CD6Cc0dC461a9d) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53","description":"can pull funds from the contract in case of emergency."}
+    }
+```
+
 Generated with discovered.json: 0x7d7a2c22d692f14526ebfd644f785714a525c271
 
 # Diff at Mon, 31 Mar 2025 11:27:29 GMT:

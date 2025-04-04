@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xe1c3dedaa111638ea6b1e69242ae42d4bacbbe55
+
+# Diff at Fri, 04 Apr 2025 09:24:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 21829674
+- current block number: 21829674
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829674 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x89c98736A806176Fe85283c1cB727ffBdeaf37A9","via":[{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]}
+      receivedPermissions.10.from:
+-        "0x89c98736A806176Fe85283c1cB727ffBdeaf37A9"
++        "0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603"
+      receivedPermissions.9.from:
+-        "0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603"
++        "0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e"
+      receivedPermissions.8.from:
+-        "0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e"
++        "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
+      receivedPermissions.7.from:
+-        "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
++        "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57"
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57"
++        "0x89c98736A806176Fe85283c1cB727ffBdeaf37A9"
+      receivedPermissions.6.via:
+-        [{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]
+      receivedPermissions.6.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0x89c98736A806176Fe85283c1cB727ffBdeaf37A9) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
 Generated with discovered.json: 0xe1ad481fffa8bc8946418ea3935a4046a980dc69
 
 # Diff at Thu, 27 Mar 2025 11:15:31 GMT:

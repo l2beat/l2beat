@@ -1,3 +1,88 @@
+Generated with discovered.json: 0x5fde36653d4972a3a99eab10165ce2732599aaaf
+
+# Diff at Fri, 04 Apr 2025 09:24:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22166253
+- current block number: 22166253
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166253 (main branch discovery), not current.
+
+```diff
+    contract CeloProxyAdminOwner (0x4092A77bAF58fef0309452cEaCb09221e556E112) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x9c314E8057025F2982aa4B3923Abd741A8e8DE91","via":[{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]}
+      receivedPermissions.11.from:
+-        "0x9c314E8057025F2982aa4B3923Abd741A8e8DE91"
++        "0x3C519816C5BdC0a0199147594F83feD4F5847f13"
+      receivedPermissions.10.from:
+-        "0x3C519816C5BdC0a0199147594F83feD4F5847f13"
++        "0xa24Bf5Bc02997f63da4e2C7F802067e05a102504"
+      receivedPermissions.9.from:
+-        "0xa24Bf5Bc02997f63da4e2C7F802067e05a102504"
++        "0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906"
+      receivedPermissions.8.from:
+-        "0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906"
++        "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683"
+      receivedPermissions.7.from:
+-        "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683"
++        "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC"
+      receivedPermissions.6.from:
+-        "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC"
++        "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
+      receivedPermissions.5.from:
+-        "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
++        "0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.via:
+-        [{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]
+      receivedPermissions.4.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0x9c314E8057025F2982aa4B3923Abd741A8e8DE91) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xbcA67eE5188efc419c42C91156EcC888b20664f3","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+```diff
+    contract DelayedWETH (0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4092A77bAF58fef0309452cEaCb09221e556E112","via":[{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x783A434532Ee94667979213af1711505E8bFE374"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract undefined (0xbcA67eE5188efc419c42C91156EcC888b20664f3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x9c314E8057025F2982aa4B3923Abd741A8e8DE91","description":"can pull funds from the contract in case of emergency."}]
+    }
+```
+
 Generated with discovered.json: 0xb772550f6323acde094961a91b201b34afcfc19d
 
 # Diff at Mon, 31 Mar 2025 10:19:03 GMT:

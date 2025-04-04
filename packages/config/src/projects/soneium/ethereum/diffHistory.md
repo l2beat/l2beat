@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xce00b99af19a711cbc07938aef3e36f9d61ecff9
+
+# Diff at Fri, 04 Apr 2025 09:24:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 21995440
+- current block number: 21995440
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995440 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x9AEA1FD851b63d57Ba4Fc556B0e0c170126C9EAf","via":[{"address":"0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"}]}
+      receivedPermissions.10.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.10.via:
+-        [{"address":"0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"}]
+      receivedPermissions.10.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0x9AEA1FD851b63d57Ba4Fc556B0e0c170126C9EAf) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A","via":[{"address":"0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
 Generated with discovered.json: 0xe86dccfbd6e7b0b00b79044fee9164a4882017e6
 
 # Diff at Thu, 27 Mar 2025 11:15:19 GMT:

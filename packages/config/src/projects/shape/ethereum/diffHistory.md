@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x4e0e3a95837a14caaf9fac602eaac4d4953c179a
+
+# Diff at Fri, 04 Apr 2025 09:24:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22166595
+- current block number: 22166595
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166595 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH (0x846d9469BAaF481f8516f7c1d03990672B68CB09) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xee1Af3f99AF8C5b93512FbE2A3f0dD5568CE087f","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+```diff
+    contract undefined (0xee1Af3f99AF8C5b93512FbE2A3f0dD5568CE087f) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"0x846d9469BAaF481f8516f7c1d03990672B68CB09","description":"can pull funds from the contract in case of emergency."}
+    }
+```
+
 Generated with discovered.json: 0x1cab0e4e4f18e701e0a32f789fe45b838ece6395
 
 # Diff at Mon, 31 Mar 2025 11:27:18 GMT:

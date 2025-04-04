@@ -356,6 +356,12 @@
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
           "via": [{ "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }]
@@ -935,9 +941,19 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "0x3E8a0B63f57e975c268d610ece93da5f78c01321",
+          "description": "can pull funds from the contract in case of emergency."
+        },
+        {
+          "permission": "interact",
           "from": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8",
+          "description": "can pull funds from the contract in case of emergency."
         },
         {
           "permission": "upgrade",
@@ -1494,6 +1510,12 @@
       "displayName": "DelayedWETH",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
@@ -2840,7 +2862,7 @@
     "lido/L1ERC20TokenBridge": "0x44d20eeab0d047608977415a93b298af0794106bce88430721828b7aebb83626",
     "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
-    "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
+    "opstack/DelayedWETH": "0x698d758bb7eabad7aba68b8a9da310c6f6cf2176978d24bf5e136e673bf28921",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
     "opstack/FaultDisputeGame": "0xc3420a1d7f361a33032b17c841737647c20c55c5387c7da1049264a131cd6d3f",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",

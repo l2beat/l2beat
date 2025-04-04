@@ -403,6 +403,16 @@
           "via": [{ "address": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C" }]
         },
         {
+          "permission": "interact",
+          "from": "0xBb70D595147A141e268532BFEF61A8c25054d26D",
+          "description": "can pull funds from the contract in case of emergency."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe",
+          "description": "can pull funds from the contract in case of emergency."
+        },
+        {
           "permission": "upgrade",
           "from": "0x0407af506d86bFA5e401099b2fC2355590638f19",
           "via": [{ "address": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C" }]
@@ -776,6 +786,12 @@
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
           "via": [{ "address": "0x7986eD289935A0F47FC434C00cDE309fE2c51f1C" }]
@@ -996,6 +1012,12 @@
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x441F31C4cdf772558D4EA31f3114de59aE145E7c",
@@ -1928,7 +1950,7 @@
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
-    "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
+    "opstack/DelayedWETH": "0x698d758bb7eabad7aba68b8a9da310c6f6cf2176978d24bf5e136e673bf28921",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
     "opstack/FaultDisputeGame": "0xc3420a1d7f361a33032b17c841737647c20c55c5387c7da1049264a131cd6d3f",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
