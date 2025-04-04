@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe5f06f485b466715a53e0181c62987ac286f999c
+Generated with discovered.json: 0x74640a17a7013d9e028b3905eda17c0ca5eb5ad4
 
-# Diff at Fri, 04 Apr 2025 09:36:55 GMT:
+# Diff at Fri, 04 Apr 2025 09:48:27 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 21880945
-- current block number: 22194701
+- current block number: 22194759
 
 ## Description
 
@@ -87,12 +87,6 @@ discovery. Values are for block 21880945 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract Escrow (0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3)
-    +++ description: None
-```
-
-```diff
     contract DelayedWETH_PermissionlessGames (0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8) {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       issuedPermissions.1:
@@ -105,6 +99,12 @@ discovery. Values are for block 21880945 (main branch discovery), not current.
       issuedPermissions.0.description:
 +        "can pull funds from the contract in case of emergency."
     }
+```
+
+```diff
++   Status: CREATED
+    contract L1TokenBridge (0xA5874756416Fa632257eEA380CAbd2E87cED352A)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xc0c8c6eb3bbcebd74d3d6347c458494caadecbd7

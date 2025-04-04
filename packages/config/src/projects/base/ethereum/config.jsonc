@@ -5,7 +5,8 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72", //wstETHEscrow
-    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35" //L1StandardBridge
+    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35", //L1StandardBridge
+    "0xA5874756416Fa632257eEA380CAbd2E87cED352A" //Maker controlled vault
   ],
   "names": {
     "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": "wstETHEscrow",
@@ -29,6 +30,9 @@
           }
         }
       }
+    },
+    "0xA5874756416Fa632257eEA380CAbd2E87cED352A": {
+      "ignoreMethods": ["proxiableUUID"]
     }
   }
 }

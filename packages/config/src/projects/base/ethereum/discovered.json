@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 22194701,
-  "configHash": "0x87460b2891826c8bec684079ed62ece7995df12dafce50d4c8728d56a27d8b99",
+  "blockNumber": 22194759,
+  "configHash": "0xc282e3b65113c764d4e85ec271b4600fe79e3fd5ed771851009287f2791d433c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -454,7 +454,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 3717,
+        "gameCount": 3718,
         "gameImpls": [
           "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
           "0xF62c15e2F99d4869A925B8F57076cD85335832A2",
@@ -1039,6 +1039,19 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Escrow",
+      "address": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1728571115,
+      "sinceBlock": 20935859,
+      "values": { "$immutable": true },
+      "derivedName": "Escrow"
+    },
+    {
       "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1534,7 +1547,7 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "20425013000000000000",
+        "totalSupply": "20505013000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1543,6 +1556,38 @@
       "address": "0xa3D3c103442F162856163d564b983ae538c6202D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L1TokenBridge",
+      "address": "0xA5874756416Fa632257eEA380CAbd2E87cED352A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x2eb865904d6c13775d52bc759e65f0b7601de45c32b313acd13d7c96ab7157d1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1728571151,
+      "sinceBlock": 20935862,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6",
+        "$pastUpgrades": [
+          [
+            "2024-10-10T14:39:11.000Z",
+            "0xde7d483c73060001a6d0ee88b5b9848bdb8a830a93a9579e956350b80296db83",
+            ["0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "escrow": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+        "getImplementation": "0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6",
+        "isOpen": 1,
+        "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "otherBridge": "0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "version": "1"
+      },
+      "derivedName": "L1TokenBridge"
     },
     {
       "address": "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18",
@@ -1817,6 +1862,11 @@
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2277,6 +2327,16 @@
     "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": [
       "constructor(address _singleton)"
     ],
+    "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3": [
+      "constructor()",
+      "event Approve(address indexed token, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Rely(address indexed usr)",
+      "function approve(address token, address spender, uint256 value)",
+      "function deny(address usr)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
+    ],
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
       "constructor(address _singleton)"
     ],
@@ -2384,6 +2444,14 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0xA5874756416Fa632257eEA380CAbd2E87cED352A": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -2452,6 +2520,46 @@
       "function paused() view returns (bool)",
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6": [
+      "constructor(address _otherBridge, address _messenger)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event File(bytes32 indexed what, address data)",
+      "event Initialized(uint64 version)",
+      "event Rely(address indexed usr)",
+      "event TokenSet(address indexed l1Token, address indexed l2Token)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function close()",
+      "function deny(address usr)",
+      "function escrow() view returns (address)",
+      "function file(bytes32 what, address data)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function getImplementation() view returns (address)",
+      "function initialize()",
+      "function isOpen() view returns (uint256)",
+      "function l1ToL2Token(address) view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerToken(address l1Token, address l2Token)",
+      "function rely(address usr)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function version() view returns (string)",
+      "function wards(address) view returns (uint256)"
     ],
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
       "constructor(address _singleton)"
