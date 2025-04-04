@@ -20,7 +20,6 @@ import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
-import { getStage } from '../../common/stages/getStage'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -98,7 +97,7 @@ const permissionlessGameFullCost = (() => {
     cost =
       cost +
       (permissionlessDisputeGameBonds / scaleFactor) *
-      exponentialBondsFactor ** i
+        exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
