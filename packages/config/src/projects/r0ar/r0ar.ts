@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 
 const discovery = new ProjectDiscovery('r0ar')
 const genesisTimestamp = UnixTime(1728285623)

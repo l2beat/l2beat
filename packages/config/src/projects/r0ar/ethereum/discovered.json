@@ -1,7 +1,7 @@
 {
   "name": "r0ar",
   "chain": "ethereum",
-  "blockNumber": 22194903,
+  "blockNumber": 22195184,
   "configHash": "0xfa55c9d43f8bb1b5cfc8934ae53a7b99912c950fbbca177e6a2ddce8c4a66b46",
   "entries": [
     {
@@ -649,10 +649,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7732800,
-        "latestOutputIndex": 4295,
-        "nextBlockNumber": 7734600,
-        "nextOutputIndex": 4296,
+        "latestBlockNumber": 7738200,
+        "latestOutputIndex": 4298,
+        "nextBlockNumber": 7740000,
+        "nextOutputIndex": 4299,
         "proposer": "0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "PROPOSER": "0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "startingBlockNumber": 0,
