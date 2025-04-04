@@ -223,7 +223,11 @@ function getEcosystemLogo(slug: string) {
 }
 
 function getMilestones(projects: Project<never, 'milestones'>[]) {
-  return projects.flatMap((project) => {
-    return project.milestones ?? []
-  })
+  return projects
+    .flatMap((project) => {
+      return project.milestones ?? []
+    })
+    .sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime()
+    })
 }

@@ -8,6 +8,7 @@ import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
 import { EcosystemTvsByStage } from '../_components/widgets/ecosystem-tvs-by-stage'
 import { EcosystemTvsByTokenType } from '../_components/widgets/ecosystem-tvs-by-token-type'
+import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
 
 interface Props {
   params: Promise<{
@@ -67,6 +68,7 @@ export default async function Page({ params }: Props) {
             entries={ecosystem.projects}
             allScalingProjectsCount={ecosystem.allScalingProjects.count}
           />
+          <EcosystemMilestonesAndIncidents milestones={ecosystem.milestones} />
           <EcosystemProjectsTable entries={ecosystem.projects} />
         </main>
       </div>
