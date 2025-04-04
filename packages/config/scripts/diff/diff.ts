@@ -25,29 +25,21 @@ export function diffAll(
   projectsBefore: Project[],
   projectsAfter: Project[],
 ): ProjectDiff[] {
-  const result: ProjectDiff[] = []
+  const beforeMap = new Map(projectsBefore.map((p) => [p.id, p]))
+  const afterMap = new Map(projectsAfter.map((p) => [p.id, p]))
 
-  let beforeIndex = 0
-  let afterIndex = 0
-  while (
-    beforeIndex < projectsBefore.length ||
-    afterIndex < projectsAfter.length
-  ) {
-    const before = projectsBefore[beforeIndex]
-    const after = projectsAfter[afterIndex]
+  const results: ProjectDiff[] = []
 
-    if (!before) {
-      result.push(addedOrRemoved(after, 'added'))
-      afterIndex++
-    } else if (!after) {
-      result.push(addedOrRemoved(before, 'removed'))
-      beforeIndex++
+  for (const [id, before] of beforeMap) {
+    const after = afterMap.get(id)
+    if (!after) {
+      results.push(addedOrRemoved(before, 'removed'))
     } else {
       const diff = diffProjects(before, after)
       if (diff.length > 0) {
         const added = diff.reduce((sum, a) => sum + a.added, 0)
         const removed = diff.reduce((sum, a) => sum + a.removed, 0)
-        result.push({
+        results.push({
           id: before.id,
           type: 'modified',
           fields: diff,
@@ -55,16 +47,17 @@ export function diffAll(
           removed,
         })
       }
-      afterIndex++
-      beforeIndex++
-    }
-
-    if (!before) {
-      after.id
     }
   }
 
-  return result
+  for (const [id, after] of afterMap) {
+    const before = beforeMap.get(id)
+    if (!before) {
+      results.push(addedOrRemoved(after, 'added'))
+    }
+  }
+
+  return results.sort((a, b) => a.id.localeCompare(b.id))
 }
 
 function addedOrRemoved(
