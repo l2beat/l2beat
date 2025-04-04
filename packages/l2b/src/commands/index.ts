@@ -1,3 +1,4 @@
+import { AddShape } from './AddShape'
 import { AdriansCommand } from './AdriansCommand'
 import { CheckRpc } from './CheckRpc'
 import { CompareFlatSources } from './CompareFlatSources'
@@ -31,6 +32,7 @@ import { UI } from './UI'
 
 export function getSubcommands() {
   return [
+    AddShape,
     AdriansCommand,
     CheckRpc,
     CompareFlatSources,
