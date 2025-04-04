@@ -8,11 +8,16 @@ import type {
 export function getEffectiveConfig(
   tokens: TvsToken[],
   timestamp: number,
+  includeStartingInFuture: boolean = true,
 ): TvsToken[] {
   const tokensInRange = []
 
   for (const token of tokens) {
-    const amountInRange = isInRangeRecursive(token.amount, timestamp)
+    const amountInRange = isInRangeRecursive(
+      token.amount,
+      timestamp,
+      includeStartingInFuture,
+    )
 
     if (!amountInRange) {
       continue
@@ -22,6 +27,7 @@ export function getEffectiveConfig(
       token.valueForProject = isInRangeRecursive(
         token.valueForProject,
         timestamp,
+        includeStartingInFuture,
       )
         ? token.valueForProject
         : undefined
@@ -31,6 +37,7 @@ export function getEffectiveConfig(
       token.valueForSummary = isInRangeRecursive(
         token.valueForSummary,
         timestamp,
+        includeStartingInFuture,
       )
         ? token.valueForSummary
         : undefined
@@ -45,11 +52,16 @@ export function getEffectiveConfig(
 function isInRangeRecursive(
   formula: CalculationFormula | ValueFormula | AmountFormula,
   timestamp: number,
+  includeStartingInFuture: boolean,
 ): boolean {
   if (formula.type === 'calculation') {
     const argumentsInRange = []
     for (const arg of formula.arguments) {
-      const inRange = isInRangeRecursive(arg, timestamp)
+      const inRange = isInRangeRecursive(
+        arg,
+        timestamp,
+        includeStartingInFuture,
+      )
       if (inRange) {
         argumentsInRange.push(arg)
       }
@@ -62,9 +74,17 @@ function isInRangeRecursive(
       ? argumentsInRange.length >= 2
       : argumentsInRange.length >= 1
   } else if (formula.type === 'value') {
-    return isInRangeRecursive(formula.amount, timestamp)
+    return isInRangeRecursive(
+      formula.amount,
+      timestamp,
+      includeStartingInFuture,
+    )
   } else {
     if (formula.untilTimestamp && formula.untilTimestamp < timestamp) {
+      return false
+    }
+
+    if (!includeStartingInFuture && formula.sinceTimestamp > timestamp) {
       return false
     }
 

@@ -12,12 +12,15 @@ import {
   boolean,
   command,
   flag,
+  number,
+  option,
   optional,
   positional,
   run,
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { getEffectiveConfig } from '../../src/modules/tvs/tools/getEffectiveConfig'
 import type { TokenValue, TvsBreakdown } from '../../src/modules/tvs/types'
 
 const args = {
@@ -32,6 +35,12 @@ const args = {
     short: 'ib',
     description: 'Include bridges in the TVS calculation',
   }),
+  timestamp: option({
+    type: optional(number),
+    long: 'timestamp',
+    short: 't',
+    description: 'Timestamp to use for TVS calculation',
+  }),
 }
 
 const cmd = command({
@@ -43,7 +52,8 @@ const cmd = command({
     const ps = new ProjectService()
     const localExecutor = new LocalExecutor(ps, env, logger)
 
-    const timestamp =
+    const timestampForTvs =
+      args.timestamp ??
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     if (!args.project) {
@@ -68,12 +78,18 @@ const cmd = command({
           continue
         }
 
+        const effectiveConfig = getEffectiveConfig(
+          project.tvsConfig,
+          timestampForTvs,
+          false,
+        )
+
         const tvs = await localExecutor.run(
           {
             projectId: project.id,
-            tokens: project.tvsConfig,
+            tokens: effectiveConfig,
           },
-          [timestamp],
+          timestampForTvs,
           false,
         )
 
@@ -102,19 +118,25 @@ const cmd = command({
         process.exit(1)
       }
 
+      const effectiveConfig = getEffectiveConfig(
+        project.tvsConfig,
+        timestampForTvs,
+        false,
+      )
+
       const tvs = await localExecutor.run(
         {
           projectId: project.id,
-          tokens: project.tvsConfig,
+          tokens: effectiveConfig,
         },
-        [timestamp],
+        timestampForTvs,
         false,
       )
 
       const tvsBreakdown = calculateBreakdown(
         project.tvsConfig,
         tvs,
-        timestamp,
+        timestampForTvs,
         args.project,
       )
 
