@@ -98,7 +98,7 @@ const permissionlessGameFullCost = (() => {
     cost =
       cost +
       (permissionlessDisputeGameBonds / scaleFactor) *
-        exponentialBondsFactor ** i
+      exponentialBondsFactor ** i
   }
   return BigNumber.from(cost).mul(BigNumber.from(scaleFactor))
 })()
@@ -528,33 +528,36 @@ export const optimism: ScalingProject = {
       },
     ],
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
-    },
-  ),
+  stage: {
+    stage: 'UnderReview',
+  },
+  // stage: getStage(
+  //   {
+  //     stage0: {
+  //       callsItselfRollup: true,
+  //       stateRootsPostedToL1: true,
+  //       dataAvailabilityOnL1: true,
+  //       rollupNodeSourceAvailable: true,
+  //     },
+  //     stage1: {
+  //       principle: false,
+  //       stateVerificationOnL1: true,
+  //       fraudProofSystemAtLeast5Outsiders: true,
+  //       usersHave7DaysToExit: true,
+  //       usersCanExitWithoutCooperation: true,
+  //       securityCouncilProperlySetUp: true,
+  //     },
+  //     stage2: {
+  //       proofSystemOverriddenOnlyInCaseOfABug: false,
+  //       fraudProofSystemIsPermissionless: true,
+  //       delayWith30DExitWindow: false,
+  //     },
+  //   },
+  //   {
+  //     rollupNodeLink:
+  //       'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+  //   },
+  // ),
   permissions: generateDiscoveryDrivenPermissions([discovery, l2Discovery]),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery, l2Discovery]),
