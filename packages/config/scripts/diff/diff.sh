@@ -8,7 +8,7 @@ if [ "$GIT_HEAD" = "HEAD" ]; then
   GIT_HEAD=$(git rev-parse HEAD)
 fi
 
-GIT_MAIN=$(git merge-base HEAD main)
+GIT_MAIN=$(git merge-base main $GIT_HEAD)
 
 git checkout $GIT_MAIN
 pnpm install
@@ -27,6 +27,6 @@ cp packages/config/build/db.sqlite /tmp/compare/pr/db.sqlite
 echo $GIT_HEAD > /tmp/compare/pr/commit
 
 cd packages/config
-pnpm -r esbuild-register scripts/diff/index.ts /tmp/compare/diff.html
+node -r esbuild-register scripts/diff/index.ts /tmp/compare/diff.html
 
 open /tmp/compare/diff.html
