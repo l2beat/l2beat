@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x74640a17a7013d9e028b3905eda17c0ca5eb5ad4
+
+# Diff at Fri, 04 Apr 2025 09:48:27 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 21880945
+- current block number: 22194759
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      values.$implementation:
+-        "0x53c165169401764778F780a69701385eb0FF19B7"
++        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol                         | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21880945 (main branch discovery), not current.
+
+```diff
+    contract DelayedWETH_PermissionedGames (0x3E8a0B63f57e975c268d610ece93da5f78c01321) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract Base Multisig 3 (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"interact","from":"0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8","description":"can pull funds from the contract in case of emergency."}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.9.from:
+-        "0xdB9091e48B1C42992A1213e6916184f9eBDbfEDf"
++        "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
+      receivedPermissions.8.from:
+-        "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
++        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
++        "0x3E8a0B63f57e975c268d610ece93da5f78c01321"
+      receivedPermissions.7.via:
+-        [{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]
+      receivedPermissions.7.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH_PermissionlessGames (0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c","via":[{"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1TokenBridge (0xA5874756416Fa632257eEA380CAbd2E87cED352A)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc0c8c6eb3bbcebd74d3d6347c458494caadecbd7
 
 # Diff at Thu, 27 Mar 2025 11:14:02 GMT:

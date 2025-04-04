@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21880945,
-  "configHash": "0xa7956670367d4244011f2eac230827a7d88e1aebc994ddfb4ece9db09f76a268",
+  "blockNumber": 22194759,
+  "configHash": "0xc282e3b65113c764d4e85ec271b4600fe79e3fd5ed771851009287f2791d433c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -245,7 +245,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 14 (21%)",
-        "nonce": 54,
+        "nonce": 59,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -356,6 +356,12 @@
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
           "via": [{ "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }]
@@ -411,7 +417,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 55,
+        "nonce": 59,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -448,7 +454,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2673,
+        "gameCount": 3718,
         "gameImpls": [
           "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
           "0xF62c15e2F99d4869A925B8F57076cD85335832A2",
@@ -528,8 +534,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 21880940
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 22194701
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -666,7 +672,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 9,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -864,7 +870,7 @@
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "eip1559Denominator": 250,
         "eip1559Elasticity": 2,
-        "gasLimit": 100000000,
+        "gasLimit": 120000000,
         "gasPayingToken": {
           "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
           "decimals_": 18
@@ -935,9 +941,19 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "0x3E8a0B63f57e975c268d610ece93da5f78c01321",
+          "description": "can pull funds from the contract in case of emergency."
+        },
+        {
+          "permission": "interact",
           "from": "0x8EfB6B5c4767B09Dc9AA6Af4eAA89F749522BaE2",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8",
+          "description": "can pull funds from the contract in case of emergency."
         },
         {
           "permission": "upgrade",
@@ -1087,7 +1103,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 15,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1133,7 +1149,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293002678",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293023982",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1208,7 +1224,7 @@
       "template": "opstack/SuperchainConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
@@ -1251,7 +1267,7 @@
       "sinceBlock": 19064589,
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-        "$implementation": "0x53c165169401764778F780a69701385eb0FF19B7",
+        "$implementation": "0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
         "$pastUpgrades": [
           [
             "2024-01-22T20:19:59.000Z",
@@ -1267,14 +1283,19 @@
             "2024-06-10T18:29:23.000Z",
             "0xe361c0d4ae3aebc94b3f281ee372fbb1cbdb0c33ca8b1b35e7f3b009b2fcbdb0",
             ["0x53c165169401764778F780a69701385eb0FF19B7"]
+          ],
+          [
+            "2025-04-02T16:50:23.000Z",
+            "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
+            ["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "guardian": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       "derivedName": "SuperchainConfig",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
@@ -1495,6 +1516,12 @@
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
+          "description": "can pull funds from the contract in case of emergency.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
           "via": [{ "address": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }]
@@ -1520,7 +1547,7 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "20345013000000000000",
+        "totalSupply": "20505013000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1529,6 +1556,38 @@
       "address": "0xa3D3c103442F162856163d564b983ae538c6202D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L1TokenBridge",
+      "address": "0xA5874756416Fa632257eEA380CAbd2E87cED352A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x2eb865904d6c13775d52bc759e65f0b7601de45c32b313acd13d7c96ab7157d1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1728571151,
+      "sinceBlock": 20935862,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6",
+        "$pastUpgrades": [
+          [
+            "2024-10-10T14:39:11.000Z",
+            "0xde7d483c73060001a6d0ee88b5b9848bdb8a830a93a9579e956350b80296db83",
+            ["0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "escrow": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+        "getImplementation": "0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6",
+        "isOpen": 1,
+        "messenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "otherBridge": "0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0",
+        "version": "1"
+      },
+      "derivedName": "L1TokenBridge"
     },
     {
       "address": "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18",
@@ -1603,7 +1662,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 17,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1803,6 +1862,11 @@
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xee44cdb68D618d58F75d9fe0818B640BD7B8A7B7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2112,7 +2176,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x53c165169401764778F780a69701385eb0FF19B7": [
+    "0x4da82a327773965b8d4D85Fa3dB8249b387458E7": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
       "event Initialized(uint8 version)",
@@ -2380,6 +2444,14 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0xA5874756416Fa632257eEA380CAbd2E87cED352A": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -2448,6 +2520,46 @@
       "function paused() view returns (bool)",
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "0xaeFd31c2e593Dc971f9Cb42cBbD5d4AD7F1970b6": [
+      "constructor(address _otherBridge, address _messenger)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event File(bytes32 indexed what, address data)",
+      "event Initialized(uint64 version)",
+      "event Rely(address indexed usr)",
+      "event TokenSet(address indexed l1Token, address indexed l2Token)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function close()",
+      "function deny(address usr)",
+      "function escrow() view returns (address)",
+      "function file(bytes32 what, address data)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function getImplementation() view returns (address)",
+      "function initialize()",
+      "function isOpen() view returns (uint256)",
+      "function l1ToL2Token(address) view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerToken(address l1Token, address l2Token)",
+      "function rely(address usr)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function version() view returns (string)",
+      "function wards(address) view returns (uint256)"
     ],
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
       "constructor(address _singleton)"
@@ -2840,7 +2952,7 @@
     "lido/L1ERC20TokenBridge": "0x44d20eeab0d047608977415a93b298af0794106bce88430721828b7aebb83626",
     "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
     "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
-    "opstack/DelayedWETH": "0x9b548d9008a0f3a19eef82ff5fb4d2b8ab6c05ace1a1d7bfb3b5493a74f54f61",
+    "opstack/DelayedWETH": "0x698d758bb7eabad7aba68b8a9da310c6f6cf2176978d24bf5e136e673bf28921",
     "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
     "opstack/FaultDisputeGame": "0xc3420a1d7f361a33032b17c841737647c20c55c5387c7da1049264a131cd6d3f",
     "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",

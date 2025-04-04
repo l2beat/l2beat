@@ -1543,6 +1543,7 @@ library Encoding {
         pure
         returns (bytes memory)
     {
+        // nosemgrep: sol-style-use-abi-encodecall
         return abi.encodeWithSignature("relayMessage(address,address,bytes,uint256)", _target, _sender, _data, _nonce);
     }
 
@@ -1566,6 +1567,7 @@ library Encoding {
         pure
         returns (bytes memory)
     {
+        // nosemgrep: sol-style-use-abi-encodecall
         return abi.encodeWithSignature(
             "relayMessage(uint256,address,address,uint256,uint256,bytes)",
             _nonce,
@@ -1604,25 +1606,25 @@ library Encoding {
     }
 
     /// @notice Returns an appropriately encoded call to L1Block.setL1BlockValuesEcotone
-    /// @param baseFeeScalar       L1 base fee Scalar
-    /// @param blobBaseFeeScalar   L1 blob base fee Scalar
-    /// @param sequenceNumber      Number of L2 blocks since epoch start.
-    /// @param timestamp           L1 timestamp.
-    /// @param number              L1 blocknumber.
-    /// @param baseFee             L1 base fee.
-    /// @param blobBaseFee         L1 blob base fee.
-    /// @param hash                L1 blockhash.
-    /// @param batcherHash         Versioned hash to authenticate batcher by.
+    /// @param _baseFeeScalar       L1 base fee Scalar
+    /// @param _blobBaseFeeScalar   L1 blob base fee Scalar
+    /// @param _sequenceNumber      Number of L2 blocks since epoch start.
+    /// @param _timestamp           L1 timestamp.
+    /// @param _number              L1 blocknumber.
+    /// @param _baseFee             L1 base fee.
+    /// @param _blobBaseFee         L1 blob base fee.
+    /// @param _hash                L1 blockhash.
+    /// @param _batcherHash         Versioned hash to authenticate batcher by.
     function encodeSetL1BlockValuesEcotone(
-        uint32 baseFeeScalar,
-        uint32 blobBaseFeeScalar,
-        uint64 sequenceNumber,
-        uint64 timestamp,
-        uint64 number,
-        uint256 baseFee,
-        uint256 blobBaseFee,
-        bytes32 hash,
-        bytes32 batcherHash
+        uint32 _baseFeeScalar,
+        uint32 _blobBaseFeeScalar,
+        uint64 _sequenceNumber,
+        uint64 _timestamp,
+        uint64 _number,
+        uint256 _baseFee,
+        uint256 _blobBaseFee,
+        bytes32 _hash,
+        bytes32 _batcherHash
     )
         internal
         pure
@@ -1631,15 +1633,15 @@ library Encoding {
         bytes4 functionSignature = bytes4(keccak256("setL1BlockValuesEcotone()"));
         return abi.encodePacked(
             functionSignature,
-            baseFeeScalar,
-            blobBaseFeeScalar,
-            sequenceNumber,
-            timestamp,
-            number,
-            baseFee,
-            blobBaseFee,
-            hash,
-            batcherHash
+            _baseFeeScalar,
+            _blobBaseFeeScalar,
+            _sequenceNumber,
+            _timestamp,
+            _number,
+            _baseFee,
+            _blobBaseFee,
+            _hash,
+            _batcherHash
         );
     }
 
@@ -1653,7 +1655,6 @@ library Encoding {
     /// @param _blobBaseFee         L1 blob base fee.
     /// @param _hash                L1 blockhash.
     /// @param _batcherHash         Versioned hash to authenticate batcher by.
-    /// @param _dependencySet       Array of the chain IDs in the interop dependency set.
     function encodeSetL1BlockValuesInterop(
         uint32 _baseFeeScalar,
         uint32 _blobBaseFeeScalar,
@@ -1663,17 +1664,12 @@ library Encoding {
         uint256 _baseFee,
         uint256 _blobBaseFee,
         bytes32 _hash,
-        bytes32 _batcherHash,
-        uint256[] memory _dependencySet
+        bytes32 _batcherHash
     )
         internal
         pure
         returns (bytes memory)
     {
-        require(_dependencySet.length <= type(uint8).max, "Encoding: dependency set length is too large");
-        // Check that the batcher hash is just the address with 0 padding to the left for version 0.
-        require(uint160(uint256(_batcherHash)) == uint256(_batcherHash), "Encoding: invalid batcher hash");
-
         bytes4 functionSignature = bytes4(keccak256("setL1BlockValuesInterop()"));
         return abi.encodePacked(
             functionSignature,
@@ -1685,9 +1681,7 @@ library Encoding {
             _baseFee,
             _blobBaseFee,
             _hash,
-            _batcherHash,
-            uint8(_dependencySet.length),
-            _dependencySet
+            _batcherHash
         );
     }
 }
@@ -1807,6 +1801,30 @@ library Hashing {
             )
         );
     }
+
+    /// @notice Generates a unique hash for cross l2 messages. This hash is used to identify
+    ///         the message and ensure it is not relayed more than once.
+    /// @param _destination Chain ID of the destination chain.
+    /// @param _source Chain ID of the source chain.
+    /// @param _nonce Unique nonce associated with the message to prevent replay attacks.
+    /// @param _sender Address of the user who originally sent the message.
+    /// @param _target Address of the contract or wallet that the message is targeting on the destination chain.
+    /// @param _message The message payload to be relayed to the target on the destination chain.
+    /// @return Hash of the encoded message parameters, used to uniquely identify the message.
+    function hashL2toL2CrossDomainMessage(
+        uint256 _destination,
+        uint256 _source,
+        uint256 _nonce,
+        address _sender,
+        address _target,
+        bytes memory _message
+    )
+        internal
+        pure
+        returns (bytes32)
+    {
+        return keccak256(abi.encode(_destination, _source, _nonce, _sender, _target, _message));
+    }
 }
 
 library Types {
@@ -1872,6 +1890,14 @@ library Types {
         uint256 value;
         uint256 gasLimit;
         bytes data;
+    }
+
+    /// @notice Enum representing where the FeeVault withdraws funds to.
+    /// @custom:value L1 FeeVault withdraws funds to L1.
+    /// @custom:value L2 FeeVault withdraws funds to L2.
+    enum WithdrawalNetwork {
+        L1,
+        L2
     }
 }
 
@@ -2349,7 +2375,37 @@ struct OutputRoot {
     uint256 l2BlockNumber;
 }
 
+type Hash is bytes32;
+
+type Timestamp is uint64;
+
+enum BondDistributionMode {
+    // Bond distribution strategy has not been chosen.
+    UNDECIDED,
+    // Bonds should be distributed as normal.
+    NORMAL,
+    // Bonds should be refunded to claimants.
+    REFUND
+}
+
+enum GameStatus {
+    // The game is currently in progress, and has not been resolved.
+    IN_PROGRESS,
+    // The game has concluded, and the `rootClaim` was challenged successfully.
+    CHALLENGER_WINS,
+    // The game has concluded, and the `rootClaim` could not be contested.
+    DEFENDER_WINS
+}
+
 type Duration is uint64;
+
+type GameType is uint32;
+
+type Clock is uint128;
+
+type Position is uint128;
+
+type Claim is bytes32;
 
 interface ISemver {
     /// @notice Getter for the semantic version of the contract. This is not
@@ -2740,95 +2796,11 @@ abstract contract Clone {
     }
 }
 
-interface IInitializable {
-    /// @notice Initializes the contract.
-    /// @dev This function may only be called once.
-    function initialize() external payable;
-}
+contract FaultDisputeGame is Clone, ISemver {
+    ////////////////////////////////////////////////////////////////
+    //                         Structs                            //
+    ////////////////////////////////////////////////////////////////
 
-enum GameStatus {
-    // The game is currently in progress, and has not been resolved.
-    IN_PROGRESS,
-    // The game has concluded, and the `rootClaim` was challenged successfully.
-    CHALLENGER_WINS,
-    // The game has concluded, and the `rootClaim` could not be contested.
-    DEFENDER_WINS
-}
-
-type Timestamp is uint64;
-
-type GameType is uint32;
-
-interface IDisputeGame is IInitializable {
-    /// @notice Emitted when the game is resolved.
-    /// @param status The status of the game after resolution.
-    event Resolved(GameStatus indexed status);
-
-    /// @notice Returns the timestamp that the DisputeGame contract was created at.
-    /// @return createdAt_ The timestamp that the DisputeGame contract was created at.
-    function createdAt() external view returns (Timestamp createdAt_);
-
-    /// @notice Returns the timestamp that the DisputeGame contract was resolved at.
-    /// @return resolvedAt_ The timestamp that the DisputeGame contract was resolved at.
-    function resolvedAt() external view returns (Timestamp resolvedAt_);
-
-    /// @notice Returns the current status of the game.
-    /// @return status_ The current status of the game.
-    function status() external view returns (GameStatus status_);
-
-    /// @notice Getter for the game type.
-    /// @dev The reference impl should be entirely different depending on the type (fault, validity)
-    ///      i.e. The game type should indicate the security model.
-    /// @return gameType_ The type of proof system being used.
-    function gameType() external view returns (GameType gameType_);
-
-    /// @notice Getter for the creator of the dispute game.
-    /// @dev `clones-with-immutable-args` argument #1
-    /// @return creator_ The creator of the dispute game.
-    function gameCreator() external pure returns (address creator_);
-
-    /// @notice Getter for the root claim.
-    /// @dev `clones-with-immutable-args` argument #2
-    /// @return rootClaim_ The root claim of the DisputeGame.
-    function rootClaim() external pure returns (Claim rootClaim_);
-
-    /// @notice Getter for the parent hash of the L1 block when the dispute game was created.
-    /// @dev `clones-with-immutable-args` argument #3
-    /// @return l1Head_ The parent hash of the L1 block when the dispute game was created.
-    function l1Head() external pure returns (Hash l1Head_);
-
-    /// @notice Getter for the extra data.
-    /// @dev `clones-with-immutable-args` argument #4
-    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.
-    function extraData() external pure returns (bytes memory extraData_);
-
-    /// @notice If all necessary information has been gathered, this function should mark the game
-    ///         status as either `CHALLENGER_WINS` or `DEFENDER_WINS` and return the status of
-    ///         the resolved game. It is at this stage that the bonds should be awarded to the
-    ///         necessary parties.
-    /// @dev May only be called if the `status` is `IN_PROGRESS`.
-    /// @return status_ The status of the game after resolution.
-    function resolve() external returns (GameStatus status_);
-
-    /// @notice A compliant implementation of this interface should return the components of the
-    ///         game UUID's preimage provided in the cwia payload. The preimage of the UUID is
-    ///         constructed as `keccak256(gameType . rootClaim . extraData)` where `.` denotes
-    ///         concatenation.
-    /// @return gameType_ The type of proof system being used.
-    /// @return rootClaim_ The root claim of the DisputeGame.
-    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.
-    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_);
-}
-
-type Claim is bytes32;
-
-type Position is uint128;
-
-type Clock is uint128;
-
-type Hash is bytes32;
-
-interface IFaultDisputeGame is IDisputeGame {
     /// @notice The `ClaimData` struct represents the data associated with a Claim.
     struct ClaimData {
         uint32 parentIndex;
@@ -2848,78 +2820,38 @@ interface IFaultDisputeGame is IDisputeGame {
         address counteredBy;
     }
 
+    /// @notice Parameters for creating a new FaultDisputeGame. We place this into a struct to
+    ///         avoid stack-too-deep errors when compiling without the optimizer enabled.
+    struct GameConstructorParams {
+        GameType gameType;
+        Claim absolutePrestate;
+        uint256 maxGameDepth;
+        uint256 splitDepth;
+        Duration clockExtension;
+        Duration maxClockDuration;
+        IBigStepper vm;
+        IDelayedWETH weth;
+        IAnchorStateRegistry anchorStateRegistry;
+        uint256 l2ChainId;
+    }
+
+    ////////////////////////////////////////////////////////////////
+    //                         Events                             //
+    ////////////////////////////////////////////////////////////////
+
+    /// @notice Emitted when the game is resolved.
+    /// @param status The status of the game after resolution.
+    event Resolved(GameStatus indexed status);
+
     /// @notice Emitted when a new claim is added to the DAG by `claimant`
     /// @param parentIndex The index within the `claimData` array of the parent claim
     /// @param claim The claim being added
     /// @param claimant The address of the claimant
     event Move(uint256 indexed parentIndex, Claim indexed claim, address indexed claimant);
 
-    /// @notice Attack a disagreed upon `Claim`.
-    /// @param _disputed The `Claim` being attacked.
-    /// @param _parentIndex Index of the `Claim` to attack in the `claimData` array. This must match the `_disputed`
-    /// claim.
-    /// @param _claim The `Claim` at the relative attack position.
-    function attack(Claim _disputed, uint256 _parentIndex, Claim _claim) external payable;
+    /// @notice Emitted when the game is closed.
+    event GameClosed(BondDistributionMode bondDistributionMode);
 
-    /// @notice Defend an agreed upon `Claim`.
-    /// @notice _disputed The `Claim` being defended.
-    /// @param _parentIndex Index of the claim to defend in the `claimData` array. This must match the `_disputed`
-    /// claim.
-    /// @param _claim The `Claim` at the relative defense position.
-    function defend(Claim _disputed, uint256 _parentIndex, Claim _claim) external payable;
-
-    /// @notice Perform an instruction step via an on-chain fault proof processor.
-    /// @dev This function should point to a fault proof processor in order to execute
-    ///      a step in the fault proof program on-chain. The interface of the fault proof
-    ///      processor contract should adhere to the `IBigStepper` interface.
-    /// @param _claimIndex The index of the challenged claim within `claimData`.
-    /// @param _isAttack Whether or not the step is an attack or a defense.
-    /// @param _stateData The stateData of the step is the preimage of the claim at the given
-    ///        prestate, which is at `_stateIndex` if the move is an attack and `_claimIndex` if
-    ///        the move is a defense. If the step is an attack on the first instruction, it is
-    ///        the absolute prestate of the fault proof VM.
-    /// @param _proof Proof to access memory nodes in the VM's merkle state tree.
-    function step(uint256 _claimIndex, bool _isAttack, bytes calldata _stateData, bytes calldata _proof) external;
-
-    /// @notice Posts the requested local data to the VM's `PreimageOralce`.
-    /// @param _ident The local identifier of the data to post.
-    /// @param _execLeafIdx The index of the leaf claim in an execution subgame that requires the local data for a step.
-    /// @param _partOffset The offset of the data to post.
-    function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset) external;
-
-    /// @notice Resolves the subgame rooted at the given claim index. `_numToResolve` specifies how many children of
-    ///         the subgame will be checked in this call. If `_numToResolve` is less than the number of children, an
-    ///         internal cursor will be updated and this function may be called again to complete resolution of the
-    ///         subgame.
-    /// @dev This function must be called bottom-up in the DAG
-    ///      A subgame is a tree of claims that has a maximum depth of 1.
-    ///      A subgame root claims is valid if, and only if, all of its child claims are invalid.
-    ///      At the deepest level in the DAG, a claim is invalid if there's a successful step against it.
-    /// @param _claimIndex The index of the subgame root claim to resolve.
-    /// @param _numToResolve The number of subgames to resolve in this call. If the input is `0`, and this is the first
-    ///                      page, this function will attempt to check all of the subgame's children at once.
-    function resolveClaim(uint256 _claimIndex, uint256 _numToResolve) external;
-
-    /// @notice Returns the number of children that still need to be resolved in order to fully resolve a subgame rooted
-    ///         at `_claimIndex`.
-    /// @param _claimIndex The subgame root claim's index within `claimData`.
-    /// @return numRemainingChildren_ The number of children that still need to be checked to resolve the subgame.
-    function getNumToResolve(uint256 _claimIndex) external view returns (uint256 numRemainingChildren_);
-
-    /// @notice The l2BlockNumber of the disputed output root in the `L2OutputOracle`.
-    function l2BlockNumber() external view returns (uint256 l2BlockNumber_);
-
-    /// @notice Starting output root and block number of the game.
-    function startingOutputRoot() external view returns (Hash startingRoot_, uint256 l2BlockNumber_);
-
-    /// @notice Only the starting block number of the game.
-    function startingBlockNumber() external view returns (uint256 startingBlockNumber_);
-
-    /// @notice Only the starting output root of the game.
-    function startingRootHash() external view returns (Hash startingRootHash_);
-}
-
-contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     ////////////////////////////////////////////////////////////////
     //                         State Vars                         //
     ////////////////////////////////////////////////////////////////
@@ -2966,8 +2898,10 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     uint256 internal constant HEADER_BLOCK_NUMBER_INDEX = 8;
 
     /// @notice Semantic version.
-    /// @custom:semver 1.3.0
-    string public constant version = "1.3.0";
+    /// @custom:semver 1.4.1
+    function version() public pure virtual returns (string memory) {
+        return "1.4.1";
+    }
 
     /// @notice The starting timestamp of the game
     Timestamp public createdAt;
@@ -2975,7 +2909,7 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     /// @notice The timestamp of the game's global resolution.
     Timestamp public resolvedAt;
 
-    /// @inheritdoc IDisputeGame
+    /// @notice Returns the current status of the game.
     GameStatus public status;
 
     /// @notice Flag for the `initialize` function to prevent re-initialization.
@@ -2992,7 +2926,7 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     ClaimData[] public claimData;
 
     /// @notice Credited balances for winning participants.
-    mapping(address => uint256) public credit;
+    mapping(address => uint256) public normalModeCredit;
 
     /// @notice A mapping to allow for constant-time lookups of existing claims.
     mapping(Hash => bool) public claims;
@@ -3009,72 +2943,72 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     /// @notice The latest finalized output root, serving as the anchor for output bisection.
     OutputRoot public startingOutputRoot;
 
-    /// @param _gameType The type ID of the game.
-    /// @param _absolutePrestate The absolute prestate of the instruction trace.
-    /// @param _maxGameDepth The maximum depth of bisection.
-    /// @param _splitDepth The final depth of the output bisection portion of the game.
-    /// @param _clockExtension The clock extension to perform when the remaining duration is less than the extension.
-    /// @param _maxClockDuration The maximum amount of time that may accumulate on a team's chess clock.
-    /// @param _vm An onchain VM that performs single instruction steps on an FPP trace.
-    /// @param _weth WETH contract for holding ETH.
-    /// @param _anchorStateRegistry The contract that stores the anchor state for each game type.
-    /// @param _l2ChainId Chain ID of the L2 network this contract argues about.
-    constructor(
-        GameType _gameType,
-        Claim _absolutePrestate,
-        uint256 _maxGameDepth,
-        uint256 _splitDepth,
-        Duration _clockExtension,
-        Duration _maxClockDuration,
-        IBigStepper _vm,
-        IDelayedWETH _weth,
-        IAnchorStateRegistry _anchorStateRegistry,
-        uint256 _l2ChainId
-    ) {
+    /// @notice A boolean for whether or not the game type was respected when the game was created.
+    bool public wasRespectedGameTypeWhenCreated;
+
+    /// @notice A mapping of each claimant's refund mode credit.
+    mapping(address => uint256) public refundModeCredit;
+
+    /// @notice A mapping of whether a claimant has unlocked their credit.
+    mapping(address => bool) public hasUnlockedCredit;
+
+    /// @notice The bond distribution mode of the game.
+    BondDistributionMode public bondDistributionMode;
+
+    /// @param _params Parameters for creating a new FaultDisputeGame.
+    constructor(GameConstructorParams memory _params) {
         // The max game depth may not be greater than `LibPosition.MAX_POSITION_BITLEN - 1`.
-        if (_maxGameDepth > LibPosition.MAX_POSITION_BITLEN - 1) revert MaxDepthTooLarge();
+        if (_params.maxGameDepth > LibPosition.MAX_POSITION_BITLEN - 1) revert MaxDepthTooLarge();
 
         // The split depth plus one cannot be greater than or equal to the max game depth. We add
         // an additional depth to the split depth to avoid a bug in trace ancestor lookup. We know
         // that the case where the split depth is the max value for uint256 is equivalent to the
         // second check though we do need to check it explicitly to avoid an overflow.
-        if (_splitDepth == type(uint256).max || _splitDepth + 1 >= _maxGameDepth) revert InvalidSplitDepth();
+        if (_params.splitDepth == type(uint256).max || _params.splitDepth + 1 >= _params.maxGameDepth) {
+            revert InvalidSplitDepth();
+        }
 
         // The split depth cannot be 0 or 1 to stay in bounds of clock extension arithmetic.
-        if (_splitDepth < 2) revert InvalidSplitDepth();
+        if (_params.splitDepth < 2) revert InvalidSplitDepth();
 
         // The PreimageOracle challenge period must fit into uint64 so we can safely use it here.
         // Runtime check was added instead of changing the ABI since the contract is already
         // deployed in production. We perform the same check within the PreimageOracle for the
         // benefit of developers but also perform this check here defensively.
-        if (_vm.oracle().challengePeriod() > type(uint64).max) revert InvalidChallengePeriod();
+        if (_params.vm.oracle().challengePeriod() > type(uint64).max) revert InvalidChallengePeriod();
 
         // Determine the maximum clock extension which is either the split depth extension or the
         // maximum game depth extension depending on the configuration of these contracts.
-        uint256 splitDepthExtension = uint256(_clockExtension.raw()) * 2;
-        uint256 maxGameDepthExtension = uint256(_clockExtension.raw()) + uint256(_vm.oracle().challengePeriod());
+        uint256 splitDepthExtension = uint256(_params.clockExtension.raw()) * 2;
+        uint256 maxGameDepthExtension =
+            uint256(_params.clockExtension.raw()) + uint256(_params.vm.oracle().challengePeriod());
         uint256 maxClockExtension = Math.max(splitDepthExtension, maxGameDepthExtension);
 
         // The maximum clock extension must fit into a uint64.
         if (maxClockExtension > type(uint64).max) revert InvalidClockExtension();
 
         // The maximum clock extension may not be greater than the maximum clock duration.
-        if (uint64(maxClockExtension) > _maxClockDuration.raw()) revert InvalidClockExtension();
+        if (uint64(maxClockExtension) > _params.maxClockDuration.raw()) revert InvalidClockExtension();
+
+        // Block type(uint32).max from being used as a game type so that it can be used in the
+        // OptimismPortal respected game type trick.
+        if (_params.gameType.raw() == type(uint32).max) revert ReservedGameType();
 
         // Set up initial game state.
-        GAME_TYPE = _gameType;
-        ABSOLUTE_PRESTATE = _absolutePrestate;
-        MAX_GAME_DEPTH = _maxGameDepth;
-        SPLIT_DEPTH = _splitDepth;
-        CLOCK_EXTENSION = _clockExtension;
-        MAX_CLOCK_DURATION = _maxClockDuration;
-        VM = _vm;
-        WETH = _weth;
-        ANCHOR_STATE_REGISTRY = _anchorStateRegistry;
-        L2_CHAIN_ID = _l2ChainId;
+        GAME_TYPE = _params.gameType;
+        ABSOLUTE_PRESTATE = _params.absolutePrestate;
+        MAX_GAME_DEPTH = _params.maxGameDepth;
+        SPLIT_DEPTH = _params.splitDepth;
+        CLOCK_EXTENSION = _params.clockExtension;
+        MAX_CLOCK_DURATION = _params.maxClockDuration;
+        VM = _params.vm;
+        WETH = _params.weth;
+        ANCHOR_STATE_REGISTRY = _params.anchorStateRegistry;
+        L2_CHAIN_ID = _params.l2ChainId;
     }
 
-    /// @inheritdoc IInitializable
+    /// @notice Initializes the contract.
+    /// @dev This function may only be called once.
     function initialize() public payable virtual {
         // SAFETY: Any revert in this function will bubble up to the DisputeGameFactory and
         // prevent the game from being created.
@@ -3091,7 +3025,7 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         if (initialized) revert AlreadyInitialized();
 
         // Grab the latest anchor root.
-        (Hash root, uint256 rootBlockNumber) = ANCHOR_STATE_REGISTRY.anchors(GAME_TYPE);
+        (Hash root, uint256 rootBlockNumber) = ANCHOR_STATE_REGISTRY.getAnchorRoot();
 
         // Should only happen if this is a new game type that hasn't been set up yet.
         if (root.raw() == bytes32(0)) revert AnchorRootNotFound();
@@ -3141,17 +3075,32 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         initialized = true;
 
         // Deposit the bond.
+        refundModeCredit[gameCreator()] += msg.value;
         WETH.deposit{ value: msg.value }();
 
         // Set the game's starting timestamp
         createdAt = Timestamp.wrap(uint64(block.timestamp));
+
+        // Set whether the game type was respected when the game was created.
+        wasRespectedGameTypeWhenCreated =
+            GameType.unwrap(ANCHOR_STATE_REGISTRY.respectedGameType()) == GameType.unwrap(GAME_TYPE);
     }
 
     ////////////////////////////////////////////////////////////////
     //                  `IFaultDisputeGame` impl                  //
     ////////////////////////////////////////////////////////////////
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Perform an instruction step via an on-chain fault proof processor.
+    /// @dev This function should point to a fault proof processor in order to execute
+    ///      a step in the fault proof program on-chain. The interface of the fault proof
+    ///      processor contract should adhere to the `IBigStepper` interface.
+    /// @param _claimIndex The index of the challenged claim within `claimData`.
+    /// @param _isAttack Whether or not the step is an attack or a defense.
+    /// @param _stateData The stateData of the step is the preimage of the claim at the given
+    ///        prestate, which is at `_stateIndex` if the move is an attack and `_claimIndex` if
+    ///        the move is a defense. If the step is an attack on the first instruction, it is
+    ///        the absolute prestate of the fault proof VM.
+    /// @param _proof Proof to access memory nodes in the VM's merkle state tree.
     function step(
         uint256 _claimIndex,
         bool _isAttack,
@@ -3342,23 +3291,35 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         subgames[_challengeIndex].push(claimData.length - 1);
 
         // Deposit the bond.
+        refundModeCredit[msg.sender] += msg.value;
         WETH.deposit{ value: msg.value }();
 
         // Emit the appropriate event for the attack or defense.
         emit Move(_challengeIndex, _claim, msg.sender);
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Attack a disagreed upon `Claim`.
+    /// @param _disputed The `Claim` being attacked.
+    /// @param _parentIndex Index of the `Claim` to attack in the `claimData` array. This must match the `_disputed`
+    /// claim.
+    /// @param _claim The `Claim` at the relative attack position.
     function attack(Claim _disputed, uint256 _parentIndex, Claim _claim) external payable {
         move(_disputed, _parentIndex, _claim, true);
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Defend an agreed upon `Claim`.
+    /// @notice _disputed The `Claim` being defended.
+    /// @param _parentIndex Index of the claim to defend in the `claimData` array. This must match the `_disputed`
+    /// claim.
+    /// @param _claim The `Claim` at the relative defense position.
     function defend(Claim _disputed, uint256 _parentIndex, Claim _claim) external payable {
         move(_disputed, _parentIndex, _claim, false);
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Posts the requested local data to the VM's `PreimageOralce`.
+    /// @param _ident The local identifier of the data to post.
+    /// @param _execLeafIdx The index of the leaf claim in an execution subgame that requires the local data for a step.
+    /// @param _partOffset The offset of the data to post.
     function addLocalData(uint256 _ident, uint256 _execLeafIdx, uint256 _partOffset) external {
         // INVARIANT: Local data can only be added if the game is currently in progress.
         if (status != GameStatus.IN_PROGRESS) revert GameNotInProgress();
@@ -3397,7 +3358,10 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         }
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Returns the number of children that still need to be resolved in order to fully resolve a subgame rooted
+    ///         at `_claimIndex`.
+    /// @param _claimIndex The subgame root claim's index within `claimData`.
+    /// @return numRemainingChildren_ The number of children that still need to be checked to resolve the subgame.
     function getNumToResolve(uint256 _claimIndex) public view returns (uint256 numRemainingChildren_) {
         ResolutionCheckpoint storage checkpoint = resolutionCheckpoints[_claimIndex];
         uint256[] storage challengeIndices = subgames[_claimIndex];
@@ -3406,17 +3370,17 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         numRemainingChildren_ = challengeIndicesLen - checkpoint.subgameIndex;
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice The l2BlockNumber of the disputed output root in the `L2OutputOracle`.
     function l2BlockNumber() public pure returns (uint256 l2BlockNumber_) {
         l2BlockNumber_ = _getArgUint256(0x54);
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Only the starting block number of the game.
     function startingBlockNumber() external view returns (uint256 startingBlockNumber_) {
         startingBlockNumber_ = startingOutputRoot.l2BlockNumber;
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Starting output root and block number of the game.
     function startingRootHash() external view returns (Hash startingRootHash_) {
         startingRootHash_ = startingOutputRoot.root;
     }
@@ -3473,7 +3437,12 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     //                    `IDisputeGame` impl                     //
     ////////////////////////////////////////////////////////////////
 
-    /// @inheritdoc IDisputeGame
+    /// @notice If all necessary information has been gathered, this function should mark the game
+    ///         status as either `CHALLENGER_WINS` or `DEFENDER_WINS` and return the status of
+    ///         the resolved game. It is at this stage that the bonds should be awarded to the
+    ///         necessary parties.
+    /// @dev May only be called if the `status` is `IN_PROGRESS`.
+    /// @return status_ The status of the game after resolution.
     function resolve() external returns (GameStatus status_) {
         // INVARIANT: Resolution cannot occur unless the game is currently in progress.
         if (status != GameStatus.IN_PROGRESS) revert GameNotInProgress();
@@ -3487,12 +3456,19 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
 
         // Update the status and emit the resolved event, note that we're performing an assignment here.
         emit Resolved(status = status_);
-
-        // Try to update the anchor state, this should not revert.
-        ANCHOR_STATE_REGISTRY.tryUpdateAnchorState();
     }
 
-    /// @inheritdoc IFaultDisputeGame
+    /// @notice Resolves the subgame rooted at the given claim index. `_numToResolve` specifies how many children of
+    ///         the subgame will be checked in this call. If `_numToResolve` is less than the number of children, an
+    ///         internal cursor will be updated and this function may be called again to complete resolution of the
+    ///         subgame.
+    /// @dev This function must be called bottom-up in the DAG
+    ///      A subgame is a tree of claims that has a maximum depth of 1.
+    ///      A subgame root claims is valid if, and only if, all of its child claims are invalid.
+    ///      At the deepest level in the DAG, a claim is invalid if there's a successful step against it.
+    /// @param _claimIndex The index of the subgame root claim to resolve.
+    /// @param _numToResolve The number of subgames to resolve in this call. If the input is `0`, and this is the first
+    ///                      page, this function will attempt to check all of the subgame's children at once.
     function resolveClaim(uint256 _claimIndex, uint256 _numToResolve) external {
         // INVARIANT: Resolution cannot occur unless the game is currently in progress.
         if (status != GameStatus.IN_PROGRESS) revert GameNotInProgress();
@@ -3594,34 +3570,51 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         }
     }
 
-    /// @inheritdoc IDisputeGame
-    function gameType() public view override returns (GameType gameType_) {
+    /// @notice Getter for the game type.
+    /// @dev The reference impl should be entirely different depending on the type (fault, validity)
+    ///      i.e. The game type should indicate the security model.
+    /// @return gameType_ The type of proof system being used.
+    function gameType() public view returns (GameType gameType_) {
         gameType_ = GAME_TYPE;
     }
 
-    /// @inheritdoc IDisputeGame
+    /// @notice Getter for the creator of the dispute game.
+    /// @dev `clones-with-immutable-args` argument #1
+    /// @return creator_ The creator of the dispute game.
     function gameCreator() public pure returns (address creator_) {
         creator_ = _getArgAddress(0x00);
     }
 
-    /// @inheritdoc IDisputeGame
+    /// @notice Getter for the root claim.
+    /// @dev `clones-with-immutable-args` argument #2
+    /// @return rootClaim_ The root claim of the DisputeGame.
     function rootClaim() public pure returns (Claim rootClaim_) {
         rootClaim_ = Claim.wrap(_getArgBytes32(0x14));
     }
 
-    /// @inheritdoc IDisputeGame
+    /// @notice Getter for the parent hash of the L1 block when the dispute game was created.
+    /// @dev `clones-with-immutable-args` argument #3
+    /// @return l1Head_ The parent hash of the L1 block when the dispute game was created.
     function l1Head() public pure returns (Hash l1Head_) {
         l1Head_ = Hash.wrap(_getArgBytes32(0x34));
     }
 
-    /// @inheritdoc IDisputeGame
+    /// @notice Getter for the extra data.
+    /// @dev `clones-with-immutable-args` argument #4
+    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.
     function extraData() public pure returns (bytes memory extraData_) {
         // The extra data starts at the second word within the cwia calldata and
         // is 32 bytes long.
         extraData_ = _getArgBytes(0x54, 0x20);
     }
 
-    /// @inheritdoc IDisputeGame
+    /// @notice A compliant implementation of this interface should return the components of the
+    ///         game UUID's preimage provided in the cwia payload. The preimage of the UUID is
+    ///         constructed as `keccak256(gameType . rootClaim . extraData)` where `.` denotes
+    ///         concatenation.
+    /// @return gameType_ The type of proof system being used.
+    /// @return rootClaim_ The root claim of the DisputeGame.
+    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.
     function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_) {
         gameType_ = gameType();
         rootClaim_ = rootClaim();
@@ -3678,15 +3671,42 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         requiredBond_ = assumedBaseFee * requiredGas;
     }
 
-    /// @notice Claim the credit belonging to the recipient address.
+    /// @notice Claim the credit belonging to the recipient address. Reverts if the game isn't
+    ///         finalized, if the recipient has no credit to claim, or if the bond transfer
+    ///         fails. If the game is finalized but no bond has been paid out yet, this method
+    ///         will determine the bond distribution mode and also try to update anchor game.
     /// @param _recipient The owner and recipient of the credit.
     function claimCredit(address _recipient) external {
-        // Remove the credit from the recipient prior to performing the external call.
-        uint256 recipientCredit = credit[_recipient];
-        credit[_recipient] = 0;
+        // Close out the game and determine the bond distribution mode if not already set.
+        // We call this as part of claim credit to reduce the number of additional calls that a
+        // Challenger needs to make to this contract.
+        closeGame();
+
+        // Fetch the recipient's credit balance based on the bond distribution mode.
+        uint256 recipientCredit;
+        if (bondDistributionMode == BondDistributionMode.REFUND) {
+            recipientCredit = refundModeCredit[_recipient];
+        } else if (bondDistributionMode == BondDistributionMode.NORMAL) {
+            recipientCredit = normalModeCredit[_recipient];
+        } else {
+            // We shouldn't get here, but sanity check just in case.
+            revert InvalidBondDistributionMode();
+        }
+
+        // If the game is in refund mode, and the recipient has not unlocked their refund mode
+        // credit, we unlock it and return early.
+        if (!hasUnlockedCredit[_recipient]) {
+            hasUnlockedCredit[_recipient] = true;
+            WETH.unlock(_recipient, recipientCredit);
+            return;
+        }
 
         // Revert if the recipient has no credit to claim.
         if (recipientCredit == 0) revert NoCreditToClaim();
+
+        // Set the recipient's credit balances to 0.
+        refundModeCredit[_recipient] = 0;
+        normalModeCredit[_recipient] = 0;
 
         // Try to withdraw the WETH amount so it can be used here.
         WETH.withdraw(_recipient, recipientCredit);
@@ -3694,6 +3714,51 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
         // Transfer the credit to the recipient.
         (bool success,) = _recipient.call{ value: recipientCredit }(hex"");
         if (!success) revert BondTransferFailed();
+    }
+
+    /// @notice Closes out the game, determines the bond distribution mode, attempts to register
+    ///         the game as the anchor game, and emits an event.
+    function closeGame() public {
+        // If the bond distribution mode has already been determined, we can return early.
+        if (bondDistributionMode == BondDistributionMode.REFUND || bondDistributionMode == BondDistributionMode.NORMAL)
+        {
+            // We can't revert or we'd break claimCredit().
+            return;
+        } else if (bondDistributionMode != BondDistributionMode.UNDECIDED) {
+            // We shouldn't get here, but sanity check just in case.
+            revert InvalidBondDistributionMode();
+        }
+
+        // Make sure that the game is resolved.
+        // AnchorStateRegistry should be checking this but we're being defensive here.
+        if (resolvedAt.raw() == 0) {
+            revert GameNotResolved();
+        }
+
+        // Game must be finalized according to the AnchorStateRegistry.
+        bool finalized = ANCHOR_STATE_REGISTRY.isGameFinalized(IDisputeGame(address(this)));
+        if (!finalized) {
+            revert GameNotFinalized();
+        }
+
+        // Try to update the anchor game first. Won't always succeed because delays can lead
+        // to situations in which this game might not be eligible to be a new anchor game.
+        // eip150-safe
+        try ANCHOR_STATE_REGISTRY.setAnchorState(IDisputeGame(address(this))) { } catch { }
+
+        // Check if the game is a proper game, which will determine the bond distribution mode.
+        bool properGame = ANCHOR_STATE_REGISTRY.isGameProper(IDisputeGame(address(this)));
+
+        // If the game is a proper game, the bonds should be distributed normally. Otherwise, go
+        // into refund mode and distribute bonds back to their original depositors.
+        if (properGame) {
+            bondDistributionMode = BondDistributionMode.NORMAL;
+        } else {
+            bondDistributionMode = BondDistributionMode.REFUND;
+        }
+
+        // Emit an event to signal that the game has been closed.
+        emit GameClosed(bondDistributionMode);
     }
 
     /// @notice Returns the amount of time elapsed on the potential challenger to `_claimIndex`'s chess clock. Maxes
@@ -3724,6 +3789,18 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     /// @notice Returns the length of the `claimData` array.
     function claimDataLen() external view returns (uint256 len_) {
         len_ = claimData.length;
+    }
+
+    /// @notice Returns the credit balance of a given recipient.
+    /// @param _recipient The recipient of the credit.
+    /// @return credit_ The credit balance of the recipient.
+    function credit(address _recipient) external view returns (uint256 credit_) {
+        if (bondDistributionMode == BondDistributionMode.REFUND) {
+            credit_ = refundModeCredit[_recipient];
+        } else {
+            // Always return normal credit balance by default unless we're in refund mode.
+            credit_ = normalModeCredit[_recipient];
+        }
     }
 
     ////////////////////////////////////////////////////////////////
@@ -3783,14 +3860,7 @@ contract FaultDisputeGame is IFaultDisputeGame, Clone, ISemver {
     /// @param _recipient The recipient of the bond.
     /// @param _bonded The claim to pay out the bond of.
     function _distributeBond(address _recipient, ClaimData storage _bonded) internal {
-        // Set all bits in the bond value to indicate that the bond has been paid out.
-        uint256 bond = _bonded.bond;
-
-        // Increase the recipient's credit.
-        credit[_recipient] += bond;
-
-        // Unlock the bond.
-        WETH.unlock(_recipient, bond);
+        normalModeCredit[_recipient] += _bonded.bond;
     }
 
     /// @notice Verifies the integrity of an execution bisection subgame's root claim. Reverts if the claim

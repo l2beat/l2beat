@@ -1,3 +1,126 @@
+Generated with discovered.json: 0xe85b4833692483a3f876256e4a9c0e4baeba99da
+
+# Diff at Fri, 04 Apr 2025 09:43:57 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22166253
+- current block number: 22194735
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      values.$implementation:
+-        "0x53c165169401764778F780a69701385eb0FF19B7"
++        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        42
++        74
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol                         | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166253 (main branch discovery), not current.
+
+```diff
+    contract CeloProxyAdminOwner (0x4092A77bAF58fef0309452cEaCb09221e556E112) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x9c314E8057025F2982aa4B3923Abd741A8e8DE91","via":[{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]}
+      receivedPermissions.11.from:
+-        "0x9c314E8057025F2982aa4B3923Abd741A8e8DE91"
++        "0x3C519816C5BdC0a0199147594F83feD4F5847f13"
+      receivedPermissions.10.from:
+-        "0x3C519816C5BdC0a0199147594F83feD4F5847f13"
++        "0xa24Bf5Bc02997f63da4e2C7F802067e05a102504"
+      receivedPermissions.9.from:
+-        "0xa24Bf5Bc02997f63da4e2C7F802067e05a102504"
++        "0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906"
+      receivedPermissions.8.from:
+-        "0x6f0E4f1EB98A52EfaCF7BE11d48B9d9d6510A906"
++        "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683"
+      receivedPermissions.7.from:
+-        "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683"
++        "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC"
+      receivedPermissions.6.from:
+-        "0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC"
++        "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
+      receivedPermissions.5.from:
+-        "0xa440975E5A6BB19Bc3Bee901d909BB24b0f43D33"
++        "0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.via:
+-        [{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]
+      receivedPermissions.4.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0x9c314E8057025F2982aa4B3923Abd741A8e8DE91) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xbcA67eE5188efc419c42C91156EcC888b20664f3","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+```diff
+    contract DelayedWETH (0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x4092A77bAF58fef0309452cEaCb09221e556E112","via":[{"address":"0x783A434532Ee94667979213af1711505E8bFE374"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x783A434532Ee94667979213af1711505E8bFE374"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract undefined (0xbcA67eE5188efc419c42C91156EcC888b20664f3) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x9c314E8057025F2982aa4B3923Abd741A8e8DE91","description":"can pull funds from the contract in case of emergency."}]
+    }
+```
+
 Generated with discovered.json: 0xb772550f6323acde094961a91b201b34afcfc19d
 
 # Diff at Mon, 31 Mar 2025 10:19:03 GMT:
