@@ -158,11 +158,23 @@
       "symbol": "USDT",
       "name": "Tether USD",
       "amount": {
-        "type": "totalSupply",
-        "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
-        "chain": "celo",
-        "decimals": 6,
-        "sinceTimestamp": 1742960663
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "totalSupply",
+            "address": "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e",
+            "chain": "celo",
+            "decimals": 6,
+            "sinceTimestamp": 1742960663
+          },
+          {
+            "type": "const",
+            "value": "323024420080000",
+            "decimals": 6,
+            "sinceTimestamp": 1742960663
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "native",
