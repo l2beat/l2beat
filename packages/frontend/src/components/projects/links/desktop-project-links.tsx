@@ -83,7 +83,9 @@ function MultiProjectLink({
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
+      <NavigationMenuContent
+        className={cn(variant === 'header' && 'bg-header-secondary')}
+      >
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
