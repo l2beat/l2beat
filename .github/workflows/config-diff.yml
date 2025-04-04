@@ -56,7 +56,6 @@ jobs:
         with:
           branch: gh-pages
           folder: pages-output
-          single-commit: true
           clean: false
 
       - name: Add gh-pages to worktree
