@@ -34,18 +34,14 @@ export class DataFormulaExecutor {
     isLatestMode: boolean,
   ) {
     const chains = extractUniqueChains(amounts)
-
     /** Optimization to fetch block for timestamp only once per chain */
-    const blockNumbersToTimestamps = await this.getBlockNumbers(
+    const blockNumbers = await this.getBlockNumbers(
       chains,
       timestamp,
       isLatestMode,
     )
 
     const promises: Promise<void>[] = []
-
-    const blockNumbers = blockNumbersToTimestamps.get(timestamp)
-    assert(blockNumbers)
 
     promises.push(
       ...this.processOnchainAmounts(amounts, timestamp, blockNumbers),
@@ -266,62 +262,33 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
     isLatestMode: boolean,
   ) {
-    let blockNumbersToTimestamps: Map<number, Map<string, number>> | undefined
-
-    if (isLatestMode) {
-      blockNumbersToTimestamps = await this.getLatestBlockNumbers(
-        chains,
-        timestamp,
-      )
-    } else {
-      blockNumbersToTimestamps = await this.getBlockNumbersForTimestamps(
-        chains,
-        timestamp,
-      )
-    }
-    assert(blockNumbersToTimestamps)
-    return blockNumbersToTimestamps
-  }
-
-  async getLatestBlockNumbers(chains: string[], timestamp: UnixTime) {
     const result = new Map<string, number>()
 
     for (const chain of chains) {
-      const block = this.blockProviders.get(chain)
-      assert(block, `${chain}: No BlockProvider configured`)
-      this.logger.info(
-        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
-      )
-      const latestBlock = await block.getLatestBlockNumber()
-      result.set(chain, latestBlock)
-    }
+      if (isLatestMode) {
+        const block = this.blockProviders.get(chain)
+        assert(block, `${chain}: No BlockProvider configured`)
+        this.logger.info(`Fetching latest block number on ${chain}`)
+        const latestBlock = await block.getLatestBlockNumber()
+        result.set(chain, latestBlock)
+      } else {
+        const cached = await this.storage.getBlockNumber(chain, timestamp)
+        if (cached) {
+          result.set(chain, cached)
+          continue
+        }
 
-    return new Map([[timestamp, result]])
-  }
-
-  async getBlockNumbersForTimestamps(chains: string[], timestamp: UnixTime) {
-    const result = new Map<number, Map<string, number>>()
-
-    const timestampMapping = new Map<string, number>()
-    result.set(timestamp, timestampMapping)
-
-    for (const chain of chains) {
-      const cached = await this.storage.getBlockNumber(chain, timestamp)
-      if (cached) {
-        timestampMapping.set(chain, cached)
-        continue
-      }
-
-      this.logger.info(
-        `Fetching block number for timestamp ${timestamp} on ${chain}`,
-      )
-      const blockNumber =
-        await this.blockTimestampProvider.getBlockNumberAtOrBefore(
-          timestamp,
-          chain,
+        this.logger.info(
+          `Fetching block number for timestamp ${timestamp} on ${chain}`,
         )
-      timestampMapping.set(chain, blockNumber)
-      await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
+        const blockNumber =
+          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            chain,
+          )
+        result.set(chain, blockNumber)
+        await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
+      }
     }
 
     return result
