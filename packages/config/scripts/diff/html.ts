@@ -8,6 +8,8 @@ export function diffsToHtml(props: {
 }) {
   const hashBefore = props.commitBefore.slice(0, 8)
   const hashAfter = props.commitAfter.slice(0, 8)
+  const linkBefore = `https://github.com/l2beat/l2beat/tree/${props.commitBefore}`
+  const linkAfter = `https://github.com/l2beat/l2beat/tree/${props.commitBefore}`
 
   const alpineSource = readFileSync(
     require.resolve('alpinejs/dist/cdn.min.js'),
@@ -27,9 +29,9 @@ export function diffsToHtml(props: {
   <script>${alpineSource}</script>
   <h1>
     Diff between
-    <code class="removed">${hashBefore}</code> (main)
+    <a href="${linkBefore}"><code class="removed">${hashBefore}</code></a> (main)
     and
-    <code class="added">${hashAfter}</code> (PR)
+    <a href="${linkAfter}"><code class="removed">${hashAfter}</code></a> (PR)
   </h1>
   <ul>${props.diffs.map(diffToHtml).join('')}</ul>
 </body>
