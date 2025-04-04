@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 
 const discovery = new ProjectDiscovery('settlus')
 const genesisTimestamp = UnixTime(1736459256)
@@ -57,4 +57,5 @@ export const settlus: ScalingProject = opStackL2({
   },
   discovery,
   genesisTimestamp,
+  isNodeAvailable: 'UnderReview',
 })
