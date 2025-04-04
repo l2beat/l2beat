@@ -23,7 +23,7 @@
     "tokens:verify": "sh scripts/tokens/verify.sh",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts",
     "stargatev2-pools": "node -r esbuild-register scripts/stargatev2-pools",
-    "diff": "node -r esbuild-register scripts/diff/index.ts"
+    "diff": "./scripts/diff/diff.sh"
   },
   "dependencies": {
     "@l2beat/discovery": "workspace:*",
