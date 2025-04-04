@@ -7,7 +7,7 @@ Generated with discovered.json: 0x605763006a0f1065b16ec3e6bbbf961f5c924bba
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Standard Orbit chain.
 
 ## Initial discovery
 
