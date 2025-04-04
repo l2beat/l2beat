@@ -73,28 +73,36 @@ export function EcosystemMilestonesAndIncidents({
               {selectedMilestone.description}
             </p>
           </div>
-          <div className="flex items-center gap-1">
-            <button
-              disabled={selectedMilestoneIndex === 0}
-              className="group"
-              onClick={() =>
-                setSelectedMilestoneIndex(selectedMilestoneIndex - 1)
-              }
+          <div className="flex justify-between">
+            <div className="flex items-center gap-1">
+              <button
+                disabled={selectedMilestoneIndex === 0}
+                className="group"
+                onClick={() =>
+                  setSelectedMilestoneIndex(selectedMilestoneIndex - 1)
+                }
+              >
+                <ChevronIcon className="size-2.5 rotate-90 fill-brand group-disabled:opacity-50" />
+              </button>
+              <span className="relative top-px text-3xs font-medium leading-none text-secondary">
+                {selectedMilestoneIndex + 1} of {milestones.length}
+              </span>
+              <button
+                className="group"
+                disabled={selectedMilestoneIndex === milestones.length - 1}
+                onClick={() =>
+                  setSelectedMilestoneIndex(selectedMilestoneIndex + 1)
+                }
+              >
+                <ChevronIcon className="size-2.5 -rotate-90 fill-brand group-disabled:opacity-50" />
+              </button>
+            </div>
+            <a
+              href={selectedMilestone.url}
+              className="text-3xs font-medium leading-none text-secondary"
             >
-              <ChevronIcon className="size-2.5 rotate-90 fill-brand group-disabled:opacity-50" />
-            </button>
-            <span className="relative top-px text-3xs font-medium leading-none text-secondary">
-              {selectedMilestoneIndex + 1} of {milestones.length}
-            </span>
-            <button
-              className="group"
-              disabled={selectedMilestoneIndex === milestones.length - 1}
-              onClick={() =>
-                setSelectedMilestoneIndex(selectedMilestoneIndex + 1)
-              }
-            >
-              <ChevronIcon className="size-2.5 -rotate-90 fill-brand group-disabled:opacity-50" />
-            </button>
+              Learn more
+            </a>
           </div>
         </div>
       </div>
