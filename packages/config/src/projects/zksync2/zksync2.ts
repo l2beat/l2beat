@@ -6,12 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const shared = new ProjectDiscovery('shared-zk-stack')
-const bridge = shared.getContract('L1SharedBridge')
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 const validatorsVTLold = () => {
   // get validators added in the constructor args
@@ -48,7 +43,6 @@ assert(
 export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
-  discovery_ZKstackGovL2,
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -102,7 +96,7 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   associatedTokens: ['ZK'],
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       description:

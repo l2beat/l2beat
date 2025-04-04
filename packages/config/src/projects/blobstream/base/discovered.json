@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 28449617,
-  "configHash": "0xba9028d7682ffa00c223538a724fca380daa684923f21874c8bc01cb5354464b",
+  "configHash": "0x42556d12dcbca343ce33f25ee67fd60fd92c28ab2e980269d8c37bf0e194a75d",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -274,7 +274,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig 1",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",

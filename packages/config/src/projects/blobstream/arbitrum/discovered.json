@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 322514614,
-  "configHash": "0x4fc96f0b9bb35c1b040167cbacba910b61260e6f92255a8b0055dcf3d37552f6",
+  "configHash": "0xf99bf286743866fe3d673d8cd3e801900167ae1e53894af947257b9f55f03514",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -274,7 +274,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Succinct Multisig 1",
+      "name": "SP1VerifierGatewayMultisig",
       "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -315,12 +315,20 @@
       "name": "SP1Verifier",
       "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
       "type": "Contract",
-      "unverified": true,
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
       "proxyType": "immutable",
+      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
       "sinceTimestamp": 1735949706,
       "sinceBlock": 291720238,
-      "values": { "$immutable": true },
-      "derivedName": ""
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
+      },
+      "derivedName": "SP1Verifier"
     }
   ],
   "abis": {
@@ -507,11 +515,21 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "succinct/SP1Blobstream": "0x02756e6ddd521ab8a6e504462ea813ffa8f5a9dd17c7b583cb8b8a0f7ec1f292",
+    "succinct/SP1Verifier": "0x7192c1fd93b120af8dcc6df20782edbb56d212ad27e0761a9fb98c8fa23d9fac",
     "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
   }
 }

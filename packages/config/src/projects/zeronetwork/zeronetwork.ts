@@ -5,15 +5,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const bridge = discovery.getContract('L1SharedBridge')
+
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
-  discovery_ZKstackGovL2,
   additionalBadges: [BADGES.RaaS.Caldera],
   addedAt: UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
