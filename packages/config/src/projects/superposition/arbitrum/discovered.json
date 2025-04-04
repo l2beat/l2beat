@@ -2,7 +2,7 @@
   "name": "superposition",
   "chain": "arbitrum",
   "blockNumber": 322777194,
-  "configHash": "0x96fbc3faea1ea753404d5bbe97b6cbb2499cffa814fa2b4ffd2b3b738d714f00",
+  "configHash": "0x489d656a726e38dbaa3aedf9e97ed9d9923b1f4126ebd2fa70401c69b18b06c7",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -35,7 +35,7 @@
       "derivedName": "ValidatorUtils"
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "Superposition Multisig",
       "address": "0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43",
       "type": "Contract",
       "template": "GnosisSafe",

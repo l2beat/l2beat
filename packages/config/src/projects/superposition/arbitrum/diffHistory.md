@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xd59428b0d6bcf27ecf0f764c72e49ac862937ace
+Generated with discovered.json: 0x99b07d7880fec583fe2a195184a6bb1e7442a755
 
-# Diff at Fri, 04 Apr 2025 08:22:28 GMT:
+# Diff at Fri, 04 Apr 2025 08:55:32 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 322777194
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard AnyTrust L3 on Arbitrum (Conduit).
 
 ## Initial discovery
 
@@ -25,7 +25,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43)
+    contract Superposition Multisig (0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43)
     +++ description: None
 ```
 
