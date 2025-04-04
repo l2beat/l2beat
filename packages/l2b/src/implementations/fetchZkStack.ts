@@ -2,33 +2,30 @@ import fs from 'fs'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
-// Interface definitions
+// Interface definitions remain the same
 interface TokenAddressMap {
   [key: string]: string
 }
-
 interface PubdataModeMap {
   [key: number]: string
 }
-
 interface ChainIdNameMap {
   [key: string]: string
 }
-
+interface DAValidatorMap {
+  [key: string]: string
+}
 interface L2Data {
   chainAddress: string
   chainID: ethers.BigNumber
   chainAdmin: string
   baseToken: string
   pubdataPricingMode: number
-  protocolVersion: {
-    major: number
-    minor: number
-    patch: number
-  }
+  daValidatorType: string
+  protocolVersion: { major: number; minor: number; patch: number }
   totalBlocksExecuted: ethers.BigNumber
+  txFilterer: string
 }
-
 interface FormattedL2Data {
   chainAddress: string
   chainID: string
@@ -38,11 +35,11 @@ interface FormattedL2Data {
   baseTokenName: string
   pubdataPricingMode: number
   pubdataModeName: string
+  daValidatorType: string
   protocolVersion: string
   totalBlocksExecuted: string
+  txFilterer: string
 }
-
-// Table field configuration
 interface TableField {
   key: keyof FormattedL2Data
   header: string
@@ -50,10 +47,11 @@ interface TableField {
 
 export class ZkStackDataFetcher {
   private provider: ethers.providers.JsonRpcProvider
-  private stateTransitionManagerAddress =
-    '0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C'
+  private bridgeHubAddress = '0x303a465B659cBB0ab36eE643eA362c509EEb5213'
   private outputFilePath: string
+  private bridgeHub: ethers.Contract
 
+  // Mappings remain the same
   private tokenAddresses: TokenAddressMap = {
     '0x0000000000000000000000000000000000000001': 'ETH',
     '0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2': 'zkCRO',
@@ -69,7 +67,11 @@ export class ZkStackDataFetcher {
     1: 'validium',
   }
 
-  // Chain ID to name mapping - manually fill as needed
+  private daValidatorMapping: DAValidatorMap = {
+    '0x72213dfe8CA61B0A782970dCFebFb877778f9119': 'Rollup',
+    '0x907b30407249949521Bf0c89A43558dae200146A': 'Validium',
+  }
+
   private chainIdToName: ChainIdNameMap = {
     '324': 'ZKsync Era',
     '388': 'Cronos zk EVM',
@@ -84,21 +86,28 @@ export class ZkStackDataFetcher {
     '232': 'Lens',
   }
 
-  // Default table display configuration
   private tableFields: TableField[] = [
     { key: 'chainID', header: 'chain ID' },
     { key: 'name', header: 'name' },
     { key: 'baseTokenName', header: 'gas token' },
-    { key: 'pubdataModeName', header: 'DA' },
+    { key: 'daValidatorType', header: 'DA' },
+    { key: 'txFilterer', header: 'txfilterer' },
     { key: 'protocolVersion', header: 'v' },
     { key: 'totalBlocksExecuted', header: 'executed' },
   ]
 
-  // ABIs - separated for easy maintenance
-  private stateTransitionManagerAbi = [
-    'function getAllHyperchains() view returns (address[] chainAddresses)',
-    'function getAllHyperchainChainIDs() view returns (uint256[])',
+  // ABIs remain the same
+  private bridgeHubAbi = [
+    'function getAllZKChains() view returns (address[] chainAddresses)',
+    'function getAllZKChainChainIDs() view returns (uint256[])',
+    'function chainTypeManager(uint256 chainId) view returns (address)',
+    'function baseToken(uint256 _chainId) view returns (address)',
+  ]
+
+  private chainTypeManagerAbi = [
     'function getChainAdmin(uint256 _chainId) view returns (address)',
+    'function getProtocolVersion(uint256 _chainId) view returns (uint256)',
+    'function getSemverProtocolVersion() view returns (uint32, uint32, uint32)',
   ]
 
   private diamondAbi = [
@@ -106,36 +115,35 @@ export class ZkStackDataFetcher {
     'function getPubdataPricingMode() view returns (uint8)',
     'function getSemverProtocolVersion() view returns (uint32, uint32, uint32)',
     'function getTotalBlocksExecuted() view returns (uint256)',
+    'function getDAValidatorPair() view returns (address, address)',
+    'function getTransactionFilterer() view returns (address)',
   ]
 
   constructor(providerUrl: string, outputFilePath: string) {
     this.provider = new ethers.providers.JsonRpcProvider(providerUrl)
     this.outputFilePath = outputFilePath
+    this.bridgeHub = new ethers.Contract(
+      this.bridgeHubAddress,
+      this.bridgeHubAbi,
+      this.provider,
+    )
   }
 
-  // Function to create a formatted console table
   private createConsoleTable(data: FormattedL2Data[]): string {
-    // Extract headers from tableFields
     const headers = this.tableFields.map((field) => field.header)
-
-    // Create rows of data
     const rows = data.map((item) =>
       this.tableFields.map((field) => {
         const value = item[field.key]
         return value !== undefined ? String(value) : 'N/A'
       }),
     )
-
-    // Use the imported formatAsAsciiTable function
     return formatAsAsciiTable(headers, rows)
   }
 
-  // Helper functions
   private getTokenName(address: string): string {
-    const key = address
     return (
-      this.tokenAddresses[key] ||
-      address.substring(0, 6) + '...' + address.substring(address.length - 4)
+      this.tokenAddresses[address] ||
+      `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
     )
   }
 
@@ -155,7 +163,139 @@ export class ZkStackDataFetcher {
     return `${version.major}.${version.minor}.${version.patch}`
   }
 
-  // Safe contract call helper with error handling
+  // Optimized batch processing for a chain
+  private async processChain(
+    chainAddress: string,
+    chainID: ethers.BigNumber,
+  ): Promise<L2Data | null> {
+    if (chainAddress === '0x0000000000000000000000000000000000000000') {
+      return null
+    }
+
+    console.log(`fetching data for chain ID: ${chainID.toString()}`)
+
+    try {
+      // Create multicall arrays for parallel requests
+      const chainTypeManagerAddress =
+        await this.bridgeHub.chainTypeManager(chainID)
+      const baseTokenAddress = await this.bridgeHub.baseToken(chainID)
+
+      const chainTypeManager = new ethers.Contract(
+        chainTypeManagerAddress,
+        this.chainTypeManagerAbi,
+        this.provider,
+      )
+
+      const diamond = new ethers.Contract(
+        chainAddress,
+        this.diamondAbi,
+        this.provider,
+      )
+
+      // Batch all the contract calls to run in parallel
+      const [
+        chainAdmin,
+        pubdataPricingModePromise,
+        daValidatorPairPromise,
+        protocolVersionPromise,
+        totalBlocksExecutedPromise,
+        txFiltererPromise,
+      ] = await Promise.allSettled([
+        chainTypeManager.getChainAdmin(chainID),
+        this.safeContractCall(
+          () => diamond.getPubdataPricingMode(),
+          0,
+          `failed to get pubdata pricing mode for chain ${chainID.toString()}`,
+        ),
+        diamond.getDAValidatorPair().catch(() => ['Unknown', 'Unknown']),
+        diamond.getSemverProtocolVersion().catch(() => [0, 0, 0]),
+        this.safeContractCall(
+          () => diamond.getTotalBlocksExecuted(),
+          ethers.BigNumber.from(0),
+          `failed to get total blocks executed for chain ${chainID.toString()}`,
+        ),
+        this.provider
+          .call({
+            to: chainAddress,
+            data: '0x22c5cf23', // Function selector for getTransactionFilterer()
+          })
+          .catch(() =>
+            ethers.utils.defaultAbiCoder.encode(
+              ['address'],
+              ['0x0000000000000000000000000000000000000000'],
+            ),
+          ),
+      ])
+
+      // Process results
+      const pubdataPricingMode =
+        pubdataPricingModePromise.status === 'fulfilled'
+          ? pubdataPricingModePromise.value
+          : 0
+
+      // Process DA validator
+      let daValidatorType = 'Unknown'
+      if (daValidatorPairPromise.status === 'fulfilled') {
+        const [daValidator, _] = daValidatorPairPromise.value
+        daValidatorType = this.daValidatorMapping[daValidator] || 'Unknown'
+
+        // Cross-check with pubdata pricing mode
+        if (
+          (daValidatorType === 'Rollup' && pubdataPricingMode !== 0) ||
+          (daValidatorType === 'Validium' && pubdataPricingMode !== 1)
+        ) {
+          daValidatorType = 'Inconsistent'
+        }
+      }
+
+      // Process protocol version
+      let major = 0,
+        minor = 0,
+        patch = 0
+      if (protocolVersionPromise.status === 'fulfilled') {
+        ;[major, minor, patch] = protocolVersionPromise.value
+      }
+
+      // Process total blocks executed
+      const totalBlocksExecuted =
+        totalBlocksExecutedPromise.status === 'fulfilled'
+          ? totalBlocksExecutedPromise.value
+          : ethers.BigNumber.from(0)
+
+      // Process transaction filterer
+      let txFilterer = 'No'
+      if (txFiltererPromise.status === 'fulfilled') {
+        const decodedAddress = ethers.utils.defaultAbiCoder.decode(
+          ['address'],
+          txFiltererPromise.value,
+        )[0]
+        if (decodedAddress !== '0x0000000000000000000000000000000000000000') {
+          txFilterer = 'Yes'
+        }
+      }
+
+      return {
+        chainAddress,
+        chainID,
+        chainAdmin:
+          chainAdmin.status === 'fulfilled' ? chainAdmin.value : 'Unknown',
+        baseToken: baseTokenAddress,
+        pubdataPricingMode,
+        daValidatorType,
+        protocolVersion: { major, minor, patch },
+        totalBlocksExecuted,
+        txFilterer,
+      }
+    } catch (error) {
+      console.error(
+        `error processing chain ${chainID.toString()}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      )
+      return null
+    }
+  }
+
   private async safeContractCall<T>(
     contractCall: () => Promise<T>,
     errorValue: T,
@@ -169,106 +309,38 @@ export class ZkStackDataFetcher {
     }
   }
 
-  // Main function to fetch and display L2 data
   public async fetchAndDisplayL2Data(): Promise<void> {
-    // Create contract instance for StateTransitionManager
-    const stateTransitionManager = new ethers.Contract(
-      this.stateTransitionManagerAddress,
-      this.stateTransitionManagerAbi,
-      this.provider,
-    )
-
     console.log('fetching L2 data...')
 
     try {
-      // Fetch all hyperchain addresses and chain IDs
-      const chainAddresses: string[] =
-        await stateTransitionManager.getAllHyperchains()
-      const chainIDs: ethers.BigNumber[] =
-        await stateTransitionManager.getAllHyperchainChainIDs()
+      // Fetch all ZK chain addresses and chain IDs in parallel
+      const [chainAddresses, chainIDs] = await Promise.all([
+        this.bridgeHub.getAllZKChains(),
+        this.bridgeHub.getAllZKChainChainIDs(),
+      ])
 
-      // Check if we have data
       if (chainAddresses.length === 0 || chainIDs.length === 0) {
-        console.log('no hyperchains found')
+        console.log('no ZK chains found')
         return
       }
 
-      // Collect data for each hyperchain
+      // Process chains in batches to avoid overwhelming the RPC
+      const batchSize = 5 // Adjust based on RPC capacity
       const l2DataList: L2Data[] = []
 
-      for (let i = 0; i < chainAddresses.length; i++) {
-        // Stop when we reach zero address
-        if (
-          chainAddresses[i] === '0x0000000000000000000000000000000000000000'
-        ) {
-          break
-        }
+      for (let i = 0; i < chainAddresses.length; i += batchSize) {
+        const batch = Array.from(
+          { length: Math.min(batchSize, chainAddresses.length - i) },
+          (_, j) => {
+            const idx = i + j
+            return this.processChain(chainAddresses[idx], chainIDs[idx])
+          },
+        )
 
-        const chainID = chainIDs[i]
-        console.log(`fetching data for chain ID: ${chainID.toString()}`)
-
-        try {
-          // Get chain admin
-          const chainAdmin = await stateTransitionManager.getChainAdmin(chainID)
-
-          // Create contract instance for the diamond (L2)
-          const diamond = new ethers.Contract(
-            chainAddresses[i],
-            this.diamondAbi,
-            this.provider,
-          )
-
-          // Fetch L2 specific data with safe calls
-          const baseToken = await this.safeContractCall(
-            () => diamond.getBaseToken(),
-            '0x0000000000000000000000000000000000000000',
-            `failed to get base token for chain ${chainID.toString()}`,
-          )
-
-          const pubdataPricingMode = await this.safeContractCall(
-            () => diamond.getPubdataPricingMode(),
-            0,
-            `failed to get pubdata pricing mode for chain ${chainID.toString()}`,
-          )
-
-          let major = 0,
-            minor = 0,
-            patch = 0
-          try {
-            ;[major, minor, patch] = await diamond.getSemverProtocolVersion()
-          } catch (_error) {
-            console.warn(
-              `failed to get protocol version for chain ${chainID.toString()}`,
-            )
-          }
-
-          const totalBlocksExecuted = await this.safeContractCall(
-            () => diamond.getTotalBlocksExecuted(),
-            ethers.BigNumber.from(0),
-            `failed to get total blocks executed for chain ${chainID.toString()}`,
-          )
-
-          // Add to our data list
-          l2DataList.push({
-            chainAddress: chainAddresses[i],
-            chainID,
-            chainAdmin,
-            baseToken,
-            pubdataPricingMode,
-            protocolVersion: {
-              major,
-              minor,
-              patch,
-            },
-            totalBlocksExecuted,
-          })
-        } catch (error: unknown) {
-          console.error(
-            `rrror processing chain ${chainID.toString()}: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
-        }
+        const results = await Promise.all(batch)
+        l2DataList.push(
+          ...results.filter((data): data is L2Data => data !== null),
+        )
       }
 
       // Format data for display and saving
@@ -283,8 +355,10 @@ export class ZkStackDataFetcher {
           baseTokenName: this.getTokenName(data.baseToken),
           pubdataPricingMode: data.pubdataPricingMode,
           pubdataModeName: this.getPubdataModeName(data.pubdataPricingMode),
+          daValidatorType: data.daValidatorType,
           protocolVersion: this.formatProtocolVersion(data.protocolVersion),
           totalBlocksExecuted: data.totalBlocksExecuted.toString(),
+          txFilterer: data.txFilterer,
         }
       })
 
@@ -307,7 +381,7 @@ export class ZkStackDataFetcher {
       // Display table
       console.log('ZK stack summary:')
       console.log(this.createConsoleTable(formattedData))
-    } catch (error: unknown) {
+    } catch (error) {
       console.error(
         `error fetching data: ${
           error instanceof Error ? error.message : String(error)
@@ -316,7 +390,7 @@ export class ZkStackDataFetcher {
     }
   }
 
-  // Configuration methods
+  // Configuration methods remain the same
   public setTableFields(fields: TableField[]): void {
     this.tableFields = fields
   }
@@ -331,5 +405,9 @@ export class ZkStackDataFetcher {
 
   public addChainNameMapping(chainID: string, name: string): void {
     this.chainIdToName[chainID] = name
+  }
+
+  public addDAValidatorMapping(address: string, type: string): void {
+    this.daValidatorMapping[address] = type
   }
 }

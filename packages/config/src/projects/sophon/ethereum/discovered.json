@@ -1,15 +1,15 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 22144899,
-  "configHash": "0xa722e5ed67d3682dab4e0a87b4907bb7a972da1bce38be2726b7f8ee24984352",
+  "blockNumber": 22181511,
+  "configHash": "0x66322a3d440de12a5289665752da3c4962e31374ebbda77d925fa0237d24908e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
       "name": "SophonZkEvm",
       "address": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
       "type": "Contract",
-      "template": "shared-zk-stack/Diamond_v26",
+      "template": "shared-zk-stack/v26/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
@@ -35,7 +35,7 @@
         {
           "permission": "interact",
           "to": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
         }
       ],
@@ -216,28 +216,28 @@
           "0x907b30407249949521Bf0c89A43558dae200146A",
           "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 4199,
+        "getFirstUnprocessedPriorityTx": 4596,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 16,
-        "getPriorityTreeRoot": "0x1f2f84d06286ac270ca2289f323c847588d021adf6035e9f7b1cedb29b414d81",
+        "getPriorityQueueSize": 7,
+        "getPriorityTreeRoot": "0x22ca2c629e99e88af570acc04f9607e9e23e877f8e556f64362f6535d1b7c919",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 20381,
-        "getTotalBatchesExecuted": 20367,
-        "getTotalBatchesVerified": 20376,
-        "getTotalBlocksCommitted": 20381,
-        "getTotalBlocksExecuted": 20367,
-        "getTotalBlocksVerified": 20376,
-        "getTotalPriorityTxs": 4215,
+        "getTotalBatchesCommitted": 20882,
+        "getTotalBatchesExecuted": 20869,
+        "getTotalBatchesVerified": 20878,
+        "getTotalBlocksCommitted": 20882,
+        "getTotalBlocksExecuted": 20869,
+        "getTotalBlocksVerified": 20878,
+        "getTotalPriorityTxs": 4603,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -246,6 +246,8 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "isPermanentRollup": 0,
+        "isPermanentRollupString": ".",
         "isPriorityQueueActive": false,
         "validators": [
           "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
@@ -257,6 +259,14 @@
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
+        },
+        "IsPorterAvailableStatus": {
+          "severity": "HIGH",
+          "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
+        },
+        "isPermanentRollup": {
+          "severity": "HIGH",
+          "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
         "getDAValidatorPair": { "severity": "HIGH" },
         "getPendingAdmin": { "severity": "HIGH" },
@@ -274,6 +284,15 @@
         }
       },
       "derivedName": "DiamondProxy",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": ".",
+            "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -352,7 +371,7 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
@@ -405,6 +424,22 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "name": "ValidiumL1DAValidator",
+      "address": "0x907b30407249949521Bf0c89A43558dae200146A",
+      "type": "Contract",
+      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
+      "sourceHashes": [
+        "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
+      ],
+      "proxyType": "immutable",
+      "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
+      "sinceTimestamp": 1739108927,
+      "sinceBlock": 21809358,
+      "values": { "$immutable": true },
+      "derivedName": "ValidiumL1DAValidator",
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
@@ -469,7 +504,7 @@
         {
           "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
         }
       ],
       "sinceTimestamp": 1729079339,
@@ -506,7 +541,7 @@
         {
           "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
         }
       ],
@@ -869,6 +904,10 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
+    "0x907b30407249949521Bf0c89A43558dae200146A": [
+      "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
+      "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    ],
     "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
       "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
@@ -1041,8 +1080,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
     "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/Diamond_v26": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
     "shared-zk-stack/L1USDCBridge": "0x38101ee641e95b308e8437435c3de4baf5094c656fcf7c11b653e865050549ac",
+    "shared-zk-stack/v26/Diamond": "0xdeb3c7f37117cbbf5abc1704aa4bf4d0eef0bae68d2f635ae073df89e75803c0",
+    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }

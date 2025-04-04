@@ -23,7 +23,7 @@ import { BADGES } from '../common/badges'
 import { formatExecutionDelay } from '../common/formatDelays'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
@@ -68,7 +68,6 @@ export interface ZkStackConfigCommon {
   addedAt: UnixTime
   capability?: ProjectScalingCapability
   discovery: ProjectDiscovery
-  discovery_ZKstackGovL2: ProjectDiscovery
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -125,7 +124,10 @@ export type Upgradeability = {
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
-  const { discovery, discovery_ZKstackGovL2 } = templateVars
+  const discovery_ZKstackGovL2 = new ProjectDiscovery(
+    'shared-zk-stack',
+    'zksync2',
+  )
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
@@ -152,25 +154,25 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'ProtocolTimelockController',
     'getMinDelay',
   )
-  const executionDelayS = discovery.getContractValue<number>(
+  const executionDelayS = templateVars.discovery.getContractValue<number>(
     'ValidatorTimelock',
     'executionDelay',
   )
   const executionDelay = executionDelayS > 0 && formatSeconds(executionDelayS)
 
-  const legalVetoStandardS = discovery.getContractValue<number>(
+  const legalVetoStandardS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'STANDARD_LEGAL_VETO_PERIOD',
   )
-  const legalVetoExtendedS = discovery.getContractValue<number>(
+  const legalVetoExtendedS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'EXTENDED_LEGAL_VETO_PERIOD',
   )
-  const upgradeDelayPeriodS = discovery.getContractValue<number>(
+  const upgradeDelayPeriodS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'UPGRADE_DELAY_PERIOD',
   )
-  const upgradeWaitOrExpireS = discovery.getContractValue<number>(
+  const upgradeWaitOrExpireS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'UPGRADE_WAIT_OR_EXPIRE_PERIOD',
   )
@@ -188,39 +190,40 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     upgradeWaitOrExpireS +
     upgradeDelayPeriodS
 
-  const softFreezeS = discovery.getContractValue<number>(
+  const softFreezeS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'SOFT_FREEZE_PERIOD',
   )
-  const hardFreezeS = discovery.getContractValue<number>(
+  const hardFreezeS = templateVars.discovery.getContractValue<number>(
     'ProtocolUpgradeHandler',
     'HARD_FREEZE_PERIOD',
   )
 
-  const scMemberCount = discovery.getContractValue<string[]>(
+  const scMemberCount = templateVars.discovery.getContractValue<string[]>(
     'SecurityCouncil',
     '$members',
   ).length
-  const scApprovalThreshold = discovery.getContractValue<number>(
+  const scApprovalThreshold = templateVars.discovery.getContractValue<number>(
     'SecurityCouncil',
     'APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD',
   )
-  const scMainThreshold = discovery.getContractValue<number>(
+  const scMainThreshold = templateVars.discovery.getContractValue<number>(
     'SecurityCouncil',
     'EIP1271_THRESHOLD',
   )
-  const guardiansMemberCount = discovery.getContractValue<string[]>(
-    'Guardians',
-    '$members',
-  ).length
-  const guardiansMainThreshold = discovery.getContractValue<number>(
-    'Guardians',
-    'EIP1271_THRESHOLD',
-  )
-  const guardiansExtendThreshold = discovery.getContractValue<number>(
-    'Guardians',
-    'EXTEND_LEGAL_VETO_THRESHOLD',
-  )
+  const guardiansMemberCount = templateVars.discovery.getContractValue<
+    string[]
+  >('Guardians', '$members').length
+  const guardiansMainThreshold =
+    templateVars.discovery.getContractValue<number>(
+      'Guardians',
+      'EIP1271_THRESHOLD',
+    )
+  const guardiansExtendThreshold =
+    templateVars.discovery.getContractValue<number>(
+      'Guardians',
+      'EXTEND_LEGAL_VETO_THRESHOLD',
+    )
   const protocolStartProposalThresholdM =
     discovery_ZKstackGovL2.getContractValueBigInt(
       'ZkProtocolGovernor',
@@ -254,9 +257,13 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      upgradesAndGovernanceImage: 'zk-stack',
+      upgradesAndGovernanceImage: 'zkstack',
       ...templateVars.display,
       stack: 'ZK Stack',
+      architectureImage:
+        templateVars.daProvider !== undefined
+          ? 'zkstack-validium'
+          : 'zkstack-rollup',
       category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
@@ -405,7 +412,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     },
     upgradesAndGovernance: (() => {
       const description = `
-There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade proxy contract ProtocolUpgradeHandler.
+There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade management contract ProtocolUpgradeHandler.
 The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants.
 The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
 ## Standard path
@@ -431,14 +438,14 @@ After this a proposal enters a \*waiting\* state of ${formatSeconds(
         upgradeWaitOrExpireS,
       )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
 For the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
-A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will be expired if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
+A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will expire if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of ${formatSeconds(upgradeDelayPeriodS)} and can then be executed.
 ### Other governance tracks
 There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and
 2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets.
 The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.
 Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
 ## Emergency path
-SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
+SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${templateVars.discovery.getMultisigStats(
         'ZK Foundation Multisig',
       )}) form a de-facto 3/3 Multisig
 by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
@@ -451,17 +458,19 @@ The cumulative duration of the upgrade paths from the moment of a voted 'success
         upgradeDelayNoScS,
       )} for the path in which the SecurityCouncil is not approving the proposal.
 ## Freezing
-The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager.
+The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current ChainTypeManager.
 Either for a softFreeze of ${formatSeconds(
         softFreezeS,
       )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
 After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible.
 Only the SecurityCouncil can unfreeze an active freeze.
-## Elastic Chain Operator and ChainAdmin
+## ZK cluster Admin and Chain Admin
 Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:
-A single *Elastic Chain operator* role that governs parameters in the shared contracts and a *ChainAdmin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
-These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock.
-ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain Operator* role in the shared ZK stack contracts.`
+A single *ZK cluster Admin* role that governs parameters in the shared contracts and a *Chain Admin* role (defined in each chain-specific diamond contract) for managing parameters of each individual ZK chain that builds on the stack.
+These chain-specific actions include critical operations like setting a transaction filterer that can censor L1 -> L2 messages, changing the DA mode, migrating the chain to a different settlement layer and standard operations like setting fee parameters and adding / removing Validators in the ValidatorTimelock.
+For rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract. Each rollup can become a permanent rollup (through their Chain Admin) which disallows any DA change to a non-whitelisted source in the future.
+The source of truth for rollup-compliant DA validator contracts is the RollupDAManager contract, which is administered via the ProtocolUpgradeHandler.
+ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cluster Admin* role in the shared ZK stack contracts.`
       return description
     })(),
     permissions: mergePermissions(

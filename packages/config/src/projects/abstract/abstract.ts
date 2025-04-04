@@ -6,11 +6,8 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1729881083)
 const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const bridge = discovery.getContract('L1SharedBridge')
+
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1724863689), // 2024-08-28T16:48:09Z
@@ -48,7 +45,6 @@ export const abstract: ScalingProject = zkStackL2({
     ],
   },
   discovery,
-  discovery_ZKstackGovL2,
   diamondContract: discovery.getContract('AbstractZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

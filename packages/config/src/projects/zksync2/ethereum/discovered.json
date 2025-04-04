@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 22123358,
+  "blockNumber": 22181512,
   "configHash": "0x5a17712e9a9415024a83d463f9daee07adb0f6d029ff7315a9415834921548fe",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -53,7 +53,7 @@
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
       "type": "Contract",
-      "template": "shared-zk-stack/Diamond_v26",
+      "template": "shared-zk-stack/v26/Diamond",
       "sourceHashes": [
         "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea",
         "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
@@ -62,7 +62,7 @@
         "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1"
       ],
       "proxyType": "EIP2535 diamond proxy",
-      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -431,28 +431,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3271263,
+        "getFirstUnprocessedPriorityTx": 3271591,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0x2c4aea0aac404a3924b2fb9f384fbe4ed1b6201ad1e14f9d69a9eac5109d163a",
+        "getPriorityQueueSize": 13,
+        "getPriorityTreeRoot": "0x2a018d656d6ac901e8e45aa774ad93e8bb34e8f2c5dbbfb513d28823616acf1a",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 498141,
-        "getTotalBatchesExecuted": 498137,
-        "getTotalBatchesVerified": 498139,
-        "getTotalBlocksCommitted": 498141,
-        "getTotalBlocksExecuted": 498137,
-        "getTotalBlocksVerified": 498139,
-        "getTotalPriorityTxs": 3271271,
+        "getTotalBatchesCommitted": 498339,
+        "getTotalBatchesExecuted": 498335,
+        "getTotalBatchesVerified": 498338,
+        "getTotalBlocksCommitted": 498339,
+        "getTotalBlocksExecuted": 498335,
+        "getTotalBlocksVerified": 498338,
+        "getTotalPriorityTxs": 3271604,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -461,6 +461,8 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
+        "isPermanentRollup": 1,
+        "isPermanentRollupString": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
         "isPriorityQueueActive": false,
         "validators": [
           "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
@@ -473,6 +475,14 @@
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
+        },
+        "IsPorterAvailableStatus": {
+          "severity": "HIGH",
+          "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements."
+        },
+        "isPermanentRollup": {
+          "severity": "HIGH",
+          "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."
         },
         "getDAValidatorPair": { "severity": "HIGH" },
         "getPendingAdmin": { "severity": "HIGH" },
@@ -490,6 +500,15 @@
         }
       },
       "derivedName": "DiamondProxy",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": ".",
+            "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+          }
+        }
+      ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -555,7 +574,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
+        "0xa470a4cd272abd74efdef01a347542477159dba5fc965b47dca90736ae6f42db"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
@@ -563,7 +582,7 @@
       "sinceBlock": 16626406,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x8D231E4097C3cb200Ed62134B466AA615cE60336",
+        "$implementation": "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142",
         "$pastUpgrades": [
           [
             "2023-02-14T10:31:23.000Z",
@@ -609,13 +628,21 @@
             "2025-01-08T16:00:35.000Z",
             "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",
             ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
+          ],
+          [
+            "2025-03-31T08:00:47.000Z",
+            "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3",
+            ["0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"]
           ]
         ],
-        "$upgradeCount": 9,
+        "$upgradeCount": 10,
+        "ERA_CHAIN_ID": 324,
+        "L1_ASSET_ROUTER": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
+        "L1_NATIVE_TOKEN_VAULT": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+        "L1_NULLIFIER": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
-        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
-        "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019"
       },
       "derivedName": "L1ERC20Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
@@ -783,11 +810,6 @@
       },
       "derivedName": "Verifier",
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -822,6 +844,35 @@
       "function transferOwnership(address newOwner)",
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
+    ],
+    "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142": [
+      "constructor(address _nullifier, address _assetRouter, address _nativeTokenVault, uint256 _eraChainId)",
+      "error AssetRouterAllowanceNotZero()",
+      "error ETHDepositNotSupported()",
+      "error EmptyDeposit()",
+      "error NotInitializedReentrancyGuard()",
+      "error Reentrancy()",
+      "error SlotOccupied()",
+      "error TokensWithFeesNotSupported()",
+      "error WithdrawalAlreadyFinalized()",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function ERA_CHAIN_ID() view returns (uint256)",
+      "function L1_ASSET_ROUTER() view returns (address)",
+      "function L1_NATIVE_TOKEN_VAULT() view returns (address)",
+      "function L1_NULLIFIER() view returns (address)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function depositAmount(address account, address l1Token, bytes32 depositL2TxHash) view returns (uint256 amount)",
+      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize()",
+      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
     "0x32400084C286CF3E17e7B677ea9583e60a000324": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
@@ -1026,32 +1077,6 @@
       "function setExecutionDelay(uint32 _executionDelay)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
-    ],
-    "0x8D231E4097C3cb200Ed62134B466AA615cE60336": [
-      "constructor(address _sharedBridge)",
-      "error EmptyDeposit()",
-      "error NotInitializedReentrancyGuard()",
-      "error Reentrancy()",
-      "error SlotOccupied()",
-      "error TokensWithFeesNotSupported()",
-      "error Unauthorized(address caller)",
-      "error WithdrawalAlreadyFinalized()",
-      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
-      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
-      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
-      "function SHARED_BRIDGE() view returns (address)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
-      "function depositAmount(address account, address l1Token, bytes32 depositL2TxHash) view returns (uint256 amount)",
-      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function initialize()",
-      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
-      "function l2Bridge() view returns (address)",
-      "function l2TokenAddress(address _l1Token) view returns (address)",
-      "function l2TokenBeacon() view returns (address)",
-      "function l2TokenProxyBytecodeHash() view returns (bytes32)",
-      "function transferTokenToSharedBridge(address _token)"
     ],
     "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
@@ -1276,7 +1301,7 @@
     ]
   },
   "usedTemplates": {
-    "shared-zk-stack/Diamond_v26": "0x38837409750dc6a6b995ff3543da35b2a25d8bf9eb9400a208af18b7ac9c8eea",
+    "shared-zk-stack/v26/Diamond": "0xdeb3c7f37117cbbf5abc1704aa4bf4d0eef0bae68d2f635ae073df89e75803c0",
     "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
     "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
   }
