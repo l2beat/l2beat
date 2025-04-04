@@ -8,7 +8,7 @@ Generated with discovered.json: 0x49ffd12f9564a7dc7cb070d5c62ba4dbb12018fe
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Upgrade 13: https://gov.optimism.io/t/upgrade-proposal-13-opcm-and-incident-response-improvements/9739
 
 ## Watched changes
 
