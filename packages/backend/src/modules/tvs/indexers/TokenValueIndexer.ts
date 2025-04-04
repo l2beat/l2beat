@@ -13,6 +13,8 @@ import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import type { ValueService } from '../services/ValueService'
 import type { DBStorage } from '../tools/DBStorage'
 import {
+  createAmountConfig,
+  createPriceConfigId,
   extractPricesAndAmounts,
   generateConfigurationId,
 } from '../tools/extractPricesAndAmounts'
@@ -122,11 +124,15 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
   }
 
   static idToConfigurationId = (token: TvsToken) => {
+    const { amounts, prices } = extractPricesAndAmounts([token])
+
     return generateConfigurationId([
       token.id,
       token.source,
       token.category,
       String(token.isAssociated),
+      ...amounts.map((a) => createAmountConfig(a).id),
+      ...prices.map((p) => createPriceConfigId(p.id)),
     ])
   }
 }
