@@ -62,4 +62,19 @@ export class ProjectValueRepository extends BaseRepository {
     const result = await this.db.deleteFrom('ProjectValue').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
+
+  // SCRIPT
+  async getByTimestampAndType(
+    timestamp: UnixTime,
+    type: string,
+  ): Promise<ProjectValueRecord[]> {
+    const rows = await this.db
+      .selectFrom('ProjectValue')
+      .selectAll()
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .where('type', '=', type)
+      .execute()
+
+    return rows.map(toRecord)
+  }
 }
