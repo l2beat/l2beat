@@ -2199,6 +2199,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "FLY",
+      "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "STONE",
       "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -6479,6 +6485,24 @@
           {
             "name": "Hyperlane (xERC-20)",
             "slug": "hyperlane"
+          }
+        ]
+      }
+    }
+  ],
+  "superposition": [
+    {
+      "symbol": "USDC.e",
+      "address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
           }
         ]
       }
