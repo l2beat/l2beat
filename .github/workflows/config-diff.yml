@@ -21,8 +21,8 @@ jobs:
         with:
           fetch-depth: 0
         
-      - name: Switch to correct commit 
-        run: git switch ${{ github.event.pull_request.head.sha }}
+      - name: Checkout correct commit 
+        run: git checkout ${{ github.event.pull_request.head.sha }}
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
