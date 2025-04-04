@@ -191,7 +191,7 @@ import { telos } from '../projects/telos/telos'
 import { ten } from '../projects/ten/ten'
 import { termstructure } from '../projects/termstructure/termstructure'
 import { ternoa } from '../projects/ternoa/ternoa'
-// import { thanos } from '../projects/thanos/thanos'
+import { thanos } from '../projects/thanos/thanos'
 import { thebinaryholdings } from '../projects/thebinaryholdings/thebinaryholdings'
 import { treasure } from '../projects/treasure/treasure'
 import { turboprotocol } from '../projects/turboprotocol/turboprotocol'
@@ -412,7 +412,7 @@ export const layer2s: ScalingProject[] = [
   ten,
   termstructure,
   ternoa,
-  // thanos,
+  thanos,
   thebinaryholdings,
   treasure,
   turboprotocol,

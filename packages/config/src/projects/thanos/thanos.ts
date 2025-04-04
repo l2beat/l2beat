@@ -3,7 +3,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
 export const thanos: ScalingProject = upcomingL2({
-  id: 'thanos',
+  id: 'thanos2',
   capability: 'universal',
   addedAt: UnixTime(1726844759), // 2024-09-20T15:05:59Z
   display: {
