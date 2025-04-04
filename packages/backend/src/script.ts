@@ -96,11 +96,11 @@ function printResults(totalTvs: number, totalTvl: number) {
   console.log(`raw: ${totalTvl}`)
   console.log(`formatted: $ ${formatLargeNumber(totalTvl)}`)
 
-  const absoluteDiff = totalTvs - totalTvl
+  const diff = totalTvs - totalTvl
   const percentageRatio = ((totalTvs / totalTvl) * 100).toFixed(2)
 
   console.log(`\nDIFF`)
-  console.log('Absolute (TVS - TVL):', formatLargeNumber(absoluteDiff))
+  console.log('Diff (TVS - TVL):', formatLargeNumber(diff))
   console.log(`Correlation (TVS/TVL): ${percentageRatio}%`)
 }
 
@@ -111,7 +111,6 @@ function printProjectDiffs(
   console.log('\nPER PROJECT DIFFERENCES:')
   console.log('------------------------')
 
-  // Create a map to aggregate TVL values by project
   const projectTvlMap = new Map<string, number>()
 
   for (const record of tvlRecords) {
@@ -128,17 +127,15 @@ function printProjectDiffs(
     }
 
     const previous = projectTvlMap.get(projectId)
-    assert(previous)
+    assert(previous !== undefined)
     projectTvlMap.set(projectId, previous + value)
   }
 
-  // Create a map for TVS values
   const projectTvsMap = new Map<string, number>()
   for (const record of tvsRecords) {
     projectTvsMap.set(record.project, record.value)
   }
 
-  // Create a combined list of all project IDs
   const allProjectIds = new Set([
     ...projectTvlMap.keys(),
     ...projectTvsMap.keys(),
@@ -150,7 +147,7 @@ function printProjectDiffs(
     const tvsValue = projectTvsMap.get(projectId) || 0
     const tvlValue = projectTvlMap.get(projectId) || 0
 
-    const absoluteDiff = tvsValue - tvlValue
+    const diff = tvsValue - tvlValue
     const percentageDiff =
       tvlValue > 0 ? ((tvsValue / tvlValue) * 100).toFixed(2) + '%' : 'N/A'
 
@@ -158,22 +155,19 @@ function printProjectDiffs(
       projectId,
       tvsValue,
       tvlValue,
-      absoluteDiff,
+      diff: diff,
       percentageDiff,
     })
   }
 
-  // Sort projects by absolute difference (descending)
-  projectDiffs.sort(
-    (a, b) => Math.abs(b.absoluteDiff) - Math.abs(a.absoluteDiff),
-  )
+  projectDiffs.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff))
 
   for (const diff of projectDiffs) {
     console.log(`Project: ${diff.projectId}`)
     console.log(`  TVS: $${formatLargeNumber(diff.tvsValue)}`)
     console.log(`  TVL: $${formatLargeNumber(diff.tvlValue)}`)
-    console.log(`  Absolute Diff: $${formatLargeNumber(diff.absoluteDiff)}`)
-    console.log(`  Percentage (TVS/TVL): ${diff.percentageDiff}`)
+    console.log(`  Diff: $${formatLargeNumber(diff.diff)}`)
+    console.log(`  Correlation (TVS/TVL): ${diff.percentageDiff}`)
     console.log('------------------------')
   }
 }
