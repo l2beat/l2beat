@@ -237,6 +237,7 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
+    tvsConfig: getTvsConfig(p),
     tvlConfig: getTvlConfig(p, tokenList),
     chainConfig: p.chainConfig,
     milestones: p.milestones,
@@ -376,7 +377,9 @@ function toProjectEscrow(
   }
 }
 
-function getTvsConfig(project: ScalingProject): TvsToken[] | undefined {
+function getTvsConfig(
+  project: ScalingProject | Bridge,
+): TvsToken[] | undefined {
   const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
   const filePath = path.join(__dirname, `../../src/tvs/json/${fileName}`)
 
