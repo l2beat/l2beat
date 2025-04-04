@@ -99,67 +99,6 @@ export async function mapConfig(
   }
 }
 
-function mergeTokensWithSameId(
-  project: Project<'tvlConfig', 'chainConfig'>,
-  chains: Map<string, ChainConfig>,
-  sameIdTokens: (LegacyToken & { escrow: ProjectTvlEscrow })[],
-): TvsToken {
-  if (sameIdTokens.length === 1) {
-    const tokenData = sameIdTokens[0]
-    const chain = getChain(tokenData.chainName, chains)
-    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
-
-    return token
-  }
-  const amounts = []
-  const valueForSummary: (CalculationFormula | ValueFormula)[] = []
-  let customValueForSummaryExists = false
-
-  for (const tokenData of sameIdTokens) {
-    const chain = getChain(tokenData.chainName, chains)
-    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
-    amounts.push(token.amount)
-
-    if (token.valueForSummary) {
-      customValueForSummaryExists = true
-      valueForSummary.push(token.valueForSummary)
-    } else {
-      valueForSummary.push({
-        type: 'value',
-        priceId: token.priceId,
-        amount: token.amount,
-      })
-    }
-  }
-
-  const firstTokenData = sameIdTokens[0]
-  const chain = getChain(firstTokenData.chainName, chains)
-  const baseToken = createEscrowToken(
-    project,
-    firstTokenData.escrow,
-    chain,
-    firstTokenData,
-  )
-
-  return {
-    ...baseToken,
-    amount: {
-      type: 'calculation',
-      operator: 'sum',
-      arguments: amounts,
-    },
-    ...(customValueForSummaryExists
-      ? {
-          valueForSummary: {
-            type: 'calculation',
-            operator: 'sum',
-            arguments: valueForSummary,
-          },
-        }
-      : {}),
-  }
-}
-
 export function createEscrowToken(
   project: Project<'tvlConfig'>,
   escrow: ProjectTvlEscrow,
@@ -259,7 +198,7 @@ export function createToken(
     project.chainConfig && project.chainConfig.name === legacyToken.chainName,
   )
   const id = TokenId.create(project.id, legacyToken.symbol)
-  let amountFormula: AmountFormula
+  let amountFormula: AmountFormula | CalculationFormula
 
   const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
     legacyToken,
@@ -269,13 +208,37 @@ export function createToken(
   switch (legacyToken.supply) {
     case 'totalSupply':
       assert(legacyToken.address, 'Only tokens have total supply')
-      amountFormula = {
-        type: 'totalSupply',
-        address: legacyToken.address,
-        chain: project.id,
-        decimals: legacyToken.decimals,
-        sinceTimestamp,
-        ...(untilTimestamp ? { untilTimestamp } : {}),
+      if (legacyToken.premint) {
+        amountFormula = {
+          type: 'calculation',
+          operator: 'diff',
+          arguments: [
+            {
+              type: 'totalSupply',
+              address: legacyToken.address,
+              chain: project.id,
+              decimals: legacyToken.decimals,
+              sinceTimestamp,
+              ...(untilTimestamp ? { untilTimestamp } : {}),
+            },
+            {
+              type: 'const',
+              value: legacyToken.premint,
+              decimals: legacyToken.decimals,
+              sinceTimestamp,
+              ...(untilTimestamp ? { untilTimestamp } : {}),
+            },
+          ],
+        }
+      } else {
+        amountFormula = {
+          type: 'totalSupply',
+          address: legacyToken.address,
+          chain: project.id,
+          decimals: legacyToken.decimals,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
+        }
       }
 
       break
@@ -333,4 +296,65 @@ function deduplicateTokens(tokens: TvsToken[]) {
     }
   }
   return deduplicatedTokens
+}
+
+function mergeTokensWithSameId(
+  project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
+  sameIdTokens: (LegacyToken & { escrow: ProjectTvlEscrow })[],
+): TvsToken {
+  if (sameIdTokens.length === 1) {
+    const tokenData = sameIdTokens[0]
+    const chain = getChain(tokenData.chainName, chains)
+    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+
+    return token
+  }
+  const amounts = []
+  const valueForSummary: (CalculationFormula | ValueFormula)[] = []
+  let customValueForSummaryExists = false
+
+  for (const tokenData of sameIdTokens) {
+    const chain = getChain(tokenData.chainName, chains)
+    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+    amounts.push(token.amount)
+
+    if (token.valueForSummary) {
+      customValueForSummaryExists = true
+      valueForSummary.push(token.valueForSummary)
+    } else {
+      valueForSummary.push({
+        type: 'value',
+        priceId: token.priceId,
+        amount: token.amount,
+      })
+    }
+  }
+
+  const firstTokenData = sameIdTokens[0]
+  const chain = getChain(firstTokenData.chainName, chains)
+  const baseToken = createEscrowToken(
+    project,
+    firstTokenData.escrow,
+    chain,
+    firstTokenData,
+  )
+
+  return {
+    ...baseToken,
+    amount: {
+      type: 'calculation',
+      operator: 'sum',
+      arguments: amounts,
+    },
+    ...(customValueForSummaryExists
+      ? {
+          valueForSummary: {
+            type: 'calculation',
+            operator: 'sum',
+            arguments: valueForSummary,
+          },
+        }
+      : {}),
+  }
 }
