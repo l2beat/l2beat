@@ -50,6 +50,11 @@ const chartMeta = {
     color: 'hsl(var(--chart-emerald))',
     indicatorType: { shape: 'line' },
   },
+  notSyncedPosted: {
+    label: 'Data posted (not synced)',
+    color: 'hsl(var(--chart-emerald))',
+    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+  },
 } satisfies ChartMeta
 
 interface CostsChartDataPoint {
@@ -147,6 +152,21 @@ export function CostsChart({
             isAnimationActive={false}
           />
         )}
+        {showDataPosted && range !== '1d' && (
+          <Line
+            yAxisId="right"
+            dataKey="notSyncedPosted"
+            strokeWidth={2}
+            stroke={chartMeta.notSyncedPosted.color}
+            strokeDasharray={
+              chartMeta.notSyncedPosted.indicatorType.strokeDasharray
+            }
+            type={resolution === 'hourly' ? 'stepAfter' : undefined}
+            dot={false}
+            isAnimationActive={false}
+            legendType="none"
+          />
+        )}
         {showDataPosted && (
           <YAxis
             yAxisId="right"
@@ -193,9 +213,15 @@ function CustomTooltip({
   resolution: CostsResolution
 }) {
   if (!active || !payload || typeof label !== 'number') return null
-  const reversedPayload = [...payload].reverse()
+  const dataKeys = payload.map((p) => p.dataKey)
+  const hasPostedAndNotSynced =
+    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
+  const filteredPayload = payload.filter(
+    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
+  )
+  const reversedPayload = [...filteredPayload].reverse()
   const total = payload.reduce((acc, curr) => {
-    if (curr.name === 'posted') {
+    if (curr.name === 'posted' || curr.name === 'notSyncedPosted') {
       return acc
     }
     return acc + (curr?.value ?? 0)
@@ -235,7 +261,7 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
-                  {entry.name === 'posted'
+                  {entry.name === 'posted' || entry.name === 'notSyncedPosted'
                     ? formatBytes(entry.value)
                     : formatCostValue(entry.value, unit, 'total')}
                 </span>
