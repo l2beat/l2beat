@@ -36,16 +36,16 @@ export class LocalExecutor {
 
   async run(
     config: ProjectTvsConfig,
-    timestamps: UnixTime[],
+    timestamp: UnixTime,
     latestMode: boolean,
   ): Promise<TokenValue[]> {
     const { prices, amounts } = extractPricesAndAmounts(config.tokens)
 
     const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
 
-    await dataFormulaExecutor.execute(prices, amounts, timestamps, latestMode)
+    await dataFormulaExecutor.execute(prices, amounts, timestamp, latestMode)
 
-    return await this.valueService.calculate(config, timestamps)
+    return await this.valueService.calculate(config, [timestamp])
   }
 
   private async initDataFormulaExecutor(amounts: AmountConfig[]) {
