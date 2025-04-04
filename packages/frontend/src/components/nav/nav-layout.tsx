@@ -2,9 +2,9 @@ import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
 import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
-import { GlobeIcon } from '~/icons/globe'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
+import { EcosystemsIcon } from '~/icons/pages/ecosystems'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
 import { ps } from '~/server/projects'
@@ -150,7 +150,7 @@ export async function NavLayout({
       title: 'Ecosystems',
       match: 'ecosystems',
       icon: (
-        <GlobeIcon className="size-5 transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+        <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
       preventTitleNavigation: true,
       links: (
