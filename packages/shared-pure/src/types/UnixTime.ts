@@ -28,6 +28,20 @@ UnixTime.fromDate = function fromDate(date: Date): UnixTime {
   return Math.floor(date.getTime() / 1000)
 }
 
+UnixTime.DATE_REGEX = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}Z)?$/
+UnixTime.from = function from(value: string | number | Date): UnixTime {
+  if (typeof value === 'number') {
+    return UnixTime(value)
+  }
+  if (value instanceof Date) {
+    return UnixTime.fromDate(value)
+  }
+  if (typeof value === 'string' && UnixTime.DATE_REGEX.test(value)) {
+    return UnixTime.fromDate(new Date(value))
+  }
+  throw new Error('Cannot convert value to UnixTime')
+}
+
 UnixTime.toStartOf = function toStartOf(
   timestamp: UnixTime,
   period: 'day' | 'hour' | 'minute' | 'six hours',

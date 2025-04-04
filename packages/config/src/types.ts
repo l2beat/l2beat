@@ -344,17 +344,17 @@ export interface ReasonForBeingInOther {
 }
 
 export type ProjectScalingStack =
-  | 'OP Stack'
   | 'Arbitrum'
-  | 'StarkEx'
-  | 'ZKsync Lite'
-  | 'ZK Stack'
-  | 'Loopring'
-  | 'Polygon'
-  | 'OVM'
-  | 'SN Stack'
-  | 'Taiko'
   | 'Cartesi Rollups'
+  | 'Loopring'
+  | 'OP Stack'
+  | 'OVM'
+  | 'Polygon'
+  | 'SN Stack'
+  | 'StarkEx'
+  | 'Taiko'
+  | 'ZK Stack'
+  | 'ZKsync Lite'
 
 export type ProjectStageName =
   | 'Not applicable'
