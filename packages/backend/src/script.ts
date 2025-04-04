@@ -15,7 +15,10 @@ async function main() {
     keepAlive: false,
   })
 
-  const timestamp = UnixTime.fromDate(new Date('2025-04-04T07:00:00Z'))
+  const timestamp = UnixTime.toStartOf(
+    UnixTime.now() - 2 * UnixTime.HOUR,
+    'hour',
+  )
 
   const records = await db.tvsProjectValue.getByTimestampAndType(
     timestamp,
@@ -37,6 +40,13 @@ async function main() {
 
   console.log(`TVS RAW: ${summaryTvs}`)
   console.log(`TVS FORMATTED: $ ${formatLargeNumber(summaryTvs)}`)
+
+  records
+    .filter((r) => ids.has(r.project))
+    .sort((a, b) => b.value - a.value)
+    .forEach((r) => {
+      console.log(r.project, `$ ${formatLargeNumber(r.value)}`)
+    })
 }
 
 main().catch((e: unknown) => {
