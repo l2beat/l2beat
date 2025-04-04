@@ -19,10 +19,10 @@ async function main() {
   const commitBefore = readFileSync('/tmp/compare/main/commit', 'utf-8').trim()
   const commitAfter = readFileSync('/tmp/compare/pr/commit', 'utf-8').trim()
 
-  const projectBefore = (await query(dbAfter, 'SELECT * FROM projects'))
+  const projectBefore = (await query(dbBefore, 'SELECT * FROM projects'))
     .map(parseProject)
     .sort((a, b) => a.id.localeCompare(b.id))
-  const projectsAfter = (await query(dbBefore, 'SELECT * FROM projects'))
+  const projectsAfter = (await query(dbAfter, 'SELECT * FROM projects'))
     .map(parseProject)
     .sort((a, b) => a.id.localeCompare(b.id))
 

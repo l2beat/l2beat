@@ -31,7 +31,7 @@ export function diffsToHtml(props: {
     Diff between
     <a href="${linkBefore}"><code class="removed">${hashBefore}</code></a> (main)
     and
-    <a href="${linkAfter}"><code class="removed">${hashAfter}</code></a> (PR)
+    <a href="${linkAfter}"><code class="added">${hashAfter}</code></a> (PR)
   </h1>
   <ul>${props.diffs.map(diffToHtml).join('')}</ul>
 </body>

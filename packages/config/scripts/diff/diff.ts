@@ -64,21 +64,18 @@ function addedOrRemoved(
   project: Project,
   type: 'added' | 'removed',
 ): ProjectDiff {
-  return {
-    id: project.id,
-    type,
-    fields: Object.entries(project).map(([key, value]) => {
-      const lines = JSON.stringify(toCanonicalJson(value), null, 2).split('\n')
-      return {
-        field: key,
-        diff: lines.map((value) => ({ type, value })),
-        added: type === 'added' ? lines.length : 0,
-        removed: type === 'removed' ? lines.length : 0,
-      }
-    }),
-    added: 0,
-    removed: 0,
-  }
+  const fields = Object.entries(project).map(([key, value]) => {
+    const lines = JSON.stringify(toCanonicalJson(value), null, 2).split('\n')
+    return {
+      field: key,
+      diff: lines.map((value) => ({ type, value })),
+      added: type === 'added' ? lines.length : 0,
+      removed: type === 'removed' ? lines.length : 0,
+    }
+  })
+  const added = fields.reduce((sum, a) => sum + a.added, 0)
+  const removed = fields.reduce((sum, a) => sum + a.removed, 0)
+  return { id: project.id, type, fields, added, removed }
 }
 
 function diffProjects(before: Project, after: Project): FieldDiff[] {
