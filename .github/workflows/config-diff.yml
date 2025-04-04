@@ -16,13 +16,14 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      - name: Checkout action
+      - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-        
-      - name: Checkout correct commit 
-        run: git checkout ${{ github.event.pull_request.head.sha }}
+
+      - name: Fetch branches
+        run: git fetch origin main:main
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
