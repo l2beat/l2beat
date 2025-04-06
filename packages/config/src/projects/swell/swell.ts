@@ -6,6 +6,15 @@ import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('swell')
 const genesisTimestamp = UnixTime(1732696703)
+const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+const sequencerAddress = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
 
 export const swell = opStackL2({
   addedAt: UnixTime(1712341625), // 2024-04-05T18:27:05Z
@@ -60,6 +69,47 @@ export const swell = opStackL2({
       },
     ],
   },
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0xf854cd5B26bfd73d51236c0122798907Ed65B1f2'), // old sequencer
+        to: sequencerInbox,
+        sinceTimestamp: genesisTimestamp,
+        untilTimestamp: UnixTime(1743876083),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: sequencerAddress,
+        to: sequencerInbox,
+        sinceTimestamp: UnixTime(1743876083),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: l2OutputOracle.address,
+        selector: '0x9aaab648',
+        functionSignature:
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xecf3376512EDAcA4FBB63d2c67d12a0397d24121'),

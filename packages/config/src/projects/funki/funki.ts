@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -15,6 +15,15 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('funki')
 const genesisTimestamp = UnixTime(1721211095)
+const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+const sequencerAddress = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -83,6 +92,47 @@ export const funki: ScalingProject = opStackL2({
   },
   discovery,
   genesisTimestamp,
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0x73c98Cf34AF1f7D798e8e6f34b16037530Bffc41'), // old sequencer
+        to: sequencerInbox,
+        sinceTimestamp: genesisTimestamp,
+        untilTimestamp: UnixTime(1743854015),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: sequencerAddress,
+        to: sequencerInbox,
+        sinceTimestamp: UnixTime(1743854015),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: l2OutputOracle.address,
+        selector: '0x9aaab648',
+        functionSignature:
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   customDa: {
     type: 'DA Challenges',
     name: 'Altlayer DA',
