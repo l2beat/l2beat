@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x4298622b599baba047bb0724933d39398cac6c90
+Generated with discovered.json: 0xd9d8dc4516ad1fddec5c41e42331929386f5a710
 
 # Diff at Thu, 03 Apr 2025 16:12:29 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x4298622b599baba047bb0724933d39398cac6c90
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Lightlink moves to opstack (partly).
 
 ## Watched changes
 
