@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @edebc8f4</title>
+  <title>Diff @9753ed3f</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,7 +105,7 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="removed">02dea11f</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="added">edebc8f4</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="added">9753ed3f</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
   <h2>
@@ -113,60 +113,84 @@ ${r?'Expression: "'+r+`"
     
     
     <span>automata</span>
-    <code><span class="added">+51</span> <span class="removed">-30</span></code>
+    <code><span class="added">+75</span> <span class="removed">-30</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    
     <span>trackedTxsConfig</span>
-    <code><span class="added">+2</span> <span class="removed">-2</span></code>
+    <code><span class="added">+26</span> <span class="removed">-2</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "automata",
 </span><span class="line ctx">    "sinceTimestamp": 1721183063,
+</span><span class="line added">    "untilTimestamp": 1743836771,
 </span><span class="line ctx">    "type": "liveness",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
-</span><span class="line added">      "from": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
+</span><span class="line ctx">      "from": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
 </span><span class="line ctx">      "to": "0xff00000000000000000000000000000001111111"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "automata",
 </span><span class="line ctx">    "sinceTimestamp": 1721183063,
+</span><span class="line added">    "untilTimestamp": 1743836771,
 </span><span class="line ctx">    "type": "l2costs",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
-</span><span class="line added">      "from": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
+</span><span class="line ctx">      "from": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
 </span><span class="line ctx">      "to": "0xff00000000000000000000000000000001111111"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "automata",
-</span><span class="line ctx">    "sinceTimestamp": 1721184983,
-</span><span class="line full indicator">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
-</span><span class="line full">      "selector": "0x9aaab648",
-</span><span class="line full">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "automata",
-</span><span class="line full">    "sinceTimestamp": 1721184983,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
+</span><span class="line removed">    "sinceTimestamp": 1721184983,
+</span><span class="line added">    "sinceTimestamp": 1743836771,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
+</span><span class="line added">      "to": "0xff00000000000000000000000000000001111111"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "automata",
+</span><span class="line added">    "sinceTimestamp": 1743836771,
+</span><span class="line added">    "type": "l2costs",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
+</span><span class="line added">      "to": "0xff00000000000000000000000000000001111111"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "automata",
+</span><span class="line added">    "sinceTimestamp": 1721183063,
+</span><span class="line added">    "type": "liveness",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
+</span><span class="line ctx">      "selector": "0x9aaab648",
+</span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "automata",
+</span><span class="line removed">    "sinceTimestamp": 1721184983,
+</span><span class="line added">    "sinceTimestamp": 1721183063,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261",
 </span><span class="line ctx">      "selector": "0x9aaab648",
 </span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
 </span><span class="line ctx">    }
@@ -697,60 +721,84 @@ ${r?'Expression: "'+r+`"
     
     
     <span>cyber</span>
-    <code><span class="added">+72</span> <span class="removed">-26</span></code>
+    <code><span class="added">+96</span> <span class="removed">-26</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    
     <span>trackedTxsConfig</span>
-    <code><span class="added">+2</span> <span class="removed">-2</span></code>
+    <code><span class="added">+26</span> <span class="removed">-2</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "cyber",
 </span><span class="line ctx">    "sinceTimestamp": 1713428569,
+</span><span class="line added">    "untilTimestamp": 1743843035,
 </span><span class="line ctx">    "type": "liveness",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
-</span><span class="line added">      "from": "0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01",
+</span><span class="line ctx">      "from": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
 </span><span class="line ctx">      "to": "0xfF00000000000000000000000000000000001d88"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "cyber",
 </span><span class="line ctx">    "sinceTimestamp": 1713428569,
+</span><span class="line added">    "untilTimestamp": 1743843035,
 </span><span class="line ctx">    "type": "l2costs",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
-</span><span class="line added">      "from": "0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01",
+</span><span class="line ctx">      "from": "0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4",
 </span><span class="line ctx">      "to": "0xfF00000000000000000000000000000000001d88"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "cyber",
-</span><span class="line ctx">    "sinceTimestamp": 1713430475,
-</span><span class="line full indicator">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0xa669A743b065828682eE16109273F5CFeF5e676d",
-</span><span class="line full">      "selector": "0x9aaab648",
-</span><span class="line full">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "cyber",
-</span><span class="line full">    "sinceTimestamp": 1713430475,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0xa669A743b065828682eE16109273F5CFeF5e676d",
+</span><span class="line removed">    "sinceTimestamp": 1713430475,
+</span><span class="line added">    "sinceTimestamp": 1743843035,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01",
+</span><span class="line added">      "to": "0xfF00000000000000000000000000000000001d88"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "cyber",
+</span><span class="line added">    "sinceTimestamp": 1743843035,
+</span><span class="line added">    "type": "l2costs",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x6AdE72DA6C1d47c856f13CD01Aac22A90D722e01",
+</span><span class="line added">      "to": "0xfF00000000000000000000000000000000001d88"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "cyber",
+</span><span class="line added">    "sinceTimestamp": 1713428569,
+</span><span class="line added">    "type": "liveness",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0xa669A743b065828682eE16109273F5CFeF5e676d",
+</span><span class="line ctx">      "selector": "0x9aaab648",
+</span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "cyber",
+</span><span class="line removed">    "sinceTimestamp": 1713430475,
+</span><span class="line added">    "sinceTimestamp": 1713428569,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0xa669A743b065828682eE16109273F5CFeF5e676d",
 </span><span class="line ctx">      "selector": "0x9aaab648",
 </span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
 </span><span class="line ctx">    }
@@ -1985,60 +2033,84 @@ ${r?'Expression: "'+r+`"
     
     
     <span>funki</span>
-    <code><span class="added">+57</span> <span class="removed">-51</span></code>
+    <code><span class="added">+81</span> <span class="removed">-51</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    
     <span>trackedTxsConfig</span>
-    <code><span class="added">+2</span> <span class="removed">-2</span></code>
+    <code><span class="added">+26</span> <span class="removed">-2</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "funki",
 </span><span class="line ctx">    "sinceTimestamp": 1721211095,
+</span><span class="line added">    "untilTimestamp": 1743854015,
 </span><span class="line ctx">    "type": "liveness",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0x73c98Cf34AF1f7D798e8e6f34b16037530Bffc41",
-</span><span class="line added">      "from": "0x4712454AddDbAbACaAb84916546899CA9690A6fF",
+</span><span class="line ctx">      "from": "0x73c98Cf34AF1f7D798e8e6f34b16037530Bffc41",
 </span><span class="line ctx">      "to": "0xfF00000000000000000000000000000084BB84Bb"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "funki",
 </span><span class="line ctx">    "sinceTimestamp": 1721211095,
+</span><span class="line added">    "untilTimestamp": 1743854015,
 </span><span class="line ctx">    "type": "l2costs",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0x73c98Cf34AF1f7D798e8e6f34b16037530Bffc41",
-</span><span class="line added">      "from": "0x4712454AddDbAbACaAb84916546899CA9690A6fF",
+</span><span class="line ctx">      "from": "0x73c98Cf34AF1f7D798e8e6f34b16037530Bffc41",
 </span><span class="line ctx">      "to": "0xfF00000000000000000000000000000084BB84Bb"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "funki",
-</span><span class="line ctx">    "sinceTimestamp": 1721212859,
-</span><span class="line full indicator">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x1A9aE6486caEc0504657351ac473B3dF8A1367cb",
-</span><span class="line full">      "selector": "0x9aaab648",
-</span><span class="line full">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "funki",
-</span><span class="line full">    "sinceTimestamp": 1721212859,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x1A9aE6486caEc0504657351ac473B3dF8A1367cb",
+</span><span class="line removed">    "sinceTimestamp": 1721212859,
+</span><span class="line added">    "sinceTimestamp": 1743854015,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x4712454AddDbAbACaAb84916546899CA9690A6fF",
+</span><span class="line added">      "to": "0xfF00000000000000000000000000000084BB84Bb"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "funki",
+</span><span class="line added">    "sinceTimestamp": 1743854015,
+</span><span class="line added">    "type": "l2costs",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x4712454AddDbAbACaAb84916546899CA9690A6fF",
+</span><span class="line added">      "to": "0xfF00000000000000000000000000000084BB84Bb"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "funki",
+</span><span class="line added">    "sinceTimestamp": 1721211095,
+</span><span class="line added">    "type": "liveness",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0x1A9aE6486caEc0504657351ac473B3dF8A1367cb",
+</span><span class="line ctx">      "selector": "0x9aaab648",
+</span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "funki",
+</span><span class="line removed">    "sinceTimestamp": 1721212859,
+</span><span class="line added">    "sinceTimestamp": 1721211095,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0x1A9aE6486caEc0504657351ac473B3dF8A1367cb",
 </span><span class="line ctx">      "selector": "0x9aaab648",
 </span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
 </span><span class="line ctx">    }
@@ -4604,60 +4676,84 @@ ${r?'Expression: "'+r+`"
     
     
     <span>xterio</span>
-    <code><span class="added">+24</span> <span class="removed">-24</span></code>
+    <code><span class="added">+48</span> <span class="removed">-24</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    
     <span>trackedTxsConfig</span>
-    <code><span class="added">+2</span> <span class="removed">-2</span></code>
+    <code><span class="added">+26</span> <span class="removed">-2</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "xterio",
 </span><span class="line ctx">    "sinceTimestamp": 1716537433,
+</span><span class="line added">    "untilTimestamp": 1743862115,
 </span><span class="line ctx">    "type": "liveness",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0x7d6251D49A102a330CfB46d132982781620700Cb",
-</span><span class="line added">      "from": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
+</span><span class="line ctx">      "from": "0x7d6251D49A102a330CfB46d132982781620700Cb",
 </span><span class="line ctx">      "to": "0xfF00000000000000000000000000000000293b30"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "xterio",
 </span><span class="line ctx">    "sinceTimestamp": 1716537433,
+</span><span class="line added">    "untilTimestamp": 1743862115,
 </span><span class="line ctx">    "type": "l2costs",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0x7d6251D49A102a330CfB46d132982781620700Cb",
-</span><span class="line added">      "from": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
+</span><span class="line ctx">      "from": "0x7d6251D49A102a330CfB46d132982781620700Cb",
 </span><span class="line ctx">      "to": "0xfF00000000000000000000000000000000293b30"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "xterio",
-</span><span class="line ctx">    "sinceTimestamp": 1716540455,
-</span><span class="line full indicator">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
-</span><span class="line full">      "selector": "0x9aaab648",
-</span><span class="line full">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "xterio",
-</span><span class="line full">    "sinceTimestamp": 1716540455,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
+</span><span class="line removed">    "sinceTimestamp": 1716540455,
+</span><span class="line added">    "sinceTimestamp": 1743862115,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
+</span><span class="line added">      "to": "0xfF00000000000000000000000000000000293b30"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "xterio",
+</span><span class="line added">    "sinceTimestamp": 1743862115,
+</span><span class="line added">    "type": "l2costs",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
+</span><span class="line added">      "to": "0xfF00000000000000000000000000000000293b30"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "xterio",
+</span><span class="line added">    "sinceTimestamp": 1716537433,
+</span><span class="line added">    "type": "liveness",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
+</span><span class="line ctx">      "selector": "0x9aaab648",
+</span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "xterio",
+</span><span class="line removed">    "sinceTimestamp": 1716540455,
+</span><span class="line added">    "sinceTimestamp": 1716537433,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28",
 </span><span class="line ctx">      "selector": "0x9aaab648",
 </span><span class="line ctx">      "signature": "function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)"
 </span><span class="line ctx">    }
