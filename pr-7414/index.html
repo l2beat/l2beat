@@ -1,0 +1,1635 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Diff @fd5c7302</title>
+  <style>
+:root {
+  --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  --font-sans: system-ui, sans-serif;
+}
+body {
+  background-color: #222;
+  color: white;
+  font-family: var(--font-sans);
+}
+.lines:not(.expand) .full {
+  display: none;
+}
+.lines:not(.expand) .full.indicator {
+  display: block;
+  font-size: 0;
+  background: repeating-linear-gradient(
+    135deg,
+    #111,
+    #111 8px,
+    #555 8px,
+    #555 16px
+  );
+}
+.lines {
+  color: #999;
+}
+.modified {
+  color: yellow;
+}
+.added {
+  background-color: #14261f;
+  color: #7ee787;
+}
+.removed {
+  background-color: #27181d;
+  color: #f14236;
+}
+button {
+  font-size: 12px;
+  font-family: var(--font-sans);
+  min-width: 60px;
+  background-color: #444;
+  font-family: inherit;
+  color: white;
+}
+pre, code {
+  font-family: var(--font-mono);
+}
+pre {
+  background-color: #111;
+  margin: 0;
+  padding: 8px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  max-width: 100%;
+  overflow: auto;
+}
+h1 {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 16px 0 24px 0;
+}
+h2, h3 {
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 0;
+  margin: 0;
+  position: sticky;
+}
+h2 {
+  top: 0;
+  background-color: #222;
+}
+h3 {
+  top: 28px;
+  background-color: #222;
+}
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+.field {
+  margin-left: 16px;
+}
+</style>
+</head>
+
+<body>
+  <script>(()=>{var nt=!1,it=!1,W=[],ot=-1;function Ut(e){Rn(e)}function Rn(e){W.includes(e)||W.push(e),Mn()}function Wt(e){let t=W.indexOf(e);t!==-1&&t>ot&&W.splice(t,1)}function Mn(){!it&&!nt&&(nt=!0,queueMicrotask(Nn))}function Nn(){nt=!1,it=!0;for(let e=0;e<W.length;e++)W[e](),ot=e;W.length=0,ot=-1,it=!1}var T,N,$,at,st=!0;function Gt(e){st=!1,e(),st=!0}function Jt(e){T=e.reactive,$=e.release,N=t=>e.effect(t,{scheduler:r=>{st?Ut(r):r()}}),at=e.raw}function ct(e){N=e}function Yt(e){let t=()=>{};return[n=>{let i=N(n);return e._x_effects||(e._x_effects=new Set,e._x_runEffects=()=>{e._x_effects.forEach(o=>o())}),e._x_effects.add(i),t=()=>{i!==void 0&&(e._x_effects.delete(i),$(i))},i},()=>{t()}]}function ve(e,t){let r=!0,n,i=N(()=>{let o=e();JSON.stringify(o),r?n=o:queueMicrotask(()=>{t(o,n),n=o}),r=!1});return()=>$(i)}var Xt=[],Zt=[],Qt=[];function er(e){Qt.push(e)}function te(e,t){typeof t=="function"?(e._x_cleanups||(e._x_cleanups=[]),e._x_cleanups.push(t)):(t=e,Zt.push(t))}function Ae(e){Xt.push(e)}function Oe(e,t,r){e._x_attributeCleanups||(e._x_attributeCleanups={}),e._x_attributeCleanups[t]||(e._x_attributeCleanups[t]=[]),e._x_attributeCleanups[t].push(r)}function lt(e,t){e._x_attributeCleanups&&Object.entries(e._x_attributeCleanups).forEach(([r,n])=>{(t===void 0||t.includes(r))&&(n.forEach(i=>i()),delete e._x_attributeCleanups[r])})}function tr(e){for(e._x_effects?.forEach(Wt);e._x_cleanups?.length;)e._x_cleanups.pop()()}var ut=new MutationObserver(mt),ft=!1;function ue(){ut.observe(document,{subtree:!0,childList:!0,attributes:!0,attributeOldValue:!0}),ft=!0}function dt(){kn(),ut.disconnect(),ft=!1}var le=[];function kn(){let e=ut.takeRecords();le.push(()=>e.length>0&&mt(e));let t=le.length;queueMicrotask(()=>{if(le.length===t)for(;le.length>0;)le.shift()()})}function m(e){if(!ft)return e();dt();let t=e();return ue(),t}var pt=!1,Se=[];function rr(){pt=!0}function nr(){pt=!1,mt(Se),Se=[]}function mt(e){if(pt){Se=Se.concat(e);return}let t=[],r=new Set,n=new Map,i=new Map;for(let o=0;o<e.length;o++)if(!e[o].target._x_ignoreMutationObserver&&(e[o].type==="childList"&&(e[o].removedNodes.forEach(s=>{s.nodeType===1&&s._x_marker&&r.add(s)}),e[o].addedNodes.forEach(s=>{if(s.nodeType===1){if(r.has(s)){r.delete(s);return}s._x_marker||t.push(s)}})),e[o].type==="attributes")){let s=e[o].target,a=e[o].attributeName,c=e[o].oldValue,l=()=>{n.has(s)||n.set(s,[]),n.get(s).push({name:a,value:s.getAttribute(a)})},u=()=>{i.has(s)||i.set(s,[]),i.get(s).push(a)};s.hasAttribute(a)&&c===null?l():s.hasAttribute(a)?(u(),l()):u()}i.forEach((o,s)=>{lt(s,o)}),n.forEach((o,s)=>{Xt.forEach(a=>a(s,o))});for(let o of r)t.some(s=>s.contains(o))||Zt.forEach(s=>s(o));for(let o of t)o.isConnected&&Qt.forEach(s=>s(o));t=null,r=null,n=null,i=null}function Ce(e){return z(B(e))}function k(e,t,r){return e._x_dataStack=[t,...B(r||e)],()=>{e._x_dataStack=e._x_dataStack.filter(n=>n!==t)}}function B(e){return e._x_dataStack?e._x_dataStack:typeof ShadowRoot=="function"&&e instanceof ShadowRoot?B(e.host):e.parentNode?B(e.parentNode):[]}function z(e){return new Proxy({objects:e},Dn)}var Dn={ownKeys({objects:e}){return Array.from(new Set(e.flatMap(t=>Object.keys(t))))},has({objects:e},t){return t==Symbol.unscopables?!1:e.some(r=>Object.prototype.hasOwnProperty.call(r,t)||Reflect.has(r,t))},get({objects:e},t,r){return t=="toJSON"?Pn:Reflect.get(e.find(n=>Reflect.has(n,t))||{},t,r)},set({objects:e},t,r,n){let i=e.find(s=>Object.prototype.hasOwnProperty.call(s,t))||e[e.length-1],o=Object.getOwnPropertyDescriptor(i,t);return o?.set&&o?.get?o.set.call(n,r)||!0:Reflect.set(i,t,r)}};function Pn(){return Reflect.ownKeys(this).reduce((t,r)=>(t[r]=Reflect.get(this,r),t),{})}function Te(e){let t=n=>typeof n=="object"&&!Array.isArray(n)&&n!==null,r=(n,i="")=>{Object.entries(Object.getOwnPropertyDescriptors(n)).forEach(([o,{value:s,enumerable:a}])=>{if(a===!1||s===void 0||typeof s=="object"&&s!==null&&s.__v_skip)return;let c=i===""?o:`${i}.${o}`;typeof s=="object"&&s!==null&&s._x_interceptor?n[o]=s.initialize(e,c,o):t(s)&&s!==n&&!(s instanceof Element)&&r(s,c)})};return r(e)}function Re(e,t=()=>{}){let r={initialValue:void 0,_x_interceptor:!0,initialize(n,i,o){return e(this.initialValue,()=>In(n,i),s=>ht(n,i,s),i,o)}};return t(r),n=>{if(typeof n=="object"&&n!==null&&n._x_interceptor){let i=r.initialize.bind(r);r.initialize=(o,s,a)=>{let c=n.initialize(o,s,a);return r.initialValue=c,i(o,s,a)}}else r.initialValue=n;return r}}function In(e,t){return t.split(".").reduce((r,n)=>r[n],e)}function ht(e,t,r){if(typeof t=="string"&&(t=t.split(".")),t.length===1)e[t[0]]=r;else{if(t.length===0)throw error;return e[t[0]]||(e[t[0]]={}),ht(e[t[0]],t.slice(1),r)}}var ir={};function y(e,t){ir[e]=t}function fe(e,t){let r=Ln(t);return Object.entries(ir).forEach(([n,i])=>{Object.defineProperty(e,`$${n}`,{get(){return i(t,r)},enumerable:!1})}),e}function Ln(e){let[t,r]=_t(e),n={interceptor:Re,...t};return te(e,r),n}function or(e,t,r,...n){try{return r(...n)}catch(i){re(i,e,t)}}function re(e,t,r=void 0){e=Object.assign(e??{message:"No error message given."},{el:t,expression:r}),console.warn(`Alpine Expression Error: ${e.message}
+
+${r?'Expression: "'+r+`"
+
+`:""}`,t),setTimeout(()=>{throw e},0)}var Me=!0;function ke(e){let t=Me;Me=!1;let r=e();return Me=t,r}function R(e,t,r={}){let n;return x(e,t)(i=>n=i,r),n}function x(...e){return sr(...e)}var sr=xt;function ar(e){sr=e}function xt(e,t){let r={};fe(r,e);let n=[r,...B(e)],i=typeof t=="function"?$n(n,t):Fn(n,t,e);return or.bind(null,e,t,i)}function $n(e,t){return(r=()=>{},{scope:n={},params:i=[]}={})=>{let o=t.apply(z([n,...e]),i);Ne(r,o)}}var gt={};function jn(e,t){if(gt[e])return gt[e];let r=Object.getPrototypeOf(async function(){}).constructor,n=/^[\n\s]*if.*\(.*\)/.test(e.trim())||/^(let|const)\s/.test(e.trim())?`(async()=>{ ${e} })()`:e,o=(()=>{try{let s=new r(["__self","scope"],`with (scope) { __self.result = ${n} }; __self.finished = true; return __self.result;`);return Object.defineProperty(s,"name",{value:`[Alpine] ${e}`}),s}catch(s){return re(s,t,e),Promise.resolve()}})();return gt[e]=o,o}function Fn(e,t,r){let n=jn(t,r);return(i=()=>{},{scope:o={},params:s=[]}={})=>{n.result=void 0,n.finished=!1;let a=z([o,...e]);if(typeof n=="function"){let c=n(n,a).catch(l=>re(l,r,t));n.finished?(Ne(i,n.result,a,s,r),n.result=void 0):c.then(l=>{Ne(i,l,a,s,r)}).catch(l=>re(l,r,t)).finally(()=>n.result=void 0)}}}function Ne(e,t,r,n,i){if(Me&&typeof t=="function"){let o=t.apply(r,n);o instanceof Promise?o.then(s=>Ne(e,s,r,n)).catch(s=>re(s,i,t)):e(o)}else typeof t=="object"&&t instanceof Promise?t.then(o=>e(o)):e(t)}var wt="x-";function C(e=""){return wt+e}function cr(e){wt=e}var De={};function d(e,t){return De[e]=t,{before(r){if(!De[r]){console.warn(String.raw`Cannot find directive \`${r}\`. \`${e}\` will use the default order of execution`);return}let n=G.indexOf(r);G.splice(n>=0?n:G.indexOf("DEFAULT"),0,e)}}}function lr(e){return Object.keys(De).includes(e)}function pe(e,t,r){if(t=Array.from(t),e._x_virtualDirectives){let o=Object.entries(e._x_virtualDirectives).map(([a,c])=>({name:a,value:c})),s=Et(o);o=o.map(a=>s.find(c=>c.name===a.name)?{name:`x-bind:${a.name}`,value:`"${a.value}"`}:a),t=t.concat(o)}let n={};return t.map(dr((o,s)=>n[o]=s)).filter(mr).map(zn(n,r)).sort(Kn).map(o=>Bn(e,o))}function Et(e){return Array.from(e).map(dr()).filter(t=>!mr(t))}var yt=!1,de=new Map,ur=Symbol();function fr(e){yt=!0;let t=Symbol();ur=t,de.set(t,[]);let r=()=>{for(;de.get(t).length;)de.get(t).shift()();de.delete(t)},n=()=>{yt=!1,r()};e(r),n()}function _t(e){let t=[],r=a=>t.push(a),[n,i]=Yt(e);return t.push(i),[{Alpine:K,effect:n,cleanup:r,evaluateLater:x.bind(x,e),evaluate:R.bind(R,e)},()=>t.forEach(a=>a())]}function Bn(e,t){let r=()=>{},n=De[t.type]||r,[i,o]=_t(e);Oe(e,t.original,o);let s=()=>{e._x_ignore||e._x_ignoreSelf||(n.inline&&n.inline(e,t,i),n=n.bind(n,e,t,i),yt?de.get(ur).push(n):n())};return s.runCleanups=o,s}var Pe=(e,t)=>({name:r,value:n})=>(r.startsWith(e)&&(r=r.replace(e,t)),{name:r,value:n}),Ie=e=>e;function dr(e=()=>{}){return({name:t,value:r})=>{let{name:n,value:i}=pr.reduce((o,s)=>s(o),{name:t,value:r});return n!==t&&e(n,t),{name:n,value:i}}}var pr=[];function ne(e){pr.push(e)}function mr({name:e}){return hr().test(e)}var hr=()=>new RegExp(`^${wt}([^:^.]+)\\b`);function zn(e,t){return({name:r,value:n})=>{let i=r.match(hr()),o=r.match(/:([a-zA-Z0-9\-_:]+)/),s=r.match(/\.[^.\]]+(?=[^\]]*$)/g)||[],a=t||e[r]||r;return{type:i?i[1]:null,value:o?o[1]:null,modifiers:s.map(c=>c.replace(".","")),expression:n,original:a}}}var bt="DEFAULT",G=["ignore","ref","data","id","anchor","bind","init","for","model","modelable","transition","show","if",bt,"teleport"];function Kn(e,t){let r=G.indexOf(e.type)===-1?bt:e.type,n=G.indexOf(t.type)===-1?bt:t.type;return G.indexOf(r)-G.indexOf(n)}function J(e,t,r={}){e.dispatchEvent(new CustomEvent(t,{detail:r,bubbles:!0,composed:!0,cancelable:!0}))}function D(e,t){if(typeof ShadowRoot=="function"&&e instanceof ShadowRoot){Array.from(e.children).forEach(i=>D(i,t));return}let r=!1;if(t(e,()=>r=!0),r)return;let n=e.firstElementChild;for(;n;)D(n,t,!1),n=n.nextElementSibling}function E(e,...t){console.warn(`Alpine Warning: ${e}`,...t)}var _r=!1;function gr(){_r&&E("Alpine has already been initialized on this page. Calling Alpine.start() more than once can cause problems."),_r=!0,document.body||E("Unable to initialize. Trying to load Alpine before `<body>` is available. Did you forget to add `defer` in Alpine's `<script>` tag?"),J(document,"alpine:init"),J(document,"alpine:initializing"),ue(),er(t=>S(t,D)),te(t=>P(t)),Ae((t,r)=>{pe(t,r).forEach(n=>n())});let e=t=>!Y(t.parentElement,!0);Array.from(document.querySelectorAll(br().join(","))).filter(e).forEach(t=>{S(t)}),J(document,"alpine:initialized"),setTimeout(()=>{Vn()})}var vt=[],xr=[];function yr(){return vt.map(e=>e())}function br(){return vt.concat(xr).map(e=>e())}function Le(e){vt.push(e)}function $e(e){xr.push(e)}function Y(e,t=!1){return j(e,r=>{if((t?br():yr()).some(i=>r.matches(i)))return!0})}function j(e,t){if(e){if(t(e))return e;if(e._x_teleportBack&&(e=e._x_teleportBack),!!e.parentElement)return j(e.parentElement,t)}}function wr(e){return yr().some(t=>e.matches(t))}var Er=[];function vr(e){Er.push(e)}var Hn=1;function S(e,t=D,r=()=>{}){j(e,n=>n._x_ignore)||fr(()=>{t(e,(n,i)=>{n._x_marker||(r(n,i),Er.forEach(o=>o(n,i)),pe(n,n.attributes).forEach(o=>o()),n._x_ignore||(n._x_marker=Hn++),n._x_ignore&&i())})})}function P(e,t=D){t(e,r=>{tr(r),lt(r),delete r._x_marker})}function Vn(){[["ui","dialog",["[x-dialog], [x-popover]"]],["anchor","anchor",["[x-anchor]"]],["sort","sort",["[x-sort]"]]].forEach(([t,r,n])=>{lr(r)||n.some(i=>{if(document.querySelector(i))return E(`found "${i}", but missing ${t} plugin`),!0})})}var St=[],At=!1;function ie(e=()=>{}){return queueMicrotask(()=>{At||setTimeout(()=>{je()})}),new Promise(t=>{St.push(()=>{e(),t()})})}function je(){for(At=!1;St.length;)St.shift()()}function Sr(){At=!0}function me(e,t){return Array.isArray(t)?Ar(e,t.join(" ")):typeof t=="object"&&t!==null?qn(e,t):typeof t=="function"?me(e,t()):Ar(e,t)}function Ar(e,t){let r=o=>o.split(" ").filter(Boolean),n=o=>o.split(" ").filter(s=>!e.classList.contains(s)).filter(Boolean),i=o=>(e.classList.add(...o),()=>{e.classList.remove(...o)});return t=t===!0?t="":t||"",i(n(t))}function qn(e,t){let r=a=>a.split(" ").filter(Boolean),n=Object.entries(t).flatMap(([a,c])=>c?r(a):!1).filter(Boolean),i=Object.entries(t).flatMap(([a,c])=>c?!1:r(a)).filter(Boolean),o=[],s=[];return i.forEach(a=>{e.classList.contains(a)&&(e.classList.remove(a),s.push(a))}),n.forEach(a=>{e.classList.contains(a)||(e.classList.add(a),o.push(a))}),()=>{s.forEach(a=>e.classList.add(a)),o.forEach(a=>e.classList.remove(a))}}function X(e,t){return typeof t=="object"&&t!==null?Un(e,t):Wn(e,t)}function Un(e,t){let r={};return Object.entries(t).forEach(([n,i])=>{r[n]=e.style[n],n.startsWith("--")||(n=Gn(n)),e.style.setProperty(n,i)}),setTimeout(()=>{e.style.length===0&&e.removeAttribute("style")}),()=>{X(e,r)}}function Wn(e,t){let r=e.getAttribute("style",t);return e.setAttribute("style",t),()=>{e.setAttribute("style",r||"")}}function Gn(e){return e.replace(/([a-z])([A-Z])/g,"$1-$2").toLowerCase()}function he(e,t=()=>{}){let r=!1;return function(){r?t.apply(this,arguments):(r=!0,e.apply(this,arguments))}}d("transition",(e,{value:t,modifiers:r,expression:n},{evaluate:i})=>{typeof n=="function"&&(n=i(n)),n!==!1&&(!n||typeof n=="boolean"?Yn(e,r,t):Jn(e,n,t))});function Jn(e,t,r){Or(e,me,""),{enter:i=>{e._x_transition.enter.during=i},"enter-start":i=>{e._x_transition.enter.start=i},"enter-end":i=>{e._x_transition.enter.end=i},leave:i=>{e._x_transition.leave.during=i},"leave-start":i=>{e._x_transition.leave.start=i},"leave-end":i=>{e._x_transition.leave.end=i}}[r](t)}function Yn(e,t,r){Or(e,X);let n=!t.includes("in")&&!t.includes("out")&&!r,i=n||t.includes("in")||["enter"].includes(r),o=n||t.includes("out")||["leave"].includes(r);t.includes("in")&&!n&&(t=t.filter((g,b)=>b<t.indexOf("out"))),t.includes("out")&&!n&&(t=t.filter((g,b)=>b>t.indexOf("out")));let s=!t.includes("opacity")&&!t.includes("scale"),a=s||t.includes("opacity"),c=s||t.includes("scale"),l=a?0:1,u=c?_e(t,"scale",95)/100:1,p=_e(t,"delay",0)/1e3,h=_e(t,"origin","center"),w="opacity, transform",F=_e(t,"duration",150)/1e3,Ee=_e(t,"duration",75)/1e3,f="cubic-bezier(0.4, 0.0, 0.2, 1)";i&&(e._x_transition.enter.during={transformOrigin:h,transitionDelay:`${p}s`,transitionProperty:w,transitionDuration:`${F}s`,transitionTimingFunction:f},e._x_transition.enter.start={opacity:l,transform:`scale(${u})`},e._x_transition.enter.end={opacity:1,transform:"scale(1)"}),o&&(e._x_transition.leave.during={transformOrigin:h,transitionDelay:`${p}s`,transitionProperty:w,transitionDuration:`${Ee}s`,transitionTimingFunction:f},e._x_transition.leave.start={opacity:1,transform:"scale(1)"},e._x_transition.leave.end={opacity:l,transform:`scale(${u})`})}function Or(e,t,r={}){e._x_transition||(e._x_transition={enter:{during:r,start:r,end:r},leave:{during:r,start:r,end:r},in(n=()=>{},i=()=>{}){Fe(e,t,{during:this.enter.during,start:this.enter.start,end:this.enter.end},n,i)},out(n=()=>{},i=()=>{}){Fe(e,t,{during:this.leave.during,start:this.leave.start,end:this.leave.end},n,i)}})}window.Element.prototype._x_toggleAndCascadeWithTransitions=function(e,t,r,n){let i=document.visibilityState==="visible"?requestAnimationFrame:setTimeout,o=()=>i(r);if(t){e._x_transition&&(e._x_transition.enter||e._x_transition.leave)?e._x_transition.enter&&(Object.entries(e._x_transition.enter.during).length||Object.entries(e._x_transition.enter.start).length||Object.entries(e._x_transition.enter.end).length)?e._x_transition.in(r):o():e._x_transition?e._x_transition.in(r):o();return}e._x_hidePromise=e._x_transition?new Promise((s,a)=>{e._x_transition.out(()=>{},()=>s(n)),e._x_transitioning&&e._x_transitioning.beforeCancel(()=>a({isFromCancelledTransition:!0}))}):Promise.resolve(n),queueMicrotask(()=>{let s=Cr(e);s?(s._x_hideChildren||(s._x_hideChildren=[]),s._x_hideChildren.push(e)):i(()=>{let a=c=>{let l=Promise.all([c._x_hidePromise,...(c._x_hideChildren||[]).map(a)]).then(([u])=>u?.());return delete c._x_hidePromise,delete c._x_hideChildren,l};a(e).catch(c=>{if(!c.isFromCancelledTransition)throw c})})})};function Cr(e){let t=e.parentNode;if(t)return t._x_hidePromise?t:Cr(t)}function Fe(e,t,{during:r,start:n,end:i}={},o=()=>{},s=()=>{}){if(e._x_transitioning&&e._x_transitioning.cancel(),Object.keys(r).length===0&&Object.keys(n).length===0&&Object.keys(i).length===0){o(),s();return}let a,c,l;Xn(e,{start(){a=t(e,n)},during(){c=t(e,r)},before:o,end(){a(),l=t(e,i)},after:s,cleanup(){c(),l()}})}function Xn(e,t){let r,n,i,o=he(()=>{m(()=>{r=!0,n||t.before(),i||(t.end(),je()),t.after(),e.isConnected&&t.cleanup(),delete e._x_transitioning})});e._x_transitioning={beforeCancels:[],beforeCancel(s){this.beforeCancels.push(s)},cancel:he(function(){for(;this.beforeCancels.length;)this.beforeCancels.shift()();o()}),finish:o},m(()=>{t.start(),t.during()}),Sr(),requestAnimationFrame(()=>{if(r)return;let s=Number(getComputedStyle(e).transitionDuration.replace(/,.*/,"").replace("s",""))*1e3,a=Number(getComputedStyle(e).transitionDelay.replace(/,.*/,"").replace("s",""))*1e3;s===0&&(s=Number(getComputedStyle(e).animationDuration.replace("s",""))*1e3),m(()=>{t.before()}),n=!0,requestAnimationFrame(()=>{r||(m(()=>{t.end()}),je(),setTimeout(e._x_transitioning.finish,s+a),i=!0)})})}function _e(e,t,r){if(e.indexOf(t)===-1)return r;let n=e[e.indexOf(t)+1];if(!n||t==="scale"&&isNaN(n))return r;if(t==="duration"||t==="delay"){let i=n.match(/([0-9]+)ms/);if(i)return i[1]}return t==="origin"&&["top","right","left","center","bottom"].includes(e[e.indexOf(t)+2])?[n,e[e.indexOf(t)+2]].join(" "):n}var I=!1;function A(e,t=()=>{}){return(...r)=>I?t(...r):e(...r)}function Tr(e){return(...t)=>I&&e(...t)}var Rr=[];function H(e){Rr.push(e)}function Mr(e,t){Rr.forEach(r=>r(e,t)),I=!0,kr(()=>{S(t,(r,n)=>{n(r,()=>{})})}),I=!1}var Be=!1;function Nr(e,t){t._x_dataStack||(t._x_dataStack=e._x_dataStack),I=!0,Be=!0,kr(()=>{Zn(t)}),I=!1,Be=!1}function Zn(e){let t=!1;S(e,(n,i)=>{D(n,(o,s)=>{if(t&&wr(o))return s();t=!0,i(o,s)})})}function kr(e){let t=N;ct((r,n)=>{let i=t(r);return $(i),()=>{}}),e(),ct(t)}function ge(e,t,r,n=[]){switch(e._x_bindings||(e._x_bindings=T({})),e._x_bindings[t]=r,t=n.includes("camel")?si(t):t,t){case"value":Qn(e,r);break;case"style":ti(e,r);break;case"class":ei(e,r);break;case"selected":case"checked":ri(e,t,r);break;default:Pr(e,t,r);break}}function Qn(e,t){if(Ot(e))e.attributes.value===void 0&&(e.value=t),window.fromModel&&(typeof t=="boolean"?e.checked=xe(e.value)===t:e.checked=Dr(e.value,t));else if(ze(e))Number.isInteger(t)?e.value=t:!Array.isArray(t)&&typeof t!="boolean"&&![null,void 0].includes(t)?e.value=String(t):Array.isArray(t)?e.checked=t.some(r=>Dr(r,e.value)):e.checked=!!t;else if(e.tagName==="SELECT")oi(e,t);else{if(e.value===t)return;e.value=t===void 0?"":t}}function ei(e,t){e._x_undoAddedClasses&&e._x_undoAddedClasses(),e._x_undoAddedClasses=me(e,t)}function ti(e,t){e._x_undoAddedStyles&&e._x_undoAddedStyles(),e._x_undoAddedStyles=X(e,t)}function ri(e,t,r){Pr(e,t,r),ii(e,t,r)}function Pr(e,t,r){[null,void 0,!1].includes(r)&&ci(t)?e.removeAttribute(t):(Ir(t)&&(r=t),ni(e,t,r))}function ni(e,t,r){e.getAttribute(t)!=r&&e.setAttribute(t,r)}function ii(e,t,r){e[t]!==r&&(e[t]=r)}function oi(e,t){let r=[].concat(t).map(n=>n+"");Array.from(e.options).forEach(n=>{n.selected=r.includes(n.value)})}function si(e){return e.toLowerCase().replace(/-(\w)/g,(t,r)=>r.toUpperCase())}function Dr(e,t){return e==t}function xe(e){return[1,"1","true","on","yes",!0].includes(e)?!0:[0,"0","false","off","no",!1].includes(e)?!1:e?Boolean(e):null}var ai=new Set(["allowfullscreen","async","autofocus","autoplay","checked","controls","default","defer","disabled","formnovalidate","inert","ismap","itemscope","loop","multiple","muted","nomodule","novalidate","open","playsinline","readonly","required","reversed","selected","shadowrootclonable","shadowrootdelegatesfocus","shadowrootserializable"]);function Ir(e){return ai.has(e)}function ci(e){return!["aria-pressed","aria-checked","aria-expanded","aria-selected"].includes(e)}function Lr(e,t,r){return e._x_bindings&&e._x_bindings[t]!==void 0?e._x_bindings[t]:jr(e,t,r)}function $r(e,t,r,n=!0){if(e._x_bindings&&e._x_bindings[t]!==void 0)return e._x_bindings[t];if(e._x_inlineBindings&&e._x_inlineBindings[t]!==void 0){let i=e._x_inlineBindings[t];return i.extract=n,ke(()=>R(e,i.expression))}return jr(e,t,r)}function jr(e,t,r){let n=e.getAttribute(t);return n===null?typeof r=="function"?r():r:n===""?!0:Ir(t)?!![t,"true"].includes(n):n}function ze(e){return e.type==="checkbox"||e.localName==="ui-checkbox"||e.localName==="ui-switch"}function Ot(e){return e.type==="radio"||e.localName==="ui-radio"}function Ke(e,t){var r;return function(){var n=this,i=arguments,o=function(){r=null,e.apply(n,i)};clearTimeout(r),r=setTimeout(o,t)}}function He(e,t){let r;return function(){let n=this,i=arguments;r||(e.apply(n,i),r=!0,setTimeout(()=>r=!1,t))}}function Ve({get:e,set:t},{get:r,set:n}){let i=!0,o,s,a=N(()=>{let c=e(),l=r();if(i)n(Ct(c)),i=!1;else{let u=JSON.stringify(c),p=JSON.stringify(l);u!==o?n(Ct(c)):u!==p&&t(Ct(l))}o=JSON.stringify(e()),s=JSON.stringify(r())});return()=>{$(a)}}function Ct(e){return typeof e=="object"?JSON.parse(JSON.stringify(e)):e}function Fr(e){(Array.isArray(e)?e:[e]).forEach(r=>r(K))}var Z={},Br=!1;function zr(e,t){if(Br||(Z=T(Z),Br=!0),t===void 0)return Z[e];Z[e]=t,Te(Z[e]),typeof t=="object"&&t!==null&&t.hasOwnProperty("init")&&typeof t.init=="function"&&Z[e].init()}function Kr(){return Z}var Hr={};function Vr(e,t){let r=typeof t!="function"?()=>t:t;return e instanceof Element?Tt(e,r()):(Hr[e]=r,()=>{})}function qr(e){return Object.entries(Hr).forEach(([t,r])=>{Object.defineProperty(e,t,{get(){return(...n)=>r(...n)}})}),e}function Tt(e,t,r){let n=[];for(;n.length;)n.pop()();let i=Object.entries(t).map(([s,a])=>({name:s,value:a})),o=Et(i);return i=i.map(s=>o.find(a=>a.name===s.name)?{name:`x-bind:${s.name}`,value:`"${s.value}"`}:s),pe(e,i,r).map(s=>{n.push(s.runCleanups),s()}),()=>{for(;n.length;)n.pop()()}}var Ur={};function Wr(e,t){Ur[e]=t}function Gr(e,t){return Object.entries(Ur).forEach(([r,n])=>{Object.defineProperty(e,r,{get(){return(...i)=>n.bind(t)(...i)},enumerable:!1})}),e}var li={get reactive(){return T},get release(){return $},get effect(){return N},get raw(){return at},version:"3.14.9",flushAndStopDeferringMutations:nr,dontAutoEvaluateFunctions:ke,disableEffectScheduling:Gt,startObservingMutations:ue,stopObservingMutations:dt,setReactivityEngine:Jt,onAttributeRemoved:Oe,onAttributesAdded:Ae,closestDataStack:B,skipDuringClone:A,onlyDuringClone:Tr,addRootSelector:Le,addInitSelector:$e,interceptClone:H,addScopeToNode:k,deferMutations:rr,mapAttributes:ne,evaluateLater:x,interceptInit:vr,setEvaluator:ar,mergeProxies:z,extractProp:$r,findClosest:j,onElRemoved:te,closestRoot:Y,destroyTree:P,interceptor:Re,transition:Fe,setStyles:X,mutateDom:m,directive:d,entangle:Ve,throttle:He,debounce:Ke,evaluate:R,initTree:S,nextTick:ie,prefixed:C,prefix:cr,plugin:Fr,magic:y,store:zr,start:gr,clone:Nr,cloneNode:Mr,bound:Lr,$data:Ce,watch:ve,walk:D,data:Wr,bind:Vr},K=li;function Rt(e,t){let r=Object.create(null),n=e.split(",");for(let i=0;i<n.length;i++)r[n[i]]=!0;return t?i=>!!r[i.toLowerCase()]:i=>!!r[i]}var ui="itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly";var Ls=Rt(ui+",async,autofocus,autoplay,controls,default,defer,disabled,hidden,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected");var Jr=Object.freeze({}),$s=Object.freeze([]);var fi=Object.prototype.hasOwnProperty,ye=(e,t)=>fi.call(e,t),V=Array.isArray,oe=e=>Yr(e)==="[object Map]";var di=e=>typeof e=="string",qe=e=>typeof e=="symbol",be=e=>e!==null&&typeof e=="object";var pi=Object.prototype.toString,Yr=e=>pi.call(e),Mt=e=>Yr(e).slice(8,-1);var Ue=e=>di(e)&&e!=="NaN"&&e[0]!=="-"&&""+parseInt(e,10)===e;var We=e=>{let t=Object.create(null);return r=>t[r]||(t[r]=e(r))},mi=/-(\w)/g,js=We(e=>e.replace(mi,(t,r)=>r?r.toUpperCase():"")),hi=/\B([A-Z])/g,Fs=We(e=>e.replace(hi,"-$1").toLowerCase()),Nt=We(e=>e.charAt(0).toUpperCase()+e.slice(1)),Bs=We(e=>e?`on${Nt(e)}`:""),kt=(e,t)=>e!==t&&(e===e||t===t);var Dt=new WeakMap,we=[],L,Q=Symbol("iterate"),Pt=Symbol("Map key iterate");function _i(e){return e&&e._isEffect===!0}function rn(e,t=Jr){_i(e)&&(e=e.raw);let r=xi(e,t);return t.lazy||r(),r}function nn(e){e.active&&(on(e),e.options.onStop&&e.options.onStop(),e.active=!1)}var gi=0;function xi(e,t){let r=function(){if(!r.active)return e();if(!we.includes(r)){on(r);try{return bi(),we.push(r),L=r,e()}finally{we.pop(),sn(),L=we[we.length-1]}}};return r.id=gi++,r.allowRecurse=!!t.allowRecurse,r._isEffect=!0,r.active=!0,r.raw=e,r.deps=[],r.options=t,r}function on(e){let{deps:t}=e;if(t.length){for(let r=0;r<t.length;r++)t[r].delete(e);t.length=0}}var se=!0,Lt=[];function yi(){Lt.push(se),se=!1}function bi(){Lt.push(se),se=!0}function sn(){let e=Lt.pop();se=e===void 0?!0:e}function M(e,t,r){if(!se||L===void 0)return;let n=Dt.get(e);n||Dt.set(e,n=new Map);let i=n.get(r);i||n.set(r,i=new Set),i.has(L)||(i.add(L),L.deps.push(i),L.options.onTrack&&L.options.onTrack({effect:L,target:e,type:t,key:r}))}function U(e,t,r,n,i,o){let s=Dt.get(e);if(!s)return;let a=new Set,c=u=>{u&&u.forEach(p=>{(p!==L||p.allowRecurse)&&a.add(p)})};if(t==="clear")s.forEach(c);else if(r==="length"&&V(e))s.forEach((u,p)=>{(p==="length"||p>=n)&&c(u)});else switch(r!==void 0&&c(s.get(r)),t){case"add":V(e)?Ue(r)&&c(s.get("length")):(c(s.get(Q)),oe(e)&&c(s.get(Pt)));break;case"delete":V(e)||(c(s.get(Q)),oe(e)&&c(s.get(Pt)));break;case"set":oe(e)&&c(s.get(Q));break}let l=u=>{u.options.onTrigger&&u.options.onTrigger({effect:u,target:e,key:r,type:t,newValue:n,oldValue:i,oldTarget:o}),u.options.scheduler?u.options.scheduler(u):u()};a.forEach(l)}var wi=Rt("__proto__,__v_isRef,__isVue"),an=new Set(Object.getOwnPropertyNames(Symbol).map(e=>Symbol[e]).filter(qe)),Ei=cn();var vi=cn(!0);var Xr=Si();function Si(){let e={};return["includes","indexOf","lastIndexOf"].forEach(t=>{e[t]=function(...r){let n=_(this);for(let o=0,s=this.length;o<s;o++)M(n,"get",o+"");let i=n[t](...r);return i===-1||i===!1?n[t](...r.map(_)):i}}),["push","pop","shift","unshift","splice"].forEach(t=>{e[t]=function(...r){yi();let n=_(this)[t].apply(this,r);return sn(),n}}),e}function cn(e=!1,t=!1){return function(n,i,o){if(i==="__v_isReactive")return!e;if(i==="__v_isReadonly")return e;if(i==="__v_raw"&&o===(e?t?Bi:dn:t?Fi:fn).get(n))return n;let s=V(n);if(!e&&s&&ye(Xr,i))return Reflect.get(Xr,i,o);let a=Reflect.get(n,i,o);return(qe(i)?an.has(i):wi(i))||(e||M(n,"get",i),t)?a:It(a)?!s||!Ue(i)?a.value:a:be(a)?e?pn(a):et(a):a}}var Ai=Oi();function Oi(e=!1){return function(r,n,i,o){let s=r[n];if(!e&&(i=_(i),s=_(s),!V(r)&&It(s)&&!It(i)))return s.value=i,!0;let a=V(r)&&Ue(n)?Number(n)<r.length:ye(r,n),c=Reflect.set(r,n,i,o);return r===_(o)&&(a?kt(i,s)&&U(r,"set",n,i,s):U(r,"add",n,i)),c}}function Ci(e,t){let r=ye(e,t),n=e[t],i=Reflect.deleteProperty(e,t);return i&&r&&U(e,"delete",t,void 0,n),i}function Ti(e,t){let r=Reflect.has(e,t);return(!qe(t)||!an.has(t))&&M(e,"has",t),r}function Ri(e){return M(e,"iterate",V(e)?"length":Q),Reflect.ownKeys(e)}var Mi={get:Ei,set:Ai,deleteProperty:Ci,has:Ti,ownKeys:Ri},Ni={get:vi,set(e,t){return console.warn(`Set operation on key "${String(t)}" failed: target is readonly.`,e),!0},deleteProperty(e,t){return console.warn(`Delete operation on key "${String(t)}" failed: target is readonly.`,e),!0}};var $t=e=>be(e)?et(e):e,jt=e=>be(e)?pn(e):e,Ft=e=>e,Qe=e=>Reflect.getPrototypeOf(e);function Ge(e,t,r=!1,n=!1){e=e.__v_raw;let i=_(e),o=_(t);t!==o&&!r&&M(i,"get",t),!r&&M(i,"get",o);let{has:s}=Qe(i),a=n?Ft:r?jt:$t;if(s.call(i,t))return a(e.get(t));if(s.call(i,o))return a(e.get(o));e!==i&&e.get(t)}function Je(e,t=!1){let r=this.__v_raw,n=_(r),i=_(e);return e!==i&&!t&&M(n,"has",e),!t&&M(n,"has",i),e===i?r.has(e):r.has(e)||r.has(i)}function Ye(e,t=!1){return e=e.__v_raw,!t&&M(_(e),"iterate",Q),Reflect.get(e,"size",e)}function Zr(e){e=_(e);let t=_(this);return Qe(t).has.call(t,e)||(t.add(e),U(t,"add",e,e)),this}function Qr(e,t){t=_(t);let r=_(this),{has:n,get:i}=Qe(r),o=n.call(r,e);o?un(r,n,e):(e=_(e),o=n.call(r,e));let s=i.call(r,e);return r.set(e,t),o?kt(t,s)&&U(r,"set",e,t,s):U(r,"add",e,t),this}function en(e){let t=_(this),{has:r,get:n}=Qe(t),i=r.call(t,e);i?un(t,r,e):(e=_(e),i=r.call(t,e));let o=n?n.call(t,e):void 0,s=t.delete(e);return i&&U(t,"delete",e,void 0,o),s}function tn(){let e=_(this),t=e.size!==0,r=oe(e)?new Map(e):new Set(e),n=e.clear();return t&&U(e,"clear",void 0,void 0,r),n}function Xe(e,t){return function(n,i){let o=this,s=o.__v_raw,a=_(s),c=t?Ft:e?jt:$t;return!e&&M(a,"iterate",Q),s.forEach((l,u)=>n.call(i,c(l),c(u),o))}}function Ze(e,t,r){return function(...n){let i=this.__v_raw,o=_(i),s=oe(o),a=e==="entries"||e===Symbol.iterator&&s,c=e==="keys"&&s,l=i[e](...n),u=r?Ft:t?jt:$t;return!t&&M(o,"iterate",c?Pt:Q),{next(){let{value:p,done:h}=l.next();return h?{value:p,done:h}:{value:a?[u(p[0]),u(p[1])]:u(p),done:h}},[Symbol.iterator](){return this}}}}function q(e){return function(...t){{let r=t[0]?`on key "${t[0]}" `:"";console.warn(`${Nt(e)} operation ${r}failed: target is readonly.`,_(this))}return e==="delete"?!1:this}}function ki(){let e={get(o){return Ge(this,o)},get size(){return Ye(this)},has:Je,add:Zr,set:Qr,delete:en,clear:tn,forEach:Xe(!1,!1)},t={get(o){return Ge(this,o,!1,!0)},get size(){return Ye(this)},has:Je,add:Zr,set:Qr,delete:en,clear:tn,forEach:Xe(!1,!0)},r={get(o){return Ge(this,o,!0)},get size(){return Ye(this,!0)},has(o){return Je.call(this,o,!0)},add:q("add"),set:q("set"),delete:q("delete"),clear:q("clear"),forEach:Xe(!0,!1)},n={get(o){return Ge(this,o,!0,!0)},get size(){return Ye(this,!0)},has(o){return Je.call(this,o,!0)},add:q("add"),set:q("set"),delete:q("delete"),clear:q("clear"),forEach:Xe(!0,!0)};return["keys","values","entries",Symbol.iterator].forEach(o=>{e[o]=Ze(o,!1,!1),r[o]=Ze(o,!0,!1),t[o]=Ze(o,!1,!0),n[o]=Ze(o,!0,!0)}),[e,r,t,n]}var[Di,Pi,Ii,Li]=ki();function ln(e,t){let r=t?e?Li:Ii:e?Pi:Di;return(n,i,o)=>i==="__v_isReactive"?!e:i==="__v_isReadonly"?e:i==="__v_raw"?n:Reflect.get(ye(r,i)&&i in n?r:n,i,o)}var $i={get:ln(!1,!1)};var ji={get:ln(!0,!1)};function un(e,t,r){let n=_(r);if(n!==r&&t.call(e,n)){let i=Mt(e);console.warn(`Reactive ${i} contains both the raw and reactive versions of the same object${i==="Map"?" as keys":""}, which can lead to inconsistencies. Avoid differentiating between the raw and reactive versions of an object and only use the reactive version if possible.`)}}var fn=new WeakMap,Fi=new WeakMap,dn=new WeakMap,Bi=new WeakMap;function zi(e){switch(e){case"Object":case"Array":return 1;case"Map":case"Set":case"WeakMap":case"WeakSet":return 2;default:return 0}}function Ki(e){return e.__v_skip||!Object.isExtensible(e)?0:zi(Mt(e))}function et(e){return e&&e.__v_isReadonly?e:mn(e,!1,Mi,$i,fn)}function pn(e){return mn(e,!0,Ni,ji,dn)}function mn(e,t,r,n,i){if(!be(e))return console.warn(`value cannot be made reactive: ${String(e)}`),e;if(e.__v_raw&&!(t&&e.__v_isReactive))return e;let o=i.get(e);if(o)return o;let s=Ki(e);if(s===0)return e;let a=new Proxy(e,s===2?n:r);return i.set(e,a),a}function _(e){return e&&_(e.__v_raw)||e}function It(e){return Boolean(e&&e.__v_isRef===!0)}y("nextTick",()=>ie);y("dispatch",e=>J.bind(J,e));y("watch",(e,{evaluateLater:t,cleanup:r})=>(n,i)=>{let o=t(n),a=ve(()=>{let c;return o(l=>c=l),c},i);r(a)});y("store",Kr);y("data",e=>Ce(e));y("root",e=>Y(e));y("refs",e=>(e._x_refs_proxy||(e._x_refs_proxy=z(Hi(e))),e._x_refs_proxy));function Hi(e){let t=[];return j(e,r=>{r._x_refs&&t.push(r._x_refs)}),t}var Bt={};function zt(e){return Bt[e]||(Bt[e]=0),++Bt[e]}function hn(e,t){return j(e,r=>{if(r._x_ids&&r._x_ids[t])return!0})}function _n(e,t){e._x_ids||(e._x_ids={}),e._x_ids[t]||(e._x_ids[t]=zt(t))}y("id",(e,{cleanup:t})=>(r,n=null)=>{let i=`${r}${n?`-${n}`:""}`;return Vi(e,i,t,()=>{let o=hn(e,r),s=o?o._x_ids[r]:zt(r);return n?`${r}-${s}-${n}`:`${r}-${s}`})});H((e,t)=>{e._x_id&&(t._x_id=e._x_id)});function Vi(e,t,r,n){if(e._x_id||(e._x_id={}),e._x_id[t])return e._x_id[t];let i=n();return e._x_id[t]=i,r(()=>{delete e._x_id[t]}),i}y("el",e=>e);gn("Focus","focus","focus");gn("Persist","persist","persist");function gn(e,t,r){y(t,n=>E(`You can't use [$${t}] without first installing the "${e}" plugin here: https://alpinejs.dev/plugins/${r}`,n))}d("modelable",(e,{expression:t},{effect:r,evaluateLater:n,cleanup:i})=>{let o=n(t),s=()=>{let u;return o(p=>u=p),u},a=n(`${t} = __placeholder`),c=u=>a(()=>{},{scope:{__placeholder:u}}),l=s();c(l),queueMicrotask(()=>{if(!e._x_model)return;e._x_removeModelListeners.default();let u=e._x_model.get,p=e._x_model.set,h=Ve({get(){return u()},set(w){p(w)}},{get(){return s()},set(w){c(w)}});i(h)})});d("teleport",(e,{modifiers:t,expression:r},{cleanup:n})=>{e.tagName.toLowerCase()!=="template"&&E("x-teleport can only be used on a <template> tag",e);let i=xn(r),o=e.content.cloneNode(!0).firstElementChild;e._x_teleport=o,o._x_teleportBack=e,e.setAttribute("data-teleport-template",!0),o.setAttribute("data-teleport-target",!0),e._x_forwardEvents&&e._x_forwardEvents.forEach(a=>{o.addEventListener(a,c=>{c.stopPropagation(),e.dispatchEvent(new c.constructor(c.type,c))})}),k(o,{},e);let s=(a,c,l)=>{l.includes("prepend")?c.parentNode.insertBefore(a,c):l.includes("append")?c.parentNode.insertBefore(a,c.nextSibling):c.appendChild(a)};m(()=>{s(o,i,t),A(()=>{S(o)})()}),e._x_teleportPutBack=()=>{let a=xn(r);m(()=>{s(e._x_teleport,a,t)})},n(()=>m(()=>{o.remove(),P(o)}))});var qi=document.createElement("div");function xn(e){let t=A(()=>document.querySelector(e),()=>qi)();return t||E(`Cannot find x-teleport element for selector: "${e}"`),t}var yn=()=>{};yn.inline=(e,{modifiers:t},{cleanup:r})=>{t.includes("self")?e._x_ignoreSelf=!0:e._x_ignore=!0,r(()=>{t.includes("self")?delete e._x_ignoreSelf:delete e._x_ignore})};d("ignore",yn);d("effect",A((e,{expression:t},{effect:r})=>{r(x(e,t))}));function ae(e,t,r,n){let i=e,o=c=>n(c),s={},a=(c,l)=>u=>l(c,u);if(r.includes("dot")&&(t=Ui(t)),r.includes("camel")&&(t=Wi(t)),r.includes("passive")&&(s.passive=!0),r.includes("capture")&&(s.capture=!0),r.includes("window")&&(i=window),r.includes("document")&&(i=document),r.includes("debounce")){let c=r[r.indexOf("debounce")+1]||"invalid-wait",l=tt(c.split("ms")[0])?Number(c.split("ms")[0]):250;o=Ke(o,l)}if(r.includes("throttle")){let c=r[r.indexOf("throttle")+1]||"invalid-wait",l=tt(c.split("ms")[0])?Number(c.split("ms")[0]):250;o=He(o,l)}return r.includes("prevent")&&(o=a(o,(c,l)=>{l.preventDefault(),c(l)})),r.includes("stop")&&(o=a(o,(c,l)=>{l.stopPropagation(),c(l)})),r.includes("once")&&(o=a(o,(c,l)=>{c(l),i.removeEventListener(t,o,s)})),(r.includes("away")||r.includes("outside"))&&(i=document,o=a(o,(c,l)=>{e.contains(l.target)||l.target.isConnected!==!1&&(e.offsetWidth<1&&e.offsetHeight<1||e._x_isShown!==!1&&c(l))})),r.includes("self")&&(o=a(o,(c,l)=>{l.target===e&&c(l)})),(Ji(t)||wn(t))&&(o=a(o,(c,l)=>{Yi(l,r)||c(l)})),i.addEventListener(t,o,s),()=>{i.removeEventListener(t,o,s)}}function Ui(e){return e.replace(/-/g,".")}function Wi(e){return e.toLowerCase().replace(/-(\w)/g,(t,r)=>r.toUpperCase())}function tt(e){return!Array.isArray(e)&&!isNaN(e)}function Gi(e){return[" ","_"].includes(e)?e:e.replace(/([a-z])([A-Z])/g,"$1-$2").replace(/[_\s]/,"-").toLowerCase()}function Ji(e){return["keydown","keyup"].includes(e)}function wn(e){return["contextmenu","click","mouse"].some(t=>e.includes(t))}function Yi(e,t){let r=t.filter(o=>!["window","document","prevent","stop","once","capture","self","away","outside","passive"].includes(o));if(r.includes("debounce")){let o=r.indexOf("debounce");r.splice(o,tt((r[o+1]||"invalid-wait").split("ms")[0])?2:1)}if(r.includes("throttle")){let o=r.indexOf("throttle");r.splice(o,tt((r[o+1]||"invalid-wait").split("ms")[0])?2:1)}if(r.length===0||r.length===1&&bn(e.key).includes(r[0]))return!1;let i=["ctrl","shift","alt","meta","cmd","super"].filter(o=>r.includes(o));return r=r.filter(o=>!i.includes(o)),!(i.length>0&&i.filter(s=>((s==="cmd"||s==="super")&&(s="meta"),e[`${s}Key`])).length===i.length&&(wn(e.type)||bn(e.key).includes(r[0])))}function bn(e){if(!e)return[];e=Gi(e);let t={ctrl:"control",slash:"/",space:" ",spacebar:" ",cmd:"meta",esc:"escape",up:"arrow-up",down:"arrow-down",left:"arrow-left",right:"arrow-right",period:".",comma:",",equal:"=",minus:"-",underscore:"_"};return t[e]=e,Object.keys(t).map(r=>{if(t[r]===e)return r}).filter(r=>r)}d("model",(e,{modifiers:t,expression:r},{effect:n,cleanup:i})=>{let o=e;t.includes("parent")&&(o=e.parentNode);let s=x(o,r),a;typeof r=="string"?a=x(o,`${r} = __placeholder`):typeof r=="function"&&typeof r()=="string"?a=x(o,`${r()} = __placeholder`):a=()=>{};let c=()=>{let h;return s(w=>h=w),En(h)?h.get():h},l=h=>{let w;s(F=>w=F),En(w)?w.set(h):a(()=>{},{scope:{__placeholder:h}})};typeof r=="string"&&e.type==="radio"&&m(()=>{e.hasAttribute("name")||e.setAttribute("name",r)});var u=e.tagName.toLowerCase()==="select"||["checkbox","radio"].includes(e.type)||t.includes("lazy")?"change":"input";let p=I?()=>{}:ae(e,u,t,h=>{l(Kt(e,t,h,c()))});if(t.includes("fill")&&([void 0,null,""].includes(c())||ze(e)&&Array.isArray(c())||e.tagName.toLowerCase()==="select"&&e.multiple)&&l(Kt(e,t,{target:e},c())),e._x_removeModelListeners||(e._x_removeModelListeners={}),e._x_removeModelListeners.default=p,i(()=>e._x_removeModelListeners.default()),e.form){let h=ae(e.form,"reset",[],w=>{ie(()=>e._x_model&&e._x_model.set(Kt(e,t,{target:e},c())))});i(()=>h())}e._x_model={get(){return c()},set(h){l(h)}},e._x_forceModelUpdate=h=>{h===void 0&&typeof r=="string"&&r.match(/\./)&&(h=""),window.fromModel=!0,m(()=>ge(e,"value",h)),delete window.fromModel},n(()=>{let h=c();t.includes("unintrusive")&&document.activeElement.isSameNode(e)||e._x_forceModelUpdate(h)})});function Kt(e,t,r,n){return m(()=>{if(r instanceof CustomEvent&&r.detail!==void 0)return r.detail!==null&&r.detail!==void 0?r.detail:r.target.value;if(ze(e))if(Array.isArray(n)){let i=null;return t.includes("number")?i=Ht(r.target.value):t.includes("boolean")?i=xe(r.target.value):i=r.target.value,r.target.checked?n.includes(i)?n:n.concat([i]):n.filter(o=>!Xi(o,i))}else return r.target.checked;else{if(e.tagName.toLowerCase()==="select"&&e.multiple)return t.includes("number")?Array.from(r.target.selectedOptions).map(i=>{let o=i.value||i.text;return Ht(o)}):t.includes("boolean")?Array.from(r.target.selectedOptions).map(i=>{let o=i.value||i.text;return xe(o)}):Array.from(r.target.selectedOptions).map(i=>i.value||i.text);{let i;return Ot(e)?r.target.checked?i=r.target.value:i=n:i=r.target.value,t.includes("number")?Ht(i):t.includes("boolean")?xe(i):t.includes("trim")?i.trim():i}}})}function Ht(e){let t=e?parseFloat(e):null;return Zi(t)?t:e}function Xi(e,t){return e==t}function Zi(e){return!Array.isArray(e)&&!isNaN(e)}function En(e){return e!==null&&typeof e=="object"&&typeof e.get=="function"&&typeof e.set=="function"}d("cloak",e=>queueMicrotask(()=>m(()=>e.removeAttribute(C("cloak")))));$e(()=>`[${C("init")}]`);d("init",A((e,{expression:t},{evaluate:r})=>typeof t=="string"?!!t.trim()&&r(t,{},!1):r(t,{},!1)));d("text",(e,{expression:t},{effect:r,evaluateLater:n})=>{let i=n(t);r(()=>{i(o=>{m(()=>{e.textContent=o})})})});d("html",(e,{expression:t},{effect:r,evaluateLater:n})=>{let i=n(t);r(()=>{i(o=>{m(()=>{e.innerHTML=o,e._x_ignoreSelf=!0,S(e),delete e._x_ignoreSelf})})})});ne(Pe(":",Ie(C("bind:"))));var vn=(e,{value:t,modifiers:r,expression:n,original:i},{effect:o,cleanup:s})=>{if(!t){let c={};qr(c),x(e,n)(u=>{Tt(e,u,i)},{scope:c});return}if(t==="key")return Qi(e,n);if(e._x_inlineBindings&&e._x_inlineBindings[t]&&e._x_inlineBindings[t].extract)return;let a=x(e,n);o(()=>a(c=>{c===void 0&&typeof n=="string"&&n.match(/\./)&&(c=""),m(()=>ge(e,t,c,r))})),s(()=>{e._x_undoAddedClasses&&e._x_undoAddedClasses(),e._x_undoAddedStyles&&e._x_undoAddedStyles()})};vn.inline=(e,{value:t,modifiers:r,expression:n})=>{t&&(e._x_inlineBindings||(e._x_inlineBindings={}),e._x_inlineBindings[t]={expression:n,extract:!1})};d("bind",vn);function Qi(e,t){e._x_keyExpression=t}Le(()=>`[${C("data")}]`);d("data",(e,{expression:t},{cleanup:r})=>{if(eo(e))return;t=t===""?"{}":t;let n={};fe(n,e);let i={};Gr(i,n);let o=R(e,t,{scope:i});(o===void 0||o===!0)&&(o={}),fe(o,e);let s=T(o);Te(s);let a=k(e,s);s.init&&R(e,s.init),r(()=>{s.destroy&&R(e,s.destroy),a()})});H((e,t)=>{e._x_dataStack&&(t._x_dataStack=e._x_dataStack,t.setAttribute("data-has-alpine-state",!0))});function eo(e){return I?Be?!0:e.hasAttribute("data-has-alpine-state"):!1}d("show",(e,{modifiers:t,expression:r},{effect:n})=>{let i=x(e,r);e._x_doHide||(e._x_doHide=()=>{m(()=>{e.style.setProperty("display","none",t.includes("important")?"important":void 0)})}),e._x_doShow||(e._x_doShow=()=>{m(()=>{e.style.length===1&&e.style.display==="none"?e.removeAttribute("style"):e.style.removeProperty("display")})});let o=()=>{e._x_doHide(),e._x_isShown=!1},s=()=>{e._x_doShow(),e._x_isShown=!0},a=()=>setTimeout(s),c=he(p=>p?s():o(),p=>{typeof e._x_toggleAndCascadeWithTransitions=="function"?e._x_toggleAndCascadeWithTransitions(e,p,s,o):p?a():o()}),l,u=!0;n(()=>i(p=>{!u&&p===l||(t.includes("immediate")&&(p?a():o()),c(p),l=p,u=!1)}))});d("for",(e,{expression:t},{effect:r,cleanup:n})=>{let i=ro(t),o=x(e,i.items),s=x(e,e._x_keyExpression||"index");e._x_prevKeys=[],e._x_lookup={},r(()=>to(e,i,o,s)),n(()=>{Object.values(e._x_lookup).forEach(a=>m(()=>{P(a),a.remove()})),delete e._x_prevKeys,delete e._x_lookup})});function to(e,t,r,n){let i=s=>typeof s=="object"&&!Array.isArray(s),o=e;r(s=>{no(s)&&s>=0&&(s=Array.from(Array(s).keys(),f=>f+1)),s===void 0&&(s=[]);let a=e._x_lookup,c=e._x_prevKeys,l=[],u=[];if(i(s))s=Object.entries(s).map(([f,g])=>{let b=Sn(t,g,f,s);n(v=>{u.includes(v)&&E("Duplicate key on x-for",e),u.push(v)},{scope:{index:f,...b}}),l.push(b)});else for(let f=0;f<s.length;f++){let g=Sn(t,s[f],f,s);n(b=>{u.includes(b)&&E("Duplicate key on x-for",e),u.push(b)},{scope:{index:f,...g}}),l.push(g)}let p=[],h=[],w=[],F=[];for(let f=0;f<c.length;f++){let g=c[f];u.indexOf(g)===-1&&w.push(g)}c=c.filter(f=>!w.includes(f));let Ee="template";for(let f=0;f<u.length;f++){let g=u[f],b=c.indexOf(g);if(b===-1)c.splice(f,0,g),p.push([Ee,f]);else if(b!==f){let v=c.splice(f,1)[0],O=c.splice(b-1,1)[0];c.splice(f,0,O),c.splice(b,0,v),h.push([v,O])}else F.push(g);Ee=g}for(let f=0;f<w.length;f++){let g=w[f];g in a&&(m(()=>{P(a[g]),a[g].remove()}),delete a[g])}for(let f=0;f<h.length;f++){let[g,b]=h[f],v=a[g],O=a[b],ee=document.createElement("div");m(()=>{O||E('x-for ":key" is undefined or invalid',o,b,a),O.after(ee),v.after(O),O._x_currentIfEl&&O.after(O._x_currentIfEl),ee.before(v),v._x_currentIfEl&&v.after(v._x_currentIfEl),ee.remove()}),O._x_refreshXForScope(l[u.indexOf(b)])}for(let f=0;f<p.length;f++){let[g,b]=p[f],v=g==="template"?o:a[g];v._x_currentIfEl&&(v=v._x_currentIfEl);let O=l[b],ee=u[b],ce=document.importNode(o.content,!0).firstElementChild,qt=T(O);k(ce,qt,o),ce._x_refreshXForScope=On=>{Object.entries(On).forEach(([Cn,Tn])=>{qt[Cn]=Tn})},m(()=>{v.after(ce),A(()=>S(ce))()}),typeof ee=="object"&&E("x-for key cannot be an object, it must be a string or an integer",o),a[ee]=ce}for(let f=0;f<F.length;f++)a[F[f]]._x_refreshXForScope(l[u.indexOf(F[f])]);o._x_prevKeys=u})}function ro(e){let t=/,([^,\}\]]*)(?:,([^,\}\]]*))?$/,r=/^\s*\(|\)\s*$/g,n=/([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/,i=e.match(n);if(!i)return;let o={};o.items=i[2].trim();let s=i[1].replace(r,"").trim(),a=s.match(t);return a?(o.item=s.replace(t,"").trim(),o.index=a[1].trim(),a[2]&&(o.collection=a[2].trim())):o.item=s,o}function Sn(e,t,r,n){let i={};return/^\[.*\]$/.test(e.item)&&Array.isArray(t)?e.item.replace("[","").replace("]","").split(",").map(s=>s.trim()).forEach((s,a)=>{i[s]=t[a]}):/^\{.*\}$/.test(e.item)&&!Array.isArray(t)&&typeof t=="object"?e.item.replace("{","").replace("}","").split(",").map(s=>s.trim()).forEach(s=>{i[s]=t[s]}):i[e.item]=t,e.index&&(i[e.index]=r),e.collection&&(i[e.collection]=n),i}function no(e){return!Array.isArray(e)&&!isNaN(e)}function An(){}An.inline=(e,{expression:t},{cleanup:r})=>{let n=Y(e);n._x_refs||(n._x_refs={}),n._x_refs[t]=e,r(()=>delete n._x_refs[t])};d("ref",An);d("if",(e,{expression:t},{effect:r,cleanup:n})=>{e.tagName.toLowerCase()!=="template"&&E("x-if can only be used on a <template> tag",e);let i=x(e,t),o=()=>{if(e._x_currentIfEl)return e._x_currentIfEl;let a=e.content.cloneNode(!0).firstElementChild;return k(a,{},e),m(()=>{e.after(a),A(()=>S(a))()}),e._x_currentIfEl=a,e._x_undoIf=()=>{m(()=>{P(a),a.remove()}),delete e._x_currentIfEl},a},s=()=>{e._x_undoIf&&(e._x_undoIf(),delete e._x_undoIf)};r(()=>i(a=>{a?o():s()})),n(()=>e._x_undoIf&&e._x_undoIf())});d("id",(e,{expression:t},{evaluate:r})=>{r(t).forEach(i=>_n(e,i))});H((e,t)=>{e._x_ids&&(t._x_ids=e._x_ids)});ne(Pe("@",Ie(C("on:"))));d("on",A((e,{value:t,modifiers:r,expression:n},{cleanup:i})=>{let o=n?x(e,n):()=>{};e.tagName.toLowerCase()==="template"&&(e._x_forwardEvents||(e._x_forwardEvents=[]),e._x_forwardEvents.includes(t)||e._x_forwardEvents.push(t));let s=ae(e,t,r,a=>{o(()=>{},{scope:{$event:a},params:[a]})});i(()=>s())}));rt("Collapse","collapse","collapse");rt("Intersect","intersect","intersect");rt("Focus","trap","focus");rt("Mask","mask","mask");function rt(e,t,r){d(t,n=>E(`You can't use [x-${t}] without first installing the "${e}" plugin here: https://alpinejs.dev/plugins/${r}`,n))}K.setEvaluator(xt);K.setReactivityEngine({reactive:et,effect:rn,release:nn,raw:_});var Vt=K;window.Alpine=Vt;queueMicrotask(()=>{Vt.start()});})();
+</script>
+  <h1>
+    Diff between
+    <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="removed">02dea11f</code></a> (main)
+    and
+    <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="added">fd5c7302</code></a> (PR)
+  </h1>
+  <ul><li x-data="{ open: true }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>lens</span>
+    <code><span class="added">+1308</span> <span class="removed">-32</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>statuses</span>
+    <code><span class="added">+12</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "isUnderReview": false,
+</span><span class="line removed">  "isUnverified": false
+</span><span class="line added">  "isUnverified": true,
+</span><span class="line added">  "otherMigration": {
+</span><span class="line added">    "expiresAt": 1750291200,
+</span><span class="line added">    "pretendingToBe": "Validium",
+</span><span class="line added">    "reasons": [
+</span><span class="line added">      {
+</span><span class="line added">        "label": "No DA bridge",
+</span><span class="line added">        "shortDescription": "There is no data availability bridge",
+</span><span class="line added">        "description": "Projects without a data availability bridge fully rely on single entities (the sequencer) to honestly rely available data roots on Ethereum. A malicious sequencer can collude with the proposer to finalize an unavailable state, which can cause loss of funds."
+</span><span class="line added">      }
+</span><span class="line added">    ]
+</span><span class="line added">  }
+</span><span class="line ctx">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>display</span>
+    <code><span class="added">+46</span> <span class="removed">-2</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line removed">  "badges": [],
+</span><span class="line added">  "badges": [
+</span><span class="line added">    {
+</span><span class="line added">      "id": "EVM",
+</span><span class="line added">      "type": "VM",
+</span><span class="line added">      "name": "EVM",
+</span><span class="line added">      "description": "This project uses the Ethereum Virtual Machine to run its smart contracts and supports the Solidity programming language",
+</span><span class="line added">      "action": {
+</span><span class="line added">        "type": "scalingFilter",
+</span><span class="line added">        "id": "vm",
+</span><span class="line added">        "value": "EVM"
+</span><span class="line added">      }
+</span><span class="line added">    },
+</span><span class="line added">    {
+</span><span class="line added">      "id": "CustomDA",
+</span><span class="line added">      "type": "DA",
+</span><span class="line added">      "name": "Custom DA solution",
+</span><span class="line added">      "description": "This project is using a custom DA solution",
+</span><span class="line added">      "action": {
+</span><span class="line added">        "type": "selfDaHighlight"
+</span><span class="line added">      }
+</span><span class="line added">    },
+</span><span class="line added">    {
+</span><span class="line added">      "id": "ZKStack",
+</span><span class="line added">      "type": "Stack",
+</span><span class="line added">      "name": "Built on the ZK Stack",
+</span><span class="line added">      "description": "The project is built on the ZK Stack",
+</span><span class="line added">      "action": {
+</span><span class="line added">        "type": "scalingFilter",
+</span><span class="line added">        "id": "stack",
+</span><span class="line added">        "value": "ZK Stack"
+</span><span class="line added">      }
+</span><span class="line added">    },
+</span><span class="line added">    {
+</span><span class="line added">      "id": "ElasticChain",
+</span><span class="line added">      "type": "Infra",
+</span><span class="line added">      "name": "Part of the Elastic Chain",
+</span><span class="line added">      "description": "The project is part of the Elastic Chain, meaning it's based on the ZK stack and uses the shared contracts",
+</span><span class="line added">      "action": {
+</span><span class="line added">        "type": "scalingFilter",
+</span><span class="line added">        "id": "infrastructure",
+</span><span class="line added">        "value": "Elastic Chain"
+</span><span class="line added">      }
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "description": "Lens Network is the main social networking hub for the entire user base of Lens Protocol, built using ZKsync's ZK Stack technology.",
+</span><span class="line ctx">  "links": {
+</span><span class="line ctx">    "websites": [
+</span><span class="line ctx">      "https://lens.xyz"
+</span><span class="line ctx">    ],
+</span><span class="line ctx">    "apps": [
+</span><span class="line full indicator">      "https://lens.xyz/mint"
+</span><span class="line ctx">    ],
+</span><span class="line ctx">    "documentation": [
+</span><span class="line ctx">      "https://lens.xyz/docs"
+</span><span class="line ctx">    ],
+</span><span class="line ctx">    "explorers": [
+</span><span class="line removed">      "https://momoka.lens.xyz"
+</span><span class="line added">      "https://momoka.lens.xyz",
+</span><span class="line added">      "https://explorer.lens.xyz/"
+</span><span class="line ctx">    ],
+</span><span class="line ctx">    "repositories": [
+</span><span class="line ctx">      "https://github.com/lens-protocol"
+</span><span class="line ctx">    ],
+</span><span class="line ctx">    "socialMedia": [
+</span><span class="line ctx">      "https://hey.xyz/u/lens",
+</span><span class="line ctx">      "https://x.com/lensprotocol",
+</span><span class="line ctx">      "https://discord.com/invite/lensprotocol"
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  }
+</span><span class="line ctx">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>milestones</span>
+    <code><span class="added">+9</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">[
+</span><span class="line added">  {
+</span><span class="line added">    "title": "Mainnet launch",
+</span><span class="line added">    "url": "https://lens.xyz/news/build-socialfi-apps-faster-with-lens-now-on-mainnet",
+</span><span class="line added">    "date": "2025-04-04T00:00:00Z",
+</span><span class="line added">    "description": "Lens mainnet launches for all users.",
+</span><span class="line added">    "type": "general"
+</span><span class="line added">  }
+</span><span class="line added">]</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>chainConfig</span>
+    <code><span class="added">+16</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">{
+</span><span class="line added">  "apis": [
+</span><span class="line added">    {
+</span><span class="line added">      "type": "rpc",
+</span><span class="line added">      "url": "https://rpc.lens.xyz",
+</span><span class="line added">      "callsPerMinute": 1500
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line added">  "chainId": 232,
+</span><span class="line added">  "explorerUrl": "",
+</span><span class="line added">  "gasTokens": [
+</span><span class="line added">    "ETH"
+</span><span class="line added">  ],
+</span><span class="line added">  "name": "lens",
+</span><span class="line added">  "sinceTimestamp": 1740140786
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>scalingInfo</span>
+    <code><span class="added">+13</span> <span class="removed">-2</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "capability": "universal",
+</span><span class="line removed">  "daLayer": "Unknown",
+</span><span class="line added">  "daLayer": "None",
+</span><span class="line ctx">  "hostChain": {
+</span><span class="line ctx">    "id": "ethereum",
+</span><span class="line ctx">    "slug": "ethereum",
+</span><span class="line ctx">    "name": "Ethereum"
+</span><span class="line ctx">  },
+</span><span class="line added">  "infrastructure": "Elastic Chain",
+</span><span class="line ctx">  "isOther": false,
+</span><span class="line ctx">  "layer": "layer2",
+</span><span class="line ctx">  "purposes": [
+</span><span class="line added">    "Universal",
+</span><span class="line ctx">    "Social"
+</span><span class="line ctx">  ],
+</span><span class="line added">  "reasonsForBeingOther": [
+</span><span class="line added">    {
+</span><span class="line added">      "label": "No DA bridge",
+</span><span class="line added">      "shortDescription": "There is no data availability bridge",
+</span><span class="line added">      "description": "Projects without a data availability bridge fully rely on single entities (the sequencer) to honestly rely available data roots on Ethereum. A malicious sequencer can collude with the proposer to finalize an unavailable state, which can cause loss of funds."
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stack": "ZK Stack",
+</span><span class="line ctx">  "stage": "Not applicable",
+</span><span class="line ctx">  "type": "Validium",
+</span><span class="line removed">  "vm": []
+</span><span class="line added">  "vm": [
+</span><span class="line added">    "EVM"
+</span><span class="line added">  ]
+</span><span class="line ctx">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>scalingRisks</span>
+    <code><span class="added">+18</span> <span class="removed">-15</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "self": {
+</span><span class="line ctx">    "stateValidation": {
+</span><span class="line removed">      "value": "",
+</span><span class="line removed">      "description": "No information available.",
+</span><span class="line removed">      "sentiment": "neutral"
+</span><span class="line added">      "value": "ZK proofs (ST, SN)",
+</span><span class="line added">      "description": "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.",
+</span><span class="line added">      "sentiment": "good",
+</span><span class="line added">      "orderHint": null,
+</span><span class="line added">      "secondLine": "3h execution delay"
+</span><span class="line ctx">    },
+</span><span class="line ctx">    "dataAvailability": {
+</span><span class="line removed">      "value": "",
+</span><span class="line removed">      "description": "No information available.",
+</span><span class="line removed">      "sentiment": "neutral"
+</span><span class="line added">      "value": "External",
+</span><span class="line added">      "description": "Proof construction and state derivation rely fully on data that is NOT published onchain.",
+</span><span class="line added">      "sentiment": "bad"
+</span><span class="line ctx">    },
+</span><span class="line ctx">    "exitWindow": {
+</span><span class="line removed">      "value": "",
+</span><span class="line removed">      "description": "No information available.",
+</span><span class="line removed">      "sentiment": "neutral"
+</span><span class="line added">      "value": "None",
+</span><span class="line added">      "sentiment": "bad",
+</span><span class="line added">      "description": "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 3h."
+</span><span class="line ctx">    },
+</span><span class="line ctx">    "sequencerFailure": {
+</span><span class="line removed">      "value": "",
+</span><span class="line removed">      "description": "No information available.",
+</span><span class="line removed">      "sentiment": "neutral"
+</span><span class="line added">      "value": "Enqueue via L1",
+</span><span class="line added">      "description": "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone.",
+</span><span class="line added">      "sentiment": "warning"
+</span><span class="line ctx">    },
+</span><span class="line ctx">    "proposerFailure": {
+</span><span class="line removed">      "value": "",
+</span><span class="line removed">      "description": "No information available.",
+</span><span class="line removed">      "sentiment": "neutral"
+</span><span class="line added">      "value": "Cannot withdraw",
+</span><span class="line added">      "description": "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade.",
+</span><span class="line added">      "sentiment": "warning",
+</span><span class="line added">      "orderHint": null
+</span><span class="line ctx">    }
+</span><span class="line ctx">  }
+</span><span class="line ctx">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>scalingDa</span>
+    <code><span class="added">+17</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">{
+</span><span class="line added">  "bridge": {
+</span><span class="line added">    "value": "None",
+</span><span class="line added">    "sentiment": "bad",
+</span><span class="line added">    "description": "There is no bridge that can attest if the data has been made available.",
+</span><span class="line added">    "orderHint": -2
+</span><span class="line added">  },
+</span><span class="line added">  "layer": {
+</span><span class="line added">    "value": "None",
+</span><span class="line added">    "sentiment": "bad",
+</span><span class="line added">    "description": "The data is not posted to any data availability layer."
+</span><span class="line added">  },
+</span><span class="line added">  "mode": {
+</span><span class="line added">    "value": "State diffs",
+</span><span class="line added">    "secondLine": "Compressed"
+</span><span class="line added">  }
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>scalingTechnology</span>
+    <code><span class="added">+141</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">{}
+</span><span class="line added">{
+</span><span class="line added">  "architectureImage": "zkstack-validium",
+</span><span class="line added">  "dataAvailability": {
+</span><span class="line added">    "name": "Data is not stored on chain",
+</span><span class="line added">    "description": "The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the centralized Sequencer.",
+</span><span class="line added">    "risks": [
+</span><span class="line added">      {
+</span><span class="line added">        "category": "Funds can be lost if",
+</span><span class="line added">        "text": "the external data becomes unavailable.",
+</span><span class="line added">        "isCritical": true
+</span><span class="line added">      }
+</span><span class="line added">    ],
+</span><span class="line added">    "references": [
+</span><span class="line added">      {
+</span><span class="line added">        "title": "ExecutorFacet - _commitOneBatch() function",
+</span><span class="line added">        "url": "https://etherscan.io/address/0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800#code#F1#L46"
+</span><span class="line added">      }
+</span><span class="line added">    ]
+</span><span class="line added">  },
+</span><span class="line added">  "exitMechanisms": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Regular messaging",
+</span><span class="line added">      "description": "The user initiates L2->L1 messages by submitting a regular transaction on this chain. When the block containing that transaction is settled, the message becomes available for processing on L1. ZK proofs are required to settle blocks.",
+</span><span class="line added">      "risks": [],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Withdrawing funds - ZKsync documentation",
+</span><span class="line added">          "url": "https://docs.zksync.io/build/developer-reference/bridging-assets"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    },
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Forced messaging",
+</span><span class="line added">      "description": "If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request or halt all messages from L1, including all forced withdrawals and deposits. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.",
+</span><span class="line added">      "risks": [],
+</span><span class="line added">      "references": []
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line added">  "forceTransactions": {
+</span><span class="line added">    "name": "Users can force any transaction via L1",
+</span><span class="line added">    "description": "If a user is censored by the L2 Sequencer, they can try to force their transaction via an L1 queue. Right now there is no mechanism that forces L2 Sequencer to include        transactions from the queue in an L2 block. The operator can implement a TransactionFilterer that censors forced transactions.",
+</span><span class="line added">    "risks": [
+</span><span class="line added">      {
+</span><span class="line added">        "category": "Users can be censored if",
+</span><span class="line added">        "text": "the operator refuses to include their transactions."
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "category": "Users can be censored if",
+</span><span class="line added">        "text": "the operator implements a TransactionFilterer, which is possible without delay."
+</span><span class="line added">      }
+</span><span class="line added">    ],
+</span><span class="line added">    "references": [
+</span><span class="line added">      {
+</span><span class="line added">        "title": "L1 - L2 interoperability - Developer's documentation",
+</span><span class="line added">        "url": "https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue"
+</span><span class="line added">      }
+</span><span class="line added">    ]
+</span><span class="line added">  },
+</span><span class="line added">  "operator": {
+</span><span class="line added">    "name": "The system has a centralized operator",
+</span><span class="line added">    "description": "The operator is the only entity that can propose blocks. A live and trustworthy operator is vital to the health of the system.",
+</span><span class="line added">    "risks": [
+</span><span class="line added">      {
+</span><span class="line added">        "category": "MEV can be extracted if",
+</span><span class="line added">        "text": "the operator exploits their centralized position and frontruns user transactions."
+</span><span class="line added">      }
+</span><span class="line added">    ],
+</span><span class="line added">    "references": []
+</span><span class="line added">  },
+</span><span class="line added">  "stateValidation": {
+</span><span class="line added">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line added">    "categories": [
+</span><span class="line added">      {
+</span><span class="line added">        "title": "Prover Architecture",
+</span><span class="line added">        "description": "ZKsync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover)."
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "title": "ZK Circuits",
+</span><span class="line added">        "description": "ZKsync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).",
+</span><span class="line added">        "risks": [
+</span><span class="line added">          {
+</span><span class="line added">            "category": "Funds can be lost if",
+</span><span class="line added">            "text": "the proof system is implemented incorrectly."
+</span><span class="line added">          }
+</span><span class="line added">        ]
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "title": "Verification Keys Generation",
+</span><span class="line added">        "description": "SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/crates/bin/vk_setup_data_generator_server_fri). The system requires a trusted setup."
+</span><span class="line added">      }
+</span><span class="line added">    ],
+</span><span class="line added">    "proofVerification": {
+</span><span class="line added">      "shortDescription": "ZKsync Era is a ZK-EVM rollup on Ethereum.",
+</span><span class="line added">      "aggregation": true,
+</span><span class="line added">      "requiredTools": [
+</span><span class="line added">        {
+</span><span class="line added">          "name": "Custom tool",
+</span><span class="line added">          "version": "v14.2.0",
+</span><span class="line added">          "link": "https://github.com/matter-labs/zksync-era/tree/prover-v14.2.0/prover/vk_setup_data_generator_server_fri"
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "verifiers": [
+</span><span class="line added">        {
+</span><span class="line added">          "name": "ZKsyncEraVerifier",
+</span><span class="line added">          "description": "ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.",
+</span><span class="line added">          "verified": "no",
+</span><span class="line added">          "contractAddress": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+</span><span class="line added">          "chainId": 1,
+</span><span class="line added">          "subVerifiers": [
+</span><span class="line added">            {
+</span><span class="line added">              "name": "Final wrap",
+</span><span class="line added">              "proofSystem": "Plonk SNARK",
+</span><span class="line added">              "mainArithmetization": "Plonkish",
+</span><span class="line added">              "mainPCS": "KZG",
+</span><span class="line added">              "trustedSetup": "Aztec ceremony",
+</span><span class="line added">              "link": "https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs"
+</span><span class="line added">            },
+</span><span class="line added">            {
+</span><span class="line added">              "name": "Aggregation circuit",
+</span><span class="line added">              "proofSystem": "Redshift",
+</span><span class="line added">              "mainArithmetization": "Plonkish",
+</span><span class="line added">              "mainPCS": "LPC",
+</span><span class="line added">              "trustedSetup": "None",
+</span><span class="line added">              "link": "https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45"
+</span><span class="line added">            },
+</span><span class="line added">            {
+</span><span class="line added">              "name": "Main circuit",
+</span><span class="line added">              "proofSystem": "Redshift",
+</span><span class="line added">              "mainArithmetization": "Plonkish",
+</span><span class="line added">              "mainPCS": "LPC",
+</span><span class="line added">              "trustedSetup": "None",
+</span><span class="line added">              "link": "https://github.com/matter-labs/era-zkevm_circuits"
+</span><span class="line added">            }
+</span><span class="line added">          ]
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  "upgradesAndGovernance": "\nThere are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade management contract ProtocolUpgradeHandler.\nThe standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or 6 SecurityCouncil participants.\nThe emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.\n## Standard path\n### On ZKsync Era\nDelegates can start new proposals by reaching a threshold of 21M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.\nThis launches a 3d 'voting delay' after which the 7d voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.\nA proposal is only successful if it reaches both quorum (630M ZK tokens) and simple majority. When it reaches quorum, a remaining voting period of 3d is guaranteed by a potential late quorum vote extension.\nIn the successful case, it can be queued in the 0s timelock which forwards it to Ethereum as an L2->L1 log.\n### On Ethereum\nAfter the execution of the proposal-containing batch (3h delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the 3d 'legal veto period'.\nThis serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of 2 Guardians can extend the veto period to 7d.\nAfter this a proposal enters a *waiting* state of 30d, from which it can be immediately approved (cancelling the delay) by 6 participants of the SecurityCouncil.\nFor the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.\nA proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will expire if not approved within the waiting period. An approved proposal now enters the *pendingExecution* state for a final delay of 1d and can then be executed.\n### Other governance tracks\nThere are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and\n2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets.\nThe protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.\nFurther customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.\n## Emergency path\nSecurityCouncil (9/12), Guardians (5/8) and ZkFoundationMultisig (3/5) form a de-facto 3/3 Multisig\nby pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.\n## Upgrade Delays\nThe cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is 4d 3h or 8d 3h (depending on Guardians extending the LegalVetoPeriod) for Standard, 0 for Emergency and 34d 3h for the path in which the SecurityCouncil is not approving the proposal.\n## Freezing\nThe SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current ChainTypeManager.\nEither for a softFreeze of 12h or a hardFreeze of 7d.\nAfter a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible.\nOnly the SecurityCouncil can unfreeze an active freeze.\n## ZK cluster Admin and Chain Admin\nApart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:\nA single *ZK cluster Admin* role that governs parameters in the shared contracts and a *Chain Admin* role (defined in each chain-specific diamond contract) for managing parameters of each individual ZK chain that builds on the stack.\nThese chain-specific actions include critical operations like setting a transaction filterer that can censor L1 -> L2 messages, changing the DA mode, migrating the chain to a different settlement layer and standard operations like setting fee parameters and adding / removing Validators in the ValidatorTimelock.\nFor rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract. Each rollup can become a permanent rollup (through their Chain Admin) which disallows any DA change to a non-whitelisted source in the future.\nThe source of truth for rollup-compliant DA validator contracts is the RollupDAManager contract, which is administered via the ProtocolUpgradeHandler.\nZKsync Era's Chain Admin differs from the others as it also has the above *ZK cluster Admin* role in the shared ZK stack contracts.",
+</span><span class="line added">  "upgradesAndGovernanceImage": "zkstack"
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>proofVerification</span>
+    <code><span class="added">+46</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">{
+</span><span class="line added">  "aggregation": true,
+</span><span class="line added">  "requiredTools": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Custom tool",
+</span><span class="line added">      "version": "v14.2.0",
+</span><span class="line added">      "link": "https://github.com/matter-labs/zksync-era/tree/prover-v14.2.0/prover/vk_setup_data_generator_server_fri"
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line added">  "shortDescription": "ZKsync Era is a ZK-EVM rollup on Ethereum.",
+</span><span class="line added">  "verifiers": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "ZKsyncEraVerifier",
+</span><span class="line added">      "description": "ZKsync Era utilizes [Boojum](https://github.com/matter-labs/era-boojum/tree/main) as the main proving stack for their system. Boojum is an implementation of the [Redshift](https://eprint.iacr.org/2019/1400.pdf) protocol. The protocol makes use of recursive proof aggregation. The final Redshift proof is wrapped in a SNARK (Plonk + KZG) proof.",
+</span><span class="line added">      "verified": "no",
+</span><span class="line added">      "contractAddress": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
+</span><span class="line added">      "chainId": 1,
+</span><span class="line added">      "subVerifiers": [
+</span><span class="line added">        {
+</span><span class="line added">          "name": "Final wrap",
+</span><span class="line added">          "proofSystem": "Plonk SNARK",
+</span><span class="line added">          "mainArithmetization": "Plonkish",
+</span><span class="line added">          "mainPCS": "KZG",
+</span><span class="line added">          "trustedSetup": "Aztec ceremony",
+</span><span class="line added">          "link": "https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "name": "Aggregation circuit",
+</span><span class="line added">          "proofSystem": "Redshift",
+</span><span class="line added">          "mainArithmetization": "Plonkish",
+</span><span class="line added">          "mainPCS": "LPC",
+</span><span class="line added">          "trustedSetup": "None",
+</span><span class="line added">          "link": "https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/recursion_layer/mod.rs#L45"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "name": "Main circuit",
+</span><span class="line added">          "proofSystem": "Redshift",
+</span><span class="line added">          "mainArithmetization": "Plonkish",
+</span><span class="line added">          "mainPCS": "LPC",
+</span><span class="line added">          "trustedSetup": "None",
+</span><span class="line added">          "link": "https://github.com/matter-labs/era-zkevm_circuits"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ]
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>tvlConfig</span>
+    <code><span class="added">+17</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
+</span><span class="line ctx">  "associatedTokens": [],
+</span><span class="line removed">  "escrows": [],
+</span><span class="line added">  "escrows": [
+</span><span class="line added">    {
+</span><span class="line added">      "address": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+</span><span class="line added">      "sinceTimestamp": 1739109131,
+</span><span class="line added">      "chain": "ethereum",
+</span><span class="line added">      "includeInTotal": true,
+</span><span class="line added">      "sharedEscrow": {
+</span><span class="line added">        "type": "ElasticChain",
+</span><span class="line added">        "l2BridgeAddress": "0xE5ecd226b3032910CEaa43ba92EE8232f8237553",
+</span><span class="line added">        "l2EtherAddress": "0xE5ecd226b3032910CEaa43ba92EE8232f8237553",
+</span><span class="line added">        "tokensToAssignFromL1": [
+</span><span class="line added">          "LGHO"
+</span><span class="line added">        ]
+</span><span class="line added">      },
+</span><span class="line added">      "tokens": []
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "tokens": []
+</span><span class="line ctx">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>activityConfig</span>
+    <code><span class="added">+4</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">{
+</span><span class="line added">  "startBlock": 1,
+</span><span class="line added">  "type": "block"
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>permissions</span>
+    <code><span class="added">+543</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">{
+</span><span class="line added">  "ethereum": {
+</span><span class="line added">    "roles": [
+</span><span class="line added">      {
+</span><span class="line added">        "name": "Validator",
+</span><span class="line added">        "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x2572835e02b59078711aa0800490e80975e4169d",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x2572…169d",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x2572835e02b59078711aa0800490e80975e4169d"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x4131…c283",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      }
+</span><span class="line added">    ],
+</span><span class="line added">    "actors": [
+</span><span class="line added">      {
+</span><span class="line added">        "name": "EmergencyUpgradeBoard",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xECE8…E3f6",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "* A custom contract allowing a 3/3 of SecurityCouncil, ZK Foundation Multisig and Guardians to `executeEmergencyUpgrade()` via the ProtocolUpgradeHandler.\n* Can act on behalf of ProtocolUpgradeHandler.\n* Is allowed to interact with BridgeHub - set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration - acting via ProtocolUpgradeHandler.\n* Is allowed to interact with ChainTypeManager - manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains - acting via ProtocolUpgradeHandler.\n* Is allowed to interact with L1Nullifier - pause, unpause and set critical escrow address references - acting via ProtocolUpgradeHandler.\n* Is allowed to interact with RollupDAManager - manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode) - acting via ProtocolUpgradeHandler.\n* Can upgrade the implementation of BridgeHub, MessageRoot, CTMDeploymentTracker, L1AssetRouter, L1NativeTokenVault, ChainTypeManager, L1Nullifier, ProtocolUpgradeHandler - acting via ProxyAdmin, ProtocolUpgradeHandler.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "Matter Labs Multisig",
+</span><span class="line added">        "description": "* A Multisig with 5/8 threshold. \n* Can act on behalf of EraAdminProxy.\n* Is allowed to interact with BridgeHub - create new zk chains (based on the current version), register tokens (ZK cluster Admin role) - acting via EraAdminProxy.\n* Is allowed to interact with ChainTypeManager - revert batches for any connected chain (ZK cluster Admin role) - acting via EraAdminProxy.\n",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x4e49…7828",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "references": [],
+</span><span class="line added">        "participants": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x4A333c167Ce76C46149c6B0197977ae02aaeC929",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x4A33…C929",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x4A333c167Ce76C46149c6B0197977ae02aaeC929"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x3F00…c481",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x8A23548a640De1137e58e2D9600e1c5913E3D674",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x8A23…D674",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x8A23548a640De1137e58e2D9600e1c5913E3D674"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x3068…d2Bc",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x702c…78b7",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xFAdb…79AE",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xFAdb20191Ab38362C50f52909817B74214CA79AE"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xfd03…aEd2",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x700D…F1df",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "Guardians",
+</span><span class="line added">        "description": "* A Multisig with 5/8 threshold. \n* Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.\n* Is allowed to interact with ProtocolUpgradeHandler - extend the legal veto period, approve a protocol upgrade.\n* Is allowed to interact with EmergencyUpgradeBoard - one of its 3/3 signers.\n",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x600d…86b8",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x600dA620Ab29F41ABC6596a15981e14cE58c86b8"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "references": [
+</span><span class="line added">          {
+</span><span class="line added">            "title": "Guardians - ZK Nation docs",
+</span><span class="line added">            "url": "https://docs.zknation.io/zksync-governance/schedule-4-zksync-guardians"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "participants": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x015318c16AE443a20DE0A776dB06a59F0D279057",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x015318c16AE443a20DE0A776dB06a59F0D279057"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x55c671BcE13120387Ded710A1d1b80C0e3d8E857"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xCe7a3dFcc35602155809920Ff65e093aa726f6cf",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xCe7a3dFcc35602155809920Ff65e093aa726f6cf"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "SecurityCouncil",
+</span><span class="line added">        "description": "* A Multisig with 9/12 threshold. \n* Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).\n* Is allowed to interact with ProtocolUpgradeHandler - soft freeze, hard freeze, approve a protocol upgrade.\n* Is allowed to interact with EmergencyUpgradeBoard - one of its 3/3 signers.\n",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x66E4431266DC7E04E7d8b7FE9d2181253df7F410",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x66E4…F410",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x66E4431266DC7E04E7d8b7FE9d2181253df7F410"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "references": [
+</span><span class="line added">          {
+</span><span class="line added">            "title": "Security Council members - ZK Nation docs",
+</span><span class="line added">            "url": "https://docs.zknation.io/zksync-governance/schedule-3-zksync-security-council"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "participants": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x13f07d9BF17615f6a17F272fe1A913168C275A66",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x13f07d9BF17615f6a17F272fe1A913168C275A66"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x69462a81ba94D64c404575f1899a464F123497A2",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x69462a81ba94D64c404575f1899a464F123497A2"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "GnosisSafe",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ValidatorTimelock3",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x5C03468829A26981c410a7930bD4853622F0B2E5",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x5C03…B2E5",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x5C03468829A26981c410a7930bD4853622F0B2E5"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "* Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.\n* Is allowed to interact with LensZkEvm - commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ValidatorTimelock2",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x5D8b…d06E",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "* Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.\n* Is allowed to interact with LensZkEvm - commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ValidatorTimelock",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x8c0B…F564",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "* Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.\n* Is allowed to interact with LensZkEvm - commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZK Foundation Multisig",
+</span><span class="line added">        "description": "* A Multisig with 3/5 threshold. \n* Is allowed to interact with EmergencyUpgradeBoard - one of its 3/3 signers.\n",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xbC16…B51c",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xbC1653bd3829dfEc575AfC3816D4899cd103B51c"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "references": [],
+</span><span class="line added">        "participants": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x56B3…2222",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x441e5c8910Ef39996B2D01499509861228cbc2d1",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x441e…c2d1",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x441e5c8910Ef39996B2D01499509861228cbc2d1"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xd596…da95",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xd5966E3dd25f6086b6aD7D7Fa3292d11b988da95"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x0B2E…4709",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x0B2E7ffbcD1E3e6f5034555Fb638889FE7564709"
+</span><span class="line added">          },
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x610e45F112e0c8a9aA7137677C83E7A198A1b991",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x610e…b991",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x610e45F112e0c8a9aA7137677C83E7A198A1b991"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "EOA 3",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xca2938BdD6Bcf5860f7176fA092b0ac9510f09A3",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xca29…09A3",
+</span><span class="line added">            "url": "https://etherscan.io/address/0xca2938BdD6Bcf5860f7176fA092b0ac9510f09A3"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Is allowed to interact with LensZkEvm - manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role) - acting via LensZkEvmAdmin.",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProtocolTimelockController(L2->L1)",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x085b…c714",
+</span><span class="line added">            "url": "https://etherscan.io/address/0x085b8B6407f150D62adB1EF926F7f304600ec714"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Is allowed to interact with ProtocolUpgradeHandler - start (queue) upgrades.",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      }
+</span><span class="line added">    ]
+</span><span class="line added">  },
+</span><span class="line added">  "zksync2": {
+</span><span class="line added">    "roles": [],
+</span><span class="line added">    "actors": [
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZkTokenGovernor",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xb83F…5746",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0xb83FF6501214ddF40C91C9565d095400f3F45746"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "* Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.\n* Can act on behalf of ZkTokenTimelockController  with 3d delay.\n* Is allowed to interact with ZkToken - grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token - acting via ZkTokenTimelockController  with 3d delay.\n* Is allowed to interact with ZkTokenTimelockController - manage all access control roles and change the minimum delay  with 3d delay - acting via ZkTokenTimelockController  with 3d delay.\n* Is allowed to interact with ZkTokenTimelockController - cancel queued transactions.\n* Is allowed to interact with ZkTokenTimelockController - execute transactions that are ready.\n* Is allowed to interact with ZkTokenTimelockController - propose transactions.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZkGovOpsGovernor",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xEEEa…b160",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "* Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.\n* Can act on behalf of GovOpsTimelockController  with 3d delay.\n* Is allowed to interact with GovOpsTimelockController - manage all access control roles and change the minimum delay  with 3d delay - acting via GovOpsTimelockController  with 3d delay.\n* Is allowed to interact with GovOpsTimelockController - cancel queued transactions.\n* Is allowed to interact with GovOpsTimelockController - execute transactions that are ready.\n* Is allowed to interact with GovOpsTimelockController - propose transactions.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZkProtocolGovernor",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x76705327e682F2d96943280D99464Ab61219e34f",
+</span><span class="line added">            "type": "Contract",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x7670…e34f",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0x76705327e682F2d96943280D99464Ab61219e34f"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "* Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.\n* Can act on behalf of ProtocolTimelockController, ProtocolTimelockController_deprecated.\n* Is allowed to interact with ProtocolTimelockController, ProtocolTimelockController_deprecated - cancel queued transactions.\n* Is allowed to interact with ProtocolTimelockController, ProtocolTimelockController_deprecated - execute transactions that are ready.\n* Is allowed to interact with ProtocolTimelockController - manage all access control roles and change the minimum delay - acting via ProtocolTimelockController.\n* Is allowed to interact with ProtocolTimelockController, ProtocolTimelockController_deprecated - propose transactions.\n* Is allowed to interact with ProtocolTimelockController_deprecated - manage all access control roles and change the minimum delay - acting via ProtocolTimelockController_deprecated.\n",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "Guardians_l2Alias",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0x711e…97c9",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0x711ea620AB29f41AbC6596a15981e14ce58C97c9"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "Is allowed to interact with ZkTokenGovernor, ZkGovOpsGovernor - cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZKFoundationMultisig_l2Alias",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xcd27…C62D",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "Is allowed to interact with ZkTokenGovernor - make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProtocolUpgradeHandler_l2Alias_deprecated",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xA08b…29A8",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "Can upgrade the implementation of ZkToken - acting via ZkTokenProxyAdmin.",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProtocolUpgradeHandler_l2Alias",
+</span><span class="line added">        "accounts": [
+</span><span class="line added">          {
+</span><span class="line added">            "address": "0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
+</span><span class="line added">            "type": "EOA",
+</span><span class="line added">            "isVerified": true,
+</span><span class="line added">            "name": "0xF41E…6bc4",
+</span><span class="line added">            "url": "https://era.zksync.network/address/0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "Is allowed to interact with ZkToken - control all roles in the ZkToken access control, including the minter roles.",
+</span><span class="line added">        "discoveryDrivenData": true
+</span><span class="line added">      }
+</span><span class="line added">    ]
+</span><span class="line added">  }
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>contracts</span>
+    <code><span class="added">+423</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">{
+</span><span class="line added">  "addresses": {
+</span><span class="line added">    "ethereum": [
+</span><span class="line added">      {
+</span><span class="line added">        "name": "LensZkEvm",
+</span><span class="line added">        "isVerified": false,
+</span><span class="line added">        "address": "0xc29d04A93F893700015138E3E334eB828dAC3cef",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP2535 diamond proxy",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
+</span><span class="line added">            "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
+</span><span class="line added">            "0x36b026c39125964D99596CE302866B5A59E4dE27",
+</span><span class="line added">            "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+</span><span class="line added">          ],
+</span><span class="line added">          "immutable": false
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xc29d04A93F893700015138E3E334eB828dAC3cef#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "Verifier",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Implements the ZK proof verification logic.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ValidiumL1DAValidator",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x907b30407249949521Bf0c89A43558dae200146A",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x907b30407249949521Bf0c89A43558dae200146A#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "BridgeHub",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0xb720523EC3c615b069453bF4B0584CEbF034706f"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "EmergencyUpgradeBoard",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x303a465B659cBB0ab36eE643eA362c509EEb5213#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "MessageRoot",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0x19347Fb8eD3E8e35eb4a01c8B18Bd330194Cf0ad"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "EmergencyUpgradeBoard",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "CTMDeploymentTracker",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0x1E405E5cdF127Dc98Eb490AB0e97345f892Ff7E1"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "EmergencyUpgradeBoard",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x6078F6B379f103de1Aa912dc46bb8Df0c8809860#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "RollupL1DAValidator",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x72213dfe8CA61B0A782970dCFebFb877778f9119#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ChainTypeManager",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0.",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "EmergencyUpgradeBoard",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "L1Nullifier",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "EmergencyUpgradeBoard",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProtocolUpgradeHandler",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "* The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.\n* Can act on behalf of ProxyAdmin, ProxyAdmin.\n* Can be used to interact with BridgeHub - set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.\n* Can be used to interact with ChainTypeManager - manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.\n* Can be used to interact with L1Nullifier - pause, unpause and set critical escrow address references.\n* Can be used to interact with RollupDAManager - manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).\n",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "EmergencyUpgradeBoard",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "RollupDAManager",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "LensZkEvmAdmin",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Can be used to interact with LensZkEvm - manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x6bd8d33551077Ed281Cb047835a2aE4033eEc433#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "EraAdminProxy",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "* Can be used to interact with BridgeHub - create new zk chains (based on the current version), register tokens (ZK cluster Admin role).\n* Can be used to interact with ChainTypeManager - revert batches for any connected chain (ZK cluster Admin role).\n",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x2cf3bD6a9056b39999F3883955E183F655345063#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProxyAdmin",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Can be used to upgrade implementation of ProtocolUpgradeHandler.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProxyAdmin",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Can be used to upgrade implementation of BridgeHub, MessageRoot, CTMDeploymentTracker, L1AssetRouter, L1NativeTokenVault, ChainTypeManager, L1Nullifier.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://etherscan.io/address/0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1#code"
+</span><span class="line added">      }
+</span><span class="line added">    ],
+</span><span class="line added">    "zksync2": [
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ProtocolTimelockController",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "* This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.\n* Can be used to interact with ProtocolTimelockController - manage all access control roles and change the minimum delay.\n",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://era.zksync.network/address/0x085b8B6407f150D62adB1EF926F7f304600ec714#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZkToken",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0x01a6715d3560241E09E865a46122bf347A576c09"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
+</span><span class="line added">        "upgradableBy": [
+</span><span class="line added">          {
+</span><span class="line added">            "name": "ProtocolUpgradeHandler_l2Alias_deprecated",
+</span><span class="line added">            "delay": "no"
+</span><span class="line added">          }
+</span><span class="line added">        ],
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://era.zksync.network/address/0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "GovOpsTimelockController",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "* Timelock contract allowing the queueing of transactions with a minimum delay of 3d.\n* Can be used to interact with GovOpsTimelockController - manage all access control roles and change the minimum delay  with 3d delay.\n",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://era.zksync.network/address/0xC9E442574958f96C026DeF9a50C3236cab17428a#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZkTokenProxyAdmin",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "Can be used to upgrade implementation of ZkToken.",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://era.zksync.network/address/0xdB1E46B448e68a5E35CB693a99D59f784aD115CC#code"
+</span><span class="line added">      },
+</span><span class="line added">      {
+</span><span class="line added">        "name": "ZkTokenTimelockController",
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "immutable",
+</span><span class="line added">          "admins": [],
+</span><span class="line added">          "implementations": [],
+</span><span class="line added">          "immutable": true
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "zksync2",
+</span><span class="line added">        "description": "* Timelock contract allowing the queueing of transactions with a minimum delay of 3d.\n* Can be used to interact with ZkToken - grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.\n* Can be used to interact with ZkTokenTimelockController - manage all access control roles and change the minimum delay  with 3d delay.\n",
+</span><span class="line added">        "discoveryDrivenData": true,
+</span><span class="line added">        "url": "https://era.zksync.network/address/0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d#code"
+</span><span class="line added">      }
+</span><span class="line added">    ]
+</span><span class="line added">  },
+</span><span class="line added">  "escrows": [
+</span><span class="line added">    {
+</span><span class="line added">      "address": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+</span><span class="line added">      "sinceTimestamp": 1739109131,
+</span><span class="line added">      "tokens": [
+</span><span class="line added">        "LGHO"
+</span><span class="line added">      ],
+</span><span class="line added">      "contract": {
+</span><span class="line added">        "isVerified": true,
+</span><span class="line added">        "address": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+</span><span class="line added">        "upgradeability": {
+</span><span class="line added">          "proxyType": "EIP1967 proxy",
+</span><span class="line added">          "admins": [
+</span><span class="line added">            "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+</span><span class="line added">          ],
+</span><span class="line added">          "implementations": [
+</span><span class="line added">            "0x40B1060a114380f40faC6869c5B383f47e61530c"
+</span><span class="line added">          ]
+</span><span class="line added">        },
+</span><span class="line added">        "chain": "ethereum",
+</span><span class="line added">        "description": "Shared bridge for depositing tokens to Lens and other ZK stack chains.",
+</span><span class="line added">        "url": "https://etherscan.io/address/0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6#code"
+</span><span class="line added">      },
+</span><span class="line added">      "chain": "ethereum",
+</span><span class="line added">      "includeInTotal": true,
+</span><span class="line added">      "sharedEscrow": {
+</span><span class="line added">        "type": "ElasticChain",
+</span><span class="line added">        "l2BridgeAddress": "0xE5ecd226b3032910CEaa43ba92EE8232f8237553",
+</span><span class="line added">        "l2EtherAddress": "0xE5ecd226b3032910CEaa43ba92EE8232f8237553",
+</span><span class="line added">        "tokensToAssignFromL1": [
+</span><span class="line added">          "LGHO"
+</span><span class="line added">        ]
+</span><span class="line added">      },
+</span><span class="line added">      "chainId": 1
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line added">  "risks": [
+</span><span class="line added">    {
+</span><span class="line added">      "category": "Funds can be stolen if",
+</span><span class="line added">      "text": "a contract receives a malicious code upgrade. There is a 4d 3h - 8d 3h delay on code upgrades unless upgrade is initiated by the     EmergencyUpgradeBoard in which case there is no delay."
+</span><span class="line added">    },
+</span><span class="line added">    {
+</span><span class="line added">      "category": "Funds can be stolen if",
+</span><span class="line added">      "text": "the source code of unverified contracts contains malicious code.",
+</span><span class="line added">      "isCritical": true
+</span><span class="line added">    }
+</span><span class="line added">  ]
+</span><span class="line added">}</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>isZkCatalog</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">1</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>isUpcoming</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">1
+</span><span class="line added">null</span></code></pre>
+</li><li x-data="{ open: false, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    <span>hasActivity</span>
+    <code><span class="added">+1</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
+</span><span class="line added">1</span></code></pre>
+</li></ul>
+</li></ul>
+</body>
+
+</html>
