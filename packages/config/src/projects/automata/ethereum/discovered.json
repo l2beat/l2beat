@@ -2,7 +2,7 @@
   "name": "automata",
   "chain": "ethereum",
   "blockNumber": 22208279,
-  "configHash": "0x00a394fb78a77e4745fee22e43afb4d6b4b0928b22b9a518547ff42d0281a01c",
+  "configHash": "0xe4607f594856203ce9ea5bf92a548faa7329272415f2f612829c3d68a2cb0fc4",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -535,19 +535,19 @@
       "derivedName": "OptimismMintableERC20Factory"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 3",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 1",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 2",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
       "proxyType": "EOA"

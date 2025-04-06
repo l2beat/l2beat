@@ -2,7 +2,7 @@
   "name": "cyber",
   "chain": "ethereum",
   "blockNumber": 22208300,
-  "configHash": "0x050764087c6361ed67b5b668dc75d18db2012ec26be4785bf8a21041921281ee",
+  "configHash": "0xa5000f0234e483cc22a105ff99f139c426a7327ac19eeb993187378cb22c3907",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -688,19 +688,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 3",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 1",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 2",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
       "proxyType": "EOA"

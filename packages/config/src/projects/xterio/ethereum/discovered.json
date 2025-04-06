@@ -2,7 +2,7 @@
   "name": "xterio",
   "chain": "ethereum",
   "blockNumber": 22208349,
-  "configHash": "0x9d07a23dc3cc05eced352594e7b2207467d6b5a5a873c899410777844f4cc221",
+  "configHash": "0x6af9eb2b623f51d83ed227a3933e28676e5774e0cb1a6e5019dda052a31c95ae",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -496,19 +496,19 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 3",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 1",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 2",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
       "proxyType": "EOA"

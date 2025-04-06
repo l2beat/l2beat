@@ -2,7 +2,7 @@
   "name": "funki",
   "chain": "ethereum",
   "blockNumber": 22208380,
-  "configHash": "0xb157df57a076ae462fbed05fc2bad38e350e52368a5e6bdb730df4e66bcfff15",
+  "configHash": "0xa08b8e3d1a3487eb1645f2b8ca626161f3b2797226956d77cc9a66f92881684d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -522,19 +522,19 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 3",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 1",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "AltLayer",
+      "name": "AltLayer 2",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
       "proxyType": "EOA"

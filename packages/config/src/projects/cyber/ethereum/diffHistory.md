@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x004a0d3c9a32bed419e5ee4d0ef58f30201ec165
+Generated with discovered.json: 0xf7c0e0fbc9dff83d0f6d6e694184c4481b89eb69
 
-# Diff at Sun, 06 Apr 2025 07:20:45 GMT:
+# Diff at Sun, 06 Apr 2025 08:20:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 21235446
@@ -138,26 +138,26 @@ discovery. Values are for block 21235446 (main branch discovery), not current.
 ```
 
 ```diff
-    contract AltLayer (0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7) {
+    contract AltLayer 3 (0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7) {
     +++ description: None
       name:
-+        "AltLayer"
++        "AltLayer 3"
     }
 ```
 
 ```diff
-    contract AltLayer (0xaC79765A73eB9dcBd3c427181E6819902AE25b48) {
+    contract AltLayer 1 (0xaC79765A73eB9dcBd3c427181E6819902AE25b48) {
     +++ description: None
       name:
-+        "AltLayer"
++        "AltLayer 1"
     }
 ```
 
 ```diff
-    contract AltLayer (0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2) {
+    contract AltLayer 2 (0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2) {
     +++ description: None
       name:
-+        "AltLayer"
++        "AltLayer 2"
     }
 ```
 
