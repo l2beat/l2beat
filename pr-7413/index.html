@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @9753ed3f</title>
+  <title>Diff @0a7774fb</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,7 +105,7 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="removed">02dea11f</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="added">9753ed3f</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/02dea11f7707601873600e275c4e2b7792c1a190"><code class="added">0a7774fb</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
   <h2>
@@ -3286,49 +3286,71 @@ ${r?'Expression: "'+r+`"
     
     
     <span>swell</span>
-    <code><span class="added">+6</span> <span class="removed">-6</span></code>
+    <code><span class="added">+28</span> <span class="removed">-4</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>trackedTxsConfig</span>
-    <code><span class="added">+2</span> <span class="removed">-2</span></code>
+    <code><span class="added">+24</span> <span class="removed">-0</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "swell",
 </span><span class="line ctx">    "sinceTimestamp": 1732696703,
+</span><span class="line added">    "untilTimestamp": 1743876083,
 </span><span class="line ctx">    "type": "liveness",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
-</span><span class="line added">      "from": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
+</span><span class="line ctx">      "from": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
 </span><span class="line ctx">      "to": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "swell",
 </span><span class="line ctx">    "sinceTimestamp": 1732696703,
+</span><span class="line added">    "untilTimestamp": 1743876083,
 </span><span class="line ctx">    "type": "l2costs",
 </span><span class="line ctx">    "subtype": "batchSubmissions",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "transfer",
-</span><span class="line removed">      "from": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
-</span><span class="line added">      "from": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
+</span><span class="line ctx">      "from": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
 </span><span class="line ctx">      "to": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "swell",
+</span><span class="line added">    "sinceTimestamp": 1743876083,
+</span><span class="line added">    "type": "liveness",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
+</span><span class="line added">      "to": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "swell",
+</span><span class="line added">    "sinceTimestamp": 1743876083,
+</span><span class="line added">    "type": "l2costs",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line added">    "params": {
+</span><span class="line added">      "formula": "transfer",
+</span><span class="line added">      "from": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
+</span><span class="line added">      "to": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0"
+</span><span class="line added">    }
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "projectId": "swell",
 </span><span class="line ctx">    "sinceTimestamp": 1732696703,
-</span><span class="line full indicator">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57",
-</span><span class="line full">      "selector": "0x82ecf2f6",
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line ctx">      "address": "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57",
+</span><span class="line full indicator">      "selector": "0x82ecf2f6",
 </span><span class="line full">      "signature": "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)"
 </span><span class="line full">    }
 </span><span class="line full">  },
