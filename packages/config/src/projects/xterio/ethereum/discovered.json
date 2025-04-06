@@ -1,8 +1,8 @@
 {
   "name": "xterio",
   "chain": "ethereum",
-  "blockNumber": 21235438,
-  "configHash": "0x7c4f48cd77e39e9efae71a65ff0bf275245c2503f0f37d8f2d69689ce45d3ed7",
+  "blockNumber": 22208349,
+  "configHash": "0x9d07a23dc3cc05eced352594e7b2207467d6b5a5a873c899410777844f4cc221",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -140,6 +140,17 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
+        }
+      ]
+    },
+    {
       "name": "OptimismMintableERC20Factory",
       "address": "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f",
       "type": "Contract",
@@ -190,12 +201,12 @@
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "to": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
+          "to": "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88",
           "via": []
         },
         {
           "permission": "propose",
-          "to": "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4",
+          "to": "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D",
           "via": []
         },
         {
@@ -220,22 +231,32 @@
             "2024-05-24T08:52:23.000Z",
             "0xf8a1b47bf39845927a0033efca9db32efafbab1739d90d59397062954922648f",
             ["0x48Ef83Cf812f291EDB00C2D48440Ee90cD12be1a"]
+          ],
+          [
+            "2025-04-05T14:16:59.000Z",
+            "0x3c36d0fd57e70dee54e8ecc5c70de812a57dd8bc3db576cf12ce164acbeb8cce",
+            ["0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]
+          ],
+          [
+            "2025-04-05T14:25:47.000Z",
+            "0x4dbaa9a0411962209ad663ec973dca85671030aef9bbf598b9727a292a83525d",
+            ["0x48Ef83Cf812f291EDB00C2D48440Ee90cD12be1a"]
           ]
         ],
-        "$upgradeCount": 1,
-        "challenger": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
-        "CHALLENGER": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
+        "$upgradeCount": 3,
+        "challenger": "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88",
+        "CHALLENGER": "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7799400,
-        "latestOutputIndex": 4332,
-        "nextBlockNumber": 7801200,
-        "nextOutputIndex": 4333,
-        "proposer": "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4",
-        "PROPOSER": "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4",
+        "latestBlockNumber": 13669200,
+        "latestOutputIndex": 7593,
+        "nextBlockNumber": 13671000,
+        "nextOutputIndex": 7594,
+        "proposer": "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D",
+        "PROPOSER": "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D",
         "startingBlockNumber": 0,
         "startingTimestamp": 1716537431,
         "SUBMISSION_INTERVAL": 1800,
@@ -273,7 +294,7 @@
         },
         {
           "permission": "sequence",
-          "to": "0x7d6251D49A102a330CfB46d132982781620700Cb",
+          "to": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
           "via": []
         },
         {
@@ -297,7 +318,7 @@
         ],
         "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "0x7d6251D49A102a330CfB46d132982781620700Cb",
+        "batcherHash": "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3",
         "batchInbox": "0xfF00000000000000000000000000000000293b30",
         "gasLimit": 30000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
@@ -333,7 +354,7 @@
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19938661,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E",
+        "unsafeBlockSigner": "0x7a4e92aD7E40C8df264eD18010847e6C27AB3d82",
         "version": "1.12.0",
         "VERSION": 0
       },
@@ -372,7 +393,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620704",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620737",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -394,28 +415,23 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4",
+      "address": "0x7a4e92aD7E40C8df264eD18010847e6C27AB3d82",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "challenge",
           "from": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
         }
       ]
     },
     {
-      "address": "0x7d6251D49A102a330CfB46d132982781620700Cb",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C"
-        }
-      ]
-    },
-    {
+      "name": "Xterio",
       "address": "0x8B6341E18B2DC644cA94eD85173691873626fc7F",
       "type": "EOA",
       "proxyType": "EOA"
@@ -480,16 +496,19 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "name": "AltLayer",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "AltLayer",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "AltLayer",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -539,7 +558,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21204408
+          "prevBlockNum": 22163136
         },
         "paused": false,
         "superchainConfig": "0xcbF423525a5471Fc5037a5397F99f6F09fe41379",
@@ -576,11 +595,6 @@
       },
       "derivedName": "AddressManager",
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SuperchainConfig",
@@ -660,12 +674,12 @@
       ]
     },
     {
-      "address": "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5",
+      "address": "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
+          "permission": "propose",
           "from": "0x5A0492D20D984eE904E46E6Ff24572bc755abb28"
         }
       ]
@@ -676,7 +690,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "XterioMultisig",
+      "name": "Xterio Multisig",
       "address": "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -757,7 +771,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 18,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
