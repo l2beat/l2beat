@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x66ef377cbf450f537dc789ea969ac77b2551224e
+
+# Diff at Sun, 06 Apr 2025 08:10:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22194718
+- current block number: 22208586
+
+## Description
+
+eip 1559 gas conf added.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        7
+    }
+```
+
 Generated with discovered.json: 0x7ab6d9fe359cbff5c1c2c4b5e9b12dd8cbae7322
 
 # Diff at Fri, 04 Apr 2025 09:40:12 GMT:
