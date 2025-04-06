@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcf158dd5c073ce0a724d769b716696045504e422
+
+# Diff at Sun, 06 Apr 2025 08:18:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 14332194
+- current block number: 14489756
+
+## Description
+
+shhh.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14332194 (main branch discovery), not current.
+
+```diff
+    contract SCRToken (0xd29687c813D741E2F938F4aC377128810E217b1b) {
+    +++ description: None
+      values.clock:
+-        14332194
+    }
+```
+
 Generated with discovered.json: 0xf5f216ef4926d63c56829cc82f50e434797bdda6
 
 # Diff at Mon, 31 Mar 2025 13:32:11 GMT:

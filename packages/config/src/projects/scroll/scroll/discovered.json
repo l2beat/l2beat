@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 14332194,
-  "configHash": "0x75e93959f391040a7943044686e1635f57cc77218c46f5992f20a8d29fc92004",
+  "blockNumber": 14489756,
+  "configHash": "0xb9ae9050131350a4236f1eff3645c6b8c51d9f716983e22a536c55a2e910722a",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -197,7 +197,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -323,13 +323,14 @@
         "0x9a0991633019cdf15962771846da5b818f134ecfef5534a00c6156c9a7fffd44"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"],
       "sinceTimestamp": 1696917614,
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x56bebaafd5a938d883597bfd60d53cd2b07e61e4f01950c8ea107b48aac3a49b",
+        "messageRoot": "0xb40a147623c54c169fa416797ebfb433ffa513bdb4f788c2b40bd84ee44da29e",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 203139,
+        "nextMessageIndex": 203355,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "derivedName": "L2MessageQueue"
@@ -802,7 +803,6 @@
         ],
         "$upgradeCount": 1,
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 14332194,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
