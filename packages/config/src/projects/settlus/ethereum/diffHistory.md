@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x5e344c5a32a7e413fc28a6e647c1c291d26a8d64
+
+# Diff at Sun, 06 Apr 2025 07:50:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22195794
+- current block number: 22208464
+
+## Description
+
+add proposer, challenger permission.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22195794 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294"}]
+    }
+```
+
+```diff
+    contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E","via":[{"address":"0xd35FeF329Bb6569baa373BDa702F3dfF59D57321"}]}
+      receivedPermissions.9.from:
+-        "0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E"
++        "0x44e9388e88Bb8edE446d62590d8A4C6d34813e98"
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0x44e9388e88Bb8edE446d62590d8A4C6d34813e98"
++        "0xC206D300b07cB905Cb1831d8a9172d4c66394638"
+      receivedPermissions.8.via:
+-        [{"address":"0xd35FeF329Bb6569baa373BDa702F3dfF59D57321"}]
+      receivedPermissions.8.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.7.permission:
+-        "interact"
++        "challenge"
+      receivedPermissions.7.from:
+-        "0xC206D300b07cB905Cb1831d8a9172d4c66394638"
++        "0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294"
+      receivedPermissions.7.description:
+-        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      issuedPermissions:
++        [{"permission":"challenge","to":"0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d","via":[]},{"permission":"propose","to":"0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x33ebf6e1d182b7763fb455e9a19dea092ab18dd9
 
 # Diff at Fri, 04 Apr 2025 13:17:10 GMT:
