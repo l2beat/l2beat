@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22187409,
+  "blockNumber": 22208553,
   "configHash": "0xa7f64ef9ee5af9f6012eb30b7fb837810cc5b97cf7fa66704642dd78d8ef9245",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -273,14 +273,14 @@
           },
           "APP_GOVERNOR": {
             "adminRole": "APP_ROLE_ADMIN",
+            "members": ["0xFF57A3bB6465501c993acF8f3b29125a862661C0"]
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
             "members": [
               "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
               "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
             ]
-          },
-          "APP_ROLE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
           },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
@@ -464,7 +464,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 7223,
+        "l1ToL2MessageNonce": 7495,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -480,9 +480,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2827848139522945842317937641818767214814096618211012288741502899897149121093",
-        "stateBlockNumber": 546045,
-        "stateRoot": "950281191667091258391444875379188062658753294880392121829940720388342048335",
+        "stateBlockHash": "2394290915808747880091067688828136799111388123893493676657323887343673231193",
+        "stateBlockNumber": 553545,
+        "stateRoot": "1895914952974984567826883859937758389905849174944946307317857475638139717137",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -583,7 +583,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
