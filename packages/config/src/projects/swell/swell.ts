@@ -6,7 +6,7 @@ import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('swell')
 const genesisTimestamp = UnixTime(1732696703)
-const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 const sequencerInbox = discovery.getContractValue<EthereumAddress>(
   'SystemConfig',
   'sequencerInbox',
@@ -102,10 +102,10 @@ export const swell = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: l2OutputOracle.address,
-        selector: '0x9aaab648',
+        address: disputeGameFactory.address,
+        selector: '0x82ecf2f6',
         functionSignature:
-          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
         sinceTimestamp: genesisTimestamp,
       },
     },
