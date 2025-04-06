@@ -8,12 +8,34 @@
     "0xc29d04A93F893700015138E3E334eB828dAC3cef": "LensZkEvm",
     "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": "LensZkEvmAdmin",
     "0x282370D1e925ee897CB29Cb3beC13aAe0743067C": "Lens Multisig",
+    "0x5C03468829A26981c410a7930bD4853622F0B2E5": "ValidatorTimelock3",
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {
-    "0xc29d04A93F893700015138E3E334eB828dAC3cef":{
-        "extends": "shared-zk-stack/Diamond_v26" // proxy unverified
+    "0xc29d04A93F893700015138E3E334eB828dAC3cef": {
+      "extends": "shared-zk-stack/v26/Diamond" // proxy unverified
+    },
+    "0x5C03468829A26981c410a7930bD4853622F0B2E5": {
+      // local override over the template to fetch the validators from the shared contract
+      "ignoreRelatives": ["stateTransitionManager"], // pointing to old STM
+      "fields": {
+        "validatorsVTL": {
+          "handler": {
+            "type": "event",
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            }
+          },
+          "permissions": [{ "type": "validateZkStack" }]
+        }
+      }
     },
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       // local override over the template to fetch the validators from the shared contract

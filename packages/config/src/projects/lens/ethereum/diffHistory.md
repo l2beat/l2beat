@@ -1,44 +1,20 @@
-Generated with discovered.json: 0xefa2c76c0ebbc71a292e97b1d42a7de5568c4ecb
+Generated with discovered.json: 0x044ed56ecd13cce5c0d8e2b0c0842f27158b3f99
 
-# Diff at Mon, 31 Mar 2025 13:05:46 GMT:
+# Diff at Sun, 06 Apr 2025 08:38:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 22167075
+- current block number: 22208714
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+ignore relative: old STM.
 
 ## Initial discovery
 
 ```diff
 +   Status: CREATED
-    contract  (0x085CE3931CDfa5B3327dE4cd36222115dA6230DB)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ChainAdmin (0x1908d615Bf6BdbEF181eC1B11b2b2D49331E985B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L1SharedBridge (0x34899F8B01cF52160C88ddb9e29eC3c269019165)
-    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
-```
-
-```diff
-+   Status: CREATED
-    contract StateTransitionManager (0x590E6587B37DC4152B6b036ff88A835BD2Ab8924)
-    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
-```
-
-```diff
-+   Status: CREATED
-    contract ValidatorTimelock (0x5C03468829A26981c410a7930bD4853622F0B2E5)
-    +++ description: None
+    contract ValidatorTimelock3 (0x5C03468829A26981c410a7930bD4853622F0B2E5)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
 ```
 
 ```diff
@@ -61,8 +37,8 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Bridgehub (0x9dA9f5dad070649811D77c40CcDcab479cE3Fa07)
-    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
 ```
 
 ```diff
