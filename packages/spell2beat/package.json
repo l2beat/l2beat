@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "spell2beat": "node -r esbuild-register src/index.ts"
+    "spell2beat": "node -r esbuild-register src/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node build/index.js"
   },
   "keywords": [],
   "author": "",
