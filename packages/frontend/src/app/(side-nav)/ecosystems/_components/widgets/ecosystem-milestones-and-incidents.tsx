@@ -6,6 +6,7 @@ import {
   getTickCondition,
   getTickFormatter,
 } from '~/components/core/chart/utils/get-x-axis-props'
+import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
@@ -161,12 +162,12 @@ function Details({
             <ChevronIcon className="size-2.5 -rotate-90 fill-[--ecosystem-primary] group-disabled:opacity-50" />
           </button>
         </div>
-        <a
+        <CustomLink
           href={selectedMilestone.url}
-          className="-mr-1 p-1 text-3xs font-medium leading-none text-secondary"
+          className="-mr-1 p-1 text-3xs font-medium leading-none"
         >
           Learn more
-        </a>
+        </CustomLink>
       </div>
     </div>
   )
