@@ -4,9 +4,6 @@ on:
   pull_request:
 
 permissions:
-  pages: write # For GitHub Pages deployment
-  id-token: write # For authentication with GitHub Pages
-  contents: write # For GitHub Pages deployment
   pull-requests: write # For commenting on PRs
 
 jobs:
