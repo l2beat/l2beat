@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @0bffa71f</title>
+  <title>Diff @0a762bd5</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,7 +105,7 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="removed">215433a6</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">0bffa71f</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">0a762bd5</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
   <h2>
@@ -113,9 +113,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>astarzkevm</span>
-    <code><span class="added">+164</span> <span class="removed">-3</span></code>
+    <code><span class="added">+33</span> <span class="removed">-1</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -255,153 +255,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+130</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "astarzkevm",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -409,9 +262,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>gpt</span>
-    <code><span class="added">+164</span> <span class="removed">-3</span></code>
+    <code><span class="added">+33</span> <span class="removed">-1</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -551,153 +404,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+130</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "gpt",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -705,9 +411,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>lumia</span>
-    <code><span class="added">+192</span> <span class="removed">-7</span></code>
+    <code><span class="added">+37</span> <span class="removed">-5</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -851,177 +557,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+154</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1741176767,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1741176767,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "lumia",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -1029,7 +564,7 @@ ${r?'Expression: "'+r+`"
     
     
     <span>polygonzkevm</span>
-    <code><span class="added">+21</span> <span class="removed">-15</span></code>
+    <code><span class="added">+95</span> <span class="removed">-89</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
@@ -1250,221 +785,295 @@ ${r?'Expression: "'+r+`"
 </li><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    
     <span>trackedTxsConfig</span>
-    <code><span class="added">+10</span> <span class="removed">-8</span></code>
+    <code><span class="added">+84</span> <span class="removed">-82</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "polygonzkevm",
-</span><span class="line ctx">    "sinceTimestamp": 1707824735,
-</span><span class="line ctx">    "untilTimestamp": 1710419699,
+</span><span class="line removed">    "sinceTimestamp": 1707824735,
+</span><span class="line removed">    "untilTimestamp": 1710419699,
+</span><span class="line added">    "sinceTimestamp": 1679653163,
+</span><span class="line added">    "untilTimestamp": 1707822059,
 </span><span class="line ctx">    "type": "liveness",
-</span><span class="line full indicator">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-</span><span class="line full">      "selector": "0xecef3f99",
-</span><span class="line full">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1707824735,
-</span><span class="line full">    "untilTimestamp": 1710419699,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-</span><span class="line full">      "selector": "0xecef3f99",
-</span><span class="line full">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1710419699,
-</span><span class="line full">    "untilTimestamp": 1736943371,
-</span><span class="line full">    "type": "liveness",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-</span><span class="line full">      "selector": "0xdef57e54",
-</span><span class="line full">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1710419699,
-</span><span class="line full">    "untilTimestamp": 1736943371,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-</span><span class="line full">      "selector": "0xdef57e54",
-</span><span class="line full">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1736943371,
-</span><span class="line full">    "type": "liveness",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-</span><span class="line full">      "selector": "0xb910e0f9",
-</span><span class="line full">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1736943371,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-</span><span class="line full">      "selector": "0xb910e0f9",
-</span><span class="line full">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1679653163,
-</span><span class="line full">    "untilTimestamp": 1707824735,
-</span><span class="line full">    "type": "liveness",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line full">      "selector": "0x5e9145c9",
-</span><span class="line full">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1679653163,
-</span><span class="line full">    "untilTimestamp": 1707824735,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "batchSubmissions",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line full">      "selector": "0x5e9145c9",
-</span><span class="line full">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1679653163,
-</span><span class="line full">    "untilTimestamp": 1707822059,
-</span><span class="line full">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line full">      "selector": "0x2b0006fa",
-</span><span class="line full">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1679653163,
-</span><span class="line full">    "untilTimestamp": 1707822059,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line full">      "selector": "0x2b0006fa",
-</span><span class="line full">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1679653163,
-</span><span class="line full">    "untilTimestamp": 1707822059,
-</span><span class="line full">    "type": "liveness",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line full">      "selector": "0x621dd411",
-</span><span class="line full">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line full">    }
-</span><span class="line full">  },
-</span><span class="line full">  {
-</span><span class="line full">    "projectId": "polygonzkevm",
-</span><span class="line full">    "sinceTimestamp": 1679653163,
-</span><span class="line full">    "untilTimestamp": 1707822059,
-</span><span class="line full">    "type": "l2costs",
-</span><span class="line full">    "subtype": "stateUpdates",
-</span><span class="line full">    "params": {
-</span><span class="line full">      "formula": "functionCall",
-</span><span class="line full">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line full">      "selector": "0x621dd411",
-</span><span class="line full">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
+</span><span class="line ctx">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line removed">      "selector": "0xecef3f99",
+</span><span class="line removed">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)"
+</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line added">      "selector": "0x5e9145c9",
+</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "polygonzkevm",
-</span><span class="line ctx">    "sinceTimestamp": 1707822059,
+</span><span class="line removed">    "sinceTimestamp": 1707824735,
+</span><span class="line removed">    "untilTimestamp": 1710419699,
+</span><span class="line added">    "sinceTimestamp": 1679653163,
+</span><span class="line added">    "untilTimestamp": 1707822059,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line ctx">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line removed">      "selector": "0xecef3f99",
+</span><span class="line removed">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)"
+</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line added">      "selector": "0x5e9145c9",
+</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1710419699,
+</span><span class="line removed">    "untilTimestamp": 1736943371,
+</span><span class="line added">    "sinceTimestamp": 1679653163,
+</span><span class="line added">    "untilTimestamp": 1707822059,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line removed">    "subtype": "batchSubmissions",
+</span><span class="line added">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line removed">      "selector": "0xdef57e54",
+</span><span class="line removed">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)"
+</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line added">      "selector": "0x2b0006fa",
+</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1710419699,
+</span><span class="line removed">    "untilTimestamp": 1736943371,
+</span><span class="line added">    "sinceTimestamp": 1679653163,
+</span><span class="line added">    "untilTimestamp": 1707822059,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line removed">    "subtype": "batchSubmissions",
+</span><span class="line added">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line removed">      "selector": "0xdef57e54",
+</span><span class="line removed">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)"
+</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line added">      "selector": "0x2b0006fa",
+</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1736943371,
+</span><span class="line added">    "sinceTimestamp": 1679653163,
+</span><span class="line added">    "untilTimestamp": 1707822059,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line removed">    "subtype": "batchSubmissions",
+</span><span class="line added">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line removed">      "selector": "0xb910e0f9",
+</span><span class="line removed">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
+</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line added">      "selector": "0x621dd411",
+</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1736943371,
+</span><span class="line added">    "sinceTimestamp": 1679653163,
+</span><span class="line added">    "untilTimestamp": 1707822059,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line removed">    "subtype": "batchSubmissions",
+</span><span class="line added">    "subtype": "stateUpdates",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line removed">      "selector": "0xb910e0f9",
+</span><span class="line removed">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
+</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line added">      "selector": "0x621dd411",
+</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1679653163,
+</span><span class="line removed">    "untilTimestamp": 1707824735,
+</span><span class="line added">    "sinceTimestamp": 1707822059,
 </span><span class="line added">    "untilTimestamp": 1738594559,
 </span><span class="line ctx">    "type": "liveness",
-</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line removed">    "subtype": "batchSubmissions",
+</span><span class="line added">    "subtype": "stateUpdates",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "functionCall",
 </span><span class="line ctx">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line removed">      "selector": "0x1489ed10",
-</span><span class="line removed">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line removed">      "selector": "0x5e9145c9",
+</span><span class="line removed">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
 </span><span class="line added">      "selector": "0x87c20c01",
 </span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "polygonzkevm",
-</span><span class="line ctx">    "sinceTimestamp": 1707822059,
+</span><span class="line removed">    "sinceTimestamp": 1679653163,
+</span><span class="line removed">    "untilTimestamp": 1707824735,
+</span><span class="line added">    "sinceTimestamp": 1707822059,
 </span><span class="line added">    "untilTimestamp": 1738594559,
 </span><span class="line ctx">    "type": "l2costs",
-</span><span class="line ctx">    "subtype": "stateUpdates",
+</span><span class="line removed">    "subtype": "batchSubmissions",
+</span><span class="line added">    "subtype": "stateUpdates",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "functionCall",
 </span><span class="line ctx">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line removed">      "selector": "0x1489ed10",
-</span><span class="line removed">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line removed">      "selector": "0x5e9145c9",
+</span><span class="line removed">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
 </span><span class="line added">      "selector": "0x87c20c01",
 </span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "polygonzkevm",
-</span><span class="line ctx">    "sinceTimestamp": 1707822059,
+</span><span class="line removed">    "sinceTimestamp": 1679653163,
+</span><span class="line removed">    "untilTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1707822059,
 </span><span class="line ctx">    "type": "liveness",
 </span><span class="line ctx">    "subtype": "stateUpdates",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "functionCall",
 </span><span class="line ctx">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line removed">      "selector": "0x87c20c01",
-</span><span class="line removed">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line removed">      "selector": "0x2b0006fa",
+</span><span class="line removed">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
 </span><span class="line added">      "selector": "0x1489ed10",
 </span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  },
 </span><span class="line ctx">  {
 </span><span class="line ctx">    "projectId": "polygonzkevm",
-</span><span class="line ctx">    "sinceTimestamp": 1707822059,
+</span><span class="line removed">    "sinceTimestamp": 1679653163,
+</span><span class="line removed">    "untilTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1707822059,
 </span><span class="line ctx">    "type": "l2costs",
 </span><span class="line ctx">    "subtype": "stateUpdates",
 </span><span class="line ctx">    "params": {
 </span><span class="line ctx">      "formula": "functionCall",
 </span><span class="line ctx">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line removed">      "selector": "0x87c20c01",
-</span><span class="line removed">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line removed">      "selector": "0x2b0006fa",
+</span><span class="line removed">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
 </span><span class="line added">      "selector": "0x1489ed10",
 </span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1679653163,
+</span><span class="line removed">    "untilTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1707824735,
+</span><span class="line added">    "untilTimestamp": 1710419699,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line removed">    "subtype": "stateUpdates",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line removed">      "selector": "0x621dd411",
+</span><span class="line removed">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
+</span><span class="line added">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line added">      "selector": "0xecef3f99",
+</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1679653163,
+</span><span class="line removed">    "untilTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1707824735,
+</span><span class="line added">    "untilTimestamp": 1710419699,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line removed">    "subtype": "stateUpdates",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line removed">      "selector": "0x621dd411",
+</span><span class="line removed">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
+</span><span class="line added">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line added">      "selector": "0xecef3f99",
+</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1710419699,
+</span><span class="line added">    "untilTimestamp": 1736943371,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line removed">    "subtype": "stateUpdates",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line removed">      "selector": "0x1489ed10",
+</span><span class="line removed">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line added">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line added">      "selector": "0xdef57e54",
+</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1710419699,
+</span><span class="line added">    "untilTimestamp": 1736943371,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line removed">    "subtype": "stateUpdates",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line removed">      "selector": "0x1489ed10",
+</span><span class="line removed">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line added">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line added">      "selector": "0xdef57e54",
+</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1736943371,
+</span><span class="line ctx">    "type": "liveness",
+</span><span class="line removed">    "subtype": "stateUpdates",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line removed">      "selector": "0x87c20c01",
+</span><span class="line removed">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line added">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line added">      "selector": "0xb910e0f9",
+</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
+</span><span class="line ctx">    }
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "projectId": "polygonzkevm",
+</span><span class="line removed">    "sinceTimestamp": 1707822059,
+</span><span class="line added">    "sinceTimestamp": 1736943371,
+</span><span class="line ctx">    "type": "l2costs",
+</span><span class="line removed">    "subtype": "stateUpdates",
+</span><span class="line added">    "subtype": "batchSubmissions",
+</span><span class="line ctx">    "params": {
+</span><span class="line ctx">      "formula": "functionCall",
+</span><span class="line removed">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+</span><span class="line removed">      "selector": "0x87c20c01",
+</span><span class="line removed">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
+</span><span class="line added">      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+</span><span class="line added">      "selector": "0xb910e0f9",
+</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
 </span><span class="line ctx">    }
 </span><span class="line ctx">  }
 </span><span class="line ctx">]</span></code></pre>
@@ -1475,9 +1084,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>silicon</span>
-    <code><span class="added">+192</span> <span class="removed">-7</span></code>
+    <code><span class="added">+37</span> <span class="removed">-5</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -1621,177 +1230,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+154</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1724183531,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1724183531,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "silicon",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -1799,9 +1237,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>ternoa</span>
-    <code><span class="added">+192</span> <span class="removed">-7</span></code>
+    <code><span class="added">+37</span> <span class="removed">-5</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -1945,177 +1383,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+154</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1735650935,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1735650935,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "ternoa",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -2123,9 +1390,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>wirex</span>
-    <code><span class="added">+164</span> <span class="removed">-3</span></code>
+    <code><span class="added">+33</span> <span class="removed">-1</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -2265,153 +1532,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+130</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "wirex",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -2419,9 +1539,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>witness</span>
-    <code><span class="added">+170</span> <span class="removed">-3</span></code>
+    <code><span class="added">+39</span> <span class="removed">-1</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -2561,153 +1681,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+130</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "witness",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li><li x-data="{ open: false }">
   <h2>
@@ -2715,9 +1688,9 @@ ${r?'Expression: "'+r+`"
     
     
     <span>xlayer</span>
-    <code><span class="added">+194</span> <span class="removed">-3</span></code>
+    <code><span class="added">+39</span> <span class="removed">-1</span></code>
   </h2>
-  <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
@@ -2857,177 +1830,6 @@ ${r?'Expression: "'+r+`"
 </span><span class="line ctx">  "upgradesAndGovernance": "\nThe regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for 3d and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.\n\nThe PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated 1 time(s) since inception.\n\nFurthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.",
 </span><span class="line ctx">  "upgradesAndGovernanceImage": "polygoncdk"
 </span><span class="line ctx">}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>livenessInfo</span>
-    <code><span class="added">+1</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">{}</span></code></pre>
-</li><li x-data="{ open: false, expand: false }">
-  <h3>
-    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
-    
-    <span>trackedTxsConfig</span>
-    <code><span class="added">+154</span> <span class="removed">-1</span></code>
-  </h3>
-  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line removed">null
-</span><span class="line added">[
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1736257283,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1736257283,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-</span><span class="line added">      "selector": "0xb910e0f9",
-</span><span class="line added">      "signature": "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707824735,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "batchSubmissions",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x5e9145c9",
-</span><span class="line added">      "signature": "function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x2b0006fa",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1679653163,
-</span><span class="line added">    "untilTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x621dd411",
-</span><span class="line added">      "signature": "function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) "
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "untilTimestamp": 1738594559,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x87c20c01",
-</span><span class="line added">      "signature": "function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "liveness",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  },
-</span><span class="line added">  {
-</span><span class="line added">    "projectId": "xlayer",
-</span><span class="line added">    "sinceTimestamp": 1707822059,
-</span><span class="line added">    "type": "l2costs",
-</span><span class="line added">    "subtype": "stateUpdates",
-</span><span class="line added">    "params": {
-</span><span class="line added">      "formula": "functionCall",
-</span><span class="line added">      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-</span><span class="line added">      "selector": "0x1489ed10",
-</span><span class="line added">      "signature": "function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])"
-</span><span class="line added">    }
-</span><span class="line added">  }
-</span><span class="line added">]</span></code></pre>
 </li></ul>
 </li></ul>
 </body>
