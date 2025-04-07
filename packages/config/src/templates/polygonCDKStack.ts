@@ -335,6 +335,30 @@ export function polygonCDKStack(
         },
       ],
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
+      otherConsiderations: [
+        {
+          name: 'Shared bridge with CDK-sovereign chains',
+          description:
+            "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+          risks: [
+            {
+              category: 'Funds can be lost if',
+              text: 'the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly.',
+            },
+          ],
+          references: [
+            {
+              title: 'Pessimistic Proof - Polygon Knowledge Layer',
+              url: 'https://docs.polygon.technology/learn/agglayer/pessimistic_proof',
+            },
+            {
+              title:
+                'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
+              url: 'https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046',
+            },
+          ],
+        },
+      ],
     },
     stateDerivation: templateVars.stateDerivation ?? {
       nodeSoftware:
