@@ -62,7 +62,7 @@ export const lens: ScalingProject = zkStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['LGHO', 'ETH'],
+      tokens: ['LGHO', 'ETH', 'USDC'],
       description:
         'Shared bridge for depositing tokens to Lens and other ZK stack chains.',
       sharedEscrow: {
@@ -75,13 +75,6 @@ export const lens: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: ['LGHO'],
       },
-    }),
-    discovery.getEscrowDetails({
-      address: discovery.getContract('L1USDCBridge').address,
-      tokens: ['USDC'],
-      ...ESCROW.CANONICAL_EXTERNAL,
-      description:
-        'External contract escrowing USDC deposited to Lens via canonical messaging.',
     }),
   ],
   daProvider: {
