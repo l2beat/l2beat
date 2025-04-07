@@ -25,17 +25,20 @@ export const lens: ScalingProject = zkStackL2({
     name: 'Lens',
     slug: 'lens',
     description:
-      "Lens Network is the main social networking hub for the entire user base of Lens Protocol, built using ZKsync's ZK Stack technology.",
+      "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",
     stack: 'ZK Stack',
     links: {
       websites: ['https://lens.xyz'],
-      apps: ['https://lens.xyz/mint'],
+      apps: [
+        'https://app.across.to/bridge?destinationChainId=232',
+        'https://onboarding.lens.xyz/explore',
+      ],
       documentation: ['https://lens.xyz/docs'],
       explorers: ['https://momoka.lens.xyz', 'https://explorer.lens.xyz/'],
       repositories: ['https://github.com/lens-protocol'],
       socialMedia: [
         'https://hey.xyz/u/lens',
-        'https://x.com/lensprotocol',
+        'https://x.com/LC',
         'https://discord.com/invite/lensprotocol',
       ],
     },
@@ -95,13 +98,13 @@ export const lens: ScalingProject = zkStackL2({
     bridge: DA_BRIDGES.NONE,
   },
   availDa: {
-    sinceBlock: 1180000, // roughly 04/03 right before mainnet launch (chain was active before)
+    sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
     appId: '17',
   },
   milestones: [
     {
       title: 'Mainnet launch',
-      url: 'https://lens.xyz/news/build-socialfi-apps-faster-with-lens-now-on-mainnet', // TODO
+      url: 'https://lens.xyz/news/build-socialfi-apps-faster-with-lens-now-on-mainnet',
       date: '2025-04-04T00:00:00Z',
       description: 'Lens mainnet launches for all users.',
       type: 'general',
