@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @dc3369c5</title>
+  <title>Diff @958ef6c1</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,7 +105,7 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="removed">215433a6</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">dc3369c5</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">958ef6c1</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
   <h2>
@@ -526,6 +526,239 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
 </span><span class="line full">      "decimals": 8,
 </span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line ctx">    "category": "other",
+</span><span class="line ctx">    "source": "canonical",
+</span><span class="line ctx">    "isAssociated": false
+</span><span class="line ctx">  }
+</span><span class="line ctx">]</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>superposition</span>
+    <code><span class="added">+45</span> <span class="removed">-0</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>tvsConfig</span>
+    <code><span class="added">+45</span> <span class="removed">-0</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "mode": "auto",
+</span><span class="line ctx">    "id": "superposition-ARB",
+</span><span class="line ctx">    "priceId": "arbitrum",
+</span><span class="line ctx">    "symbol": "ARB",
+</span><span class="line full indicator">    "name": "Arbitrum",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+</span><span class="line full">      "chain": "arbitrum",
+</span><span class="line full">      "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1725644465
+</span><span class="line full">    },
+</span><span class="line full">    "valueForSummary": {
+</span><span class="line full">      "type": "value",
+</span><span class="line full">      "amount": {
+</span><span class="line full">        "type": "const",
+</span><span class="line full">        "value": "0",
+</span><span class="line full">        "decimals": 0,
+</span><span class="line full">        "sinceTimestamp": 1725644465
+</span><span class="line full">      },
+</span><span class="line full">      "priceId": "arbitrum"
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "superposition-ETH",
+</span><span class="line full">    "priceId": "ethereum",
+</span><span class="line full">    "symbol": "ETH",
+</span><span class="line full">    "name": "Ether",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "calculation",
+</span><span class="line full">      "operator": "sum",
+</span><span class="line full">      "arguments": [
+</span><span class="line full">        {
+</span><span class="line full">          "type": "balanceOfEscrow",
+</span><span class="line full">          "address": "native",
+</span><span class="line full">          "chain": "arbitrum",
+</span><span class="line full">          "escrowAddress": "0xEca0fEB4aA6112a3923823559e7197294Bc49CC7",
+</span><span class="line full">          "decimals": 18,
+</span><span class="line full">          "sinceTimestamp": 1725644220
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "type": "balanceOfEscrow",
+</span><span class="line full">          "address": "native",
+</span><span class="line full">          "chain": "arbitrum",
+</span><span class="line full">          "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+</span><span class="line full">          "decimals": 18,
+</span><span class="line full">          "sinceTimestamp": 1725644465
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    "valueForSummary": {
+</span><span class="line full">      "type": "calculation",
+</span><span class="line full">      "operator": "sum",
+</span><span class="line full">      "arguments": [
+</span><span class="line full">        {
+</span><span class="line full">          "type": "value",
+</span><span class="line full">          "amount": {
+</span><span class="line full">            "type": "const",
+</span><span class="line full">            "value": "0",
+</span><span class="line full">            "decimals": 0,
+</span><span class="line full">            "sinceTimestamp": 1725644220
+</span><span class="line full">          },
+</span><span class="line full">          "priceId": "ethereum"
+</span><span class="line full">        },
+</span><span class="line full">        {
+</span><span class="line full">          "type": "value",
+</span><span class="line full">          "amount": {
+</span><span class="line full">            "type": "const",
+</span><span class="line full">            "value": "0",
+</span><span class="line full">            "decimals": 0,
+</span><span class="line full">            "sinceTimestamp": 1725644465
+</span><span class="line full">          },
+</span><span class="line full">          "priceId": "ethereum"
+</span><span class="line full">        }
+</span><span class="line full">      ]
+</span><span class="line full">    },
+</span><span class="line full">    "category": "ether",
+</span><span class="line ctx">    "source": "canonical",
+</span><span class="line ctx">    "isAssociated": false
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "mode": "auto",
+</span><span class="line added">    "id": "superposition-FLY",
+</span><span class="line added">    "priceId": "fluidity",
+</span><span class="line added">    "symbol": "FLY",
+</span><span class="line added">    "name": "Fluidity",
+</span><span class="line added">    "amount": {
+</span><span class="line added">      "type": "balanceOfEscrow",
+</span><span class="line added">      "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",
+</span><span class="line added">      "chain": "arbitrum",
+</span><span class="line added">      "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+</span><span class="line added">      "decimals": 6,
+</span><span class="line added">      "sinceTimestamp": 1725644465
+</span><span class="line added">    },
+</span><span class="line added">    "valueForSummary": {
+</span><span class="line added">      "type": "value",
+</span><span class="line added">      "amount": {
+</span><span class="line added">        "type": "const",
+</span><span class="line added">        "value": "0",
+</span><span class="line added">        "decimals": 0,
+</span><span class="line added">        "sinceTimestamp": 1725644465
+</span><span class="line added">      },
+</span><span class="line added">      "priceId": "fluidity"
+</span><span class="line added">    },
+</span><span class="line added">    "category": "other",
+</span><span class="line added">    "source": "canonical",
+</span><span class="line added">    "isAssociated": false
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "mode": "auto",
+</span><span class="line ctx">    "id": "superposition-USDC",
+</span><span class="line ctx">    "priceId": "usd-coin",
+</span><span class="line ctx">    "symbol": "USDC",
+</span><span class="line ctx">    "name": "USD Coin",
+</span><span class="line ctx">    "amount": {
+</span><span class="line ctx">      "type": "balanceOfEscrow",
+</span><span class="line full indicator">      "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+</span><span class="line full">      "chain": "arbitrum",
+</span><span class="line full">      "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+</span><span class="line full">      "decimals": 6,
+</span><span class="line full">      "sinceTimestamp": 1725644465
+</span><span class="line full">    },
+</span><span class="line full">    "valueForSummary": {
+</span><span class="line full">      "type": "value",
+</span><span class="line full">      "amount": {
+</span><span class="line full">        "type": "const",
+</span><span class="line full">        "value": "0",
+</span><span class="line full">        "decimals": 0,
+</span><span class="line full">        "sinceTimestamp": 1725644465
+</span><span class="line full">      },
+</span><span class="line full">      "priceId": "usd-coin"
+</span><span class="line full">    },
+</span><span class="line full">    "category": "stablecoin",
+</span><span class="line ctx">    "source": "canonical",
+</span><span class="line ctx">    "isAssociated": false
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "mode": "auto",
+</span><span class="line added">    "id": "superposition-USDC.e-1",
+</span><span class="line added">    "priceId": "usd-coin",
+</span><span class="line added">    "symbol": "USDC.e",
+</span><span class="line added">    "name": "Bridged USDC (Stargate)",
+</span><span class="line added">    "amount": {
+</span><span class="line added">      "type": "totalSupply",
+</span><span class="line added">      "address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
+</span><span class="line added">      "chain": "superposition",
+</span><span class="line added">      "decimals": 6,
+</span><span class="line added">      "sinceTimestamp": 1733444058
+</span><span class="line added">    },
+</span><span class="line added">    "category": "stablecoin",
+</span><span class="line added">    "source": "external",
+</span><span class="line added">    "isAssociated": false
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "mode": "auto",
+</span><span class="line ctx">    "id": "superposition-USDT",
+</span><span class="line ctx">    "priceId": "tether",
+</span><span class="line ctx">    "symbol": "USDT",
+</span><span class="line ctx">    "name": "Tether USD",
+</span><span class="line ctx">    "amount": {
+</span><span class="line ctx">      "type": "balanceOfEscrow",
+</span><span class="line full indicator">      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+</span><span class="line full">      "chain": "arbitrum",
+</span><span class="line full">      "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+</span><span class="line full">      "decimals": 6,
+</span><span class="line full">      "sinceTimestamp": 1725644465
+</span><span class="line full">    },
+</span><span class="line full">    "valueForSummary": {
+</span><span class="line full">      "type": "value",
+</span><span class="line full">      "amount": {
+</span><span class="line full">        "type": "const",
+</span><span class="line full">        "value": "0",
+</span><span class="line full">        "decimals": 0,
+</span><span class="line full">        "sinceTimestamp": 1725644465
+</span><span class="line full">      },
+</span><span class="line full">      "priceId": "tether"
+</span><span class="line full">    },
+</span><span class="line full">    "category": "stablecoin",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "superposition-wBTC",
+</span><span class="line full">    "priceId": "wrapped-bitcoin",
+</span><span class="line full">    "symbol": "wBTC",
+</span><span class="line full">    "name": "Wrapped BTC",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+</span><span class="line full">      "chain": "arbitrum",
+</span><span class="line full">      "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+</span><span class="line full">      "decimals": 8,
+</span><span class="line full">      "sinceTimestamp": 1725644465
+</span><span class="line full">    },
+</span><span class="line full">    "valueForSummary": {
+</span><span class="line full">      "type": "value",
+</span><span class="line full">      "amount": {
+</span><span class="line full">        "type": "const",
+</span><span class="line full">        "value": "0",
+</span><span class="line full">        "decimals": 0,
+</span><span class="line full">        "sinceTimestamp": 1725644465
+</span><span class="line full">      },
+</span><span class="line full">      "priceId": "wrapped-bitcoin"
 </span><span class="line full">    },
 </span><span class="line ctx">    "category": "other",
 </span><span class="line ctx">    "source": "canonical",
