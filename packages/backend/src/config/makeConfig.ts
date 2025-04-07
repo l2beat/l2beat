@@ -79,7 +79,7 @@ export async function makeConfig(
           connectionPoolSize: {
             // our heroku plan allows us for up to 400 open connections
             min: 20,
-            max: 200,
+            max: env.integer('DB_CONNECTION_POOL_SIZE_MAX', 200),
           },
           isReadonly,
         },
