@@ -1,0 +1,14 @@
+import { Icon } from './Icon'
+
+export function IconChatbot(props: { className?: string }) {
+  return (
+    <Icon {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M13.3333 4.66668V1.33334H2.66663V4.66668H0.666626V8.66668H2.66663V12.6667H13.3333V8.66668H14V14H11.3333V13.3333H8.66663V15.3333H9.99996H11.3333H15.3333V8.66668V6.00001V4.66668H13.3333ZM10.6666 8.00001V10H5.33329V8.00001H10.6666ZM5.33329 6.66668V4.66668H7.33329V6.66668H5.33329ZM8.66663 6.66668V4.66668H10.6666V6.66668H8.66663Z"
+        fill="currentColor"
+      />
+    </Icon>
+  )
+}

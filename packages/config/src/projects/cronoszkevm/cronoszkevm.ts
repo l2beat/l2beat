@@ -11,17 +11,12 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const shared = new ProjectDiscovery('shared-zk-stack')
-const bridge = shared.getContract('L1SharedBridge')
+
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const cronoszkevm: ScalingProject = zkStackL2({
   addedAt: UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
-  discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
@@ -85,7 +80,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
     },
   },
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: ['CRO', 'USDC', 'WBTC', 'zkCRO', 'FUL', 'FRTN', 'MOON'],
       description:

@@ -11,14 +11,9 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('grvt')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
 
 export const grvt: ScalingProject = zkStackL2({
   discovery,
-  discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],

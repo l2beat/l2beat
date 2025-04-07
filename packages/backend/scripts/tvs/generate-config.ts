@@ -95,7 +95,7 @@ const cmd = command({
 
       if (tvsConfig.tokens.length > 0) {
         logger.info('Executing TVS to exclude zero-valued tokens')
-        const tvs = await localExecutor.run(tvsConfig, [timestamp], false)
+        const tvs = await localExecutor.run(tvsConfig, timestamp, false)
 
         const valueForProject = tvs.reduce((acc, token) => {
           return acc + token.valueForProject

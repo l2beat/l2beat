@@ -1,5 +1,5 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-import type { ProjectContracts, ProjectRisk } from '../types'
+import type { ProjectRisk } from '../types'
 
 const UNVERIFIED_RISK: ProjectRisk = {
   category: 'Funds can be stolen if',
@@ -41,11 +41,6 @@ function UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds: number): ProjectRisk {
   return UPGRADE_WITH_DELAY_RISK(delay)
 }
 
-const EMPTY: ProjectContracts = {
-  addresses: {},
-  risks: [],
-}
-
 const ARBITRUM_OLD_BRIDGE = EthereumAddress(
   '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
 )
@@ -57,7 +52,6 @@ const UNDER_REVIEW = {
 }
 
 export const CONTRACTS = {
-  EMPTY,
   UNDER_REVIEW,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,

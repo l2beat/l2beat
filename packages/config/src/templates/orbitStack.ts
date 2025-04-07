@@ -1245,7 +1245,7 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(
-    hostChain.technology.dataAvailability !== undefined,
+    hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
   assert(
@@ -1303,13 +1303,13 @@ function BoLDStateValidation(
       },
       {
         title: 'Challenges',
-        description: `A challenge can be started between two siblings, i.e. two different state roots that share the same parent, by calling the \`createLayerZeroEdge\` function in the \`ChallengeManager\` contract. Edges represent assertions, or bisected assertions, within the challenge protocol. Challenges are played via a bisection game, where asserters and challengers play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determines the winner. An edge can only be bisected when rivaled. The bisection process requires no new stake as their validity is checked against a parent "history root" that contains all intermediate states. An edge can also be confirmed if itself or its descendants spend enough time being unrivaled. Such time is set to ${formatSeconds(edgesChallengePeriod)}. If both actors play as slow as possible, the maximum time to confirm an edge is double such value, i.e. ${formatSeconds(
+        description: `A challenge can be started between two siblings, i.e. two different state roots that share the same parent, by calling the \`createLayerZeroEdge\` function in the \`ChallengeManager\` contract. Edges represent assertions, or bisected assertions, within the challenge protocol. Challenges are played via a bisection game, where asserters and challengers play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner. An edge can only be bisected when rivaled. The bisection process requires no new stake as their validity is checked against a parent "history root" that contains all intermediate states. An edge can also be confirmed if itself or its descendants spend enough time being unrivaled. Such time is set to ${formatSeconds(edgesChallengePeriod)}. If both actors play as slow as possible, the maximum time to confirm an edge is double such value, i.e. ${formatSeconds(
           edgesChallengePeriod * 2,
         )}. Due to the complexities of maintaining the history root, the challenge protocol is divided into ${numBigStepLevels + 2} levels, where the lowest level represents assertions over blocks, the highest level represents assertions over single WASM instructions, and intermediate levels represent assertions over chunks of WASM instructions. When moving between levels, a new stake is required. ${stakeDescription}. The ratio between such stakes can be exploited to perform resource exhaustion attacks.`,
         risks: [
           {
             category: 'Funds can be stolen if',
-            text: 'an attacker succesfully performs a resource exhaustion attack.',
+            text: 'an attacker successfully performs a resource exhaustion attack.',
           },
         ],
         references: [

@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x9f2750eac76ead5098bb7f90b40546469fc0a7c7
+
+# Diff at Thu, 03 Apr 2025 09:36:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad19dfb413ff34348157f743c194a146b6447e05 block: 21766767
+- current block number: 22187530
+
+## Description
+
+DAC and rpc changes (project is archived).
+
+## Watched changes
+
+```diff
+    contract PolygonDataCommittee (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions.0.to:
+-        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
++        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      values.committeeHash:
+-        "0xe6f885fcfef296a71bcc466caa039d3a8e72b1c43f5b110d5045776b5680750b"
++        "0xe27c1d4c1b3048b06294d26a28223926b5bdc4efe8e725b8c59e95a92c88b397"
+      values.members.1.1:
+-        "https://pay-chain-da-1.eu-central-6.gateway.fm/"
++        "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
+      values.members.1.0:
+-        "0xCEb82CC6e0C2541a19E4b6E2DBF237fF2d8E96f8"
++        "https://dac2.wirexpaychain.zeeve.online"
+      values.members.0.1:
+-        "https://pay-chain-da-2.eu-central-6.gateway.fm/"
++        "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
+      values.members.0.0:
+-        "0xBf5B50887F0B2b3160A3a097EBA4edEd8A9dDed1"
++        "https://dac.wirexpaychain.zeeve.online"
+      values.owner:
+-        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
++        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+    }
+```
+
+```diff
+    contract Validium (0x78253E2E6120164bd826668A4C96Db20f78A94c9) {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions.2.to:
+-        "0x49a191471F248f7c86cA29477e6E969970BaEAdA"
++        "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
+      issuedPermissions.1.to:
+-        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
++        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      values.admin:
+-        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
++        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      values.trustedSequencer:
+-        "0x49a191471F248f7c86cA29477e6E969970BaEAdA"
++        "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
+      values.trustedSequencerURL:
+-        "https://pay-chain-sequencer.eu-central-6.gateway.fm/"
++        "https://rpc.wirexpaychain.com"
+    }
+```
+
+```diff
+    contract undefined (0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"0x78253E2E6120164bd826668A4C96Db20f78A94c9","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches."}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5","description":"manage the members of the data availability committee and the threshold for valid commitments."}
+    }
+```
+
 Generated with discovered.json: 0x6e575cd99e9acb959b88c556424e9b27de2deb31
 
 # Diff at Wed, 19 Mar 2025 13:05:53 GMT:

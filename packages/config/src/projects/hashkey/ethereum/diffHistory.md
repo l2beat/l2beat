@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x8c13df2d3ddd442b26ce6819c5cd5c62cf6833e5
+
+# Diff at Fri, 04 Apr 2025 09:24:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22081892
+- current block number: 22081892
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081892 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"interact","from":"0xBb70D595147A141e268532BFEF61A8c25054d26D","description":"can pull funds from the contract in case of emergency."}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.10.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.10.from:
+-        "0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04"
++        "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
+      receivedPermissions.10.via:
+-        [{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]
+      receivedPermissions.10.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0xBb70D595147A141e268532BFEF61A8c25054d26D) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+```diff
+    contract DelayedWETH (0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
 Generated with discovered.json: 0x2fe2a9a67c32b28da60823e8ff511363f2150789
 
 # Diff at Thu, 27 Mar 2025 11:14:24 GMT:

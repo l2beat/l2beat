@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x8e452018edfcbaf850a42fd13a7726badf628f91
+
+# Diff at Fri, 04 Apr 2025 09:41:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22094650
+- current block number: 22194725
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
+      values.$implementation:
+-        "0x53c165169401764778F780a69701385eb0FF19B7"
++        "0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
+      values.$pastUpgrades.3:
++        ["2025-04-02T16:50:23.000Z","0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",["0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol                         | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22094650 (main branch discovery), not current.
+
+```diff
+    contract UnichainProxyAdminOwner (0x6d5B183F538ABB8572F5cD17109c617b994D5833) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0xc9edb4E340f4E9683B4557bD9db8f9d932177C86","via":[{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf","via":[{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]}
+      receivedPermissions.9.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.9.via:
+-        [{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]
+      receivedPermissions.9.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.8.from:
+-        "0xD04D0D87E0bd4D2E50286760a3EF323FeA6849Cf"
++        "0x318A642db9e24A85318B8BF18eFd5287BA38643B"
+      receivedPermissions.7.from:
+-        "0x318A642db9e24A85318B8BF18eFd5287BA38643B"
++        "0x84B268A4101A8c8e3CcB33004F81eD08202bA124"
+      receivedPermissions.6.from:
+-        "0x84B268A4101A8c8e3CcB33004F81eD08202bA124"
++        "0x2F12d621a16e2d3285929C9996f478508951dFe4"
+      receivedPermissions.5.from:
+-        "0x2F12d621a16e2d3285929C9996f478508951dFe4"
++        "0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad"
+      receivedPermissions.4.from:
+-        "0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad"
++        "0xc407398d063f942feBbcC6F80a156b47F3f1BDA6"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0xc407398d063f942feBbcC6F80a156b47F3f1BDA6"
++        "0x8098F676033A377b9Defe302e9fE6877cD63D575"
+      receivedPermissions.3.description:
++        "set and change address mappings."
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0x8098F676033A377b9Defe302e9fE6877cD63D575"
++        "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
+      receivedPermissions.2.description:
+-        "set and change address mappings."
+      receivedPermissions.1.from:
+-        "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
++        "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      receivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "0x84B268A4101A8c8e3CcB33004F81eD08202bA124"
+      receivedPermissions.0.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.0.via:
+-        [{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]
+    }
+```
+
+```diff
+    contract DelayedWETH (0x84B268A4101A8c8e3CcB33004F81eD08202bA124) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x6d5B183F538ABB8572F5cD17109c617b994D5833","via":[{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0xc9edb4E340f4E9683B4557bD9db8f9d932177C86) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x6d5B183F538ABB8572F5cD17109c617b994D5833","via":[{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.via.0:
+-        {"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}
+      issuedPermissions.0.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
 Generated with discovered.json: 0x2b8bf21711db8736b48374830440e67490f9cb37
 
 # Diff at Thu, 27 Mar 2025 11:15:41 GMT:

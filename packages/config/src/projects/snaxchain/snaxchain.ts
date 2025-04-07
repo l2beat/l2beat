@@ -1,23 +1,28 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { opStackL2 } from '../../templates/opStack'
 
-export const snaxchain: ScalingProject = underReviewL2({
-  id: 'snaxchain',
+const discovery = new ProjectDiscovery('snaxchain')
+const genesisTimestamp = UnixTime(1723562231)
+
+export const snaxchain: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1740099913),
-  badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'SNAXchain',
     slug: 'snaxchain',
     description:
-      "SNAXchain, developed by Synthetix, is a Layer-2 blockchain built on the OP Stack. It aims to enhance Synthetix V3's decentralized governance and streamline operations.",
-    purposes: ['Universal'],
+      "SNAXchain, developed by Synthetix, is a Rollup built on the OP Stack. It aims to enhance Synthetix V3's decentralized governance and streamline operations.",
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {
       websites: ['https://governance.synthetix.io/'],
+      apps: ['https://superbridge.app/snaxchain-mainnet'],
       repositories: ['https://github.com/Synthetixio/snaxchain-config'],
       documentation: ['https://sips.synthetix.io/sips/sip-384/'],
       socialMedia: ['https://x.com/synthetix_io'],
@@ -35,17 +40,13 @@ export const snaxchain: ScalingProject = underReviewL2({
       },
     ],
   },
+  isNodeAvailable: true,
+  stateDerivation: DERIVATION.OPSTACK('SNAXCHAIN'),
   activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x936D881b4760D5e9b6D55b774f65c509236b4743'), // optiPortal
-      sinceTimestamp: UnixTime(1723518000),
-      tokens: ['ETH'],
-      chain: 'ethereum',
-    },
-  ],
+  discovery,
+  genesisTimestamp,
 })

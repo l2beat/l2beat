@@ -32,6 +32,7 @@
       }
     },
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      "category": "spam",
       // old VTL
       // local override over the template to fetch the validators from the shared contract
       "fields": {

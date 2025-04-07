@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from 'fs'
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import path, { join } from 'path'
 
 import { hashJson } from '@l2beat/shared'
@@ -8,17 +8,18 @@ import {
   Hash256,
   type json,
 } from '@l2beat/shared-pure'
-import { flatteningHash, hashFirstSource } from '../../flatten/utils'
+import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
+import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import type { ShapeSchema } from '../config/ShapeSchema'
 import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
 export const TEMPLATES_PATH = path.join('_templates')
-const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 interface ShapeCriteria {
   validAddresses?: string[]
@@ -36,6 +37,11 @@ export class TemplateService {
 
   constructor(private readonly rootPath: string) {}
 
+  exists(template: string): boolean {
+    const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
+    return existsSync(join(resolvedRootPath, template, 'template.jsonc'))
+  }
+
   /**
    * @returns A record where the keys are template IDs (relative paths from the templates
    *          root directory) and the values are arrays of paths to the Solidity shape
@@ -44,7 +50,7 @@ export class TemplateService {
   listAllTemplates() {
     const result: Record<
       string,
-      { criteria?: ShapeCriteria; paths: string[] }
+      { criteria?: ShapeCriteria; shapePath: string | undefined }
     > = {}
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     if (!fileExistsCaseSensitive(resolvedRootPath)) {
@@ -55,23 +61,20 @@ export class TemplateService {
       if (!existsSync(join(path, 'template.jsonc'))) {
         continue
       }
-      const shapePath = join(path, TEMPLATE_SHAPE_FOLDER)
+      const shapePath = join(path, 'shapes.json')
 
-      const solidityShapeFiles = !existsSync(shapePath)
-        ? []
-        : readdirSync(shapePath, {
-            withFileTypes: true,
-          })
-            .filter((x) => x.isFile() && x.name.endsWith('.sol'))
-            .map((x) => join(shapePath, x.name))
-      const criteriaPath = join(shapePath, 'criteria.json')
+      const hasShape = existsSync(shapePath)
+      const criteriaPath = join(path, 'criteria.json')
       const criteria = existsSync(criteriaPath)
         ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
         : undefined
       criteria?.validAddresses?.map((a: string) => EthereumAddress(a))
 
       const templateId = path.substring(resolvedRootPath.length + 1)
-      result[templateId] = { criteria, paths: solidityShapeFiles }
+      result[templateId] = {
+        criteria,
+        shapePath: hasShape ? shapePath : undefined,
+      }
     }
     return result
   }
@@ -146,14 +149,11 @@ export class TemplateService {
 
     const result: Record<string, Shape> = {}
     const allTemplates = this.listAllTemplates()
-    for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
-      const haystackHashes = shapeFilePaths.paths.map((p) =>
-        flatteningHash(readFileSync(p, 'utf8')),
-      )
-      result[templateId] = {
-        criteria: shapeFilePaths.criteria,
-        hashes: haystackHashes,
-      }
+    for (const [templateId, { criteria, shapePath }] of Object.entries(
+      allTemplates,
+    )) {
+      const hashes = this.readShapeSchema(shapePath).map((shape) => shape.hash)
+      result[templateId] = { criteria, hashes }
     }
 
     this.shapeHashes = result
@@ -236,6 +236,50 @@ export class TemplateService {
     if (outdatedTemplates.length > 0) {
       return `template configs has changed: ${outdatedTemplates.join(', ')}`
     }
+  }
+
+  addToShape(
+    templateId: string,
+    chain: string,
+    address: EthereumAddress,
+    description: string,
+    blockNumber: number,
+    source: ContractSource,
+  ): void {
+    assert(this.exists(templateId), 'Template does not exist')
+    const allTemplates = this.listAllTemplates()
+    const entry = allTemplates[templateId]
+    assert(entry !== undefined, 'Could not find template')
+
+    const shapes =
+      entry.shapePath === undefined ? [] : this.readShapeSchema(entry.shapePath)
+    const hash = contractFlatteningHash(source)
+    assert(hash !== undefined, 'Could not find hash')
+
+    if (shapes.some((s) => s.hash === hash)) {
+      return
+    }
+
+    shapes.push({
+      hash: Hash256(hash),
+      description,
+      address,
+      chain,
+      blockNumber,
+    })
+
+    const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
+    const templatePath = join(resolvedRootPath, templateId)
+    const shapePath = join(templatePath, 'shapes.json')
+    writeFileSync(shapePath, JSON.stringify(shapes, null, 2))
+  }
+
+  private readShapeSchema(shapePath: string | undefined): ShapeSchema[] {
+    if (shapePath === undefined) {
+      return []
+    }
+
+    return JSON.parse(readFileSync(shapePath, 'utf8')) as ShapeSchema[]
   }
 }
 

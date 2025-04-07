@@ -20,7 +20,6 @@ import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
-import { getStage } from '../../common/stages/getStage'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -61,6 +60,8 @@ const sequencerAddress = EthereumAddress(
 const sequencerInbox = EthereumAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
+
+const faultDisputeGame = discovery.getContract('FaultDisputeGame')
 
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
 
@@ -378,12 +379,12 @@ export const optimism: ScalingProject = {
         {
           title:
             'DisputeGameFactory.sol - Etherscan source code, create() function',
-          url: 'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
+          url: `https://etherscan.io/address/${safeGetImplementation(disputeGameFactory)}#code`,
         },
         {
           title:
             'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          url: 'https://etherscan.io/address/0x27B81db41F586016694632193b99E45b1a27B8f8#code',
+          url: `https://etherscan.io/address/${faultDisputeGame.address.toString()}#code`,
         },
       ],
     },
@@ -526,33 +527,36 @@ export const optimism: ScalingProject = {
       },
     ],
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
-    },
-  ),
+  stage: {
+    stage: 'UnderReview',
+  },
+  // stage: getStage(
+  //   {
+  //     stage0: {
+  //       callsItselfRollup: true,
+  //       stateRootsPostedToL1: true,
+  //       dataAvailabilityOnL1: true,
+  //       rollupNodeSourceAvailable: true,
+  //     },
+  //     stage1: {
+  //       principle: false,
+  //       stateVerificationOnL1: true,
+  //       fraudProofSystemAtLeast5Outsiders: true,
+  //       usersHave7DaysToExit: true,
+  //       usersCanExitWithoutCooperation: true,
+  //       securityCouncilProperlySetUp: true,
+  //     },
+  //     stage2: {
+  //       proofSystemOverriddenOnlyInCaseOfABug: false,
+  //       fraudProofSystemIsPermissionless: true,
+  //       delayWith30DExitWindow: false,
+  //     },
+  //   },
+  //   {
+  //     rollupNodeLink:
+  //       'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+  //   },
+  // ),
   permissions: generateDiscoveryDrivenPermissions([discovery, l2Discovery]),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery, l2Discovery]),

@@ -1,7 +1,7 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -13,6 +13,8 @@ import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import type { ValueService } from '../services/ValueService'
 import type { DBStorage } from '../tools/DBStorage'
 import {
+  createAmountConfig,
+  createPriceConfigId,
   extractPricesAndAmounts,
   generateConfigurationId,
 } from '../tools/extractPricesAndAmounts'
@@ -79,10 +81,16 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
       timestamps,
     )
 
-    const records: TokenValueRecord[] = tvs.map((t) => ({
-      ...t,
-      configurationId: TokenValueIndexer.idToConfigurationId(t.tokenId),
-    }))
+    const records: TokenValueRecord[] = tvs.map((t) => {
+      const token = configurations.find((c) => c.properties.id === t.tokenId)
+      assert(token, `${t.tokenId}: no token found`)
+      return {
+        ...t,
+        configurationId: TokenValueIndexer.idToConfigurationId(
+          token.properties,
+        ),
+      }
+    })
 
     return async () => {
       await this.$.db.tvsTokenValue.insertMany(records)
@@ -115,7 +123,16 @@ export class TokenValueIndexer extends ManagedMultiIndexer<TvsToken> {
     }
   }
 
-  static idToConfigurationId = (tokenId: string) => {
-    return generateConfigurationId([tokenId])
+  static idToConfigurationId = (token: TvsToken) => {
+    const { amounts, prices } = extractPricesAndAmounts([token])
+
+    return generateConfigurationId([
+      token.id,
+      token.source,
+      token.category,
+      String(token.isAssociated),
+      ...amounts.map((a) => createAmountConfig(a).id),
+      ...prices.map((p) => createPriceConfigId(p.id)),
+    ])
   }
 }

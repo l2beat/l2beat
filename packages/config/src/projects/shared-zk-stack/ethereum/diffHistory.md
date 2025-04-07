@@ -1,3 +1,831 @@
+Generated with discovered.json: 0x3e394c7af6c2d1b5cac7da0a17abbd43d664fb0b
+
+# Diff at Sun, 06 Apr 2025 08:05:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22181739
+- current block number: 22208565
+
+## Description
+
+new chain deployed: chainID 1217, ETH gas token validium, not active yet.
+lens has launched. unfortunately the diamond proxy is not verified.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.11:
++        {"chainId":9637,"chainTypeManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.10.chainId:
+-        9637
++        388
+      values.chainsCreated.10.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.9.chainId:
+-        388
++        325
+      values.chainsCreated.9.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.8.chainId:
+-        325
++        320
+      values.chainsCreated.8.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.7.chainId:
+-        320
++        324
+      values.chainsCreated.7.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.6.chainId:
+-        324
++        50104
+      values.chainsCreated.6.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.chainsCreated.5.chainId:
+-        50104
++        543210
+      values.chainsCreated.5.chainGovernance:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      values.chainsCreated.4.chainId:
+-        543210
++        1217
+      values.chainsCreated.4.chainGovernance:
+-        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
+      values.getAllZKChainChainIDs.11:
++        388
+      values.getAllZKChainChainIDs.10:
+-        388
++        325
+      values.getAllZKChainChainIDs.9:
+-        325
++        324
+      values.getAllZKChainChainIDs.8:
+-        324
++        320
+      values.getAllZKChainChainIDs.7:
+-        320
++        232
+      values.getAllZKChainChainIDs.6:
+-        232
++        9637
+      values.getAllZKChainChainIDs.5:
+-        9637
++        2741
+      values.getAllZKChainChainIDs.4:
+-        2741
++        1345
+      values.getAllZKChainChainIDs.3:
+-        1345
++        1217
+      values.getAllZKChains.11:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllZKChains.10:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      values.getAllZKChains.9:
+-        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        12
++        13
+      values.getAggregatedRoot:
+-        "0x160dd873fe3499b5aafd588005617fae4d12e5d11f0e856de9576aedf0565019"
++        "0x619372ea4d229fc7921bbdcd7b46a64f151d566c0bf6d43cf1807bc6aa4629ad"
+    }
+```
+
+Generated with discovered.json: 0x76aab63ab59b57351874ceefbea12218f8494404
+
+# Diff at Wed, 02 Apr 2025 14:42:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123258
+- current block number: 22181739
+
+## Description
+
+shared zk stack contracts upgraded to v26: config related changes for all children chains.
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions.2:
+-        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."}
+      directlyReceivedPermissions.1.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      directlyReceivedPermissions.1.description:
+-        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "revert batches for any connected chain (ZK cluster Admin role)."
+      directlyReceivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.0.description:
+-        "register new Elastic Chains in the shared bridge."
++        "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      template:
+-        "shared-zk-stack/v25/BridgeHub"
++        "shared-zk-stack/v26/BridgeHub"
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0xe79288af01ff8940265966caffdc9ea0ef18822166fd7f704488419737716623"
+      sourceHashes.0:
+-        "0x568d6f26c34f7da5f4ac55957f99d9e66cbf967d550fa27ec431fb66bbd36a0b"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      description:
+-        "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations."
++        "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers."
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      issuedPermissions.1.description:
++        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+      issuedPermissions.0.description:
+-        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+      values.$implementation:
+-        "0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"
++        "0xb720523EC3c615b069453bF4B0584CEbF034706f"
+      values.$pastUpgrades.3:
++        ["2024-06-04T17:03:59.000Z","0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61",["0x12f893689f9603991a8c22C249FFd0509Be95661"]]
+      values.$pastUpgrades.2.2:
+-        ["0x12f893689f9603991a8c22C249FFd0509Be95661"]
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.2.1:
+-        "2024-06-04T17:03:59.000Z"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.2.0:
+-        "0xdbb03a14ea223de3db4ac0916e78123bd0a1dde68e98952326d8382d29ac4d61"
++        ["0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"]
+      values.$pastUpgrades.1.2:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        ["0xb720523EC3c615b069453bF4B0584CEbF034706f"]
+      values.$pastUpgrades.1.1:
+-        "2025-01-08T16:00:35.000Z"
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.1.0:
+-        ["0x0029e562c0b54C0b88cB22adF4346DbfEC87400c"]
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$upgradeCount:
+-        3
++        4
+      values.chainsCreated.10.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.10.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.9.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.9.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.8.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.8.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.7.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.7.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.6.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.6.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.5.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.5.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.4.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.4.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.3.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.3.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.2.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.2.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.1.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.1.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.0.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.chainsCreated.0.chainTypeManager:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.CronosDiamond:
+-        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
+      values.CronosSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.getHyperchain:
+-        []
+      values.GrvtDiamond:
+-        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.GrvtSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.sharedBridge:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.SophonDiamond:
+-        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.SophonSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.ZeroNetworkDiamond:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.ZeroNetworkSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.zksyncEraDiamond:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.zksyncEraSTM:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.assetRouter:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.getAllZKChainChainIDs:
++        [324,388,50104,543210,2741,325,61166,1345,9637,320,232]
+      values.getAllZKChains:
++        ["0x32400084C286CF3E17e7B677ea9583e60a000324","0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879","0x89f90748A9a36C30A324481133fa198f4E16A824","0xC8C4cB5AF7c723c7EfD360898B47920679f92C92","0xF2704433d11842d15aa76BBF0E00407267a99C92","0xc29d04A93F893700015138E3E334eB828dAC3cef"]
+      values.L1_CHAIN_ID:
++        1
+      values.l1CtmDeployer:
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      values.MAX_NUMBER_OF_ZK_CHAINS:
++        100
+      values.messageRoot:
++        "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
++++ description: If false, chains can migrate to whitelisted settlement layers.
++++ severity: HIGH
+      values.migrationPaused:
++        false
++++ description: New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin.
++++ severity: HIGH
+      values.settlementLayers:
++        {}
+      fieldMeta.chainsCreated.description:
+-        "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs."
++        "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
+      fieldMeta.migrationPaused:
++        {"severity":"HIGH","description":"If false, chains can migrate to whitelisted settlement layers."}
+      fieldMeta.settlementLayers:
++        {"severity":"HIGH","description":"New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."}
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.","via":[{"address":"0x2cf3bD6a9056b39999F3883955E183F655345063"}]}
+      receivedPermissions.1.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.1.description:
+-        "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
++        "revert batches for any connected chain (ZK cluster Admin role)."
+      receivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.0.description:
+-        "register new Elastic Chains in the shared bridge."
++        "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"}
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56"}
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213"}
+      directlyReceivedPermissions.2.from:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      directlyReceivedPermissions.1.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      directlyReceivedPermissions.0.from:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0.
+      name:
+-        "StateTransitionManager"
++        "ChainTypeManager"
+      template:
+-        "shared-zk-stack/v25/StateTransitionManager"
++        "shared-zk-stack/v26/ChainTypeManager"
+      sourceHashes.1:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0xf6789714ce74a28098dbbf1bb19c228c5c72b5a0756925b2f1c4b8ea9c072e37"
+      sourceHashes.0:
+-        "0x2322249822d1ffda838f7005dd4137d161f15f2cc3553e9bffba7c04a44d9226"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      description:
+-        "Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic)."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,26,0."
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      issuedPermissions.1.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      issuedPermissions.0.description:
+-        "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
++        "revert batches for any connected chain (ZK cluster Admin role)."
+      values.$implementation:
+-        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
++        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
+      values.$pastUpgrades.3:
++        ["2025-01-08T16:00:35.000Z","0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5",["0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"]]
+      values.$pastUpgrades.2.2.0:
+-        "0xb39B175a5E0945F2FB6A7F31764c0e31D9cF5b75"
++        "0xA3bCcAEe38cb0273A979118a0DE483E47D50F6Cb"
+      values.$pastUpgrades.2.1:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.2.0:
+-        "2025-01-08T16:00:35.000Z"
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$upgradeCount:
+-        3
++        4
+      values.genesisUpgrade:
+-        "0x0000000000000000000000000000000000000001"
+      values.getAllHyperchainChainIDs:
+-        [324,388,50104,543210,2741,325,61166,1345,9637,320,232]
+      values.getAllHyperchains:
+-        ["0x32400084C286CF3E17e7B677ea9583e60a000324","0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc","0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3","0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9","0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9","0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E","0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879","0x89f90748A9a36C30A324481133fa198f4E16A824","0xC8C4cB5AF7c723c7EfD360898B47920679f92C92","0xF2704433d11842d15aa76BBF0E00407267a99C92","0xc29d04A93F893700015138E3E334eB828dAC3cef"]
+      values.getChainAdmin:
+-        []
+      values.initialCutHash:
+-        "0xaf3397d2d574e3fb4a729df5b561afe890323a5eab21980fe9aae230f5934458"
++        "0x1f2fc821f3af8fc4dae46f80a28e8b582ace20e83a979acacf6ecbd0e9b4fcea"
+      values.MAX_NUMBER_OF_HYPERCHAINS:
+-        100
+      values.storedBatchZero:
+-        "0xbb3c62fb5577f094f9290297114948e6f6fb8d04083a366ba3dadb3569fb5c4f"
++        "0x30624ae13932bc83804b007160a60b2394893f6097d5f7062de441172adc4749"
+      values.initialForceDeploymentHash:
++        "0x5d46606048f0821e6ce823fd9cc257b47818b44dffed0bc21489e23ab242d0e1"
+      values.l1GenesisUpgrade:
++        "0x107e92E7360e595d8129B522ABD458361f32f66C"
+      derivedName:
+-        "StateTransitionManager"
++        "ChainTypeManager"
+    }
+```
+
+```diff
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      name:
+-        "L1SharedBridge"
++        "L1Nullifier"
+      template:
+-        "shared-zk-stack/v25/L1SharedBridge"
++        "shared-zk-stack/v26/L1Nullifier"
+      sourceHashes.1:
+-        "0x23ebe4dfc517328a5acc1f6f8aa84be593be5db9d6357fcdcd69c62ca60853f7"
++        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
+      sourceHashes.0:
+-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad"
++        "0x1d68adefefffd4b896740e985d1d7d39abbface4239c0fb54cbda7892ce8c99d"
+      description:
+-        "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era."
++        "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds."
+      issuedPermissions.0.to:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      issuedPermissions.0.description:
+-        "register new Elastic Chains in the shared bridge."
++        "pause, unpause and set critical escrow address references."
+      issuedPermissions.0.via.0.address:
+-        "0x2cf3bD6a9056b39999F3883955E183F655345063"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.$implementation:
+-        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
++        "0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"
+      values.$pastUpgrades.3:
++        ["2024-08-26T07:51:11.000Z","0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c",["0xb56A8225A745756DD215faf22E4796f373561AcD"]]
+      values.$pastUpgrades.2.2.0:
+-        "0xb56A8225A745756DD215faf22E4796f373561AcD"
++        "0xF5A14DCdde1143443f06033200D345c2a2828A99"
+      values.$pastUpgrades.2.1:
+-        "2024-08-26T07:51:11.000Z"
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.2.0:
+-        "0xaec33529b74f8f9d56d7aa568c6358be299228a85e49ea85cb106eca5af7367c"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.1.2:
+-        ["0xF5A14DCdde1143443f06033200D345c2a2828A99"]
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.1.1:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$pastUpgrades.1.0:
+-        "2025-01-08T16:00:35.000Z"
++        ["0xda2866AF0e170d0867a3F3bB52Db10D6E09Df78A"]
+      values.$upgradeCount:
+-        3
++        4
+      values.admin:
+-        "0x2cf3bD6a9056b39999F3883955E183F655345063"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
+      values.l1AssetRouter:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.l1NativeTokenVault:
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      derivedName:
+-        "L1SharedBridge"
++        "L1Nullifier"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      template:
+-        "shared-zk-stack/v25/ProtocolUpgradeHandler"
++        "shared-zk-stack/v26/ProtocolUpgradeHandler"
+      sourceHashes.1:
+-        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
++        "0x12958ca399cc6a20305ec705a35cae0ee77a75afd66ee1eb5f09d3a811ca4457"
+      sourceHashes.0:
+-        "0x07105095c7b0ff20b0cdd1e3754255aa6189aa79719f6d09fdd8e20df48bed44"
++        "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8"
+      description:
+-        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
++        "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract."
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."}
+      directlyReceivedPermissions.3:
++        {"permission":"act","from":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      directlyReceivedPermissions.2.from:
+-        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      directlyReceivedPermissions.2.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
++        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+      directlyReceivedPermissions.1.from:
+-        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      directlyReceivedPermissions.0.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      directlyReceivedPermissions.0.description:
++        "pause, unpause and set critical escrow address references."
+      values.$implementation:
+-        "0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"
++        "0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"
+      values.$pastUpgrades.1:
++        ["2025-02-06T15:32:47.000Z","0xa3d1fa107e6dc4ce67d92a5af74aa7dc34602c2a1d46727790819c1f974bed95",["0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"]]
+      values.$pastUpgrades.0.2:
+-        ["0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604"]
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.0.1:
+-        "2025-02-06T15:32:47.000Z"
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$pastUpgrades.0.0:
+-        "0xa3d1fa107e6dc4ce67d92a5af74aa7dc34602c2a1d46727790819c1f974bed95"
++        ["0x0A67f0Fd2f7523057039F14969Fe23a5f620f19A"]
+      values.$upgradeCount:
+-        1
++        2
+      values.emergencyUpgradeProposals:
+-        ["0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"]
+      values.SHARED_BRIDGE:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.STATE_TRANSITION_MANAGER:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.CHAIN_TYPE_MANAGER:
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted:
++        ["0xa34bdc028de549c0fbd0374e64eb5977e78f62331f6a55f4f2211348c4902d13"]
+      values.L1_ASSET_ROUTER:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.L1_NATIVE_TOKEN_VAULT:
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      values.L1_NULLIFIER:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      fieldMeta.emergencyUpgradeProposals:
+-        {"severity":"HIGH"}
+      fieldMeta.emergencyUpgradesExecuted:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x303a465B659cBB0ab36eE643eA362c509EEb5213","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).","via":[{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","via":[{"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.4.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.3.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
++        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.2.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      receivedPermissions.2.via.1:
++        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.1.via.1:
+-        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      receivedPermissions.1.description:
++        "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.via.1:
+-        {"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.0.description:
++        "pause, unpause and set critical escrow address references."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (0x107e92E7360e595d8129B522ABD458361f32f66C)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD)
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+```
+
+```diff
++   Status: CREATED
+    contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860)
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+```
+
+```diff
++   Status: CREATED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+```
+
+```diff
++   Status: CREATED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+```
+
+## Source code changes
+
+```diff
+.../BridgeHub/Bridgehub.sol                        | 2541 +++++++++++--
+ .../CTMDeploymentTracker/CTMDeploymentTracker.sol  |  674 ++++
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../ChainTypeManager/ChainTypeManager.sol}         |  476 ++-
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../ethereum/.flat/L1AssetRouter/L1AssetRouter.sol | 2359 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++
+ .../ethereum/.flat/L1GenesisUpgrade.sol            | 3775 ++++++++++++++++++++
+ .../L1NativeTokenVault/L1NativeTokenVault.sol      | 2202 ++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 ++++
+ .../L1Nullifier/L1Nullifier.sol}                   | 1488 ++++----
+ .../L1Nullifier/TransparentUpgradeableProxy.p.sol  |  729 ++++
+ .../ethereum/.flat/MessageRoot/MessageRoot.sol     | 1448 ++++++++
+ .../MessageRoot/TransparentUpgradeableProxy.p.sol  |  729 ++++
+ .../ProtocolUpgradeHandler.sol                     |   64 +-
+ 15 files changed, 16537 insertions(+), 1406 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123258 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      template:
+-        "shared-zk-stack/BridgeHub"
++        "shared-zk-stack/v25/BridgeHub"
+    }
+```
+
+```diff
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"extend the legal veto period, approve a protocol upgrade."}
+      receivedPermissions.0.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      receivedPermissions.0.description:
+-        "extend the legal veto period, approve a protocol upgrade."
++        "one of its 3/3 signers."
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      receivedPermissions.1:
++        {"permission":"interact","from":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"soft freeze, hard freeze, approve a protocol upgrade."}
+      receivedPermissions.0.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6"
+      receivedPermissions.0.description:
+-        "soft freeze, hard freeze, approve a protocol upgrade."
++        "one of its 3/3 signers."
+    }
+```
+
+```diff
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/RollupL1DAValidator"
++        "shared-zk-stack/v26/RollupL1DAValidator"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+```
+
+```diff
+-   Status: DELETED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6","description":"one of its 3/3 signers."}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains.
+```
+
+```diff
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"}
+      directlyReceivedPermissions.3:
+-        {"permission":"upgrade","from":"0x8829AD80E425C646DAB305381ff105169FeEcE56"}
+      directlyReceivedPermissions.2.from:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      directlyReceivedPermissions.1.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      template:
+-        "shared-zk-stack/StateTransitionManager"
++        "shared-zk-stack/v25/StateTransitionManager"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      template:
+-        "shared-zk-stack/L1SharedBridge"
++        "shared-zk-stack/v25/L1SharedBridge"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      template:
+-        "shared-zk-stack/ProtocolUpgradeHandler"
++        "shared-zk-stack/v25/ProtocolUpgradeHandler"
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","via":[{"address":"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"},{"address":"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"}]}
+      receivedPermissions.4.from:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
+      receivedPermissions.2.via.1:
+-        {"address":"0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"}
+      receivedPermissions.2.description:
++        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      receivedPermissions.1.from:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      receivedPermissions.1.via.1.address:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+      issuedPermissions:
++        [{"permission":"interact","to":"0x66E4431266DC7E04E7d8b7FE9d2181253df7F410","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0x600dA620Ab29F41ABC6596a15981e14cE58c86b8","description":"one of its 3/3 signers.","via":[]},{"permission":"interact","to":"0xbC1653bd3829dfEc575AfC3816D4899cd103B51c","description":"one of its 3/3 signers.","via":[]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45)
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+```
+
 Generated with discovered.json: 0xe7639ce8f9590f6e6cc987fc96ee73940a4be783
 
 # Diff at Tue, 25 Mar 2025 10:34:28 GMT:

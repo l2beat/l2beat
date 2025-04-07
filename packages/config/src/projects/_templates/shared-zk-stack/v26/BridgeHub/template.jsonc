@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+  "category": "shared",
+  "ignoreMethods": [
+    "__DEPRECATED_baseToken",
+    "baseToken",
+    "baseTokenAssetId",
+    "chainTypeManager",
+    "ctmAssetIdFromChainId",
+    "getHyperchain",
+    "getZKChain",
+    "settlementLayer",
+    "whitelistedSettlementLayers"
+  ],
+  "ignoreRelatives": ["getAllZKChains"],
+  "fields": {
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration."
+        }
+      ]
+    },
+    "migrationPaused": {
+      "description": "If false, chains can migrate to whitelisted settlement layers.",
+      "severity": "HIGH"
+    },
+    "chainsCreated": {
+      "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.",
+      "handler": {
+        "type": "event",
+        "select": ["chainId", "chainTypeManager", "chainGovernance"],
+        "add": { "event": "NewChain" },
+        "ignoreRelative": true
+      }
+    },
+    "settlementLayers": {
+      "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["isWhitelisted"],
+        "groupBy": "chainId",
+        "set": { "event": "SettlementLayerRegistered" }
+      }
+    }
+  }
+}

@@ -30,37 +30,31 @@ export class DataFormulaExecutor {
   async execute(
     prices: PriceConfig[],
     amounts: AmountConfig[],
-    timestamps: UnixTime[],
+    timestamp: UnixTime,
     isLatestMode: boolean,
   ) {
     const chains = extractUniqueChains(amounts)
-
     /** Optimization to fetch block for timestamp only once per chain */
-    const blockNumbersToTimestamps = await this.getBlockNumbers(
+    const blockNumbers = await this.getBlockNumbers(
       chains,
-      timestamps,
+      timestamp,
       isLatestMode,
     )
 
     const promises: Promise<void>[] = []
 
-    for (const timestamp of timestamps) {
-      const blockNumbers = blockNumbersToTimestamps.get(timestamp)
-      assert(blockNumbers)
+    promises.push(
+      ...this.processOnchainAmounts(amounts, timestamp, blockNumbers),
+    )
 
-      promises.push(
-        ...this.processOnchainAmounts(amounts, timestamp, blockNumbers),
-      )
+    promises.push(
+      ...this.processCirculatingSupplies(amounts, timestamp, isLatestMode),
+    )
 
-      promises.push(
-        ...this.processCirculatingSupplies(amounts, timestamp, isLatestMode),
-      )
+    promises.push(...this.processPrices(prices, timestamp, isLatestMode))
 
-      promises.push(...this.processPrices(prices, timestamp, isLatestMode))
-
-      this.logger.info(`Fetching data...`)
-      await Promise.all(promises)
-    }
+    this.logger.info(`Fetching data...`)
+    await Promise.all(promises)
   }
 
   private processOnchainAmounts(
@@ -72,7 +66,7 @@ export class DataFormulaExecutor {
       .filter((a) => a.type !== 'circulatingSupply' && a.type !== 'const')
       .filter(
         (a) =>
-          timestamp > a.sinceTimestamp &&
+          timestamp >= a.sinceTimestamp &&
           (!a.untilTimestamp || timestamp < a.untilTimestamp),
       )
       .map(async (amount) => {
@@ -111,7 +105,7 @@ export class DataFormulaExecutor {
       .filter((a) => a.type === 'circulatingSupply')
       .filter(
         (a) =>
-          timestamp > a.sinceTimestamp &&
+          timestamp >= a.sinceTimestamp &&
           (!a.untilTimestamp || timestamp < a.untilTimestamp),
       )
 
@@ -265,53 +259,22 @@ export class DataFormulaExecutor {
 
   async getBlockNumbers(
     chains: string[],
-    timestamps: UnixTime[],
+    timestamp: UnixTime,
     isLatestMode: boolean,
   ) {
-    let blockNumbersToTimestamps: Map<number, Map<string, number>> | undefined
-
-    if (isLatestMode) {
-      blockNumbersToTimestamps = await this.getLatestBlockNumbers(
-        chains,
-        timestamps[0],
-      )
-    } else {
-      blockNumbersToTimestamps = await this.getBlockNumbersForTimestamps(
-        chains,
-        timestamps,
-      )
-    }
-    assert(blockNumbersToTimestamps)
-    return blockNumbersToTimestamps
-  }
-
-  async getLatestBlockNumbers(chains: string[], timestamp: UnixTime) {
     const result = new Map<string, number>()
 
     for (const chain of chains) {
-      const block = this.blockProviders.get(chain)
-      assert(block, `${chain}: No BlockProvider configured`)
-      this.logger.info(
-        `Fetching latest block number for timestamp ${timestamp} on ${chain}`,
-      )
-      const latestBlock = await block.getLatestBlockNumber()
-      result.set(chain, latestBlock)
-    }
-
-    return new Map([[timestamp, result]])
-  }
-
-  async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
-    const result = new Map<number, Map<string, number>>()
-
-    for (const timestamp of timestamps) {
-      const timestampMapping = new Map<string, number>()
-      result.set(timestamp, timestampMapping)
-
-      for (const chain of chains) {
+      if (isLatestMode) {
+        const block = this.blockProviders.get(chain)
+        assert(block, `${chain}: No BlockProvider configured`)
+        this.logger.info(`Fetching latest block number on ${chain}`)
+        const latestBlock = await block.getLatestBlockNumber()
+        result.set(chain, latestBlock)
+      } else {
         const cached = await this.storage.getBlockNumber(chain, timestamp)
         if (cached) {
-          timestampMapping.set(chain, cached)
+          result.set(chain, cached)
           continue
         }
 
@@ -323,7 +286,7 @@ export class DataFormulaExecutor {
             timestamp,
             chain,
           )
-        timestampMapping.set(chain, blockNumber)
+        result.set(chain, blockNumber)
         await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
       }
     }

@@ -148,7 +148,7 @@ export const zkspace: ScalingProject = {
     },
   }),
   technology: {
-    stateCorrectness: zkswap.technology.stateCorrectness,
+    stateCorrectness: zkswap.technology?.stateCorrectness,
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
@@ -158,10 +158,10 @@ export const zkspace: ScalingProject = {
         },
       ],
     },
-    dataAvailability: zkswap.technology.dataAvailability,
-    operator: zkswap.technology.operator,
-    forceTransactions: zkswap.technology.forceTransactions,
-    exitMechanisms: zkswap.technology.exitMechanisms,
+    dataAvailability: zkswap.technology?.dataAvailability,
+    operator: zkswap.technology?.operator,
+    forceTransactions: zkswap.technology?.forceTransactions,
+    exitMechanisms: zkswap.technology?.exitMechanisms,
   },
   contracts: {
     addresses: {

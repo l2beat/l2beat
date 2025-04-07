@@ -10566,6 +10566,20 @@
       }
     },
     {
+      "name": "Fluidity",
+      "coingeckoId": "fluidity",
+      "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",
+      "symbol": "FLY",
+      "decimals": 6,
+      "deploymentTimestamp": 1710339658,
+      "coingeckoListingTimestamp": 1712188800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36086/large/FLY_2D_Old_Map_Double_Border.png?1710434215",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Forta",
       "coingeckoId": "forta",
       "address": "0x3A1429d50E0cBBc45c997aF600541Fe1cc3D2923",
@@ -11998,6 +12012,28 @@
         "bridges": [
           {
             "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1733444058,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 55244,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2 (Hydra mode)",
             "slug": "stargatev2"
           }
         ]
