@@ -1,5 +1,6 @@
 import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainConfig, ProjectService } from '@l2beat/config'
+import { createDatabase } from '@l2beat/database'
 import {
   BlockIndexerClient,
   BlockProvider,
@@ -17,12 +18,14 @@ import { RpcClientPOC } from '../providers/RpcClientPOC'
 import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import { ValueService } from '../services/ValueService'
 import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
+import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import { LocalStorage } from './LocalStorage'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 export class LocalExecutor {
-  private readonly storage: LocalStorage
+  private readonly localStorage: LocalStorage
+  private readonly dbStorage: DBStorage | undefined
   private readonly valueService: ValueService
 
   constructor(
@@ -30,8 +33,9 @@ export class LocalExecutor {
     private readonly env: Env,
     private readonly logger: Logger,
   ) {
-    this.storage = new LocalStorage('./scripts/tvs/local-data.json')
-    this.valueService = new ValueService(this.storage)
+    this.localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    this.valueService = new ValueService(this.localStorage)
+    this.dbStorage = this.createDbStorage(env, logger)
   }
 
   async run(
@@ -63,7 +67,8 @@ export class LocalExecutor {
     const balanceProvider = new BalanceProvider(rpcs)
 
     return new DataFormulaExecutor(
-      this.storage,
+      this.localStorage,
+      this.dbStorage,
       priceProvider,
       circulatingSupplyProvider,
       blockProviders,
@@ -197,5 +202,25 @@ export class LocalExecutor {
       blockProviders: Array.from(blockProviders.values()),
     })
     return { rpcs, blockProviders, blockTimestampProvider }
+  }
+
+  private createDbStorage(env: Env, logger: Logger): DBStorage | undefined {
+    const tvsDbUrl = env.optionalString('TVS_DB_URL')
+
+    if (!tvsDbUrl) {
+      logger.warn('TVS_DB_URL is not set. All data will be fetched from APIs')
+      return undefined
+    }
+
+    const db = createDatabase({
+      connectionString: tvsDbUrl,
+      application_name: 'TVS-LOCAL-EXECUTOR',
+      ssl: { rejectUnauthorized: false },
+      min: 2,
+      max: 10,
+      keepAlive: false,
+    })
+
+    return new DBStorage(db, logger)
   }
 }
