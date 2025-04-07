@@ -37,7 +37,7 @@ export function EcosystemNativeToken({ nativeToken }: Props) {
       <p className="mt-1.5 text-2xs font-medium text-secondary">
         {nativeToken.description}
       </p>
-      <div className="mt-4 grid grid-cols-3 gap-2">
+      <div className="mt-4 grid grid-cols-3 gap-4">
         <DataTile
           label="Price"
           value={formatCurrency(nativeToken.data.price, 'usd')}
