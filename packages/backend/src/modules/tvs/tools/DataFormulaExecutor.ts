@@ -26,7 +26,7 @@ export class DataFormulaExecutor {
     private totalSupplyProvider: TotalSupplyProvider,
     private balanceProvider: BalanceProvider,
     private logger: Logger,
-  ) {}
+  ) { }
 
   /** Fetches data from APIs. Writes result to LocalStorage */
   async execute(
@@ -46,12 +46,12 @@ export class DataFormulaExecutor {
     if (this.dbStorage) {
       this.logger.info(`Preloading prices and amounts from DB`)
 
-      await this.dbStorage?.preloadPrices(
+      await this.dbStorage.preloadPrices(
         prices.map((p) => p.id),
         [timestamp],
       )
 
-      await this.dbStorage?.preloadAmounts(
+      await this.dbStorage.preloadAmounts(
         amounts.map((a) => a.id),
         [timestamp],
       )
@@ -276,16 +276,16 @@ export class DataFormulaExecutor {
     const escrowBalance =
       config.address === 'native'
         ? await this.balanceProvider.getNativeAssetBalance(
-            config.chain,
-            config.escrowAddress,
-            blockNumber,
-          )
+          config.chain,
+          config.escrowAddress,
+          blockNumber,
+        )
         : await this.balanceProvider.getTokenBalance(
-            config.chain,
-            config.address,
-            config.escrowAddress,
-            blockNumber,
-          )
+          config.chain,
+          config.address,
+          config.escrowAddress,
+          blockNumber,
+        )
 
     return escrowBalance
   }
