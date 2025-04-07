@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
-  type ProjectValueRecord,
+  type Database,
   type ValueRecord,
   createDatabase,
 } from '@l2beat/database'
@@ -80,7 +80,7 @@ async function main() {
     )
 
     printResults(totalTvs, totalTvl)
-    printProjectDiffs(filteredTvsRecords, tvlRecords)
+    printProjectDiffs(tvsDb, timestamp, projectIds, tvlRecords)
   } catch (error) {
     console.error('Error in main function:', error)
     process.exit(1)
@@ -104,8 +104,10 @@ function printResults(totalTvs: number, totalTvl: number) {
   console.log(`Correlation (TVS/TVL): ${percentageRatio}%`)
 }
 
-function printProjectDiffs(
-  tvsRecords: ProjectValueRecord[],
+async function printProjectDiffs(
+  tvsDb: Database,
+  timestamp: UnixTime,
+  projectIds: Set<string>,
   tvlRecords: ValueRecord[],
 ) {
   console.log('\nPER PROJECT DIFFERENCES:')
@@ -116,9 +118,7 @@ function printProjectDiffs(
   for (const record of tvlRecords) {
     const projectId = record.projectId.toString()
     const value = asNumber(
-      record.nativeForTotal +
-        record.externalForTotal +
-        record.canonicalForTotal,
+      record.native + record.external + record.canonical,
       2,
     )
 
@@ -130,6 +130,9 @@ function printProjectDiffs(
     assert(previous !== undefined)
     projectTvlMap.set(projectId, previous + value)
   }
+  const tvsRecords = (
+    await tvsDb.tvsProjectValue.getByTimestampAndType(timestamp, 'FULL')
+  ).filter((r) => projectIds.has(r.project))
 
   const projectTvsMap = new Map<string, number>()
   for (const record of tvsRecords) {
