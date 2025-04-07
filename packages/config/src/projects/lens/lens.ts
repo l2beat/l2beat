@@ -58,7 +58,7 @@ export const lens: ScalingProject = zkStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['LGHO'],
+      tokens: ['LGHO', 'ETH'],
       description:
         'Shared bridge for depositing tokens to Lens and other ZK stack chains.',
       sharedEscrow: {
