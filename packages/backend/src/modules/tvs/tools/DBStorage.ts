@@ -10,7 +10,7 @@ export class DBStorage implements DataStorage {
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
-  ) { }
+  ) {}
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
     if (configurationIds.length === 0 || timestamps.length === 0) {
