@@ -46,13 +46,27 @@ export class DataFormulaExecutor {
     if (this.dbStorage) {
       this.logger.info(`Preloading prices and amounts from DB`)
 
+      const storedPrices = await Promise.all(
+        prices.map((price) => this.localStorage.getPrice(price.id, timestamp)),
+      )
+
       await this.dbStorage.preloadPrices(
-        prices.map((p) => p.id),
+        prices
+          .map((price) => price.id)
+          .filter((_, index) => storedPrices[index] === undefined),
         [timestamp],
       )
 
+      const storedAmounts = await Promise.all(
+        amounts.map((amount) =>
+          this.localStorage.getAmount(amount.id, timestamp),
+        ),
+      )
+
       await this.dbStorage.preloadAmounts(
-        amounts.map((a) => a.id),
+        amounts
+          .map((amount) => amount.id)
+          .filter((_, index) => storedAmounts[index] === undefined),
         [timestamp],
       )
     }

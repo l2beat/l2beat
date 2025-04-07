@@ -13,6 +13,10 @@ export class DBStorage implements DataStorage {
   ) {}
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
+    if (configurationIds.length === 0 || timestamps.length === 0) {
+      return
+    }
+
     this.prices = new Map(timestamps.map((t) => [t, new Map()]))
 
     const from = timestamps[0]
@@ -29,6 +33,10 @@ export class DBStorage implements DataStorage {
   }
 
   async preloadAmounts(configurationIds: string[], timestamps: UnixTime[]) {
+    if (configurationIds.length === 0 || timestamps.length === 0) {
+      return
+    }
+
     this.amounts = new Map(timestamps.map((t) => [t, new Map()]))
 
     const from = timestamps[0]
@@ -78,9 +86,7 @@ export class DBStorage implements DataStorage {
     configurationId: string,
     timestamp: UnixTime,
   ): Promise<bigint | undefined> {
-    const amount = await Promise.resolve(
-      this.amounts.get(timestamp)?.get(configurationId),
-    )
+    const amount = this.amounts.get(timestamp)?.get(configurationId)
 
     if (amount !== undefined) {
       return Promise.resolve(amount)
