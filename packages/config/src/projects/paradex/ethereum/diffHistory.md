@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x323a73c4e59a58ea7a4f67fc221fb8d9db8c4f25
+
+# Diff at Sun, 06 Apr 2025 08:03:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22187409
+- current block number: 22208553
+
+## Description
+
+usdc bridge gov changes.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      values.accessControl.APP_GOVERNOR.members.1:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_GOVERNOR.members.0:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_ROLE_ADMIN.members.1:
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+    }
+```
+
 Generated with discovered.json: 0x03d3c49cc13e4aca5681486214828592274910c5
 
 # Diff at Thu, 03 Apr 2025 09:11:47 GMT:

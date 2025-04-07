@@ -1,7 +1,7 @@
 {
   "name": "ternoa",
   "chain": "ethereum",
-  "blockNumber": 21766747,
+  "blockNumber": 22208591,
   "configHash": "0x13c36bdc5b1367bb1d126e55f1c3f91662395ca8d1333d4983823ab00792b926",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -58,8 +58,11 @@
       "name": "Validium",
       "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
       "type": "Contract",
-      "unverified": true,
       "template": "polygon-cdk/PolygonZkEVM",
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      ],
       "proxyType": "EIP1967 proxy",
       "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.",
@@ -115,7 +118,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x33ada9736b1e8f854a75e4790d98ec4b77b18d5f696917136c88e85b195afa5c",
+        "lastAccInputHash": "0xf26602fe5f0d1170faf995b0e5711551d1177f7addb180fc7b60b954db66cae3",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",
@@ -376,6 +379,16 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
+    ],
+    "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"

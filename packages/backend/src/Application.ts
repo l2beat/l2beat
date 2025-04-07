@@ -24,7 +24,14 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
-    logger.for(this).info('Initializing App')
+    const appLogger = logger.for(this)
+
+    appLogger.info('Initializing App')
+
+    appLogger.info('Initializing DB', {
+      poolSize: config.database.connectionPoolSize,
+      appName: config.database.connection.application_name,
+    })
 
     const database = createDatabase({
       ...config.database.connection,
@@ -85,14 +92,14 @@ export class Application {
 
     if (config.isReadonly) {
       this.start = async () => {
-        logger.for(this).info('Starting in readonly mode')
+        appLogger.info('Starting in readonly mode')
         await apiServer.start()
       }
       return
     }
 
     this.start = async () => {
-      logger.for(this).info('Starting', { features: config.flags })
+      appLogger.info('Starting', { features: config.flags })
       const unusedFlags = Object.values(config.flags)
         .filter((x) => !x.used)
         .map((x) => x.feature)

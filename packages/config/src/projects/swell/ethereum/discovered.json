@@ -1,7 +1,7 @@
 {
   "name": "swell",
   "chain": "ethereum",
-  "blockNumber": 22194722,
+  "blockNumber": 22208481,
   "configHash": "0x4101e041f5d2f1200f279069e2ea06c312c24525f2da7100abe21289b5db2409",
   "entries": [
     {
@@ -86,7 +86,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 0,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -249,7 +249,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -480,11 +480,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0x6967D304E9b7E26b5eb3f5A1FD1239DaAD3215E6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OptimismPortal2",
       "address": "0x758E0EE66102816F5C3Ec9ECc1188860fbb87812",
       "type": "Contract",
@@ -523,7 +518,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 22194601
+          "prevBlockNum": 22208067
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -686,7 +681,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 3039,
+        "gameCount": 3084,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893",
@@ -696,7 +691,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 3039,
+        "permissionedGamesTotal": 3084,
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory",
@@ -1126,6 +1121,11 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "address": "0xc28bAd2A2D3E915d132795D2963D0e0459664D68",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OptimismMintableERC20Factory",
       "address": "0xc2b228cd433eBaE788DE287EDE2abE55B3F3F603",
       "type": "Contract",
@@ -1209,7 +1209,7 @@
         },
         {
           "permission": "sequence",
-          "to": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
+          "to": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
           "via": []
         },
         {
@@ -1238,7 +1238,7 @@
         ],
         "$upgradeCount": 2,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
+        "batcherHash": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
         "batchInbox": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0",
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0x87690676786cDc8cCA75A472e483AF7C8F2f0F57",
@@ -1275,7 +1275,7 @@
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 21277945,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "0x6967D304E9b7E26b5eb3f5A1FD1239DaAD3215E6",
+        "unsafeBlockSigner": "0xc28bAd2A2D3E915d132795D2963D0e0459664D68",
         "version": "2.2.0",
         "VERSION": 0
       },
@@ -1346,7 +1346,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292626152",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292626168",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1371,6 +1371,17 @@
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
+        }
+      ]
     },
     {
       "name": "L1ERC20TokenBridge",
@@ -1418,17 +1429,6 @@
       "address": "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4"
-        }
-      ]
     },
     {
       "name": "L1ERC721Bridge",

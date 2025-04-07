@@ -1,8 +1,8 @@
 {
   "name": "celo",
   "chain": "ethereum",
-  "blockNumber": 22194735,
-  "configHash": "0x9a5d1ca1fd36f69903b8e27ccbd2c6f09b5bea4c3822f06257013e0ffa5360a3",
+  "blockNumber": 22208467,
+  "configHash": "0x5dcd9e2b2670b41dd659973a4385a25b14cd90ba93cd8764dbc9eb8e4f6544c6",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -159,7 +159,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619818",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619819",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -232,7 +232,6 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1742960075,
       "sinceBlock": 22128421,
       "values": {
@@ -499,7 +498,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1668,7 +1667,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 492334,
-          "prevBlockNum": 22194250
+          "prevBlockNum": 22205604
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1859,7 +1858,7 @@
           "via": [{ "address": "0x783A434532Ee94667979213af1711505E8bFE374" }]
         }
       ],
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1741879559,
       "sinceBlock": 22038831,
       "values": {
@@ -1873,7 +1872,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 74,
+        "gameCount": 89,
         "gameImpls": [
           "0x876e8eeE292F23F163C9bCA406eDD65bEAEFBEBC",
           "0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755",
@@ -1883,7 +1882,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x4092A77bAF58fef0309452cEaCb09221e556E112",
-        "permissionedGamesTotal": 74,
+        "permissionedGamesTotal": 89,
         "version": "1.0.1-beta.3"
       },
       "derivedName": "DisputeGameFactory",

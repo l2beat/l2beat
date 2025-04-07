@@ -15,7 +15,8 @@
   },
   "overrides": {
     "0x5300000000000000000000000000000000000000": {
-      "ignoreMethods": ["branches"]
+      "ignoreMethods": ["branches"],
+      "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"]
     },
     "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": {
       "ignoreMethods": [
@@ -28,7 +29,7 @@
       ]
     },
     "0xd29687c813D741E2F938F4aC377128810E217b1b": {
-      "ignoreMethods": ["getPastTotalSupply"]
+      "ignoreMethods": ["getPastTotalSupply", "clock"]
     }
   }
 }

@@ -13,6 +13,10 @@ export class DBStorage implements DataStorage {
   ) {}
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
+    if (configurationIds.length === 0 || timestamps.length === 0) {
+      return
+    }
+
     this.prices = new Map(timestamps.map((t) => [t, new Map()]))
 
     const from = timestamps[0]
@@ -29,6 +33,10 @@ export class DBStorage implements DataStorage {
   }
 
   async preloadAmounts(configurationIds: string[], timestamps: UnixTime[]) {
+    if (configurationIds.length === 0 || timestamps.length === 0) {
+      return
+    }
+
     this.amounts = new Map(timestamps.map((t) => [t, new Map()]))
 
     const from = timestamps[0]
@@ -52,6 +60,16 @@ export class DBStorage implements DataStorage {
 
     if (price !== undefined) {
       return Promise.resolve(price)
+    }
+
+    // if not preloaded, we need to fetch from DB
+    const priceRecord = await this.db.tvsPrice.getPrice(
+      configurationId,
+      timestamp,
+    )
+
+    if (priceRecord) {
+      return Promise.resolve(priceRecord.priceUsd)
     }
 
     // Fallback is needed due to the way PriceIndexer works.
@@ -78,12 +96,20 @@ export class DBStorage implements DataStorage {
     configurationId: string,
     timestamp: UnixTime,
   ): Promise<bigint | undefined> {
-    const amount = await Promise.resolve(
-      this.amounts.get(timestamp)?.get(configurationId),
-    )
+    const amount = this.amounts.get(timestamp)?.get(configurationId)
 
     if (amount !== undefined) {
       return Promise.resolve(amount)
+    }
+
+    // if not preloaded, we need to fetch from DB
+    const amountRecord = await this.db.tvsAmount.getAmount(
+      configurationId,
+      timestamp,
+    )
+
+    if (amountRecord) {
+      return Promise.resolve(amountRecord.amount)
     }
 
     // Fallback is needed for circulating supplies.

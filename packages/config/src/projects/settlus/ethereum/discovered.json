@@ -1,8 +1,8 @@
 {
   "name": "settlus",
   "chain": "ethereum",
-  "blockNumber": 22195794,
-  "configHash": "0x6a7980d4f709b574e7413ddb2fcd65ea8ee15bc8fb588c599120f99663dfc301",
+  "blockNumber": 22208464,
+  "configHash": "0x2cda904561afbc1561fcd1c55504ffc13fb7a243952c44f6de191fcc8f95ff67",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -224,7 +224,13 @@
     {
       "address": "0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294"
+        }
+      ]
     },
     {
       "name": "LivenessGuard",
@@ -285,7 +291,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -710,7 +716,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619779",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619780",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -778,6 +784,10 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294"
+        },
         {
           "permission": "interact",
           "from": "0xC206D300b07cB905Cb1831d8a9172d4c66394638",
@@ -1238,7 +1248,7 @@
           "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
         }
       ],
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -1252,7 +1262,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 672,
+        "gameCount": 700,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1262,7 +1272,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 672,
+        "permissionedGamesTotal": 700,
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory",
@@ -1298,6 +1308,18 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "to": "0x1bC6Df949b8eDC8EE61adB99d578A7a6E6Ff7310",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -1421,7 +1443,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 22180277
+          "prevBlockNum": 22202330
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,

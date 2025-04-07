@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22181739,
+  "blockNumber": 22208565,
   "configHash": "0x83f0de540128072806b294d672f8ee7844a63fb01b66e6d70779f4ba04bfe7ff",
   "entries": [
     {
@@ -390,10 +390,15 @@
             "chainId": 232,
             "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
             "chainGovernance": "0x0000000000000000000000000000000000000000"
+          },
+          {
+            "chainId": 1217,
+            "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+            "chainGovernance": "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
           }
         ],
         "getAllZKChainChainIDs": [
-          324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232
+          324, 388, 50104, 543210, 2741, 325, 61166, 1345, 9637, 320, 232, 1217
         ],
         "getAllZKChains": [
           "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -406,7 +411,8 @@
           "0x89f90748A9a36C30A324481133fa198f4E16A824",
           "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
           "0xF2704433d11842d15aa76BBF0E00407267a99C92",
-          "0xc29d04A93F893700015138E3E334eB828dAC3cef"
+          "0xc29d04A93F893700015138E3E334eB828dAC3cef",
+          "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
         ],
         "L1_CHAIN_ID": 1,
         "l1CtmDeployer": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
@@ -637,7 +643,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 185,
+        "nonce": 186,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -781,12 +787,12 @@
         ],
         "$upgradeCount": 1,
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "chainCount": 12,
-        "getAggregatedRoot": "0x160dd873fe3499b5aafd588005617fae4d12e5d11f0e856de9576aedf0565019",
+        "chainCount": 13,
+        "getAggregatedRoot": "0x619372ea4d229fc7921bbdcd7b46a64f151d566c0bf6d43cf1807bc6aa4629ad",
         "getChainRoot": [
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "sharedTree": { "_height": 4, "_leafNumber": 12 }
+        "sharedTree": { "_height": 4, "_leafNumber": 13 }
       },
       "derivedName": "MessageRoot",
       "category": { "name": "Shared Infrastructure", "priority": 4 }

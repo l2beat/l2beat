@@ -4,9 +4,6 @@ on:
   pull_request:
 
 permissions:
-  pages: write # For GitHub Pages deployment
-  id-token: write # For authentication with GitHub Pages
-  contents: write # For GitHub Pages deployment
   pull-requests: write # For commenting on PRs
 
 jobs:
@@ -15,6 +12,8 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,38 +39,15 @@ jobs:
         id: diff
         run: |
           bash ./packages/config/scripts/diff/diff.sh
-          echo "has_changes=$(cat /tmp/compare/diff.html | grep -c "No changes detected" || true)" >> $GITHUB_OUTPUT
+          echo "has_changes=$(cat /tmp/compare/out/index.html | grep -c "No changes detected" || true)" >> $GITHUB_OUTPUT
 
-      - name: Setup GitHub Pages artifact
+      - name: Publish diff
+        id: publish
         if: steps.diff.outputs.has_changes != '1'
         run: |
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          REPORT_DIR="pages-output/pr-$PR_NUMBER"
-          mkdir -p "$REPORT_DIR"
-          cp /tmp/compare/diff.html "$REPORT_DIR/index.html"
-
-      - name: Save gh-pages files
-        if: steps.diff.outputs.has_changes != '1'
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: pages-output
-          clean: false
-
-      - name: Add gh-pages to worktree
-        if: steps.diff.outputs.has_changes != '1'
-        run: git worktree add gh-pages gh-pages
-
-      - name: Upload GitHub Pages artifact
-        if: steps.diff.outputs.has_changes != '1'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: gh-pages
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        if: steps.diff.outputs.has_changes != '1'
-        uses: actions/deploy-pages@v4
+          DOMAIN="https://pr-${{ github.event.pull_request.number }}-l2beat.surge.sh"
+          pnpx surge --project /tmp/compare/out --domain "$DOMAIN"
+          echo "domain=$DOMAIN" >> $GITHUB_OUTPUT
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -96,7 +72,7 @@ jobs:
             
             Config changes have been detected between main and this PR.
             
-            [View Full Report](https://l2beat.github.io/l2beat/pr-${{ github.event.pull_request.number }})
+            [View Full Report](${{ steps.publish.outputs.domain }})
             
             *Last updated: ${{ steps.timestamp.outputs.value }}*
           edit-mode: replace

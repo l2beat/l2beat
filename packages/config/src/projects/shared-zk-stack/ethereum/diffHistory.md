@@ -1,3 +1,115 @@
+Generated with discovered.json: 0x3e394c7af6c2d1b5cac7da0a17abbd43d664fb0b
+
+# Diff at Sun, 06 Apr 2025 08:05:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22181739
+- current block number: 22208565
+
+## Description
+
+new chain deployed: chainID 1217, ETH gas token validium, not active yet.
+lens has launched. unfortunately the diamond proxy is not verified.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.11:
++        {"chainId":9637,"chainTypeManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.10.chainId:
+-        9637
++        388
+      values.chainsCreated.10.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.9.chainId:
+-        388
++        325
+      values.chainsCreated.9.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.8.chainId:
+-        325
++        320
+      values.chainsCreated.8.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.7.chainId:
+-        320
++        324
+      values.chainsCreated.7.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.6.chainId:
+-        324
++        50104
+      values.chainsCreated.6.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.chainsCreated.5.chainId:
+-        50104
++        543210
+      values.chainsCreated.5.chainGovernance:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      values.chainsCreated.4.chainId:
+-        543210
++        1217
+      values.chainsCreated.4.chainGovernance:
+-        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
+      values.getAllZKChainChainIDs.11:
++        388
+      values.getAllZKChainChainIDs.10:
+-        388
++        325
+      values.getAllZKChainChainIDs.9:
+-        325
++        324
+      values.getAllZKChainChainIDs.8:
+-        324
++        320
+      values.getAllZKChainChainIDs.7:
+-        320
++        232
+      values.getAllZKChainChainIDs.6:
+-        232
++        9637
+      values.getAllZKChainChainIDs.5:
+-        9637
++        2741
+      values.getAllZKChainChainIDs.4:
+-        2741
++        1345
+      values.getAllZKChainChainIDs.3:
+-        1345
++        1217
+      values.getAllZKChains.11:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllZKChains.10:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      values.getAllZKChains.9:
+-        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        12
++        13
+      values.getAggregatedRoot:
+-        "0x160dd873fe3499b5aafd588005617fae4d12e5d11f0e856de9576aedf0565019"
++        "0x619372ea4d229fc7921bbdcd7b46a64f151d566c0bf6d43cf1807bc6aa4629ad"
+    }
+```
+
 Generated with discovered.json: 0x76aab63ab59b57351874ceefbea12218f8494404
 
 # Diff at Wed, 02 Apr 2025 14:42:58 GMT:
