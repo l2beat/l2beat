@@ -98,7 +98,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   usesBlobs: true,
   display: {
-    name: 'Arbitrum One TEST',
+    name: 'Arbitrum One',
     slug: 'arbitrum',
     warning: undefined,
     architectureImage: 'arbitrumwithbold',
