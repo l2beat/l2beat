@@ -36,6 +36,21 @@ describeDatabase(TvsAmountRepository.name, (db) => {
     })
   })
 
+  describe(TvsAmountRepository.prototype.getAmount.name, () => {
+    it('returns amount for a configuration', async () => {
+      await repository.insertMany([
+        tvsAmount('a', UnixTime(100), 1n),
+        tvsAmount('a', UnixTime(200), 2n),
+        tvsAmount('a', UnixTime(50), 0n),
+        tvsAmount('b', UnixTime(150), 3n),
+      ])
+
+      const result = await repository.getAmount('a'.repeat(12), UnixTime(100))
+
+      expect(result).toEqual(tvsAmount('a', UnixTime(100), 1n))
+    })
+  })
+
   describe(TvsAmountRepository.prototype.getAmountsInRange.name, () => {
     it('gets amounts for given configIds in time range', async () => {
       await repository.insertMany([

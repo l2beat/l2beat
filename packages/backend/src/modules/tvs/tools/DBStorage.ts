@@ -10,7 +10,7 @@ export class DBStorage implements DataStorage {
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
-  ) {}
+  ) { }
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
     if (configurationIds.length === 0 || timestamps.length === 0) {
@@ -62,6 +62,16 @@ export class DBStorage implements DataStorage {
       return Promise.resolve(price)
     }
 
+    // if not preloaded, we need to fetch from DB
+    const priceRecord = await this.db.tvsPrice.getPrice(
+      configurationId,
+      timestamp,
+    )
+
+    if (priceRecord) {
+      return Promise.resolve(priceRecord.priceUsd)
+    }
+
     // Fallback is needed due to the way PriceIndexer works.
     // If CoingeckoClient returns empty response we will not save anything to DB
     // and skip this timestamp altogether, effectively creating a gap in data.
@@ -90,6 +100,16 @@ export class DBStorage implements DataStorage {
 
     if (amount !== undefined) {
       return Promise.resolve(amount)
+    }
+
+    // if not preloaded, we need to fetch from DB
+    const amountRecord = await this.db.tvsAmount.getAmount(
+      configurationId,
+      timestamp,
+    )
+
+    if (amountRecord) {
+      return Promise.resolve(amountRecord.amount)
     }
 
     // Fallback is needed for circulating supplies.

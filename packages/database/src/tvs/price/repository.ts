@@ -13,6 +13,20 @@ export class TvsPriceRepository extends BaseRepository {
     return rows.length
   }
 
+  async getPrice(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsPriceRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsPrice')
+      .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getPricesInRange(
     configurationIds: string[],
     fromInclusive: UnixTime,
