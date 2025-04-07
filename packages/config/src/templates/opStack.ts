@@ -534,6 +534,7 @@ function getStateValidation(
         gameSplitDepth: permissionedGameSplitDepth,
         gameClockExtension: permissionedGameClockExtension,
         oracleChallengePeriod: oracleChallengePeriod,
+        isPermissionless: false,
       })
     }
     case 'Permissionless': {
@@ -579,6 +580,7 @@ function getStateValidation(
         gameSplitDepth: permissionlessGameSplitDepth,
         gameClockExtension: permissionlessGameClockExtension,
         oracleChallengePeriod: oracleChallengePeriod,
+        isPermissionless: true,
       })
     }
   }
@@ -591,6 +593,7 @@ function describeOPFP({
   gameSplitDepth,
   gameClockExtension,
   oracleChallengePeriod,
+  isPermissionless,
 }: {
   disputeGameBonds: number
   maxClockDuration: number
@@ -598,6 +601,7 @@ function describeOPFP({
   gameSplitDepth: number
   gameClockExtension: number
   oracleChallengePeriod: number
+  isPermissionless: boolean
 }): ProjectScalingStateValidation {
   const exponentialBondsFactor = 1.09493 // hardcoded, from https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html?highlight=1.09493#bond-scaling
 
@@ -616,8 +620,7 @@ function describeOPFP({
   })()
 
   return {
-    description:
-      'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    description: `Updates to the system state can be proposed and challenged by ${isPermissionless ? 'anyone who has sufficient funds' : 'permissioned operators only'}. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.`,
     categories: [
       {
         title: 'State root proposals',
@@ -1213,6 +1216,10 @@ function getFinality(
 function getTrackedTxs(
   templateVars: OpStackConfigCommon,
 ): Layer2TxConfig[] | undefined {
+  if (templateVars.nonTemplateTrackedTxs !== undefined) {
+    return templateVars.nonTemplateTrackedTxs
+  }
+
   const fraudProofType = getFraudProofType(templateVars)
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
@@ -1227,38 +1234,36 @@ function getTrackedTxs(
         templateVars.l2OutputOracle ??
         templateVars.discovery.getContract('L2OutputOracle')
 
-      return (
-        templateVars.nonTemplateTrackedTxs ?? [
-          {
-            uses: [
-              { type: 'liveness', subtype: 'batchSubmissions' },
-              { type: 'l2costs', subtype: 'batchSubmissions' },
-            ],
-            query: {
-              formula: 'transfer',
-              from: sequencerAddress,
-              to: sequencerInbox,
-              sinceTimestamp: templateVars.genesisTimestamp,
-            },
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
           },
-          {
-            uses: [
-              { type: 'liveness', subtype: 'stateUpdates' },
-              { type: 'l2costs', subtype: 'stateUpdates' },
-            ],
-            query: {
-              formula: 'functionCall',
-              address: l2OutputOracle.address,
-              selector: '0x9aaab648',
-              functionSignature:
-                'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-              sinceTimestamp: UnixTime(
-                l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
-              ),
-            },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: l2OutputOracle.address,
+            selector: '0x9aaab648',
+            functionSignature:
+              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+            sinceTimestamp: UnixTime(
+              l2OutputOracle.sinceTimestamp ?? templateVars.genesisTimestamp,
+            ),
           },
-        ]
-      )
+        },
+      ]
     }
     case 'Permissioned':
     case 'Permissionless': {

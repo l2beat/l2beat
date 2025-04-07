@@ -1,7 +1,7 @@
 {
   "name": "gmnetwork",
   "chain": "ethereum",
-  "blockNumber": 21235441,
+  "blockNumber": 22208402,
   "configHash": "0x45df61613855921d4a9d208a0f333de2141d866066e3a8446c2cb9a210784aa8",
   "entries": [
     {
@@ -224,10 +224,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7236000,
-        "latestOutputIndex": 1339,
-        "nextBlockNumber": 7241400,
-        "nextOutputIndex": 1340,
+        "latestBlockNumber": 12889800,
+        "latestOutputIndex": 2386,
+        "nextBlockNumber": 12895200,
+        "nextOutputIndex": 2387,
         "proposer": "0x4FACE9ec6237C04a22d434989Beb30b43055886D",
         "PROPOSER": "0x4FACE9ec6237C04a22d434989Beb30b43055886D",
         "startingBlockNumber": 0,
@@ -381,7 +381,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 684000,
+        "scalar": 6840000,
         "sequencerInbox": "0xFf00000000000000000000000000000000000aD9",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20031128,
@@ -596,7 +596,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21234500
+          "prevBlockNum": 22137853
         },
         "paused": false,
         "superchainConfig": "0xB83831efA1Cc1bFF0c29ed0d8df1943F834442A0",
@@ -649,7 +649,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621650",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621851",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

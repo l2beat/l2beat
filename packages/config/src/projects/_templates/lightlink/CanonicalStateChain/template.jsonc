@@ -2,6 +2,8 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CanonicalStateChain",
   "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
+  "ignoreMethods": ["chain", "getHeaderByNum", "getL2Output", "proxiableUUID"],
+  "ignoreInWatchMode": ["chainHead", "getHead"],
   "fields": {
     "publisher": {
       "permissions": [
@@ -19,7 +21,5 @@
         }
       ]
     }
-  },
-  "ignoreMethods": ["chain", "getHeaderByNum", "getL2Output", "proxiableUUID"],
-  "ignoreInWatchMode": []
+  }
 }
