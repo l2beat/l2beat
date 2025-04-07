@@ -11,6 +11,7 @@ import { EcosystemBuildOnLink } from '../_components/widgets/ecosystem-build-on-
 import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
 import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
 import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
+import { EcosystemProjectsByRaas } from '../_components/widgets/ecosystem-projects-by-raas'
 import { EcosystemTvsByStage } from '../_components/widgets/ecosystem-tvs-by-stage'
 import { EcosystemTvsByTokenType } from '../_components/widgets/ecosystem-tvs-by-token-type'
 
@@ -88,6 +89,11 @@ export default async function Page({ params }: Props) {
             </div>
           </div>
           <EcosystemMilestonesAndIncidents milestones={ecosystem.milestones} />
+          <div className="grid grid-cols-4 gap-[--spacing]">
+            <EcosystemProjectsByRaas
+              projectsByRaas={ecosystem.projectsByRaas}
+            />
+          </div>
           <EcosystemProjectsTable entries={ecosystem.projects} />
         </main>
       </div>

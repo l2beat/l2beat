@@ -43,6 +43,7 @@ export interface EcosystemEntry {
   tvsByStage: Record<Stage, number>
   tvsByTokenType: TvsByTokenType
   daLayersUsed: Record<string, number>
+  projectsByRaas: Record<string, string[]>
   links: {
     header: ProjectLink[]
     buildOn: string
@@ -106,6 +107,19 @@ export async function getEcosystemEntry(
     0,
   )
 
+  const projectsByRaas = ecosystemProjects.reduce(
+    (acc, curr) => {
+      const raas = curr.scalingInfo?.raas
+      if (!raas) return acc
+      if (!acc[raas]) {
+        acc[raas] = []
+      }
+      acc[raas].push(curr.slug.toString())
+      return acc
+    },
+    {} as Record<string, string[]>,
+  )
+
   return {
     ...ecosystem,
     colors: ecosystem.ecosystemConfig.colors,
@@ -126,6 +140,7 @@ export async function getEcosystemEntry(
     tvsByStage: getTvsByStage(ecosystemProjects, tvs),
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
+    projectsByRaas,
     projects: ecosystemProjects
       .map((project) => ({
         ...getScalingSummaryEntry(
