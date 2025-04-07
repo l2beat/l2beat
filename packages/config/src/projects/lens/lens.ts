@@ -5,6 +5,7 @@ import {
   ESCROW,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -80,20 +81,10 @@ export const lens: ScalingProject = zkStackL2({
     }),
   ],
   daProvider: {
-    layer: DA_LAYERS.NONE,
-    bridge: DA_BRIDGES.NONE,
-    riskView: RISK_VIEW.DATA_EXTERNAL,
+    layer: DA_LAYERS.AVAIL,
+    riskView: RISK_VIEW.DATA_AVAIL(false),
     technology: {
-      name: 'Data is not stored on chain',
-      description:
-        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the centralized Sequencer.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'the external data becomes unavailable.',
-          isCritical: true,
-        },
-      ],
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
@@ -101,6 +92,11 @@ export const lens: ScalingProject = zkStackL2({
         },
       ],
     },
+    bridge: DA_BRIDGES.NONE,
+  },
+  availDa: {
+    sinceBlock: 1180000, // roughly 04/03 right before mainnet launch (chain was active before)
+    appId: '17',
   },
   milestones: [
     {
