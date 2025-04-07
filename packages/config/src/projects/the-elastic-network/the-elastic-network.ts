@@ -17,6 +17,10 @@ export const theElasticNetwork: BaseProject = {
     badges: [BADGES.Stack.ZKStack, BADGES.Infra.ElasticChain],
   },
   ecosystemConfig: {
+    links: {
+      buildOn: 'https://docs.zksync.io/',
+      learnMore: 'https://zksync.io/',
+    },
     colors: {
       primary: '#513BE5',
       secondary: '#4276FF',

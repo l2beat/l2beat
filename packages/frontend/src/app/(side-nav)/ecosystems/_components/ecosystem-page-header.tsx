@@ -9,7 +9,7 @@ import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-
 interface Props {
   logo: EcosystemEntry['logo']
   badges: BadgeWithParams[]
-  links: EcosystemEntry['links']
+  links: EcosystemEntry['links']['header']
 }
 
 export function EcosystemPageHeader({ logo, badges, links }: Props) {

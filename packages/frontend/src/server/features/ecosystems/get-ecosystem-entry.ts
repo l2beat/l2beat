@@ -43,7 +43,11 @@ export interface EcosystemEntry {
   tvsByStage: Record<Stage, number>
   tvsByTokenType: TvsByTokenType
   daLayersUsed: Record<string, number>
-  links: ProjectLink[]
+  links: {
+    header: ProjectLink[]
+    buildOn: string
+    learnMore: string
+  }
   milestones: Milestone[]
 }
 
@@ -109,7 +113,11 @@ export async function getEcosystemEntry(
     badges: ecosystem.display.badges
       .map((badge) => getBadgeWithParams(badge, ecosystem))
       .filter((badge) => badge !== undefined),
-    links: getProjectLinks(ecosystem.display.links),
+    links: {
+      header: getProjectLinks(ecosystem.display.links),
+      buildOn: ecosystem.ecosystemConfig.links.buildOn,
+      learnMore: ecosystem.ecosystemConfig.links.learnMore,
+    },
     allScalingProjects: {
       tvs: tvs.total,
       uops: allScalingProjectsUops,
@@ -215,11 +223,11 @@ function getDaLayersUsed(ecosystemProjects: Project<'scalingInfo'>[]) {
 
 function getEcosystemLogo(slug: string) {
   const imgBuffer = readFileSync(
-    path.join(process.cwd(), './public', `/ecosystems/${slug}.png`),
+    path.join(process.cwd(), './public', `/ecosystems/${slug}/logo.png`),
   )
   const dimensions = getImageDimensions(imgBuffer)
   assert(dimensions, 'Ecosystem logo not found')
-  return { ...dimensions, src: `/ecosystems/${slug}.png` }
+  return { ...dimensions, src: `/ecosystems/${slug}/logo.png` }
 }
 
 function getMilestones(projects: Project<never, 'milestones'>[]) {

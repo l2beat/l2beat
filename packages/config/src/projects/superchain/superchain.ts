@@ -16,6 +16,10 @@ export const superchain: BaseProject = {
     badges: [BADGES.Infra.Superchain, BADGES.Stack.OPStack],
   },
   ecosystemConfig: {
+    links: {
+      buildOn: 'https://superchain.eco/develop',
+      learnMore: 'https://superchain.eco/',
+    },
     colors: {
       primary: '#F00000',
       secondary: '#F93E3F',

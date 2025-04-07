@@ -1,14 +1,18 @@
 import { notFound } from 'next/navigation'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import { cn } from '~/utils/cn'
 import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
 import { EcosystemsProjectsChart } from '../_components/charts/ecosystems-projects-chart'
 import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
+import { EcosystemBuildOnLink } from '../_components/widgets/ecosystem-build-on-link'
 import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
+import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
+import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
 import { EcosystemTvsByStage } from '../_components/widgets/ecosystem-tvs-by-stage'
 import { EcosystemTvsByTokenType } from '../_components/widgets/ecosystem-tvs-by-token-type'
-import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
 
 interface Props {
   params: Promise<{
@@ -42,7 +46,7 @@ export default async function Page({ params }: Props) {
         <EcosystemPageHeader
           logo={ecosystem.logo}
           badges={ecosystem.badges}
-          links={ecosystem.links}
+          links={ecosystem.links.header}
         />
         <main className="mt-3 space-y-[--spacing]">
           <div className="grid grid-cols-2 gap-[--spacing]">
@@ -68,6 +72,21 @@ export default async function Page({ params }: Props) {
             entries={ecosystem.projects}
             allScalingProjectsCount={ecosystem.allScalingProjects.count}
           />
+          <div className="grid grid-cols-2 gap-[--spacing]">
+            <PrimaryCard>Token</PrimaryCard>
+            <div className="grid grid-rows-2 gap-[--spacing]">
+              <EcosystemBuildOnLink
+                name={ecosystem.name}
+                slug={slug}
+                href={ecosystem.links.buildOn}
+                className={cn(slug === 'superchain' && 'text-primary')}
+              />
+              <EcosystemLearnMoreLink
+                name={ecosystem.name}
+                href={ecosystem.links.learnMore}
+              />
+            </div>
+          </div>
           <EcosystemMilestonesAndIncidents milestones={ecosystem.milestones} />
           <EcosystemProjectsTable entries={ecosystem.projects} />
         </main>

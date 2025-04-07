@@ -893,9 +893,10 @@ export interface ProjectEcosystemConfig {
     chain: string
     description: string
   }
-  links?: {
+  links: {
+    buildOn: string
+    learnMore: string
     tools?: string[]
-    forBuilders?: string
     grants?: string
     governanceTopDelegates?: string
     governanceLatestProposals?: string

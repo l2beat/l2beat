@@ -1,7 +1,15 @@
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 
-export function EcosystemWidget({ children }: { children: React.ReactNode }) {
-  return <PrimaryCard>{children}</PrimaryCard>
+export function EcosystemWidget({
+  children,
+  asChild,
+  className,
+}: { children: React.ReactNode; asChild?: boolean; className?: string }) {
+  return (
+    <PrimaryCard asChild={asChild} className={className}>
+      {children}
+    </PrimaryCard>
+  )
 }
 
 export function EcosystemWidgetTitle({
