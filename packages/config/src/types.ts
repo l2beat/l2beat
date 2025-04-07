@@ -888,7 +888,7 @@ export interface ProjectEcosystemConfig {
     primary: `#${string}`
     secondary: `#${string}`
   }
-  ecosystemToken?: {
+  nativeToken: {
     id: string
     description: string
   }

@@ -27,7 +27,7 @@ export const superchain: BaseProject = {
       primary: '#F00000',
       secondary: '#F93E3F',
     },
-    ecosystemToken: {
+    nativeToken: {
       id: 'optimism-OP',
       description:
         'OP is the governance token for the Optimism Collective and the Superchain ecosystem. It is used for voting on protocol upgrades, treasury allocations, and other governance decisions across the Superchain network of OP Stack chains.',

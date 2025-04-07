@@ -27,7 +27,7 @@ export const theElasticNetwork: BaseProject = {
       primary: '#513BE5',
       secondary: '#4276FF',
     },
-    ecosystemToken: {
+    nativeToken: {
       id: 'zksync2-ZK',
       description: 'ZK is the governance token for the Elastic Network.',
     },
