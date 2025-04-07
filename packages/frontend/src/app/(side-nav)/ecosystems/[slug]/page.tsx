@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { cn } from '~/utils/cn'
 import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
@@ -12,6 +11,7 @@ import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layer
 import { EcosystemGovernanceLinks } from '../_components/widgets/ecosystem-governance-links'
 import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
 import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
+import { EcosystemNativeToken } from '../_components/widgets/ecosystem-native-token'
 import { EcosystemProjectsByRaas } from '../_components/widgets/ecosystem-projects-by-raas'
 import { EcosystemTvsByStage } from '../_components/widgets/ecosystem-tvs-by-stage'
 import { EcosystemTvsByTokenType } from '../_components/widgets/ecosystem-tvs-by-token-type'
@@ -75,7 +75,7 @@ export default async function Page({ params }: Props) {
             allScalingProjectsCount={ecosystem.allScalingProjects.count}
           />
           <div className="grid grid-cols-2 gap-[--spacing]">
-            <PrimaryCard>Token</PrimaryCard>
+            <EcosystemNativeToken nativeToken={ecosystem.nativeToken} />
             <div className="grid grid-rows-2 gap-[--spacing]">
               <EcosystemBuildOnLink
                 name={ecosystem.name}

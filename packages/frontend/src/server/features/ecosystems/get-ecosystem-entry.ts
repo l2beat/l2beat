@@ -9,6 +9,7 @@ import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
+import type { EcosystemNativeToken } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-native-token'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { getCollection } from '~/content/get-collection'
@@ -46,6 +47,7 @@ export interface EcosystemEntry {
   tvsByTokenType: TvsByTokenType
   daLayersUsed: Record<string, number>
   projectsByRaas: Record<string, string[]>
+  nativeToken: EcosystemNativeToken
   links: {
     header: ProjectLink[]
     buildOn: string
@@ -145,6 +147,7 @@ export async function getEcosystemEntry(
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projectsByRaas,
+    nativeToken: getNativeToken(ecosystem),
     projects: ecosystemProjects
       .map((project) => ({
         ...getScalingSummaryEntry(
@@ -273,5 +276,21 @@ function getGovernanceLinks(
     proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
     reviewThumbnail: `/meta-images/governance/publications/${lastPublication.id}.png`,
+  }
+}
+
+function getNativeToken(
+  ecosystem: Project<'ecosystemConfig'>,
+): EcosystemNativeToken {
+  return {
+    logo: 'https://assets.coingecko.com/coins/images/38043/standard/ZKTokenBlack.png',
+    name: 'ZKsync',
+    symbol: 'ZK',
+    description: ecosystem.ecosystemConfig.nativeToken.description,
+    data: {
+      price: 100,
+      marketCap: 1000000,
+      amount: 1000000,
+    },
   }
 }
