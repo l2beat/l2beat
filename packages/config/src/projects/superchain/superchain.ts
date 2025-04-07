@@ -33,6 +33,5 @@ export const superchain: BaseProject = {
       description:
         'OP is the governance token for the Optimism Collective and the Superchain ecosystem. It is used for voting on protocol upgrades, treasury allocations, and other governance decisions across the Superchain network of OP Stack chains.',
     },
-    governanceReviews: true,
   },
 }

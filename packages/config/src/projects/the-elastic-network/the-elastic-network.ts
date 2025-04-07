@@ -32,6 +32,5 @@ export const theElasticNetwork: BaseProject = {
       chain: 'ethereum',
       description: 'ZK is the governance token for the Elastic Network.',
     },
-    governanceReviews: true,
   },
 }

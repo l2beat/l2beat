@@ -901,7 +901,6 @@ export interface ProjectEcosystemConfig {
     tools?: string[]
     grants?: string
   }
-  governanceReviews: boolean
 }
 // #endregion
 

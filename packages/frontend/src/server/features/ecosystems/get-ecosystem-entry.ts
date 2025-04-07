@@ -11,6 +11,7 @@ import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
+import { getCollection } from '~/content/get-collection'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getImageDimensions } from '~/utils/project/get-image-params'
@@ -24,7 +25,6 @@ import {
 import type { SevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
-import { getCollection } from '~/content/get-collection'
 
 export interface EcosystemEntry {
   slug: string
@@ -262,21 +262,16 @@ function getMilestones(projects: Project<never, 'milestones'>[]) {
 function getGovernanceLinks(
   ecosystem: Project<'ecosystemConfig'>,
 ): EcosystemGovernanceLinks {
-  const base = {
-    topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
-    proposals: ecosystem.ecosystemConfig.links.governanceProposals,
-    review: undefined,
-  }
-  if (!ecosystem.ecosystemConfig.governanceReviews) {
-    return base
-  }
-  const lastPublication = getCollection('publications').at(-1)
-  if (!lastPublication) {
-    return base
-  }
+  const lastPublication = getCollection('publications')
+    .filter((p) => p.id.includes('review'))
+    .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
+    .at(-1)
+  assert(lastPublication, 'No last publication')
 
   return {
-    ...base,
+    topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
+    proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
+    reviewThumbnail: `/meta-images/governance/publications/${lastPublication.id}.png`,
   }
 }
