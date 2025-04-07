@@ -48,8 +48,8 @@ jobs:
         id: publish
         if: steps.diff.outputs.has_changes != '1'
         run: |
-          DOMAIN="$pr-{{ github.event.pull_request.number }}.l2beat.surge.sh"
-          npx surge --project /tmp/compare/out --domain "$DOMAIN"
+          DOMAIN="https://pr-${{ github.event.pull_request.number }}-l2beat.surge.sh"
+          pnpx surge --project /tmp/compare/out --domain "$DOMAIN"
           echo "domain=$DOMAIN" >> $GITHUB_OUTPUT
 
       - name: Find Comment
