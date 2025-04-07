@@ -1,9 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import {
-  DA_BRIDGES,
-  DA_LAYERS,
-  RISK_VIEW,
-} from '../../common'
+import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -116,22 +112,23 @@ export const xlayer: ScalingProject = polygonCDKStack({
       },
     }),
   ],
-  nonTemplateTrackedTxs: [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: rollupModuleContract.address,
-        selector: '0xb910e0f9',
-        functionSignature:
-          'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
-        sinceTimestamp: UnixTime(1736257283),
-      },
-    },
-  ],
+  // project-specific sequencer txs (can be listed when we are able to split the shared agglayer trackedTxs):
+  // nonTemplateTrackedTxs: [
+  //   {
+  //     uses: [
+  //       { type: 'liveness', subtype: 'batchSubmissions' },
+  //       { type: 'l2costs', subtype: 'batchSubmissions' },
+  //     ],
+  //     query: {
+  //       formula: 'functionCall',
+  //       address: rollupModuleContract.address,
+  //       selector: '0xb910e0f9',
+  //       functionSignature:
+  //         'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)',
+  //       sinceTimestamp: UnixTime(1736257283),
+  //     },
+  //   },
+  // ],
   milestones: [
     {
       title: 'X Layer Public Launch',
