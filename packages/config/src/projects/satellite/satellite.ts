@@ -21,6 +21,7 @@ export const satellite: Bridge = {
   display: {
     name: 'Satellite (Axelar)',
     slug: 'satellite',
+    bridgeTab: 'Multichain',
     description:
       'Satellite is a token bridge powered by Axelar network. It allows for cross-chain transfers of assets between Ethereum and other chains, typically to/from Cosmos ecosystem. Axelar is used as both escrow and message relayer.',
     category: 'Hybrid',

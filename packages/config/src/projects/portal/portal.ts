@@ -19,6 +19,7 @@ export const portal: Bridge = {
   display: {
     name: 'Portal (Wormhole)',
     slug: 'portal',
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://wormhole.com/'],
       documentation: [

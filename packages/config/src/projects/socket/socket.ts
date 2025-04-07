@@ -14,6 +14,7 @@ export const socket: Bridge = {
   display: {
     name: 'Socket',
     slug: 'socket',
+    bridgeTab: 'Multichain',
     warning:
       'The security parameters of each individual token and vault must be individually assessed, and can be changed by the developers. DYOR and use Socket at your own risk.',
     category: 'Token Bridge',

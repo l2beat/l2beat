@@ -45,6 +45,7 @@ export const sonicgateway: Bridge = {
   display: {
     name: 'Sonic Gateway',
     slug: 'sonicgateway',
+    bridgeTab: 'Single-chain',
     links: {
       websites: ['https://gateway.soniclabs.com/'],
       documentation: ['https://docs.soniclabs.com/sonic/sonic-gateway'],

@@ -23,6 +23,7 @@ export const amarok: Bridge = {
   display: {
     name: 'Connext',
     slug: 'connext',
+    bridgeTab: 'Multichain',
     warning:
       'This project [is winding down](https://bridge.connext.network/) and operations are migrating to [the Everclear Hub](https://l2beat.com/scaling/projects/everclear).',
     description:

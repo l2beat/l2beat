@@ -24,6 +24,7 @@ export const fraxferry: Bridge = {
   display: {
     name: 'Frax Ferry',
     slug: 'fraxferry',
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://frax.com/'],
       apps: ['https://mainnet.frax.com/tools/bridge/'],

@@ -13,6 +13,7 @@ export const orbiter: Bridge = {
   display: {
     name: 'Orbiter',
     slug: 'orbiter',
+    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://orbiter.finance/'],

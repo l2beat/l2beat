@@ -11,6 +11,7 @@ export const wormholeV1: Bridge = {
   display: {
     name: 'Wormhole V1',
     slug: 'wormholev1',
+    bridgeTab: 'Multichain',
     description: 'First version of the Wormhole bridge.',
     links: {
       websites: ['https://wormhole.com/'],

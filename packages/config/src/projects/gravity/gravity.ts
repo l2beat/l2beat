@@ -13,6 +13,7 @@ export const gravity: Bridge = {
   display: {
     name: 'Gravity',
     slug: 'gravity',
+    bridgeTab: 'Single-chain',
     category: 'Token Bridge',
     links: {
       websites: ['https://gravitybridge.net/'],

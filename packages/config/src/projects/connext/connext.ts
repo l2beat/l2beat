@@ -13,6 +13,7 @@ export const connext: Bridge = {
   display: {
     name: 'Connext (Legacy)',
     slug: 'connext-legacy',
+    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://bridge.connext.network/', 'https://connext.network/'],

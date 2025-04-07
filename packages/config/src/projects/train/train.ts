@@ -10,6 +10,7 @@ export const train: Bridge = {
   display: {
     name: 'Train',
     slug: 'train',
+    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://train.tech/'],

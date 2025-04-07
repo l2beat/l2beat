@@ -14,6 +14,7 @@ export const debridge: Bridge = {
   display: {
     name: 'deBridge',
     slug: 'debridge',
+    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: ['https://debridge.finance'],

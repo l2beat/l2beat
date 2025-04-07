@@ -14,6 +14,7 @@ export const sollet: Bridge = {
   display: {
     name: 'Sollet',
     slug: 'sollet',
+    bridgeTab: 'Single-chain',
     warning:
       'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead.',
     description:

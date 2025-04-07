@@ -38,6 +38,7 @@ export const ronin: Bridge = {
     name: 'Ronin V3',
     slug: 'ronin',
     warning: warningText,
+    bridgeTab: 'Single-chain',
     links: {
       websites: ['https://bridge.roninchain.com/'],
       apps: ['https://bridge.roninchain.com/'],

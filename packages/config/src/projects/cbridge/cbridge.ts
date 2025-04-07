@@ -13,6 +13,7 @@ export const cBridge: Bridge = {
   display: {
     name: 'cBridge (Celer)',
     slug: 'cbridge',
+    bridgeTab: 'Multichain',
     description:
       'Celer cBridge offers cross-chain token bridging in two modes: Token Bridge and Liquidity Network. It also offers AMB facility - ability to pass arbitrary messages across chains.',
     detailedDescription:

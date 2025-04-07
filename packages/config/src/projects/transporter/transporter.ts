@@ -30,6 +30,7 @@ export const transporter: Bridge = {
   display: {
     name: 'Transporter',
     slug: 'transporter',
+    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: ['https://app.transporter.io/'],

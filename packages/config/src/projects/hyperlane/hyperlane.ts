@@ -27,6 +27,7 @@ export const hyperlane: Bridge = {
   display: {
     name: 'Hyperlane Nexus',
     slug: 'hyperlane',
+    bridgeTab: 'Multichain',
     // nexus-unspecific fields are commented out (will add those later)
     // warning:
     //   'The security parameters of each Token Router and non-default ISM module must be individually assessed, and can be changed by their developers.',

@@ -13,6 +13,7 @@ export const everclearbridge: Bridge = {
   display: {
     name: 'Everclear',
     slug: 'everclearbridge',
+    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://everclear.org/'],

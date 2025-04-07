@@ -22,6 +22,7 @@ export const layerzerov2oft: Bridge = {
     slug: 'layerzerov2oft',
     warning:
       'The security parameters of each Omnichain Fungible Token must be individually assessed, and can be changed by their developers (OFT/OApp owners).',
+    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: ['https://layerzero.network/'],

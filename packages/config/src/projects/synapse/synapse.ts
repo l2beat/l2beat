@@ -14,6 +14,7 @@ export const synapse: Bridge = {
   display: {
     name: 'Synapse',
     slug: 'synapse',
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://synapseprotocol.com/landing'],
       apps: ['https://synapseprotocol.com'],

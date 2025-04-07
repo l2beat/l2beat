@@ -40,6 +40,7 @@ export const near: Bridge = {
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://near.org/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],

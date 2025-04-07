@@ -263,6 +263,7 @@ export interface BridgeDisplay {
   description: string
   detailedDescription?: string
   category: BridgeCategory
+  bridgeTab: 'Single-chain' | 'Multichain'
   links: ProjectLinks
   architectureImage?: string
 }

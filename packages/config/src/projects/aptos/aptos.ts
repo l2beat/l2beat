@@ -14,6 +14,7 @@ export const aptos: Bridge = {
   display: {
     name: 'Aptos (LayerZero)',
     slug: 'aptos',
+    bridgeTab: 'Single-chain',
     links: {
       websites: [
         'https://theaptosbridge.com/bridge',

@@ -24,6 +24,7 @@ export const nomad: Bridge = {
   display: {
     name: 'Nomad',
     slug: 'nomad',
+    bridgeTab: 'Multichain',
     warning:
       'The Nomad token bridge contract has recently been exploited and currently is not operational.',
     category: 'Token Bridge',

@@ -13,6 +13,7 @@ export const allbridge: Bridge = {
   display: {
     name: 'Allbridge',
     slug: 'allbridge',
+    bridgeTab: 'Multichain',
     description:
       'Allbridge Core enables the transfer of value between blockchains by offering cross-chain swaps of native stablecoins using liquidity pools.',
     detailedDescription:

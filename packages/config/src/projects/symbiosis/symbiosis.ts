@@ -12,6 +12,7 @@ export const symbiosis: Bridge = {
   display: {
     name: 'Symbiosis',
     slug: 'symbiosis',
+    bridgeTab: 'Multichain',
     category: 'Hybrid',
     description:
       'Symbiosis is a cross-chain AMM DEX externally validated my an MPC relayers network.',

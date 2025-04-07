@@ -36,6 +36,7 @@ export const omni: Bridge = {
   display: {
     name: 'Omnibridge',
     slug: 'omni',
+    bridgeTab: 'Single-chain',
     warning: warningText,
     category: 'Token Bridge',
     links: {

@@ -12,6 +12,7 @@ export const stargate: Bridge = {
   display: {
     name: 'StarGate (LayerZero)',
     slug: 'stargate',
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
       repositories: [

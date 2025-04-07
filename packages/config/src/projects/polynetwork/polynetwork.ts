@@ -22,6 +22,7 @@ export const polynetwork: Bridge = {
     name: 'Poly Bridge',
     slug: 'polynetwork',
     warning: warningText,
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://bridge.poly.network/', 'https://poly.network/'],
       apps: ['https://bridge.poly.network/'],

@@ -28,6 +28,7 @@ export const acrossV3: Bridge = {
   display: {
     name: 'Across V3',
     slug: 'acrossv3',
+    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],

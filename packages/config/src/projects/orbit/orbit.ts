@@ -22,6 +22,7 @@ export const orbit: Bridge = {
     slug: 'orbit',
     warning:
       'Orbit Bridge has been hacked on 1 Jan 2024 and is potentially not safe to use.',
+    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: [

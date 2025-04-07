@@ -55,6 +55,7 @@ export const stargatev2: Bridge = {
     name: 'Stargate v2 (LayerZero v2)',
     shortName: 'Stargate v2',
     slug: 'stargatev2',
+    bridgeTab: 'Multichain',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
       apps: ['https://layerzeroscan.com/'],
