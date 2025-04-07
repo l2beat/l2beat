@@ -36,20 +36,17 @@ proofSystemIsOrCanBeMadePermissioned :-
 proofSystemIsOrCanBeMadePermissioned :-
   proofSystemCanBeMadePermissioned.
 
-proofSystemCanNOTbeMadePermissionlessByMinoritySC :-
-  not proofSystemCanBeMadePermissionlessByMinoritySC.
-
-proofSystemCanBeMadePermissionlessByMinoritySC :-
+proofSystemCanBeMadePermissionless :-
   thereArePermissionlessGamesAvailable,
   canSetRespectedGameType(Actor),
   not compromised(Actor).
-  % minority(Actor, Minority),
-  % msig(Actor, Threshold),
-  % Threshold <= Minority.
+  minority(Actor, Minority),
+  msig(Actor, Threshold),
+  Threshold <= Minority.
 
 canFinalizeInvalidStateRoot :-
   proofSystemIsOrCanBeMadePermissioned,
-  not proofSystemCanBeMadePermissionlessByMinoritySC,
+  not proofSystemCanBeMadePermissionless,
   isPermissionedDisputeGame(PermissionedDisputeGame),
   ultimatePermission(Challenger, "interact", PermissionedDisputeGame, _, "challenge", _, _),
   ultimatePermission(Proposer, "interact", PermissionedDisputeGame, _, "propose", _, _),
@@ -85,29 +82,24 @@ isStage1 :-
   not isNotStage1.
 
 isNotStage1 :-
-  compromisedContract(_).
+  compromised(X),
+  not ultimatePermission(X, _, _, _, _, _, _).
 
 compromisedContract(X) :-
   compromised(X),
   not ultimatePermission(X, _, _, _, _, _, _).
 
-thereAreContractsThatCanBeUpgradedNotBySC :-
-  compromisedContract(X),
-  not isOptimismPortal(X).
-
+% #show nonSCUpgradePermissionExists/1.
 % #show compromised/1.
-% #show compromisedContract/1.
+#show compromisedContract/1.
+#show isStage1/0.
+#show isNotStage1/0.
 % #show canSetRespectedGameType/1.
+#show proofSystemCanBeMadePermissioned/0.
 % #show proofSystemIsOrCanBeMadePermissioned/0.
+#show canFinalizeInvalidStateRoot/0.
 #show currentGame/1.
 % #show thereArePermissionedGamesAvailable/0.
 % #show thereArePermissionlessGamesAvailable/0.
+#show proofSystemCanBeMadePermissionless/0.
 % #show minority/2.
-
-#show isStage1/0.
-#show isNotStage1/0.
-#show proofSystemCanBeMadePermissioned/0.
-#show canFinalizeInvalidStateRoot/0.
-#show proofSystemCanBeMadePermissionlessByMinoritySC/0.
-#show thereAreContractsThatCanBeUpgradedNotBySC/0.
-#show proofSystemCanNOTbeMadePermissionlessByMinoritySC/0.
