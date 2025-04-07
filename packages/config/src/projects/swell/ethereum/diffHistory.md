@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xd0ee1a0ac8905a59f0eeeb61ec138a08361769d1
+
+# Diff at Sun, 06 Apr 2025 07:49:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22194722
+- current block number: 22208481
+
+## Description
+
+Operators change, no change to implementations.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.to:
+-        "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2"
++        "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C"
+      values.batcherHash:
+-        "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2"
++        "0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C"
+      values.unsafeBlockSigner:
+-        "0x6967D304E9b7E26b5eb3f5A1FD1239DaAD3215E6"
++        "0xc28bAd2A2D3E915d132795D2963D0e0459664D68"
+    }
+```
+
 Generated with discovered.json: 0x29198a2522b9aa887bd1eff7d9df1324cd5236ad
 
 # Diff at Fri, 04 Apr 2025 09:41:04 GMT:

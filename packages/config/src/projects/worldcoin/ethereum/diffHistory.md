@@ -1,3 +1,67 @@
+Generated with discovered.json: 0xfdfe3e076fce9670ea90f18a33a3325a4f8f4fa3
+
+# Diff at Sun, 06 Apr 2025 08:11:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22166651
+- current block number: 22208595
+
+## Description
+
+owner/admin changes.
+
+## Watched changes
+
+```diff
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986) {
+    +++ description: None
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49) {
+    +++ description: None
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0xf7134CE138832c1456F2a91D64621eE90c2bddEa"}]
+    }
+```
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      issuedPermissions.0.to:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$admin:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x399f8835567250b9edd2110bf8da23f343a0a2f2
 
 # Diff at Mon, 31 Mar 2025 11:38:28 GMT:

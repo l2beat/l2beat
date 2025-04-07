@@ -1,7 +1,7 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 22189498,
+  "blockNumber": 22208513,
   "configHash": "0x0b2a47bb76f19eb9b026810468a91345d8b2db74f9be6b3117ebee27dff94eb4",
   "entries": [
     {
@@ -277,7 +277,7 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": [],
+      "ignoreInWatchMode": ["chainHead", "getHead"],
       "sinceTimestamp": 1717522271,
       "sinceBlock": 20019964,
       "values": {
@@ -296,35 +296,35 @@
           ]
         ],
         "$upgradeCount": 2,
-        "chainHead": 1280,
+        "chainHead": 1291,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 22187754,
-          "l2Height": 136759159,
-          "prevHash": "0x13498280d1840253acf9037a65d1f32ae475fec6783fc96558d0b7061d414767",
-          "outputRoot": "0x56d4485d2c8ec043386f5d8a5834075e352263448f68dc6f0b0749d38654ad64",
+          "epoch": 22207027,
+          "l2Height": 137220262,
+          "prevHash": "0xfaa57fa01b7f5d1d949caddcf4d90af5f24fad3f226643ae32b9d43c614c56b0",
+          "outputRoot": "0xc952d17cdd11cb351a97ba983f6bbac3baae997196c9e0f1614591f9a0e14e49",
           "celestiaPointers": [
-            { "height": 4739864, "shareStart": 8832, "shareLen": 3665 },
-            { "height": 4739880, "shareStart": 6208, "shareLen": 3259 },
-            { "height": 4739895, "shareStart": 5760, "shareLen": 3545 },
-            { "height": 4739912, "shareStart": 6464, "shareLen": 3447 },
-            { "height": 4739924, "shareStart": 5376, "shareLen": 3631 },
-            { "height": 4739940, "shareStart": 8576, "shareLen": 3576 },
-            { "height": 4739958, "shareStart": 5952, "shareLen": 3646 },
-            { "height": 4739978, "shareStart": 9408, "shareLen": 3437 },
-            { "height": 4739997, "shareStart": 5504, "shareLen": 3432 },
-            { "height": 4740010, "shareStart": 7936, "shareLen": 3579 },
-            { "height": 4740025, "shareStart": 5248, "shareLen": 3582 },
-            { "height": 4740044, "shareStart": 8192, "shareLen": 3664 },
-            { "height": 4740063, "shareStart": 7872, "shareLen": 3224 },
-            { "height": 4740080, "shareStart": 9280, "shareLen": 3605 },
-            { "height": 4740099, "shareStart": 7424, "shareLen": 3662 },
-            { "height": 4740119, "shareStart": 5184, "shareLen": 3665 },
-            { "height": 4740135, "shareStart": 5696, "shareLen": 3656 },
-            { "height": 4740151, "shareStart": 8960, "shareLen": 3664 },
-            { "height": 4740165, "shareStart": 5952, "shareLen": 3542 },
-            { "height": 4740181, "shareStart": 8832, "shareLen": 3537 },
-            { "height": 4740195, "shareStart": 9408, "shareLen": 3167 }
+            { "height": 4779781, "shareStart": 2688, "shareLen": 3663 },
+            { "height": 4779792, "shareStart": 2752, "shareLen": 3571 },
+            { "height": 4779803, "shareStart": 3136, "shareLen": 3441 },
+            { "height": 4779815, "shareStart": 2880, "shareLen": 3565 },
+            { "height": 4779825, "shareStart": 3392, "shareLen": 3349 },
+            { "height": 4779837, "shareStart": 2944, "shareLen": 3516 },
+            { "height": 4779847, "shareStart": 3328, "shareLen": 3518 },
+            { "height": 4779858, "shareStart": 6080, "shareLen": 3365 },
+            { "height": 4779867, "shareStart": 3392, "shareLen": 3505 },
+            { "height": 4779875, "shareStart": 2880, "shareLen": 3449 },
+            { "height": 4779885, "shareStart": 5888, "shareLen": 3404 },
+            { "height": 4779897, "shareStart": 6528, "shareLen": 3549 },
+            { "height": 4779905, "shareStart": 3328, "shareLen": 3516 },
+            { "height": 4779913, "shareStart": 3264, "shareLen": 3474 },
+            { "height": 4779920, "shareStart": 2880, "shareLen": 3396 },
+            { "height": 4779931, "shareStart": 3136, "shareLen": 3354 },
+            { "height": 4779942, "shareStart": 6080, "shareLen": 3461 },
+            { "height": 4779952, "shareStart": 3520, "shareLen": 3466 },
+            { "height": 4779964, "shareStart": 3072, "shareLen": 3570 },
+            { "height": 4779975, "shareStart": 2816, "shareLen": 3368 },
+            { "height": 4779985, "shareStart": 2752, "shareLen": 3559 }
           ]
         },
         "maxPointers": 21,
@@ -498,7 +498,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619825",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619830",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -565,7 +565,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 22188959
+          "prevBlockNum": 22207556
         },
         "paused": false,
         "resourceConfig": {
@@ -1172,7 +1172,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "lightlink/CanonicalStateChain": "0x2a1dee98a80fe70c5ab33c3a8609fdd914616093b8a54b13886ec89d95790113",
+    "lightlink/CanonicalStateChain": "0x42b3266e50dabce089070ea82d582ff24059484a1c9c17ed18b3b03b9aca3df8",
     "lightlink/ChainOracle": "0xb64f3873a84aacd7abfa1a8de00a1fcf40e58e20f71b881c8c791940ec233e61",
     "lightlink/Challenge": "0xdcb2d992b0ec031b3ea66e2a72f2f5c901f68231f201cc17993f2b13e6ebc244",
     "lightlink/L1BridgeRegistry": "0x03bfd7764060fab451eb4e49b4c1576143cb2d058087846124a273e163152adb",

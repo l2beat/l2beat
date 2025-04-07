@@ -10,7 +10,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "498329",
+    "totalBlocksExecuted": "498429",
     "txFilterer": "No"
   },
   {
@@ -24,7 +24,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "375",
+    "totalBlocksExecuted": "379",
     "txFilterer": "Yes"
   },
   {
@@ -38,7 +38,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "20847",
+    "totalBlocksExecuted": "21118",
     "txFilterer": "No"
   },
   {
@@ -52,7 +52,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "786",
+    "totalBlocksExecuted": "798",
     "txFilterer": "No"
   },
   {
@@ -66,7 +66,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "9092",
+    "totalBlocksExecuted": "9419",
     "txFilterer": "No"
   },
   {
@@ -80,7 +80,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "1657",
+    "totalBlocksExecuted": "1769",
     "txFilterer": "Yes"
   },
   {
@@ -94,7 +94,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "452",
+    "totalBlocksExecuted": "464",
     "txFilterer": "No"
   },
   {
@@ -108,7 +108,7 @@
     "pubdataModeName": "rollup",
     "daValidatorType": "Rollup",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "109",
+    "totalBlocksExecuted": "119",
     "txFilterer": "No"
   },
   {
@@ -136,7 +136,7 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "72",
+    "totalBlocksExecuted": "108",
     "txFilterer": "No"
   },
   {
@@ -150,7 +150,21 @@
     "pubdataModeName": "validium",
     "daValidatorType": "Validium",
     "protocolVersion": "0.26.0",
-    "totalBlocksExecuted": "4973",
+    "totalBlocksExecuted": "5333",
+    "txFilterer": "No"
+  },
+  {
+    "chainAddress": "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
+    "chainID": "1217",
+    "name": "chain 1217",
+    "chainAdmin": "0x86F4487949Ac2fb0d5735870f1731e879e1d9680",
+    "baseToken": "0x0000000000000000000000000000000000000001",
+    "baseTokenName": "ETH",
+    "pubdataPricingMode": 1,
+    "pubdataModeName": "validium",
+    "daValidatorType": "Validium",
+    "protocolVersion": "0.26.0",
+    "totalBlocksExecuted": "0",
     "txFilterer": "No"
   }
 ]
