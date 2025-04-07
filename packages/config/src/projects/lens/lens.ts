@@ -57,6 +57,7 @@ export const lens: ScalingProject = zkStackL2({
         callsPerMinute: 1500,
       },
     ],
+    gasTokens: ['LGHO'],
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
