@@ -1,4 +1,3 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
@@ -10,13 +9,7 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
-  logger: Logger
-  constructor(
-    private readonly rpcs: RpcClient[],
-    _logger: Logger,
-  ) {
-    this.logger = _logger.for(this)
-  }
+  constructor(private readonly rpcs: RpcClient[]) {}
 
   async getBalances(
     queries: BalanceQuery[],
@@ -43,24 +36,13 @@ export class BalanceProvider {
           const results = []
           for (const { token, holder } of queries) {
             if (token === 'native') {
-              const start = Date.now()
               const balance = await client.getBalance(holder, blockNumber)
-              this.logger.tag({ chain }).info('Call duration', {
-                callDuration: (Date.now() - start) / 1000,
-                type: 'native',
-              })
               results.push(balance)
             } else {
-              const start = Date.now()
               const res = await client.call(
                 encodeErc20Balance(token, holder),
                 blockNumber,
               )
-              this.logger.tag({ chain }).info('Call duration', {
-                callDuration: (Date.now() - start) / 1000,
-                type: 'erc20',
-              })
-
               results.push(
                 res.toString() === '0x' ? 0n : BigInt(res.toString()),
               )

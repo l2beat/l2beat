@@ -1,16 +1,9 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
 
 export class TotalSupplyProvider {
-  logger: Logger
-  constructor(
-    private readonly rpcs: RpcClient[],
-    _logger: Logger,
-  ) {
-    this.logger = _logger.for(this)
-  }
+  constructor(private readonly rpcs: RpcClient[]) {}
 
   async getTotalSupplies(
     tokens: EthereumAddress[],
@@ -34,13 +27,7 @@ export class TotalSupplyProvider {
         } else {
           const results = []
           for (const c of calls) {
-            const start = Date.now()
             const res = await client.call(c, blockNumber)
-            this.logger.tag({ chain }).info('Call duration', {
-              callDuration: (Date.now() - start) / 1000,
-              type: 'totalSupply',
-            })
-
             if (res.toString() === '0x') {
               results.push(0n)
             } else {
