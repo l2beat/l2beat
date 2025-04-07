@@ -28,8 +28,7 @@ export const theElasticNetwork: BaseProject = {
       secondary: '#4276FF',
     },
     ecosystemToken: {
-      name: 'ZK',
-      chain: 'ethereum',
+      id: 'zksync2-ZK',
       description: 'ZK is the governance token for the Elastic Network.',
     },
   },

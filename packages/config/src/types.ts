@@ -889,8 +889,7 @@ export interface ProjectEcosystemConfig {
     secondary: `#${string}`
   }
   ecosystemToken?: {
-    name: string
-    chain: string
+    id: string
     description: string
   }
   links: {

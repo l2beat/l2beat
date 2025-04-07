@@ -94,6 +94,9 @@ export default async function Page({ params }: Props) {
             <EcosystemProjectsByRaas
               projectsByRaas={ecosystem.projectsByRaas}
             />
+            <EcosystemProjectsByRaas
+              projectsByRaas={ecosystem.projectsByRaas}
+            />
             <EcosystemGovernanceLinks
               links={ecosystem.links.governance}
               className="col-span-2 col-start-3"
