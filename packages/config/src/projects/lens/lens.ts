@@ -98,7 +98,7 @@ export const lens: ScalingProject = zkStackL2({
     bridge: DA_BRIDGES.NONE,
   },
   availDa: {
-    sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
+    sinceBlock: 0, // vincenzo said so
     appId: '17',
   },
   milestones: [
