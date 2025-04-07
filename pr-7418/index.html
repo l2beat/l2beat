@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @3530e955</title>
+  <title>Diff @dc3369c5</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,9 +105,9 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="removed">215433a6</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">3530e955</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">dc3369c5</code></a> (PR)
   </h1>
-  <ul><li x-data="{ open: true }">
+  <ul><li x-data="{ open: false }">
   <h2>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     
@@ -292,6 +292,290 @@ ${r?'Expression: "'+r+`"
 </span><span class="line added">    "amount": {
 </span><span class="line added">      "type": "balanceOfEscrow",
 </span><span class="line added">      "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+</span><span class="line added">      "chain": "ethereum",
+</span><span class="line added">      "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+</span><span class="line added">      "decimals": 18,
+</span><span class="line added">      "sinceTimestamp": 1739109131
+</span><span class="line added">    },
+</span><span class="line added">    "category": "other",
+</span><span class="line added">    "source": "canonical",
+</span><span class="line added">    "isAssociated": true
+</span><span class="line ctx">  }
+</span><span class="line ctx">]</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>lightlink</span>
+    <code><span class="added">+32</span> <span class="removed">-0</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>tvsConfig</span>
+    <code><span class="added">+32</span> <span class="removed">-0</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "mode": "auto",
+</span><span class="line ctx">    "id": "lightlink-ARB",
+</span><span class="line ctx">    "priceId": "arbitrum",
+</span><span class="line ctx">    "symbol": "ARB",
+</span><span class="line full indicator">    "name": "Arbitrum",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-DAI",
+</span><span class="line full">    "priceId": "dai",
+</span><span class="line full">    "symbol": "DAI",
+</span><span class="line full">    "name": "Dai Stablecoin",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "stablecoin",
+</span><span class="line ctx">    "source": "canonical",
+</span><span class="line ctx">    "isAssociated": false
+</span><span class="line ctx">  },
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "mode": "auto",
+</span><span class="line added">    "id": "lightlink-ETH",
+</span><span class="line added">    "priceId": "ethereum",
+</span><span class="line added">    "symbol": "ETH",
+</span><span class="line added">    "name": "Ether",
+</span><span class="line added">    "amount": {
+</span><span class="line added">      "type": "calculation",
+</span><span class="line added">      "operator": "sum",
+</span><span class="line added">      "arguments": [
+</span><span class="line added">        {
+</span><span class="line added">          "type": "balanceOfEscrow",
+</span><span class="line added">          "address": "native",
+</span><span class="line added">          "chain": "ethereum",
+</span><span class="line added">          "escrowAddress": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+</span><span class="line added">          "decimals": 18,
+</span><span class="line added">          "sinceTimestamp": 1725540839
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "type": "balanceOfEscrow",
+</span><span class="line added">          "address": "native",
+</span><span class="line added">          "chain": "ethereum",
+</span><span class="line added">          "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line added">          "decimals": 18,
+</span><span class="line added">          "sinceTimestamp": 1692185219
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    },
+</span><span class="line added">    "category": "ether",
+</span><span class="line added">    "source": "canonical",
+</span><span class="line added">    "isAssociated": false
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "mode": "auto",
+</span><span class="line ctx">    "id": "lightlink-LINK",
+</span><span class="line ctx">    "priceId": "chainlink",
+</span><span class="line ctx">    "symbol": "LINK",
+</span><span class="line ctx">    "name": "ChainLink Token",
+</span><span class="line ctx">    "amount": {
+</span><span class="line ctx">      "type": "balanceOfEscrow",
+</span><span class="line full indicator">      "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-LL",
+</span><span class="line full">    "priceId": "lightlink",
+</span><span class="line full">    "symbol": "LL",
+</span><span class="line full">    "name": "LightLink",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x0921799CB1d702148131024d18fCdE022129Dc73",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1713916800
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": true
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-MATIC",
+</span><span class="line full">    "priceId": "matic-network",
+</span><span class="line full">    "symbol": "MATIC",
+</span><span class="line full">    "name": "Matic Token",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-PEPE",
+</span><span class="line full">    "priceId": "pepe",
+</span><span class="line full">    "symbol": "PEPE",
+</span><span class="line full">    "name": "Pepe",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-UNI",
+</span><span class="line full">    "priceId": "uniswap",
+</span><span class="line full">    "symbol": "UNI",
+</span><span class="line full">    "name": "Uniswap",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 18,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "other",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-USDC",
+</span><span class="line full">    "priceId": "usd-coin",
+</span><span class="line full">    "symbol": "USDC",
+</span><span class="line full">    "name": "USD Coin",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 6,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "stablecoin",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-USDT",
+</span><span class="line full">    "priceId": "tether",
+</span><span class="line full">    "symbol": "USDT",
+</span><span class="line full">    "name": "Tether USD",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 6,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line full">    "category": "stablecoin",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line full">    "isAssociated": false
+</span><span class="line full">  },
+</span><span class="line full">  {
+</span><span class="line full">    "mode": "auto",
+</span><span class="line full">    "id": "lightlink-WBTC",
+</span><span class="line full">    "priceId": "wrapped-bitcoin",
+</span><span class="line full">    "symbol": "WBTC",
+</span><span class="line full">    "name": "Wrapped BTC",
+</span><span class="line full">    "amount": {
+</span><span class="line full">      "type": "balanceOfEscrow",
+</span><span class="line full">      "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+</span><span class="line full">      "chain": "ethereum",
+</span><span class="line full">      "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+</span><span class="line full">      "decimals": 8,
+</span><span class="line full">      "sinceTimestamp": 1692185219
+</span><span class="line full">    },
+</span><span class="line ctx">    "category": "other",
+</span><span class="line ctx">    "source": "canonical",
+</span><span class="line ctx">    "isAssociated": false
+</span><span class="line ctx">  }
+</span><span class="line ctx">]</span></code></pre>
+</li></ul>
+</li><li x-data="{ open: false }">
+  <h2>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    
+    
+    <span>treasure</span>
+    <code><span class="added">+19</span> <span class="removed">-1</span></code>
+  </h2>
+  <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
+  <h3>
+    <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
+    <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
+    <span>tvsConfig</span>
+    <code><span class="added">+19</span> <span class="removed">-1</span></code>
+  </h3>
+  <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">[
+</span><span class="line ctx">  {
+</span><span class="line ctx">    "mode": "auto",
+</span><span class="line ctx">    "id": "treasure-ETH",
+</span><span class="line ctx">    "priceId": "ethereum",
+</span><span class="line ctx">    "symbol": "ETH",
+</span><span class="line full indicator">    "name": "Ethereum",
+</span><span class="line full">    "category": "ether",
+</span><span class="line full">    "source": "canonical",
+</span><span class="line ctx">    "amount": {
+</span><span class="line ctx">      "type": "totalSupply",
+</span><span class="line ctx">      "address": "0x650BE505C391d396A1e0b1f2337EaE77F064fF7f",
+</span><span class="line ctx">      "chain": "treasure",
+</span><span class="line ctx">      "decimals": 18,
+</span><span class="line removed">      "sinceTimestamp": 1732617294
+</span><span class="line added">      "sinceTimestamp": 1739109131
+</span><span class="line ctx">    },
+</span><span class="line ctx">    "isAssociated": false
+</span><span class="line added">  },
+</span><span class="line added">  {
+</span><span class="line added">    "mode": "auto",
+</span><span class="line added">    "id": "treasure-MAGIC",
+</span><span class="line added">    "priceId": "magic",
+</span><span class="line added">    "symbol": "MAGIC",
+</span><span class="line added">    "name": "MAGIC",
+</span><span class="line added">    "amount": {
+</span><span class="line added">      "type": "balanceOfEscrow",
+</span><span class="line added">      "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
 </span><span class="line added">      "chain": "ethereum",
 </span><span class="line added">      "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
 </span><span class="line added">      "decimals": 18,
