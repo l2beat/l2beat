@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Diff @0a762bd5</title>
+  <title>Diff @d49b2b19</title>
   <style>
 :root {
   --font-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -105,7 +105,7 @@ ${r?'Expression: "'+r+`"
     Diff between
     <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="removed">215433a6</code></a> (main)
     and
-    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">0a762bd5</code></a> (PR)
+    <a href="https://github.com/l2beat/l2beat/tree/215433a6322399aa94789758216661fd91a27a5f"><code class="added">d49b2b19</code></a> (PR)
   </h1>
   <ul><li x-data="{ open: false }">
   <h2>
@@ -113,14 +113,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>astarzkevm</span>
-    <code><span class="added">+33</span> <span class="removed">-1</span></code>
+    <code><span class="added">+55</span> <span class="removed">-1</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+33</span> <span class="removed">-1</span></code>
+    <code><span class="added">+55</span> <span class="removed">-1</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -203,18 +203,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line full">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line full">      }
 </span><span class="line full">    ]
@@ -262,14 +284,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>gpt</span>
-    <code><span class="added">+33</span> <span class="removed">-1</span></code>
+    <code><span class="added">+55</span> <span class="removed">-1</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+33</span> <span class="removed">-1</span></code>
+    <code><span class="added">+55</span> <span class="removed">-1</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -352,18 +374,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line full">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line full">      }
 </span><span class="line full">    ]
@@ -411,14 +455,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>lumia</span>
-    <code><span class="added">+37</span> <span class="removed">-5</span></code>
+    <code><span class="added">+59</span> <span class="removed">-5</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+37</span> <span class="removed">-5</span></code>
+    <code><span class="added">+59</span> <span class="removed">-5</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -501,18 +545,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line ctx">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line ctx">      }
 </span><span class="line ctx">    ]
@@ -564,14 +630,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>polygonzkevm</span>
-    <code><span class="added">+95</span> <span class="removed">-89</span></code>
+    <code><span class="added">+117</span> <span class="removed">-89</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: false, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+11</span> <span class="removed">-7</span></code>
+    <code><span class="added">+33</span> <span class="removed">-7</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-rollup",
@@ -651,18 +717,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonZkEVM.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x7253F329302b1b5E774Ac641EA3743E9E3244f2E#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "PolygonZkEVM.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x7253F329302b1b5E774Ac641EA3743E9E3244f2E#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line ctx">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line ctx">      }
 </span><span class="line ctx">    ]
@@ -1084,14 +1172,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>silicon</span>
-    <code><span class="added">+37</span> <span class="removed">-5</span></code>
+    <code><span class="added">+59</span> <span class="removed">-5</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+37</span> <span class="removed">-5</span></code>
+    <code><span class="added">+59</span> <span class="removed">-5</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -1174,18 +1262,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line ctx">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line ctx">      }
 </span><span class="line ctx">    ]
@@ -1237,14 +1347,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>ternoa</span>
-    <code><span class="added">+37</span> <span class="removed">-5</span></code>
+    <code><span class="added">+59</span> <span class="removed">-5</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+37</span> <span class="removed">-5</span></code>
+    <code><span class="added">+59</span> <span class="removed">-5</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -1327,18 +1437,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line ctx">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line ctx">      }
 </span><span class="line ctx">    ]
@@ -1390,14 +1522,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>wirex</span>
-    <code><span class="added">+33</span> <span class="removed">-1</span></code>
+    <code><span class="added">+55</span> <span class="removed">-1</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+33</span> <span class="removed">-1</span></code>
+    <code><span class="added">+55</span> <span class="removed">-1</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -1480,18 +1612,40 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
-</span><span class="line full">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
+</span><span class="line full indicator">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line full">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line full">      }
 </span><span class="line full">    ]
@@ -1539,14 +1693,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>witness</span>
-    <code><span class="added">+39</span> <span class="removed">-1</span></code>
+    <code><span class="added">+61</span> <span class="removed">-1</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+39</span> <span class="removed">-1</span></code>
+    <code><span class="added">+61</span> <span class="removed">-1</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -1629,17 +1783,39 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
 </span><span class="line ctx">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line ctx">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line ctx">      }
@@ -1688,14 +1864,14 @@ ${r?'Expression: "'+r+`"
     
     
     <span>xlayer</span>
-    <code><span class="added">+39</span> <span class="removed">-1</span></code>
+    <code><span class="added">+61</span> <span class="removed">-1</span></code>
   </h2>
   <ul class="field" x-show="open"><li x-data="{ open: true, expand: false }">
   <h3>
     <button @click="open = !open" x-text="open ? 'Close' : 'Open'"></button>
     <button x-show="open" @click="expand = !expand" x-text="expand ? 'Hide full' : 'Show full'"></button>
     <span>scalingTechnology</span>
-    <code><span class="added">+39</span> <span class="removed">-1</span></code>
+    <code><span class="added">+61</span> <span class="removed">-1</span></code>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code><span class="line ctx">{
 </span><span class="line ctx">  "architectureImage": "polygon-cdk-validium",
@@ -1778,17 +1954,39 @@ ${r?'Expression: "'+r+`"
 </span><span class="line full">    ],
 </span><span class="line full">    "references": [
 </span><span class="line full">      {
-</span><span class="line full">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
-</span><span class="line full">        "url": "https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code"
-</span><span class="line full">      }
-</span><span class="line full">    ]
-</span><span class="line full">  },
-</span><span class="line full">  "stateCorrectness": {
-</span><span class="line full">    "name": "Validity proofs ensure state correctness",
-</span><span class="line full">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
-</span><span class="line full">    "risks": [],
-</span><span class="line full">    "references": [
-</span><span class="line full">      {
+</span><span class="line ctx">        "title": "Validium.sol - source code, onlyTrustedSequencer modifier",
+</span><span class="line ctx">        "url": "https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code"
+</span><span class="line ctx">      }
+</span><span class="line ctx">    ]
+</span><span class="line ctx">  },
+</span><span class="line added">  "otherConsiderations": [
+</span><span class="line added">    {
+</span><span class="line added">      "name": "Shared bridge with CDK-sovereign chains",
+</span><span class="line added">      "description": "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt-in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'pessimistic proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a proof system on Ethereum are able to share the bridge with other Agglayer projects that prove their full execution to Ethereum.",
+</span><span class="line added">      "risks": [
+</span><span class="line added">        {
+</span><span class="line added">          "category": "Funds can be lost if",
+</span><span class="line added">          "text": "the accounting proof system for the bridge (pessimistic proofs, SP1) is implemented incorrectly."
+</span><span class="line added">        }
+</span><span class="line added">      ],
+</span><span class="line added">      "references": [
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Pessimistic Proof - Polygon Knowledge Layer",
+</span><span class="line added">          "url": "https://docs.polygon.technology/learn/agglayer/pessimistic_proof"
+</span><span class="line added">        },
+</span><span class="line added">        {
+</span><span class="line added">          "title": "Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function",
+</span><span class="line added">          "url": "https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046"
+</span><span class="line added">        }
+</span><span class="line added">      ]
+</span><span class="line added">    }
+</span><span class="line added">  ],
+</span><span class="line ctx">  "stateCorrectness": {
+</span><span class="line ctx">    "name": "Validity proofs ensure state correctness",
+</span><span class="line ctx">    "description": "Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.",
+</span><span class="line ctx">    "risks": [],
+</span><span class="line ctx">    "references": [
+</span><span class="line ctx">      {
 </span><span class="line ctx">        "title": "PolygonRollupManager.sol - source code, _verifyAndRewardBatches function",
 </span><span class="line ctx">        "url": "https://etherscan.io/address/0xA33619940bceb9be7c9679Dd80FA2918C2476382#code"
 </span><span class="line ctx">      }
