@@ -1,0 +1,10 @@
+{
+  "name": "lens",
+  "chain": "zksync2",
+  "blockNumber": 54952331,
+  "configHash": "0x908e228f5efd39546dab229eed593609627c11b52d012ef749087d2c7599fc02",
+  "sharedModules": ["shared-zk-stack"],
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {}
+}
