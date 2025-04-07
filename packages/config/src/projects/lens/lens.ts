@@ -18,7 +18,7 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const lens: ScalingProject = zkStackL2({
   capability: 'universal',
   additionalPurposes: ['Social'],
-  additionalBadges: [BADGES.DA.CustomDA],
+  additionalBadges: [BADGES.DA.Avail],
   addedAt: UnixTime(1716536821), // 2024-05-24T07:47:01Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
