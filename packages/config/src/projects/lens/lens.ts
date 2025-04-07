@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
+  ESCROW,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
@@ -62,13 +63,20 @@ export const lens: ScalingProject = zkStackL2({
       sharedEscrow: {
         type: 'ElasticChain',
         l2BridgeAddress: EthereumAddress(
-          '0xE5ecd226b3032910CEaa43ba92EE8232f8237553', // WRONG, todo
+          '0x8116A750e2091B2bA0D94223e7b20a6A65A279f4',
         ),
         l2EtherAddress: EthereumAddress(
           '0xE5ecd226b3032910CEaa43ba92EE8232f8237553',
         ),
         tokensToAssignFromL1: ['LGHO'],
       },
+    }),
+    discovery.getEscrowDetails({
+      address: discovery.getContract('L1USDCBridge').address,
+      tokens: ['USDC'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'External contract escrowing USDC deposited to Lens via canonical messaging.',
     }),
   ],
   daProvider: {

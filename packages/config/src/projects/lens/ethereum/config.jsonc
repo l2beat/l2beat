@@ -3,7 +3,10 @@
   "chain": "ethereum",
   "name": "lens",
   "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": ["0xc29d04A93F893700015138E3E334eB828dAC3cef"],
+  "initialAddresses": [
+    "0xc29d04A93F893700015138E3E334eB828dAC3cef",
+    "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987" // L1USDCBridge
+  ],
   "names": {
     "0xc29d04A93F893700015138E3E334eB828dAC3cef": "LensZkEvm",
     "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": "LensZkEvmAdmin",

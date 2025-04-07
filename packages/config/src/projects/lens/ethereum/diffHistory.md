@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x044ed56ecd13cce5c0d8e2b0c0842f27158b3f99
+Generated with discovered.json: 0x718d767207808391a4f07b9e9c9cfd8db26b8c24
 
-# Diff at Sun, 06 Apr 2025 08:38:49 GMT:
+# Diff at Mon, 07 Apr 2025 13:15:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 22208714
+- current block number: 22217252
 
 ## Description
 
-ignore relative: old STM.
+Initial discovery of a standard ZK stack validium.
 
 ## Initial discovery
 
@@ -51,4 +51,10 @@ ignore relative: old STM.
 +   Status: CREATED
     contract Verifier (0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5)
     +++ description: Implements the ZK proof verification logic.
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987)
+    +++ description: None
 ```
