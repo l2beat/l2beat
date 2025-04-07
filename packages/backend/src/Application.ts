@@ -26,6 +26,11 @@ export class Application {
   constructor(config: Config, logger: Logger) {
     logger.for(this).info('Initializing App')
 
+    logger.info('Initializing DB', {
+      maxPoolSize: config.database.connectionPoolSize,
+      appName: config.database.connection.application_name,
+    })
+
     const database = createDatabase({
       ...config.database.connection,
       ...config.database.connectionPoolSize,

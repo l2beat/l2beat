@@ -73,13 +73,13 @@ export async function makeConfig(
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
-            application_name: 'BE-PROD',
+            application_name: env.string('DATABASE_APP_NAME', 'BE-PROD'),
             ssl: { rejectUnauthorized: false },
           },
           connectionPoolSize: {
             // our heroku plan allows us for up to 400 open connections
             min: 20,
-            max: env.integer('DB_CONNECTION_POOL_SIZE_MAX', 200),
+            max: env.integer('DATABASE_MAX_POOL_SIZE', 200),
           },
           isReadonly,
         },
