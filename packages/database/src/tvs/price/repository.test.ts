@@ -36,6 +36,22 @@ describeDatabase(TvsPriceRepository.name, (db) => {
     })
   })
 
+  describe(TvsPriceRepository.prototype.getPrice.name, () => {
+    it('returns price for a configuration', async () => {
+      await repository.insertMany([
+        tvsPrice('a', 'eth', UnixTime(100), 1000),
+        tvsPrice('a', 'eth', UnixTime(200), 1100),
+        tvsPrice('a', 'eth', UnixTime(300), 1200),
+        tvsPrice('b', 'btc', UnixTime(100), 20000),
+        tvsPrice('b', 'btc', UnixTime(200), 21000),
+      ])
+
+      const result = await repository.getPrice('a'.repeat(12), UnixTime(200))
+
+      expect(result).toEqual(tvsPrice('a', 'eth', UnixTime(200), 1100))
+    })
+  })
+
   describe(TvsPriceRepository.prototype.getPricesInRange.name, () => {
     it('gets prices for given configIds in time range', async () => {
       await repository.insertMany([

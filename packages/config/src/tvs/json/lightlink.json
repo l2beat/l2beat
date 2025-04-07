@@ -40,6 +40,38 @@
     },
     {
       "mode": "auto",
+      "id": "lightlink-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+            "decimals": 18,
+            "sinceTimestamp": 1725540839
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
+            "decimals": 18,
+            "sinceTimestamp": 1692185219
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "lightlink-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",

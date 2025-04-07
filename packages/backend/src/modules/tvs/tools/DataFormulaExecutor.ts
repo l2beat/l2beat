@@ -12,11 +12,13 @@ import type {
   PriceConfig,
   TotalSupplyAmountConfig,
 } from '../types'
+import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
 
 export class DataFormulaExecutor {
   constructor(
-    private storage: LocalStorage,
+    private localStorage: LocalStorage,
+    private dbStorage: DBStorage | undefined,
     private priceProvider: PriceProvider,
     private circulatingSupplyProvider: CirculatingSupplyProvider,
     private blockProviders: Map<string, BlockProvider>,
@@ -40,6 +42,34 @@ export class DataFormulaExecutor {
       timestamp,
       isLatestMode,
     )
+
+    if (this.dbStorage) {
+      this.logger.info(`Preloading prices and amounts from DB`)
+
+      const storedPrices = await Promise.all(
+        prices.map((price) => this.localStorage.getPrice(price.id, timestamp)),
+      )
+
+      await this.dbStorage.preloadPrices(
+        prices
+          .map((price) => price.id)
+          .filter((_, index) => storedPrices[index] === undefined),
+        [timestamp],
+      )
+
+      const storedAmounts = await Promise.all(
+        amounts.map((amount) =>
+          this.localStorage.getAmount(amount.id, timestamp),
+        ),
+      )
+
+      await this.dbStorage.preloadAmounts(
+        amounts
+          .map((amount) => amount.id)
+          .filter((_, index) => storedAmounts[index] === undefined),
+        [timestamp],
+      )
+    }
 
     const promises: Promise<void>[] = []
 
@@ -70,9 +100,21 @@ export class DataFormulaExecutor {
           (!a.untilTimestamp || timestamp < a.untilTimestamp),
       )
       .map(async (amount) => {
-        const cachedValue = await this.storage.getAmount(amount.id, timestamp)
+        const cachedValue = await this.localStorage.getAmount(
+          amount.id,
+          timestamp,
+        )
+
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${amount.id}`)
+          return
+        }
+
+        const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
+
+        if (dbValue !== undefined) {
+          this.logger.debug(`DB value found for ${amount.id}`)
+          await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
           return
         }
 
@@ -82,12 +124,12 @@ export class DataFormulaExecutor {
         switch (amount.type) {
           case 'totalSupply': {
             const value = await this.fetchTotalSupply(amount, block)
-            await this.storage.writeAmount(amount.id, timestamp, value)
+            await this.localStorage.writeAmount(amount.id, timestamp, value)
             break
           }
           case 'balanceOfEscrow': {
             const value = await this.fetchEscrowBalance(amount, block)
-            await this.storage.writeAmount(amount.id, timestamp, value)
+            await this.localStorage.writeAmount(amount.id, timestamp, value)
             break
           }
           default:
@@ -127,20 +169,31 @@ export class DataFormulaExecutor {
               `${c.apiId}: No latest circulating supply found`,
             )
 
-            await this.storage.writeAmount(c.id, timestamp, latest)
+            await this.localStorage.writeAmount(c.id, timestamp, latest)
           }
         })(),
       ]
     } else {
       return filteredAmounts.map(async (amount) => {
-        const cachedValue = await this.storage.getAmount(amount.id, timestamp)
+        const cachedValue = await this.localStorage.getAmount(
+          amount.id,
+          timestamp,
+        )
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${amount.id}`)
           return
         }
 
+        const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
+
+        if (dbValue !== undefined) {
+          this.logger.debug(`DB value found for ${amount.id}`)
+          await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
+          return
+        }
+
         const value = await this.fetchCirculatingSupply(amount, timestamp)
-        await this.storage.writeAmount(amount.id, timestamp, value)
+        await this.localStorage.writeAmount(amount.id, timestamp, value)
       })
     }
   }
@@ -164,19 +217,31 @@ export class DataFormulaExecutor {
               `${price.priceId}: No latest price found`,
             )
 
-            await this.storage.writePrice(price.id, timestamp, latest)
+            await this.localStorage.writePrice(price.id, timestamp, latest)
           }
         })(),
       ]
     } else {
       return prices.map(async (price) => {
-        const cachedValue = await this.storage.getPrice(price.id, timestamp)
+        const cachedValue = await this.localStorage.getPrice(
+          price.id,
+          timestamp,
+        )
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${price.priceId}`)
           return
         }
+
+        const dbValue = await this.dbStorage?.getPrice(price.id, timestamp)
+
+        if (dbValue !== undefined) {
+          this.logger.debug(`DB value found for ${price.priceId}`)
+          await this.localStorage.writePrice(price.id, timestamp, dbValue)
+          return
+        }
+
         const v = await this.fetchPrice(price, timestamp)
-        await this.storage.writePrice(price.id, timestamp, v)
+        await this.localStorage.writePrice(price.id, timestamp, v)
       })
     }
   }
@@ -272,7 +337,7 @@ export class DataFormulaExecutor {
         const latestBlock = await block.getLatestBlockNumber()
         result.set(chain, latestBlock)
       } else {
-        const cached = await this.storage.getBlockNumber(chain, timestamp)
+        const cached = await this.localStorage.getBlockNumber(chain, timestamp)
         if (cached) {
           result.set(chain, cached)
           continue
@@ -287,7 +352,7 @@ export class DataFormulaExecutor {
             chain,
           )
         result.set(chain, blockNumber)
-        await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
+        await this.localStorage.writeBlockNumber(chain, timestamp, blockNumber)
       }
     }
 
