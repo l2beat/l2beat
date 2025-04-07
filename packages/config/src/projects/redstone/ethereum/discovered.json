@@ -1,7 +1,7 @@
 {
   "name": "redstone",
   "chain": "ethereum",
-  "blockNumber": 21235431,
+  "blockNumber": 22208357,
   "configHash": "0x193a1942bf028f05e01db003c4fefc3bdf5cb067044575b3dde0d07390a10bba",
   "entries": [
     {
@@ -133,7 +133,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622080",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624369",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -500,10 +500,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9957600,
-        "latestOutputIndex": 460,
-        "nextBlockNumber": 9979200,
-        "nextOutputIndex": 461,
+        "latestBlockNumber": 15832800,
+        "latestOutputIndex": 732,
+        "nextBlockNumber": 15854400,
+        "nextOutputIndex": 733,
         "proposer": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
         "PROPOSER": "0x4c465E58946145bb2BFC38833154f5A3B5728CF7",
         "startingBlockNumber": 0,
@@ -640,7 +640,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 21234953
+          "prevBlockNum": 22207864
         },
         "paused": false,
         "superchainConfig": "0x4b5b41c240173191425F5928bc6bdd0d439331BB",

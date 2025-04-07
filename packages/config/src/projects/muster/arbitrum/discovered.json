@@ -1,7 +1,7 @@
 {
   "name": "muster",
   "chain": "arbitrum",
-  "blockNumber": 311763335,
+  "blockNumber": 323453444,
   "configHash": "0xab265838385bdb3b6a5e8ab6b2f2a4051e615024f34d73548e3e222e0a6b2c7e",
   "entries": [
     {
@@ -125,6 +125,18 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
+    {
       "name": "OneStepProverHostIo",
       "address": "0x33c1514Bf90e202d242C299b37C60f908aa206D4",
       "type": "Contract",
@@ -242,7 +254,7 @@
         },
         {
           "permission": "validate",
-          "to": "0xa213e1A202C49C4AC17C43Fc57aA469ebd897F40",
+          "to": "0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         }
@@ -290,13 +302,13 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 8394,
+        "firstUnresolvedNode": 9206,
         "inbox": "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 18762461,
-        "latestConfirmed": 8393,
-        "latestNodeCreated": 8417,
+        "lastStakeBlock": 22199788,
+        "latestConfirmed": 9205,
+        "latestNodeCreated": 9229,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD17550876106645988051ffDd31dFc3cDaA29F9c",
@@ -305,12 +317,12 @@
         "rollupDeploymentBlock": 18761899,
         "rollupEventInbox": "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C",
         "sequencerInbox": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
-        "setValidatorCount": 1,
-        "stakerCount": 1,
+        "setValidatorCount": 3,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0xa213e1A202C49C4AC17C43Fc57aA469ebd897F40"],
+        "validators": ["0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298"],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
@@ -411,22 +423,15 @@
       "derivedName": "RollupEventInbox"
     },
     {
-      "address": "0xa213e1A202C49C4AC17C43Fc57aA469ebd897F40",
+      "address": "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
-          "from": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-        }
-      ]
-    },
-    {
-      "address": "0xa91279538ADfcD8E47ec74e50Cd02d9498cD039a",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
+          "permission": "interact",
+          "from": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
+          "description": "Add/remove batchPosters (Sequencers)."
+        },
         {
           "permission": "sequence",
           "from": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
@@ -479,7 +484,7 @@
           "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
         ],
         "allowedOutboxList": ["0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
-        "delayedMessageCount": 10996,
+        "delayedMessageCount": 11920,
         "inboxHistory": [
           "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
           "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
@@ -487,8 +492,8 @@
         "outboxHistory": ["0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
         "rollup": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
         "sequencerInbox": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
-        "sequencerMessageCount": 8996,
-        "sequencerReportedSubMessageCount": 294541
+        "sequencerMessageCount": 9908,
+        "sequencerReportedSubMessageCount": 320061
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -755,8 +760,14 @@
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": []
+        },
+        {
           "permission": "sequence",
-          "to": "0xa91279538ADfcD8E47ec74e50Cd02d9498cD039a",
+          "to": "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "via": []
         },
@@ -798,9 +809,9 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 8996,
-        "batchPosterManager": "0x0000000000000000000000000000000000000000",
-        "batchPosters": ["0xa91279538ADfcD8E47ec74e50Cd02d9498cD039a"],
+        "batchCount": 9908,
+        "batchPosterManager": "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
+        "batchPosters": ["0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"],
         "bridge": "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
@@ -827,8 +838,8 @@
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
         "sequencerVersion": "0x88",
-        "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 10995,
+        "setIsBatchPosterCount": 3,
+        "totalDelayedMessagesRead": 11919,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
