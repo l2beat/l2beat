@@ -896,10 +896,10 @@ export interface ProjectEcosystemConfig {
   links: {
     buildOn: string
     learnMore: string
+    governanceTopDelegates: string
+    governanceProposals: string
     tools?: string[]
     grants?: string
-    governanceTopDelegates?: string
-    governanceLatestProposals?: string
   }
   governanceReviews: boolean
 }

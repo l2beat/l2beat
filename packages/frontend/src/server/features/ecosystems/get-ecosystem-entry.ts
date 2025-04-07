@@ -8,6 +8,7 @@ import type {
 import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
+import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { ps } from '~/server/projects'
@@ -23,6 +24,7 @@ import {
 import type { SevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
+import { getCollection } from '~/content/get-collection'
 
 export interface EcosystemEntry {
   slug: string
@@ -48,6 +50,7 @@ export interface EcosystemEntry {
     header: ProjectLink[]
     buildOn: string
     learnMore: string
+    governance: EcosystemGovernanceLinks
   }
   milestones: Milestone[]
 }
@@ -131,6 +134,7 @@ export async function getEcosystemEntry(
       header: getProjectLinks(ecosystem.display.links),
       buildOn: ecosystem.ecosystemConfig.links.buildOn,
       learnMore: ecosystem.ecosystemConfig.links.learnMore,
+      governance: getGovernanceLinks(ecosystem),
     },
     allScalingProjects: {
       tvs: tvs.total,
@@ -253,4 +257,26 @@ function getMilestones(projects: Project<never, 'milestones'>[]) {
     .sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime()
     })
+}
+
+function getGovernanceLinks(
+  ecosystem: Project<'ecosystemConfig'>,
+): EcosystemGovernanceLinks {
+  const base = {
+    topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
+    proposals: ecosystem.ecosystemConfig.links.governanceProposals,
+    review: undefined,
+  }
+  if (!ecosystem.ecosystemConfig.governanceReviews) {
+    return base
+  }
+  const lastPublication = getCollection('publications').at(-1)
+  if (!lastPublication) {
+    return base
+  }
+
+  return {
+    ...base,
+    review: `/governance/publications/${lastPublication.id}`,
+  }
 }

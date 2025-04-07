@@ -20,6 +20,8 @@ export const theElasticNetwork: BaseProject = {
     links: {
       buildOn: 'https://docs.zksync.io/',
       learnMore: 'https://zksync.io/',
+      governanceTopDelegates: 'https://www.tally.xyz/gov/zksync/delegates',
+      governanceProposals: 'https://www.tally.xyz/gov/zksync/proposals',
     },
     colors: {
       primary: '#513BE5',

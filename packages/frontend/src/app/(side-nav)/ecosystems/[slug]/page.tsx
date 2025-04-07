@@ -9,6 +9,7 @@ import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 import { EcosystemBuildOnLink } from '../_components/widgets/ecosystem-build-on-link'
 import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
+import { EcosystemGovernanceLinks } from '../_components/widgets/ecosystem-governance-links'
 import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
 import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
 import { EcosystemProjectsByRaas } from '../_components/widgets/ecosystem-projects-by-raas'
@@ -92,6 +93,10 @@ export default async function Page({ params }: Props) {
           <div className="grid grid-cols-4 gap-[--spacing]">
             <EcosystemProjectsByRaas
               projectsByRaas={ecosystem.projectsByRaas}
+            />
+            <EcosystemGovernanceLinks
+              links={ecosystem.links.governance}
+              className="col-span-2 col-start-3"
             />
           </div>
           <EcosystemProjectsTable entries={ecosystem.projects} />

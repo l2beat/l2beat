@@ -19,6 +19,9 @@ export const superchain: BaseProject = {
     links: {
       buildOn: 'https://superchain.eco/develop',
       learnMore: 'https://superchain.eco/',
+      governanceTopDelegates:
+        'https://vote.optimism.io/delegates?orderBy=most_voting_power',
+      governanceProposals: 'https://vote.optimism.io/proposals',
     },
     colors: {
       primary: '#F00000',
