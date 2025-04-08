@@ -3,7 +3,6 @@ import type {
   Project,
   ProjectEcosystemConfig,
   ProjectEcosystemInfo,
-  Stage,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
@@ -23,9 +22,14 @@ import {
   type ScalingSummaryEntry,
   getScalingSummaryEntry,
 } from '../scaling/summary/get-scaling-summary-entries'
-import type { SevenDayTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
+import { getDaLayersUsed } from './get-da-layers-used'
+import { getNativeToken } from './get-native-token'
+import { getProjectsByRaas } from './get-projects-by-raas'
+import { type TvsByStage, getTvsByStage } from './get-tvs-by-stage'
+import type { TvsByTokenType } from './get-tvs-by-token-type'
+import { getTvsByTokenType } from './get-tvs-by-token-type'
 
 export interface EcosystemEntry {
   slug: string
@@ -43,7 +47,7 @@ export interface EcosystemEntry {
     uops: number
     count: number
   }
-  tvsByStage: Record<Stage, number>
+  tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
   daLayersUsed: Record<string, number>
   projectsByRaas: Record<
@@ -119,23 +123,6 @@ export async function getEcosystemEntry(
     0,
   )
 
-  const projectsByRaas = ecosystemProjects.reduce(
-    (acc, curr) => {
-      const raas = curr.scalingInfo?.raas
-      if (!raas) return acc
-      if (!acc[raas]) {
-        acc[raas] = []
-      }
-      acc[raas].push({
-        slug: curr.slug.toString(),
-        name: curr.name,
-        href: `/scaling/projects/${curr.slug}`,
-      })
-      return acc
-    },
-    {} as Record<string, { slug: string; name: string; href: string }[]>,
-  )
-
   return {
     ...ecosystem,
     colors: ecosystem.ecosystemConfig.colors,
@@ -157,7 +144,7 @@ export async function getEcosystemEntry(
     tvsByStage: getTvsByStage(ecosystemProjects, tvs),
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
-    projectsByRaas,
+    projectsByRaas: getProjectsByRaas(ecosystemProjects),
     nativeToken: getNativeToken(ecosystem),
     projects: ecosystemProjects
       .map((project) => ({
@@ -172,86 +159,6 @@ export async function getEcosystemEntry(
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
   }
-}
-
-interface TvsByTokenType {
-  ether: number
-  stablecoins: number
-  other: number
-}
-
-function getTvsByTokenType(
-  ecosystemProjects: Project[],
-  tvs: SevenDayTvsBreakdown,
-): TvsByTokenType {
-  return ecosystemProjects.reduce(
-    (acc, curr) => {
-      const projectTvs = tvs.projects[curr.id.toString()]
-
-      const other =
-        (projectTvs?.breakdown.total ?? 0) -
-        (projectTvs?.breakdown.ether ?? 0) -
-        (projectTvs?.breakdown.stablecoin ?? 0)
-
-      return {
-        ether: acc.ether + (projectTvs?.breakdown.ether ?? 0),
-        stablecoins: acc.stablecoins + (projectTvs?.breakdown.stablecoin ?? 0),
-        other: acc.other + other,
-      }
-    },
-    {
-      ether: 0,
-      stablecoins: 0,
-      other: 0,
-    },
-  )
-}
-
-function getTvsByStage(
-  ecosystemProjects: Project<never, 'scalingStage'>[],
-  tvs: SevenDayTvsBreakdown,
-) {
-  return ecosystemProjects.reduce(
-    (acc, curr) => {
-      const projectTvs = tvs.projects[curr.id.toString()]
-      const stage = curr.scalingStage
-      if (
-        !stage ||
-        stage.stage === 'NotApplicable' ||
-        stage.stage === 'UnderReview'
-      ) {
-        return acc
-      }
-
-      const stageTvs = acc[stage.stage]
-      return {
-        ...acc,
-        [stage.stage]: stageTvs + (projectTvs?.breakdown.total ?? 0),
-      }
-    },
-    {
-      'Stage 0': 0,
-      'Stage 1': 0,
-      'Stage 2': 0,
-    },
-  )
-}
-
-function getDaLayersUsed(ecosystemProjects: Project<'scalingInfo'>[]) {
-  return ecosystemProjects
-    .map((p) => p.scalingInfo.daLayer)
-    .reduce(
-      (acc, curr) => {
-        const record = acc[curr]
-        if (record) {
-          acc[curr] = record + 1
-        } else {
-          acc[curr] = 1
-        }
-        return acc
-      },
-      {} as Record<string, number>,
-    )
 }
 
 function getEcosystemLogo(slug: string) {
@@ -287,21 +194,5 @@ function getGovernanceLinks(
     proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
     reviewThumbnail: `/meta-images/governance/publications/${lastPublication.id}.png`,
-  }
-}
-
-function getNativeToken(
-  ecosystem: Project<'ecosystemConfig'>,
-): EcosystemNativeToken {
-  return {
-    logo: 'https://assets.coingecko.com/coins/images/38043/standard/ZKTokenBlack.png',
-    name: 'ZKsync',
-    symbol: 'ZK',
-    description: ecosystem.ecosystemConfig.nativeToken.description,
-    data: {
-      price: 100,
-      marketCap: 1000000,
-      amount: 1000000,
-    },
   }
 }
