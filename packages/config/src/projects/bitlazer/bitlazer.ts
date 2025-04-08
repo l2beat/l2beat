@@ -45,6 +45,11 @@ export const bitlazer: ScalingProject = underReviewL3({
       },
     ],
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1737636289),
+  },
   activityConfig: {
     type: 'block',
     startBlock: 1,

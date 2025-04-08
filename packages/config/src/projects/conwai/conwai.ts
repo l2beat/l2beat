@@ -34,6 +34,11 @@ export const conwai: ScalingProject = underReviewL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1739364151),
+  },
   chainConfig: {
     name: 'conwai',
     chainId: 668668,

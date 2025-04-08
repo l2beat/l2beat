@@ -49,6 +49,11 @@ export const huddle01: ScalingProject = underReviewL3({
       },
     ],
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1737469443),
+  },
   escrows: [
     {
       address: EthereumAddress('0x4A346da02EA2Fa6E49834C409165c6D6527ae522'), // bridge

@@ -46,6 +46,11 @@ export const henez: ScalingProject = underReviewL3({
       },
     ],
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+    // FAKE DATE
+    sinceTimestamp: UnixTime(1737469444),
+  },
   escrows: [
     {
       address: EthereumAddress('0x66CDC656D5ACf342B2E4dC5a399Ba258Cd3f74c9'), // bridge
