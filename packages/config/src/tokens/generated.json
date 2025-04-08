@@ -3012,6 +3012,20 @@
       "supply": "zero"
     },
     {
+      "name": "Lens Wrapped GHO",
+      "coingeckoId": "gho",
+      "address": "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a",
+      "symbol": "LGHO",
+      "decimals": 18,
+      "deploymentTimestamp": 1739358395,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/gho-token-logo.png?1720517092",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Lido DAO Token",
       "coingeckoId": "lido-dao",
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
