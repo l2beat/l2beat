@@ -7,6 +7,7 @@ import {
   getChainShortName,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
+import type { ContractConfigColor } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
@@ -25,7 +26,6 @@ import type {
   Field,
   FieldValue,
 } from './types'
-import { ContractConfigColor } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 
 interface ProjectData {
   chain: string
@@ -76,7 +76,9 @@ export function getProject(
             entry.template,
           )
           contractConfig.pushValues(templateValues)
-          contractColorConfig.pushValues(templateService.loadContractTemplateColor(entry.template))
+          contractColorConfig.pushValues(
+            templateService.loadContractTemplateColor(entry.template),
+          )
         }
 
         return contractFromDiscovery(
