@@ -275,7 +275,7 @@ export const starknet: ScalingProject = {
     costsWarning: {
       sentiment: 'warning',
       value:
-        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet's costs represent a rough estimate, and we are working to provide more accurate values.",
+        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Due to this complexity, Starknet's SHARP costs represent an estimate based on self-reported costs by the Starkware team.",
     },
   },
   chainConfig: {
