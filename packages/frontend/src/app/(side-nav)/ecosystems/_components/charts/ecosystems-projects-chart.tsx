@@ -46,7 +46,6 @@ export function EcosystemsProjectsChart({
     } satisfies ChartMeta
   }, [])
   const data = getChartData(entries, allScalingProjectsCount)
-
   const range = getChartRange(data)!
   const stats = getStats(data, allScalingProjectsCount)
   return (
@@ -173,12 +172,12 @@ function getChartData(
   allScalingProjectsCount: number,
 ) {
   const minTimestamp = Math.min(
-    ...entries.map((e) => e.ecosystemInfo.sinceTimestamp),
+    ...entries.map((e) =>
+      UnixTime.toStartOf(e.ecosystemInfo.sinceTimestamp, 'day'),
+    ),
   )
-  const now = UnixTime.now()
-
-  const timestamps = generateTimestamps([minTimestamp, now], 'daily')
-
+  const timestamps = generateTimestamps([minTimestamp, UnixTime.now()], 'daily')
+  console.log(timestamps)
   const data = timestamps.map((timestamp) => {
     const projects = entries.filter(
       (e) => e.ecosystemInfo.sinceTimestamp <= timestamp,
