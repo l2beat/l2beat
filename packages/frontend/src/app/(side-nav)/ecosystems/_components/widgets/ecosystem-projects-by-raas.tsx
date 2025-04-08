@@ -35,7 +35,7 @@ export function EcosystemProjectsByRaas({
               {projects.map((project) => (
                 <Tooltip key={project.slug}>
                   <TooltipTrigger asChild>
-                    <Link href={project.href}>
+                    <Link href={project.href} className="shrink-0">
                       <Image
                         src={`/icons/${project.slug}.png`}
                         alt={project.slug}
