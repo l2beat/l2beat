@@ -29,11 +29,11 @@
             "select": ["validator"],
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 61166]
+              "where": ["=", "#chainId", 232]
             },
             "remove": {
               "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 61166]
+              "where": ["=", "#chainId", 232]
             }
           },
           "permissions": [{ "type": "validateZkStack" }]
@@ -49,11 +49,11 @@
             "select": ["validator"],
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 61166]
+              "where": ["=", "#chainId", 232]
             },
             "remove": {
               "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 61166]
+              "where": ["=", "#chainId", 232]
             }
           },
           "permissions": [{ "type": "validateZkStack" }]
@@ -69,11 +69,11 @@
             "select": ["validator"],
             "add": {
               "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 61166]
+              "where": ["=", "#chainId", 232]
             },
             "remove": {
               "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
-              "where": ["=", "#chainId", 61166]
+              "where": ["=", "#chainId", 232]
             }
           },
           "permissions": [{ "type": "validateZkStack" }]
