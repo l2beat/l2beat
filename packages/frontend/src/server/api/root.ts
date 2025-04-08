@@ -3,6 +3,7 @@ import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
 import { tvsRouter } from './routers/tvs'
+import { newTvsRouter } from './routers/new-tvs'
 
 /**
  * This is the primary router for your server.
@@ -13,6 +14,7 @@ export const appRouter = router({
   activity: activityRouter,
   costs: costsRouter,
   tvs: tvsRouter,
+  newTvs: newTvsRouter,
   da: daRouter,
 })
 

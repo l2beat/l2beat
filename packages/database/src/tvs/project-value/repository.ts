@@ -58,6 +58,26 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getForType(
+    type: string,
+    range: [number | null, number],
+  ): Promise<ProjectValueRecord[]> {
+    const [from, to] = range
+    let query = this.db
+      .selectFrom('ProjectValue')
+      .selectAll()
+      .where('type', '=', type)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .orderBy('timestamp', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('ProjectValue').executeTakeFirst()
     return Number(result.numDeletedRows)

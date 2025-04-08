@@ -68,9 +68,8 @@ export function ScalingSummaryTvsChart({
   timeRange,
 }: { unit: ChartUnit; timeRange: TvsChartRange }) {
   const { checked } = useRecategorisationPreviewContext()
-  const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
+  const { data, isLoading } = api.newTvs.recategorisedChart.useQuery({
     range: timeRange,
-    excludeAssociatedTokens: false,
     filter: { type: 'layer2' },
     previewRecategorisation: checked,
   })
@@ -79,9 +78,9 @@ export function ScalingSummaryTvsChart({
     return data?.map(([timestamp, rollups, validiumsAndOptimiums, others]) => {
       return {
         timestamp,
-        rollups: rollups / 100,
-        validiumsAndOptimiums: validiumsAndOptimiums / 100,
-        others: others / 100,
+        rollups,
+        validiumsAndOptimiums,
+        others,
       }
     })
   }, [data])
