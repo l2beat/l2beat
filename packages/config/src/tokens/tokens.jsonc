@@ -6007,6 +6007,37 @@
   ],
   "soneium": [
     {
+      "symbol": "USD₮0",
+      "address": "0x102d758f688a4C1C5a80b116bD945d4455460282",
+      "coingeckoId": "usdt0",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "uBTC",
+      "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",
+      "coingeckoId": "wrapped-bitcoin-universal",
+      "source": "external", // from b2 (bsquared) bitcoin l2 via lockbox
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "nsASTR",
       "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
       "source": "native",
