@@ -10,12 +10,14 @@ export function EcosystemDaLayersUsed({
 }) {
   return (
     <EcosystemWidget className={className}>
-      <EcosystemWidgetTitle>DA Layers Used</EcosystemWidgetTitle>
+      <EcosystemWidgetTitle>DA Layers used</EcosystemWidgetTitle>
       <div>
         {Object.entries(daLayersUsed).map(([name, count]) => (
           <div key={name} className="flex justify-between">
             <div className="text-sm font-medium">{name}</div>
-            <div className="text-xs font-medium text-secondary">{count}</div>
+            <div className="text-xs font-medium text-secondary">
+              {count} projects
+            </div>
           </div>
         ))}
       </div>
