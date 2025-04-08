@@ -2,11 +2,14 @@
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'react'
+import { MilestoneDrawerContent } from '~/components/core/chart/chart-milestones'
 import {
   getTickCondition,
   getTickFormatter,
 } from '~/components/core/chart/utils/get-x-axis-props'
+import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/drawer'
 import { CustomLink } from '~/components/link/custom-link'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
@@ -40,69 +43,51 @@ export function EcosystemMilestonesAndIncidents({
     UnixTime.DAY
 
   const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-  const tickCondition = getTickCondition(actualRangeInDays)
-  const tickFormatter = getTickFormatter(actualRangeInDays)
 
   return (
     <EcosystemWidget className={className}>
       <div className="grid grid-cols-3 gap-6" ref={sectionRef}>
-        <div className="col-span-2 flex flex-col">
+        <div className="col-span-full flex flex-col md:col-span-2">
           <EcosystemWidgetTitle>Milestones & Incidents</EcosystemWidgetTitle>
-          <div className="relative my-auto">
-            <div className="h-px w-full bg-gradient-to-r from-[--ecosystem-primary-50] to-[--ecosystem-primary]" />
-            <svg
-              width="12"
-              height="9"
-              viewBox="0 0 12 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute -right-0.5 -top-1 fill-[--ecosystem-primary]"
-            >
-              <path d="M12 4.177L-3.93401e-07 8.99996L0 -4.55091e-05L12 4.177Z" />
-            </svg>
-            {timestamps.map((timestamp, index) => {
-              const shouldShow = tickCondition(timestamp)
-              if (!shouldShow) return null
-              const label = tickFormatter(timestamp)
-              return (
-                <span
-                  key={timestamp}
-                  className="absolute top-2.5 text-3xs leading-none text-secondary"
-                  style={{ left: `${(index / timestamps.length) * 100}%` }}
-                >
-                  {label}
-                </span>
-              )
-            })}
-            {timestamps.map((timestamp, index) => {
-              const milestones = milestonesByTimestamp[timestamp]
-              if (!milestones) return null
-              return milestones.map((milestone) => {
-                const Icon =
-                  milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
-                const isSelected = milestone.index === selectedMilestoneIndex
-                return (
-                  <button
+          <div className="my-auto">
+            <div className="relative mt-2 h-5">
+              <div className="h-px w-full bg-gradient-to-r from-[--ecosystem-primary-50] to-[--ecosystem-primary]" />
+              <svg
+                width="12"
+                height="9"
+                viewBox="0 0 12 9"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute -right-0.5 -top-1 fill-[--ecosystem-primary]"
+              >
+                <path d="M12 4.177L-3.93401e-07 8.99996L0 -4.55091e-05L12 4.177Z" />
+              </svg>
+              <Timeline
+                timestamps={timestamps}
+                actualRangeInDays={actualRangeInDays}
+              />
+              {timestamps.map((timestamp, index) => {
+                const milestonesForTimestamp = milestonesByTimestamp[timestamp]
+                if (!milestonesForTimestamp) return null
+                return milestonesForTimestamp.map((milestone) => (
+                  <MilestoneItem
                     key={`${timestamp}-${milestone.index}`}
                     onClick={() => setSelectedMilestoneIndex(milestone.index)}
-                    className={cn(
-                      'absolute -top-2.5',
-                      isSelected && 'z-10 scale-150 transition-transform',
-                    )}
+                    milestone={milestone}
+                    allMilestones={milestones}
+                    selectedMilestoneIndex={selectedMilestoneIndex}
                     style={{ left: `${(index / timestamps.length) * 100}%` }}
-                  >
-                    <Icon />
-                  </button>
-                )
-              })
-            })}
+                  />
+                ))
+              })}
+            </div>
           </div>
         </div>
         <Details
           milestones={milestones}
           selectedMilestoneIndex={selectedMilestoneIndex}
           setSelectedMilestoneIndex={setSelectedMilestoneIndex}
-          className="col-span-1"
+          className="col-span-1 max-md:hidden"
         />
       </div>
     </EcosystemWidget>
@@ -173,6 +158,78 @@ function Details({
       </div>
     </div>
   )
+}
+
+function MilestoneItem({
+  onClick,
+  milestone,
+  selectedMilestoneIndex,
+  allMilestones,
+  style,
+}: {
+  onClick: () => void
+  milestone: Milestone & { index: number }
+  allMilestones: Milestone[]
+  selectedMilestoneIndex: number
+  style: React.CSSProperties
+}) {
+  const isMobile = useIsMobile()
+  const Icon = milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
+  const isSelected = milestone.index === selectedMilestoneIndex
+
+  if (isMobile) {
+    return (
+      <Drawer>
+        <DrawerTrigger className="absolute -top-2.5" style={style}>
+          <Icon />
+        </DrawerTrigger>
+        <DrawerContent>
+          <MilestoneDrawerContent
+            milestoneIndex={milestone.index}
+            allMilestones={allMilestones}
+          />
+        </DrawerContent>
+      </Drawer>
+    )
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        'absolute -top-2.5 scale-75 md:scale-100',
+        isSelected && 'z-10 scale-100 transition-transform md:scale-150',
+      )}
+      style={style}
+    >
+      <Icon />
+    </button>
+  )
+}
+
+function Timeline({
+  timestamps,
+  actualRangeInDays,
+}: {
+  timestamps: number[]
+  actualRangeInDays: number
+}) {
+  const tickCondition = getTickCondition(actualRangeInDays)
+  const tickFormatter = getTickFormatter(actualRangeInDays)
+  return timestamps.map((timestamp, index) => {
+    const shouldShow = tickCondition(timestamp)
+    if (!shouldShow) return null
+    const label = tickFormatter(timestamp)
+    return (
+      <span
+        key={timestamp}
+        className="absolute top-2.5 text-3xs leading-none text-secondary"
+        style={{ left: `${(index / timestamps.length) * 100}%` }}
+      >
+        {label}
+      </span>
+    )
+  })
 }
 
 function mapMilestones(milestones: Milestone[]) {

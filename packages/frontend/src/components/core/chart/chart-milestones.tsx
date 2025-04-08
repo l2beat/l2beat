@@ -143,7 +143,7 @@ function ChartMilestone({
   )
 }
 
-function MilestoneDrawerContent({
+export function MilestoneDrawerContent({
   milestoneIndex,
   allMilestones,
 }: {
