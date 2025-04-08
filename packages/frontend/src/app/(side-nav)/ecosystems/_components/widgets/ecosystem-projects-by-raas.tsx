@@ -20,7 +20,16 @@ export function EcosystemProjectsByRaas({
       <div className="flex flex-col gap-2">
         {Object.entries(projectsByRaas).map(([raas, projects]) => (
           <div key={raas} className="flex justify-between gap-2">
-            <div className="whitespace-nowrap text-xs font-bold">{raas}</div>
+            <div className="flex items-center gap-1.5">
+              <Image
+                src={`/icons/${raas.toLowerCase()}.png`}
+                className="rounded-sm"
+                alt={raas}
+                width={20}
+                height={20}
+              />
+              <div className="whitespace-nowrap text-xs font-bold">{raas}</div>
+            </div>
             <div className="flex -space-x-1.5">
               {projects.map((project) => (
                 <Tooltip key={project.slug}>
