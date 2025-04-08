@@ -56,12 +56,13 @@ export function printTemplatization(
           ]
         : []
 
-      const shapeData = nestedLines.map(
-        (line, index) =>
-          `${indent}${chalk.gray(`${nestedLinePrefix} ${index === nestedLines.length - 1 ? '└─' : '├─'} `)}${chalk.italic(
-            chalk.green(line),
-          )}`,
-      )
+      const shapeData = nestedLines.map((line, index) => {
+        const isLastLine = index === nestedLines.length - 1
+        const linePrefix = isLastLine ? '└─' : '├─'
+        const prefixText = `${nestedLinePrefix} ${linePrefix} `
+
+        return `${indent}${chalk.gray(prefixText)}${chalk.green(line)}`
+      })
 
       const log = `${contract.address} ${name} [${templateColor}]`
       logs.push(`${indent}${chalk.gray(firstLinePrefix)} ${log}`)
