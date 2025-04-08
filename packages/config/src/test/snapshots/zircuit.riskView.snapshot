@@ -21,11 +21,9 @@
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
-    orderHint: 43200
-    secondLine: "12h delay"
-    sentiment: "good"
-    value: "Self sequence"
+    description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
+    sentiment: "bad"
+    value: "No mechanism"
   }
   stateValidation: {
     description: "Currently the system permits invalid state roots. More details in project overview."

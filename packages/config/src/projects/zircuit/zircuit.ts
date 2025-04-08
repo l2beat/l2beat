@@ -1,5 +1,10 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  ESCROW,
+  FORCE_TRANSACTIONS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -84,8 +89,22 @@ export const zircuit: ScalingProject = opStackL2({
   genesisTimestamp,
   // Chain ID: 48900
   isNodeAvailable: 'UnderReview',
+  nonTemplateRiskView: {
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+  },
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
+      references: [
+        ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.references,
+        {
+          title:
+            'L1Block.sol - Zircuit explorer source code - setL1BlockValuesEcotoneExclusions() function',
+          url: 'https://explorer.zircuit.com/address/0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015?activeTab=3',
+        },
+      ],
+    },
   },
   activityConfig: {
     // zircuit does not have a system transaction in every block but in every 5th/6th, so we do not subtract those and overcount
