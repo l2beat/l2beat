@@ -177,7 +177,6 @@ function getChartData(
     ),
   )
   const timestamps = generateTimestamps([minTimestamp, UnixTime.now()], 'daily')
-  console.log(timestamps)
   const data = timestamps.map((timestamp) => {
     const projects = entries.filter(
       (e) => e.ecosystemInfo.sinceTimestamp <= timestamp,

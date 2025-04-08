@@ -1,9 +1,9 @@
-import crypto from 'crypto'
-import { readFileSync, readdirSync } from 'fs'
-import path from 'path'
 import { ProjectService } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import crypto from 'crypto'
 import { expect } from 'earl'
+import { readFileSync, readdirSync } from 'fs'
+import path from 'path'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 
 describe('icons', () => {
@@ -43,7 +43,6 @@ describe('icons', () => {
         return [badgeName]
       })
       .filter((x, i, a) => a.indexOf(x) === i) // unique
-    console.log(raasSlugs)
     for (const slug of raasSlugs) {
       expect(icons).toInclude(slug)
     }
