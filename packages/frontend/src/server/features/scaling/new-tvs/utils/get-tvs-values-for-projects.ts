@@ -12,6 +12,7 @@ import { getRangeConfig } from './range'
 export async function getTvsValuesForProjects(
   projects: TvsProject[],
   range: TvsChartRange,
+  type?: 'SUMMARY' | 'SUMMARY_EXCLUDING_ASSOCIATED',
 ) {
   const db = getDb()
   const { days, resolution } = getRangeConfig(range)
@@ -22,7 +23,7 @@ export async function getTvsValuesForProjects(
     UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
       days * UnixTime.DAY
 
-  const valueRecords = await db.tvsProjectValue.getForType('SUMMARY', [
+  const valueRecords = await db.tvsProjectValue.getForType(type ?? 'SUMMARY', [
     from || null,
     target,
   ])

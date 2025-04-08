@@ -1,6 +1,6 @@
-import type { ValueRecord } from '@l2beat/database'
+import type { ProjectValueRecord } from '@l2beat/database'
 
-export function getTvsBreakdown(values: ValueRecord[]) {
+export function getTvsBreakdown(values: ProjectValueRecord[]) {
   return values.reduce(
     (acc, curr) => {
       acc.native += Number(curr.native)

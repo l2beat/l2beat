@@ -1,12 +1,11 @@
-import type { ValueRecord } from '@l2beat/database'
+import type { ProjectValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import type { Dictionary } from 'lodash'
+import { uniq, type Dictionary } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { ps } from '~/server/projects'
 import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
@@ -16,7 +15,6 @@ import {
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
-import { sumValuesPerSource } from './utils/sum-values-per-source'
 
 export const TvsChartDataParams = z.object({
   range: TvsChartRange,
@@ -58,31 +56,21 @@ export const getCachedTvsChartData = cache(
       filter,
       previewRecategorisation,
     )
-    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-      (p) => p.chainConfig,
-    )
-    const tokenList = await ps.getTokens()
     const tvsProjects = await getTvsProjects(
       projectsFilter,
-      chains,
-      tokenList,
       previewRecategorisation,
     )
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
-      getTvsValuesForProjects(tvsProjects, range),
+      getTvsValuesForProjects(
+        tvsProjects,
+        range,
+        excludeAssociatedTokens ? 'SUMMARY_EXCLUDING_ASSOCIATED' : 'SUMMARY',
+      ),
     ])
-
-    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
-    const forTotal =
-      filter.type !== 'projects' || filter.projectIds.length !== 1
-
-    return getChartData(values, ethPrices, {
-      excludeAssociatedTokens,
-      forTotal,
-    })
+    return getChartData(values, ethPrices)
   },
-  ['tvs-chart-data-v2'],
+  ['new-tvs-chart-data'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
@@ -90,14 +78,10 @@ export const getCachedTvsChartData = cache(
 )
 
 function getChartData(
-  values: Dictionary<Dictionary<ValueRecord[]>>,
+  values: Dictionary<Dictionary<ProjectValueRecord>>,
   ethPrices: Record<number, number>,
-  options: {
-    excludeAssociatedTokens: boolean
-    forTotal: boolean
-  },
 ) {
-  const timestampValues: Record<string, ValueRecord[]> = {}
+  const timestampValues: Record<string, ProjectValueRecord[]> = {}
 
   for (const projectValues of Object.values(values)) {
     for (const [timestamp, values] of Object.entries(projectValues)) {
@@ -106,16 +90,32 @@ function getChartData(
     }
   }
 
-  return Object.entries(timestampValues).map(([timestamp, values]) => {
-    const summed = sumValuesPerSource(values, options)
+  const timestamps = uniq([...Object.keys(timestampValues)]).sort()
+
+  return timestamps.map((timestamp) => {
+    const values = timestampValues[timestamp]
     const ethPrice = ethPrices[+timestamp]
     assert(ethPrice, 'No ETH price for ' + timestamp)
 
-    const native = Number(summed.native)
-    const canonical = Number(summed.canonical)
-    const external = Number(summed.external)
+    const native =
+      values?.reduce((acc, curr) => {
+        acc += Number(curr.native)
+        return acc
+      }, 0) ?? 0
 
-    return [+timestamp, native, canonical, external, ethPrice * 100] as const
+    const canonical =
+      values?.reduce((acc, curr) => {
+        acc += Number(curr.canonical)
+        return acc
+      }, 0) ?? 0
+
+    const external =
+      values?.reduce((acc, curr) => {
+        acc += Number(curr.external)
+        return acc
+      }, 0) ?? 0
+
+    return [+timestamp, native, canonical, external, ethPrice] as const
   })
 }
 

@@ -47,7 +47,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     }
   }, [entries, filters, tab])
 
-  const { data, isLoading } = api.tvs.chart.useQuery({
+  const { data, isLoading } = api.newTvs.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens,
     filter,
@@ -57,7 +57,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const chartData = useMemo(
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
-        const divider = unit === 'usd' ? 100 : ethPrice
+        const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
           native: native / divider,

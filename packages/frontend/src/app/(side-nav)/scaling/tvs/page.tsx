@@ -16,7 +16,7 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const entries = await getScalingTvsEntries()
 
-  await api.tvs.chart.prefetch({
+  await api.newTvs.chart.prefetch({
     filter: {
       type: 'rollups',
     },
