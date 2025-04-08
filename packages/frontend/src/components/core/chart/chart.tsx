@@ -108,9 +108,7 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              'top-[63px] group-has-[.recharts-legend-wrapper]:top-[58px]',
-              'md:top-[84px] md:group-has-[.recharts-legend-wrapper]:top-[78px]',
-              'xl:top-[98px] xl:group-has-[.recharts-legend-wrapper]:top-[93px]',
+              'top-[calc(50%_-_5px)] -translate-y-1/2 group-has-[.recharts-legend-wrapper]:top-[calc(50%_-_11px)]',
               loaderClassName,
             )}
           />
