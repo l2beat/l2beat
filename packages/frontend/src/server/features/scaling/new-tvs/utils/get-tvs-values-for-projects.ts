@@ -12,7 +12,7 @@ import { getRangeConfig } from './range'
 export async function getTvsValuesForProjects(
   projects: TvsProject[],
   range: TvsChartRange,
-  type?: 'SUMMARY' | 'SUMMARY_EXCLUDING_ASSOCIATED',
+  type?: 'SUMMARY' | 'SUMMARY_EXCLUDING_ASSOCIATED' | 'FULL',
 ) {
   const db = getDb()
   const { days, resolution } = getRangeConfig(range)

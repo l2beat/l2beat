@@ -60,12 +60,19 @@ export const getCachedTvsChartData = cache(
       projectsFilter,
       previewRecategorisation,
     )
+    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
+    const forSummary =
+      filter.type !== 'projects' || filter.projectIds.length !== 1
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvsValuesForProjects(
         tvsProjects,
         range,
-        excludeAssociatedTokens ? 'SUMMARY_EXCLUDING_ASSOCIATED' : 'SUMMARY',
+        !forSummary
+          ? 'FULL'
+          : excludeAssociatedTokens
+            ? 'SUMMARY_EXCLUDING_ASSOCIATED'
+            : 'SUMMARY',
       ),
     ])
     return getChartData(values, ethPrices)
