@@ -51,14 +51,14 @@ export function EcosystemMilestonesAndIncidents({
           <EcosystemWidgetTitle>Milestones & Incidents</EcosystemWidgetTitle>
           <div className="my-auto">
             <div className="relative mt-2 h-5">
-              <div className="h-px w-full bg-gradient-to-r from-[--ecosystem-primary-50] to-[--ecosystem-primary]" />
+              <div className="h-px w-full bg-secondary" />
               <svg
                 width="12"
                 height="9"
                 viewBox="0 0 12 9"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="absolute -right-0.5 -top-1 fill-[--ecosystem-primary]"
+                className="absolute -right-0.5 -top-1 fill-secondary"
               >
                 <path d="M12 4.177L-3.93401e-07 8.99996L0 -4.55091e-05L12 4.177Z" />
               </svg>
@@ -115,7 +115,7 @@ function Details({
       )}
     >
       <div>
-        <span className="text-2xs font-bold uppercase text-[--ecosystem-primary]">
+        <span className="text-2xs font-bold uppercase text-secondary">
           {formatDate(selectedMilestone.date.slice(0, 10))}
         </span>
         <p className="text-base font-bold leading-tight">
@@ -134,7 +134,7 @@ function Details({
               setSelectedMilestoneIndex(selectedMilestoneIndex - 1)
             }
           >
-            <ChevronIcon className="size-2.5 rotate-90 fill-[--ecosystem-primary] group-disabled:opacity-50" />
+            <ChevronIcon className="size-2.5 rotate-90 fill-primary group-disabled:opacity-50" />
           </button>
           <span className="relative top-px text-3xs font-medium leading-none text-secondary">
             {selectedMilestoneIndex + 1} of {milestones.length}
@@ -146,7 +146,7 @@ function Details({
               setSelectedMilestoneIndex(selectedMilestoneIndex + 1)
             }
           >
-            <ChevronIcon className="size-2.5 -rotate-90 fill-[--ecosystem-primary] group-disabled:opacity-50" />
+            <ChevronIcon className="size-2.5 -rotate-90 fill-primary group-disabled:opacity-50" />
           </button>
         </div>
         <CustomLink
