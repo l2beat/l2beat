@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { CssVariables } from '~/components/css-variables'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { api } from '~/trpc/server'
 import { cn } from '~/utils/cn'
@@ -50,18 +51,16 @@ export default async function Page({ params }: Props) {
   ])
 
   return (
-    <div
-      className="relative z-[0] max-md:px-4"
-      style={
-        {
-          '--ecosystem-primary': ecosystem.colors.primary,
-          '--ecosystem-primary-50': `${ecosystem.colors.primary}80`,
-          '--ecosystem-primary-25': `${ecosystem.colors.primary}40`,
-          '--ecosystem-secondary': ecosystem.colors.secondary,
-          '--spacing': '0.75rem',
-        } as React.CSSProperties
-      }
-    >
+    <div className="relative z-[0] max-md:px-4">
+      <CssVariables
+        variables={{
+          'ecosystem-primary': ecosystem.colors.primary,
+          'ecosystem-primary-50': `${ecosystem.colors.primary}80`,
+          'ecosystem-primary-25': `${ecosystem.colors.primary}40`,
+          'ecosystem-secondary': ecosystem.colors.secondary,
+          spacing: '0.75rem',
+        }}
+      />
       {/* eslint-disable-next-line tailwindcss/no-contradicting-classname */}
       <div className="fixed right-[20%] top-44 -z-1 h-[2400px] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
       <div>
