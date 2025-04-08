@@ -35,11 +35,11 @@ export const zkcandy: ScalingProject = zkStackL2({
     },
   },
   discovery,
-  diamondContract: discovery.getContract('LensZkEvm'),
+  diamondContract: discovery.getContract('zkCandyZkEvm'),
   chainConfig: {
     name: 'zkcandy',
     chainId: 320,
-    explorerUrl: 'https://explorer.zkcandy.io/',
+    explorerUrl: 'https://explorer.zkcandy.io',
     sinceTimestamp: UnixTime(1741880977),
     apis: [
       {
