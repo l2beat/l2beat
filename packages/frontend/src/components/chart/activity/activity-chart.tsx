@@ -127,7 +127,9 @@ export function ActivityChart({
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
           },
         })}
-        <ChartTooltip content={<ActivityCustomTooltip syncedUntil={syncedUntil} />} />
+        <ChartTooltip
+          content={<ActivityCustomTooltip syncedUntil={syncedUntil} />}
+        />
         <defs>
           {type === 'Rollups' && (
             <>

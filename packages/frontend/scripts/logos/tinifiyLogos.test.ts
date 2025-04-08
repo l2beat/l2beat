@@ -1,9 +1,9 @@
-import { ProjectService } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import crypto from 'crypto'
-import { expect } from 'earl'
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
+import { ProjectService } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import { getImageDimensions } from '~/utils/project/get-image-params'
 
 describe('icons', () => {
