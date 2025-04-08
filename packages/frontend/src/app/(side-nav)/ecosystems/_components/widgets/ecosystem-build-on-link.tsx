@@ -16,7 +16,7 @@ export function EcosystemBuildOnLink({ name, slug, href, className }: Props) {
         variant="plain"
         href={href}
         className={cn(
-          'group relative min-h-[100px] overflow-hidden text-primary-invert no-underline',
+          'group relative min-h-[100px] overflow-hidden text-pure-white no-underline',
           className,
         )}
       >

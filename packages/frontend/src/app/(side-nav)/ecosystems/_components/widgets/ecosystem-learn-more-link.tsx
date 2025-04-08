@@ -16,7 +16,7 @@ export function EcosystemLearnMoreLink({ name, href, className }: Props) {
         className,
       )}
     >
-      <div className="relative flex h-full flex-col justify-center rounded bg-pure-black pl-4 text-primary-invert">
+      <div className="relative flex h-full flex-col justify-center rounded bg-pure-black pl-4 text-pure-white">
         <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
           Interested in Ecosystem?
         </div>
