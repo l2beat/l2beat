@@ -10,6 +10,8 @@ import {
   SimpleChartContainer,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { CssVariables } from '~/components/css-variables'
 import type { TvsByStage } from '~/server/features/ecosystems/get-tvs-by-stage'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -39,7 +41,7 @@ const chartMeta = {
   },
   notApplicable: {
     label: 'Not Applicable',
-    color: '#B4C7D5',
+    color: 'var(--not-applicable)',
     indicatorType: {
       shape: 'square',
     },
@@ -72,7 +74,7 @@ export function EcosystemTvsByStage({
     {
       stage: 'notApplicable',
       tvs: tvsByStage.NotApplicable,
-      fill: '#B4C7D5',
+      fill: 'var(--not-applicable)',
     },
   ]
 
@@ -80,6 +82,14 @@ export function EcosystemTvsByStage({
 
   return (
     <EcosystemWidget className={className}>
+      <CssVariables
+        variables={{
+          'not-applicable': {
+            light: '#B4C7D5',
+            dark: '#3D4361',
+          },
+        }}
+      />
       <EcosystemWidgetTitle>TVS breakdown by stage</EcosystemWidgetTitle>
       <div className="flex items-center justify-around">
         <div>
@@ -158,8 +168,14 @@ export function CustomTooltip({
               key={entry.name}
               className="flex items-center justify-between gap-x-3"
             >
-              <span className="w-20 whitespace-nowrap leading-none sm:w-fit">
-                {config.label}
+              <span className="flex items-center gap-1">
+                <ChartDataIndicator
+                  backgroundColor={config.color}
+                  type={config.indicatorType}
+                />
+                <span className="w-20 whitespace-nowrap leading-none sm:w-fit">
+                  {config.label}
+                </span>
               </span>
               <span className="whitespace-nowrap font-medium leading-none">
                 {formatCurrency(entry.value, 'usd')}
