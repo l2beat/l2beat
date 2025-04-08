@@ -14,6 +14,7 @@ import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ColorContract } from '../config/ColorConfig'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { ContractPermission } from '../config/PermissionConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
@@ -156,6 +157,14 @@ export class TemplateService {
 
   loadContractTemplateColor(template: string): ColorContract {
     return this.loadContractTemplateBase(template, 'color', ColorContract)
+  }
+
+  loadContractPermissionTemplate(template: string): ContractPermission {
+    return this.loadContractTemplateBase(
+      template,
+      'permission',
+      ContractPermission,
+    )
   }
 
   getTemplateHash(template: string): Hash256 {

@@ -23,6 +23,10 @@ export interface StructureOutput {
   usedTemplates: Record<string, Hash256>
 }
 
+export interface PermissionOutput {
+  entries: Record<string, IssuedPermission[]>
+}
+
 export interface DiscoveryOutput {
   name: string
   chain: string
