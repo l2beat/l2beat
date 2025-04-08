@@ -46,7 +46,14 @@ export interface EcosystemEntry {
   tvsByStage: Record<Stage, number>
   tvsByTokenType: TvsByTokenType
   daLayersUsed: Record<string, number>
-  projectsByRaas: Record<string, string[]>
+  projectsByRaas: Record<
+    string,
+    {
+      slug: string
+      name: string
+      href: string
+    }[]
+  >
   nativeToken: EcosystemNativeToken
   links: {
     header: ProjectLink[]
@@ -119,10 +126,14 @@ export async function getEcosystemEntry(
       if (!acc[raas]) {
         acc[raas] = []
       }
-      acc[raas].push(curr.slug.toString())
+      acc[raas].push({
+        slug: curr.slug.toString(),
+        name: curr.name,
+        href: `/scaling/projects/${curr.slug}`,
+      })
       return acc
     },
-    {} as Record<string, string[]>,
+    {} as Record<string, { slug: string; name: string; href: string }[]>,
   )
 
   return {
