@@ -51,7 +51,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <div
-      className="relative z-[0]"
+      className="relative z-[0] max-md:px-4"
       style={
         {
           '--ecosystem-primary': ecosystem.colors.primary,
@@ -83,7 +83,7 @@ export default async function Page({ params }: Props) {
             allScalingProjectsUops={ecosystem.allScalingProjects.uops}
             className="col-span-12 md:col-span-6"
           />
-          <div className="col-span-12 grid grid-cols-2 gap-[--spacing] md:hidden">
+          <div className="col-span-12 grid gap-[--spacing] md:hidden md:grid-cols-2">
             <EcosystemBuildOnLink
               name={ecosystem.name}
               slug={slug}

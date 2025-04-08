@@ -1,4 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import { cn } from '~/utils/cn'
 
 export function EcosystemWidget({
   children,
@@ -6,7 +7,7 @@ export function EcosystemWidget({
   className,
 }: { children: React.ReactNode; asChild?: boolean; className?: string }) {
   return (
-    <PrimaryCard asChild={asChild} className={className}>
+    <PrimaryCard asChild={asChild} className={cn('rounded-lg', className)}>
       {children}
     </PrimaryCard>
   )

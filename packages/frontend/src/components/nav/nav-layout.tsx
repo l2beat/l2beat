@@ -149,6 +149,7 @@ export async function NavLayout({
       type: 'multiple',
       title: 'Ecosystems',
       match: 'ecosystems',
+      disableMobileTabs: true,
       icon: (
         <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
