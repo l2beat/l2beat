@@ -3,13 +3,14 @@ import chalk from 'chalk'
 import { partition } from 'lodash'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { ShapeLocator } from '../analysis/ShapeLocator'
+import type { TemplateService } from '../analysis/TemplateService'
+import { getShapeFromAnalyzedContract } from '../analysis/findShape'
 
 export function printTemplatization(
   logger: DiscoveryLogger,
   analyses: Analysis[],
   verbose: boolean,
-  shapeLocator: ShapeLocator,
+  templateService: TemplateService,
 ) {
   const contracts = analyses.filter((a) => a.type === 'Contract')
   const [templatized, untemplatized] = partition(
@@ -33,7 +34,10 @@ export function printTemplatization(
   if (verbose) {
     logs.push(chalk.greenBright(chalk.bold('Templatized')))
     for (const [i, contract] of templatized.entries()) {
-      const matchedShape = shapeLocator.getShapeFromAnalyzedContract(contract)
+      const matchedShape = getShapeFromAnalyzedContract(
+        templateService,
+        contract,
+      )
       const firstLinePrefix = i === templatized.length - 1 ? `└─` : `├─`
       const nestedLinePrefix = i === templatized.length - 1 ? `  ` : `│ `
       const indent = ' '.repeat(2)
@@ -48,7 +52,7 @@ export function printTemplatization(
         ? [
             matchedShape.description,
             `${matchedShape.chain} @ ${matchedShape.blockNumber} (${matchedShape.address})`,
-            matchedShape.hash,
+            `hash: ${matchedShape.hash}`,
           ]
         : []
 
