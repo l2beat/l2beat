@@ -115,6 +115,7 @@ export function EcosystemsTvsChart({
         <TvsChartTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
+          projectSection={true}
         />
       </ChartControlsWrapper>
     </EcosystemWidget>

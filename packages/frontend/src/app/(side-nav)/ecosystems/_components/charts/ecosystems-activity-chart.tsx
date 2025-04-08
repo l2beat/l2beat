@@ -48,7 +48,7 @@ export function EcosystemsActivityChart({
   const isClient = useIsClient()
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
   const [showMainnet, setShowMainnet] = useLocalStorage(
-    'scaling-activity-show-mainnet',
+    'ecosystems-activity-show-mainnet',
     true,
   )
 
@@ -156,8 +156,8 @@ export function EcosystemsActivityChart({
           >
             <div className="flex flex-row items-center gap-2">
               <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden md:inline">ETH Mainnet Operations</span>
-              <span className="md:hidden">ETH UOPS</span>
+              <span className="hidden xl:inline">ETH Mainnet Operations</span>
+              <span className="xl:hidden">ETH UOPS</span>
             </div>
           </Checkbox>
         ) : (
@@ -166,6 +166,7 @@ export function EcosystemsActivityChart({
         <ActivityTimeRangeControls
           timeRange={timeRange}
           setTimeRange={setTimeRange}
+          projectSection={true}
         />
       </ChartControlsWrapper>
     </EcosystemWidget>
