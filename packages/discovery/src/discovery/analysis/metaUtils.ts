@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 
 import { groupBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
@@ -10,7 +10,7 @@ import type {
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
 import type { ContractValue } from '../output/types'
-import { get$Admins } from '../utils/extractors'
+import { get$Admins, toAddressArray } from '../utils/extractors'
 import type { Analysis } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
@@ -118,7 +118,7 @@ export function getTargetsMeta(
     const field = fields[fieldName]
     const target = field?.permissions
     if (target) {
-      for (const address of getAddresses(value)) {
+      for (const address of toAddressArray(value)) {
         const meta = mergeContractMeta(
           result[address.toString()],
           targetConfigToMeta(self, field, analysis),
@@ -221,21 +221,4 @@ function isEmptyObject(obj: object): boolean {
 
 function isDefined<T>(value: T | undefined): value is T {
   return value !== undefined
-}
-
-export function getAddresses(
-  value: ContractValue | undefined,
-): EthereumAddress[] {
-  if (Array.isArray(value)) {
-    return value.flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'object') {
-    return Object.values(value).flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'string') {
-    try {
-      return [EthereumAddress(value)]
-    } catch {
-      return []
-    }
-  }
-  return []
 }

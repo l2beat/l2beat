@@ -2,8 +2,8 @@ import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import type { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import type { HandlerResult } from '../handlers/Handler'
+import { toAddressArray } from '../utils/extractors'
 import type { AddressesWithTemplates } from './AddressAnalyzer'
-import { getAddresses } from './metaUtils'
 
 export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],
@@ -16,7 +16,7 @@ export function getRelativesWithSuggestedTemplates(
     if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
       continue
     }
-    const addresses = getAddresses(param.value).filter(
+    const addresses = toAddressArray(param.value).filter(
       (address) => !ignoredAddresses?.includes(address),
     )
     const template = fields?.[param.field]?.template ?? undefined
