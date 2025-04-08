@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs'
+import path from 'path'
 import type {
   Milestone,
   Project,
@@ -5,8 +7,6 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { readFileSync } from 'fs'
-import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'

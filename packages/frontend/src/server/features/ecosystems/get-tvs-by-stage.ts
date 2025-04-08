@@ -11,10 +11,7 @@ export function getTvsByStage(
     (acc, curr) => {
       const projectTvs = tvs.projects[curr.id.toString()]
       const stage = curr.scalingStage
-      if (
-        !stage ||
-        stage.stage === 'UnderReview'
-      ) {
+      if (!stage || stage.stage === 'UnderReview') {
         return acc
       }
 
