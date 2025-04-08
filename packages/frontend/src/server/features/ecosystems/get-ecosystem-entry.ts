@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs'
-import path from 'path'
 import type {
   Milestone,
   Project,
@@ -7,6 +5,8 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { readFileSync } from 'fs'
+import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { EcosystemNativeToken } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-native-token'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -24,8 +24,9 @@ import {
 } from '../scaling/summary/get-scaling-summary-entries'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
-import { getDaLayersUsed } from './get-da-layers-used'
+import { type DaLayersUsed, getDaLayersUsed } from './get-da-layers-used'
 import { getNativeToken } from './get-native-token'
+import type { ProjectByRaas } from './get-projects-by-raas'
 import { getProjectsByRaas } from './get-projects-by-raas'
 import { type TvsByStage, getTvsByStage } from './get-tvs-by-stage'
 import type { TvsByTokenType } from './get-tvs-by-token-type'
@@ -49,15 +50,8 @@ export interface EcosystemEntry {
   }
   tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
-  daLayersUsed: Record<string, number>
-  projectsByRaas: Record<
-    string,
-    {
-      slug: string
-      name: string
-      href: string
-    }[]
-  >
+  daLayersUsed: DaLayersUsed
+  projectsByRaas: ProjectByRaas
   nativeToken: EcosystemNativeToken
   links: {
     header: ProjectLink[]

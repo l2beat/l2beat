@@ -10,7 +10,7 @@ import {
   PieChartContainer,
   useChart,
 } from '~/components/core/chart/chart'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import type { TvsByStage } from '~/server/features/ecosystems/get-tvs-by-stage'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
@@ -43,7 +43,7 @@ export function EcosystemTvsByStage({
   tvsByStage,
   className,
 }: {
-  tvsByStage: EcosystemEntry['tvsByStage']
+  tvsByStage: TvsByStage
   className?: string
 }) {
   const chartData = [

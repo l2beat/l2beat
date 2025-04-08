@@ -1,5 +1,14 @@
 import type { Project } from '@l2beat/config'
 
+export type ProjectByRaas = Record<
+  string,
+  {
+    slug: string
+    name: string
+    href: string
+  }[]
+>
+
 export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
   return ecosystemProjects.reduce(
     (acc, curr) => {
@@ -15,6 +24,6 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
       })
       return acc
     },
-    {} as Record<string, { slug: string; name: string; href: string }[]>,
+    {} as ProjectByRaas,
   )
 }

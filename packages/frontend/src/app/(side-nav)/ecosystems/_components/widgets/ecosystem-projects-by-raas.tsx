@@ -5,13 +5,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemProjectsByRaas({
   projectsByRaas,
   className,
 }: {
-  projectsByRaas: Record<string, { slug: string; name: string; href: string }[]>
+  projectsByRaas: ProjectByRaas
   className?: string
 }) {
   return (

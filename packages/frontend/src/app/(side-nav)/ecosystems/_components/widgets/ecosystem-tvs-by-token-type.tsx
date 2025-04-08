@@ -9,7 +9,7 @@ import {
   useChart,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import type { TvsByTokenType } from '~/server/features/ecosystems/get-tvs-by-token-type'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
@@ -38,18 +38,17 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-const tokenTypeLabels: Record<keyof EcosystemEntry['tvsByTokenType'], string> =
-  {
-    ether: 'ETH & LSTs',
-    stablecoins: 'Stablecoins',
-    other: 'Other',
-  }
+const tokenTypeLabels: Record<keyof TvsByTokenType, string> = {
+  ether: 'ETH & LSTs',
+  stablecoins: 'Stablecoins',
+  other: 'Other',
+}
 
 export function EcosystemTvsByTokenType({
   tvsByTokenType,
   className,
 }: {
-  tvsByTokenType: EcosystemEntry['tvsByTokenType']
+  tvsByTokenType: TvsByTokenType
   className?: string
 }) {
   const chartData = [

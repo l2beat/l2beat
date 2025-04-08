@@ -1,11 +1,11 @@
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import type { DaLayersUsed } from '~/server/features/ecosystems/get-da-layers-used'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemDaLayersUsed({
   daLayersUsed,
   className,
 }: {
-  daLayersUsed: EcosystemEntry['daLayersUsed']
+  daLayersUsed: DaLayersUsed
   className?: string
 }) {
   return (
