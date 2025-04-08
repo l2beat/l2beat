@@ -2,7 +2,6 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  ESCROW,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -87,6 +86,7 @@ export const sophon: ScalingProject = zkStackL2({
         'stAZUR',
         'stAVAIL',
         'OPN',
+        'USDC',
       ], // 'SOPH' not on CG yet
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
@@ -100,13 +100,6 @@ export const sophon: ScalingProject = zkStackL2({
         ),
         tokensToAssignFromL1: [], // 'SOPH' not on CG yet
       },
-    }),
-    discovery.getEscrowDetails({
-      address: discovery.getContract('L1USDCBridge').address,
-      tokens: ['USDC'],
-      ...ESCROW.CANONICAL_EXTERNAL,
-      description:
-        'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
   ],
   availDa: {
