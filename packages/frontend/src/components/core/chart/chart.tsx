@@ -260,5 +260,5 @@ export {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
-  SimpleChartContainer as PieChartContainer,
+  SimpleChartContainer,
 }

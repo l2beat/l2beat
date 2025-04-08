@@ -5,7 +5,7 @@ import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartTooltip,
   ChartTooltipWrapper,
-  PieChartContainer,
+  SimpleChartContainer,
   useChart,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
@@ -94,7 +94,7 @@ export function EcosystemTvsByTokenType({
             )
           })}
         </div>
-        <PieChartContainer
+        <SimpleChartContainer
           meta={chartMeta}
           className="aspect-square h-[140px] min-h-[140px]"
         >
@@ -140,7 +140,7 @@ export function EcosystemTvsByTokenType({
               />
             </Pie>
           </PieChart>
-        </PieChartContainer>
+        </SimpleChartContainer>
       </div>
     </EcosystemWidget>
   )

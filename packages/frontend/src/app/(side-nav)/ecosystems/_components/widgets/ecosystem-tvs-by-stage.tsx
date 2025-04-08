@@ -7,7 +7,7 @@ import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartTooltip,
   ChartTooltipWrapper,
-  PieChartContainer,
+  SimpleChartContainer,
   useChart,
 } from '~/components/core/chart/chart'
 import type { TvsByStage } from '~/server/features/ecosystems/get-tvs-by-stage'
@@ -80,7 +80,7 @@ export function EcosystemTvsByStage({
             </div>
           ))}
         </div>
-        <PieChartContainer
+        <SimpleChartContainer
           meta={chartMeta}
           className="aspect-square h-[140px] min-h-[140px]"
         >
@@ -120,7 +120,7 @@ export function EcosystemTvsByStage({
               />
             </Pie>
           </PieChart>
-        </PieChartContainer>
+        </SimpleChartContainer>
       </div>
     </EcosystemWidget>
   )
