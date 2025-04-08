@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import { api } from '~/trpc/server'
 import { cn } from '~/utils/cn'
 import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
 import { EcosystemsProjectsChart } from '../_components/charts/ecosystems-projects-chart'
@@ -29,6 +30,24 @@ export default async function Page({ params }: Props) {
   if (!ecosystem) {
     return notFound()
   }
+
+  await Promise.all([
+    api.tvs.chart.prefetch({
+      range: '1y',
+      excludeAssociatedTokens: false,
+      filter: {
+        type: 'projects',
+        projectIds: ecosystem.projects.map((project) => project.id),
+      },
+    }),
+    api.activity.chart.prefetch({
+      range: '1y',
+      filter: {
+        type: 'projects',
+        projectIds: ecosystem.projects.map((project) => project.id),
+      },
+    }),
+  ])
 
   return (
     <div
