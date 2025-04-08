@@ -37,6 +37,13 @@ const chartMeta = {
       shape: 'square',
     },
   },
+  notApplicable: {
+    label: 'Not Applicable',
+    color: '#B4C7D5',
+    indicatorType: {
+      shape: 'square',
+    },
+  },
 } satisfies ChartMeta
 
 export function EcosystemTvsByStage({
@@ -62,6 +69,11 @@ export function EcosystemTvsByStage({
       tvs: tvsByStage['Stage 2'],
       fill: '#125D19',
     },
+    {
+      stage: 'notApplicable',
+      tvs: tvsByStage.NotApplicable,
+      fill: '#B4C7D5',
+    },
   ]
 
   const totalTvs = Object.values(tvsByStage).reduce((acc, tvs) => acc + tvs, 0)
@@ -71,14 +83,17 @@ export function EcosystemTvsByStage({
       <EcosystemWidgetTitle>TVS breakdown by stage</EcosystemWidgetTitle>
       <div className="flex items-center justify-around">
         <div>
-          {Object.entries(tvsByStage).map(([stage, tvs]) => (
-            <div key={stage} className="flex gap-2">
-              <StageBadge stage={stage as Stage} isAppchain={false} />
-              <div className="text-xs font-medium leading-[28px] text-secondary">
-                {formatPercent(tvs / totalTvs)}
+          {Object.entries(tvsByStage).map(([stage, tvs]) => {
+            if (stage === 'NotApplicable' && tvs === 0) return null
+            return (
+              <div key={stage} className="flex gap-2">
+                <StageBadge stage={stage as Stage} isAppchain={false} />
+                <div className="text-xs font-medium leading-[28px] text-secondary">
+                  {formatPercent(tvs / totalTvs)}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
         <SimpleChartContainer
           meta={chartMeta}
