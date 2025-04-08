@@ -44,7 +44,7 @@ export function EcosystemNativeToken({ nativeToken, className }: Props) {
           />
         </DataTile>
         <DataTile label="Amount">
-          <span>{`${formatNumber(nativeToken.data.amount.value)} ${nativeToken.symbol}`}</span>
+          <span>{`${formatNumber(nativeToken.data.amount.value)}`}</span>
           <PercentChange
             className="ml-0.5"
             value={nativeToken.data.amount.change}
