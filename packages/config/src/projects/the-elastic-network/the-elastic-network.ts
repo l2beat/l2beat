@@ -10,7 +10,7 @@ export const theElasticNetwork: BaseProject = {
   addedAt: 1743677000,
   display: {
     description:
-      'An ever-expanding, verifiable network of blockchains, powered by ZKsync',
+      'An ever-expanding, verifiable network of blockchains, powered by ZKsync.',
     links: {
       websites: ['https://www.zksync.io/'],
     },
