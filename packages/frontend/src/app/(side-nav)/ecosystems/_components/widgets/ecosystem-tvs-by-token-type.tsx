@@ -47,8 +47,10 @@ const tokenTypeLabels: Record<keyof EcosystemEntry['tvsByTokenType'], string> =
 
 export function EcosystemTvsByTokenType({
   tvsByTokenType,
+  className,
 }: {
   tvsByTokenType: EcosystemEntry['tvsByTokenType']
+  className?: string
 }) {
   const chartData = [
     {
@@ -72,7 +74,7 @@ export function EcosystemTvsByTokenType({
     tvsByTokenType.ether + tvsByTokenType.stablecoins + tvsByTokenType.other
 
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>TVS breakdown by token type</EcosystemWidgetTitle>
       <div className="flex items-center justify-around">
         <div>

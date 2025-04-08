@@ -3,11 +3,13 @@ import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemProjectsByRaas({
   projectsByRaas,
+  className,
 }: {
   projectsByRaas: Record<string, string[]>
+  className?: string
 }) {
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>Rollup as a Service</EcosystemWidgetTitle>
       <div className="flex flex-col gap-2">
         {Object.entries(projectsByRaas).map(([raas, projectsSlugs]) => (

@@ -3,11 +3,13 @@ import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemDaLayersUsed({
   daLayersUsed,
+  className,
 }: {
   daLayersUsed: EcosystemEntry['daLayersUsed']
+  className?: string
 }) {
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>DA Layers Used</EcosystemWidgetTitle>
       <div>
         {Object.entries(daLayersUsed).map(([name, count]) => (

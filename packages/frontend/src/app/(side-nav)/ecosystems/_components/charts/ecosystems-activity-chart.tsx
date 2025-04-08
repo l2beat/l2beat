@@ -38,10 +38,12 @@ export function EcosystemsActivityChart({
   name,
   entries,
   allScalingProjectsUops,
+  className,
 }: {
   name: string
   entries: EcosystemEntry['projects']
   allScalingProjectsUops: number
+  className?: string
 }) {
   const isClient = useIsClient()
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
@@ -94,7 +96,7 @@ export function EcosystemsActivityChart({
   const range = getChartRange(chartData)
 
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <Header range={range} stats={stats} />
       <ChartContainer
         data={chartData}

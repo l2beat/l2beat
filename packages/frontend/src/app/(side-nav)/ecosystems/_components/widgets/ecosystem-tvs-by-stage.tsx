@@ -41,8 +41,10 @@ const chartMeta = {
 
 export function EcosystemTvsByStage({
   tvsByStage,
+  className,
 }: {
   tvsByStage: EcosystemEntry['tvsByStage']
+  className?: string
 }) {
   const chartData = [
     {
@@ -65,7 +67,7 @@ export function EcosystemTvsByStage({
   const totalTvs = Object.values(tvsByStage).reduce((acc, tvs) => acc + tvs, 0)
 
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>TVS breakdown by stage</EcosystemWidgetTitle>
       <div className="flex items-center justify-around">
         <div>

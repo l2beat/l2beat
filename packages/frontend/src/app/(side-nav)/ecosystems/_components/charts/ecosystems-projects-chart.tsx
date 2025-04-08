@@ -26,11 +26,13 @@ import { EcosystemsMarketShare } from './ecosystems-market-share'
 interface Props {
   entries: EcosystemEntry['projects']
   allScalingProjectsCount: number
+  className?: string
 }
 
 export function EcosystemsProjectsChart({
   entries,
   allScalingProjectsCount,
+  className,
 }: Props) {
   const chartMeta = useMemo(() => {
     return {
@@ -48,7 +50,7 @@ export function EcosystemsProjectsChart({
   const range = getChartRange(data)!
   const stats = getStats(data, allScalingProjectsCount)
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <Header range={range} stats={stats} />
       <ChartContainer
         meta={chartMeta}

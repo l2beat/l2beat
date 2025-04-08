@@ -32,7 +32,7 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
 
         <div className="m-auto px-6 py-5">
           <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link"
             href={links.review}
           >
             Governance Review

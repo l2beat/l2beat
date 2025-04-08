@@ -17,11 +17,12 @@ export interface EcosystemNativeToken {
 
 interface Props {
   nativeToken: EcosystemNativeToken
+  className?: string
 }
 
-export function EcosystemNativeToken({ nativeToken }: Props) {
+export function EcosystemNativeToken({ nativeToken, className }: Props) {
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>Native Token</EcosystemWidgetTitle>
       <div className="flex items-center gap-2 text-xl font-medium">
         <Image

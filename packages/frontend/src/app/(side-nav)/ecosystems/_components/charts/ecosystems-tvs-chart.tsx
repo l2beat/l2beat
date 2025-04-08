@@ -30,10 +30,12 @@ export function EcosystemsTvsChart({
   name,
   entries,
   allScalingProjectsTvs,
+  className,
 }: {
   name: string
   entries: EcosystemEntry['projects']
   allScalingProjectsTvs: number
+  className?: string
 }) {
   const [unit, setUnit] = useState<ChartUnit>('usd')
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
@@ -71,7 +73,7 @@ export function EcosystemsTvsChart({
   const range = getChartRange(chartData)
 
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <Header range={range} stats={stats} unit={unit} />
       <ChartContainer
         meta={chartMeta}

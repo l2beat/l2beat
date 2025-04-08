@@ -50,60 +50,82 @@ export default async function Page({ params }: Props) {
           badges={ecosystem.badges}
           links={ecosystem.links.header}
         />
-        <main className="mt-3 space-y-[--spacing]">
-          <div className="grid grid-cols-2 gap-[--spacing]">
-            <EcosystemsTvsChart
+        <main className="my-[--spacing] grid grid-cols-12 gap-[--spacing]">
+          <EcosystemsTvsChart
+            name={ecosystem.name}
+            entries={ecosystem.projects}
+            allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+            className="col-span-12 md:col-span-6"
+          />
+          <EcosystemsActivityChart
+            name={ecosystem.name}
+            entries={ecosystem.projects}
+            allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+            className="col-span-12 md:col-span-6"
+          />
+          <div className="col-span-12 grid grid-cols-2 gap-[--spacing] md:hidden">
+            <EcosystemBuildOnLink
               name={ecosystem.name}
-              entries={ecosystem.projects}
-              allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+              slug={slug}
+              href={ecosystem.links.buildOn}
+              className={cn(slug === 'superchain' && 'text-primary')}
             />
-            <EcosystemsActivityChart
+            <EcosystemLearnMoreLink
               name={ecosystem.name}
-              entries={ecosystem.projects}
-              allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+              href={ecosystem.links.learnMore}
             />
           </div>
-          <div className="grid grid-cols-3 gap-[--spacing]">
-            <EcosystemTvsByTokenType
-              tvsByTokenType={ecosystem.tvsByTokenType}
-            />
-            <EcosystemTvsByStage tvsByStage={ecosystem.tvsByStage} />
-            <EcosystemDaLayersUsed daLayersUsed={ecosystem.daLayersUsed} />
-          </div>
+          <EcosystemTvsByTokenType
+            tvsByTokenType={ecosystem.tvsByTokenType}
+            className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
+          />
+          <EcosystemTvsByStage
+            tvsByStage={ecosystem.tvsByStage}
+            className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
+          />
+          <EcosystemDaLayersUsed
+            daLayersUsed={ecosystem.daLayersUsed}
+            className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
+          />
           <EcosystemsProjectsChart
             entries={ecosystem.projects}
             allScalingProjectsCount={ecosystem.allScalingProjects.count}
+            className="col-span-12 md:col-span-6 min-[1440px]:col-span-12"
           />
-          <div className="grid grid-cols-2 gap-[--spacing]">
-            <EcosystemNativeToken nativeToken={ecosystem.nativeToken} />
-            <div className="grid grid-rows-2 gap-[--spacing]">
-              <EcosystemBuildOnLink
-                name={ecosystem.name}
-                slug={slug}
-                href={ecosystem.links.buildOn}
-                className={cn(slug === 'superchain' && 'text-primary')}
-              />
-              <EcosystemLearnMoreLink
-                name={ecosystem.name}
-                href={ecosystem.links.learnMore}
-              />
-            </div>
-          </div>
-          <EcosystemMilestonesAndIncidents milestones={ecosystem.milestones} />
-          <div className="grid grid-cols-4 gap-[--spacing]">
-            <EcosystemProjectsByRaas
-              projectsByRaas={ecosystem.projectsByRaas}
+          <EcosystemNativeToken
+            nativeToken={ecosystem.nativeToken}
+            className="col-span-12 md:col-span-6"
+          />
+          <div className="col-span-12 grid grid-rows-2 gap-[--spacing] max-md:hidden md:col-span-6">
+            <EcosystemBuildOnLink
+              name={ecosystem.name}
+              slug={slug}
+              href={ecosystem.links.buildOn}
+              className={cn(slug === 'superchain' && 'text-primary')}
             />
-            <EcosystemProjectsByRaas
-              projectsByRaas={ecosystem.projectsByRaas}
-            />
-            <EcosystemGovernanceLinks
-              links={ecosystem.links.governance}
-              className="col-span-2 col-start-3"
+            <EcosystemLearnMoreLink
+              name={ecosystem.name}
+              href={ecosystem.links.learnMore}
             />
           </div>
-          <EcosystemProjectsTable entries={ecosystem.projects} />
+          <EcosystemMilestonesAndIncidents
+            milestones={ecosystem.milestones}
+            className="col-span-12"
+          />
+          <EcosystemProjectsByRaas
+            projectsByRaas={ecosystem.projectsByRaas}
+            className="col-span-12 md:col-span-3"
+          />
+          <EcosystemProjectsByRaas
+            projectsByRaas={ecosystem.projectsByRaas}
+            className="col-span-12 md:col-span-3"
+          />
+          <EcosystemGovernanceLinks
+            links={ecosystem.links.governance}
+            className="col-span-12 md:col-span-6"
+          />
         </main>
+        <EcosystemProjectsTable entries={ecosystem.projects} />
       </div>
     </div>
   )

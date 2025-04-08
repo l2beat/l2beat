@@ -17,8 +17,10 @@ import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 export function EcosystemMilestonesAndIncidents({
   milestones,
+  className,
 }: {
   milestones: Milestone[]
+  className?: string
 }) {
   const sectionRef = useRef<HTMLDivElement>(null)
 
@@ -42,7 +44,7 @@ export function EcosystemMilestonesAndIncidents({
   const tickFormatter = getTickFormatter(actualRangeInDays)
 
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className={className}>
       <div className="grid grid-cols-3 gap-6" ref={sectionRef}>
         <div className="col-span-2 flex flex-col">
           <EcosystemWidgetTitle>Milestones & Incidents</EcosystemWidgetTitle>
