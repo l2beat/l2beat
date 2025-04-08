@@ -31,8 +31,8 @@ async function main() {
       ProjectId(p),
     )
 
-    const tvsDb = createDatabase({
-      connectionString: env.string('TVS_STAGING_URL'),
+    const db = createDatabase({
+      connectionString: env.string('TVS_DB_URL'),
       application_name: 'DIFF-SCRIPT',
       ssl: { rejectUnauthorized: false },
       min: 2,
@@ -40,7 +40,7 @@ async function main() {
       keepAlive: false,
     })
 
-    const tvsRecords = await tvsDb.tvsProjectValue.getByTimestampAndType(
+    const tvsRecords = await db.tvsProjectValue.getByTimestampAndType(
       timestamp,
       'SUMMARY',
     )
@@ -53,16 +53,7 @@ async function main() {
       0,
     )
 
-    const tvlDb = createDatabase({
-      connectionString: env.string('TVL_STAGING_URL'),
-      application_name: 'DIFF-SCRIPT',
-      ssl: { rejectUnauthorized: false },
-      min: 2,
-      max: 10,
-      keepAlive: false,
-    })
-
-    const tvlRecords = await tvlDb.value.getValuesByProjectIdsAndTimeRange(
+    const tvlRecords = await db.value.getValuesByProjectIdsAndTimeRange(
       projectIdArray,
       [timestamp, timestamp],
     )
@@ -80,7 +71,7 @@ async function main() {
     )
 
     printResults(totalTvs, totalTvl)
-    printProjectDiffs(tvsDb, timestamp, projectIds, tvlRecords)
+    printProjectDiffs(db, timestamp, projectIds, tvlRecords)
   } catch (error) {
     console.error('Error in main function:', error)
     process.exit(1)
@@ -105,7 +96,7 @@ function printResults(totalTvs: number, totalTvl: number) {
 }
 
 async function printProjectDiffs(
-  tvsDb: Database,
+  db: Database,
   timestamp: UnixTime,
   projectIds: Set<string>,
   tvlRecords: ValueRecord[],
@@ -131,7 +122,7 @@ async function printProjectDiffs(
     projectTvlMap.set(projectId, previous + value)
   }
   const tvsRecords = (
-    await tvsDb.tvsProjectValue.getByTimestampAndType(timestamp, 'FULL')
+    await db.tvsProjectValue.getByTimestampAndType(timestamp, 'FULL')
   ).filter((r) => projectIds.has(r.project))
 
   const projectTvsMap = new Map<string, number>()
