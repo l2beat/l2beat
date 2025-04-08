@@ -37,7 +37,7 @@ export class TotalSupplyProvider {
           return results
         }
       } catch (error) {
-        if (i === this.rpcs.length - 1) throw error
+        if (i === clients.length - 1) throw error
       }
     }
 

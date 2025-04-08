@@ -33,25 +33,23 @@ export class BalanceProvider {
             return BigInt(r.data.toString())
           })
         } else {
-          const results = []
-          for (const { token, holder } of queries) {
-            if (token === 'native') {
-              const balance = await client.getBalance(holder, blockNumber)
-              results.push(balance)
-            } else {
-              const res = await client.call(
-                encodeErc20Balance(token, holder),
-                blockNumber,
-              )
-              results.push(
-                res.toString() === '0x' ? 0n : BigInt(res.toString()),
-              )
-            }
-          }
-          return results
+          return Promise.all(
+            queries.map(async (q) => {
+              if (q.token === 'native') {
+                const res = await client.getBalance(q.holder, blockNumber)
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+              } else {
+                const res = await client.call(
+                  encodeErc20Balance(q.token, q.holder),
+                  blockNumber,
+                )
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+              }
+            }),
+          )
         }
       } catch (error) {
-        if (index === this.rpcs.length - 1) throw error
+        if (index === clients.length - 1) throw error
       }
     }
 
@@ -74,7 +72,7 @@ const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
 ])
 
-function encodeErc20Balance(
+export function encodeErc20Balance(
   token: EthereumAddress,
   holder: EthereumAddress,
 ): CallParameters {
