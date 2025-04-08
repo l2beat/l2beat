@@ -79,6 +79,7 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
+        loaderClassName="!top-[52px]"
         className="!h-44 !min-h-44"
       >
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>

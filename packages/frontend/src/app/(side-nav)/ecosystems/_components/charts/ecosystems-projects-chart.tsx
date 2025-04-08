@@ -55,6 +55,7 @@ export function EcosystemsProjectsChart({
       <ChartContainer
         meta={chartMeta}
         data={data}
+        loaderClassName="!top-[18px]"
         className="!h-[110px] !min-h-[110px]"
       >
         <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>

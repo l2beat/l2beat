@@ -73,6 +73,7 @@ function ChartContainer<T extends { timestamp: number }>({
   data,
   isLoading,
   milestones,
+  loaderClassName,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -81,6 +82,7 @@ function ChartContainer<T extends { timestamp: number }>({
   >['children']
   data: T[] | undefined
   milestones?: Milestone[]
+  loaderClassName?: string
   isLoading?: boolean
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -109,6 +111,7 @@ function ChartContainer<T extends { timestamp: number }>({
               'top-[63px] group-has-[.recharts-legend-wrapper]:top-[58px]',
               'md:top-[84px] md:group-has-[.recharts-legend-wrapper]:top-[78px]',
               'xl:top-[98px] xl:group-has-[.recharts-legend-wrapper]:top-[93px]',
+              loaderClassName,
             )}
           />
         )}
