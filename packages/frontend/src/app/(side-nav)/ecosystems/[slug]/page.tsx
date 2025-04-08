@@ -62,7 +62,8 @@ export default async function Page({ params }: Props) {
         } as React.CSSProperties
       }
     >
-      <div className="fixed right-[20%] top-44 -z-1 h-[2400px] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-ecosystem-primary via-ecosystem-secondary via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
+      {/* eslint-disable-next-line tailwindcss/no-contradicting-classname */}
+      <div className="fixed right-[20%] top-44 -z-1 h-[2400px] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
       <div>
         <EcosystemPageHeader
           logo={ecosystem.logo}
