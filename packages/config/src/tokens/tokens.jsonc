@@ -1,6 +1,12 @@
 {
   "ethereum": [
     {
+      "symbol": "LGHO",
+      "category": "stablecoin",
+      "coingeckoId": "gho",
+      "address": "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a"
+    },
+    {
       "symbol": "CELO",
       "address": "0x057898f3C43F129a17517B9056D23851F124b19f",
       "coingeckoId": "celo"
