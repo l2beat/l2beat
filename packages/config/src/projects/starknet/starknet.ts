@@ -275,7 +275,7 @@ export const starknet: ScalingProject = {
     costsWarning: {
       sentiment: 'warning',
       value:
-        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet's costs represent a rough estimate, and we are working to provide more accurate values.",
+        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Due to this complexity, Starknet's SHARP costs represent an estimate based on self-reported costs by the Starkware team.",
     },
   },
   chainConfig: {
@@ -625,6 +625,7 @@ export const starknet: ScalingProject = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
+          untilTimestamp: UnixTime(1742836319), // 2025/03/24 17:11 UTC
           programHashes: [
             '2397984267054479079853548842566103781972463965746662494980785692480538410509', // Starknet OS
           ],
@@ -638,12 +639,56 @@ export const starknet: ScalingProject = {
         ],
         query: {
           formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1742836319),
+          untilTimestamp: UnixTime(1742967335), // 2025/03/26 05:35 UTC
+          programHashes: [
+            '2231644845387633655859130162745748394456578773184260372693322394988769337368', // Starknet OS
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1742967335),
+          programHashes: [
+            '2534935718742676028234156221136000178296467523045214874259117268197132196876', // Starknet OS
+          ],
+        },
+        _hackCostMultiplier: 0.17,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
           sinceTimestamp: UnixTime(1732747391),
+          untilTimestamp: UnixTime(1742836319), // 2025/03/24 17:11 UTC
           programHashes: [
             '15787695375210609250491147414005894154890873413229882671403677761527504080', // Aggregator (since Starknet v0.13.3)
           ],
         },
         _hackCostMultiplier: 0.05,
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestamp: UnixTime(1742836319),
+          programHashes: [
+            '273279642033703284306509103355536170486431195329675679055627933497997642494', // Aggregator (since Starknet v0.13.4)
+          ],
+        },
+        _hackCostMultiplier: 0.17,
       },
       {
         uses: [

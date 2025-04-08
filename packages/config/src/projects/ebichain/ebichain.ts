@@ -9,6 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('ebichain')
 
 export const ebichain: ScalingProject = orbitStackL2({
+  isArchived: true,
   discovery,
   addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
   additionalBadges: [BADGES.RaaS.Conduit],

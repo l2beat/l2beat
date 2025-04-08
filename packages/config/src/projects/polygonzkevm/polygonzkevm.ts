@@ -1,9 +1,5 @@
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import {
-  ESCROW,
-  NEW_CRYPTOGRAPHY,
-  TECHNOLOGY_DATA_AVAILABILITY,
-} from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from '../../templates/polygonCDKStack'
@@ -77,6 +73,107 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
     ],
   },
   nonTemplateTrackedTxs: [
+    // mostly pre-agglayer trackedTxs when polygonzkevm was the only significant chain
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+        selector: '0x5e9145c9',
+        functionSignature:
+          'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
+        sinceTimestamp: UnixTime(1679653163),
+        untilTimestamp: UnixTime(1707822059),
+      },
+    },
+    {
+      uses: [
+        {
+          type: 'liveness',
+          subtype: 'stateUpdates',
+        },
+        {
+          type: 'l2costs',
+          subtype: 'stateUpdates',
+        },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+        selector: '0x2b0006fa',
+        functionSignature:
+          'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
+        sinceTimestamp: UnixTime(1679653163),
+        untilTimestamp: UnixTime(1707822059),
+      },
+    },
+    {
+      uses: [
+        {
+          type: 'liveness',
+          subtype: 'stateUpdates',
+        },
+        {
+          type: 'l2costs',
+          subtype: 'stateUpdates',
+        },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+        selector: '0x621dd411',
+        functionSignature:
+          'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
+        sinceTimestamp: UnixTime(1679653163),
+        untilTimestamp: UnixTime(1707822059),
+      },
+    },
+    // shared trackedtxs for all agglayer chains
+    {
+      uses: [
+        {
+          type: 'liveness',
+          subtype: 'stateUpdates',
+        },
+        {
+          type: 'l2costs',
+          subtype: 'stateUpdates',
+        },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+        selector: '0x87c20c01',
+        functionSignature:
+          'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
+        sinceTimestamp: UnixTime(1707822059),
+        untilTimestamp: UnixTime(1738594559),
+      },
+    },
+    {
+      uses: [
+        {
+          type: 'liveness',
+          subtype: 'stateUpdates',
+        },
+        {
+          type: 'l2costs',
+          subtype: 'stateUpdates',
+        },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+        selector: '0x1489ed10',
+        functionSignature:
+          'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
+        sinceTimestamp: UnixTime(1707822059),
+      },
+    },
+    // project-specific trackedTxs (polygonZkEVM)
     {
       uses: [
         { type: 'liveness', subtype: 'batchSubmissions' },
@@ -154,38 +251,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
   ],
-  nonTemplateTechnology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-      references: [
-        {
-          title:
-            'PolygonZkEVM.sol - Etherscan source code, verifyBatches function',
-          url: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-        },
-      ],
-    },
-    dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
-      references: [
-        {
-          title:
-            'PolygonZkEVM.sol - Etherscan source code, sequenceBatches function',
-          url: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-        },
-      ],
-    },
-  },
   isForcedBatchDisallowed,
-  stateDerivation: {
-    nodeSoftware:
-      'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
-    compressionScheme: 'No compression scheme yet.',
-    genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the [`_legacyBatchNumToStateRoot`](https://evm.storage/eth/19489007/0x5132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2/_legacyBatchNumToStateRoot#map) variable of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
-    dataFormat:
-      'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
-  },
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -198,7 +264,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
       {
         title: 'ZK Circuits',
         description:
-          'Polygon zkEVM circuits are built from PIL and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
+          'Polygon zkEVM circuits are built from PIL (polynomial identity language) and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/0xPolygonHermez/zkevm-rom).',
         risks: [
           {
             category: 'Funds can be lost if',
@@ -210,6 +276,11 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         title: 'Verification Keys Generation',
         description:
           'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this guide](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/verifyMainnetDeployment/verifyMainnetProofVerifier.md). The system requires a trusted setup.',
+      },
+      {
+        title: 'Pessimistic Proofs',
+        description:
+          'The pessimistic proofs that are used to prove correct accounting in the shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
       },
     ],
     proofVerification: {

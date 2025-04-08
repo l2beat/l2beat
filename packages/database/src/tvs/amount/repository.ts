@@ -13,6 +13,20 @@ export class TvsAmountRepository extends BaseRepository {
     return rows.length
   }
 
+  async getAmount(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsAmountRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async getAmountsInRange(
     configurationIds: string[],
     fromInclusive: UnixTime,
