@@ -8497,6 +8497,50 @@
       }
     },
     {
+      "name": "Stargate USD₮0 (Bridged)",
+      "coingeckoId": "usdt0",
+      "address": "0x102d758f688a4C1C5a80b116bD945d4455460282",
+      "symbol": "USD₮0",
+      "decimals": 6,
+      "deploymentTimestamp": 1743178455,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "uBTC",
+      "coingeckoId": "wrapped-bitcoin-universal",
+      "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",
+      "symbol": "uBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1742262373,
+      "coingeckoListingTimestamp": 1726704000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50252/large/UA-BTC_1.png?1726721793",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Warpped stASTR",
       "coingeckoId": "wrapped-stastr",
       "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
