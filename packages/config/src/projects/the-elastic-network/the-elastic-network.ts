@@ -28,7 +28,8 @@ export const theElasticNetwork: BaseProject = {
       secondary: '#4276FF',
     },
     nativeToken: {
-      id: 'zksync2-ZK',
+      tokenId: 'zksync2-ZK',
+      projectId: ProjectId('zksync2'),
       description: 'ZK is the governance token for the Elastic Network.',
     },
   },

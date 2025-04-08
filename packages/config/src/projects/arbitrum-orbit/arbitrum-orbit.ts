@@ -28,7 +28,8 @@ export const arbitrumOrbit: BaseProject = {
       secondary: '#12AAFF',
     },
     nativeToken: {
-      id: 'arbitrum-ARB',
+      tokenId: 'arbitrum-ARB-1',
+      projectId: ProjectId('arbitrum'),
       description:
         'ARB is the governance token for the Arbitrum Orbit ecosystem. It is used for voting on protocol upgrades, treasury allocations, and other governance decisions across the Orbit network of Arbitrum chains.',
     },

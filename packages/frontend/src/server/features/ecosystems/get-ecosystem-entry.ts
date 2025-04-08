@@ -8,7 +8,6 @@ import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
-import type { EcosystemNativeToken } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-native-token'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { getCollection } from '~/content/get-collection'
@@ -25,6 +24,7 @@ import {
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 import { type DaLayersUsed, getDaLayersUsed } from './get-da-layers-used'
+import type { EcosystemNativeToken } from './get-native-token'
 import { getNativeToken } from './get-native-token'
 import type { ProjectByRaas } from './get-projects-by-raas'
 import { getProjectsByRaas } from './get-projects-by-raas'
@@ -93,6 +93,7 @@ export async function getEcosystemEntry(
     ],
     optional: [
       'tvlInfo',
+      'tvsConfig',
       'scalingDa',
       'scalingStage',
       'chainConfig',
@@ -139,7 +140,7 @@ export async function getEcosystemEntry(
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projectsByRaas: getProjectsByRaas(ecosystemProjects),
-    nativeToken: getNativeToken(ecosystem),
+    nativeToken: await getNativeToken(ecosystem, ecosystemProjects),
     projects: ecosystemProjects
       .map((project) => ({
         ...getScalingSummaryEntry(

@@ -1,19 +1,9 @@
 import Image from 'next/image'
+import { PercentChange } from '~/components/percent-change'
+import type { EcosystemNativeToken } from '~/server/features/ecosystems/get-native-token'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { formatNumber } from '~/utils/number-format/format-number'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
-
-export interface EcosystemNativeToken {
-  logo: string
-  name: string
-  symbol: string
-  description: string
-  data: {
-    price: number
-    marketCap: number
-    amount: number
-  }
-}
 
 interface Props {
   nativeToken: EcosystemNativeToken
@@ -39,30 +29,42 @@ export function EcosystemNativeToken({ nativeToken, className }: Props) {
         {nativeToken.description}
       </p>
       <div className="mt-4 grid grid-cols-3 gap-4">
-        <DataTile
-          label="Price"
-          value={formatCurrency(nativeToken.data.price, 'usd')}
-        />
-        <DataTile
-          label="Market Cap"
-          value={formatCurrency(nativeToken.data.marketCap, 'usd')}
-        />
-        <DataTile
-          label="Amount"
-          value={`${formatNumber(nativeToken.data.amount)} ${nativeToken.symbol}`}
-        />
+        <DataTile label="Price">
+          <span>{formatCurrency(nativeToken.data.price.value, 'usd')}</span>
+          <PercentChange
+            className="ml-0.5"
+            value={nativeToken.data.price.change}
+          />
+        </DataTile>
+        <DataTile label="Market Cap">
+          <span>{formatCurrency(nativeToken.data.marketCap.value, 'usd')}</span>
+          <PercentChange
+            className="ml-0.5"
+            value={nativeToken.data.marketCap.change}
+          />
+        </DataTile>
+        <DataTile label="Amount">
+          <span>{`${formatNumber(nativeToken.data.amount.value)} ${nativeToken.symbol}`}</span>
+          <PercentChange
+            className="ml-0.5"
+            value={nativeToken.data.amount.change}
+          />
+        </DataTile>
       </div>
     </EcosystemWidget>
   )
 }
 
-function DataTile({ label, value }: { label: string; value: string }) {
+function DataTile({
+  label,
+  children,
+}: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col items-center gap-1 rounded border border-divider p-3">
       <p className="text-2xs font-medium leading-none text-secondary">
         {label}
       </p>
-      <p className="text-xs font-bold">{value}</p>
+      <p className="text-sm font-bold">{children}</p>
     </div>
   )
 }
