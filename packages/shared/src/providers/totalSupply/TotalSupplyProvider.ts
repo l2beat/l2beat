@@ -1,9 +1,16 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
 
 export class TotalSupplyProvider {
-  constructor(private readonly rpcs: RpcClient[]) {}
+  private logger: Logger
+  constructor(
+    private readonly rpcs: RpcClient[],
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getTotalSupplies(
     tokens: EthereumAddress[],
@@ -18,23 +25,33 @@ export class TotalSupplyProvider {
 
         if (client.isMulticallDeployed(blockNumber)) {
           const res = await client.multicall(calls, blockNumber)
-          return res.map((r) => {
+          return res.map((r, i) => {
             if (r.success === false) {
+              this.logger
+                .tag({ chain })
+                .warn(`Issue with totalSupply fetching`, {
+                  token: tokens[i],
+                })
               return 0n
             }
             return BigInt(r.data.toString())
           })
         } else {
-          const results = []
-          for (const c of calls) {
-            const res = await client.call(c, blockNumber)
-            if (res.toString() === '0x') {
-              results.push(0n)
-            } else {
-              results.push(BigInt(res.toString()))
-            }
-          }
-          return results
+          return Promise.all(
+            calls.map(async (c, i) => {
+              try {
+                const res = await client.call(c, blockNumber)
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+              } catch {
+                this.logger
+                  .tag({ chain })
+                  .warn(`Issue with totalSupply fetching`, {
+                    token: tokens[i],
+                  })
+                return 0n
+              }
+            }),
+          )
         }
       } catch (error) {
         if (i === clients.length - 1) throw error
@@ -49,7 +66,7 @@ const erc20Interface = new utils.Interface([
   'function totalSupply() view returns (uint256)',
 ])
 
-function encodeTotalSupply(token: EthereumAddress): CallParameters {
+export function encodeTotalSupply(token: EthereumAddress): CallParameters {
   return {
     to: token,
     data: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),
