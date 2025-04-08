@@ -16,7 +16,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147"
     },
     {
       "mode": "auto",
@@ -34,7 +35,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13585/large/image_2024-01-16_172847810.png?1705397359"
     }
   ]
 }

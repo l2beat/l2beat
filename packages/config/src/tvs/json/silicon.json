@@ -17,7 +17,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928"
     },
     {
       "mode": "auto",
@@ -34,7 +35,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12124/large/Curve.png?1696511967"
     },
     {
       "mode": "auto",
@@ -51,7 +53,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -81,7 +84,8 @@
           }
         ]
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -98,7 +102,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562"
     },
     {
       "mode": "auto",
@@ -115,7 +120,8 @@
         "chain": "silicon",
         "decimals": 8,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12493/large/GALA_token_image_-_200PNG.png?1709725869"
     },
     {
       "mode": "auto",
@@ -132,7 +138,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326"
     },
     {
       "mode": "auto",
@@ -149,7 +156,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745"
     },
     {
       "mode": "auto",
@@ -166,7 +174,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1696505053"
     },
     {
       "mode": "auto",
@@ -183,7 +192,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4630/large/Orbs.jpg?1696505200"
     },
     {
       "mode": "auto",
@@ -200,7 +210,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32440/large/polygon.png?1698233684"
     },
     {
       "mode": "auto",
@@ -217,7 +228,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3139/large/REN.png?1696503862"
     },
     {
       "mode": "auto",
@@ -234,7 +246,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11939/large/shiba.png?1696511800"
     },
     {
       "mode": "auto",
@@ -251,7 +264,8 @@
         "chain": "silicon",
         "decimals": 18,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3449/large/tusd.png?1696504140"
     },
     {
       "mode": "auto",
@@ -268,7 +282,8 @@
         "chain": "silicon",
         "decimals": 6,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -285,7 +300,8 @@
         "chain": "silicon",
         "decimals": 6,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -302,7 +318,8 @@
         "chain": "silicon",
         "decimals": 8,
         "sinceTimestamp": 1724183531
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     }
   ]
 }

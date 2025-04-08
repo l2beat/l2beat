@@ -132,7 +132,8 @@
             "priceId": "ethereum"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -192,7 +193,8 @@
             "priceId": "mantle-staked-ether"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066"
     },
     {
       "mode": "auto",
@@ -252,7 +254,8 @@
             "priceId": "metis-token"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192"
     },
     {
       "mode": "auto",
@@ -366,7 +369,8 @@
             "priceId": "usd-coin"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -394,7 +398,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35296/large/USDC_Icon.png?1708082083"
     },
     {
       "mode": "auto",
@@ -472,7 +477,8 @@
             "priceId": "tether"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -500,7 +506,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346"
     },
     {
       "mode": "auto",
@@ -528,7 +535,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114"
     },
     {
       "mode": "auto",
@@ -556,7 +564,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -584,7 +593,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31013/large/wrapped-eth-mantle-bridge.png?1696529850"
     }
   ]
 }

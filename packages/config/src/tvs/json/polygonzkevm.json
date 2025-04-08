@@ -17,7 +17,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230"
     },
     {
       "mode": "auto",
@@ -34,7 +35,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354"
     },
     {
       "mode": "auto",
@@ -51,7 +53,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928"
     },
     {
       "mode": "auto",
@@ -68,7 +71,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24383/large/apecoin.jpg?1696523566"
     },
     {
       "mode": "auto",
@@ -85,7 +89,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11683/large/Balancer.png?1696511572"
     },
     {
       "mode": "auto",
@@ -102,7 +107,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1690387679
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26618/large/icon_200.png?1696525691"
     },
     {
       "mode": "auto",
@@ -119,7 +125,8 @@
         "chain": "polygonzkevm",
         "decimals": 8,
         "sinceTimestamp": 1684108800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30323/large/hpos10i_logo_casino_night-dexview.png?1696529224"
     },
     {
       "mode": "auto",
@@ -136,7 +143,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16916/large/bone_icon.png?1696516487"
     },
     {
       "mode": "auto",
@@ -153,7 +161,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534"
     },
     {
       "mode": "auto",
@@ -170,7 +179,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/27008/large/cbeth.png?1709186989"
     },
     {
       "mode": "auto",
@@ -187,7 +197,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10775/large/COMP.png?1696510737"
     },
     {
       "mode": "auto",
@@ -204,7 +215,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12124/large/Curve.png?1696511967"
     },
     {
       "mode": "auto",
@@ -221,7 +233,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -239,7 +252,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -256,7 +270,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14091/large/DFX.png?1696513813"
     },
     {
       "mode": "auto",
@@ -273,7 +288,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12508/large/dht.png?1696512323"
     },
     {
       "mode": "auto",
@@ -290,7 +306,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4586/large/dip.png?1696505164"
     },
     {
       "mode": "auto",
@@ -307,7 +324,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14287/large/dola.png?1696513984"
     },
     {
       "mode": "auto",
@@ -324,7 +342,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12465/large/defi_pulse_index_set.png?1696512284"
     },
     {
       "mode": "auto",
@@ -354,7 +373,8 @@
           }
         ]
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -371,7 +391,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1688688000
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30870/large/staderx.png?1696529717"
     },
     {
       "mode": "auto",
@@ -388,7 +409,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19479/large/agEUR-4.png?1710726218"
     },
     {
       "mode": "auto",
@@ -405,7 +427,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12423/large/FIS.png?1696512244"
     },
     {
       "mode": "auto",
@@ -422,7 +445,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1692316800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31308/large/f.png?1696530127"
     },
     {
       "mode": "auto",
@@ -439,7 +463,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25060/large/Forta_lgo_%281%29.png?1696524210"
     },
     {
       "mode": "auto",
@@ -456,7 +481,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9988/large/fox_token.png?1728373561"
     },
     {
       "mode": "auto",
@@ -473,7 +499,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100"
     },
     {
       "mode": "auto",
@@ -490,7 +517,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099"
     },
     {
       "mode": "auto",
@@ -507,7 +535,8 @@
       },
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303"
     },
     {
       "mode": "auto",
@@ -524,7 +553,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303"
     },
     {
       "mode": "auto",
@@ -541,7 +571,8 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284"
     },
     {
       "mode": "auto",
@@ -558,7 +589,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16036/large/Fantom.png?1696515646"
     },
     {
       "mode": "auto",
@@ -575,7 +607,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183"
     },
     {
       "mode": "auto",
@@ -592,7 +625,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286"
     },
     {
       "mode": "auto",
@@ -609,7 +643,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159"
     },
     {
       "mode": "auto",
@@ -626,7 +661,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25445/large/hop.png?1696524577"
     },
     {
       "mode": "auto",
@@ -643,7 +679,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3348/large/Holologo_Profile.png?1696504052"
     },
     {
       "mode": "auto",
@@ -660,7 +697,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2822/large/huobi-token-logo.png?1696503584"
     },
     {
       "mode": "auto",
@@ -677,7 +715,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14468/large/logo-200x200.png?1696514154"
     },
     {
       "mode": "auto",
@@ -694,7 +733,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17233/large/immutableX-symbol-BLK-RGB.png?1696516787"
     },
     {
       "mode": "auto",
@@ -711,7 +751,8 @@
         "chain": "polygonzkevm",
         "decimals": 6,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1047/large/sa9z79.png?1696502152"
     },
     {
       "mode": "auto",
@@ -728,7 +769,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14899/large/RwdVsGcw_400x400.jpg?1696514562"
     },
     {
       "mode": "auto",
@@ -745,7 +787,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326"
     },
     {
       "mode": "auto",
@@ -762,7 +805,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009"
     },
     {
       "mode": "auto",
@@ -779,7 +823,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14665/large/logo_V2.png?1725437146"
     },
     {
       "mode": "auto",
@@ -796,7 +841,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1729296000
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993"
     },
     {
       "mode": "auto",
@@ -813,7 +859,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14666/large/Group_3.png?1696514341"
     },
     {
       "mode": "auto",
@@ -830,7 +877,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/878/large/decentraland-mana.png?1696502010"
     },
     {
       "mode": "auto",
@@ -847,7 +895,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745"
     },
     {
       "mode": "auto",
@@ -864,7 +913,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1364/large/Mark_Maker.png?1696502423"
     },
     {
       "mode": "auto",
@@ -881,7 +931,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/605/large/Enzyme_Icon_Secondary.png?1696501803"
     },
     {
       "mode": "auto",
@@ -898,7 +949,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1696505053"
     },
     {
       "mode": "auto",
@@ -915,7 +967,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12151/large/OM_Token.png?1696511991"
     },
     {
       "mode": "auto",
@@ -932,7 +985,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13429/large/LOGO-OVER-ICON-200X200PX.png?1699396496"
     },
     {
       "mode": "auto",
@@ -949,7 +1003,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1681776000
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776"
     },
     {
       "mode": "auto",
@@ -966,7 +1021,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1698224783
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32440/large/polygon.png?1698233684"
     },
     {
       "mode": "auto",
@@ -983,7 +1039,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14770/large/1617088937196.png?1696514439"
     },
     {
       "mode": "auto",
@@ -1000,7 +1057,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14004/large/RAI-logo-coin.png?1696513733"
     },
     {
       "mode": "auto",
@@ -1017,7 +1075,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20764/large/reth.png?1696520159"
     },
     {
       "mode": "auto",
@@ -1034,7 +1093,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11636/large/rndr.png?1696511529"
     },
     {
       "mode": "auto",
@@ -1051,7 +1111,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058"
     },
     {
       "mode": "auto",
@@ -1068,7 +1129,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1705017600
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855"
     },
     {
       "mode": "auto",
@@ -1085,7 +1147,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971"
     },
     {
       "mode": "auto",
@@ -1102,7 +1165,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1696982400
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278"
     },
     {
       "mode": "auto",
@@ -1120,7 +1184,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278"
     },
     {
       "mode": "auto",
@@ -1137,7 +1202,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35383/large/sfrax-logo.png?1739780377"
     },
     {
       "mode": "auto",
@@ -1154,7 +1220,8 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285"
     },
     {
       "mode": "auto",
@@ -1171,7 +1238,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/21070/large/SipherToken.png?1696520453"
     },
     {
       "mode": "auto",
@@ -1188,7 +1256,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3406/large/SNX.png?1696504103"
     },
     {
       "mode": "auto",
@@ -1205,7 +1274,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14040/large/SV-Logo-200x200.png?1706880312"
     },
     {
       "mode": "auto",
@@ -1222,7 +1292,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22228/large/nFPNiSbL_400x400.jpg?1696521570"
     },
     {
       "mode": "auto",
@@ -1239,7 +1310,8 @@
         "chain": "polygonzkevm",
         "decimals": 2,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1899/large/tel.png?1696502892"
     },
     {
       "mode": "auto",
@@ -1256,7 +1328,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16416/large/Logo_colored_200.png?1696516012"
     },
     {
       "mode": "auto",
@@ -1273,7 +1346,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9644/large/TRB-New_Logo.png?1737722143"
     },
     {
       "mode": "auto",
@@ -1290,7 +1364,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16801/large/ufo.png?1696516371"
     },
     {
       "mode": "auto",
@@ -1307,7 +1382,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669"
     },
     {
       "mode": "auto",
@@ -1324,7 +1400,8 @@
         "chain": "polygonzkevm",
         "decimals": 4,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4480/large/Ultra.png?1696505069"
     },
     {
       "mode": "auto",
@@ -1341,7 +1418,8 @@
         "chain": "polygonzkevm",
         "decimals": 6,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -1359,7 +1437,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -1376,7 +1455,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6013/large/Pax_Dollar.png?1696506427"
     },
     {
       "mode": "auto",
@@ -1393,7 +1473,8 @@
         "chain": "polygonzkevm",
         "decimals": 6,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -1410,7 +1491,8 @@
         "chain": "polygonzkevm",
         "decimals": 8,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     },
     {
       "mode": "auto",
@@ -1427,7 +1509,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1701648000
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396"
     },
     {
       "mode": "auto",
@@ -1444,7 +1527,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     },
     {
       "mode": "auto",
@@ -1461,7 +1545,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295"
     },
     {
       "mode": "auto",
@@ -1479,7 +1564,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295"
     },
     {
       "mode": "auto",
@@ -1496,7 +1582,8 @@
         "chain": "polygonzkevm",
         "decimals": 6,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471"
     },
     {
       "mode": "auto",
@@ -1513,7 +1600,8 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909"
     }
   ]
 }
