@@ -75,7 +75,7 @@ export class Providers {
       ),
     })
     this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients)
-    this.balance = new BalanceProvider(this.clients.rpcClients)
+    this.balance = new BalanceProvider(this.clients.rpcClients, logger)
   }
 
   getPriceProviders() {

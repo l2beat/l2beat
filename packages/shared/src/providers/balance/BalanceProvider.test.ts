@@ -1,5 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { RpcClient } from '../../clients'
 import {
   type MulticallV3Client,
@@ -8,26 +9,25 @@ import {
 import { BalanceProvider, encodeErc20Balance } from './BalanceProvider'
 
 describe(BalanceProvider.name, () => {
+  const BLOCK = 100
+  const CHAIN = 'ethereum'
+  const QUERIES = [
+    {
+      token: 'native' as const,
+      holder: EthereumAddress.random(),
+    },
+    {
+      token: EthereumAddress.random(),
+      holder: EthereumAddress.random(),
+    },
+    {
+      token: EthereumAddress.random(),
+      holder: EthereumAddress.random(),
+    },
+  ]
+
   describe(BalanceProvider.prototype.getBalances.name, () => {
     it('uses multicall if possible', async () => {
-      const queries = [
-        {
-          token: 'native' as const,
-          holder: EthereumAddress.random(),
-        },
-        {
-          token: EthereumAddress.random(),
-          holder: EthereumAddress.random(),
-        },
-        {
-          token: EthereumAddress.random(),
-          holder: EthereumAddress.random(),
-        },
-      ]
-
-      const blockNumber = 100
-      const chain = 'ethereum'
-
       const multicallClient = mockObject<MulticallV3Client>({
         encodeGetEthBalance: (holder: EthereumAddress) => ({
           to: EthereumAddress.ZERO,
@@ -39,7 +39,7 @@ describe(BalanceProvider.name, () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
-        multicall: async () => [
+        multicall: mockFn().resolvesToOnce([
           {
             success: true,
             data: Bytes.fromNumber(123_456),
@@ -52,38 +52,54 @@ describe(BalanceProvider.name, () => {
             success: false,
             data: Bytes.fromHex('0x'),
           },
-        ],
-        chain: chain,
+        ]),
+        chain: CHAIN,
       })
 
-      const balanceProvider = new BalanceProvider([
-        rpc,
-        mockObject<RpcClient>({ chain: 'random' }),
-      ])
-
-      const result = await balanceProvider.getBalances(
-        queries,
-        blockNumber,
-        chain,
+      const balanceProvider = new BalanceProvider(
+        [rpc, mockObject<RpcClient>({ chain: 'random' })], // test rpcs filtering
+        Logger.SILENT,
       )
 
+      const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
+
       expect(multicallClient.encodeGetEthBalance).toHaveBeenOnlyCalledWith(
-        queries[0].holder,
+        QUERIES[0].holder,
       )
       expect(rpc.multicall).toHaveBeenOnlyCalledWith(
         [
-          multicallClient.encodeGetEthBalance(queries[0].holder),
+          multicallClient.encodeGetEthBalance(QUERIES[0].holder),
           encodeErc20Balance(
-            queries[1].token as EthereumAddress,
-            queries[1].holder,
+            QUERIES[1].token as EthereumAddress,
+            QUERIES[1].holder,
           ),
           encodeErc20Balance(
-            queries[2].token as EthereumAddress,
-            queries[2].holder,
+            QUERIES[2].token as EthereumAddress,
+            QUERIES[2].holder,
           ),
         ],
-        blockNumber,
+        BLOCK,
       )
+      expect(result).toEqual([123_456n, 654_321n, 0n])
+    })
+
+    it('performs single calls if multicall not deployed', async () => {
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => false,
+        getBalance: mockFn().resolvesToOnce(Bytes.fromNumber(123_456)),
+        call: mockFn()
+          .resolvesToOnce(Bytes.fromNumber(654_321))
+          .rejectsWithOnce('error'),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider(
+        [rpc, mockObject<RpcClient>({ chain: 'random' })], // test rpcs filtering
+        Logger.SILENT,
+      )
+
+      const result = await balanceProvider.getBalances(QUERIES, BLOCK, CHAIN)
+
       expect(result).toEqual([123_456n, 654_321n, 0n])
     })
   })

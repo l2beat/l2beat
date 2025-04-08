@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
@@ -9,7 +10,13 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
-  constructor(private readonly rpcs: RpcClient[]) {}
+  private logger: Logger
+  constructor(
+    private readonly rpcs: RpcClient[],
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getBalances(
     queries: BalanceQuery[],
@@ -26,8 +33,11 @@ export class BalanceProvider {
             return encodeBalanceForMulticall(q, client.multicallClient)
           })
           const res = await client.multicall(calls, blockNumber)
-          return res.map((r) => {
+          return res.map((r, i) => {
             if (r.success === false) {
+              this.logger.tag({ chain }).warn(`Issue with balance fetching`, {
+                token: queries[i].token,
+              })
               return 0n
             }
             return BigInt(r.data.toString())
@@ -36,14 +46,32 @@ export class BalanceProvider {
           return Promise.all(
             queries.map(async (q) => {
               if (q.token === 'native') {
-                const res = await client.getBalance(q.holder, blockNumber)
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                try {
+                  const res = await client.getBalance(q.holder, blockNumber)
+                  return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                } catch {
+                  this.logger
+                    .tag({ chain })
+                    .warn(`Issue with balance fetching`, {
+                      token: q.token,
+                    })
+                  return 0n
+                }
               } else {
-                const res = await client.call(
-                  encodeErc20Balance(q.token, q.holder),
-                  blockNumber,
-                )
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                try {
+                  const res = await client.call(
+                    encodeErc20Balance(q.token, q.holder),
+                    blockNumber,
+                  )
+                  return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                } catch {
+                  this.logger
+                    .tag({ chain })
+                    .warn(`Issue with balance fetching`, {
+                      token: q.token,
+                    })
+                  return 0n
+                }
               }
             }),
           )
