@@ -9,7 +9,7 @@ import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
-import { TEMPLATES_PATH } from './analysis/TemplateService'
+import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { DiscoveryConfig } from './config/DiscoveryConfig'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
@@ -77,7 +77,14 @@ export async function runDiscovery(
     printProviderStats(logger, providerStats)
   }
 
-  printTemplatization(logger, result, !!config.verboseTemplatization)
+  const templateService = new TemplateService(paths.discovery)
+
+  printTemplatization(
+    logger,
+    result,
+    !!config.verboseTemplatization,
+    templateService,
+  )
 }
 
 export async function dryRunDiscovery(

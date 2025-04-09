@@ -12,5 +12,12 @@
     "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  {
+    "hash": "0x25bdecbeaa15d7cf07e99f3cb1c76f7d97e4915947fc44ee773076b3544ccb8e",
+    "description": "ValidatorTimelock_old_lens",
+    "address": "0x5C03468829A26981c410a7930bD4853622F0B2E5",
+    "chain": "ethereum",
+    "blockNumber": 22208619
   }
 ]
