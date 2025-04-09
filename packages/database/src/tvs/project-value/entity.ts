@@ -19,6 +19,7 @@ export interface ProjectValueRecord {
 export function toRecord(row: Selectable<ProjectValue>): ProjectValueRecord {
   return {
     ...row,
+    type: row.type as ProjectValueType,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
