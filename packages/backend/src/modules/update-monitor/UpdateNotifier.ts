@@ -5,8 +5,8 @@ import {
   type ChainConverter,
   type ChainId,
   type EthereumAddress,
-  UnixTime,
   formatAsAsciiTable,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
@@ -258,7 +258,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
   const scaling = await ps.getProjects({
     select: ['scalingInfo', 'discoveryInfo'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const stacks: string[] = [

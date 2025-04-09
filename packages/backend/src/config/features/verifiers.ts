@@ -6,7 +6,7 @@ export async function getVerifiersConfig(
 ): Promise<VerifiersConfig> {
   const verifiers = await ps.getProjects({
     select: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   const chains = await ps.getProjects({
     select: ['chainConfig'],
