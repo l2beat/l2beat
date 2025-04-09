@@ -7,6 +7,11 @@ type FormulaTest = (formula: Formula) => void
 
 describe('tvs', () => {
   const projects = getProjects().filter((p) => p.tvsConfig)
+  const supportedChains = new Set(
+    getProjects()
+      .filter((p) => p.chainConfig)
+      .map((c) => c.chainConfig!.name),
+  )
 
   it(`throws when token config has wrong schema`, () => {
     const mockTvsConfig = {
@@ -123,10 +128,23 @@ describe('tvs', () => {
           }
         }
 
+        const chainIsSupported: FormulaTest = (formula) => {
+          if (
+            formula.type === 'balanceOfEscrow' ||
+            formula.type === 'totalSupply'
+          ) {
+            assert(
+              supportedChains.has(formula.chain),
+              `Unsupported chain ${formula.chain} configured for ${token.id}`,
+            )
+          }
+        }
+
         const commonTests = [
           untilLaterThanSince,
           hasCorrectNumberOfArguments,
           noMixedArguments,
+          chainIsSupported,
         ]
 
         testRecursive(token.amount, [noValueFormula, ...commonTests])
