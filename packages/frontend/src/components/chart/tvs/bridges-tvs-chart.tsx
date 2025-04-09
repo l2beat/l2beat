@@ -24,7 +24,7 @@ export function BridgesTvsChart() {
   )
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
 
-  const { data, isLoading } = api.tvs.chart.useQuery({
+  const { data, isLoading } = api.newTvs.chart.useQuery({
     range: timeRange,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
@@ -35,7 +35,7 @@ export function BridgesTvsChart() {
       const total = native + canonical + external
       return {
         timestamp,
-        value: unit === 'usd' ? total / 100 : total / ethPrice,
+        value: unit === 'usd' ? total : total / ethPrice,
       }
     },
   )

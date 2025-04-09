@@ -7,7 +7,7 @@ import type {
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import { getTokensForProject } from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
 import { isTvsChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
@@ -60,7 +60,7 @@ export async function getBridgesProjectEntry(
   project: Project<
     | 'statuses'
     | 'tvlInfo'
-    | 'tvlConfig'
+    | 'tvsConfig'
     | 'bridgeInfo'
     | 'bridgeRisks'
     | 'bridgeTechnology'
@@ -136,7 +136,7 @@ export async function getBridgesProjectEntry(
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
-    getTokensForProject(project.id),
+    getTokensForProject(project),
   ])
 
   const sections: ProjectDetailsSection[] = []

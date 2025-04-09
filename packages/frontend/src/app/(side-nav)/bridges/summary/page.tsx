@@ -16,7 +16,7 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
-    api.tvs.chart.prefetch({
+    api.newTvs.chart.prefetch({
       range: '1y',
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,

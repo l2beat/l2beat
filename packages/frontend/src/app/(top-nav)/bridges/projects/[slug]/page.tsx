@@ -55,7 +55,7 @@ export default async function Page(props: Props) {
       'display',
       'statuses',
       'tvlInfo',
-      'tvlConfig',
+      'tvsConfig',
       'bridgeInfo',
       'bridgeRisks',
       'bridgeTechnology',
