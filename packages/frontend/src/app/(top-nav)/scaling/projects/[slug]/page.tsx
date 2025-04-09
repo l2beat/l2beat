@@ -68,7 +68,7 @@ export default async function Page(props: Props) {
       'scalingStage',
       'scalingTechnology',
       'tvlInfo',
-      'tvlConfig',
+      'tvsConfig',
     ],
     optional: [
       'contracts',

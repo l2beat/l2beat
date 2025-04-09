@@ -35,7 +35,7 @@ import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
+import { getTokensForProject } from '../new-tvs/tokens/get-tokens-for-project'
 import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
@@ -106,7 +106,7 @@ export async function getScalingProjectEntry(
     | 'scalingStage'
     | 'scalingTechnology'
     | 'tvlInfo'
-    | 'tvlConfig',
+    | 'tvsConfig',
     // optional
     | 'contracts'
     | 'permissions'
@@ -233,7 +233,7 @@ export async function getScalingProjectEntry(
             projectId: project.id,
           })
         : undefined,
-      getTokensForProject(project.id),
+      getTokensForProject(project),
     ])
 
   const sections: ProjectDetailsSection[] = []

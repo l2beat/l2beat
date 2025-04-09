@@ -1,28 +1,23 @@
 import {
   assert,
-  EthereumAddress,
   ProjectId,
   UnixTime,
-  asNumber,
   branded,
+  TokenId,
 } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
-import { getConfigMapping } from '../utils/get-config-mapping'
-import type { TvsChartResolution } from '../utils/range'
 import { TvsChartRange, rangeToResolution } from '../utils/range'
-import { calculateValue } from './utils/calculate-value'
-import { getTokenAmounts } from './utils/get-token-amounts'
-import { getTokenPrices } from './utils/get-token-prices'
+import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
+import { getDb } from '~/server/database'
+import type { TokenValueRecord } from '@l2beat/database'
 
 const TokenParams = z.object({
   projectId: z.string(),
-  address: branded(z.string(), EthereumAddress).or(z.literal('native')),
-  chain: z.string(),
+  tokenId: branded(z.string(), TokenId),
 })
 
 export const TokenTvsChartParams = z.object({
@@ -48,69 +43,41 @@ type TokenTvsChart = Awaited<ReturnType<typeof getCachedTokenTvsChartData>>
 
 export const getCachedTokenTvsChartData = cache(
   async ({ token, range }: TokenTvsChartParams) => {
-    const targetTimestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+    const db = getDb()
+    const targetTimestamp = getTvsTargetTimestamp()
     const resolution = rangeToResolution(range)
 
-    const project = await ps.getProject({
-      id: ProjectId(token.projectId),
-      select: ['tvlConfig'],
-      optional: ['chainConfig'],
+    const [from, to] = getRangeWithMax(range, resolution, {
+      now: targetTimestamp,
     })
 
-    assert(project, 'Project not found')
-
-    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-      (p) => p.chainConfig,
-    )
-    const tokenList = await ps.getTokens()
-    const configMapping = getConfigMapping(project, chains, tokenList)
-
-    const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
-      project.id,
-      token,
-    )
-    const firstTokenAmountConfig = tokenAmountConfigs[0]
-    assert(firstTokenAmountConfig, 'No token amount config found')
-
-    const adjustedRange = getAdjustedRange(
-      range,
-      resolution,
-      firstTokenAmountConfig.sinceTimestamp,
-      targetTimestamp,
+    const tokenValues = await db.tvsTokenValue.getByProjectAndToken(
+      ProjectId(token.projectId),
+      token.tokenId,
+      from ?? 0,
+      to,
     )
 
-    const tokenPriceConfig = configMapping.getPriceConfigFromAmountConfig(
-      firstTokenAmountConfig,
-    )
+    const tokenValuesByTimestamp = tokenValues.reduce<
+      Record<UnixTime, TokenValueRecord>
+    >((acc, value) => {
+      acc[value.timestamp] = value
+      return acc
+    }, {})
 
-    const timestamps = generateTimestamps(adjustedRange, resolution)
-    const [tokenAmounts, tokenPrices] = await Promise.all([
-      getTokenAmounts({
-        configurations: tokenAmountConfigs,
-        range: adjustedRange,
-        timestamps,
-      }),
-      getTokenPrices(tokenPriceConfig, adjustedRange, resolution),
-    ])
+    const minTimestamp = tokenValues[0]?.timestamp ?? 0
+    const timestamps = generateTimestamps([minTimestamp, to], resolution)
 
-    const decimals = firstTokenAmountConfig.decimals
     const data: [number, number, number][] = []
     for (const timestamp of timestamps) {
-      const amount = tokenAmounts.amounts[timestamp]
-      const price = tokenPrices.prices[timestamp]
-      assert(amount !== undefined && price !== undefined, 'No amount or price')
-      const usdValue = calculateValue({
-        amount,
-        priceUsd: price,
-        decimals,
-      })
-      data.push([timestamp, asNumber(amount, decimals), asNumber(usdValue, 2)])
+      const value = tokenValuesByTimestamp[timestamp]
+      assert(value !== undefined, 'No value')
+      data.push([timestamp, value.amount, value.value])
     }
 
     return data
   },
-  ['token-tvs-chart'],
+  ['token-new-tvs-chart'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
@@ -127,18 +94,4 @@ function getMockTokenTvsChartData(params: TokenTvsChartParams): TokenTvsChart {
   const timestamps = generateTimestamps(adjustedRange, resolution)
 
   return timestamps.map((timestamp) => [timestamp, 30000, 50000])
-}
-
-function getAdjustedRange(
-  range: TvsChartRange,
-  resolution: TvsChartResolution,
-  tokenSinceTimestamp: UnixTime,
-  targetTimestamp: UnixTime,
-): [UnixTime, UnixTime] {
-  const [from, to] = getRangeWithMax(range, resolution, {
-    now: targetTimestamp,
-  })
-  const sinceTimestamp = UnixTime.toEndOf(tokenSinceTimestamp, 'day')
-  const adjustedFrom = from ? Math.max(from, sinceTimestamp) : sinceTimestamp
-  return [adjustedFrom, to]
 }

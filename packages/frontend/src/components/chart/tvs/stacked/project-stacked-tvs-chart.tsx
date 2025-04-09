@@ -8,7 +8,7 @@ import { TokenCombobox } from '~/components/token-combobox'
 import type {
   ProjectToken,
   ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+} from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
@@ -96,7 +96,7 @@ function DefaultChart({
   setUnit,
   tvsBreakdownUrl,
 }: DefaultChartProps) {
-  const { data, isLoading } = api.tvs.chart.useQuery({
+  const { data, isLoading } = api.newTvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
     range: timeRange,
     excludeAssociatedTokens: false,
@@ -105,7 +105,7 @@ function DefaultChart({
   const chartData = useMemo(
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
-        const divider = unit === 'usd' ? 100 : ethPrice
+        const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
           native: native / divider,
