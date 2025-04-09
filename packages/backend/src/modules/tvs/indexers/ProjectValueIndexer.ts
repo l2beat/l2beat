@@ -118,31 +118,25 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
       summaryRecord.value += token.valueForSummary
       projectRecord.value += token.valueForProject
       if (config.isAssociated === false) {
+        // only add if not associated
         summaryWaRecord.value += token.valueForSummary
         projectWaRecord.value += token.valueForProject
-      } else {
-        summaryWaRecord.value -= token.valueForSummary
-        projectWaRecord.value -= token.valueForProject
       }
 
       const source = config.source // canonical, external, or native
       summaryRecord[source] += token.valueForSummary
       projectRecord[source] += token.valueForProject
       if (config.isAssociated === false) {
+        // only add if not associated
         summaryWaRecord[source] += token.valueForSummary
         projectWaRecord[source] += token.valueForProject
-      } else {
-        summaryWaRecord[source] -= token.valueForSummary
-        projectWaRecord[source] -= token.valueForProject
       }
 
       const category = config.category // ether, stablecoin, or other
       summaryRecord[category] += token.valueForSummary
       projectRecord[category] += token.valueForProject
       if (config.isAssociated === false) {
-        summaryWaRecord[category] += token.valueForSummary
-        projectWaRecord[category] += token.valueForProject
-      } else {
+        // only add if not associated
         summaryWaRecord[category] += token.valueForSummary
         projectWaRecord[category] += token.valueForProject
       }
