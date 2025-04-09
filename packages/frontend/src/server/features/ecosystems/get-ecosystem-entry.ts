@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs'
-import path from 'path'
 import type {
   Milestone,
   Project,
@@ -7,6 +5,8 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
@@ -36,7 +36,8 @@ export interface EcosystemEntry {
   slug: string
   name: string
   logo: {
-    src: string
+    light: string
+    dark: string | undefined
     width: number
     height: number
   }
@@ -158,11 +159,18 @@ export async function getEcosystemEntry(
 
 function getEcosystemLogo(slug: string) {
   const imgBuffer = readFileSync(
-    path.join(process.cwd(), './public', `/ecosystems/${slug}/logo.png`),
+    path.join(process.cwd(), 'public', `ecosystems/${slug}/logo.png`),
+  )
+  const hasDark = existsSync(
+    path.join(process.cwd(), 'public', `ecosystems/${slug}/logo.dark.png`),
   )
   const dimensions = getImageDimensions(imgBuffer)
   assert(dimensions, 'Ecosystem logo not found')
-  return { ...dimensions, src: `/ecosystems/${slug}/logo.png` }
+  return {
+    ...dimensions,
+    light: `/ecosystems/${slug}/logo.png`,
+    dark: hasDark ? `/ecosystems/${slug}/logo.dark.png` : undefined,
+  }
 }
 
 function getMilestones(projects: Project<never, 'milestones'>[]) {

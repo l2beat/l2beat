@@ -5,6 +5,7 @@ import {
   ProjectBadge,
 } from '~/components/projects/project-badge'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import { cn } from '~/utils/cn'
 
 interface Props {
   logo: EcosystemEntry['logo']
@@ -17,7 +18,24 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
     <header className="flex items-center">
       <div>
         <div className="flex h-20 items-center gap-2">
-          <Image {...logo} alt="Ecosystem logo" priority />
+          <Image
+            src={logo.light}
+            className={cn(logo.dark && 'dark:hidden')}
+            alt="Ecosystem logo"
+            width={logo.width}
+            height={logo.height}
+            priority
+          />
+          {logo.dark && (
+            <Image
+              src={logo.dark}
+              className="hidden dark:block"
+              alt="Ecosystem logo"
+              width={logo.width}
+              height={logo.height}
+              priority
+            />
+          )}
         </div>
         <div className="max-md:hidden">
           <DesktopProjectLinks projectLinks={links} variant="primary" />
