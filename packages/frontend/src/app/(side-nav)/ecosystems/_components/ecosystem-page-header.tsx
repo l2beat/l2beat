@@ -19,9 +19,11 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
         <div className="flex h-20 items-center gap-2">
           <Image {...logo} alt="Ecosystem logo" priority />
         </div>
-        <DesktopProjectLinks projectLinks={links} variant="primary" />
+        <div className="max-md:hidden">
+          <DesktopProjectLinks projectLinks={links} variant="primary" />
+        </div>
       </div>
-      <div className="ml-auto flex gap-3">
+      <div className="ml-auto flex gap-3 max-md:hidden">
         {badges.map((badge) => (
           <ProjectBadge key={badge.id} badge={badge} />
         ))}
