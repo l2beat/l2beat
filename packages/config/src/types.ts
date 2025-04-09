@@ -1038,7 +1038,6 @@ export interface ProjectDiscoveryInfo {
 // #endregion
 
 // #region TVS
-
 export const BaseCalculationFormulaSchema = z.object({
   type: z.literal('calculation'),
   operator: z.enum(['sum', 'diff', 'max', 'min']),
@@ -1125,6 +1124,11 @@ export const AmountFormulaSchema = z.union([
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
 ])
+
+export type Formula = CalculationFormula | ValueFormula | AmountFormula
+export function isAmountFormula(formula: Formula): boolean {
+  return formula.type !== 'calculation' && formula.type !== 'value'
+}
 
 // token deployed to single chain
 export type TvsToken = z.infer<typeof TvsTokenSchema>
