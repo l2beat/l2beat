@@ -6,8 +6,6 @@ import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 
 export type ProjectTokens = Record<TvsToken['source'], ProjectToken[]>
 export type ProjectToken = TvsToken & {
-  address: string
-  iconUrl: string
   usdValue: number
 }
 
@@ -28,9 +26,6 @@ export async function getTokensForProject(
       if (!tokenValue) return undefined
       return {
         ...t,
-        address: 'example',
-        iconUrl:
-          'https://coin-images.coingecko.com/coins/images/14238/large/logo_black.png?1715198164',
         usdValue: tokenValue.valueForProject,
       }
     })
