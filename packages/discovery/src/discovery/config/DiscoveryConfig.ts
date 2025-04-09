@@ -1,18 +1,10 @@
 import { hashJson } from '@l2beat/shared'
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { DiscoveryOutput } from '../output/types'
-import { type ColorConfig, ColorContract } from './ColorConfig'
+import { ColorConfig } from './ColorConfig'
 import { ConfigReader } from './ConfigReader'
-import {
-  type ContractConfig,
-  type ContractConfigColor,
-  createContractConfig,
-  createContractConfigColor,
-} from './ContractConfig'
-import {
-  DiscoveryContract,
-  type RawDiscoveryConfig,
-} from './RawDiscoveryConfig'
+import { type ContractConfig, createContractConfig } from './ContractConfig'
+import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
 
@@ -24,16 +16,20 @@ export type ContractOverrides = DiscoveryContract & {
 // this will result in the hash being different and break the update mechanism
 export class DiscoveryConfig {
   readonly sharedModuleDiscovery: DiscoveryOutput[]
+  readonly config: RawDiscoveryConfig
+  readonly colorConfig: ColorConfig
 
   constructor(
-    private readonly config: RawDiscoveryConfig,
-    private readonly colorConfig: ColorConfig, // TODO(radomski): I dont like this but we just want to get it working
+    readonly unparsedConfig: object,
     configReader?: ConfigReader,
   ) {
+    this.config = RawDiscoveryConfig.parse(unparsedConfig)
+    this.colorConfig = ColorConfig.parse(unparsedConfig)
+
     configReader ??= new ConfigReader(getDiscoveryPaths().discovery)
-    this.sharedModuleDiscovery = (config.sharedModules ?? []).map(
+    this.sharedModuleDiscovery = (this.config.sharedModules ?? []).map(
       (projectName) => {
-        return configReader.readDiscovery(projectName, config.chain)
+        return configReader.readDiscovery(projectName, this.config.chain)
       },
     )
   }
@@ -48,22 +44,6 @@ export class DiscoveryConfig {
       overrides,
       structuredClone(this.config.types ?? {}),
     )
-  }
-
-  forColor(address: EthereumAddress): ContractConfigColor {
-    const override =
-      this.colorConfig.overrides?.[address.toString()] ??
-      ColorContract.parse({})
-    const name = (this.colorConfig.names ?? {})[address.toString()]
-
-    const overrides = { address, name, ...override }
-
-    const result = createContractConfigColor(
-      overrides,
-      structuredClone(this.colorConfig.categories ?? {}),
-    )
-
-    return result
   }
 
   get raw(): RawDiscoveryConfig {

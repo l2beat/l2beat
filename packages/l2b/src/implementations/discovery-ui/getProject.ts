@@ -7,7 +7,8 @@ import {
   getChainShortName,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
-import type { ContractConfigColor } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
+import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
+import { evaluateConfigForEntry } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
@@ -70,16 +71,19 @@ export function getProject(
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
         const contractConfig = config.for(entry.address)
-        const contractColorConfig = config.forColor(entry.address)
+
         if (entry.template !== undefined) {
           const templateValues = templateService.loadContractTemplate(
             entry.template,
           )
           contractConfig.pushValues(templateValues)
-          contractColorConfig.pushValues(
-            templateService.loadContractTemplateColor(entry.template),
-          )
         }
+
+        const contractColorConfig = evaluateConfigForEntry(
+          config.colorConfig,
+          entry.address,
+          templateService.loadContractTemplateColor(entry.template),
+        )
 
         return contractFromDiscovery(
           chain,
@@ -143,7 +147,7 @@ function contractFromDiscovery(
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: EntryParameters,
   contractConfig: ContractConfig,
-  contractColorConfig: ContractConfigColor,
+  contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {

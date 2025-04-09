@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { ColorContract, type DiscoveryCategory } from './ColorConfig'
+import { type ColorConfig, ColorContract } from './ColorConfig'
 import {
   DiscoveryContract,
   type DiscoveryCustomType,
@@ -13,14 +13,6 @@ export type ContractOverrides = DiscoveryContract & {
 
 export type ContractConfig = ContractOverrides & {
   pushValues: (arg: DiscoveryContract) => void
-}
-
-export type ContractOverridesColor = ColorContract & {
-  name?: string
-}
-
-export type ContractConfigColor = ContractOverridesColor & {
-  pushValues: (arg: ColorContract) => void
 }
 
 export function createContractConfig(
@@ -43,17 +35,28 @@ export function createContractConfig(
   return config
 }
 
-export function createContractConfigColor(
-  overrides: ContractOverridesColor,
-  categories: Record<string, DiscoveryCategory>,
-): ContractConfigColor {
-  const config = {
-    ...overrides,
-    categories: merge(categories, overrides.categories),
-    pushValues: function (values: ColorContract) {
-      Object.assign(this, ColorContract.parse(merge({}, values, this)))
-    },
-  }
+export type ContractOverridesColor = ColorContract & {
+  name?: string
+}
 
-  return config
+export function evaluateConfigForEntry(
+  config: ColorConfig,
+  address: EthereumAddress,
+  template: ColorContract,
+): ContractOverridesColor {
+  const name = (config.names ?? {})[address.toString()]
+  const override =
+    config.overrides?.[address.toString()] ?? ColorContract.parse({})
+
+  const result = merge(
+    {
+      address,
+      name,
+      ...override,
+      categories: merge(config.categories ?? {}, override.categories),
+    },
+    template,
+  )
+
+  return result
 }

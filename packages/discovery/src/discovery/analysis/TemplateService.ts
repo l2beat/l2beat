@@ -155,7 +155,11 @@ export class TemplateService {
     )
   }
 
-  loadContractTemplateColor(template: string): ColorContract {
+  loadContractTemplateColor(template: string | undefined): ColorContract {
+    if (template === undefined) {
+      return ColorContract.parse({})
+    }
+
     return this.loadContractTemplateBase(template, 'color', ColorContract)
   }
 

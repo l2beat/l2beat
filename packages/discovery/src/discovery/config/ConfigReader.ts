@@ -59,8 +59,7 @@ export class ConfigReader {
     }
 
     const config = new DiscoveryConfig(
-      RawDiscoveryConfig.parse(rawConfig),
-      ColorConfig.parse(rawConfig),
+      rawConfig,
       this,
     )
 
