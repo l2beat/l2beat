@@ -17,7 +17,8 @@
         "chain": "wirex",
         "decimals": 18,
         "sinceTimestamp": 1720093223
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -47,7 +48,8 @@
           }
         ]
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -64,7 +66,8 @@
         "chain": "wirex",
         "decimals": 6,
         "sinceTimestamp": 1720093223
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -81,7 +84,8 @@
         "chain": "wirex",
         "decimals": 6,
         "sinceTimestamp": 1720093223
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     }
   ]
 }
