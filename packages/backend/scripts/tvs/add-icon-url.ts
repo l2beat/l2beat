@@ -46,6 +46,7 @@ const cmd = command({
     for (const project of projects) {
       logger.info(`Changing TVS config schema for project ${project.id}`)
       const newConfig: TvsToken[] = project.tvsConfig.map((t) => {
+        if (t.iconUrl) return t
         const iconUrl = iconMap.get(t.priceId)
         assert(iconUrl, `Missing icon for ${t.priceId}`)
         return { ...t, iconUrl }
