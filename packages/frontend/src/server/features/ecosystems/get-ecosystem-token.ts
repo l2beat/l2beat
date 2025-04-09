@@ -5,7 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 
-export interface EcosystemNativeToken {
+export interface EcosystemToken {
   logo: string
   name: string
   symbol: string
@@ -25,31 +25,31 @@ export interface EcosystemNativeToken {
     }
   }
 }
-export async function getNativeToken(
+export async function getEcosystemToken(
   ecosystem: Project<'ecosystemConfig'>,
   ecosystemProjects: Project<never, 'tvsConfig'>[],
-): Promise<EcosystemNativeToken> {
+): Promise<EcosystemToken> {
   if (env.MOCK) {
-    return getMockNativeToken(ecosystem)
+    return getMockEcosystemToken(ecosystem)
   }
-  return getCachedNativeToken(ecosystem, ecosystemProjects)
+  return getCachedEcosystemToken(ecosystem, ecosystemProjects)
 }
 
-const getCachedNativeToken = cache(
+const getCachedEcosystemToken = cache(
   async (
     ecosystem: Project<'ecosystemConfig'>,
     ecosystemProjects: Project<never, 'tvsConfig'>[],
-  ): Promise<EcosystemNativeToken> => {
+  ): Promise<EcosystemToken> => {
     const db = getDb()
     const now = UnixTime.toStartOf(UnixTime.now(), 'hour')
 
     const tokenProject = ecosystemProjects.find(
-      (p) => p.id === ecosystem.ecosystemConfig.nativeToken.projectId,
+      (p) => p.id === ecosystem.ecosystemConfig.token.projectId,
     )
     assert(tokenProject, 'Token project not found')
     assert(tokenProject.tvsConfig, 'Token project has no TVL config')
     const token = tokenProject.tvsConfig.find(
-      (t) => t.id === ecosystem.ecosystemConfig.nativeToken.tokenId,
+      (t) => t.id === ecosystem.ecosystemConfig.token.tokenId,
     )
     assert(token, 'Token not found')
 
@@ -60,7 +60,7 @@ const getCachedNativeToken = cache(
         now,
       ),
       db.tvsTokenValue.getByTokenIdInTimeRange(
-        ecosystem.ecosystemConfig.nativeToken.tokenId,
+        ecosystem.ecosystemConfig.token.tokenId,
         now - 30 * UnixTime.DAY,
         now,
       ),
@@ -89,7 +89,7 @@ const getCachedNativeToken = cache(
       logo: token.iconUrl ?? '/images/token-placeholder.png',
       name: token.name,
       symbol: token.symbol,
-      description: ecosystem.ecosystemConfig.nativeToken.description,
+      description: ecosystem.ecosystemConfig.token.description,
       data: {
         price: {
           value: latestPrice.priceUsd,
@@ -106,21 +106,21 @@ const getCachedNativeToken = cache(
       },
     }
   },
-  ['native-token-data'],
+  ['ecosystem-token-data'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )
 
-function getMockNativeToken(
+function getMockEcosystemToken(
   ecosystem: Project<'ecosystemConfig'>,
-): EcosystemNativeToken {
+): EcosystemToken {
   return {
-    logo: 'https://assets.coingecko.com/coins/images/38043/standard/ZKTokenBlack.png',
+    logo: '/images/token-placeholder.png',
     name: 'Mock Token',
     symbol: 'MOCK',
-    description: ecosystem.ecosystemConfig.nativeToken.description,
+    description: ecosystem.ecosystemConfig.token.description,
     data: {
       price: {
         value: 1.23,

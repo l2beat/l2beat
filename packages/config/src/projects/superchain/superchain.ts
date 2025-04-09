@@ -32,7 +32,7 @@ export const superchain: BaseProject = {
       primary: '#F00000',
       secondary: '#F93E3F',
     },
-    nativeToken: {
+    token: {
       tokenId: 'optimism-OP',
       projectId: ProjectId('optimism'),
       description:

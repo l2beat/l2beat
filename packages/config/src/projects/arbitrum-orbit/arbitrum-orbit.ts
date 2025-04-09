@@ -27,7 +27,7 @@ export const arbitrumOrbit: BaseProject = {
       primary: '#12AAFF',
       secondary: '#12AAFF',
     },
-    nativeToken: {
+    token: {
       tokenId: 'arbitrum-ARB-1',
       projectId: ProjectId('arbitrum'),
       description:

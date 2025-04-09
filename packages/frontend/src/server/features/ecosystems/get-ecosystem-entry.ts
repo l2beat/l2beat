@@ -24,8 +24,8 @@ import {
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 import { type DaLayersUsed, getDaLayersUsed } from './get-da-layers-used'
-import type { EcosystemNativeToken } from './get-native-token'
-import { getNativeToken } from './get-native-token'
+import type { EcosystemToken } from './get-ecosystem-token'
+import { getEcosystemToken } from './get-ecosystem-token'
 import type { ProjectByRaas } from './get-projects-by-raas'
 import { getProjectsByRaas } from './get-projects-by-raas'
 import { type TvsByStage, getTvsByStage } from './get-tvs-by-stage'
@@ -53,7 +53,7 @@ export interface EcosystemEntry {
   tvsByTokenType: TvsByTokenType
   daLayersUsed: DaLayersUsed
   projectsByRaas: ProjectByRaas
-  nativeToken: EcosystemNativeToken
+  token: EcosystemToken
   links: {
     header: ProjectLink[]
     buildOn: string
@@ -141,7 +141,7 @@ export async function getEcosystemEntry(
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projectsByRaas: getProjectsByRaas(ecosystemProjects),
-    nativeToken: await getNativeToken(ecosystem, ecosystemProjects),
+    token: await getEcosystemToken(ecosystem, ecosystemProjects),
     projects: ecosystemProjects
       .map((project) => ({
         ...getScalingSummaryEntry(

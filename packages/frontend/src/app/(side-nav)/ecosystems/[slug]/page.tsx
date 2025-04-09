@@ -14,8 +14,8 @@ import { EcosystemGovernanceLinks } from '../_components/widgets/ecosystem-gover
 import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
 import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
 import { EcosystemMobileProjectLinks } from '../_components/widgets/ecosystem-mobile-project-links'
-import { EcosystemNativeToken } from '../_components/widgets/ecosystem-native-token'
 import { EcosystemProjectsByRaas } from '../_components/widgets/ecosystem-projects-by-raas'
+import { EcosystemToken } from '../_components/widgets/ecosystem-token'
 import { EcosystemTvsByStage } from '../_components/widgets/ecosystem-tvs-by-stage'
 import { EcosystemTvsByTokenType } from '../_components/widgets/ecosystem-tvs-by-token-type'
 
@@ -116,8 +116,8 @@ export default async function Page({ params }: Props) {
             allScalingProjectsCount={ecosystem.allScalingProjects.count}
             className="col-span-12 md:col-span-6 min-[1440px]:col-span-12"
           />
-          <EcosystemNativeToken
-            nativeToken={ecosystem.nativeToken}
+          <EcosystemToken
+            token={ecosystem.token}
             className="col-span-12 md:col-span-6"
           />
           <div className="col-span-12 grid grid-rows-2 gap-[--spacing] max-md:hidden md:col-span-6">
