@@ -11,7 +11,7 @@ import type { ProjectsChangeReport } from '../../projects-change-report/get-proj
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
+import { getProjectsLatestTvsUsd } from '../new-tvs/utils/get-latest-tvs-usd'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 import { getLiveness } from './get-liveness'
 import type { LivenessAnomaly, LivenessProject } from './types'
