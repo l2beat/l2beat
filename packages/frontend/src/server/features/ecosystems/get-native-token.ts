@@ -52,7 +52,6 @@ const getCachedNativeToken = cache(
       (t) => t.id === ecosystem.ecosystemConfig.nativeToken.tokenId,
     )
     assert(token, 'Token not found')
-    assert(token.iconUrl, 'Token has no icon URL')
 
     const [prices, tokenValues] = await Promise.all([
       db.tvsPrice.getPricesInRangeByPriceId(
@@ -87,7 +86,7 @@ const getCachedNativeToken = cache(
     )
 
     return {
-      logo: token.iconUrl,
+      logo: token.iconUrl ?? '/images/token-placeholder.png',
       name: token.name,
       symbol: token.symbol,
       description: ecosystem.ecosystemConfig.nativeToken.description,
