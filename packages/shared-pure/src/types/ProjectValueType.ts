@@ -1,5 +1,5 @@
 export type ProjectValueType =
   | 'PROJECT'
-  | 'PROJECT_WA'
+  | 'PROJECT_WA' // Without Associated
   | 'SUMMARY'
-  | 'SUMMARY_WA'
+  | 'SUMMARY_WA' // Without Associated
