@@ -165,6 +165,9 @@ export class UpdateNotifier {
     timestamp: UnixTime,
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
+      this.logger.info('Daily reminder not sent, not the right time', {
+        date: UnixTime.toDate(timestamp).toISOString(),
+      })
       return
     }
 
