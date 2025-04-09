@@ -31,6 +31,7 @@ export class TotalSupplyProvider {
                 .tag({ chain })
                 .warn(`Issue with totalSupply fetching`, {
                   token: tokens[i],
+                  blockNumber,
                 })
               return 0n
             }
@@ -47,6 +48,7 @@ export class TotalSupplyProvider {
                   .tag({ chain })
                   .warn(`Issue with totalSupply fetching`, {
                     token: tokens[i],
+                    blockNumber,
                   })
                 return 0n
               }

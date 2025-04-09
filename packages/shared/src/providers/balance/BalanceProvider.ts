@@ -37,6 +37,7 @@ export class BalanceProvider {
             if (r.success === false) {
               this.logger.tag({ chain }).warn(`Issue with balance fetching`, {
                 token: queries[i].token,
+                blockNumber,
               })
               return 0n
             }
@@ -54,6 +55,7 @@ export class BalanceProvider {
                     .tag({ chain })
                     .warn(`Issue with balance fetching`, {
                       token: q.token,
+                      blockNumber,
                     })
                   return 0n
                 }
@@ -69,6 +71,7 @@ export class BalanceProvider {
                     .tag({ chain })
                     .warn(`Issue with balance fetching`, {
                       token: q.token,
+                      blockNumber,
                     })
                   return 0n
                 }
