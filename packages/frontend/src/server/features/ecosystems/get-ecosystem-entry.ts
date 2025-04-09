@@ -24,6 +24,8 @@ import {
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 import { type DaLayersUsed, getDaLayersUsed } from './get-da-layers-used'
+import type { EcosystemProjectsCountData } from './get-ecosystem-projects-chart-data'
+import { getEcosystemProjectsChartData } from './get-ecosystem-projects-chart-data'
 import type { EcosystemToken } from './get-ecosystem-token'
 import { getEcosystemToken } from './get-ecosystem-token'
 import type { ProjectByRaas } from './get-projects-by-raas'
@@ -31,7 +33,6 @@ import { getProjectsByRaas } from './get-projects-by-raas'
 import { type TvsByStage, getTvsByStage } from './get-tvs-by-stage'
 import type { TvsByTokenType } from './get-tvs-by-token-type'
 import { getTvsByTokenType } from './get-tvs-by-token-type'
-
 export interface EcosystemEntry {
   slug: string
   name: string
@@ -44,10 +45,10 @@ export interface EcosystemEntry {
   badges: BadgeWithParams[]
   colors: ProjectEcosystemConfig['colors']
   projects: EcosystemProjectEntry[]
+  projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
     tvs: number
     uops: number
-    count: number
   }
   tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
@@ -99,9 +100,10 @@ export async function getEcosystemEntry(
       'scalingStage',
       'chainConfig',
       'milestones',
+      'isArchived',
     ],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming'],
   })
 
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
@@ -135,14 +137,18 @@ export async function getEcosystemEntry(
     allScalingProjects: {
       tvs: tvs.total,
       uops: allScalingProjectsUops,
-      count: allScalingProjects.length,
     },
     tvsByStage: getTvsByStage(ecosystemProjects, tvs),
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     daLayersUsed: getDaLayersUsed(ecosystemProjects),
     projectsByRaas: getProjectsByRaas(ecosystemProjects),
     token: await getEcosystemToken(ecosystem, ecosystemProjects),
+    projectsChartData: getEcosystemProjectsChartData(
+      ecosystemProjects,
+      allScalingProjects.length,
+    ),
     projects: ecosystemProjects
+      .filter((p) => !p.isArchived)
       .map((project) => ({
         ...getScalingSummaryEntry(
           project,

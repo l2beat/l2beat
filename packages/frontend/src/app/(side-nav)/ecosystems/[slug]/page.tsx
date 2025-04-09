@@ -112,8 +112,7 @@ export default async function Page({ params }: Props) {
             className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
           />
           <EcosystemsProjectsChart
-            entries={ecosystem.projects}
-            allScalingProjectsCount={ecosystem.allScalingProjects.count}
+            data={ecosystem.projectsChartData}
             className="col-span-12 md:col-span-6 min-[1440px]:col-span-12"
           />
           <EcosystemToken

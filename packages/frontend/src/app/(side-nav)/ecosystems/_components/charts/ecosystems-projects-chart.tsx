@@ -1,5 +1,5 @@
 'use client'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -16,24 +16,18 @@ import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator
 import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradient-def'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
-import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/get-ecosystem-projects-chart-data'
 import { formatTimestamp } from '~/utils/dates'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 import { EcosystemsMarketShare } from './ecosystems-market-share'
 
 interface Props {
-  entries: EcosystemEntry['projects']
-  allScalingProjectsCount: number
+  data: EcosystemProjectsCountData
   className?: string
 }
 
-export function EcosystemsProjectsChart({
-  entries,
-  allScalingProjectsCount,
-  className,
-}: Props) {
+export function EcosystemsProjectsChart({ data, className }: Props) {
   const chartMeta = useMemo(() => {
     return {
       projectCount: {
@@ -45,18 +39,23 @@ export function EcosystemsProjectsChart({
       },
     } satisfies ChartMeta
   }, [])
-  const data = getChartData(entries, allScalingProjectsCount)
-  const range = getChartRange(data)!
-  const stats = getStats(data, allScalingProjectsCount)
+  const range = getChartRange(data.chart)!
+  const total = data.chart.at(-1)?.projectCount
+  assert(total !== undefined, 'No data')
+
   return (
     <EcosystemWidget className={className}>
-      <Header range={range} stats={stats} />
+      <Header
+        range={range}
+        projectCount={total}
+        marketShare={data.marketShare}
+      />
       <ChartContainer
         meta={chartMeta}
-        data={data}
+        data={data.chart}
         className="!h-[110px] !min-h-[110px]"
       >
-        <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>
+        <AreaChart data={data.chart} accessibilityLayer margin={{ top: 20 }}>
           <defs>
             <CustomFillGradientDef
               id="fill"
@@ -76,7 +75,7 @@ export function EcosystemsProjectsChart({
             isAnimationActive={false}
           />
           {getCommonChartComponents({
-            data,
+            data: data.chart,
             isLoading: false,
             yAxis: {
               tickCount: 2,
@@ -92,10 +91,12 @@ export function EcosystemsProjectsChart({
 
 function Header({
   range,
-  stats,
+  projectCount,
+  marketShare,
 }: {
   range: [number, number]
-  stats: { projectCount: number; marketShare: number }
+  projectCount: number
+  marketShare: number
 }) {
   return (
     <div className="mb-3 flex items-center justify-between">
@@ -104,8 +105,8 @@ function Header({
         <EcosystemChartTimeRange range={range} />
       </div>
       <div className="text-right">
-        <div className="text-xl font-bold">{stats.projectCount} Projects</div>
-        <EcosystemsMarketShare marketShare={stats.marketShare} />
+        <div className="text-xl font-bold">{projectCount} Projects</div>
+        <EcosystemsMarketShare marketShare={marketShare} />
       </div>
     </div>
   )
@@ -152,41 +153,4 @@ export function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function getStats(
-  data: { projectCount: number }[],
-  allScalingProjectsCount: number,
-) {
-  const total = data.at(-1)?.projectCount
-  assert(total !== undefined, 'No data')
-
-  return {
-    projectCount: total,
-    marketShare: total / allScalingProjectsCount,
-  }
-}
-
-function getChartData(
-  entries: EcosystemEntry['projects'],
-  allScalingProjectsCount: number,
-) {
-  const minTimestamp = Math.min(
-    ...entries.map((e) =>
-      UnixTime.toStartOf(e.ecosystemInfo.sinceTimestamp, 'day'),
-    ),
-  )
-  const timestamps = generateTimestamps([minTimestamp, UnixTime.now()], 'daily')
-  const data = timestamps.map((timestamp) => {
-    const projects = entries.filter(
-      (e) => e.ecosystemInfo.sinceTimestamp <= timestamp,
-    )
-    return {
-      timestamp,
-      projectCount: projects.length,
-      marketShare: projects.length / allScalingProjectsCount,
-    }
-  })
-
-  return data
 }
