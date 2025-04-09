@@ -16,7 +16,7 @@ export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'hasActivity', 'display'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
   const projects = unfilteredProjects.filter(
     (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),

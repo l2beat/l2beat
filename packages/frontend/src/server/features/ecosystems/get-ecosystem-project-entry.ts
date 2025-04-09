@@ -1,7 +1,7 @@
-import { readFileSync } from 'fs'
-import path from 'path'
 import type { ProjectEcosystemConfig } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { readFileSync } from 'fs'
+import path from 'path'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { ps } from '~/server/projects'
@@ -53,7 +53,7 @@ export async function getEcosystemProjectEntry(
     ],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),

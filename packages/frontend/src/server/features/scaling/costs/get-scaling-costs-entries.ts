@@ -19,7 +19,7 @@ export async function getScalingCostsEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
       where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
     api.costs.table({ range: '30d' }),
   ])

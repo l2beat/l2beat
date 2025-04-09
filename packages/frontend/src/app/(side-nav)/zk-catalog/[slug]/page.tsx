@@ -36,7 +36,7 @@ export async function generateStaticParams(): Promise<Params[]> {
   if (env.VERCEL_ENV !== 'production') return []
   const projects = await ps.getProjects({
     where: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   return projects.map((p) => ({ slug: p.slug }))
 }
@@ -46,7 +46,7 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const project = await ps.getProject({
     slug: params.slug,
     where: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   if (!project) {
     return null
@@ -62,7 +62,7 @@ export default async function Page(props: Props) {
     slug: params.slug,
     select: ['proofVerification'],
     optional: ['isScaling'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   if (!project) {
     return notFound()

@@ -16,7 +16,7 @@ export async function getScalingTvsEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'tvlInfo', 'display'],
       where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 
