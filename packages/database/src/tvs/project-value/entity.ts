@@ -1,11 +1,11 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type ProjectValueType, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { ProjectValue } from '../../kysely/generated/types'
 
 export interface ProjectValueRecord {
   timestamp: UnixTime
   project: string
-  type: string
+  type: ProjectValueType
   value: number
   canonical: number
   external: number
