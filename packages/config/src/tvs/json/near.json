@@ -18,7 +18,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230"
     },
     {
       "mode": "auto",
@@ -36,7 +37,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354"
     },
     {
       "mode": "auto",
@@ -54,7 +56,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12409/large/amp-200x200.png?1696512231"
     },
     {
       "mode": "auto",
@@ -72,7 +75,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/20582/large/aurora.jpeg?1696519989"
     },
     {
       "mode": "auto",
@@ -90,7 +94,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11683/large/Balancer.png?1696511572"
     },
     {
       "mode": "auto",
@@ -108,7 +113,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867"
     },
     {
       "mode": "auto",
@@ -126,7 +132,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9576/large/BUSDLOGO.jpg?1696509654"
     },
     {
       "mode": "auto",
@@ -144,7 +151,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10775/large/COMP.png?1696510737"
     },
     {
       "mode": "auto",
@@ -162,7 +170,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599"
     },
     {
       "mode": "auto",
@@ -180,7 +189,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -198,7 +208,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13915/large/4.jpg?1727532864"
     },
     {
       "mode": "auto",
@@ -216,7 +227,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12651/large/dodo_logo.png?1696512458"
     },
     {
       "mode": "auto",
@@ -234,7 +246,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12465/large/defi_pulse_index_set.png?1696512284"
     },
     {
       "mode": "auto",
@@ -266,7 +279,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -284,7 +298,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19479/large/agEUR-4.png?1710726218"
     },
     {
       "mode": "auto",
@@ -302,7 +317,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303"
     },
     {
       "mode": "auto",
@@ -320,7 +336,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9026/large/F.png?1696509161"
     },
     {
       "mode": "auto",
@@ -338,7 +355,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183"
     },
     {
       "mode": "auto",
@@ -356,7 +374,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159"
     },
     {
       "mode": "auto",
@@ -374,7 +393,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429"
     },
     {
       "mode": "auto",
@@ -392,7 +412,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/5992/large/gemini-dollar-gusd.png?1696506408"
     },
     {
       "mode": "auto",
@@ -410,7 +431,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2822/large/huobi-token-logo.png?1696503584"
     },
     {
       "mode": "auto",
@@ -428,7 +450,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009"
     },
     {
       "mode": "auto",
@@ -446,7 +469,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13454/large/lon_logo.png?1696513217"
     },
     {
       "mode": "auto",
@@ -464,7 +488,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745"
     },
     {
       "mode": "auto",
@@ -482,7 +507,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1364/large/Mark_Maker.png?1696502423"
     },
     {
       "mode": "auto",
@@ -500,7 +526,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3139/large/REN.png?1696503862"
     },
     {
       "mode": "auto",
@@ -518,7 +545,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13724/large/stakedao_logo.jpg?1696513468"
     },
     {
       "mode": "auto",
@@ -536,7 +564,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35383/large/sfrax-logo.png?1739780377"
     },
     {
       "mode": "auto",
@@ -554,7 +583,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/779/large/status.png?1696501931"
     },
     {
       "mode": "auto",
@@ -572,7 +602,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3406/large/SNX.png?1696504103"
     },
     {
       "mode": "auto",
@@ -590,7 +621,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101"
     },
     {
       "mode": "auto",
@@ -608,7 +640,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/3449/large/tusd.png?1696504140"
     },
     {
       "mode": "auto",
@@ -626,7 +659,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669"
     },
     {
       "mode": "auto",
@@ -644,7 +678,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -662,7 +697,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25380/large/UUSD.jpg?1696524513"
     },
     {
       "mode": "auto",
@@ -680,7 +716,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -698,7 +735,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     },
     {
       "mode": "auto",
@@ -716,7 +754,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     },
     {
       "mode": "auto",
@@ -734,7 +773,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12921/large/WOO_Logos_2023_Profile_Pic_WOO.png?1696512709"
     },
     {
       "mode": "auto",
@@ -752,7 +792,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720"
     }
   ]
 }

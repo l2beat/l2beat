@@ -28,7 +28,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242"
     },
     {
       "mode": "auto",
@@ -86,7 +87,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -114,7 +116,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36086/large/FLY_2D_Old_Map_Double_Border.png?1710434215"
     },
     {
       "mode": "auto",
@@ -142,7 +145,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -159,7 +163,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -187,7 +192,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -215,7 +221,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     }
   ]
 }

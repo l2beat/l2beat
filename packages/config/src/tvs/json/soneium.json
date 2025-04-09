@@ -17,7 +17,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22617/large/astr.png?1696521933"
     },
     {
       "mode": "auto",
@@ -49,7 +50,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -66,7 +68,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53907/large/nsASTR_2x.png?1737707599"
     },
     {
       "mode": "auto",
@@ -83,7 +86,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54474/large/Pipo.jpg?1739951527"
     },
     {
       "mode": "auto",
@@ -100,7 +104,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174"
     },
     {
       "mode": "auto",
@@ -117,7 +122,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684"
     },
     {
       "mode": "auto",
@@ -134,7 +140,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640"
     },
     {
       "mode": "auto",
@@ -151,7 +158,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54834/large/solvBTC_Jupiter.png?1741969449"
     },
     {
       "mode": "auto",
@@ -168,7 +176,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672"
     },
     {
       "mode": "auto",
@@ -186,7 +195,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -204,7 +214,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -221,7 +232,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34706/large/vASTR.png?1705893008"
     },
     {
       "mode": "auto",
@@ -238,7 +250,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     },
     {
       "mode": "auto",
@@ -256,7 +269,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     },
     {
       "mode": "auto",
@@ -273,7 +287,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54782/large/wstASTR.png?1741570094"
     },
     {
       "mode": "auto",
@@ -291,7 +306,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295"
     },
     {
       "mode": "auto",
@@ -308,7 +324,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54281/large/yayagETH200w.png?1739438881"
     },
     {
       "mode": "auto",
@@ -325,7 +342,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54279/large/Yay!_Stone200w.png?1739438931"
     }
   ]
 }

@@ -58,7 +58,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36726/large/moltenmesh.png?1712147407"
     },
     {
       "mode": "auto",
@@ -86,7 +87,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -114,7 +116,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     }
   ]
 }

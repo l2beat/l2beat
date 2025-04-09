@@ -1107,6 +1107,7 @@ export interface TvsToken {
   symbol: string
   displaySymbol?: string
   name: string
+  iconUrl?: string
   amount: CalculationFormula | AmountFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula

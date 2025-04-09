@@ -18,7 +18,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835"
     },
     {
       "mode": "auto",
@@ -36,7 +37,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -54,7 +56,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404"
     },
     {
       "mode": "auto",
@@ -72,7 +75,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192"
     },
     {
       "mode": "auto",
@@ -90,7 +94,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31293/large/photo_2024-06-03_12-14-59.png?1717638614"
     },
     {
       "mode": "auto",
@@ -108,7 +113,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -126,7 +132,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -144,7 +151,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     }
   ]
 }

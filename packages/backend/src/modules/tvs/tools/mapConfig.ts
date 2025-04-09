@@ -180,6 +180,7 @@ export function createEscrowToken(
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
+    iconUrl: legacyToken.iconUrl,
     amount: amountFormula,
     ...(valueForSummary ? { valueForSummary } : {}),
     category: legacyToken.category,
@@ -263,8 +264,8 @@ export function createToken(
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
+    iconUrl: legacyToken.iconUrl,
     amount: amountFormula,
-
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(

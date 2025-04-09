@@ -75,6 +75,7 @@ export async function getElasticChainTokens(
         priceId: token.coingeckoId,
         symbol: token.symbol,
         name: token.name,
+        iconUrl: token.iconUrl,
         category: token.category,
         source: 'canonical' as const,
         isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -101,6 +102,8 @@ export async function getElasticChainTokens(
     priceId: 'ethereum',
     symbol: 'ETH',
     name: 'Ethereum',
+    iconUrl:
+      'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
     category: 'ether' as const,
     source: 'canonical' as const,
     amount: {

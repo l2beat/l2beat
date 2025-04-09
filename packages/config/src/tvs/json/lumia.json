@@ -17,7 +17,8 @@
         "chain": "lumia",
         "decimals": 18,
         "sinceTimestamp": 1719499031
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28453/large/blur.png?1696527448"
     },
     {
       "mode": "auto",
@@ -34,7 +35,8 @@
         "chain": "lumia",
         "decimals": 18,
         "sinceTimestamp": 1719499031
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15585/large/convex.png?1696515221"
     },
     {
       "mode": "auto",
@@ -51,7 +53,8 @@
         "decimals": 18,
         "sinceTimestamp": 1719499031
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -69,7 +72,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993"
     },
     {
       "mode": "auto",
@@ -86,7 +90,8 @@
         "chain": "lumia",
         "decimals": 9,
         "sinceTimestamp": 1719499031
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17980/large/photo_2024-09-10_17.09.00.jpeg?1725963446"
     },
     {
       "mode": "auto",
@@ -103,7 +108,8 @@
         "chain": "lumia",
         "decimals": 6,
         "sinceTimestamp": 1719499031
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     }
   ]
 }

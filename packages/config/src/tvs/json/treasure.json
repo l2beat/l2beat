@@ -17,7 +17,8 @@
         "decimals": 18,
         "sinceTimestamp": 1739109131
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -35,7 +36,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18623/large/magic.png?1696518095"
     }
   ]
 }

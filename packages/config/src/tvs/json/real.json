@@ -17,7 +17,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209"
     },
     {
       "mode": "auto",
@@ -35,7 +36,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727"
     },
     {
       "mode": "auto",
@@ -52,7 +54,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/more-v1.png?1726895535"
     },
     {
       "mode": "auto",
@@ -69,7 +72,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660"
     },
     {
       "mode": "auto",
@@ -86,7 +90,8 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632"
     },
     {
       "mode": "auto",
@@ -104,7 +109,8 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13442/large/steth_logo.png?1696513206"
     },
     {
       "mode": "auto",
@@ -121,7 +127,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50540/large/usd-coin-usdc-logo-200x200.png?1728269501"
     },
     {
       "mode": "auto",
@@ -139,7 +146,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -157,7 +165,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -174,7 +183,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607"
     },
     {
       "mode": "auto",
@@ -192,7 +202,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     }
   ]
 }
