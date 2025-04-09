@@ -122,7 +122,7 @@ async function printProjectDiffs(
     projectTvlMap.set(projectId, previous + value)
   }
   const tvsRecords = (
-    await db.tvsProjectValue.getByTimestampAndType(timestamp, 'FULL')
+    await db.tvsProjectValue.getByTimestampAndType(timestamp, 'PROJECT')
   ).filter((r) => projectIds.has(r.project))
 
   const projectTvsMap = new Map<string, number>()
