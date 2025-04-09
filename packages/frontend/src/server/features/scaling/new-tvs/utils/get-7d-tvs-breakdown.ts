@@ -1,11 +1,10 @@
 import type { Project } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
-import { getTvsBreakdown } from './get-tvs-breakdown'
 import { getTvsProjects } from './get-tvs-projects'
 import { getTvsValuesForProjects } from './get-tvs-values-for-projects'
 
@@ -54,6 +53,7 @@ const getCached7dTokenBreakdown = cache(
     const tvsValues = await getTvsValuesForProjects(
       await getTvsProjects(createTvsBreakdownProjectFilter(props)),
       '7d',
+      'FULL',
     )
 
     const projects = Object.fromEntries(
@@ -61,70 +61,65 @@ const getCached7dTokenBreakdown = cache(
         ([projectId, values]): [string, ProjectSevenDayTvsBreakdown] => {
           const latestTimestamp = Math.max(...Object.keys(values).map(Number))
           const oldestTimestamp = Math.min(...Object.keys(values).map(Number))
-          const latestValues = values[latestTimestamp] ?? []
-          const oldestValues = values[oldestTimestamp] ?? []
-          const breakdown = getTvsBreakdown(latestValues)
-          const oldBreakdown = getTvsBreakdown(oldestValues)
-          const total =
-            breakdown.native + breakdown.canonical + breakdown.external
-          const oldTotal =
-            oldBreakdown.native + oldBreakdown.canonical + oldBreakdown.external
-          const associatedTotal =
-            breakdown.associated.native +
-            breakdown.associated.canonical +
-            breakdown.associated.external
-          const oldAssociatedTotal =
-            oldBreakdown.associated.native +
-            oldBreakdown.associated.canonical +
-            oldBreakdown.associated.external
+          const latestValue = values[latestTimestamp]
+          const oldestValues = values[oldestTimestamp]
+
+          assert(
+            latestValue && oldestValues,
+            `No values for project ${projectId}`,
+          )
+
           return [
             projectId,
             {
               breakdown: {
-                total: total / 100,
-                native: breakdown.native / 100,
-                canonical: breakdown.canonical / 100,
-                external: breakdown.external / 100,
-                ether: breakdown.ether / 100,
-                stablecoin: breakdown.stablecoin / 100,
+                total: latestValue.value,
+                native: latestValue.native,
+                canonical: latestValue.canonical,
+                external: latestValue.external,
+                ether: latestValue.ether,
+                stablecoin: latestValue.stablecoin,
               },
               associated: {
-                total: associatedTotal / 100,
-                native: breakdown.associated.native / 100,
-                canonical: breakdown.associated.canonical / 100,
-                external: breakdown.associated.external / 100,
+                total: latestValue.associated,
+                native: latestValue.associated / 3,
+                canonical: latestValue.associated / 3,
+                external: latestValue.associated / 3,
               },
               change: {
-                total: calculatePercentageChange(total, oldTotal),
+                total: calculatePercentageChange(
+                  latestValue.value,
+                  oldestValues.value,
+                ),
                 native: calculatePercentageChange(
-                  breakdown.native,
-                  oldBreakdown.native,
+                  latestValue.native,
+                  oldestValues.native,
                 ),
                 canonical: calculatePercentageChange(
-                  breakdown.canonical,
-                  oldBreakdown.canonical,
+                  latestValue.canonical,
+                  oldestValues.canonical,
                 ),
                 external: calculatePercentageChange(
-                  breakdown.external,
-                  oldBreakdown.external,
+                  latestValue.external,
+                  oldestValues.external,
                 ),
               },
               changeExcludingAssociated: {
                 total: calculatePercentageChange(
-                  total - associatedTotal,
-                  oldTotal - oldAssociatedTotal,
+                  latestValue.associated,
+                  oldestValues.associated,
                 ),
                 native: calculatePercentageChange(
-                  breakdown.native - breakdown.associated.native,
-                  oldBreakdown.native - oldBreakdown.associated.native,
+                  latestValue.native - latestValue.associated / 3,
+                  oldestValues.native - oldestValues.associated / 3,
                 ),
                 canonical: calculatePercentageChange(
-                  breakdown.canonical - breakdown.associated.canonical,
-                  oldBreakdown.canonical - oldBreakdown.associated.canonical,
+                  latestValue.canonical - latestValue.associated / 3,
+                  oldestValues.canonical - oldestValues.associated / 3,
                 ),
                 external: calculatePercentageChange(
-                  breakdown.external - breakdown.associated.external,
-                  oldBreakdown.external - oldBreakdown.associated.external,
+                  latestValue.external - latestValue.associated / 3,
+                  oldestValues.external - oldestValues.associated / 3,
                 ),
               },
             },
@@ -134,8 +129,7 @@ const getCached7dTokenBreakdown = cache(
     )
 
     const total = Object.values(projects).reduce(
-      (acc, { breakdown }) =>
-        acc + breakdown.native + breakdown.canonical + breakdown.external,
+      (acc, { breakdown }) => acc + breakdown.total,
       0,
     )
 
@@ -144,7 +138,7 @@ const getCached7dTokenBreakdown = cache(
       projects,
     }
   },
-  ['getCached7dTokenBreakdown'],
+  ['getCached7dTokenBreakdown-new'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
