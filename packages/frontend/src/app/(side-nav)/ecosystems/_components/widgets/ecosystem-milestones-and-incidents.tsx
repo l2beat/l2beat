@@ -1,5 +1,4 @@
 'use client'
-import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'react'
 import { MilestoneDrawerContent } from '~/components/core/chart/chart-milestones'
@@ -13,6 +12,7 @@ import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
+import type { EcosystemMilestone } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
@@ -22,7 +22,7 @@ export function EcosystemMilestonesAndIncidents({
   milestones,
   className,
 }: {
-  milestones: Milestone[]
+  milestones: EcosystemMilestone[]
   className?: string
 }) {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -100,7 +100,7 @@ function Details({
   setSelectedMilestoneIndex,
   className,
 }: {
-  milestones: Milestone[]
+  milestones: EcosystemMilestone[]
   selectedMilestoneIndex: number
   setSelectedMilestoneIndex: (index: number) => void
   className?: string
@@ -115,9 +115,10 @@ function Details({
       )}
     >
       <div>
-        <span className="text-2xs font-bold uppercase text-secondary">
-          {formatDate(selectedMilestone.date.slice(0, 10))}
-        </span>
+        <p className="text-2xs font-bold text-secondary">
+          {formatDate(selectedMilestone.date.slice(0, 10))} •{' '}
+          {selectedMilestone.projectName}
+        </p>
         <p className="text-base font-bold leading-tight">
           {selectedMilestone.title}
         </p>
@@ -168,8 +169,8 @@ function MilestoneItem({
   style,
 }: {
   onClick: () => void
-  milestone: Milestone & { index: number }
-  allMilestones: Milestone[]
+  milestone: EcosystemMilestone & { index: number }
+  allMilestones: EcosystemMilestone[]
   selectedMilestoneIndex: number
   style: React.CSSProperties
 }) {
@@ -232,10 +233,10 @@ function Timeline({
   })
 }
 
-function mapMilestones(milestones: Milestone[]) {
+function mapMilestones(milestones: EcosystemMilestone[]) {
   const milestonesByTimestamp: Record<
     number,
-    (Milestone & { index: number })[]
+    (EcosystemMilestone & { index: number })[]
   > = {}
   for (const [index, milestone] of milestones.entries()) {
     const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)

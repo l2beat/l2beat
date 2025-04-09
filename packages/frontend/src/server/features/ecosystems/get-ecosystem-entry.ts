@@ -60,7 +60,7 @@ export interface EcosystemEntry {
     learnMore: string
     governance: EcosystemGovernanceLinks
   }
-  milestones: Milestone[]
+  milestones: EcosystemMilestone[]
 }
 
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
@@ -173,10 +173,21 @@ function getEcosystemLogo(slug: string) {
   }
 }
 
-function getMilestones(projects: Project<never, 'milestones'>[]) {
+export interface EcosystemMilestone extends Milestone {
+  projectName: string
+}
+
+function getMilestones(
+  projects: Project<never, 'milestones'>[],
+): EcosystemMilestone[] {
   return projects
     .flatMap((project) => {
-      return project.milestones ?? []
+      return (
+        project.milestones?.map((milestone) => ({
+          ...milestone,
+          projectName: project.name,
+        })) ?? []
+      )
     })
     .sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime()
