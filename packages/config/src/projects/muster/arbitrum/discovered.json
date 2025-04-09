@@ -1,7 +1,7 @@
 {
   "name": "muster",
   "chain": "arbitrum",
-  "blockNumber": 323453444,
+  "blockNumber": 324576418,
   "configHash": "0xab265838385bdb3b6a5e8ab6b2f2a4051e615024f34d73548e3e222e0a6b2c7e",
   "entries": [
     {
@@ -302,13 +302,13 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 9206,
+        "firstUnresolvedNode": 9283,
         "inbox": "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22199788,
-        "latestConfirmed": 9205,
-        "latestNodeCreated": 9229,
+        "latestConfirmed": 9282,
+        "latestNodeCreated": 9306,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD17550876106645988051ffDd31dFc3cDaA29F9c",
@@ -317,8 +317,8 @@
         "rollupDeploymentBlock": 18761899,
         "rollupEventInbox": "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C",
         "sequencerInbox": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
-        "setValidatorCount": 3,
-        "stakerCount": 2,
+        "setValidatorCount": 5,
+        "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -484,7 +484,7 @@
           "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
         ],
         "allowedOutboxList": ["0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
-        "delayedMessageCount": 11920,
+        "delayedMessageCount": 12033,
         "inboxHistory": [
           "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
           "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
@@ -492,8 +492,8 @@
         "outboxHistory": ["0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
         "rollup": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
         "sequencerInbox": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
-        "sequencerMessageCount": 9908,
-        "sequencerReportedSubMessageCount": 320061
+        "sequencerMessageCount": 10021,
+        "sequencerReportedSubMessageCount": 322444
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -809,7 +809,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 9908,
+        "batchCount": 10021,
         "batchPosterManager": "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
         "batchPosters": ["0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"],
         "bridge": "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1",
@@ -839,7 +839,7 @@
         "rollup": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 11919,
+        "totalDelayedMessagesRead": 12032,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
