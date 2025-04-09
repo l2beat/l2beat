@@ -47,7 +47,7 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
           className="relative flex items-center bg-[url(/ecosystems/governance-delegates.png)] bg-cover text-xl font-bold text-primary-invert"
         >
           <div className="absolute inset-y-0 left-0 w-1/2 rounded-xl bg-gradient-to-r from-black"></div>
-          <div className="relative z-10">
+          <div className="relative z-10 text-pure-white">
             Governance
             <br />
             Top Delegates
