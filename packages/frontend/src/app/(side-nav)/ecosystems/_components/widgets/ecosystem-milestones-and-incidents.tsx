@@ -9,7 +9,7 @@ import {
 } from '~/components/core/chart/utils/get-x-axis-props'
 import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/drawer'
 import { CustomLink } from '~/components/link/custom-link'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
@@ -47,7 +47,7 @@ export function EcosystemMilestonesAndIncidents({
   return (
     <EcosystemWidget className={className}>
       <div className="grid grid-cols-3 gap-6" ref={sectionRef}>
-        <div className="col-span-full flex flex-col md:col-span-2">
+        <div className="col-span-full flex flex-col lg:col-span-2">
           <EcosystemWidgetTitle>Milestones & Incidents</EcosystemWidgetTitle>
           <div className="my-auto">
             <div className="relative mt-2 h-5">
@@ -87,7 +87,7 @@ export function EcosystemMilestonesAndIncidents({
           milestones={milestones}
           selectedMilestoneIndex={selectedMilestoneIndex}
           setSelectedMilestoneIndex={setSelectedMilestoneIndex}
-          className="col-span-1 max-md:hidden"
+          className="col-span-1 max-lg:hidden"
         />
       </div>
     </EcosystemWidget>
@@ -110,7 +110,7 @@ function Details({
   return (
     <div
       className={cn(
-        'flex h-44 flex-col justify-between rounded bg-surface-secondary p-4',
+        'flex h-40 flex-col justify-between rounded bg-surface-secondary p-4',
         className,
       )}
     >
@@ -173,11 +173,11 @@ function MilestoneItem({
   selectedMilestoneIndex: number
   style: React.CSSProperties
 }) {
-  const isMobile = useIsMobile()
+  const breakpoint = useBreakpoint()
   const Icon = milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
   const isSelected = milestone.index === selectedMilestoneIndex
 
-  if (isMobile) {
+  if (breakpoint === 'mobile' || breakpoint === 'tablet') {
     return (
       <Drawer>
         <DrawerTrigger className="absolute -top-2.5" style={style}>
@@ -197,8 +197,8 @@ function MilestoneItem({
     <button
       onClick={onClick}
       className={cn(
-        'absolute -top-2.5 scale-75 md:scale-100',
-        isSelected && 'z-10 scale-100 transition-transform md:scale-150',
+        'absolute -top-2.5 scale-75 lg:scale-100',
+        isSelected && 'z-10 scale-100 transition-transform lg:scale-150',
       )}
       style={style}
     >
