@@ -105,11 +105,11 @@ export const DiscoveryContract = z.object({
   types: z.record(z.string(), DiscoveryCustomType).default({}),
 })
 
-export type CombinedContract = z.infer<typeof CombinedContract>
-export const CombinedContract = DiscoveryContract
-
-export type DiscoveryConfig = z.infer<typeof DiscoveryConfig>
-export const DiscoveryConfig = z.object({
+export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
+export const RawDiscoveryConfig = z.object({
+  name: z.string().min(1),
+  chain: z.string().min(1),
+  initialAddresses: z.array(stringAs(EthereumAddress)),
   import: z.optional(z.array(z.string())),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number()),
@@ -123,11 +123,4 @@ export const DiscoveryConfig = z.object({
   ),
   sharedModules: z.optional(z.array(z.string())),
   types: z.optional(z.record(z.string(), DiscoveryCustomType)),
-})
-
-export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
-export const RawDiscoveryConfig = DiscoveryConfig.extend({
-  name: z.string().min(1),
-  chain: z.string().min(1),
-  initialAddresses: z.array(stringAs(EthereumAddress)),
 })

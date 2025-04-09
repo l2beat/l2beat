@@ -8,10 +8,6 @@ import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
 
-export type ContractOverrides = DiscoveryContract & {
-  address: EthereumAddress
-}
-
 // values inside this class should not be modified during the runtime
 // this will result in the hash being different and break the update mechanism
 export class DiscoveryConfig {

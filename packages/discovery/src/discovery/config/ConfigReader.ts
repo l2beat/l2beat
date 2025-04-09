@@ -13,16 +13,12 @@ import { type ZodError, z } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
-import { ColorConfig } from './ColorConfig'
 import { DiscoveryConfig } from './DiscoveryConfig'
-import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
 const JustImport = z
-  .object({
-    import: z.optional(z.array(z.string())),
-  })
+  .object({ import: z.optional(z.array(z.string())) })
   .passthrough()
 
 export class ConfigReader {
@@ -58,10 +54,7 @@ export class ConfigReader {
       )
     }
 
-    const config = new DiscoveryConfig(
-      rawConfig,
-      this,
-    )
+    const config = new DiscoveryConfig(rawConfig, this)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
