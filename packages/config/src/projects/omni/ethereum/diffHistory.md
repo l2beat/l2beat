@@ -1,3 +1,168 @@
+Generated with discovered.json: 0x5ea36a4aff4fc882e11d19695a4878c723d04198
+
+# Diff at Wed, 09 Apr 2025 11:56:43 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@b04ae40394d41744c67519d82fd543837c6ad4a0 block: 22123489
+- current block number: 22230472
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract ForeignBridgeErcToNative (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      values.getCurrentDay:
+-        20172
++        20187
+    }
+```
+
+```diff
+    contract DSToken (0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359) {
+    +++ description: None
+      values.totalSupply:
+-        "2683953813833779547195663"
++        "2683599995685693792307707"
+    }
+```
+
+```diff
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: None
+      values.currentNonce:
+-        13731
++        14951
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123489 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      name:
+-        "MultiTokenMediator"
++        "ForeignOmnibridge"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++        "gnosis:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++++ description: Array of the reports on GnosisChain
++++ severity: HIGH
+      values.reporters.0:
+-        "0x0000000000000000000000000000000000000000"
++        "gnosis:0x0000000000000000000000000000000000000000"
++++ description: Address of the target contract on GnosisChain
++++ severity: HIGH
+      values.targetAddress:
+-        "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
++        "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+      fieldMeta:
++        {"targetAddress":{"severity":"HIGH","description":"Address of the target contract on GnosisChain"},"adapters":{"severity":"HIGH","description":"Array of the adapters on GnosisChain"},"reporters":{"severity":"HIGH","description":"Array of the reports on GnosisChain"},"threshold":{"severity":"HIGH","description":"Threshold of the adapters on GnosisChain"}}
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"gnosis"}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DSGuard (0x315cBb88168396D12e1a255f9Cb935408fe80710)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignBridgeErcToNative (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroAdapter (0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DSToken (0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x45a419e2504a90e818419078c2109937a8616106
 
 # Diff at Tue, 25 Mar 2025 11:02:10 GMT:

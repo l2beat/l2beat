@@ -5,10 +5,11 @@
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x88ad09518695c6c3712AC10a214bE5109a655671",
-    "0x87D48c565D0D85770406D248efd7dc3cbd41e729"
+    "0x87D48c565D0D85770406D248efd7dc3cbd41e729",
+    "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418" // LayerZero Adapter for Hashi
   ],
   "names": {
-    "0x88ad09518695c6c3712AC10a214bE5109a655671": "MultiTokenMediator",
+    "0x88ad09518695c6c3712AC10a214bE5109a655671": "ForeignOmnibridge",
     "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "ForeignAMB",
     "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "BridgeValidators",
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "OmniBridgeGovernance",
@@ -24,8 +25,27 @@
     "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": {
       // HashiManager
       "proxyType": "Eternal Storage proxy",
-      "ignoreRelatives": ["yaho", "yaru", "targetAddress"], // until HASHI_IS_MANDATORY=true we ignore this optional external validator
+      //"ignoreRelatives": ["yaho", "yaru", "targetAddress"], // until HASHI_IS_MANDATORY=true we ignore this optional external validator
       "fields": {
+        "targetAddress": {
+          "description": "Address of the target contract on GnosisChain",
+          "severity": "HIGH",
+          "returnType": "(GnosisAddress)"
+        },
+        "adapters": {
+          "description": "Array of the adapters on GnosisChain",
+          "severity": "HIGH",
+          "returnType": "(GnosisAddress[])"
+        },
+        "reporters": {
+          "description": "Array of the reports on GnosisChain",
+          "severity": "HIGH",
+          "returnType": "(GnosisAddress[])"
+        },
+        "threshold": {
+          "description": "Threshold of the adapters on GnosisChain",
+          "severity": "HIGH",
+        },
         "AdaptersFromStorage": {
           "handler": {
             "type": "storage",
@@ -36,7 +56,7 @@
       }
     },
     "0x88ad09518695c6c3712AC10a214bE5109a655671": {
-      // MultiTokenMediator
+      // ForeignOmnibridge
       "proxyType": "Eternal Storage proxy",
       "ignoreMethods": ["getCurrentDay"]
     },
