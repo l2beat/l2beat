@@ -14,7 +14,6 @@ export const skaleIMA: Bridge = {
   display: {
     name: 'SKALE IMA Bridge',
     slug: 'skale-ima',
-    bridgeTab: 'Multichain',
     links: {
       websites: ['https://skale.space'],
       apps: ['https://bridge.skale.network'],

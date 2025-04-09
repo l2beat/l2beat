@@ -14,7 +14,6 @@ export const hyphen: Bridge = {
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
-    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://hyphen.biconomy.io/'],

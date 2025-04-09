@@ -21,7 +21,6 @@ export const beamerbridgev2: Bridge = {
   display: {
     name: 'Beamer Bridge V2',
     slug: 'beamerbridgev2',
-    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     warning: warningText,
     links: {

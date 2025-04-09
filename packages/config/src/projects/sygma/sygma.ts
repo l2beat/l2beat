@@ -12,7 +12,6 @@ export const sygma: Bridge = {
   display: {
     name: 'Sygma',
     slug: 'sygma',
-    bridgeTab: 'Multichain',
     category: 'Hybrid',
     description:
       'Sygma is an interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',

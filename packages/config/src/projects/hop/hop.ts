@@ -12,7 +12,6 @@ export const hop: Bridge = {
   display: {
     name: 'Hop',
     slug: 'hop',
-    bridgeTab: 'Multichain',
     category: 'Liquidity Network',
     links: {
       websites: ['https://hop.exchange/'],

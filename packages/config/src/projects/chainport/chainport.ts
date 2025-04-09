@@ -20,7 +20,6 @@ export const chainport: Bridge = {
   display: {
     name: 'Chainport',
     slug: 'chainport',
-    bridgeTab: 'Multichain',
     description: 'ChainPort Cross-Chain Bridge: Port across 15+ Chains.',
     category: 'Token Bridge',
     links: {

@@ -23,7 +23,6 @@ export const opticsV1: Bridge = {
   display: {
     name: 'Optics V1',
     slug: 'opticsv1',
-    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: ['https://old.optics.app/'],

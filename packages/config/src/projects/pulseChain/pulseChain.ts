@@ -24,11 +24,10 @@ export const pulseChain: Bridge = {
   display: {
     name: 'PulseChain',
     slug: 'pulsechain',
-    bridgeTab: 'Single-chain',
     description:
       'Bridge used to transfer assets from Ethereum to PulseChain. Transfers are validated by set of trusted Validators.',
     // not sure about this
-    category: 'Token Bridge',
+    category: 'Single-chain',
     links: {
       websites: [
         'https://pulsechain.com/',

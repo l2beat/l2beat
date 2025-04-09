@@ -10,7 +10,6 @@ export const davos: Bridge = {
   display: {
     name: 'Davos',
     slug: 'davos',
-    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: ['https://davos.xyz/app/bridge'],

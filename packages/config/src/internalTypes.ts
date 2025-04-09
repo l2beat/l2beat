@@ -8,7 +8,6 @@ import type {
 import type {
   Badge,
   BridgeCategory,
-  BridgeTab,
   ChainConfig,
   Milestone,
   ProjectActivityConfig,
@@ -264,7 +263,6 @@ export interface BridgeDisplay {
   description: string
   detailedDescription?: string
   category: BridgeCategory
-  bridgeTab: BridgeTab
   links: ProjectLinks
   architectureImage?: string
 }

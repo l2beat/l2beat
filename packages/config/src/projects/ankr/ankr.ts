@@ -10,7 +10,6 @@ export const ankr: Bridge = {
   display: {
     name: 'Ankr',
     slug: 'ankr',
-    bridgeTab: 'Multichain',
     category: 'Token Bridge',
     links: {
       websites: ['https://ankr.com/staking/bridge/'],
