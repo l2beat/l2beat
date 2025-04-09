@@ -17,7 +17,7 @@ export function EcosystemProjectsByRaas({
 }) {
   return (
     <EcosystemWidget className={className}>
-      <EcosystemWidgetTitle>Rollup as a Service</EcosystemWidgetTitle>
+      <EcosystemWidgetTitle>RaaS Providers</EcosystemWidgetTitle>
       <div className="flex flex-col gap-2">
         {Object.entries(projectsByRaas).map(([raas, projects]) => (
           <div key={raas} className="flex justify-between gap-2">
