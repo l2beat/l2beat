@@ -28,7 +28,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727"
     },
     {
       "mode": "auto",
@@ -106,7 +107,8 @@
             "priceId": "dai"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -124,7 +126,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37441/large/eigen.jpg?1728023974"
     },
     {
       "mode": "auto",
@@ -142,7 +145,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436"
     },
     {
       "mode": "auto",
@@ -160,7 +164,8 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -178,7 +183,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562"
     },
     {
       "mode": "auto",
@@ -238,7 +244,8 @@
             "priceId": "chainlink"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009"
     },
     {
       "mode": "auto",
@@ -256,7 +263,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1364/large/Mark_Maker.png?1696502423"
     },
     {
       "mode": "auto",
@@ -274,7 +282,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9519/large/paxgold.png?1696509604"
     },
     {
       "mode": "auto",
@@ -292,7 +301,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278"
     },
     {
       "mode": "auto",
@@ -310,7 +320,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22876/large/SOL_wh_small.png?1696522175"
     },
     {
       "mode": "auto",
@@ -338,7 +349,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684"
     },
     {
       "mode": "auto",
@@ -398,7 +410,8 @@
             "priceId": "spx6900"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31401/large/centeredcoin_%281%29.png?1737048493"
     },
     {
       "mode": "auto",
@@ -416,7 +429,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680"
     },
     {
       "mode": "auto",
@@ -494,7 +508,8 @@
             "priceId": "usd-coin"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -554,7 +569,8 @@
             "priceId": "ethena-usde"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059"
     },
     {
       "mode": "auto",
@@ -632,7 +648,8 @@
             "priceId": "wrapped-eeth"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396"
     },
     {
       "mode": "auto",
@@ -710,7 +727,8 @@
             "priceId": "weth"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     },
     {
       "mode": "auto",
@@ -788,7 +806,8 @@
             "priceId": "wrapped-steth"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295"
     },
     {
       "mode": "auto",
@@ -848,7 +867,8 @@
             "priceId": "mountain-protocol-usdm"
           }
         ]
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31719/large/usdm.png?1696530540"
     },
     {
       "mode": "auto",
@@ -866,7 +886,8 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471"
     }
   ]
 }

@@ -17,7 +17,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32417/large/chain-logo.png?1698114384"
     },
     {
       "mode": "auto",
@@ -34,7 +35,8 @@
         "decimals": 18,
         "sinceTimestamp": 1729531437
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -51,7 +53,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36612/large/TOKEN.png?1711975511"
     },
     {
       "mode": "auto",
@@ -68,7 +71,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776"
     },
     {
       "mode": "auto",
@@ -85,7 +89,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278"
     },
     {
       "mode": "auto",
@@ -102,7 +107,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706"
     },
     {
       "mode": "auto",
@@ -119,7 +125,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1730764800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51343/large/stAVAIL_200x200.png?1730824445"
     },
     {
       "mode": "auto",
@@ -136,7 +143,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38499/large/azuro.jpeg?1717727357"
     },
     {
       "mode": "auto",
@@ -154,7 +162,8 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -171,7 +180,8 @@
         "chain": "sophon",
         "decimals": 6,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -188,7 +198,8 @@
         "chain": "sophon",
         "decimals": 8,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     },
     {
       "mode": "auto",
@@ -205,7 +216,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396"
     },
     {
       "mode": "auto",
@@ -222,7 +234,8 @@
         "chain": "sophon",
         "decimals": 18,
         "sinceTimestamp": 1729531437
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295"
     }
   ]
 }

@@ -517,6 +517,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
+    | 'Pessimistic Proofs'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -1110,6 +1111,7 @@ export interface TvsToken {
   symbol: string
   displaySymbol?: string
   name: string
+  iconUrl?: string
   amount: CalculationFormula | AmountFormula
   // we need this formula to handle relations between tokens on the same chain
   valueForProject?: CalculationFormula | ValueFormula

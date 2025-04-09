@@ -16,7 +16,10 @@ const CORRECT_SUPERCHAIN_SOURCES_HASH = Hash256(
 
 describe(hashFirstSource.name, () => {
   it('coorectly hashes the first source', () => {
-    const hash = hashFirstSource(superchainConfigSources)
+    const hash = hashFirstSource(
+      superchainConfigSources.isVerified,
+      superchainConfigSources.sources,
+    )
     expect(hash).toEqual(CORRECT_SUPERCHAIN_SOURCES_HASH)
   })
 })

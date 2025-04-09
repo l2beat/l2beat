@@ -17,7 +17,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12645/large/aave-token-round.png?1720472354"
     },
     {
       "mode": "auto",
@@ -34,7 +35,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534"
     },
     {
       "mode": "auto",
@@ -51,7 +53,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12124/large/Curve.png?1696511967"
     },
     {
       "mode": "auto",
@@ -68,7 +71,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30118/large/0xf939e0a03fb07f59a73314e73794be0e57ac1b4e.png?1721097561"
     },
     {
       "mode": "auto",
@@ -85,7 +89,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
     },
     {
       "mode": "auto",
@@ -102,7 +107,8 @@
         "decimals": 18,
         "sinceTimestamp": 1712620800
       },
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
     },
     {
       "mode": "auto",
@@ -119,7 +125,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1729296000
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993"
     },
     {
       "mode": "auto",
@@ -136,7 +143,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/878/large/decentraland-mana.png?1696502010"
     },
     {
       "mode": "auto",
@@ -153,7 +161,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4713/large/polygon.png?1698233745"
     },
     {
       "mode": "auto",
@@ -171,7 +180,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/4463/large/WeChat_Image_20220118095654.png?1696505053"
     },
     {
       "mode": "auto",
@@ -188,7 +198,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32440/large/polygon.png?1698233684"
     },
     {
       "mode": "auto",
@@ -205,7 +216,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/23931/large/512_x_512_Dark.png?1721243699"
     },
     {
       "mode": "auto",
@@ -222,7 +234,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855"
     },
     {
       "mode": "auto",
@@ -239,7 +252,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101"
     },
     {
       "mode": "auto",
@@ -256,7 +270,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28477/large/uniETH_200.png?1696527471"
     },
     {
       "mode": "auto",
@@ -273,7 +288,8 @@
         "chain": "xlayer",
         "decimals": 6,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -290,7 +306,8 @@
         "chain": "xlayer",
         "decimals": 6,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -307,7 +324,8 @@
         "chain": "xlayer",
         "decimals": 8,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     },
     {
       "mode": "auto",
@@ -324,7 +342,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332"
     },
     {
       "mode": "auto",
@@ -341,7 +360,8 @@
         "chain": "xlayer",
         "decimals": 18,
         "sinceTimestamp": 1712620800
-      }
+      },
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295"
     }
   ]
 }

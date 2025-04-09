@@ -135,7 +135,7 @@ function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
 }
 
-function undefinedIfEmpty<T>(array: T[]): T[] | undefined {
+export function undefinedIfEmpty<T>(array: T[]): T[] | undefined {
   if (array.length === 0) {
     return undefined
   }

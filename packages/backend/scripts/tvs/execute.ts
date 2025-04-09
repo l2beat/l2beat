@@ -56,6 +56,10 @@ const cmd = command({
       args.timestamp ??
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
+    logger.info(
+      `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toLocaleString()})`,
+    )
+
     if (!args.project) {
       const projects = await ps.getProjects({
         select: ['tvsConfig'],

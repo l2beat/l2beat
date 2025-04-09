@@ -28,7 +28,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242"
     },
     {
       "mode": "auto",
@@ -86,7 +87,37 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-FLY",
+      "priceId": "fluidity",
+      "symbol": "FLY",
+      "name": "Fluidity",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",
+        "chain": "arbitrum",
+        "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+        "decimals": 6,
+        "sinceTimestamp": 1725644465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1725644465
+        },
+        "priceId": "fluidity"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36086/large/FLY_2D_Old_Map_Double_Border.png?1710434215"
     },
     {
       "mode": "auto",
@@ -114,7 +145,26 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-USDC.e-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
+        "chain": "superposition",
+        "decimals": 6,
+        "sinceTimestamp": 1733444058
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
     },
     {
       "mode": "auto",
@@ -142,7 +192,8 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
     },
     {
       "mode": "auto",
@@ -170,7 +221,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
     }
   ]
 }
