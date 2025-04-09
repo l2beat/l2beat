@@ -5,7 +5,7 @@ import type {
   ColorContract,
   ExternalReference,
 } from '../config/ColorConfig'
-import { evaluateConfigForEntry } from '../config/ContractConfig'
+import { evaluateConfigForEntry } from '../config/colorUtils'
 import type {
   ColorOutput,
   FieldMeta,

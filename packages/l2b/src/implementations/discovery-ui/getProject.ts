@@ -4,11 +4,11 @@ import {
   type DiscoveryOutput,
   type EntryParameters,
   type TemplateService,
+  evaluateConfigForEntry,
   getChainShortName,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
-import { evaluateConfigForEntry } from '@l2beat/discovery/dist/discovery/config/ContractConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
