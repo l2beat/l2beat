@@ -196,6 +196,11 @@ export const aztec: ScalingProject = {
     {
       rollupNodeLink:
         'https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw',
+      additionalConsiderations: {
+        short:
+          'Aztec v2 is a private rollup that allows users to transfer assets privately. Arbitrary smart contracts are not supported.',
+        long: 'Aztec v2 is a private rollup that allows users to transfer assets privately. Arbitrary smart contracts are not supported.',
+      },
     },
   ),
   technology: {

@@ -230,6 +230,11 @@ export const loopring: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/Loopring/loopring-subgraph-v2',
+      additionalConsiderations: {
+        short:
+          'Loopring provides an orderbook decentralized exchange for spot trading. Arbitrary contracts are not supported.',
+        long: 'Loopring provides an orderbook decentralized exchange for spot trading. Arbitrary contracts are not supported.',
+      },
     },
   ),
   technology: {
