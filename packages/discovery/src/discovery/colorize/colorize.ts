@@ -1,10 +1,7 @@
 import type { TemplateService } from '../analysis/TemplateService'
 import { resolveCategory } from '../analysis/category'
 import type { ExternalReference } from '../config/ColorConfig'
-import type {
-  ContractConfig,
-  ContractConfigColor,
-} from '../config/ContractConfig'
+import type { ContractConfigColor } from '../config/ContractConfig'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import type {
   DiscoveryOutput,
@@ -23,29 +20,25 @@ export function colorize(
   const result: DiscoveryOutput = structure
 
   result.entries.forEach((e) => {
-    const entryConfigStructure = config.for(e.address)
-    const entryConfigColor = config.forColor(e.address)
+    const entryConfig = config.forColor(e.address)
 
     if (e.template !== undefined) {
-      const template = templateService.loadContractTemplate(e.template)
       const templateColor = templateService.loadContractTemplateColor(
         e.template,
       )
 
-      entryConfigColor.pushValues(templateColor)
-      entryConfigStructure.pushValues(template)
+      entryConfig.pushValues(templateColor)
     }
 
-    e.name =
-      entryConfigColor.name ?? entryConfigStructure.displayName ?? e.derivedName
+    e.name = entryConfig.name ?? entryConfig.displayName ?? e.derivedName
     e.displayName =
-      entryConfigStructure.displayName && e.name !== e.displayName
+      entryConfig.displayName && e.name !== e.displayName
         ? e.displayName
         : undefined
-    e.description = interpolateString(entryConfigColor.description, e)
-    e.references = getReferences(entryConfigStructure, entryConfigColor, e)
-    e.category = resolveCategory(entryConfigColor)
-    e.fieldMeta = getFieldsMeta(entryConfigColor)
+    e.description = interpolateString(entryConfig.description, e)
+    e.references = getReferences(entryConfig, e)
+    e.category = resolveCategory(entryConfig)
+    e.fieldMeta = getFieldsMeta(entryConfig)
   })
 
   result.entries = result.entries.map((e) => sortEntry(e))
@@ -101,7 +94,6 @@ function interpolateString(
 }
 
 function getReferences(
-  entryConfigStructure: ContractConfig,
   entryConfigColor: ContractConfigColor,
   entry: StructureEntry,
 ): ExternalReference[] | undefined {
@@ -114,7 +106,7 @@ function getReferences(
   const addresses = [entry.address, ...get$Implementations(entry.values)]
   for (const address of addresses) {
     const manualSourcePath =
-      entryConfigStructure.manualSourcePaths[address.toString()]
+      entryConfigColor.manualSourcePaths[address.toString()]
     if (manualSourcePath === undefined) {
       continue
     }
