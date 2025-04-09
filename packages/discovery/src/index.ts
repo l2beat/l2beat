@@ -88,3 +88,4 @@ export {
   type DiscoveryPaths,
 } from './discovery/config/getDiscoveryPaths'
 export { ShapeSchema } from './discovery/config/ShapeSchema'
+export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'

@@ -4,7 +4,7 @@ import type { ExternalReference } from '../config/ColorConfig'
 import type { ContractConfigColor } from '../config/ContractConfig'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import type {
-  DiscoveryOutput,
+  ColorOutput,
   EntryParameters,
   FieldMeta,
   StructureEntry,
@@ -16,10 +16,10 @@ export function colorize(
   config: DiscoveryConfig,
   structure: StructureOutput,
   templateService: TemplateService,
-): DiscoveryOutput {
-  const result: DiscoveryOutput = structure
+): ColorOutput {
+  const result: ColorOutput = { entries: [] }
 
-  result.entries.forEach((e) => {
+  for (const e of structure.entries) {
     const entryConfig = config.forColor(e.address)
 
     if (e.template !== undefined) {
@@ -30,47 +30,17 @@ export function colorize(
       entryConfig.pushValues(templateColor)
     }
 
-    e.name = entryConfig.name ?? entryConfig.displayName ?? e.derivedName
-    e.displayName =
-      entryConfig.displayName && e.name !== e.displayName
-        ? e.displayName
-        : undefined
-    e.description = interpolateString(entryConfig.description, e)
-    e.references = getReferences(entryConfig, e)
-    e.category = resolveCategory(entryConfig)
-    e.fieldMeta = getFieldsMeta(entryConfig)
-  })
-
-  result.entries = result.entries.map((e) => sortEntry(e))
+    result.entries.push({
+      name: entryConfig.name ?? entryConfig.displayName ?? e.derivedName,
+      displayName: undefined, // entryConfig.displayName ? entryConfig.displayName : undefined,
+      description: interpolateString(entryConfig.description, e),
+      references: getReferences(entryConfig, e),
+      category: resolveCategory(entryConfig),
+      fieldMeta: getFieldsMeta(entryConfig),
+    })
+  }
 
   return result
-}
-
-export function sortEntry(e: EntryParameters): EntryParameters {
-  return {
-    name: e.name,
-    address: e.address,
-    type: e.type,
-    unverified: e.unverified,
-    template: e.template,
-    sourceHashes: e.sourceHashes,
-    proxyType: e.proxyType,
-    displayName: e.displayName,
-    description: e.description,
-    issuedPermissions: e.issuedPermissions,
-    receivedPermissions: e.receivedPermissions,
-    directlyReceivedPermissions: e.directlyReceivedPermissions,
-    ignoreInWatchMode: e.ignoreInWatchMode,
-    sinceTimestamp: e.sinceTimestamp,
-    sinceBlock: e.sinceBlock,
-    values: e.values,
-    errors: e.errors,
-    fieldMeta: e.fieldMeta,
-    derivedName: e.derivedName,
-    usedTypes: e.usedTypes,
-    references: e.references,
-    category: e.category,
-  }
 }
 
 function interpolateString(

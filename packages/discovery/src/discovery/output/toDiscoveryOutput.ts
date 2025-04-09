@@ -1,4 +1,9 @@
-import type { DiscoveryOutput } from './types'
+import type {
+  ColorOutput,
+  DiscoveryOutput,
+  EntryParameters,
+  StructureOutput,
+} from './types'
 
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -6,6 +11,7 @@ import { colorize } from '../colorize/colorize'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { neuterErrors } from './errors'
 import { getStructureOutput } from './structureOutput'
+import { merge } from 'lodash'
 
 export function toDiscoveryOutput(
   templateService: TemplateService,
@@ -37,11 +43,48 @@ export function toRawDiscoveryOutput(
 ): DiscoveryOutput {
   const structure = getStructureOutput(config, blockNumber, results)
   const colorized = colorize(config, structure, templateService)
-  return colorized
+
+  return combineStructureAndColor(structure, colorized)
+}
+
+export function combineStructureAndColor(
+  structure: StructureOutput,
+  color: ColorOutput,
+): DiscoveryOutput {
+  const result = merge({}, structure, color)
+  result.entries = result.entries.map((e) => sortEntry(e))
+  return result
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
   ) as T
+}
+
+export function sortEntry(e: EntryParameters): EntryParameters {
+  return {
+    name: e.name,
+    address: e.address,
+    type: e.type,
+    unverified: e.unverified,
+    template: e.template,
+    sourceHashes: e.sourceHashes,
+    proxyType: e.proxyType,
+    displayName: e.displayName,
+    description: e.description,
+    issuedPermissions: e.issuedPermissions,
+    receivedPermissions: e.receivedPermissions,
+    directlyReceivedPermissions: e.directlyReceivedPermissions,
+    ignoreInWatchMode: e.ignoreInWatchMode,
+    sinceTimestamp: e.sinceTimestamp,
+    sinceBlock: e.sinceBlock,
+    values: e.values,
+    errors: e.errors,
+    fieldMeta: e.fieldMeta,
+    derivedName: e.derivedName,
+    usedTypes: e.usedTypes,
+    references: e.references,
+    category: e.category,
+  }
 }

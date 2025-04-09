@@ -109,3 +109,7 @@ export type ColorEntry = {
 }
 
 export type EntryParameters = StructureEntry & ColorEntry
+
+export interface ColorOutput {
+  entries: ColorEntry[]
+}

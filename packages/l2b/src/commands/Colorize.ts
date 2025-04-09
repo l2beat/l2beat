@@ -3,6 +3,7 @@ import {
   ConfigReader,
   TemplateService,
   colorize,
+  combineStructureAndColor,
   getDiscoveryPaths,
   saveDiscoveredJson,
 } from '@l2beat/discovery'
@@ -24,7 +25,9 @@ export const Colorize = command({
     for (const config of chainConfigs) {
       const discovery = configReader.readDiscovery(config.name, config.chain)
       const copy = structuredClone(discovery)
-      const colorized = colorize(config, copy, templateService)
+      const color = colorize(config, copy, templateService)
+
+      const colorized = combineStructureAndColor(copy, color)
       const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
       if (changed) {
         const projectDiscoveryFolder = posix.join(
