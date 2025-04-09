@@ -1,0 +1,30 @@
+[
+  {
+    "hash": "0xa949b42c0c7697496d06fe3d513ba1663e62f99796bacd265ab50e6453e4dcbb",
+    "description": "EtherPredicate_shibarium",
+    "address": "0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA",
+    "chain": "ethereum",
+    "blockNumber": 22231805
+  },
+  {
+    "hash": "0x093a1d884a048e1f39d3bb4ebd1bab3f52d07ed9cfd823099f6ddb87098f2de2",
+    "description": "ERC20Predicate_shibarium",
+    "address": "0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd",
+    "chain": "ethereum",
+    "blockNumber": 22231805
+  },
+  {
+    "hash": "0x366c91202d3a2d7866e03ca63c5642da8ae32252a79ec9f171a4ddb75437df71",
+    "description": "ERC20Predicate_polygonpos",
+    "address": "0xeB185ED8f664D105903EF434E5becd214a8AC874",
+    "chain": "ethereum",
+    "blockNumber": 22231805
+  },
+  {
+    "hash": "0xdb2c7a7688883aa90817563334c9613daee6ccad8d086ff273d6b484340444ab",
+    "description": "EtherPredicate_polygonpos",
+    "address": "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB",
+    "chain": "ethereum",
+    "blockNumber": 22231805
+  }
+]

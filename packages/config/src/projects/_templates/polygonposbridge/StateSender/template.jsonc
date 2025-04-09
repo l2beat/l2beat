@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "REGISTRATIONS": {
+      "handler": {
+        "type": "event",
+        "select": "sender",
+        "add": { "event": "RegistrationUpdated" }
+      }
+    }
+  },
+  "ignoreInWatchMode": ["counter"],
+  "ignoreRelatives": ["REGISTRATIONS"]
+}

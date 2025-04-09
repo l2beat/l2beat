@@ -3,6 +3,8 @@ import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
+const discovery = new ProjectDiscovery('shibarium')
+
 export const shibarium: ScalingProject = underReviewL2({
   id: 'shibarium',
   capability: 'universal',

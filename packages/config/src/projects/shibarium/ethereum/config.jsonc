@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "shibarium",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": [
+    "0xc3897302aB4B42931cB4857050Fa60f53B775870", //EtherPredicate
+    "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa" //ERC20Predicate
+  ],
+  "overrides": {}
+}
