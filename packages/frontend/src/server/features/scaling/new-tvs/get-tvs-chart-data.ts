@@ -69,9 +69,9 @@ export const getCachedTvsChartData = cache(
         tvsProjects,
         range,
         !forSummary
-          ? 'FULL'
+          ? 'PROJECT'
           : excludeAssociatedTokens
-            ? 'SUMMARY_EXCLUDING_ASSOCIATED'
+            ? 'SUMMARY_WA'
             : 'SUMMARY',
       ),
     ])

@@ -1,4 +1,5 @@
 import type { ProjectValueRecord } from '@l2beat/database'
+import type { ProjectValueType } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { groupBy } from 'lodash'
@@ -12,7 +13,7 @@ import { getRangeConfig } from './range'
 export async function getTvsValuesForProjects(
   projects: TvsProject[],
   range: TvsChartRange,
-  type?: 'SUMMARY' | 'SUMMARY_EXCLUDING_ASSOCIATED' | 'FULL',
+  type?: ProjectValueType,
 ) {
   const db = getDb()
   const { days, resolution } = getRangeConfig(range)

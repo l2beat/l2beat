@@ -53,19 +53,32 @@ const getCached7dTokenBreakdown = cache(
     const tvsValues = await getTvsValuesForProjects(
       await getTvsProjects(createTvsBreakdownProjectFilter(props)),
       '7d',
-      'FULL',
+      'PROJECT',
+    )
+    const tvsValuesWithoutAssociated = await getTvsValuesForProjects(
+      await getTvsProjects(createTvsBreakdownProjectFilter(props)),
+      '7d',
+      'PROJECT_WA',
     )
 
     const projects = Object.fromEntries(
       Object.entries(tvsValues).map(
         ([projectId, values]): [string, ProjectSevenDayTvsBreakdown] => {
-          const latestTimestamp = Math.max(...Object.keys(values).map(Number))
-          const oldestTimestamp = Math.min(...Object.keys(values).map(Number))
-          const latestValue = values[latestTimestamp]
-          const oldestValues = values[oldestTimestamp]
+          const projectValuesWithoutAssociated = Object.values(
+            tvsValuesWithoutAssociated[projectId] ?? {},
+          )
+          const projectValues = Object.values(values ?? {})
+
+          const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
+          const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
+          const latestValue = projectValues.at(-1)
+          const oldestValues = projectValues.at(0)
 
           assert(
-            latestValue && oldestValues,
+            latestValue &&
+              oldestValues &&
+              latestWithoutAssociated &&
+              oldestWithoutAssociated,
             `No values for project ${projectId}`,
           )
 
@@ -82,9 +95,11 @@ const getCached7dTokenBreakdown = cache(
               },
               associated: {
                 total: latestValue.associated,
-                native: latestValue.associated / 3,
-                canonical: latestValue.associated / 3,
-                external: latestValue.associated / 3,
+                native: latestValue.native - latestWithoutAssociated.native,
+                canonical:
+                  latestValue.canonical - latestWithoutAssociated.canonical,
+                external:
+                  latestValue.external - latestWithoutAssociated.external,
               },
               change: {
                 total: calculatePercentageChange(
@@ -106,20 +121,20 @@ const getCached7dTokenBreakdown = cache(
               },
               changeExcludingAssociated: {
                 total: calculatePercentageChange(
-                  latestValue.associated,
-                  oldestValues.associated,
+                  latestValue.value - latestValue.associated,
+                  oldestValues.value - oldestValues.associated,
                 ),
                 native: calculatePercentageChange(
-                  latestValue.native - latestValue.associated / 3,
-                  oldestValues.native - oldestValues.associated / 3,
+                  latestWithoutAssociated.native,
+                  oldestWithoutAssociated.native,
                 ),
                 canonical: calculatePercentageChange(
-                  latestValue.canonical - latestValue.associated / 3,
-                  oldestValues.canonical - oldestValues.associated / 3,
+                  latestWithoutAssociated.canonical,
+                  oldestWithoutAssociated.canonical,
                 ),
                 external: calculatePercentageChange(
-                  latestValue.external - latestValue.associated / 3,
-                  oldestValues.external - oldestValues.associated / 3,
+                  latestWithoutAssociated.external,
+                  oldestWithoutAssociated.external,
                 ),
               },
             },

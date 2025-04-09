@@ -59,7 +59,7 @@ export class ProjectValueRepository extends BaseRepository {
   }
 
   async getForType(
-    type: string,
+    type: ProjectValueType,
     range: [number | null, number],
   ): Promise<ProjectValueRecord[]> {
     const [from, to] = range
