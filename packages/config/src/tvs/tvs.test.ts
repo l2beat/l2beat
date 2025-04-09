@@ -1,4 +1,4 @@
-import { ProjectId, TokenId } from '@l2beat/shared-pure'
+import { assert, ProjectId, TokenId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getProjects } from '../processing/getProjects'
 import { type Formula, ProjectTvsConfigSchema, isAmountFormula } from '../types'
@@ -58,7 +58,10 @@ describe('tvs', () => {
       const tokenIds = new Set<string>()
       for (const token of project.tvsConfig!) {
         // token has unique id within the project
-        expect(tokenIds.has(token.id)).toEqual(false)
+        assert(
+          tokenIds.has(token.id) === false,
+          `Duplicated token id: ${token.id}`,
+        )
         tokenIds.add(token.id)
 
         // if untilTimestamp defined then > sinceTimestamp
@@ -68,7 +71,10 @@ describe('tvs', () => {
             formula.type !== 'value' &&
             formula.untilTimestamp
           ) {
-            expect(formula.sinceTimestamp).toBeLessThanOrEqual(0)
+            assert(
+              formula.sinceTimestamp < formula.untilTimestamp,
+              `Wrong untilTimestamp for token ${token.id}`,
+            )
           }
         }
 
@@ -76,7 +82,10 @@ describe('tvs', () => {
         const noValueFormula: FormulaTest = (formula) => {
           if (formula.type === 'calculation') {
             for (const arg of formula.arguments) {
-              expect(arg.type).not.toEqual('value')
+              assert(
+                arg.type !== 'value',
+                `Value formula included in amount for token ${token.id}`,
+              )
             }
           }
         }
@@ -84,9 +93,15 @@ describe('tvs', () => {
         // CalculationFormula have at least two arguments (diff has max two)
         const hasCorrectNumberOfArguments: FormulaTest = (formula) => {
           if (formula.type === 'calculation') {
-            expect(formula.arguments.length).toBeGreaterThan(1)
+            assert(
+              formula.arguments.length > 1,
+              `Wrong number of arguments for token ${token.id}`,
+            )
             if (formula.operator === 'diff') {
-              expect(formula.arguments.length).toEqual(2)
+              assert(
+                (formula.arguments.length = 2),
+                `Wrong number of arguments for token ${token.id}`,
+              )
             }
           }
         }
@@ -101,7 +116,10 @@ describe('tvs', () => {
               isAmountFormula(arg),
             )
 
-            expect(hasValue && hasAmount).toEqual(false)
+            assert(
+              (hasValue && hasAmount) === false,
+              `Mixed arguments in formula for token ${token.id}`,
+            )
           }
         }
 
