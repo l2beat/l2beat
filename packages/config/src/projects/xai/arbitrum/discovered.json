@@ -1,7 +1,7 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 323463446,
+  "blockNumber": 324577860,
   "configHash": "0xe56820a589db489da74932840f5b3b0ff9e88497f25bcf0e3ef1b7499d24f877",
   "entries": [
     {
@@ -698,7 +698,7 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 91833,
+        "delayedMessageCount": 91844,
         "inboxHistory": [
           "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
@@ -707,8 +707,8 @@
         "outboxHistory": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 147289,
-        "sequencerReportedSubMessageCount": 90760093
+        "sequencerMessageCount": 147623,
+        "sequencerReportedSubMessageCount": 90985507
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -869,7 +869,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 147289,
+        "batchCount": 147623,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -904,7 +904,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 91833,
+        "totalDelayedMessagesRead": 91844,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1140,7 +1140,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 3583086,
+        "totalSupply": 3583103,
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "usdcAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1227,13 +1227,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 10581,
+        "firstUnresolvedNode": 10658,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 10580,
-        "latestNodeCreated": 10732,
+        "latestConfirmed": 10657,
+        "latestNodeCreated": 10810,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1369,11 +1369,6 @@
     },
     {
       "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1578,7 +1573,6 @@
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
           "0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
-          "0xd427165292B2E39cdac102eD963B14fFBACc964a",
           "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
           "0xbBE90F6748C82623F130A4486722a436c5a72440",
           "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
@@ -1589,8 +1583,8 @@
         "domainSeparator": "0x0f84f5102dd9fea36a3e0099c9a4da5d3e2def631c0fe4cd8fd30ae7c261b379",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 60,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1729,7 +1723,7 @@
           "17836757990867579908675",
           "312500000000000000000000000"
         ],
-        "challengeCounter": 11472,
+        "challengeCounter": 11549,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",

@@ -8,6 +8,9 @@ Generated with discovered.json: 0x91e8676e6bc2abaa55c5e8431d57f11ebc09ee8a
 
 ## Description
 
+ARCHIVED.
+NOTE 25/04/09: Upgraded to an unverified bridge contract and [withdrew all remaining funds](https://etherscan.io/tx/0x0d5111c670dce75cb206d7f0976ed2c2f0ba03e465eda6fbdbb0ce06392c4a9b).
+
 Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
 
 ## Config/verification related changes

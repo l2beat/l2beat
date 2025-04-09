@@ -77,6 +77,9 @@ export function Decoded(props: DecodedProps) {
               <option value="(address, address, uint256, uint256, uint256, bytes)">
                 scheduleBatch
               </option>
+              <option value="function upgrade((address, address, bytes32)[])">
+                OPCM upgrade
+              </option>
             </select>
           </div>
           {customAbi ? (
