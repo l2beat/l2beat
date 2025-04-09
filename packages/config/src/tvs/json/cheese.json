@@ -28,7 +28,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37156/large/cheese_icon_500x500.png?1713499473"
     }
   ]
 }

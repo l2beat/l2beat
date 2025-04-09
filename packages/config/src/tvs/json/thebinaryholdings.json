@@ -32,7 +32,8 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222"
     }
   ]
 }

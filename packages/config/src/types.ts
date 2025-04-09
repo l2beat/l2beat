@@ -1135,6 +1135,7 @@ export const TvsTokenSchema = z.object({
   symbol: z.string(),
   displaySymbol: z.string().optional(),
   name: z.string(),
+  iconUrl: z.string().optional(),
   amount: z.union([CalculationFormulaSchema, AmountFormulaSchema]),
   valueForProject: z
     .union([CalculationFormulaSchema, ValueFormulaSchema])

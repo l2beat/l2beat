@@ -38,6 +38,8 @@ describe(mapConfig.name, () => {
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
+      iconUrl:
+        'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       amount: {
         type: 'calculation',
         operator: 'sum',
@@ -89,6 +91,8 @@ describe(mapConfig.name, () => {
       id: TokenId('arbitrum-ARB-1'),
       symbol: 'ARB',
       name: 'Arbitrum',
+      iconUrl:
+        'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242',
       priceId: 'arbitrum',
       amount: {
         type: 'circulatingSupply',
@@ -108,6 +112,8 @@ describe(mapConfig.name, () => {
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',
       name: 'Aethir Token',
+      iconUrl:
+        'https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706',
       priceId: 'aethir',
       amount: {
         type: 'totalSupply',

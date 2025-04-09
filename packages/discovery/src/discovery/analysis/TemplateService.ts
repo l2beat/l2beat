@@ -83,7 +83,7 @@ export class TemplateService {
     sources: ContractSources,
     address: EthereumAddress,
   ): string[] {
-    const sourceHash = hashFirstSource(sources)
+    const sourceHash = hashFirstSource(sources.isVerified, sources.sources)
     if (sourceHash === undefined) {
       return []
     }
@@ -280,6 +280,20 @@ export class TemplateService {
     }
 
     return JSON.parse(readFileSync(shapePath, 'utf8')) as ShapeSchema[]
+  }
+
+  findShapeByTemplateAndHash(
+    templateId: string,
+    hash: Hash256,
+  ): ShapeSchema | undefined {
+    const allTemplates = this.listAllTemplates()
+    const entry = allTemplates[templateId]
+    if (!entry || !entry.shapePath) {
+      return undefined
+    }
+
+    const shapes = this.readShapeSchema(entry.shapePath)
+    return shapes.find((s) => s.hash === hash)
   }
 }
 
