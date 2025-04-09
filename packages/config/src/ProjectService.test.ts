@@ -1,6 +1,6 @@
-import { unlinkSync } from 'fs'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { unlinkSync } from 'fs'
 import { ProjectDatabase } from './ProjectDatabase'
 import { ProjectService } from './ProjectService'
 import type { BaseProject } from './types'
@@ -14,7 +14,7 @@ describe(ProjectService.name, () => {
       shortName: undefined,
       addedAt: 0,
       isScaling: true,
-      isArchived: true,
+      archivedAt: UnixTime(1112470620),
     },
     {
       id: ProjectId('bar'),
@@ -70,7 +70,7 @@ describe(ProjectService.name, () => {
     const result = await ps.getProject({
       id: ProjectId('foo'),
       select: ['isScaling'],
-      optional: ['isBridge', 'isArchived'],
+      optional: ['isBridge', 'archivedAt'],
     })
     expect(result).toEqual({
       id: ProjectId('foo'),
@@ -80,7 +80,7 @@ describe(ProjectService.name, () => {
       addedAt: 0,
       isScaling: true,
       isBridge: undefined,
-      isArchived: true,
+      archivedAt: UnixTime(1112470620),
     })
   })
 
@@ -88,7 +88,7 @@ describe(ProjectService.name, () => {
     const ps = new ProjectService(TEMP_PATH)
     const result = await ps.getProjects({
       select: ['isScaling'],
-      optional: ['isBridge', 'isArchived'],
+      optional: ['isBridge', 'archivedAt'],
     })
     expect(result).toEqual([
       {
@@ -99,7 +99,7 @@ describe(ProjectService.name, () => {
         addedAt: 0,
         isScaling: true,
         isBridge: undefined,
-        isArchived: true,
+        archivedAt: UnixTime(1112470620),
       },
       {
         id: ProjectId('bar'),
@@ -109,7 +109,7 @@ describe(ProjectService.name, () => {
         addedAt: 0,
         isScaling: true,
         isBridge: undefined,
-        isArchived: undefined,
+        archivedAt: undefined,
       },
     ])
   })

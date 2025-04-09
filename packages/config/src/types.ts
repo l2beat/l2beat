@@ -120,7 +120,7 @@ export interface BaseProject {
   isZkCatalog?: true
   isDaLayer?: true
   isUpcoming?: true
-  isArchived?: true
+  archivedAt?: UnixTime
   hasActivity?: true
 }
 

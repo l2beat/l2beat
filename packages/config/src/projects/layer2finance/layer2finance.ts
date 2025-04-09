@@ -7,11 +7,11 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('layer2finance')
 
 export const layer2finance: ScalingProject = {
-  isArchived: true,
   type: 'layer2',
   id: ProjectId('layer2finance'),
-  capability: 'universal',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1695686400), // 2023-09-26T00:00:00.000Z,
+  capability: 'universal',
   display: {
     name: 'ScalingProject.Finance',
     slug: 'layer2finance',

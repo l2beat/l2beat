@@ -54,11 +54,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const reddioex: ScalingProject = {
-  isArchived: true,
   type: 'layer2',
   id: ProjectId('reddioex'),
+  addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  archivedAt: UnixTime(1728259200), // 2024-10-07T00:00:00.000Z,
   capability: 'universal',
-  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,

@@ -1,12 +1,12 @@
-import { existsSync } from 'fs'
 import {
+  createTrackedTxId,
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
-  createTrackedTxId,
 } from '@l2beat/shared'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { existsSync } from 'fs'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
 import type { BaseProject } from '../types'
@@ -129,7 +129,7 @@ describe('getProjects', () => {
         (project) =>
           !project.isUpcoming &&
           !project.isUnderReview &&
-          !project.isArchived &&
+          !project.archivedAt &&
           // TODO: Ideally the category check should be removed, but
           // hyperliquid and polygon-pos are exceptions that would fail the test
           (project.display.category === 'Optimium' ||
@@ -490,7 +490,9 @@ describe('getProjects', () => {
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
       return (
-        p.isScaling === true && p.isArchived !== true && p.isUpcoming !== true
+        p.isScaling === true &&
+        p.archivedAt === undefined &&
+        p.isUpcoming !== true
       )
     }
 

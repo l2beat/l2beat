@@ -70,7 +70,7 @@ const schema = {
   isZkCatalog: 'INTEGER',
   isDaLayer: 'INTEGER',
   isUpcoming: 'INTEGER',
-  isArchived: 'INTEGER',
+  archivedAt: 'INTEGER',
   hasActivity: 'INTEGER',
 } satisfies Schema<BaseProject>
 

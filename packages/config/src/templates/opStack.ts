@@ -1,9 +1,9 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
@@ -115,7 +115,7 @@ interface OpStackConfigCommon {
   capability?: ProjectScalingCapability
   architectureImage?: string
   stateValidationImage?: string
-  isArchived?: true
+  archivedAt?: UnixTime
   addedAt: UnixTime
   daProvider?: DAProvider
   customDa?: ProjectCustomDa
@@ -258,7 +258,7 @@ function opStackCommon(
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
   return {
-    isArchived: templateVars.isArchived,
+    archivedAt: templateVars.archivedAt,
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',

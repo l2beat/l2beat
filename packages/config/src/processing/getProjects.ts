@@ -1,11 +1,11 @@
-import * as fs from 'fs'
-import path from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
+import * as fs from 'fs'
+import path from 'path'
 import { badgesCompareFn } from '../common/badges'
 import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
@@ -157,7 +157,7 @@ function layer2Or3ToProject(
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
-    isArchived: p.isArchived ? true : undefined,
+    archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasActivity: p.config.activityConfig ? true : undefined,
   }
@@ -242,7 +242,7 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     milestones: p.milestones,
     // tags
     isBridge: true,
-    isArchived: p.isArchived ? true : undefined,
+    archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
 }
