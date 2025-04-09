@@ -224,6 +224,11 @@ export const zksync: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/matter-labs/zksync',
+      additionalConsiderations: {
+        short:
+          'ZKsync Lite provides the infrastructure for token transfer, swaps and NFT minting. Arbitrary contracts are not supported.',
+        long: 'ZKsync Lite provides the infrastructure for token transfer, swaps and NFT minting. Arbitrary contracts are not supported.',
+      },
     },
   ),
   technology: {
