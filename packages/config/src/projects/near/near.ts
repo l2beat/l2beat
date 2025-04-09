@@ -172,7 +172,7 @@ export const near: Bridge = {
   },
   milestones: [
     {
-      title: 'Bridge is paused, migration to Omnibridge in progress',
+      title: 'Bridge paused, migration in progress',
       url: 'https://x.com/NEARProtocol/status/1908247501032824914',
       date: '2025-04-04T00:00:00Z',
       type: 'incident',
