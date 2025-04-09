@@ -5,7 +5,6 @@ import type { ContractConfigColor } from '../config/ContractConfig'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import type {
   ColorOutput,
-  EntryParameters,
   FieldMeta,
   StructureEntry,
   StructureOutput,

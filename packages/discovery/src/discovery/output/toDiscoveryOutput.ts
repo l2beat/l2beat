@@ -5,13 +5,13 @@ import type {
   StructureOutput,
 } from './types'
 
+import { merge } from 'lodash'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { colorize } from '../colorize/colorize'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { neuterErrors } from './errors'
 import { getStructureOutput } from './structureOutput'
-import { merge } from 'lodash'
 
 export function toDiscoveryOutput(
   templateService: TemplateService,
