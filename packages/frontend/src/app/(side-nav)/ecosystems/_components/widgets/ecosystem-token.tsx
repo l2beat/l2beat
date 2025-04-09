@@ -32,7 +32,7 @@ export function EcosystemToken({ token, className }: Props) {
           {token.description}
         </p>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-2">
         <DataTile label="Price">
           <span>{formatCurrency(token.data.price.value, 'usd')}</span>
           <PercentChange className="ml-0.5" value={token.data.price.change} />
@@ -44,7 +44,7 @@ export function EcosystemToken({ token, className }: Props) {
             value={token.data.marketCap.change}
           />
         </DataTile>
-        <DataTile label="Circulating Supply">
+        <DataTile label="Circulating Supply" className="col-span-2">
           <span>{`${formatNumber(token.data.amount.value)}`}</span>
           <PercentChange className="ml-0.5" value={token.data.amount.change} />
         </DataTile>
@@ -56,9 +56,15 @@ export function EcosystemToken({ token, className }: Props) {
 function DataTile({
   label,
   children,
-}: { label: string; children: React.ReactNode }) {
+  className,
+}: { label: string; children: React.ReactNode; className?: string }) {
   return (
-    <div className="flex flex-col items-center gap-1 rounded border border-divider p-3">
+    <div
+      className={cn(
+        'flex flex-col items-center gap-1 rounded border border-divider py-3',
+        className,
+      )}
+    >
       <p className="text-2xs font-medium leading-none text-secondary">
         {label}
       </p>
