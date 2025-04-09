@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xc2fece56ef577cecaf0b711d55be9b99dd8c6c88
+
+# Diff at Wed, 09 Apr 2025 12:42:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 19531990
+- current block number: 22231415
+
+## Description
+
+Bridge paused for deposits and funds [moved to a new contract](https://docs.near.org/chain-abstraction/omnibridge/overview). added warning.
+
+## Watched changes
+
+```diff
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f) {
+    +++ description: None
+      values.paused:
+-        0
++        1
+    }
+```
+
+```diff
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52) {
+    +++ description: None
+      values.paused:
+-        0
++        3
+    }
+```
+
 Generated with discovered.json: 0x0a49f33417609c85252f2137d340cfd732de6391
 
 # Diff at Tue, 04 Mar 2025 10:39:28 GMT:
