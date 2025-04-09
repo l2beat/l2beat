@@ -74,7 +74,7 @@ export class Providers {
         (c) => new BlockProvider(c.chain, [c]),
       ),
     })
-    this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients)
+    this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients, logger)
     this.balance = new BalanceProvider(this.clients.rpcClients, logger)
   }
 
