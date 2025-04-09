@@ -110,7 +110,7 @@ function Details({
   return (
     <div
       className={cn(
-        'flex h-40 flex-col justify-between rounded bg-surface-secondary p-4',
+        'flex h-44 flex-col justify-between rounded bg-surface-secondary p-4',
         className,
       )}
     >
