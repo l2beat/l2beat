@@ -1,11 +1,12 @@
 import type { Project } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 
 export type ProjectByRaas = Record<
   string,
   {
+    id: ProjectId
     slug: string
     name: string
-    href: string
   }[]
 >
 
@@ -17,9 +18,9 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
       acc[raas] = []
     }
     acc[raas].push({
+      id: curr.id,
       slug: curr.slug.toString(),
       name: curr.name,
-      href: `/scaling/projects/${curr.slug}`,
     })
     return acc
   }, {} as ProjectByRaas)

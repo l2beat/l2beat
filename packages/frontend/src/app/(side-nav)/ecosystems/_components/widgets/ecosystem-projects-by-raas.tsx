@@ -1,10 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/tooltip'
+import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
@@ -31,28 +26,7 @@ export function EcosystemProjectsByRaas({
               />
               <div className="whitespace-nowrap text-xs font-bold">{raas}</div>
             </div>
-            <div className="flex -space-x-1.5">
-              {projects.map((project) => (
-                <Tooltip key={project.slug}>
-                  <TooltipTrigger asChild>
-                    <Link href={project.href} className="shrink-0">
-                      <Image
-                        src={`/icons/${project.slug}.png`}
-                        alt={project.slug}
-                        width={20}
-                        height={20}
-                      />
-                    </Link>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <h3 className="font-bold">{project.name}</h3>
-                    <p className="text-xs text-secondary">
-                      Click to view project page
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              ))}
-            </div>
+            <ProjectsUsedIn usedIn={projects} />
           </div>
         ))}
       </div>
