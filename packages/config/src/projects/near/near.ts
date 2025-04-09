@@ -40,8 +40,6 @@ export const near: Bridge = {
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',
-    warning:
-      'Rainbow bridge funds were [migrated to new contracts](https://x.com/NEARProtocol/status/1908247501032824914) that are part of a new multichain bridge protocol called [Omnibridge](https://docs.near.org/chain-abstraction/omnibridge/overview). The old bridge reviewed here is paused and all funds [were moved to the new contracts](https://etherscan.io/tx/0xc0a56a969a75127b0ec174a2e313c281d5990644f9e170218768ef7b1c2a85fa).',
     links: {
       websites: ['https://near.org/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
