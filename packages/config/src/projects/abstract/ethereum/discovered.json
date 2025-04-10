@@ -1,10 +1,42 @@
 {
   "name": "abstract",
   "chain": "ethereum",
-  "blockNumber": 22181510,
-  "configHash": "0x641ad03ec6ef6f240a1cbdd1ad81bb2afa753e9b54ced496c0802dd352af737b",
+  "blockNumber": 22239078,
+  "configHash": "0xfd0469872c5efdbbe8dd32e995e4c8343b93831513a6b6e2f2b4fd65bedfeb40",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
+    {
+      "name": "Safe",
+      "address": "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1742920979,
+      "sinceBlock": 22125181,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xc12F6A2D93C0788366FC91aeBf21b33CCCb0c0d8",
+          "0xE57e5D24660d83bf8A40Ca2269d31D4A2F4F3C47",
+          "0x3846c3A30E62075Fa916216b35EF04B8F53931f6"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x49c74e35dec76c4aca6afd7d05d0a2b6b5f81eb5ab3a386f37c23dca62e21a3f",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe",
+      "category": { "name": "Spam", "priority": -1 }
+    },
     {
       "address": "0x11805594be0229EF08429D775AF0c55f7c4535dE",
       "type": "EOA",
@@ -19,6 +51,21 @@
           "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
+    },
+    {
+      "address": "0x1CdfBDED92D46261837827607e674110Ca5a0575",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x28228243eb37cd1754c85980c6F6Ce697d2a1332",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AbstractZkEvm",
@@ -231,28 +278,28 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 17472,
+        "getFirstUnprocessedPriorityTx": 17761,
         "getL2BootloaderBytecodeHash": "0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81",
         "getL2DefaultAccountBytecodeHash": "0x010004dbf8be36c421254d005352f8245146906919be0099e8a50d0e78df85e0",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 9,
-        "getPriorityTreeRoot": "0xcbdd0c239c7236268b2ff955484d1dca3f4effec8b14ecc88fbd5eb17c91d7b0",
+        "getPriorityQueueSize": 16,
+        "getPriorityTreeRoot": "0xd43a93414e0f4da639beb08df029c92fbae50b4ecc0abbb938154696321dbd54",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 111669149696,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 26, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 9122,
-        "getTotalBatchesExecuted": 9110,
-        "getTotalBatchesVerified": 9116,
-        "getTotalBlocksCommitted": 9122,
-        "getTotalBlocksExecuted": 9110,
-        "getTotalBlocksVerified": 9116,
-        "getTotalPriorityTxs": 17481,
+        "getTotalBatchesCommitted": 9851,
+        "getTotalBatchesExecuted": 9833,
+        "getTotalBatchesVerified": 9843,
+        "getTotalBlocksCommitted": 9851,
+        "getTotalBlocksExecuted": 9833,
+        "getTotalBlocksVerified": 9843,
+        "getTotalPriorityTxs": 17777,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
         "getVerifierParams": {
@@ -311,7 +358,51 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "Safe",
+      "address": "0x325407EEC948b97429068AF0cd8A8D95F06315a4",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1743475211,
+      "sinceBlock": 22171132,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xfBbBa4FbAA3A99bA842924d4c47C14d6d61D9615",
+          "0x23F48e7BF163941Ebeb7a6106B8ac712a8c54f75",
+          "0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
+          "0xa925fac7B26C2959b5d55173B21CAc5729372459",
+          "0x45CC620803974f13a0f1A11517685581FF098000"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x6bd5d176dc3e359b9e03bf0149c82e26ee9a80a970d54f4b7713ef1027771bec",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe",
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "address": "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x45CC620803974f13a0f1A11517685581FF098000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -329,6 +420,66 @@
           "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
         }
       ]
+    },
+    {
+      "name": "Safe",
+      "address": "0x57533344e91d29f927AAEBee364A33633Bd205Ab",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1743434807,
+      "sinceBlock": 22167779,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xafc7805c640C4A9E5D28f6A5Eae23b50e59B831c",
+          "0xdF28907A6A272fa06333a197d7F0379A0f8f00aa",
+          "0xCe20135Ac0253650E28Ea14911c69F1fADD8b06f"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xefbb3ed474511543d81431a8565fcd55242d5ce18219f436039b2f151e5a7c22",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe",
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "Safe",
+      "address": "0x58536761C97F5037931b56efeE922471add0eEe8",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1743588479,
+      "sinceBlock": 22180530,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": ["0xbB943Cf3c5b90f2eD04F53658CCA49286601e808"],
+        "$threshold": 1,
+        "domainSeparator": "0x311babe4bd563e5f43fb0eb372f00ab961cb56ed2184f54248c26fab440c3269",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ValidatorTimelock2",
@@ -379,6 +530,39 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "0x77D1124E9061d238430Df3F4311111BDf69a4CFA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1742869559,
+      "sinceBlock": 22120925,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": ["0x28228243eb37cd1754c85980c6F6Ce697d2a1332"],
+        "$threshold": 1,
+        "domainSeparator": "0x7b7bb2c704c008bbeabe6f6474fdd366d57472d2106d6dd4a48066705e607ed6",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe",
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "name": "AbstractChainAdminMultisig",
       "address": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
       "type": "Contract",
@@ -409,17 +593,25 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x57533344e91d29f927AAEBee364A33633Bd205Ab",
+          "0xFC84E99984A3526dea97c408f5991A5E099f3Da2",
+          "0x58536761C97F5037931b56efeE922471add0eEe8",
+          "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB",
+          "0x1CdfBDED92D46261837827607e674110Ca5a0575",
+          "0x325407EEC948b97429068AF0cd8A8D95F06315a4",
+          "0x77D1124E9061d238430Df3F4311111BDf69a4CFA",
+          "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892",
           "0xe7ea5B62F939611D11C0Ce7606B001207870C704",
           "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE",
           "0x41c1d613dbE28dAab73b7Dc0003Da124924a56f0",
           "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74"
         ],
-        "$threshold": 2,
+        "$threshold": 4,
         "domainSeparator": "0x601992af611ef8a8fceda6a206c8c3ca2aefc6d3b38faea7968180c999ae8c79",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 8,
+        "multisigThreshold": "4 of 12 (33%)",
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -514,7 +706,22 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "0xa925fac7B26C2959b5d55173B21CAc5729372459",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xbB943Cf3c5b90f2eD04F53658CCA49286601e808",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc12F6A2D93C0788366FC91aeBf21b33CCCb0c0d8",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -538,15 +745,36 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0xE57e5D24660d83bf8A40Ca2269d31D4A2F4F3C47",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xe7ea5B62F939611D11C0Ce7606B001207870C704",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xfBbBa4FbAA3A99bA842924d4c47C14d6d61D9615",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFC84E99984A3526dea97c408f5991A5E099f3Da2",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
+    "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB": [
+      "constructor(address _singleton)"
+    ],
     "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
+    ],
+    "0x325407EEC948b97429068AF0cd8A8D95F06315a4": [
+      "constructor(address _singleton)"
     ],
     "0x36b026c39125964D99596CE302866B5A59E4dE27": [
       "constructor(uint256 _eraChainId, uint256 _l1ChainId)",
@@ -699,6 +927,12 @@
       "function proveBatchesSharedBridge(uint256, uint256 _processBatchFrom, uint256 _processBatchTo, bytes _proofData)",
       "function revertBatchesSharedBridge(uint256, uint256 _newLastBatch)"
     ],
+    "0x57533344e91d29f927AAEBee364A33633Bd205Ab": [
+      "constructor(address _singleton)"
+    ],
+    "0x58536761C97F5037931b56efeE922471add0eEe8": [
+      "constructor(address _singleton)"
+    ],
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
       "constructor(address _initialOwner, uint32 _executionDelay, uint256 _eraChainId)",
       "error AddressAlreadyValidator(uint256 _chainId)",
@@ -734,6 +968,9 @@
       "function stateTransitionManager() view returns (address)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
+    ],
+    "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892": [
+      "constructor(address _singleton)"
     ],
     "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": [
       "constructor(address _singleton)"
