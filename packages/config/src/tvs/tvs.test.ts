@@ -1,7 +1,12 @@
 import { assert, ProjectId, TokenId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { getProjects } from '../processing/getProjects'
-import { type Formula, ProjectTvsConfigSchema, isAmountFormula } from '../types'
+import {
+  type AmountFormula,
+  type Formula,
+  ProjectTvsConfigSchema,
+  isAmountFormula,
+} from '../types'
 
 type FormulaTest = (formula: Formula) => void
 
@@ -140,11 +145,26 @@ describe('tvs', () => {
           }
         }
 
+        // first argument of diff should have the earliest sinceTimestamp
+        const diffWithHasCorrectSince: FormulaTest = (formula) => {
+          if (formula.type === 'calculation' && formula.operator === 'diff') {
+            const firstSince = getFormulaSinceTimestamp(formula.arguments[0])
+            for (const arg of formula.arguments) {
+              const since = getFormulaSinceTimestamp(arg)
+              assert(
+                firstSince <= since,
+                `Wrong sinceTimestamp of diff formula for token ${token.id}`,
+              )
+            }
+          }
+        }
+
         const commonTests = [
           untilLaterThanSince,
           hasCorrectNumberOfArguments,
           noMixedArguments,
           chainIsSupported,
+          diffWithHasCorrectSince,
         ]
 
         testRecursive(token.amount, [noValueFormula, ...commonTests])
@@ -174,4 +194,34 @@ function testRecursive(
   for (const arg of formula.arguments) {
     testRecursive(arg, tests)
   }
+}
+
+function getFormulaSinceTimestamp(formula: Formula): number {
+  let sinceTimestamp = Infinity
+
+  const getFormulaSinceTimestampRecursive = (formula: Formula) => {
+    if (isAmountFormula(formula)) {
+      sinceTimestamp = Math.min(
+        sinceTimestamp,
+        (formula as AmountFormula).sinceTimestamp,
+      )
+    }
+
+    if (formula.type === 'value') {
+      sinceTimestamp = Math.min(
+        sinceTimestamp,
+        (formula.amount as AmountFormula).sinceTimestamp,
+      )
+    }
+
+    if (formula.type === 'calculation') {
+      for (const arg of formula.arguments) {
+        getFormulaSinceTimestampRecursive(arg)
+      }
+    }
+  }
+
+  getFormulaSinceTimestampRecursive(formula)
+
+  return sinceTimestamp
 }
