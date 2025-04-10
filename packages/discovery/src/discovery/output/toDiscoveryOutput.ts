@@ -1,4 +1,4 @@
-import type { Hash256 } from '@l2beat/shared-pure'
+import { undefinedIfEmpty, type Hash256 } from '@l2beat/shared-pure'
 import type { DiscoveryOutput, EntryParameters } from './types'
 
 import type { Analysis } from '../analysis/AddressAnalyzer'
