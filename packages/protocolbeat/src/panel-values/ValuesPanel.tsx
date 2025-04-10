@@ -8,6 +8,7 @@ import type {
   ApiProjectContract,
 } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
+import { isReadOnly } from '../config'
 import { IconCopy } from '../icons/IconCopy'
 import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
@@ -96,7 +97,7 @@ function Display({
 }) {
   const address = getAddressToCopy(selected)
 
-  const copy = address && canCopy(selected) && (
+  const copy = address && canCopy(selected) && !isReadOnly && (
     <CopyAddShapeCommand
       chain={chain}
       address={address}
