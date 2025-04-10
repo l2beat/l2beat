@@ -221,6 +221,6 @@ export class LocalExecutor {
       keepAlive: false,
     })
 
-    return new DBStorage(db, logger)
+    return new DBStorage(db, logger, true)
   }
 }
