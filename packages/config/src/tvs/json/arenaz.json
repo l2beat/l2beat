@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -32,8 +33,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -41,6 +41,7 @@
       "priceId": "league-of-kingdoms",
       "symbol": "LOKA",
       "name": "League of Kingdoms Arena",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22572/large/loka_64pix.png?1696521891",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406",
@@ -51,8 +52,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/22572/large/loka_64pix.png?1696521891"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -60,6 +60,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -70,8 +71,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
+      "isAssociated": false
     }
   ]
 }

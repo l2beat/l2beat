@@ -1,10 +1,10 @@
 {
   "$schema": "schema/tvs-config-schema.json",
-  "projectId": "swan",
+  "projectId": "settlus",
   "tokens": [
     {
       "mode": "auto",
-      "id": "swan-ETH",
+      "id": "settlus-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
@@ -17,17 +17,17 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15",
+            "escrowAddress": "0xFc1D560eB01443e31B0EB56620703E80e42A7E4e",
             "decimals": 18,
-            "sinceTimestamp": 1718644919
+            "sinceTimestamp": 1740171575
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0xed7525946A09056C6AaE29941b8323017382050e",
+            "escrowAddress": "0xFD4918e51d1e5aa2195C42654CF769b152C9d9C0",
             "decimals": 18,
-            "sinceTimestamp": 1718644955
+            "sinceTimestamp": 1740171575
           }
         ]
       },
