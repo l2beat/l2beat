@@ -103,11 +103,6 @@ function Display({
       address={address}
       description={selected.name ?? '<<provide description>>'}
       blockNumber={blockNumber}
-      disabled={
-        selected.type === 'Unverified' ||
-        selected.type === 'Unknown' ||
-        selected.type === 'EOA'
-      }
     />
   )
 
@@ -177,7 +172,6 @@ function CopyAddShapeCommand(props: {
   address: string
   description: string
   blockNumber: number
-  disabled?: boolean
 }) {
   const [copied, setCopied] = useState(false)
 
@@ -193,20 +187,15 @@ function CopyAddShapeCommand(props: {
 
   return (
     <button
-      className="flex items-center justify-center gap-1 px-2 py-1 text-coffee-400 text-xs underline underline-offset-2 hover:text-coffee-300 disabled:opacity-50"
+      className="flex items-center justify-center gap-1 px-2 py-1 text-coffee-400 text-xs underline underline-offset-2 hover:text-coffee-300"
       onClick={(e) => {
         e.preventDefault()
         setCopied(true)
       }}
-      disabled={props.disabled}
     >
-      {props.disabled ? 'Cannot copy' : 'Copy shape command'}
-      {!props.disabled && (
-        <>
-          {!copied && <IconCopy className="text-coffee-400" />}
-          {copied && <IconTick className="text-aux-green" />}
-        </>
-      )}
+      Copy shape command
+      {!copied && <IconCopy className="text-coffee-400" />}
+      {copied && <IconTick className="text-aux-green" />}
     </button>
   )
 }
