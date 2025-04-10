@@ -9,6 +9,8 @@
     - [Forced transactions](./code_walkthroughs/arbitrum/forced_txs.md)
     - [Proof system](./code_walkthroughs/arbitrum/proof_system.md)
     - [Admin operations](./code_walkthroughs/arbitrum/admin_ops.md)
+- [Optimism](./code_walkthroughs/optimism/README.md)
+    - [Withdrawals](./code_walkthroughs/optimism/withdrawals.md)
 
 # L2BEAT specs
 
