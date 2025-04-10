@@ -37,13 +37,9 @@ export const DownloadShapes = command({
       join(templatePath, 'shapes.json'),
     )
 
-    // 1. Remove and recreate the shapes folder
-    // (helps if there are renames or removed shapes)
+    // 1. Download the source code and flatten it
+    const outputFiles: Record<string, string> = {}
     const shapesFolder = join(templatePath, 'shapes')
-    rimraf.sync(shapesFolder)
-    mkdirSync(shapesFolder, { recursive: true })
-
-    // 2. Download the source code and flatten it
     for (const shape of shapeSchema) {
       const chainConfig = getChainConfig(shape.chain)
       const httpClient = new HttpClient()
@@ -72,7 +68,19 @@ export const DownloadShapes = command({
         ? shape.description
         : `${shape.description}.sol`
       const filePath = join(shapesFolder, fileName)
-      writeFileSync(filePath, flattenOutput)
+      outputFiles[filePath] = flattenOutput
+    }
+
+    // 2. Remove and recreate the shapes folder
+    // (helps if there are renames or removed shapes)
+    logger.logLine('Emptying the shapes folder')
+    rimraf.sync(shapesFolder)
+    mkdirSync(shapesFolder, { recursive: true })
+
+    // 3. Write all the files to the shapes folder
+    logger.logLine(`Writing ${Object.keys(outputFiles).length} files`)
+    for (const [filePath, content] of Object.entries(outputFiles)) {
+      writeFileSync(filePath, content)
     }
   },
 })
