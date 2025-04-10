@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import type {
@@ -7,6 +8,9 @@ import type {
   ApiProjectContract,
 } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
+import { isReadOnly } from '../config'
+import { IconCopy } from '../icons/IconCopy'
+import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
 import { AddressDisplay } from './AddressDisplay'
@@ -36,7 +40,13 @@ export function ValuesPanel() {
   return (
     <div className="h-full w-full overflow-x-auto">
       {!selected && <div>Select a contract</div>}
-      {selected && <Display selected={selected} />}
+      {selected && (
+        <Display
+          selected={selected}
+          chain={selected.chain}
+          blockNumber={selected.blockNumber}
+        />
+      )}
     </div>
   )
 }
@@ -48,17 +58,29 @@ function findSelected(chains: ApiProjectChain[], address: string | undefined) {
   for (const chain of chains) {
     for (const contract of chain.initialContracts) {
       if (contract.address === address) {
-        return contract
+        return {
+          ...contract,
+          chain: chain.chain,
+          blockNumber: chain.blockNumber,
+        }
       }
     }
     for (const contract of chain.discoveredContracts) {
       if (contract.address === address) {
-        return contract
+        return {
+          ...contract,
+          chain: chain.chain,
+          blockNumber: chain.blockNumber,
+        }
       }
     }
     for (const eoa of chain.eoas) {
       if (eoa.address === address) {
-        return eoa
+        return {
+          ...eoa,
+          chain: chain.chain,
+          blockNumber: chain.blockNumber,
+        }
       }
     }
   }
@@ -66,14 +88,34 @@ function findSelected(chains: ApiProjectChain[], address: string | undefined) {
 
 function Display({
   selected,
-}: { selected: ApiProjectContract | ApiAddressEntry }) {
+  chain,
+  blockNumber,
+}: {
+  selected: ApiProjectContract | ApiAddressEntry
+  chain: string
+  blockNumber: number
+}) {
+  const address = getAddressToCopy(selected)
+
+  const copy = address && canCopy(selected) && !isReadOnly && (
+    <CopyAddShapeCommand
+      chain={chain}
+      address={address}
+      description={selected.name ?? '<<provide description>>'}
+      blockNumber={blockNumber}
+    />
+  )
+
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
-        <p className="flex items-center gap-1 font-bold">
-          <AddressIcon type={selected.type} />{' '}
-          {selected.name ??
-            (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
+        <p className="flex items-center">
+          <p className="flex items-center gap-1 font-bold">
+            <AddressIcon type={selected.type} />
+            {selected.name ??
+              (selected.type === 'Unverified' ? 'Unverified' : 'Unknown')}
+          </p>
+          {copy}
         </p>
         {'template' in selected && selected.template && (
           <p className="font-mono text-aux-orange text-xs">
@@ -122,5 +164,83 @@ function Display({
         </Folder>
       )}
     </>
+  )
+}
+
+function CopyAddShapeCommand(props: {
+  chain: string
+  address: string
+  description: string
+  blockNumber: number
+}) {
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (copied) {
+      const command = `l2b add-shape <<template>> ${props.chain} ${props.address} ${props.description} ${props.blockNumber}`
+
+      void navigator.clipboard.writeText(command)
+      const timeout = setTimeout(() => setCopied(false), 1000)
+      return () => clearTimeout(timeout)
+    }
+  }, [props, copied, setCopied])
+
+  return (
+    <button
+      className="flex items-center justify-center gap-1 px-2 py-1 text-coffee-400 text-xs underline underline-offset-2 hover:text-coffee-300"
+      onClick={(e) => {
+        e.preventDefault()
+        setCopied(true)
+      }}
+    >
+      Copy shape command
+      {!copied && <IconCopy className="text-coffee-400" />}
+      {copied && <IconTick className="text-aux-green" />}
+    </button>
+  )
+}
+
+function getAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
+  const address = findAddressToCopy(selected)
+
+  if (!address) {
+    return
+  }
+  // biome-ignore lint/style/noNonNullAssertion: it's there
+  return address.split(':')[1]!
+}
+
+function findAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
+  const hasFields = 'fields' in selected && selected.fields.length > 0
+
+  if (!hasFields) {
+    return selected.address
+  }
+
+  const implementations = selected.fields.find(
+    (field) => field.name === '$implementation',
+  )
+
+  if (!implementations) {
+    return selected.address
+  }
+
+  if (implementations.value.type === 'address') {
+    return implementations.value.address
+  }
+
+  if (implementations.value.type === 'array') {
+    // skipping the array type explicity
+    return
+  }
+
+  return selected.address
+}
+
+function canCopy(selected: ApiProjectContract | ApiAddressEntry) {
+  return (
+    selected.type !== 'Unverified' &&
+    selected.type !== 'Unknown' &&
+    selected.type !== 'EOA'
   )
 }
