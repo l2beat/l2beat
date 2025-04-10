@@ -1,13 +1,13 @@
 'use client'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { TokenTable } from '~/components/table/token-breakdown-table'
-import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
+import type { ProjectTvsBreakdown } from '~/server/features/scaling/new-tvs/breakdown/get-tvs-breakdown-for-project'
 import { externallyBridgedColumns } from './columns/externally-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 
 export type ExternallyBridgedTokenEntry =
-  ProjectTvsBreakdown['breakdown']['external'][number]
+  ProjectTvsBreakdown['external'][number]
 
 interface Props {
   tokens: ExternallyBridgedTokenEntry[]

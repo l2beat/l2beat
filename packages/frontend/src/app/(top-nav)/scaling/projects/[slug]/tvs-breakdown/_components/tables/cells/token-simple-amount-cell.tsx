@@ -1,4 +1,3 @@
-import type { Token } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
@@ -8,34 +7,15 @@ import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 interface Props {
   amount: number
-  supply: Token['supply']
-  isLockedInEscrow?: boolean
 }
 
-export function TokenSimpleAmountCell({
-  amount,
-  supply,
-  isLockedInEscrow,
-}: Props) {
-  const formula = getFormula(supply, isLockedInEscrow)
-
+export function TokenSimpleAmountCell({ amount }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger className="text-xs font-medium">
         {formatNumberWithCommas(+amount)}
       </TooltipTrigger>
-      <TooltipContent>{formula}</TooltipContent>
+      <TooltipContent>test</TooltipContent>
     </Tooltip>
   )
-}
-
-function getFormula(supply: Token['supply'], isLockedInEscrow?: boolean) {
-  if (isLockedInEscrow) {
-    return 'Tokens locked in a bridge contract'
-  }
-  return supply === 'totalSupply'
-    ? 'Total Supply'
-    : supply === 'circulatingSupply'
-      ? 'Circulating Supply'
-      : ''
 }

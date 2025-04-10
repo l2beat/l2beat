@@ -1,4 +1,3 @@
-import type { Token } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
@@ -7,18 +6,10 @@ import {
 import { formatNumberWithCommas } from '~/utils/number-format/format-number'
 
 interface Props {
-  supply: Token['supply']
   usdValue: number
 }
 
-export function TokenSimpleValueCell({ supply, usdValue }: Props) {
-  const formula =
-    supply === 'totalSupply'
-      ? 'total supply'
-      : supply === 'circulatingSupply'
-        ? 'circulating supply'
-        : ''
-
+export function TokenSimpleValueCell({ usdValue }: Props) {
   return (
     <Tooltip>
       <TooltipTrigger className="text-xs font-bold">
@@ -27,7 +18,7 @@ export function TokenSimpleValueCell({ supply, usdValue }: Props) {
       <TooltipContent>
         Calculation formula:
         <br />
-        Value = {formula} * price
+        Value = * price
       </TooltipContent>
     </Tooltip>
   )
