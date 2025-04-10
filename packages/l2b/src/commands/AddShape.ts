@@ -1,13 +1,13 @@
-import { TemplateService, getDiscoveryPaths } from '@l2beat/discovery'
 import {
-  type ExplorerConfig,
-  getExplorerClient,
-} from '@l2beat/discovery/dist/utils/IEtherscanClient'
+  TemplateService,
+  getChainConfig,
+  getDiscoveryPaths,
+} from '@l2beat/discovery'
+import { getExplorerClient } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { CliLogger, HttpClient } from '@l2beat/shared'
-import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
+import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, positional, string } from 'cmd-ts'
-import { explorerApiKey, explorerType, explorerUrl } from './args'
 import { EthereumAddressValue } from './types'
 
 export const AddShape = command({
@@ -39,9 +39,6 @@ export const AddShape = command({
       displayName: 'blockNumber',
       description: 'block number of the contract',
     }),
-    explorerUrl,
-    type: explorerType,
-    apiKey: explorerApiKey,
   },
   handler: async (args) => {
     const logger = new CliLogger()
@@ -75,16 +72,10 @@ export const AddShape = command({
       return
     }
 
-    assert(
-      args.type !== 'etherscan' || args.apiKey !== undefined,
-      'When using etherscan you should provide the API key using --etherscan-key.',
-    )
+    const chainConfig = getChainConfig(args.chain)
+
     const httpClient = new HttpClient()
-    const client = getExplorerClient(httpClient, {
-      type: args.type as ExplorerConfig['type'],
-      url: args.explorerUrl.toString(),
-      apiKey: args.apiKey ?? 'YourApiKeyToken',
-    })
+    const client = getExplorerClient(httpClient, chainConfig.explorer)
 
     logger.logLine('Fetching contract source code...')
     const source = await client.getContractSource(args.address)
