@@ -135,14 +135,6 @@ function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
 }
 
-export function undefinedIfEmpty<T>(array: T[]): T[] | undefined {
-  if (array.length === 0) {
-    return undefined
-  }
-
-  return array
-}
-
 export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
