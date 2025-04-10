@@ -41,7 +41,7 @@ export function toRawDiscoveryOutput(
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
-  const structure = getStructureOutput(config, blockNumber, results)
+  const structure = getStructureOutput(config.config, blockNumber, results)
   const colorized = colorize(config.colorConfig, structure, templateService)
 
   return combineStructureAndColor(structure, colorized)

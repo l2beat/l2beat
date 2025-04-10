@@ -6,7 +6,7 @@ export type ContractOverridesColor = ColorContract & {
   name?: string
 }
 
-export function evaluateConfigForEntry(
+export function makeEntryColorConfig(
   config: ColorConfig,
   address: EthereumAddress,
   template: ColorContract,

@@ -1,4 +1,4 @@
-import type { ContractConfig } from '../config/ContractConfig'
+import type { ContractConfig } from '../config/structureUtils'
 import type { Handler } from './Handler'
 import { getSystemHandlers } from './getSystemHandlers'
 import { ErrorHandler } from './system/ErrorHandler'

@@ -37,8 +37,8 @@ export async function saveDiscoveryResult(
 ): Promise<void> {
   const projectDiscoveryFolder = posix.join(
     options.paths.discovery,
-    config.name,
-    config.chain,
+    config.config.name,
+    config.config.chain,
   )
   await mkdirp(projectDiscoveryFolder)
 
@@ -66,7 +66,7 @@ export async function saveDiscoveryResult(
     )
   }
   if (options.buildProjectPageFacts) {
-    await buildProjectPageFacts(config.name, options.paths)
+    await buildProjectPageFacts(config.config.name, options.paths)
   }
 }
 

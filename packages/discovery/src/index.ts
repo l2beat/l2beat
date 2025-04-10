@@ -58,7 +58,10 @@ export {
   buildSimilarityHashmap,
   estimateSimilarity,
 } from './flatten/utils'
-export type { ContractConfig } from './discovery/config/ContractConfig'
+export {
+  type ContractConfig,
+  makeEntryStructureConfig,
+} from './discovery/config/structureUtils'
 export type { ExplorerConfig } from './utils/IEtherscanClient'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
@@ -90,4 +93,4 @@ export {
 } from './discovery/config/getDiscoveryPaths'
 export { ShapeSchema } from './discovery/config/ShapeSchema'
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
-export { evaluateConfigForEntry } from './discovery/config/colorUtils'
+export { makeEntryColorConfig } from './discovery/config/colorUtils'

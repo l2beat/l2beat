@@ -3,6 +3,7 @@ import {
   ConfigReader,
   TemplateService,
   getDiscoveryPaths,
+  makeEntryStructureConfig,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -142,9 +143,11 @@ describe('discovery config.jsonc', () => {
     describe('every override correspond to existing contract', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
-          for (const key of Object.keys(c.raw.overrides ?? {})) {
+          for (const key of Object.keys(c.config.overrides ?? {})) {
             it(`${c.name} on ${c.chain} with the override ${key}`, () => {
-              expect(() => c.for(EthereumAddress(key))).not.toThrow()
+              expect(() =>
+                makeEntryStructureConfig(c.config, EthereumAddress(key)),
+              ).not.toThrow()
             })
           }
         }
@@ -155,7 +158,7 @@ describe('discovery config.jsonc', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
           it(`${c.name} on ${c.chain}`, () => {
-            for (const sharedModule of c.sharedModules) {
+            for (const sharedModule of c.config.sharedModules) {
               assert(
                 chainConfigs?.flat()?.some((x) => x.name === sharedModule),
                 `Shared module ${sharedModule} does not exist (${c.name})`,
@@ -173,7 +176,10 @@ describe('discovery config.jsonc', () => {
           const discovery = configReader.readDiscovery(c.name, c.chain)
           it(`${c.name}:${c.chain}`, () => {
             for (const entry of discovery.entries) {
-              const fields = c.for(entry.address).fields
+              const fields = makeEntryStructureConfig(
+                c.config,
+                entry.address,
+              ).fields
               for (const [key, value] of Object.entries(fields)) {
                 if (
                   value.handler?.type === 'accessControl' &&

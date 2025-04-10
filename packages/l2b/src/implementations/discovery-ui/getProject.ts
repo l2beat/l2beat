@@ -4,8 +4,9 @@ import {
   type DiscoveryOutput,
   type EntryParameters,
   type TemplateService,
-  evaluateConfigForEntry,
   getChainShortName,
+  makeEntryColorConfig,
+  makeEntryStructureConfig,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
@@ -70,7 +71,10 @@ export function getProject(
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
-        const contractConfig = config.for(entry.address)
+        const contractConfig = makeEntryStructureConfig(
+          config.config,
+          entry.address,
+        )
 
         if (entry.template !== undefined) {
           const templateValues = templateService.loadContractTemplate(
@@ -79,7 +83,7 @@ export function getProject(
           contractConfig.pushValues(templateValues)
         }
 
-        const contractColorConfig = evaluateConfigForEntry(
+        const contractColorConfig = makeEntryColorConfig(
           config.colorConfig,
           entry.address,
           templateService.loadContractTemplateColor(entry.template),
@@ -95,7 +99,7 @@ export function getProject(
         )
       })
       .sort(orderAddressEntries)
-    const initialAddresses = config.initialAddresses.map(
+    const initialAddresses = config.config.initialAddresses.map(
       (address) => `${getChainShortName(chain)}:${address}`,
     )
 

@@ -22,7 +22,7 @@ function createEmptyConfig(
   chain: string,
   initialAddresses: EthereumAddress[],
 ) {
-  const config: DiscoveryConfig = {
+  const config: Partial<DiscoveryConfig> = {
     name: project,
     chain,
     initialAddresses,

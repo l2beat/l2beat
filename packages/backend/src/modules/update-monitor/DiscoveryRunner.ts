@@ -50,7 +50,7 @@ export class DiscoveryRunner {
     blockNumber: number,
   ): Promise<DiscoveryRunResult> {
     const provider = this.allProviders.get(config.chain, blockNumber)
-    const result = await this.discoveryEngine.discover(provider, config)
+    const result = await this.discoveryEngine.discover(provider, config.config)
 
     setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 

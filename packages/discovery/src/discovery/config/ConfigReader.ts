@@ -54,9 +54,9 @@ export class ConfigReader {
       )
     }
 
-    const config = new ConfigRegistry(rawConfig, this)
+    const config = new ConfigRegistry(rawConfig)
 
-    assert(config.chain === chain, 'Chain mismatch in config.jsonc')
+    assert(config.config.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }

@@ -11,6 +11,7 @@ import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -234,7 +235,10 @@ export class TemplateService {
         contract.template !== undefined &&
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
-        if (config.for(contract.address).extends === undefined) {
+        if (
+          makeEntryStructureConfig(config.config, contract.address).extends ===
+          undefined
+        ) {
           if (matchingTemplates.length === 0) {
             return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
           }

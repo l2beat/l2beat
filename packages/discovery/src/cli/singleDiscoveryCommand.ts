@@ -7,7 +7,6 @@ import { rimraf } from 'rimraf'
 import { getChainConfigs } from '../config/config.discovery'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
-import { ConfigReader } from '../discovery/config/ConfigReader'
 import { ConfigRegistry } from '../discovery/config/ConfigRegistry'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
@@ -31,16 +30,11 @@ export const SingleDiscoveryCommand = command({
 
     const chainConfigs = getChainConfigs()
     const paths = getDiscoveryPaths()
-
-    const configReader = new ConfigReader(paths.discovery)
-    const projectConfig = new ConfigRegistry(
-      {
-        name: address.toString(),
-        chain: chain,
-        initialAddresses: [address],
-      },
-      configReader,
-    )
+    const projectConfig = new ConfigRegistry({
+      name: address.toString(),
+      chain: chain,
+      initialAddresses: [address],
+    })
     const http = new HttpClient()
 
     const { result, blockNumber } = await discover(

@@ -5,7 +5,7 @@ import type {
   ColorContract,
   ExternalReference,
 } from '../config/ColorConfig'
-import { evaluateConfigForEntry } from '../config/colorUtils'
+import { makeEntryColorConfig } from '../config/colorUtils'
 import type {
   ColorOutput,
   FieldMeta,
@@ -22,7 +22,7 @@ export function colorize(
   const result: ColorOutput = { entries: [] }
 
   for (const e of structure.entries) {
-    const entryConfig = evaluateConfigForEntry(
+    const entryConfig = makeEntryColorConfig(
       config,
       e.address,
       templateService.loadContractTemplateColor(e.template),

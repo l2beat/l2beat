@@ -1,6 +1,6 @@
 import type { Hash256 } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { ConfigRegistry } from '../config/ConfigRegistry'
+import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
@@ -10,7 +10,7 @@ import {
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
-  config: ConfigRegistry,
+  config: StructureConfig,
   blockNumber: number,
   results: Analysis[],
 ): StructureOutput {
@@ -18,7 +18,7 @@ export function getStructureOutput(
     name: config.name,
     chain: config.chain,
     blockNumber,
-    configHash: hashJsonStable(config.config),
+    configHash: hashJsonStable(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),

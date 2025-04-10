@@ -1,7 +1,7 @@
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import type { ContractConfig } from '../config/ContractConfig'
 import type { DiscoveryCustomType } from '../config/StructureConfig'
+import type { ContractConfig } from '../config/structureUtils'
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'

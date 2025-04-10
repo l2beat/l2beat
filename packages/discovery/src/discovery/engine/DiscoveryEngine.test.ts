@@ -65,7 +65,7 @@ describe(DiscoveryEngine.name, () => {
       })
 
     const engine = new DiscoveryEngine(addressAnalyzer, DiscoveryLogger.SILENT)
-    const result = await engine.discover(provider, config)
+    const result = await engine.discover(provider, config.config)
 
     expect(result).toEqual([
       {

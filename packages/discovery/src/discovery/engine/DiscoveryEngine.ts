@@ -8,7 +8,9 @@ import type {
   AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
-import type { ConfigRegistry } from '../config/ConfigRegistry'
+import type { StructureConfig } from '../config/StructureConfig'
+import { makeEntryStructureConfig } from '../config/structureUtils'
+import { buildSharedModuleIndex } from '../config/structureUtils'
 import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -28,8 +30,9 @@ export class DiscoveryEngine {
 
   async discover(
     provider: IProvider,
-    config: ConfigRegistry,
+    config: StructureConfig,
   ): Promise<Analysis[]> {
+    const sharedModuleIndex = buildSharedModuleIndex(config)
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}
     let depth = 0
@@ -83,6 +86,7 @@ export class DiscoveryEngine {
           const skipReason = shouldSkip(
             EthereumAddress(address),
             config,
+            sharedModuleIndex,
             depth,
             this.objectCount,
           )
@@ -101,7 +105,7 @@ export class DiscoveryEngine {
           const analysis = await this.addressAnalyzer.analyze(
             provider,
             address,
-            config.for(address),
+            makeEntryStructureConfig(config, address),
             templates,
           )
           resolved[address.toString()] = analysis

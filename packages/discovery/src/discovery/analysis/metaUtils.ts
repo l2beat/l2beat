@@ -1,12 +1,12 @@
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 
 import { groupBy } from 'lodash'
-import type { ContractConfig } from '../config/ContractConfig'
 import type {
   PermissionConfiguration,
   RawPermissionConfiguration,
   StructureContractField,
 } from '../config/StructureConfig'
+import type { ContractConfig } from '../config/structureUtils'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
 import type { ContractValue } from '../output/types'

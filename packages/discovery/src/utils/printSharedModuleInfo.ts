@@ -1,7 +1,7 @@
 import chalk from 'chalk'
-import type { ConfigRegistry } from '../discovery/config/ConfigRegistry'
+import type { StructureConfig } from '../discovery/config/StructureConfig'
 
-export function printSharedModuleInfo(backrefConfigs: ConfigRegistry[]) {
+export function printSharedModuleInfo(backrefConfigs: StructureConfig[]) {
   if (backrefConfigs.length > 0) {
     console.log(
       `\n    -----=====[ ${chalk.red('SHARED MODULE DETECTED!')} ]=====-----`,

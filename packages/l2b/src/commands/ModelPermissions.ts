@@ -27,7 +27,7 @@ export const ModelPermissions = command({
     for (const config of chainConfigs) {
       const discovery = configReader.readDiscovery(config.name, config.chain)
       const permissions = modelPermissions(
-        config.raw,
+        config.config,
         discovery,
         templateService,
       )

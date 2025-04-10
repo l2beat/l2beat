@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import type { ContractConfig } from '../config/ContractConfig'
+import type { ContractConfig } from '../config/structureUtils'
 import type { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'

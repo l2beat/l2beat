@@ -111,8 +111,8 @@ export const StructureConfig = z.object({
   chain: z.string().min(1),
   initialAddresses: z.array(stringAs(EthereumAddress)),
   import: z.optional(z.array(z.string())),
-  maxAddresses: z.optional(z.number().positive()),
-  maxDepth: z.optional(z.number()),
+  maxAddresses: z.number().positive().default(100),
+  maxDepth: z.number().default(6),
   overrides: z.optional(
     z.record(
       z.string().refine((key) => EthereumAddress.check(key), {
@@ -121,6 +121,6 @@ export const StructureConfig = z.object({
       StructureContract,
     ),
   ),
-  sharedModules: z.optional(z.array(z.string())),
+  sharedModules: z.array(z.string()).default([]),
   types: z.optional(z.record(z.string(), DiscoveryCustomType)),
 })

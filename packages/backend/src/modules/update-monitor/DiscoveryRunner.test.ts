@@ -18,7 +18,7 @@ describe(DiscoveryRunner.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const sourceConfig: ConfigRegistry = new ConfigRegistry({
-        ...getMockConfig().raw,
+        ...getMockConfig().config,
       })
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
@@ -105,6 +105,9 @@ const getMockConfig = () => {
   return new ConfigRegistry({
     name: 'project-a',
     chain: 'ethereum',
+    maxAddresses: 100,
+    maxDepth: 6,
     initialAddresses: [],
+    sharedModules: [],
   })
 }

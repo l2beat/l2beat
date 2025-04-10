@@ -1,8 +1,8 @@
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { createContractConfig } from '../config/ContractConfig'
 import { StructureContract } from '../config/StructureConfig'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
@@ -14,9 +14,10 @@ import type { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
   const overrides = StructureContract.parse({})
-  const config = createContractConfig(
-    { address: EthereumAddress.random(), ...overrides },
-    {},
+  const address = EthereumAddress.random()
+  const config = makeEntryStructureConfig(
+    { overrides: { [address]: overrides } },
+    address,
   )
 
   describe(AddressAnalyzer.prototype.analyze.name, () => {

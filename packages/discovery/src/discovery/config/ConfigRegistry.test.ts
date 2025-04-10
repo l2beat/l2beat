@@ -2,6 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ConfigRegistry } from './ConfigRegistry'
 import { StructureContract } from './StructureConfig'
+import { makeEntryStructureConfig } from './structureUtils'
 
 const ADDRESS_A = EthereumAddress.random()
 const ADDRESS_B = EthereumAddress.random()
@@ -33,7 +34,7 @@ const CONFIG = new ConfigRegistry({
 describe(ConfigRegistry.name, () => {
   describe('overrides', () => {
     it('gets override for given address, ignoring common name since it is already named', () => {
-      const result = CONFIG.for(ADDRESS_B)
+      const result = makeEntryStructureConfig(CONFIG.config, ADDRESS_B)
       expect(result.address).toEqual(ADDRESS_B)
     })
   })

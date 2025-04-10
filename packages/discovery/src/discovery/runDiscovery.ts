@@ -67,9 +67,9 @@ export async function runDiscovery(
 
   if (config.project.startsWith('shared-')) {
     const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
-    const backrefConfigs = allConfigs.filter((c) =>
-      c.sharedModules.includes(config.project),
-    )
+    const backrefConfigs = allConfigs
+      .filter((c) => c.config.sharedModules.includes(config.project))
+      .map((c) => c.config)
     printSharedModuleInfo(backrefConfigs)
   }
 
@@ -173,19 +173,20 @@ export async function discover(
     ? new OverwriteCacheWrapper(sqliteCache)
     : sqliteCache
 
+  const chain = config.config.chain
   const { allProviders, discoveryEngine } = getDiscoveryEngine(
     paths,
     chainConfigs,
     cache,
     http,
     logger,
-    config.chain,
+    chain,
   )
-  blockNumber ??= await allProviders.getLatestBlockNumber(config.chain)
-  const provider = allProviders.get(config.chain, blockNumber)
+  blockNumber ??= await allProviders.getLatestBlockNumber(chain)
+  const provider = allProviders.get(chain, blockNumber)
   return {
-    result: await discoveryEngine.discover(provider, config),
+    result: await discoveryEngine.discover(provider, config.config),
     blockNumber,
-    providerStats: allProviders.getStats(config.chain),
+    providerStats: allProviders.getStats(chain),
   }
 }
