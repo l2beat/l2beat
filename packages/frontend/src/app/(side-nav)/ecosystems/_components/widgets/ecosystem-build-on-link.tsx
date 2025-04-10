@@ -14,14 +14,15 @@ export function EcosystemBuildOnLink({ name, slug, href, className }: Props) {
     <EcosystemWidget asChild>
       <CustomLink
         variant="plain"
+        underline={false}
         href={href}
         className={cn(
-          'group relative min-h-[100px] overflow-hidden text-pure-white no-underline',
+          'group relative min-h-[100px] overflow-hidden text-pure-white',
           className,
         )}
       >
         <div
-          className="absolute inset-0 origin-center rounded-lg bg-cover transition-all group-hover:scale-125 md:rounded-xl"
+          className="absolute inset-0 origin-left rounded-lg bg-cover transition-all group-hover:scale-125 md:rounded-xl"
           style={{ backgroundImage: `url(/ecosystems/${slug}/build-on.png)` }}
         />
         <div className="relative flex h-full flex-col justify-center">
