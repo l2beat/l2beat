@@ -15,8 +15,6 @@ export const polynomial: ScalingProject = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1648771200), // 2022-04-01T00:00:00Z
   },
   display: {
     name: 'Polynomial',

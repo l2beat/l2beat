@@ -15,8 +15,6 @@ export const superseed: ScalingProject = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1664582400), // 2022-10-01T00:00:00Z
   },
   display: {
     name: 'Superseed',

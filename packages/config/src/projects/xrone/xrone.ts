@@ -37,8 +37,6 @@ export const xrone: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1737469445),
   },
   chainConfig: {
     name: 'xrone',

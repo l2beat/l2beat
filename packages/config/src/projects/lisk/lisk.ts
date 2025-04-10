@@ -16,8 +16,6 @@ export const lisk: ScalingProject = opStackL2({
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1640995200), // 2022-01-01T00:00:00Z
   },
   display: {
     name: 'Lisk',

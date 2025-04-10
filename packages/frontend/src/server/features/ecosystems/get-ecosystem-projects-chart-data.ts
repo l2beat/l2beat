@@ -16,7 +16,7 @@ export function getEcosystemProjectsChartData(
 ): EcosystemProjectsCountData {
   const minTimestamp = Math.min(
     ...entries.map((e) =>
-      UnixTime.toStartOf(e.ecosystemInfo.sinceTimestamp, 'day'),
+      UnixTime.toStartOf(e.ecosystemInfo.sinceTimestamp ?? e.addedAt, 'day'),
     ),
   )
 
@@ -27,7 +27,7 @@ export function getEcosystemProjectsChartData(
   const chart = timestamps.map((timestamp) => {
     const projects = entries.filter(
       (e) =>
-        e.ecosystemInfo.sinceTimestamp <= timestamp &&
+        (e.ecosystemInfo.sinceTimestamp ?? e.addedAt) <= timestamp &&
         (!e.ecosystemInfo.untilTimestamp ||
           e.ecosystemInfo.untilTimestamp > timestamp),
     )

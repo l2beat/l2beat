@@ -47,8 +47,6 @@ export const treasure: ScalingProject = zkStackL2({
   associatedTokens: ['MAGIC'],
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1622505600), // 2021-06-01T00:00:00Z
   },
   chainConfig: {
     name: 'treasure',

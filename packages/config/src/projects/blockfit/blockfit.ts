@@ -41,8 +41,6 @@ export const blockfit: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1739285196),
   },
   activityConfig: {
     type: 'block',

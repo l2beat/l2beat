@@ -35,8 +35,6 @@ export const abstract: ScalingProject = zkStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1617235200), // 2021-04-01T00:00:00Z
   },
   chainConfig: {
     name: 'abstract',

@@ -102,8 +102,6 @@ export const zksync2: ScalingProject = zkStackL2({
   associatedTokens: ['ZK'],
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1725314400), // 2024-09-03T00:00:00Z
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

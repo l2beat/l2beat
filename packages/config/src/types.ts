@@ -882,7 +882,7 @@ export interface AvailDaTrackingConfig {
 
 export interface ProjectEcosystemInfo {
   id: ProjectId
-  sinceTimestamp: UnixTime
+  sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
 }
 

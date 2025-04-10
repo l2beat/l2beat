@@ -1,9 +1,9 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -756,8 +756,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
     ...common,
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
-      // FAKE DATE
-      sinceTimestamp: UnixTime(1739285196),
     },
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
@@ -816,8 +814,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     },
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
-      // FAKE DATE
-      sinceTimestamp: UnixTime(1739285196),
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }

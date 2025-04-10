@@ -38,8 +38,6 @@ export const zeronetwork: ScalingProject = zkStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1656633600), // 2022-07-01T00:00:00Z
   },
   chainConfig: {
     name: 'zeronetwork',

@@ -48,8 +48,6 @@ export const rufus: ScalingProject = underReviewL2({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1737636288),
   },
   activityConfig: {
     type: 'block',

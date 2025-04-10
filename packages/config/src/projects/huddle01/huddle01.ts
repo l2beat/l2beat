@@ -51,8 +51,6 @@ export const huddle01: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1737469443),
   },
   escrows: [
     {

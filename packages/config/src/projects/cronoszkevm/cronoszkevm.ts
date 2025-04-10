@@ -38,8 +38,6 @@ export const cronoszkevm: ScalingProject = zkStackL2({
   associatedTokens: ['zkCRO'],
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1672531200), // 2023-01-01T00:00:00Z
   },
   chainConfig: {
     name: 'cronoszkevm',

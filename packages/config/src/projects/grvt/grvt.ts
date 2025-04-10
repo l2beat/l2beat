@@ -41,8 +41,6 @@ export const grvt: ScalingProject = zkStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1640995200), // 2022-01-01T00:00:00Z
   },
   diamondContract: discovery.getContract('GrvtZkEvm'),
   daProvider: {

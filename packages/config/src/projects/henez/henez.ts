@@ -48,8 +48,6 @@ export const henez: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1737469444),
   },
   escrows: [
     {

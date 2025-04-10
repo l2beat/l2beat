@@ -42,8 +42,6 @@ export const sophon: ScalingProject = zkStackL2({
   associatedTokens: ['SOPH'],
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1633046400), // 2021-10-01T00:00:00Z
   },
   chainConfig: {
     name: 'sophon',

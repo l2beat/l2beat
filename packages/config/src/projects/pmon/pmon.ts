@@ -38,8 +38,6 @@ export const pmon: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1722587021),
   },
   associatedTokens: ['PMON'],
   escrows: [

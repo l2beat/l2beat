@@ -47,8 +47,6 @@ export const onchain: ScalingProject = underReviewL3({
   },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1737469446),
   },
   escrows: [
     {
