@@ -12,10 +12,10 @@ import { api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { RequestTokenBox } from './_components/request-token-box'
 import { CanonicallyBridgedTable } from './_components/tables/canonically-bridged-table'
+import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
+import { NativelyMintedTable } from './_components/tables/natively-minted-table'
 import { TvsBreakdownPageHeader } from './_components/tvs-breakdown-page-header'
 import { TvsBreakdownSummaryBox } from './_components/tvs-breakdown-summary-box'
-import { NativelyMintedTable } from './_components/tables/natively-minted-table'
-import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []

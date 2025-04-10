@@ -1,19 +1,19 @@
+import type { TokenValueRecord } from '@l2beat/database'
 import {
   assert,
   ProjectId,
+  TokenId,
   UnixTime,
   branded,
-  TokenId,
 } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
+import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getRangeWithMax } from '~/utils/range/range'
-import { TvsChartRange, rangeToResolution } from '../utils/range'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
-import { getDb } from '~/server/database'
-import type { TokenValueRecord } from '@l2beat/database'
+import { TvsChartRange, rangeToResolution } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),

@@ -1,8 +1,8 @@
 import type { TvsToken } from '@l2beat/config'
-import { assertUnreachable, type TokenId } from '@l2beat/shared-pure'
+import type { TokenValueRecord } from '@l2beat/database'
+import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import type { BaseAssetBreakdownData, BreakdownRecord } from './types'
-import type { TokenValueRecord } from '@l2beat/database'
 
 export async function getTvsBreakdown(
   projectTokens: TvsToken[],

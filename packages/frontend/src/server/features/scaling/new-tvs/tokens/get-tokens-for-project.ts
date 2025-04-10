@@ -1,6 +1,6 @@
+import type { Project, TvsToken } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
-import type { Project, TvsToken } from '@l2beat/config'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 

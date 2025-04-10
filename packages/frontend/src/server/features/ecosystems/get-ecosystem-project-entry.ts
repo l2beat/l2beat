@@ -10,11 +10,11 @@ import { getImageDimensions } from '~/utils/project/get-image-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { getActivityLatestUops } from '../scaling/activity/get-activity-latest-tps'
+import { get7dTvsBreakdown } from '../scaling/new-tvs/utils/get-7d-tvs-breakdown'
 import {
   type ScalingSummaryEntry,
   getScalingSummaryEntry,
 } from '../scaling/summary/get-scaling-summary-entries'
-import { get7dTvsBreakdown } from '../scaling/new-tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 
 export interface EcosystemProjectEntry {

@@ -2,9 +2,9 @@ import type { Project } from '@l2beat/config'
 import { TokenId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
-import { getTvsBreakdown } from './get-tvs-breakdown'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
+import { getTvsBreakdown } from './get-tvs-breakdown'
 
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 

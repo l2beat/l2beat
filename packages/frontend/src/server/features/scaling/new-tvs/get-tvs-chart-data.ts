@@ -1,6 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { uniq, type Dictionary } from 'lodash'
+import { type Dictionary, uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
@@ -77,7 +77,7 @@ export const getCachedTvsChartData = cache(
     ])
     return getChartData(values, ethPrices)
   },
-  ['new-tvs-chart-data'],
+  ['new-tvs-chart-datax'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
