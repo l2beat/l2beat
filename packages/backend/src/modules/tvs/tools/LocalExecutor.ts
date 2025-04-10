@@ -34,7 +34,7 @@ export class LocalExecutor {
     private readonly logger: Logger,
   ) {
     this.localStorage = new LocalStorage('./scripts/tvs/local-data.json')
-    this.valueService = new ValueService(this.localStorage)
+    this.valueService = new ValueService(this.localStorage, logger)
     this.dbStorage = this.createDbStorage(env, logger)
   }
 

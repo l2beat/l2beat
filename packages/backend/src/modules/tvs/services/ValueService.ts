@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AmountFormula,
   CalculationFormula,
@@ -13,7 +14,13 @@ import {
 import type { ProjectTvsConfig, TokenValue } from '../types'
 
 export class ValueService {
-  constructor(private readonly storage: DataStorage) {}
+  private logger: Logger
+  constructor(
+    private readonly storage: DataStorage,
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async calculate(
     config: ProjectTvsConfig,
@@ -168,7 +175,14 @@ export class ValueService {
                 .filter(notUndefined)
                 .reduce((val, acc) => (acc += val), 0n)
 
-              return subtractFrom - toSubtract
+              const result = subtractFrom - toSubtract
+
+              if (result < 0n) {
+                this.logger.warn(`Diff returned less than zero`, { tokenId })
+                return 0n
+              }
+
+              return result
             }
 
             throw new Error('First argument of diff cannot be undefined')
