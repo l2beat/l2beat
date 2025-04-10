@@ -91,7 +91,12 @@ export function ProjectsUsedIn({
                 </TooltipTrigger>
               </LinkWithOnHoverPrefetch>
             )}
-            <TooltipContent>{project.name}</TooltipContent>
+            <TooltipContent>
+              <p className="font-bold">{project.name}</p>
+              <p className="text-xs text-secondary">
+                Click to view project page
+              </p>
+            </TooltipContent>
           </Tooltip>
         )
       })}
