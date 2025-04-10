@@ -6,14 +6,14 @@ import {
   ContractFieldSeverity,
   ContractValueType,
   DiscoveryCategory,
-  StructureContract,
-  StructureContractField,
   DiscoveryCustomType,
   ExternalReference,
   ManualProxyType,
   Permission,
-  StructureConfig,
   RawPermissionConfiguration,
+  StructureConfig,
+  StructureContract,
+  StructureContractField,
 } from '../src/discovery/config/StructureConfig'
 import { UserHandlerDefinition } from '../src/discovery/handlers/user'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'

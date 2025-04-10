@@ -1,7 +1,7 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
 import type {
-  StructureContract,
   DiscoveryCustomType,
+  StructureContract,
 } from '../config/StructureConfig'
 import type { EntryParameters } from '../output/types'
 import { TypeApplier } from '../type-casters/TypeApplier'

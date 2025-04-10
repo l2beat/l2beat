@@ -4,7 +4,7 @@ import { expect, mockObject } from 'earl'
 import {
   type ConfigReader,
   ConfigRegistry,
-  type StructureConfig,
+  type DiscoveryConfig,
 } from '@l2beat/discovery'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery, formatAsBulletPoints } from './ProjectDiscovery'
@@ -148,7 +148,7 @@ describe(formatAsBulletPoints.name, () => {
 function mockConfig(
   name: string,
   chain = 'ethereum',
-  innerConfig: Partial<StructureConfig> = {},
+  innerConfig: Partial<DiscoveryConfig> = {},
 ): ConfigRegistry {
   return new ConfigRegistry({
     name,

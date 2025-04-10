@@ -14,10 +14,10 @@ export { ConfigReader } from './discovery/config/ConfigReader'
 export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export {
   Permission,
-  StructureConfig,
   BasePermissionEntries,
   RolePermissionEntries,
 } from './discovery/config/StructureConfig'
+export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'

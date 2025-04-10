@@ -1,10 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import type { ColorContract } from './ColorConfig'
-import {
-  StructureContract,
-  type DiscoveryCustomType,
-} from './StructureConfig'
+import { type DiscoveryCustomType, StructureContract } from './StructureConfig'
 
 export type ContractOverrides = StructureContract & {
   name?: string // TODO(radomski): This is required?

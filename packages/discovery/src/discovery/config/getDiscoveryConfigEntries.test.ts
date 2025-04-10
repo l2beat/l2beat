@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
-  StructureContract,
   type StructureConfig,
+  StructureContract,
 } from '../config/StructureConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 

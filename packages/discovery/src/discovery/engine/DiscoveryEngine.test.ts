@@ -5,8 +5,8 @@ import { DiscoveryLogger } from '../DiscoveryLogger'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import {
-  StructureContract,
   type StructureConfig,
+  StructureContract,
 } from '../config/StructureConfig'
 import type { IProvider } from '../provider/IProvider'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'

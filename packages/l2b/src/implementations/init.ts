@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
-import { type StructureConfig, getDiscoveryPaths } from '@l2beat/discovery'
+import { type DiscoveryConfig, getDiscoveryPaths } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export function initDiscovery(
@@ -22,7 +22,7 @@ function createEmptyConfig(
   chain: string,
   initialAddresses: EthereumAddress[],
 ) {
-  const config: StructureConfig = {
+  const config: DiscoveryConfig = {
     name: project,
     chain,
     initialAddresses,

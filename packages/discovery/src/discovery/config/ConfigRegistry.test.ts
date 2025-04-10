@@ -2,7 +2,7 @@ import { hashJson } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ConfigRegistry } from './ConfigRegistry'
-import { StructureContract, type StructureConfig } from './StructureConfig'
+import { type StructureConfig, StructureContract } from './StructureConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress.random()

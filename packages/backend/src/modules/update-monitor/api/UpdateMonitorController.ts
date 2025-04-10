@@ -1,8 +1,8 @@
 import type { Database } from '@l2beat/database'
 import type {
   ConfigReader,
-  DiscoveryChainConfig,
   ConfigRegistry,
+  DiscoveryChainConfig,
 } from '@l2beat/discovery'
 import type { ChainConverter } from '@l2beat/shared-pure'
 import {

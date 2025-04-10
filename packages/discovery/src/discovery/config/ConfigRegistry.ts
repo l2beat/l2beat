@@ -4,7 +4,7 @@ import type { DiscoveryOutput } from '../output/types'
 import { ColorConfig } from './ColorConfig'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
-import { StructureContract, StructureConfig } from './StructureConfig'
+import { StructureConfig, StructureContract } from './StructureConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
 

@@ -1,8 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type {
-  StructureContractField,
   PermissionConfiguration,
+  StructureContractField,
 } from '../config/StructureConfig'
 import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
