@@ -59,7 +59,7 @@ export {
   estimateSimilarity,
 } from './flatten/utils'
 export {
-  type ContractConfig,
+  type StructureContractConfig as ContractConfig,
   makeEntryStructureConfig,
 } from './discovery/config/structureUtils'
 export type { ExplorerConfig } from './utils/IEtherscanClient'

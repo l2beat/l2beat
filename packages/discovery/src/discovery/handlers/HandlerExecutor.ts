@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { StructureContractConfig } from '../config/structureUtils'
 import type { DiscoveryCustomType } from '../config/StructureConfig'
-import type { ContractConfig } from '../config/structureUtils'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { HandlerResult } from './Handler'
@@ -13,7 +13,7 @@ export class HandlerExecutor {
     provider: IProvider,
     address: EthereumAddress,
     abi: string[],
-    config: ContractConfig,
+    config: StructureContractConfig,
   ): Promise<{
     results: HandlerResult[]
     values: Record<string, ContractValue | undefined> | undefined

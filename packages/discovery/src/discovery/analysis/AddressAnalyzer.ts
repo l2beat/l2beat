@@ -1,7 +1,7 @@
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 
+import type { StructureContractConfig } from '../config/structureUtils'
 import type { DiscoveryCustomType } from '../config/StructureConfig'
-import type { ContractConfig } from '../config/structureUtils'
 import type { HandlerResult } from '../handlers/Handler'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
@@ -73,7 +73,7 @@ export class AddressAnalyzer {
   async analyze(
     provider: IProvider,
     address: EthereumAddress,
-    config: ContractConfig,
+    config: StructureContractConfig,
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)

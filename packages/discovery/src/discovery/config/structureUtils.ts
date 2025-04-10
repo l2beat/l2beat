@@ -20,19 +20,19 @@ export function buildSharedModuleIndex(
   return result
 }
 
-export type ContractOverrides = StructureContract & {
+export type StructureContractOverrides = StructureContract & {
   name?: string // TODO(radomski): This is required?
   address: EthereumAddress
 }
 
-export type ContractConfig = ContractOverrides & {
+export type StructureContractConfig = StructureContractOverrides & {
   pushValues: (arg: StructureContract) => void
 }
 
 export function makeEntryStructureConfig(
   config: Pick<StructureConfig, 'overrides' | 'types'>,
   address: EthereumAddress,
-): ContractConfig {
+): StructureContractConfig {
   const override =
     config.overrides?.[address.toString()] ?? StructureContract.parse({})
 
