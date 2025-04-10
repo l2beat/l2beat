@@ -8,6 +8,7 @@
       "priceId": "zkfair",
       "symbol": "ZKF",
       "name": "ZKF",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "zkfair",
@@ -16,8 +17,7 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -25,6 +25,7 @@
       "priceId": "zkspace",
       "symbol": "ZKS",
       "name": "Zks",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13585/large/image_2024-01-16_172847810.png?1705397359",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
@@ -35,8 +36,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/13585/large/image_2024-01-16_172847810.png?1705397359"
+      "isAssociated": false
     }
   ]
 }

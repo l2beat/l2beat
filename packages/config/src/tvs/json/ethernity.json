@@ -8,6 +8,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -18,8 +19,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -27,6 +27,7 @@
       "priceId": "ethernity-chain",
       "symbol": "ERN",
       "name": "@EthernityChain $ERN Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14238/large/logo_black.png?1715198164",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xBBc2AE13b23d715c30720F079fcd9B4a74093505",
@@ -37,8 +38,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/14238/large/logo_black.png?1715198164"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -46,6 +46,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -70,8 +71,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -79,6 +79,7 @@
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
@@ -89,8 +90,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -98,6 +98,7 @@
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
@@ -108,8 +109,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/12504/large/uniswap-logo.png?1720676669"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -117,6 +117,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -127,8 +128,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+      "isAssociated": false
     }
   ]
 }

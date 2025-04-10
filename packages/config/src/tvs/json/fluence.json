@@ -8,6 +8,7 @@
       "priceId": "fluence-2",
       "symbol": "FLT",
       "name": "Fluence",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36339/large/IMG_3928.png?1727165842",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -32,8 +33,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36339/large/IMG_3928.png?1727165842"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -41,6 +41,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -51,8 +52,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+      "isAssociated": false
     }
   ]
 }

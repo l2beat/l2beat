@@ -8,6 +8,7 @@
       "priceId": "constitutiondao",
       "symbol": "PEOPLE",
       "name": "ConstitutionDAO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20612/large/GN_UVm3d_400x400.jpg?1696520017",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71",
@@ -18,8 +19,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/20612/large/GN_UVm3d_400x400.jpg?1696520017"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -27,6 +27,7 @@
       "priceId": "mountain-protocol-usdm",
       "symbol": "USDM",
       "name": "Mountain Protocol USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31719/large/usdm.png?1696530540",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
@@ -37,8 +38,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31719/large/usdm.png?1696530540"
+      "isAssociated": false
     }
   ]
 }
