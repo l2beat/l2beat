@@ -1,4 +1,3 @@
-import path from 'path'
 import {
   ConfigReader,
   TemplateService,
@@ -8,7 +7,7 @@ import {
   saveDiscoveredJson,
 } from '@l2beat/discovery'
 import { command } from 'cmd-ts'
-import { updateDiffHistoryHash } from '../implementations/discovery/hashing'
+import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const Colorize = command({
   name: 'colorize',
@@ -37,12 +36,7 @@ export const Colorize = command({
 
         await saveDiscoveredJson(colorized, projectDiscoveryFolder)
 
-        updateDiffHistoryHash(
-          configReader,
-          path.join(projectDiscoveryFolder, 'diffHistory.md'),
-          config.name,
-          config.chain,
-        )
+        updateDiffHistory(config.name, config.chain)
       }
     }
   },
