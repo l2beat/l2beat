@@ -115,7 +115,7 @@ function Details({
       )}
     >
       <div>
-        <p className="text-2xs font-bold text-secondary">
+        <p className="text-2xs font-bold uppercase text-secondary">
           {formatDate(selectedMilestone.date.slice(0, 10))} •{' '}
           {selectedMilestone.projectName}
         </p>
