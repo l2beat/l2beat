@@ -18,7 +18,7 @@ describe(DiscoveryRunner.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
       const sourceConfig: ConfigRegistry = new ConfigRegistry({
-        ...getMockConfig().config,
+        ...getMockConfig().structure,
       })
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({

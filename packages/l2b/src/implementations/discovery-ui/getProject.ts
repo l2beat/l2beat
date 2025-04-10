@@ -72,7 +72,7 @@ export function getProject(
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
-          config.config,
+          config.structure,
           entry.address,
         )
 
@@ -84,7 +84,7 @@ export function getProject(
         }
 
         const contractColorConfig = makeEntryColorConfig(
-          config.colorConfig,
+          config.color,
           entry.address,
           templateService.loadContractTemplateColor(entry.template),
         )
@@ -99,7 +99,7 @@ export function getProject(
         )
       })
       .sort(orderAddressEntries)
-    const initialAddresses = config.config.initialAddresses.map(
+    const initialAddresses = config.structure.initialAddresses.map(
       (address) => `${getChainShortName(chain)}:${address}`,
     )
 

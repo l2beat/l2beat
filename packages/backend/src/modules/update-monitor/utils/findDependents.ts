@@ -10,7 +10,7 @@ export function findDependents(
   const configs = configReader.readAllConfigsForChain(chain)
   const dependents: string[] = []
   for (const config of configs) {
-    if (config.config.sharedModules.includes(name)) {
+    if (config.structure.sharedModules.includes(name)) {
       dependents.push(config.name)
     }
   }

@@ -19,8 +19,8 @@ describe(shouldSkip.name, () => {
         }),
       },
     })
-    const index = buildSharedModuleIndex(config.config)
-    const result = shouldSkip(address, config.config, index, 0, 1)
+    const index = buildSharedModuleIndex(config.structure)
+    const result = shouldSkip(address, config.structure, index, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -54,8 +54,8 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       sharedModules: ['SharedFoo'],
     })
-    const index = buildSharedModuleIndex(config.config, configReader)
-    const result = shouldSkip(address, config.config, index, 0, 1)
+    const index = buildSharedModuleIndex(config.structure, configReader)
+    const result = shouldSkip(address, config.structure, index, 0, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -67,8 +67,8 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxDepth: 1,
     })
-    const index = buildSharedModuleIndex(config.config)
-    const result = shouldSkip(address, config.config, index, 2, 1)
+    const index = buildSharedModuleIndex(config.structure)
+    const result = shouldSkip(address, config.structure, index, 2, 1)
     expect(result).not.toEqual(undefined)
   })
 
@@ -80,8 +80,8 @@ describe(shouldSkip.name, () => {
       initialAddresses: [],
       maxAddresses: 1,
     })
-    const index = buildSharedModuleIndex(config.config)
-    const result = shouldSkip(address, config.config, index, 0, 2)
+    const index = buildSharedModuleIndex(config.structure)
+    const result = shouldSkip(address, config.structure, index, 0, 2)
     expect(result).not.toEqual(undefined)
   })
 
@@ -92,8 +92,8 @@ describe(shouldSkip.name, () => {
       chain: 'ethereum',
       initialAddresses: [],
     })
-    const index = buildSharedModuleIndex(config.config)
-    const result = shouldSkip(address, config.config, index, 0, 1)
+    const index = buildSharedModuleIndex(config.structure)
+    const result = shouldSkip(address, config.structure, index, 0, 1)
     expect(result).toEqual(undefined)
   })
 })

@@ -257,7 +257,7 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
-      configHash: hashJsonStable(projectConfig.config),
+      configHash: hashJsonStable(projectConfig.structure),
     })
 
     await this.db.flatSources.upsert({
@@ -296,7 +296,7 @@ export class UpdateMonitor {
     let previousDiscovery: DiscoveryOutput
     if (
       databaseEntry &&
-      databaseEntry.configHash === hashJsonStable(projectConfig.config)
+      databaseEntry.configHash === hashJsonStable(projectConfig.structure)
     ) {
       this.logger.info('Using database record', {
         chain: runner.chain,

@@ -25,7 +25,7 @@ export const Colorize = command({
     for (const config of chainConfigs) {
       const discovery = configReader.readDiscovery(config.name, config.chain)
       const copy = structuredClone(discovery)
-      const color = colorize(config.colorConfig, copy, templateService)
+      const color = colorize(config.color, copy, templateService)
 
       const colorized = combineStructureAndColor(copy, color)
       const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)

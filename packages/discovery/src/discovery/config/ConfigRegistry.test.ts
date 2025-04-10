@@ -34,7 +34,7 @@ const CONFIG = new ConfigRegistry({
 describe(ConfigRegistry.name, () => {
   describe('overrides', () => {
     it('gets override for given address, ignoring common name since it is already named', () => {
-      const result = makeEntryStructureConfig(CONFIG.config, ADDRESS_B)
+      const result = makeEntryStructureConfig(CONFIG.structure, ADDRESS_B)
       expect(result.address).toEqual(ADDRESS_B)
     })
   })

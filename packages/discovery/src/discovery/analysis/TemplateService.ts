@@ -236,8 +236,8 @@ export class TemplateService {
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
         if (
-          makeEntryStructureConfig(config.config, contract.address).extends ===
-          undefined
+          makeEntryStructureConfig(config.structure, contract.address)
+            .extends === undefined
         ) {
           if (matchingTemplates.length === 0) {
             return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
@@ -251,7 +251,7 @@ export class TemplateService {
       }
     }
 
-    if (discovery.configHash !== hashJsonStable(config.config)) {
+    if (discovery.configHash !== hashJsonStable(config.structure)) {
       return 'project config or used template has changed'
     }
 

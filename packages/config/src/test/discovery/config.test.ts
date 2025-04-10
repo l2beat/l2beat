@@ -143,10 +143,10 @@ describe('discovery config.jsonc', () => {
     describe('every override correspond to existing contract', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
-          for (const key of Object.keys(c.config.overrides ?? {})) {
+          for (const key of Object.keys(c.structure.overrides ?? {})) {
             it(`${c.name} on ${c.chain} with the override ${key}`, () => {
               expect(() =>
-                makeEntryStructureConfig(c.config, EthereumAddress(key)),
+                makeEntryStructureConfig(c.structure, EthereumAddress(key)),
               ).not.toThrow()
             })
           }
@@ -158,7 +158,7 @@ describe('discovery config.jsonc', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
           it(`${c.name} on ${c.chain}`, () => {
-            for (const sharedModule of c.config.sharedModules) {
+            for (const sharedModule of c.structure.sharedModules) {
               assert(
                 chainConfigs?.flat()?.some((x) => x.name === sharedModule),
                 `Shared module ${sharedModule} does not exist (${c.name})`,
@@ -177,7 +177,7 @@ describe('discovery config.jsonc', () => {
           it(`${c.name}:${c.chain}`, () => {
             for (const entry of discovery.entries) {
               const fields = makeEntryStructureConfig(
-                c.config,
+                c.structure,
                 entry.address,
               ).fields
               for (const [key, value] of Object.entries(fields)) {
@@ -198,13 +198,13 @@ describe('discovery config.jsonc', () => {
   it('every name in config.jsonc is unique', () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        if (c.colorConfig.names === undefined) {
+        if (c.color.names === undefined) {
           continue
         }
 
         assert(
-          new Set(Object.values(c.colorConfig.names)).size ===
-            Object.values(c.colorConfig.names).length,
+          new Set(Object.values(c.color.names)).size ===
+            Object.values(c.color.names).length,
           `names field in ${c.name} configuration includes duplicate names`,
         )
       }

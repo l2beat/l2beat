@@ -56,7 +56,7 @@ export class ConfigReader {
 
     const config = new ConfigRegistry(rawConfig)
 
-    assert(config.config.chain === chain, 'Chain mismatch in config.jsonc')
+    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }

@@ -316,7 +316,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: DISCOVERY_RESULT,
-          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
         upsert: async () => undefined,
       })
@@ -359,7 +359,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: DISCOVERY_RESULT,
-          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
         upsert: async () => undefined,
       })
@@ -404,7 +404,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: { ...DISCOVERY_RESULT, blockNumber: BLOCK_NUMBER - 1 },
-          configHash: hashJsonStable(config.config),
+          configHash: hashJsonStable(config.structure),
           blockNumber: BLOCK_NUMBER - 1,
         }),
         upsert: async () => undefined,
@@ -563,7 +563,7 @@ describe(UpdateMonitor.name, () => {
       const dbEntry = {
         ...mockRecord,
         discovery: { ...mockProject, entries: COMMITTED },
-        configHash: hashJsonStable(mockConfig(PROJECT_A).config),
+        configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -627,7 +627,7 @@ describe(UpdateMonitor.name, () => {
             ...mockProject,
             entries: dbEntry,
           },
-          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
       })
 
@@ -666,7 +666,7 @@ describe(UpdateMonitor.name, () => {
             entries: dbEntry,
             blockNumber: BLOCK_NUMBER - 1,
           },
-          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
       })
 
