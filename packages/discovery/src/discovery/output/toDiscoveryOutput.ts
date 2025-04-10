@@ -1,4 +1,4 @@
-import type { Hash256 } from '@l2beat/shared-pure'
+import { type Hash256, undefinedIfEmpty } from '@l2beat/shared-pure'
 import type { DiscoveryOutput, EntryParameters } from './types'
 
 import type { Analysis } from '../analysis/AddressAnalyzer'
@@ -133,14 +133,6 @@ function getEntries(results: Analysis[]): {
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
-}
-
-export function undefinedIfEmpty<T>(array: T[]): T[] | undefined {
-  if (array.length === 0) {
-    return undefined
-  }
-
-  return array
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
