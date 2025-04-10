@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Default ERC20 token contract deployed by the Near Omni Bridge for any tokens that are bridged from other chains to ethereum."
+}

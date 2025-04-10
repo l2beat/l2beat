@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main bridge contract validating withdrawals, taking deposits and escrowing funds.",
+  "ignoreMethods": ["proxiableUUID", "paused"],
+  "ignoreInWatchMode": ["currentOriginNonce"],
+  "types": {
+    "PauseFlags": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "Unpaused",
+        "1": "Deposits Paused",
+        "2": "Withdrawals Paused",
+        "3": "Deposits/Withdrawals Paused"
+      }
+    }
+  },
+  "fields": {
+    "nearBridgeDerivedAddress": {
+      "description": "The derived address controlled by the MPC setup, used for signing withdrawals from the escrow on Ethereum.",
+      "severity": "HIGH"
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "upgrade"
+        },
+        {
+          "type": "interact",
+          "description": "manage all access control roles, upgrade deployed contracts for BridgeTokens, set metadata and config values, manage token registrations, pause and unpause."
+        }
+      ]
+    },
+    "pauseAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "PAUSABLE_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the bridge for deposits and withdrawals."
+        }
+      ]
+    },
+    "pausedFlags": {
+      "severity": "HIGH",
+      "returnType": "(PauseFlags)"
+    }
+  }
+}

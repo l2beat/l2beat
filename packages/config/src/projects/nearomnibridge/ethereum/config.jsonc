@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "nearomnibridge",
+  "import": ["../../ethereumConfig.jsonc"],
+  "initialAddresses": ["0xe00c629aFaCCb0510995A2B95560E446A24c85B9"],
+  "names": {
+    "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "Near Multisig"
+  },
+  "overrides": {}
+}
