@@ -5,6 +5,7 @@ import type {
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -49,7 +50,7 @@ export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
-  isArchived: boolean
+  archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
   underReviewStatus: UnderReviewStatus
@@ -114,7 +115,7 @@ export async function getScalingProjectEntry(
     | 'customDa'
     | 'chainConfig'
     | 'isUpcoming'
-    | 'isArchived'
+    | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
   >,
@@ -185,7 +186,7 @@ export async function getScalingProjectEntry(
       isUnderReview: !!project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
+    archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
     header,

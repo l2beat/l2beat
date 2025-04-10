@@ -19,7 +19,7 @@ export async function getBridgeRiskEntries() {
     ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
       where: ['isBridge'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 

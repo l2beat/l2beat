@@ -1,6 +1,7 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { ValueSecuredBreakdown as ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
+import { ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
 import {
   Tooltip,
   TooltipContent,
@@ -28,7 +29,7 @@ interface ValueSecuredBreakdown {
 export interface ValueSecuredSummaryProps {
   tvs: NonNullable<ProjectScalingEntry['header']['tvs']> | undefined
   detailedBreakdownHref: string
-  isArchived?: boolean
+  archivedAt?: UnixTime | undefined
 }
 
 export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
@@ -74,7 +75,7 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
         </span>
 
         <div className="flex items-center gap-1">
-          {params.breakdown.total > 0 || props.isArchived ? (
+          {params.breakdown.total > 0 || !!props.archivedAt ? (
             <ValueWithPercentageChange
               className="text-lg font-bold md:text-2xl md:leading-none"
               changeClassName="text-xs font-bold md:text-base md:w-[58px]"

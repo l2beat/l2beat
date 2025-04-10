@@ -53,7 +53,7 @@ export async function getEcosystemProjectEntry(
     ],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),

@@ -10,7 +10,7 @@ export const sollet: Bridge = {
   type: 'bridge',
   id: ProjectId('sollet'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'Sollet',
     slug: 'sollet',

@@ -12,7 +12,7 @@ export async function getVerifiers() {
   const db = getDb()
   const projects = await ps.getProjects({
     select: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
 
   const coercedQueries = projects
@@ -34,7 +34,7 @@ export async function getVerifiers() {
 async function getMockVerifiers() {
   const projects = await ps.getProjects({
     select: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   return projects
     .flatMap((p) => p.proofVerification.verifiers)

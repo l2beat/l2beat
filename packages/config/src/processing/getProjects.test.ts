@@ -129,7 +129,7 @@ describe('getProjects', () => {
         (project) =>
           !project.isUpcoming &&
           !project.isUnderReview &&
-          !project.isArchived &&
+          !project.archivedAt &&
           // TODO: Ideally the category check should be removed, but
           // hyperliquid and polygon-pos are exceptions that would fail the test
           (project.display.category === 'Optimium' ||
@@ -490,7 +490,9 @@ describe('getProjects', () => {
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
       return (
-        p.isScaling === true && p.isArchived !== true && p.isUpcoming !== true
+        p.isScaling === true &&
+        p.archivedAt === undefined &&
+        p.isUpcoming !== true
       )
     }
 

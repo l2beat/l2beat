@@ -3,9 +3,9 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   NEW_CRYPTOGRAPHY,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -30,9 +30,9 @@ const isForcedBatchDisallowed =
 
 export const gpt: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  archivedAt: UnixTime(1737676800), // 2025-01-24T00:00:00.000Z,
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['AI'],
-  isArchived: true,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'GPT Protocol',

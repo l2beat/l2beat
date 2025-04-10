@@ -254,6 +254,11 @@ export const degate3: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/degatedev/degate-state-recover',
+      additionalConsiderations: {
+        short:
+          'Degate provides an orderbook decentralized exchange for spot trading. Arbitrary contracts are not supported.',
+        long: 'Degate provides an orderbook decentralized exchange for spot trading. Arbitrary contracts are not supported.',
+      },
     },
   ),
   technology: {

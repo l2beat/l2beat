@@ -89,7 +89,7 @@ export interface PolygonCDKStackConfig {
   additionalBadges?: Badge[]
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
-  isArchived?: boolean
+  archivedAt?: UnixTime
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
@@ -145,7 +145,7 @@ export function polygonCDKStack(
     addedAt: templateVars.addedAt,
     id: ProjectId(templateVars.discovery.projectName),
     capability: templateVars.capability ?? 'universal',
-    isArchived: templateVars.isArchived,
+    archivedAt: templateVars.archivedAt,
     display: {
       ...templateVars.display,
       upgradesAndGovernanceImage: 'polygoncdk',
