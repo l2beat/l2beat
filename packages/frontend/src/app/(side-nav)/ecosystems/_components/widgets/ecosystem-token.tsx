@@ -4,7 +4,7 @@ import type { EcosystemToken } from '~/server/features/ecosystems/get-ecosystem-
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { formatNumber } from '~/utils/number-format/format-number'
-import { EcosystemWidget } from './ecosystem-widget'
+import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 interface Props {
   token: EcosystemToken
@@ -13,10 +13,9 @@ interface Props {
 
 export function EcosystemToken({ token, className }: Props) {
   return (
-    <EcosystemWidget
-      className={cn('flex flex-col justify-between gap-4', className)}
-    >
-      <div>
+    <EcosystemWidget className={className}>
+      <EcosystemWidgetTitle>Ecosystem Token</EcosystemWidgetTitle>
+      <div className="grid md:grid-cols-3 lg:grid-cols-1">
         <div className="flex items-center gap-2 text-xl font-medium">
           <Image
             src={token.logo}
@@ -28,11 +27,11 @@ export function EcosystemToken({ token, className }: Props) {
           <p>{token.name}</p>
           <p className="text-secondary">{token.symbol}</p>
         </div>
-        <p className="mt-2 text-2xs font-medium text-secondary">
+        <p className="mt-2 text-2xs font-medium text-secondary md:max-lg:col-span-2">
           {token.description}
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="mt-4 grid grid-cols-3 gap-2">
         <DataTile label="Price">
           <span>{formatCurrency(token.data.price.value, 'usd')}</span>
           <PercentChange className="ml-0.5" value={token.data.price.change} />
@@ -44,7 +43,7 @@ export function EcosystemToken({ token, className }: Props) {
             value={token.data.marketCap.change}
           />
         </DataTile>
-        <DataTile label="Circulating Supply" className="col-span-2">
+        <DataTile label="Circulating Supply">
           <span>{`${formatNumber(token.data.amount.value)}`}</span>
           <PercentChange className="ml-0.5" value={token.data.amount.change} />
         </DataTile>

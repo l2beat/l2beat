@@ -87,7 +87,7 @@ export default async function Page({ params }: Props) {
             allScalingProjectsUops={ecosystem.allScalingProjects.uops}
             className="col-span-12 md:col-span-6"
           />
-          <div className="col-span-12 grid gap-[--spacing] md:hidden md:grid-cols-2">
+          <div className="col-span-12 grid gap-[--spacing] lg:hidden lg:grid-cols-2">
             <EcosystemBuildOnLink
               name={ecosystem.name}
               slug={slug}
@@ -117,9 +117,9 @@ export default async function Page({ params }: Props) {
           />
           <EcosystemToken
             token={ecosystem.token}
-            className="col-span-12 md:col-span-6"
+            className="col-span-12 lg:col-span-6"
           />
-          <div className="col-span-12 grid grid-rows-2 gap-[--spacing] max-md:hidden md:col-span-6">
+          <div className="col-span-12 grid grid-rows-2 gap-[--spacing] max-lg:hidden md:col-span-6">
             <EcosystemBuildOnLink
               name={ecosystem.name}
               slug={slug}
