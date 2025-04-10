@@ -9,7 +9,7 @@ import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 import { EcosystemBuildOnLink } from '../_components/widgets/ecosystem-build-on-link'
-import { EcosystemProjectsByDaLayer } from '../_components/widgets/ecosystem-da-layers-used'
+import { EcosystemProjectsByDaLayer } from '../_components/widgets/ecosystem-projects-by-da-layer'
 import { EcosystemGovernanceLinks } from '../_components/widgets/ecosystem-governance-links'
 import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
 import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
@@ -137,11 +137,11 @@ export default async function Page({ params }: Props) {
           />
           <EcosystemProjectsByRaas
             projectsByRaas={ecosystem.projectsByRaas}
-            className="col-span-12 md:col-span-4"
+            className="col-span-12 lg:col-span-4"
           />
           <EcosystemGovernanceLinks
             links={ecosystem.links.governance}
-            className="col-span-12 md:col-span-8"
+            className="col-span-12 lg:col-span-8"
           />
         </main>
         <EcosystemProjectsTable entries={ecosystem.projects} />

@@ -13,23 +13,29 @@ export function EcosystemProjectsByRaas({
   return (
     <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>RaaS Providers</EcosystemWidgetTitle>
-      <div className="flex flex-col gap-2">
+      <table className="w-full">
         {Object.entries(projectsByRaas).map(([raas, projects]) => (
-          <div key={raas} className="flex justify-between gap-2">
-            <div className="flex items-center gap-1.5">
-              <Image
-                src={`/icons/${raas.toLowerCase()}.png`}
-                className="rounded-sm"
-                alt={raas}
-                width={20}
-                height={20}
-              />
-              <div className="whitespace-nowrap text-xs font-bold">{raas}</div>
-            </div>
-            <ProjectsUsedIn usedIn={projects} />
-          </div>
+          <tr key={raas}>
+            <td className="w-full pb-1.5 pr-4">
+              <div className="flex items-center gap-1.5">
+                <Image
+                  src={`/icons/${raas.toLowerCase()}.png`}
+                  className="rounded-sm"
+                  alt={raas}
+                  width={20}
+                  height={20}
+                />
+                <div className="whitespace-nowrap text-xs font-bold">
+                  {raas}
+                </div>
+              </div>
+            </td>
+            <td className="whitespace-pre">
+              <ProjectsUsedIn usedIn={projects} maxProjects={4} />
+            </td>
+          </tr>
         ))}
-      </div>
+      </table>
     </EcosystemWidget>
   )
 }
