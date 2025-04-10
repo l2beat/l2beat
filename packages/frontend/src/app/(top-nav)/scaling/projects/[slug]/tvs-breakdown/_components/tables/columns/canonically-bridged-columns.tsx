@@ -29,6 +29,19 @@ export function getCanonicallyBridgedColumns() {
       },
     }),
     columnHelper.display({
+      id: 'escrow',
+      header: 'Escrow',
+      cell: (ctx) => {
+        const { escrow } = ctx.row.original
+        if (!escrow) return '-'
+
+        if (escrow === 'multiple')
+          return <div className="text-xs font-medium">Multiple</div>
+
+        return <TokenAddressCell address={escrow.address} url={escrow.url} />
+      },
+    }),
+    columnHelper.display({
       id: 'value',
       header: 'Value',
       meta: {

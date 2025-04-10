@@ -9,15 +9,19 @@ import type {
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 
-export type TokenAddress = {
+export type Address = {
   address: EthereumAddress
   chain: string
 }
 
-export function extractAddresses(token: TvsToken): TokenAddress[] {
-  if (!token.amount) return []
+export function extractAddresses(token: TvsToken): {
+  addresses: Address[]
+  escrows: Address[]
+} {
+  if (!token.amount) return { addresses: [], escrows: [] }
 
-  const addresses: TokenAddress[] = []
+  const addresses: Address[] = []
+  const escrows: Address[] = []
 
   function collectFromFormula(
     formula: CalculationFormula | ValueFormula | AmountFormula,
@@ -33,6 +37,10 @@ export function extractAddresses(token: TvsToken): TokenAddress[] {
             chain: formula.chain,
           })
         }
+        escrows.push({
+          address: formula.escrowAddress,
+          chain: formula.chain,
+        })
         break
       case 'totalSupply':
         if (formula.address !== 'native') {
@@ -52,5 +60,8 @@ export function extractAddresses(token: TvsToken): TokenAddress[] {
 
   collectFromFormula(token.amount as Formula)
 
-  return uniqBy(addresses, 'address')
+  return {
+    addresses: uniqBy(addresses, 'address'),
+    escrows: uniqBy(escrows, 'address'),
+  }
 }

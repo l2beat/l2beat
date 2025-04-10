@@ -52,7 +52,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
       breakdown,
     }
   },
-  ['getCachedTvsBreakdownForProjectx'],
+  ['getCachedTvsBreakdownForProject'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,

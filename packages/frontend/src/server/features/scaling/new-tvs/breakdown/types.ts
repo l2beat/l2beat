@@ -1,6 +1,13 @@
 import type { TvsToken } from '@l2beat/config'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
+type AddressData =
+  | {
+      address: EthereumAddress
+      url?: string
+    }
+  | 'multiple'
+
 export type BaseAssetBreakdownData = {
   id: TvsToken['id']
   symbol: TvsToken['symbol']
@@ -10,15 +17,12 @@ export type BaseAssetBreakdownData = {
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
-  address?:
-    | {
-        address: EthereumAddress
-        url?: string
-      }
-    | 'multiple'
+  address?: AddressData
 }
 
-export type CanonicalAssetBreakdownData = BaseAssetBreakdownData
+export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
+  escrow?: AddressData
+}
 export type ExternalAssetBreakdownData = BaseAssetBreakdownData
 export type NativeAssetBreakdownData = BaseAssetBreakdownData
 

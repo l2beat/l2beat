@@ -2,8 +2,12 @@ import type { ChainConfig, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
-import type { BaseAssetBreakdownData, BreakdownRecord } from './types'
-import type { TokenAddress } from './extract-addresses'
+import type {
+  BaseAssetBreakdownData,
+  BreakdownRecord,
+  CanonicalAssetBreakdownData,
+} from './types'
+import type { Address } from './extract-addresses'
 import { extractAddresses } from './extract-addresses'
 
 export async function getTvsBreakdown(
@@ -22,7 +26,7 @@ export async function getTvsBreakdown(
     const tokenValue = tokenValuesMap.get(token.id)
     if (!tokenValue) continue
 
-    const addresses = extractAddresses(token)
+    const { addresses, escrows } = extractAddresses(token)
     const address = processAddresses(addresses, chains)
 
     const tokenWithValues: BaseAssetBreakdownData = {
@@ -35,9 +39,15 @@ export async function getTvsBreakdown(
     }
 
     switch (token.source) {
-      case 'canonical':
-        breakdown.canonical.push(tokenWithValues)
+      case 'canonical': {
+        const escrow = processAddresses(escrows, chains)
+        const canonicalTokenWithValues: CanonicalAssetBreakdownData = {
+          ...tokenWithValues,
+          escrow,
+        }
+        breakdown.canonical.push(canonicalTokenWithValues)
         break
+      }
       case 'external':
         breakdown.external.push(tokenWithValues)
         break
@@ -53,7 +63,7 @@ export async function getTvsBreakdown(
 }
 
 function processAddresses(
-  addresses: TokenAddress[],
+  addresses: Address[],
   chains: ChainConfig[],
 ): BaseAssetBreakdownData['address'] {
   if (addresses.length > 1) {
