@@ -23,6 +23,7 @@ import {
 } from '../scaling/summary/get-scaling-summary-entries'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
+import { getBlobsData, type BlobsData } from './get-blobs-data'
 import type { EcosystemProjectsCountData } from './get-ecosystem-projects-chart-data'
 import { getEcosystemProjectsChartData } from './get-ecosystem-projects-chart-data'
 import type { EcosystemToken } from './get-ecosystem-token'
@@ -56,6 +57,7 @@ export interface EcosystemEntry {
   tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
   projectsByDaLayer: ProjectsByDaLayer
+  blobsData: BlobsData
   projectsByRaas: ProjectByRaas
   token: EcosystemToken
   links: {
@@ -144,6 +146,7 @@ export async function getEcosystemEntry(
     tvsByStage: getTvsByStage(ecosystemProjects, tvs),
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
     projectsByDaLayer: getProjectsByDaLayer(ecosystemProjects),
+    blobsData: await getBlobsData(ecosystemProjects),
     projectsByRaas: getProjectsByRaas(ecosystemProjects),
     token: await getEcosystemToken(ecosystem, ecosystemProjects),
     projectsChartData: getEcosystemProjectsChartData(

@@ -109,6 +109,7 @@ export default async function Page({ params }: Props) {
           />
           <EcosystemProjectsByDaLayer
             projectsByDaLayer={ecosystem.projectsByDaLayer}
+            blobsData={ecosystem.blobsData}
             className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
           />
           <EcosystemsProjectsChart
