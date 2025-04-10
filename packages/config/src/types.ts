@@ -1,5 +1,4 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { TokenId, stringAs } from '@l2beat/shared-pure'
 import {
   type ChainId,
   EthereumAddress,
@@ -7,8 +6,10 @@ import {
   type StringWithAutocomplete,
   type Token,
   type TokenBridgedUsing,
+  TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
+  stringAs,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -317,7 +318,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
-  daLayer: string
+  daLayer: string | undefined
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
