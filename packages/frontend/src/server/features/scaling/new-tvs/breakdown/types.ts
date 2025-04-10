@@ -1,4 +1,5 @@
 import type { TvsToken } from '@l2beat/config'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export type BaseAssetBreakdownData = {
   id: TvsToken['id']
@@ -9,6 +10,12 @@ export type BaseAssetBreakdownData = {
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
+  address?:
+    | {
+        address: EthereumAddress
+        url?: string
+      }
+    | 'multiple'
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData

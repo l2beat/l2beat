@@ -5,6 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 import { getTvsBreakdown } from './get-tvs-breakdown'
+import { ps } from '~/server/projects'
 
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 
@@ -22,6 +23,12 @@ type TvsBreakdownForProject = Awaited<
 >
 export const getCachedTvsBreakdownForProjectData = cache(
   async (project: Project<'tvsConfig', 'chainConfig' | 'contracts'>) => {
+    const chains = (
+      await ps.getProjects({
+        select: ['chainConfig'],
+      })
+    ).map((x) => x.chainConfig)
+
     const targetTimestamp = getTvsTargetTimestamp()
     const db = getDb()
     const tokenValues = await db.tvsTokenValue.getByProjectAndTimestamp(
@@ -36,6 +43,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
     const breakdown = await getTvsBreakdown(
       project.tvsConfig,
       tokenValuesMap,
+      chains,
       project.chainConfig?.gasTokens,
     )
 
@@ -44,7 +52,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
       breakdown,
     }
   },
-  ['getCachedTvsBreakdownForProject'],
+  ['getCachedTvsBreakdownForProjectx'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,

@@ -3,6 +3,7 @@ import type { CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { TokenCanonicalAmountCell } from '../cells/token-canonical-amount-cell'
 import { TokenCanonicalValueCell } from '../cells/token-canonical-value-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
+import { TokenAddressCell } from '../cells/token-address-cell'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
 export function getCanonicallyBridgedColumns() {
@@ -11,14 +12,20 @@ export function getCanonicallyBridgedColumns() {
       id: 'token',
       header: 'Token',
       cell: (ctx) => {
-        // Do not bloat table if parent row is expanded
-        const parentRow = ctx.row.getParentRow()
-
-        if (parentRow?.getIsExpanded()) {
-          return null
-        }
-
         return <TokenNameCell {...ctx.row.original} />
+      },
+    }),
+    columnHelper.display({
+      id: 'contract',
+      header: 'Contract',
+      cell: (ctx) => {
+        const { address } = ctx.row.original
+        if (!address) return '-'
+
+        if (address === 'multiple')
+          return <div className="text-xs font-medium">Multiple</div>
+
+        return <TokenAddressCell address={address.address} url={address.url} />
       },
     }),
     columnHelper.display({
@@ -28,15 +35,9 @@ export function getCanonicallyBridgedColumns() {
         align: 'right',
       },
       cell: (ctx) => {
-        const isParentMultiEscrow = false
         const { usdValue } = ctx.row.original
 
-        return (
-          <TokenCanonicalValueCell
-            usdValue={usdValue}
-            isDescendant={isParentMultiEscrow}
-          />
-        )
+        return <TokenCanonicalValueCell usdValue={usdValue} />
       },
     }),
     columnHelper.display({
@@ -50,12 +51,9 @@ export function getCanonicallyBridgedColumns() {
 
         const { amount } = ctx.row.original
 
-        const isPreminted = false
-
         return (
           <TokenCanonicalAmountCell
             amount={amount}
-            isPreminted={isPreminted}
             isDescendant={isParentMultiEscrow}
           />
         )
