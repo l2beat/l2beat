@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "doctoc": "doctoc ./specs/code_walkthroughs/ '--title=**Table of Contents**'",
+    "doctoc": "doctoc ./specs/ '--title=**Table of Contents**'",
     "build:vercel": "./vercel-build.sh",
     "build": "mdbook build"
   },
