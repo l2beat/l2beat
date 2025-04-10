@@ -5,6 +5,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
+  hashJsonStable,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -256,7 +257,7 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
-      configHash: projectConfig.hash,
+      configHash: hashJsonStable(projectConfig.config),
     })
 
     await this.db.flatSources.upsert({
@@ -293,7 +294,10 @@ export class UpdateMonitor {
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
     let previousDiscovery: DiscoveryOutput
-    if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
+    if (
+      databaseEntry &&
+      databaseEntry.configHash === hashJsonStable(projectConfig.config)
+    ) {
       this.logger.info('Using database record', {
         chain: runner.chain,
         project: projectConfig.name,

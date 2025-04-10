@@ -25,6 +25,7 @@ export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSo
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export { neuterErrors } from './discovery/output/errors'
+export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   diffDiscovery,
   type DiscoveryDiff,

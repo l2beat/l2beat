@@ -5,6 +5,7 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   type EntryParameters,
+  hashJsonStable,
 } from '@l2beat/discovery'
 import {
   ChainConverter,
@@ -315,7 +316,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: DISCOVERY_RESULT,
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
         }),
         upsert: async () => undefined,
       })
@@ -358,7 +359,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: DISCOVERY_RESULT,
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
         }),
         upsert: async () => undefined,
       })
@@ -403,7 +404,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: { ...DISCOVERY_RESULT, blockNumber: BLOCK_NUMBER - 1 },
-          configHash: config.hash,
+          configHash: hashJsonStable(config.config),
           blockNumber: BLOCK_NUMBER - 1,
         }),
         upsert: async () => undefined,
@@ -562,7 +563,7 @@ describe(UpdateMonitor.name, () => {
       const dbEntry = {
         ...mockRecord,
         discovery: { ...mockProject, entries: COMMITTED },
-        configHash: mockConfig(PROJECT_A).hash,
+        configHash: hashJsonStable(mockConfig(PROJECT_A).config),
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -626,7 +627,7 @@ describe(UpdateMonitor.name, () => {
             ...mockProject,
             entries: dbEntry,
           },
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
         }),
       })
 
@@ -665,7 +666,7 @@ describe(UpdateMonitor.name, () => {
             entries: dbEntry,
             blockNumber: BLOCK_NUMBER - 1,
           },
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).config),
         }),
       })
 

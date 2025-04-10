@@ -1,11 +1,9 @@
-import { hashJson } from '@l2beat/shared'
-import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { DiscoveryOutput } from '../output/types'
 import { ColorConfig } from './ColorConfig'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
 import { StructureConfig, StructureContract } from './StructureConfig'
-import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
 
 // values inside this class should not be modified during the runtime
@@ -68,10 +66,6 @@ export class ConfigRegistry {
 
   get sharedModules(): string[] {
     return this.config.sharedModules ?? []
-  }
-
-  get hash(): Hash256 {
-    return hashJson(getDiscoveryConfigEntries(this.config))
   }
 
   isInSharedModules(address: EthereumAddress): boolean {

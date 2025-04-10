@@ -1,13 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import path, { join } from 'path'
-
-import { hashJson } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  type json,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { z } from 'zod'
 import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -17,7 +10,7 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
-import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
+import { hashJsonStable } from '../config/hashJsonStable'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -173,7 +166,7 @@ export class TemplateService {
 
   getTemplateHash(template: string): Hash256 {
     const templateJson = this.loadContractTemplate(template)
-    return hashJson(deepSortByKeys(templateJson) as json)
+    return hashJsonStable(templateJson)
   }
 
   getAllShapes(): Record<string, Shape> {
@@ -254,7 +247,7 @@ export class TemplateService {
       }
     }
 
-    if (discovery.configHash !== config.hash) {
+    if (discovery.configHash !== hashJsonStable(config.config)) {
       return 'project config or used template has changed'
     }
 
