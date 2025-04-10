@@ -2,7 +2,7 @@
   "name": "sorare",
   "chain": "ethereum",
   "blockNumber": 21981156,
-  "configHash": "0xecd92e3546df02a1f6f18d5469b4eed75f2d519c9073cbd9415a4a45eae9fb10",
+  "configHash": "0xcd392ec1169adc478a289e138955872d52eee58c6fb494303dd29cf8e6f181e7",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -960,10 +960,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "starkex/Committee": "0xdd0de4efcc59e58eacde5dd5ae89cb67e8ca289b8701d2dde3cd78b38e06c4e0",
-    "starkex/GpsFactRegistryAdapter": "0xd25d19938656386c9c7d88accb6ce40d364c77e8fc0173bf9678eefbb7532a05",
-    "starkex/OrderRegistry": "0xd9645d62193dcf480291c42dcbd47fdad4779ed791d517f5512fed8f0d02e7ab",
-    "starkex/StarkExchange": "0xc96f674125c785b04101cc7151ce7b6c0b3a274c3dee0c55adab1da10ef9576e"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
+    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
+    "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
+    "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
   }
 }

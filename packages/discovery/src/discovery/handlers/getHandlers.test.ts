@@ -1,6 +1,6 @@
 import { expect, mockObject } from 'earl'
 
-import type { ContractConfig } from '../config/ContractConfig'
+import type { StructureContractConfig } from '../config/structureUtils'
 import { getHandlers } from './getHandlers'
 import { ErrorHandler } from './system/ErrorHandler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
@@ -8,7 +8,7 @@ import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { StorageHandler } from './user/StorageHandler'
 
 describe(getHandlers.name, () => {
-  const mockConfig = mockObject<ContractConfig>({
+  const mockConfig = mockObject<StructureContractConfig>({
     fields: {},
     ignoreMethods: [],
   })
@@ -88,7 +88,7 @@ describe(getHandlers.name, () => {
   })
 
   it('ignores methods added to ignore list', () => {
-    const config = mockObject<ContractConfig>({
+    const config = mockObject<StructureContractConfig>({
       ...mockConfig,
       ignoreMethods: ['foo', 'baz', 'flip'],
     })
@@ -113,7 +113,7 @@ describe(getHandlers.name, () => {
   })
 
   it('returns user handlers', () => {
-    const config = mockObject<ContractConfig>({
+    const config = mockObject<StructureContractConfig>({
       ...mockConfig,
       fields: {
         foo: { handler: { type: 'storage', slot: 1 } },
@@ -129,7 +129,7 @@ describe(getHandlers.name, () => {
   })
 
   it('prefers user handlers', () => {
-    const config = mockObject<ContractConfig>({
+    const config = mockObject<StructureContractConfig>({
       ...mockConfig,
       fields: {
         foo: { handler: { type: 'storage', slot: 1 } },
@@ -152,7 +152,7 @@ describe(getHandlers.name, () => {
   })
 
   it('handles constructor errors', () => {
-    const config = mockObject<ContractConfig>({
+    const config = mockObject<StructureContractConfig>({
       ...mockConfig,
       fields: {
         foo: {

@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 22187330,
-  "configHash": "0x85d12ba1f8c528127519bbecea757d6396a6ee8104172d199ebe65c429f8c895",
+  "configHash": "0x818b24d164c21fdad65b6f96c50596e7b4d3e5b9e5566dd2ecea8287d5958d6c",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -250,7 +250,7 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "proxyType": "immutable",
-      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0x0AfaF0f0097246e0aA2a53F3d049D5E6FE75b620,0xEE9b1fbB0453dcD55DD155438Ef8DA902C5D5075] ISM contracts successfully verify a message.",
+      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -485,7 +485,7 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "proxyType": "immutable",
-      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.",
+      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
       "sinceTimestamp": 1726246067,
       "sinceBlock": 20742981,
       "values": {
@@ -505,10 +505,10 @@
         "threshold": 1
       },
       "fieldMeta": {
+        "modules": { "severity": "HIGH" },
         "modulesAndThreshold": {
           "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
-        },
-        "modules": { "severity": "HIGH" }
+        }
       },
       "derivedName": "StaticAggregationIsm"
     },
@@ -1463,9 +1463,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "hyperlane/HypERC20Collateral": "0x46c58559ac8d2fc451fbbab33cf64336a6aaa4dc5b502f4086228c68f1f24409",
-    "hyperlane/StaticAggregationIsm": "0x4f2401354384aa0c656d98aad03631095cf0348fc2c01470e09a403572e126aa"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "hyperlane/HypERC20Collateral": "0x455d9fac67cb70e193347258fde0eb088bef75b179cfaff2dd52e0fdc2efdf96",
+    "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   }
 }

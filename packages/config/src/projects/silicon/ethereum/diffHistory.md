@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x98a149607a828c81678981d1105eb9b2b1de86a9
+
+# Diff at Thu, 10 Apr 2025 14:43:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21766766
+- current block number: 21766766
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766766 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
 Generated with discovered.json: 0x78f496a41665f5cc37b25b0e205db5d89d9a2808
 
 # Diff at Wed, 19 Mar 2025 13:05:32 GMT:

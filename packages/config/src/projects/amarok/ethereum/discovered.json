@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0x101988036e141a78ff7ef360254e34975c65cbc24472b8137cd2e5155902b8e8",
+  "configHash": "0x3b35167353ea141501f970598e30615ddc43f0813ea3e4daa35f9f53d4d0d90a",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -3881,8 +3881,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x2e1de0bd5e66100a21bb99c944222818a507084747c6cd8508cb4f9c82d72f50",
-    "amarok/RelayerProxyHub": "0xb39f11377aa3c325a9ed116aaab55ff76bac6f6a69bef647bd3425cabb652eaa",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "amarok/Relayer": "0xc06497ad0c634f581d93cefc639ed852334cd7fa0219bc93d7c9400a8e2e8815",
+    "amarok/RelayerProxyHub": "0xabf44b5af1f5a5287b387cf1ec1d54a3d609495fa34a36162765992d7d896fc0",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

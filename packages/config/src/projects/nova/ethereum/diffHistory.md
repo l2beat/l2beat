@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xbbf516dbaba553dcade1cc32c27e0c54cebcc8c0
+
+# Diff at Thu, 10 Apr 2025 14:42:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22166991
+- current block number: 22166991
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166991 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin 2 (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      displayName:
+-        "ChallengeManager"
+    }
+```
+
 Generated with discovered.json: 0x57f57882d63373f52a021dbbe9e92cbe5cef8c7a
 
 # Diff at Mon, 31 Mar 2025 12:46:54 GMT:

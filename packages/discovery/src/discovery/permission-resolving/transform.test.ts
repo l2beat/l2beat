@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { PermissionConfiguration } from '../config/RawDiscoveryConfig'
+import type { PermissionConfiguration } from '../config/StructureConfig'
 import type { ResolvedPermission } from './resolvePermissions'
 import { transformToReceived } from './transform'
 

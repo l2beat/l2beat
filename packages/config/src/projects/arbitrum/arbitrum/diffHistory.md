@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x6466bfb019944ac5d0da924a40ca2940fbc0eade
+
+# Diff at Thu, 10 Apr 2025 14:43:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 316974509
+- current block number: 316974509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 316974509 (main branch discovery), not current.
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.7:
++        {"permission":"upgrade","to":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}]}
+      issuedPermissions.6.to:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      issuedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.5.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      issuedPermissions.5.via.1:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.5.via.0.address:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      issuedPermissions.5.delay:
++        691200
+      issuedPermissions.5.description:
++        "manage all access control roles and change the minimum delay."
+      issuedPermissions.4.to:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      issuedPermissions.4.delay:
+-        691200
+      issuedPermissions.4.description:
+-        "manage all access control roles and change the minimum delay."
++        "propose transactions."
+      issuedPermissions.4.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}
+      directlyReceivedPermissions.0.permission:
+-        "interact"
++        "act"
+      directlyReceivedPermissions.0.description:
+-        "propose transactions."
+      directlyReceivedPermissions.0.delay:
++        691200
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xe362c1f87db1447d8733b0a454dc3df288ca0e18
 
 # Diff at Thu, 20 Mar 2025 16:31:42 GMT:

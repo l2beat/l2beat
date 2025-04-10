@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 17565279,
-  "configHash": "0xf71fd806c1d06f30311621501748a103281e769de9f311f218f47f97a430ee7f",
+  "configHash": "0xd3a877ad2fed5b83435ec5d0f1e1c375e155ddd959f27a4c645b28388b6c6672",
   "entries": [
     {
       "name": "LineaOwner",
@@ -761,7 +761,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
   }
 }

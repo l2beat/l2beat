@@ -3,7 +3,7 @@ import { isEqual } from 'lodash'
 import type {
   Permission,
   PermissionConfiguration,
-} from '../config/RawDiscoveryConfig'
+} from '../config/StructureConfig'
 import type {
   IssuedPermission,
   ReceivedPermission,

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xedadbb88f7a6a4a1566d9809a806e1e2b07debca
+
+# Diff at Thu, 10 Apr 2025 14:42:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22081896
+- current block number: 22081896
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081896 (main branch discovery), not current.
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xf7d2fd294e01ccff500764d2a4265dcc11765914
 
 # Diff at Thu, 27 Mar 2025 11:14:39 GMT:

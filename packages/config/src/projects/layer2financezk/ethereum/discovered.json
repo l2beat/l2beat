@@ -2,7 +2,7 @@
   "name": "layer2financezk",
   "chain": "ethereum",
   "blockNumber": 19825376,
-  "configHash": "0x3ddade493d1ac6e6b8e2d9afaf5174a3830eebbbfa337469ef3568873a1be6d8",
+  "configHash": "0xe9d46ff974545c0055b2ed50995ba1824ea31df63f84db27c841274120bb5f39",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -772,8 +772,8 @@
     ]
   },
   "usedTemplates": {
-    "starkex/GpsFactRegistryAdapter": "0xd25d19938656386c9c7d88accb6ce40d364c77e8fc0173bf9678eefbb7532a05",
-    "starkex/OrderRegistry": "0xd9645d62193dcf480291c42dcbd47fdad4779ed791d517f5512fed8f0d02e7ab",
-    "starkex/StarkExchange": "0xc96f674125c785b04101cc7151ce7b6c0b3a274c3dee0c55adab1da10ef9576e"
+    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
+    "starkex/OrderRegistry": "0x762bc84109bd2e056d14f30169e27dca280fecc11fd89c90336a8d26c61ba257",
+    "starkex/StarkExchange": "0x2b4d7204e6f768dfdf9bd57f6e32533c9070944fa8a899475261397a1fdd9a74"
   }
 }
