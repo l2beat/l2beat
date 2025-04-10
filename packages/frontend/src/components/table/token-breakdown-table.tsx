@@ -60,7 +60,7 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
             <TableRow
               slug={undefined}
               key={row.id}
-              className="border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0"
+              className="peer border-b border-b-black/10 hover:bg-black/5 dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0"
             >
               {row.getVisibleCells().map((cell) => {
                 return (
@@ -78,7 +78,11 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
               })}
             </TableRow>
             {row.getIsExpanded() && (
-              <TableRow slug={undefined} key={`${row.id}-expanded`}>
+              <TableRow
+                slug={undefined}
+                key={`${row.id}-expanded`}
+                className="peer-hover:bg-black/5 dark:border-b-zinc-700 dark:peer-hover:bg-white/5 md:border-b-0"
+              >
                 <TableCell colSpan={row.getVisibleCells().length}>
                   {renderSubComponent({ row })}
                 </TableCell>
