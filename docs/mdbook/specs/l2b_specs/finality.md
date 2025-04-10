@@ -50,6 +50,28 @@ The time when the withdrawal is ready to be executed can be calculated by tracki
 #### Why this approach?
 Withdrawals are not directly executed based on the information in the `AnchorStateRegistry`, but rather based on games whose status is `GameStatus.DEFENDER_WINS`. Since the `AnchorStateRegistry`'s latest anchor root can be updated with the same condition, it is enough to track that to determine when a withdrawal is ready to be executed on L1. This assumes that the `AnchorStateRegistry` is always updated as soon as possible with the latest root that has been confirmed by the proof system. In practice the assumption holds since a game terminates with a `closeGame()` call, which also calls `setAnchorState()` on the `AnchorStateRegistry` to update the root if it is newer than the current saved one.
 
+Another approach consists in tracking finalized withdrawals directly, but this would skew the calculation since not every withdrawal is finalized as soon as they are available to be finalized, and outliers would be introduced in the data set. For completeness, when a withdrawal is finalized, the `WithdrawalFinalized` event is emitted, which is defined as follows:
+
+```solidity
+// 0xdb5c7652857aa163daadd670e116628fb42e869d8ac4251ef8971d9e5727df1b
+event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success) 
+```
+
+The `withdrawalHash` can be calculated as follows:
+
+```solidity
+function hashWithdrawal(Types.WithdrawalTransaction memory _tx) internal pure returns (bytes32) {
+    return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));
+}
+```
+
+where the nonce is must be fetched through the `SentMessage` event emitted by the `L2CrossDomainMessenger` when a withdrawal is initiated. The `SentMessage` event is defined as follows:
+
+```solidity
+// 0xcb0f7ffd78f9aee47a248fae8db181db6eee833039123e026dcbff529522e52a
+event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit) 
+```
+
 #### Example
 
 Let's take [this withdrawal](https://optimistic.etherscan.io/tx/0x762b6734f4aaf722b836709ad1d410584bc25d8a1ee22c0f958600ddf47f26df) as an example to show how to calculate the withdrawal time. The transaction emits the `WithdrawalInitiated` event as expected, and the corresponding L2 block number is `134010739`, whose timestamp is `1743620255` (Apr-02-2025 06:57:35 PM +UTC). 
