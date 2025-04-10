@@ -14,11 +14,6 @@ export const AddShape = command({
   name: 'add-shape',
   description: 'Add a new contract shape to a template',
   args: {
-    template: positional({
-      type: string,
-      displayName: 'template',
-      description: 'name of the template to add the shape to',
-    }),
     chain: positional({
       type: string,
       displayName: 'chain',
@@ -29,15 +24,20 @@ export const AddShape = command({
       displayName: 'address',
       description: 'address of the contract to add',
     }),
+    blockNumber: positional({
+      type: number,
+      displayName: 'blockNumber',
+      description: 'block number of the contract',
+    }),
     description: positional({
       type: string,
       displayName: 'description',
       description: 'description of the contract',
     }),
-    blockNumber: positional({
-      type: number,
-      displayName: 'blockNumber',
-      description: 'block number of the contract',
+    template: positional({
+      type: string,
+      displayName: 'template',
+      description: 'name of the template to add the shape to',
     }),
   },
   handler: async (args) => {
