@@ -1,5 +1,4 @@
 import type { Badge } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
@@ -17,7 +16,7 @@ export interface ScalingApiEntry {
   category: string
   provider: string | undefined
   purposes: string[]
-  archivedAt: UnixTime | undefined
+  isArchived: boolean
   isUpcoming: boolean
   isUnderReview: boolean
   badges: Badge[]
@@ -60,7 +59,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
         category: project.scalingInfo.type,
         provider: project.scalingInfo.stack,
         purposes: project.scalingInfo.purposes,
-        archivedAt: undefined,
+        isArchived: false,
         isUpcoming: false,
         isUnderReview: !!getUnderReviewStatus({
           isUnderReview: project.statuses.isUnderReview,
