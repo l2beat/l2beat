@@ -125,13 +125,13 @@ export async function getBridgesProjectEntry(
     },
   }
 
-  await api.tvs.chart.prefetch({
+  await api.newTvs.chart.prefetch({
     range: '1y',
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
   })
   const [tvsChartData, tokens] = await Promise.all([
-    api.tvs.chart({
+    api.newTvs.chart({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,

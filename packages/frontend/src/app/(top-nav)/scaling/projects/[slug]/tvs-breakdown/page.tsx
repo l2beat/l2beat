@@ -75,7 +75,7 @@ export default async function Page(props: Props) {
   ] = await Promise.all([
     getTvsBreakdownForProject(project),
     getTokensForProject(project),
-    api.tvs.chart.prefetch({
+    api.newTvs.chart.prefetch({
       filter: { type: 'projects', projectIds: [project.id.toString()] },
       excludeAssociatedTokens: false,
       range: '1y',

@@ -1,4 +1,4 @@
-import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
+import type { ScalingTvsEntry } from '~/server/features/scaling/new-tvs/get-scaling-tvs-entries'
 
 export function toTableRows({
   projects,

@@ -200,7 +200,7 @@ export async function getScalingProjectEntry(
   const daSolution = await getScalingDaSolution(project)
 
   await Promise.all([
-    api.tvs.chart.prefetch({
+    api.newTvs.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
@@ -218,7 +218,7 @@ export async function getScalingProjectEntry(
   ])
   const [tvsChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
-      api.tvs.chart({
+      api.newTvs.chart({
         range: '1y',
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,

@@ -1,5 +1,5 @@
 import { INFINITY } from '~/consts/characters'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import { Skeleton } from '../../core/skeleton'

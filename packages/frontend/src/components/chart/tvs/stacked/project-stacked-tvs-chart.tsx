@@ -9,7 +9,7 @@ import type {
   ProjectToken,
   ProjectTokens,
 } from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../../core/chart/chart-time-range'

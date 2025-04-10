@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
