@@ -240,7 +240,10 @@ describe('discovery config.jsonc', () => {
 
         const colorized = combineStructureAndColor(discovery, color)
         const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
-        assert(!changed, `${c.name} is not colorized correctly. Run l2b colorize.`)
+        assert(
+          !changed,
+          `${c.name} is not colorized correctly. Run l2b colorize.`,
+        )
       }
     }
   })
