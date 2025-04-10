@@ -5,9 +5,9 @@ import { DiscoveryLogger } from '../DiscoveryLogger'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import {
-  DiscoveryContract,
-  type RawDiscoveryConfig,
-} from '../config/RawDiscoveryConfig'
+  StructureContract,
+  type StructureConfig,
+} from '../config/StructureConfig'
 import type { IProvider } from '../provider/IProvider'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { DiscoveryEngine } from './DiscoveryEngine'
@@ -35,7 +35,7 @@ describe(DiscoveryEngine.name, () => {
 
   it('can perform a discovery', async () => {
     const config = generateFakeConfig([A], {
-      [B.toString()]: DiscoveryContract.parse({ ignoreDiscovery: true }),
+      [B.toString()]: StructureContract.parse({ ignoreDiscovery: true }),
     })
 
     const addressAnalyzer = mockObject<AddressAnalyzer>({
@@ -89,7 +89,7 @@ describe(DiscoveryEngine.name, () => {
 
 const generateFakeConfig = (
   initialAddresses: EthereumAddress[],
-  overrides: RawDiscoveryConfig['overrides'],
+  overrides: StructureConfig['overrides'],
 ): ConfigRegistry => {
   return new ConfigRegistry({
     name: 'test',

@@ -2,7 +2,7 @@ import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ConfigReader } from '../config/ConfigReader'
 import { ConfigRegistry } from '../config/ConfigRegistry'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { StructureContract } from '../config/StructureConfig'
 import { shouldSkip } from './shouldSkip'
 
 describe(shouldSkip.name, () => {
@@ -13,7 +13,7 @@ describe(shouldSkip.name, () => {
       chain: 'ethereum',
       initialAddresses: [],
       overrides: {
-        [address.toString()]: DiscoveryContract.parse({
+        [address.toString()]: StructureContract.parse({
           ignoreDiscovery: true,
         }),
       },

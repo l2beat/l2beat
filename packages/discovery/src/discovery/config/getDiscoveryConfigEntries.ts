@@ -1,10 +1,8 @@
 import { isArray, isObject } from 'lodash'
 
-import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import type { StructureConfig } from './StructureConfig'
 
-export function getDiscoveryConfigEntries(
-  rawConfig: RawDiscoveryConfig,
-): string {
+export function getDiscoveryConfigEntries(rawConfig: StructureConfig): string {
   const sorted = deepSortByKeys(rawConfig)
   return JSON.stringify(sorted)
 }

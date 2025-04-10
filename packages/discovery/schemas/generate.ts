@@ -6,15 +6,15 @@ import {
   ContractFieldSeverity,
   ContractValueType,
   DiscoveryCategory,
-  DiscoveryContract,
-  DiscoveryContractField,
+  StructureContract,
+  StructureContractField,
   DiscoveryCustomType,
   ExternalReference,
   ManualProxyType,
   Permission,
-  RawDiscoveryConfig,
+  StructureConfig,
   RawPermissionConfiguration,
-} from '../src/discovery/config/RawDiscoveryConfig'
+} from '../src/discovery/config/StructureConfig'
 import { UserHandlerDefinition } from '../src/discovery/handlers/user'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 
@@ -33,12 +33,12 @@ async function generateAndSaveSchema(
       RawPermissionConfiguration,
       ContractValueType,
       ContractFieldSeverity,
-      DiscoveryContractField,
+      DiscoveryContractField: StructureContractField,
       DiscoveryCustomType,
       ExternalReference,
       DiscoveryCategory,
       ManualProxyType,
-      DiscoveryContract,
+      DiscoveryContract: StructureContract,
       CommonDiscoveryConfig,
     } as const,
   })
@@ -46,12 +46,9 @@ async function generateAndSaveSchema(
 }
 
 async function main() {
+  await generateAndSaveSchema(StructureConfig, 'schemas/config.v2.schema.json')
   await generateAndSaveSchema(
-    RawDiscoveryConfig,
-    'schemas/config.v2.schema.json',
-  )
-  await generateAndSaveSchema(
-    DiscoveryContract,
+    StructureContract,
     'schemas/contract.v2.schema.json',
   )
 }

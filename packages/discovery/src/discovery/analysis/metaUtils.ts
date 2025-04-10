@@ -3,10 +3,10 @@ import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
-  DiscoveryContractField,
+  StructureContractField,
   PermissionConfiguration,
   RawPermissionConfiguration,
-} from '../config/RawDiscoveryConfig'
+} from '../config/StructureConfig'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
 import type { ContractValue } from '../output/types'
@@ -109,7 +109,7 @@ export function getSelfMeta(config: ContractConfig): ContractMeta | undefined {
 export function getTargetsMeta(
   self: EthereumAddress,
   values: Record<string, ContractValue | undefined> = {},
-  fields: { [address: string]: DiscoveryContractField } = {},
+  fields: { [address: string]: StructureContractField } = {},
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): AddressToMetaMap | undefined {
   const result: AddressToMetaMap = {}
@@ -155,7 +155,7 @@ export function getTargetsMeta(
 
 function targetConfigToMeta(
   self: EthereumAddress,
-  field: DiscoveryContractField,
+  field: StructureContractField,
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (field.permissions === undefined) {

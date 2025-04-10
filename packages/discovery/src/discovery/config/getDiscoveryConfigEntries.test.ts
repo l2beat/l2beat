@@ -2,9 +2,9 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import {
-  DiscoveryContract,
-  type RawDiscoveryConfig,
-} from '../config/RawDiscoveryConfig'
+  StructureContract,
+  type StructureConfig,
+} from '../config/StructureConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda')
@@ -13,14 +13,14 @@ const ADDRESS_C = EthereumAddress('0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc')
 
 describe(getDiscoveryConfigEntries.name, () => {
   it('correctly sorts raw config object keys', () => {
-    const config: RawDiscoveryConfig = {
+    const config: StructureConfig = {
       name: 'a',
       chain: 'ethereum',
       initialAddresses: [ADDRESS_A],
       maxDepth: 1,
       maxAddresses: 1,
       overrides: {
-        [ADDRESS_B.toString()]: DiscoveryContract.parse({
+        [ADDRESS_B.toString()]: StructureContract.parse({
           ignoreInWatchMode: ['b', 'a'],
           ignoreMethods: ['d', 'c'],
           ignoreDiscovery: false,
@@ -42,7 +42,7 @@ describe(getDiscoveryConfigEntries.name, () => {
             },
           },
         }),
-        [ADDRESS_C.toString()]: DiscoveryContract.parse({
+        [ADDRESS_C.toString()]: StructureContract.parse({
           ignoreInWatchMode: ['a', 'b'],
           ignoreMethods: ['c', 'd'],
           ignoreDiscovery: false,

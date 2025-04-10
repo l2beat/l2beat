@@ -15,7 +15,7 @@ import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ColorContract } from '../config/ColorConfig'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { ContractPermission } from '../config/PermissionConfig'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { StructureContract } from '../config/StructureConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
 import type { DiscoveryOutput } from '../output/types'
@@ -34,7 +34,7 @@ export interface Shape {
 }
 
 export class TemplateService {
-  private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
+  private readonly loadedTemplates: Record<string, StructureContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
 
@@ -147,11 +147,11 @@ export class TemplateService {
     return parsed
   }
 
-  loadContractTemplate(template: string): DiscoveryContract {
+  loadContractTemplate(template: string): StructureContract {
     return this.loadContractTemplateBase(
       template,
       'contract',
-      DiscoveryContract,
+      StructureContract,
     )
   }
 

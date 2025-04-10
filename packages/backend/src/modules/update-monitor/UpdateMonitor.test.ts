@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
-  DiscoveryConfig,
+  ConfigRegistry,
   type DiscoveryDiff,
   type DiscoveryOutput,
   type EntryParameters,
@@ -644,7 +644,7 @@ describe(UpdateMonitor.name, () => {
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         // different config hash
-        new DiscoveryConfig({
+        new ConfigRegistry({
           name: PROJECT_A,
           chain: 'ethereum',
           initialAddresses: [EthereumAddress.ZERO],
@@ -930,8 +930,8 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   }
 }
 
-function mockConfig(name: string, chain = 'ethereum'): DiscoveryConfig {
-  return new DiscoveryConfig({
+function mockConfig(name: string, chain = 'ethereum'): ConfigRegistry {
+  return new ConfigRegistry({
     name,
     chain,
     initialAddresses: [],

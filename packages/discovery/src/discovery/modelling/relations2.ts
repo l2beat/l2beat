@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { ContractPermission } from '../config/PermissionConfig'
-import type { RawPermissionConfiguration } from '../config/RawDiscoveryConfig'
+import type { RawPermissionConfiguration } from '../config/StructureConfig'
 import type { StructureEntry } from '../output/types'
 import type { ContractValue } from '../output/types'
 import { toAddressArray } from '../utils/extractors'

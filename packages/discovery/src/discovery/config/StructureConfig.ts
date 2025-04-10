@@ -53,8 +53,8 @@ export type PermissionConfiguration = RawPermissionConfiguration & {
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
-export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
-export const DiscoveryContractField = z.object({
+export type StructureContractField = z.infer<typeof StructureContractField>
+export const StructureContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
   template: z.string().optional(),
   returnType: z.string().optional(),
@@ -89,8 +89,8 @@ export const ManualProxyType = z.enum([
   'immutable',
 ])
 
-export type DiscoveryContract = z.infer<typeof DiscoveryContract>
-export const DiscoveryContract = z.object({
+export type StructureContract = z.infer<typeof StructureContract>
+export const StructureContract = z.object({
   extends: z.optional(z.string()),
   canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
@@ -99,14 +99,14 @@ export const DiscoveryContract = z.object({
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.array(z.string()).default([]),
   ignoreRelatives: z.array(z.string()).default([]),
-  fields: z.record(z.string(), DiscoveryContractField).default({}),
+  fields: z.record(z.string(), StructureContractField).default({}),
   methods: z.record(z.string(), z.string()).default({}),
   manualSourcePaths: z.record(z.string()).default({}),
   types: z.record(z.string(), DiscoveryCustomType).default({}),
 })
 
-export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
-export const RawDiscoveryConfig = z.object({
+export type StructureConfig = z.infer<typeof StructureConfig>
+export const StructureConfig = z.object({
   name: z.string().min(1),
   chain: z.string().min(1),
   initialAddresses: z.array(stringAs(EthereumAddress)),
@@ -118,7 +118,7 @@ export const RawDiscoveryConfig = z.object({
       z.string().refine((key) => EthereumAddress.check(key), {
         message: 'Invalid Ethereum address',
       }),
-      DiscoveryContract,
+      StructureContract,
     ),
   ),
   sharedModules: z.optional(z.array(z.string())),

@@ -1,6 +1,6 @@
 import { orderIndependentDiff } from 'deep-diff'
 import type { ContractValueType } from '../config/ColorConfig'
-import type { ContractFieldSeverity } from '../config/RawDiscoveryConfig'
+import type { ContractFieldSeverity } from '../config/StructureConfig'
 import { normalizeDiffPath } from '../utils/normalizeDiffPath'
 import type { EntryParameters } from './types'
 

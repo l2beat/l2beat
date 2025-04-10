@@ -4,7 +4,7 @@ import type { DiscoveryOutput } from '../output/types'
 import { ColorConfig } from './ColorConfig'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
-import { DiscoveryContract, RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { StructureContract, StructureConfig } from './StructureConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
 
@@ -12,14 +12,14 @@ import { getDiscoveryPaths } from './getDiscoveryPaths'
 // this will result in the hash being different and break the update mechanism
 export class ConfigRegistry {
   readonly sharedModuleDiscovery: DiscoveryOutput[]
-  readonly config: RawDiscoveryConfig
+  readonly config: StructureConfig
   readonly colorConfig: ColorConfig
 
   constructor(
     readonly unparsedConfig: object,
     configReader?: ConfigReader,
   ) {
-    this.config = RawDiscoveryConfig.parse(unparsedConfig)
+    this.config = StructureConfig.parse(unparsedConfig)
     this.colorConfig = ColorConfig.parse(unparsedConfig)
 
     configReader ??= new ConfigReader(getDiscoveryPaths().discovery)
@@ -32,7 +32,7 @@ export class ConfigRegistry {
 
   for(address: EthereumAddress): ContractConfig {
     const override =
-      this.config.overrides?.[address.toString()] ?? DiscoveryContract.parse({})
+      this.config.overrides?.[address.toString()] ?? StructureContract.parse({})
 
     const overrides = { address, ...override }
 
@@ -42,7 +42,7 @@ export class ConfigRegistry {
     )
   }
 
-  get raw(): RawDiscoveryConfig {
+  get raw(): StructureConfig {
     return this.config
   }
 

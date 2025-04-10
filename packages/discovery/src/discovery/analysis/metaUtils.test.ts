@@ -1,9 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type {
-  DiscoveryContractField,
+  StructureContractField,
   PermissionConfiguration,
-} from '../config/RawDiscoveryConfig'
+} from '../config/StructureConfig'
 import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
@@ -283,7 +283,7 @@ describe('metaUtils', () => {
       ]
 
       const selfAddress = EthereumAddress.from('0x1234')
-      const fields: { [address: string]: DiscoveryContractField } = {
+      const fields: { [address: string]: StructureContractField } = {
         overhead: { permissions: [{ type: 'interact', delay: 0 }] },
         owner: {
           permissions: [
@@ -404,7 +404,7 @@ describe('metaUtils', () => {
         },
       ]
 
-      const fields: { [field: string]: DiscoveryContractField } = {
+      const fields: { [field: string]: StructureContractField } = {
         configuredUpgrade: {
           permissions: [
             {

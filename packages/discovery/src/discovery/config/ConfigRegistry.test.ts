@@ -2,10 +2,7 @@ import { hashJson } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ConfigRegistry } from './ConfigRegistry'
-import {
-  DiscoveryContract,
-  type RawDiscoveryConfig,
-} from './RawDiscoveryConfig'
+import { StructureContract, type StructureConfig } from './StructureConfig'
 import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress.random()
@@ -30,8 +27,8 @@ const CONFIG = new ConfigRegistry({
     [ADDRESS_B.toString()]: 'B',
   },
   overrides: {
-    [ADDRESS_A.toString()]: DiscoveryContract.parse(OVERRIDE_A),
-    [ADDRESS_B.toString()]: DiscoveryContract.parse(OVERRIDE_B),
+    [ADDRESS_A.toString()]: StructureContract.parse(OVERRIDE_A),
+    [ADDRESS_B.toString()]: StructureContract.parse(OVERRIDE_B),
   },
 })
 
@@ -64,7 +61,7 @@ describe(ConfigRegistry.name, () => {
       })
       const copiedConfig = JSON.parse(
         JSON.stringify(config.raw),
-      ) as RawDiscoveryConfig
+      ) as StructureConfig
 
       // run hash getter, which will run the function that sorts the config
       config.hash

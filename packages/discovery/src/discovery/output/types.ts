@@ -3,7 +3,7 @@ import type { ContractValueType } from '../config/ColorConfig'
 import type {
   ContractFieldSeverity,
   Permission,
-} from '../config/RawDiscoveryConfig'
+} from '../config/StructureConfig'
 
 export type ContractValue =
   | string

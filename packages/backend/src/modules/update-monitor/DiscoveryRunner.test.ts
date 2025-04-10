@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  DiscoveryConfig,
+  ConfigRegistry,
   type DiscoveryEngine,
   type IProvider,
   type TemplateService,
@@ -17,7 +17,7 @@ describe(DiscoveryRunner.name, () => {
   describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const sourceConfig: DiscoveryConfig = new DiscoveryConfig({
+      const sourceConfig: ConfigRegistry = new ConfigRegistry({
         ...getMockConfig().raw,
       })
       const runner = new DiscoveryRunner(
@@ -102,7 +102,7 @@ describe(DiscoveryRunner.name, () => {
 })
 
 const getMockConfig = () => {
-  return new DiscoveryConfig({
+  return new ConfigRegistry({
     name: 'project-a',
     chain: 'ethereum',
     initialAddresses: [],

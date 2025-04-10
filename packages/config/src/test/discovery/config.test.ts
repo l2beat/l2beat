@@ -192,13 +192,13 @@ describe('discovery config.jsonc', () => {
   it('every name in config.jsonc is unique', () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        if (c.raw.names === undefined) {
+        if (c.colorConfig.names === undefined) {
           continue
         }
 
         assert(
-          new Set(Object.values(c.raw.names)).size ===
-            Object.values(c.raw.names).length,
+          new Set(Object.values(c.colorConfig.names)).size ===
+            Object.values(c.colorConfig.names).length,
           `names field in ${c.name} configuration includes duplicate names`,
         )
       }

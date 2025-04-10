@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
@@ -200,7 +200,7 @@ export class UpdateMonitor {
 
   private async updateProject(
     runner: DiscoveryRunner,
-    projectConfig: DiscoveryConfig,
+    projectConfig: ConfigRegistry,
     blockNumber: number,
     timestamp: UnixTime,
   ) {
@@ -286,7 +286,7 @@ export class UpdateMonitor {
 
   async getPreviousDiscovery(
     runner: DiscoveryRunner,
-    projectConfig: DiscoveryConfig,
+    projectConfig: ConfigRegistry,
   ): Promise<DiscoveryOutput | undefined> {
     const databaseEntry = await this.db.updateMonitor.findLatest(
       projectConfig.name,
@@ -322,7 +322,7 @@ export class UpdateMonitor {
   private async handleDiff(
     diff: DiscoveryDiff[],
     discovery: DiscoveryOutput,
-    projectConfig: DiscoveryConfig,
+    projectConfig: ConfigRegistry,
     blockNumber: number,
     chain: string,
     timestamp: UnixTime,

@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryEngine,
   DiscoveryLogger,
   type DiscoveryOutput,
@@ -46,7 +46,7 @@ export class DiscoveryRunner {
   }
 
   private async discover(
-    config: DiscoveryConfig,
+    config: ConfigRegistry,
     blockNumber: number,
   ): Promise<DiscoveryRunResult> {
     const provider = this.allProviders.get(config.chain, blockNumber)
@@ -66,7 +66,7 @@ export class DiscoveryRunner {
   }
 
   async discoverWithRetry(
-    config: DiscoveryConfig,
+    config: ConfigRegistry,
     blockNumber: number,
     logger: Logger,
     maxRetries = MAX_RETRIES,

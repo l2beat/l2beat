@@ -2,17 +2,17 @@ import type { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import type { ColorContract } from './ColorConfig'
 import {
-  DiscoveryContract,
+  StructureContract,
   type DiscoveryCustomType,
-} from './RawDiscoveryConfig'
+} from './StructureConfig'
 
-export type ContractOverrides = DiscoveryContract & {
+export type ContractOverrides = StructureContract & {
   name?: string // TODO(radomski): This is required?
   address: EthereumAddress
 }
 
 export type ContractConfig = ContractOverrides & {
-  pushValues: (arg: DiscoveryContract) => void
+  pushValues: (arg: StructureContract) => void
 }
 
 export function createContractConfig(
@@ -22,12 +22,12 @@ export function createContractConfig(
   const config = {
     ...overrides,
     types: merge(configTypes, overrides.types),
-    pushValues: function (values: DiscoveryContract) {
+    pushValues: function (values: StructureContract) {
       const newState = {
         // root names > display names
         name: this.name ?? values.displayName ?? this.displayName,
         address: this.address,
-        ...DiscoveryContract.parse(merge({}, values, this)),
+        ...StructureContract.parse(merge({}, values, this)),
       }
       Object.assign(this, newState)
     },

@@ -2,7 +2,7 @@ import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { createContractConfig } from '../config/ContractConfig'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { StructureContract } from '../config/StructureConfig'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
@@ -13,7 +13,7 @@ import { AddressAnalyzer } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
-  const overrides = DiscoveryContract.parse({})
+  const overrides = StructureContract.parse({})
   const config = createContractConfig(
     { address: EthereumAddress.random(), ...overrides },
     {},

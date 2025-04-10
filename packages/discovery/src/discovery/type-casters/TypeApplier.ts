@@ -2,7 +2,7 @@ import type { utils } from 'ethers'
 import type { ContractValue } from '../output/types'
 
 import { assert } from '@l2beat/shared-pure'
-import type { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
+import type { DiscoveryCustomType } from '../config/StructureConfig'
 import { getCustomTypeCaster, isCustomTypeCaster } from '../type-casters'
 import {
   type TupleType,

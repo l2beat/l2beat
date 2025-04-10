@@ -1,13 +1,13 @@
 import type {
-  DiscoveryContract,
-  DiscoveryContractField,
-} from '../config/RawDiscoveryConfig'
+  StructureContract,
+  StructureContractField,
+} from '../config/StructureConfig'
 import { normalizeDiffPath } from './normalizeDiffPath'
 
 export function getContractField(
-  contract: DiscoveryContract | undefined,
+  contract: StructureContract | undefined,
   field: string | undefined,
-): DiscoveryContractField | undefined {
+): StructureContractField | undefined {
   return field === undefined
     ? undefined
     : contract?.fields?.[normalizeDiffPath(field)]
