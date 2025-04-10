@@ -84,5 +84,7 @@ export function printTemplatization(
     }
   }
 
-  logger.log(formatAsciiBorder(logs, true))
+  if (logs.length > 0) {
+    logger.log(formatAsciiBorder(logs, true))
+  }
 }
