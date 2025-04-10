@@ -5,8 +5,8 @@
 **Table of Contents**
 
 - [How to calculate withdrawal times (L2 -> L1)](#how-to-calculate-withdrawal-times-l2---l1)
-- [Why this approach?](#why-this-approach)
-- [Example](#example)
+  - [Why this approach?](#why-this-approach)
+  - [Example](#example)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -44,10 +44,10 @@ function l2BlockNumber() public pure returns (uint256 l2BlockNumber_)
 
 The time when the withdrawal is ready to be executed can be calculated by tracking the `AnchorUpdated` event, specifically when its respective L2 block number becomes greater than the L2 block number of the `WithdrawalInitiated` event.
 
-## Why this approach?
+### Why this approach?
 Withdrawals are not directly executed based on the information in the `AnchorStateRegistry`, but rather based on games whose status is `GameStatus.DEFENDER_WINS`. Since the `AnchorStateRegistry`'s latest anchor root can be updated with the same condition, it is enough to track that to determine when a withdrawal is ready to be executed on L1. This assumes that the `AnchorStateRegistry` is always updated as soon as possible with the latest root that has been confirmed by the proof system. In practice the assumption holds since a game terminates with a `closeGame()` call, which also calls `setAnchorState()` on the `AnchorStateRegistry` to update the root if it is newer than the current saved one.
 
-## Example
+### Example
 
 Let's take [this withdrawal](https://optimistic.etherscan.io/tx/0x762b6734f4aaf722b836709ad1d410584bc25d8a1ee22c0f958600ddf47f26df) as an example to show how to calculate the withdrawal time. The transaction emits the `WithdrawalInitiated` event as expected, and the corresponding L2 block number is `134010739`, whose timestamp is `1743620255` (Apr-02-2025 06:57:35 PM +UTC). 
 
