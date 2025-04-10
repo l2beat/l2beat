@@ -8,6 +8,7 @@
       "name": "ERC1155Predicate",
       "address": "0x0057bed57066F61c64DACB395B38c6E1792e03B8",
       "type": "Contract",
+      "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x428926e63c344a25fc6e1854be10f620c64143f66904314e15837a6734e132b1",
         "0xd4be21971e93432f8a4269386f5c2dfa288dff859600b0a3c8d8f17fdfd895e6"
@@ -33,6 +34,19 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+              "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+            ]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xCbb0D2eCBEDBF2D0F0D5616dFE25bC286D8F8610",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -48,6 +62,7 @@
       "name": "MintableERC721Predicate",
       "address": "0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
       "type": "Contract",
+      "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x378a22860f926f5ba4dd478549ef1dc9f126335557b56556444e5c1393bdbfef",
         "0x6e1b7753cf25b1dc926ed1048285f85b9cc596dbcebdadc1fdabd6830ac08f1e"
@@ -73,6 +88,19 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+              "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+            ]
+          }
+        },
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b",
@@ -178,50 +206,10 @@
       "derivedName": "StateSender"
     },
     {
-      "name": "Registry",
-      "address": "0x46cC87ecd69d52A925047411432Fb7429aCf51A2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1f637982ea9bd709231ded4ec9be109ae35f88e8b73b3c2e17f49437bca3a701",
-        "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
-      ],
-      "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1691468891,
-      "sinceBlock": 17867820,
-      "values": {
-        "$admin": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "$implementation": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "implementation": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
-        "owner": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "proxyType": 2
-      },
-      "errors": {
-        "erc20Predicate": "Processing error occurred.",
-        "erc721Predicate": "Processing error occurred.",
-        "getChildChainAndStateSender": "Processing error occurred.",
-        "getDepositManagerAddress": "Processing error occurred.",
-        "getSlashingManagerAddress": "Processing error occurred.",
-        "getStakeManagerAddress": "Processing error occurred.",
-        "getValidatorShareAddress": "Processing error occurred.",
-        "getWethTokenAddress": "Processing error occurred.",
-        "getWithdrawManagerAddress": "Processing error occurred.",
-        "governance": "Processing error occurred."
-      },
-      "derivedName": "Registry"
-    },
-    {
       "name": "StakingInfo",
       "address": "0x539964b3d225194717fb896D26c8b3E635b8A1aE",
       "type": "Contract",
+      "template": "polygonposbridge/StakingInfo",
       "sourceHashes": [
         "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
       ],
@@ -241,72 +229,11 @@
             0
           ]
         ],
-        "getValidatorContractAddress": [
-          "0x0000000000000000000000000000000000000000",
-          "0xB817B7C987bE0a0Bc85c807Eb8Dc7848270Cc523",
-          "0xded22C8bB67A92d719057B919f76585A1654E8f1",
-          "0x46cC87ecd69d52A925047411432Fb7429aCf51A2",
-          "0x586Ef7C40f540cfacf804c1Cc0cBAAF778466986"
-        ],
         "isOwner": false,
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
-        "registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
-        "totalValidatorStake": [
-          0,
-          "811137652300845816834860",
-          "404078922614336073880246",
-          "1234240366389097550291901",
-          "241567899007949941513826"
-        ],
-        "validatorNonce": [0, 656, 375, 333, 333]
-      },
-      "errors": {
-        "getValidatorContractAddress": "Processing error occurred.",
-        "totalValidatorStake": "Processing error occurred.",
-        "validatorNonce": "Processing error occurred."
+        "registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB"
       },
       "derivedName": "StakingInfo"
-    },
-    {
-      "name": "Registry",
-      "address": "0x586Ef7C40f540cfacf804c1Cc0cBAAF778466986",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1f637982ea9bd709231ded4ec9be109ae35f88e8b73b3c2e17f49437bca3a701",
-        "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
-      ],
-      "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1691468939,
-      "sinceBlock": 17867824,
-      "values": {
-        "$admin": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "$implementation": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "implementation": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
-        "owner": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "proxyType": 2
-      },
-      "errors": {
-        "erc20Predicate": "Processing error occurred.",
-        "erc721Predicate": "Processing error occurred.",
-        "getChildChainAndStateSender": "Processing error occurred.",
-        "getDepositManagerAddress": "Processing error occurred.",
-        "getSlashingManagerAddress": "Processing error occurred.",
-        "getStakeManagerAddress": "Processing error occurred.",
-        "getValidatorShareAddress": "Processing error occurred.",
-        "getWethTokenAddress": "Processing error occurred.",
-        "getWithdrawManagerAddress": "Processing error occurred.",
-        "governance": "Processing error occurred."
-      },
-      "derivedName": "Registry"
     },
     {
       "name": "",
@@ -384,24 +311,6 @@
           "permission": "upgrade",
           "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
           "via": []
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x46cC87ecd69d52A925047411432Fb7429aCf51A2"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x586Ef7C40f540cfacf804c1Cc0cBAAF778466986"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xB817B7C987bE0a0Bc85c807Eb8Dc7848270Cc523"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xded22C8bB67A92d719057B919f76585A1654E8f1"
         }
       ],
       "sinceTimestamp": 1691243867,
@@ -539,6 +448,7 @@
       "name": "DepositManager",
       "address": "0x885fcE983b6a01633f764325B8c3c5D31032C995",
       "type": "Contract",
+      "template": "polygonposbridge/DepositManager",
       "sourceHashes": [
         "0x5a03169cc01515b7d5ddd8f76da3641dcf8ffd451fc1d8edede0459191021835",
         "0x6abce1ddeb9ae9c18a0e3da61c77df366e4fc7b1837de5dbc51cdbd50fb6004c"
@@ -550,28 +460,6 @@
         "$immutable": false,
         "$implementation": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
         "childChain": "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
-        "deposits": [
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ],
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            0
-          ]
-        ],
         "governance": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
         "implementation": "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430",
         "isOwner": false,
@@ -583,13 +471,13 @@
         "rootChain": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
         "stateSender": "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C"
       },
-      "errors": { "deposits": "Processing error occurred." },
       "derivedName": "DepositManager"
     },
     {
       "name": "SlashingManager",
       "address": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
       "type": "Contract",
+      "template": "polygonposbridge/SlashingManager",
       "sourceHashes": [
         "0x64d3fd0840fb5d9eedf5977cce8c443d31adfc2323458db3d2d9461d889ea994"
       ],
@@ -615,6 +503,7 @@
       "name": "ERC721Predicate",
       "address": "0x98C831cFB18852f7deB3E3a970e907475b49730f",
       "type": "Contract",
+      "template": "polygonposbridge/predicate",
       "sourceHashes": [
         "0x1d84e4aa2ca9808f7866a5d3c6c804956136d56a985525328da76b85a63238f3",
         "0x4731842b5a3a9367e3a748bcccb6280c89c1e5428139b7cca48ed566ed74709a"
@@ -645,6 +534,19 @@
           ]
         ],
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x80Cc222EA02F4334F67e9E55E7412fed62599004"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+              "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+            ]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xe0f4555Fcffb181B1D7566d89200105226F29580",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -667,50 +569,10 @@
       "derivedName": ""
     },
     {
-      "name": "Registry",
-      "address": "0xB817B7C987bE0a0Bc85c807Eb8Dc7848270Cc523",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1f637982ea9bd709231ded4ec9be109ae35f88e8b73b3c2e17f49437bca3a701",
-        "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
-      ],
-      "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1691467751,
-      "sinceBlock": 17867725,
-      "values": {
-        "$admin": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "$implementation": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "implementation": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
-        "owner": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "proxyType": 2
-      },
-      "errors": {
-        "erc20Predicate": "Processing error occurred.",
-        "erc721Predicate": "Processing error occurred.",
-        "getChildChainAndStateSender": "Processing error occurred.",
-        "getDepositManagerAddress": "Processing error occurred.",
-        "getSlashingManagerAddress": "Processing error occurred.",
-        "getStakeManagerAddress": "Processing error occurred.",
-        "getValidatorShareAddress": "Processing error occurred.",
-        "getWethTokenAddress": "Processing error occurred.",
-        "getWithdrawManagerAddress": "Processing error occurred.",
-        "governance": "Processing error occurred."
-      },
-      "derivedName": "Registry"
-    },
-    {
       "name": "RLPReader",
       "address": "0xc107664eeEEA2c84e51D56F1B7a479EbCf9541c4",
       "type": "Contract",
+      "template": "polygonposbridge/RLPReader",
       "sourceHashes": [
         "0x00b47d9143f40ccd858572c752a890b6aa733e80f4a63e03fe919674f4ac55e1"
       ],
@@ -845,47 +707,6 @@
       "derivedName": ""
     },
     {
-      "name": "Registry",
-      "address": "0xded22C8bB67A92d719057B919f76585A1654E8f1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1f637982ea9bd709231ded4ec9be109ae35f88e8b73b3c2e17f49437bca3a701",
-        "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
-      ],
-      "proxyType": "Polygon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1691468723,
-      "sinceBlock": 17867806,
-      "values": {
-        "$admin": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "$implementation": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "implementation": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
-        "owner": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-        "proxyType": 2
-      },
-      "errors": {
-        "erc20Predicate": "Processing error occurred.",
-        "erc721Predicate": "Processing error occurred.",
-        "getChildChainAndStateSender": "Processing error occurred.",
-        "getDepositManagerAddress": "Processing error occurred.",
-        "getSlashingManagerAddress": "Processing error occurred.",
-        "getStakeManagerAddress": "Processing error occurred.",
-        "getValidatorShareAddress": "Processing error occurred.",
-        "getWethTokenAddress": "Processing error occurred.",
-        "getWithdrawManagerAddress": "Processing error occurred.",
-        "governance": "Processing error occurred."
-      },
-      "derivedName": "Registry"
-    },
-    {
       "name": "",
       "address": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
       "type": "Contract",
@@ -905,6 +726,7 @@
       "name": "Registry",
       "address": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
       "type": "Contract",
+      "template": "polygonposbridge/Registry",
       "sourceHashes": [
         "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
       ],
@@ -1080,17 +902,6 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0x46cC87ecd69d52A925047411432Fb7429aCf51A2": [
-      "constructor(address _registry)",
-      "event OwnerUpdate(address _new, address _old)",
-      "event ProxyUpdated(address indexed _new, address indexed _old)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function proxyType() pure returns (uint256 proxyTypeId)",
-      "function transferOwnership(address newOwner)",
-      "function updateAndCall(address _newProxyTo, bytes data) payable",
-      "function updateImplementation(address _newProxyTo)"
-    ],
     "0x539964b3d225194717fb896D26c8b3E635b8A1aE": [
       "constructor(address _registry)",
       "event ClaimFee(address indexed user, uint256 indexed fee)",
@@ -1153,17 +964,6 @@
       "function transferOwnership(address newOwner)",
       "function updateNonce(uint256[] validatorIds, uint256[] nonces)",
       "function validatorNonce(uint256) view returns (uint256)"
-    ],
-    "0x586Ef7C40f540cfacf804c1Cc0cBAAF778466986": [
-      "constructor(address _registry)",
-      "event OwnerUpdate(address _new, address _old)",
-      "event ProxyUpdated(address indexed _new, address indexed _old)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function proxyType() pure returns (uint256 proxyTypeId)",
-      "function transferOwnership(address newOwner)",
-      "function updateAndCall(address _newProxyTo, bytes data) payable",
-      "function updateImplementation(address _newProxyTo)"
     ],
     "0x5F683665ca87dbC3D1358913da80e3C71c328Fb0": [
       "constructor(address _proxyTo, address _registry, address _rootChain, address _exitNft)",
@@ -1343,17 +1143,6 @@
       "function transferOwnership(address newOwner)",
       "function updateDepositId(uint256 numDeposits) returns (uint256 depositId)"
     ],
-    "0xB817B7C987bE0a0Bc85c807Eb8Dc7848270Cc523": [
-      "constructor(address _registry)",
-      "event OwnerUpdate(address _new, address _old)",
-      "event ProxyUpdated(address indexed _new, address indexed _old)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function proxyType() pure returns (uint256 proxyTypeId)",
-      "function transferOwnership(address newOwner)",
-      "function updateAndCall(address _newProxyTo, bytes data) payable",
-      "function updateImplementation(address _newProxyTo)"
-    ],
     "0xc3897302aB4B42931cB4857050Fa60f53B775870": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
@@ -1422,17 +1211,6 @@
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
-      "function updateImplementation(address _newProxyTo)"
-    ],
-    "0xded22C8bB67A92d719057B919f76585A1654E8f1": [
-      "constructor(address _registry)",
-      "event OwnerUpdate(address _new, address _old)",
-      "event ProxyUpdated(address indexed _new, address indexed _old)",
-      "function implementation() view returns (address)",
-      "function owner() view returns (address)",
-      "function proxyType() pure returns (uint256 proxyTypeId)",
-      "function transferOwnership(address newOwner)",
-      "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
     "0xe0f4555Fcffb181B1D7566d89200105226F29580": [
@@ -1517,9 +1295,14 @@
     ]
   },
   "usedTemplates": {
+    "polygonposbridge/DepositManager": "0xcedd87ee682ee481f62622cb03e1cc9ac791a601a81695aaccfbe7723c6a07a5",
     "polygonposbridge/predicate": "0xb77dacaa0fc6fab29ac4f30ab100ca5030665fc9a35fa65702cbee5526a7d0bc",
+    "polygonposbridge/Registry": "0xa02c46bbf8565bf20c5187a5bb9cd00d284b677d688d16719842a20f921eb156",
+    "polygonposbridge/RLPReader": "0xa02c46bbf8565bf20c5187a5bb9cd00d284b677d688d16719842a20f921eb156",
     "polygonposbridge/RootChain": "0x73188fcd2fd921c369feb88dd37bd01455b0b76ba32d94bbf7420d24cd9a97aa",
     "polygonposbridge/RootChainManager": "0xb8406d94ec5250357a1019508f8770a2f849a8ecc2758357c9089a783c38144f",
+    "polygonposbridge/SlashingManager": "0xa02c46bbf8565bf20c5187a5bb9cd00d284b677d688d16719842a20f921eb156",
+    "polygonposbridge/StakingInfo": "0xfb6db0e53c5a8b063ff5e3076ecb5992872a948e3b6e88d51ab4723d7c5e8acb",
     "polygonposbridge/StateSender": "0xa317af937a7be72d6cad2bf162fcfea0d295635907aa047f6029ab6ec09b6f10"
   }
 }

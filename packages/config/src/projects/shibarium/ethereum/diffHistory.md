@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3c41a428c4de021474613533215edf305628f1ed
+Generated with discovered.json: 0x04fd1258802e789ef40857464e7f5542d92e1709
 
-# Diff at Wed, 09 Apr 2025 14:59:04 GMT:
+# Diff at Thu, 10 Apr 2025 10:46:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22231818
@@ -43,19 +43,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Registry (0x46cC87ecd69d52A925047411432Fb7429aCf51A2)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract StakingInfo (0x539964b3d225194717fb896D26c8b3E635b8A1aE)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Registry (0x586Ef7C40f540cfacf804c1Cc0cBAAF778466986)
     +++ description: None
 ```
 
@@ -109,12 +97,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Registry (0xB817B7C987bE0a0Bc85c807Eb8Dc7848270Cc523)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract RLPReader (0xc107664eeEEA2c84e51D56F1B7a479EbCf9541c4)
     +++ description: None
 ```
@@ -140,12 +122,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract  (0xdaF14950155DF895E9D0fd2521D05477d26F462c)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Registry (0xded22C8bB67A92d719057B919f76585A1654E8f1)
     +++ description: None
 ```
 
