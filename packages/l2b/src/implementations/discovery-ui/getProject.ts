@@ -1,6 +1,6 @@
 import {
   type ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryOutput,
   type EntryParameters,
   type TemplateService,
@@ -30,7 +30,7 @@ import type {
 
 interface ProjectData {
   chain: string
-  config: DiscoveryConfig
+  config: ConfigRegistry
   discovery: DiscoveryOutput
 }
 

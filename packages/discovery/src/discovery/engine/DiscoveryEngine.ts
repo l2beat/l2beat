@@ -8,7 +8,7 @@ import type {
   AnalyzedContract,
 } from '../analysis/AddressAnalyzer'
 import { invertMeta, mergeContractMeta } from '../analysis/metaUtils'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -28,7 +28,7 @@ export class DiscoveryEngine {
 
   async discover(
     provider: IProvider,
-    config: DiscoveryConfig,
+    config: ConfigRegistry,
   ): Promise<Analysis[]> {
     const resolved: Record<string, Analysis> = {}
     let toAnalyze: AddressesWithTemplates = {}

@@ -8,7 +8,7 @@ import { getChainConfigs } from '../config/config.discovery'
 import { DiscoveryLogger } from '../discovery/DiscoveryLogger'
 import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
 import { ConfigReader } from '../discovery/config/ConfigReader'
-import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
+import { ConfigRegistry } from '../discovery/config/ConfigRegistry'
 import { getDiscoveryPaths } from '../discovery/config/getDiscoveryPaths'
 import { saveDiscoveryResult } from '../discovery/output/saveDiscoveryResult'
 import { discover } from '../discovery/runDiscovery'
@@ -33,7 +33,7 @@ export const SingleDiscoveryCommand = command({
     const paths = getDiscoveryPaths()
 
     const configReader = new ConfigReader(paths.discovery)
-    const projectConfig = new DiscoveryConfig(
+    const projectConfig = new ConfigRegistry(
       {
         name: address.toString(),
         chain: chain,

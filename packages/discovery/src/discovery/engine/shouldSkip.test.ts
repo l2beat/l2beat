@@ -1,14 +1,14 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ConfigReader } from '../config/ConfigReader'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { ConfigRegistry } from '../config/ConfigRegistry'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import { shouldSkip } from './shouldSkip'
 
 describe(shouldSkip.name, () => {
   it('skips addresses marked as ignored', () => {
     const address = EthereumAddress.random()
-    const config = new DiscoveryConfig({
+    const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
       initialAddresses: [],
@@ -46,7 +46,7 @@ describe(shouldSkip.name, () => {
       }),
     })
 
-    const config = new DiscoveryConfig(
+    const config = new ConfigRegistry(
       {
         name: 'Test',
         chain: 'ethereum',
@@ -61,7 +61,7 @@ describe(shouldSkip.name, () => {
 
   it('skips addresses that exceed max depth', () => {
     const address = EthereumAddress.random()
-    const config = new DiscoveryConfig({
+    const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
       initialAddresses: [],
@@ -73,7 +73,7 @@ describe(shouldSkip.name, () => {
 
   it('skips addresses that exceed max addresses', () => {
     const address = EthereumAddress.random()
-    const config = new DiscoveryConfig({
+    const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
       initialAddresses: [],
@@ -85,7 +85,7 @@ describe(shouldSkip.name, () => {
 
   it('does not skip addresses that are not ignored', () => {
     const address = EthereumAddress.random()
-    const config = new DiscoveryConfig({
+    const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
       initialAddresses: [],

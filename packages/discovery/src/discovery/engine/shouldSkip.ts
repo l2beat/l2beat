@@ -1,9 +1,9 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 
 export function shouldSkip(
   address: EthereumAddress,
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   depth: number,
   counter: number,
 ): string | undefined {

@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { ConfigRegistry } from '../config/ConfigRegistry'
 import {
   DiscoveryContract,
   type RawDiscoveryConfig,
@@ -90,8 +90,8 @@ describe(DiscoveryEngine.name, () => {
 const generateFakeConfig = (
   initialAddresses: EthereumAddress[],
   overrides: RawDiscoveryConfig['overrides'],
-): DiscoveryConfig => {
-  return new DiscoveryConfig({
+): ConfigRegistry => {
+  return new ConfigRegistry({
     name: 'test',
     chain: 'ethereum',
     initialAddresses,

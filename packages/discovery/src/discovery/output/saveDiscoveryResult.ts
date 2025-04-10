@@ -6,7 +6,7 @@ import { rimraf } from 'rimraf'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { TemplateService } from '../analysis/TemplateService'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { buildAndSaveModels } from '../modelling/build'
 import { buildProjectPageFacts } from '../modelling/projectPageFacts'
@@ -30,7 +30,7 @@ export interface SaveDiscoveryResultOptions {
 
 export async function saveDiscoveryResult(
   results: Analysis[],
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   blockNumber: number,
   logger: DiscoveryLogger,
   options: SaveDiscoveryResultOptions,

@@ -11,7 +11,7 @@ import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
-import type { DiscoveryConfig } from './config/DiscoveryConfig'
+import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
 import { diffDiscovery } from './output/diffDiscovery'
@@ -135,7 +135,7 @@ export async function dryRunDiscovery(
 async function justDiscover(
   paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   blockNumber: number,
   http: HttpClient,
   overwriteCache: boolean,
@@ -157,7 +157,7 @@ async function justDiscover(
 export async function discover(
   paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   logger: DiscoveryLogger,
   blockNumber: number | undefined,
   http: HttpClient,

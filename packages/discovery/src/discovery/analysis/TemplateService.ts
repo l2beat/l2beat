@@ -13,7 +13,7 @@ import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { ColorContract } from '../config/ColorConfig'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { ContractPermission } from '../config/PermissionConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
@@ -208,7 +208,7 @@ export class TemplateService {
   }
 
   // returns reason or undefined
-  discoveryNeedsRefresh(discovery: DiscoveryOutput, config: DiscoveryConfig) {
+  discoveryNeedsRefresh(discovery: DiscoveryOutput, config: ConfigRegistry) {
     const allTemplateHashes = this.getAllTemplateHashes()
     const allShapes = this.getAllShapes()
 

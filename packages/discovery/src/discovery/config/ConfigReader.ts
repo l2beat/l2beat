@@ -13,7 +13,7 @@ import { type ZodError, z } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
-import { DiscoveryConfig } from './DiscoveryConfig'
+import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
@@ -24,7 +24,7 @@ const JustImport = z
 export class ConfigReader {
   constructor(private rootPath: string) {}
 
-  readConfig(name: string, chain: string): DiscoveryConfig {
+  readConfig(name: string, chain: string): ConfigRegistry {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
@@ -54,7 +54,7 @@ export class ConfigReader {
       )
     }
 
-    const config = new DiscoveryConfig(rawConfig, this)
+    const config = new ConfigRegistry(rawConfig, this)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -104,14 +104,14 @@ export class ConfigReader {
     return [...chains]
   }
 
-  readAllConfigs(): DiscoveryConfig[] {
+  readAllConfigs(): ConfigRegistry[] {
     return this.readAllChains().flatMap((chain) =>
       this.readAllConfigsForChain(chain),
     )
   }
 
-  readAllConfigsForChain(chain: string): DiscoveryConfig[] {
-    const result: DiscoveryConfig[] = []
+  readAllConfigsForChain(chain: string): ConfigRegistry[] {
+    const result: ConfigRegistry[] = []
     const projects = this.readAllProjectsForChain(chain)
 
     for (const project of projects) {

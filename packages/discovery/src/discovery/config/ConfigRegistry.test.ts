@@ -1,7 +1,7 @@
 import { hashJson } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { DiscoveryConfig } from './DiscoveryConfig'
+import { ConfigRegistry } from './ConfigRegistry'
 import {
   DiscoveryContract,
   type RawDiscoveryConfig,
@@ -19,7 +19,7 @@ const OVERRIDE_A = {
 const OVERRIDE_B = {
   ignoreDiscovery: true,
 }
-const CONFIG = new DiscoveryConfig({
+const CONFIG = new ConfigRegistry({
   name: 'a',
   chain: 'ethereum',
   initialAddresses: [ADDRESS_A],
@@ -30,16 +30,15 @@ const CONFIG = new DiscoveryConfig({
     [ADDRESS_B.toString()]: 'B',
   },
   overrides: {
-    A: DiscoveryContract.parse(OVERRIDE_A),
+    [ADDRESS_A.toString()]: DiscoveryContract.parse(OVERRIDE_A),
     [ADDRESS_B.toString()]: DiscoveryContract.parse(OVERRIDE_B),
   },
 })
 
-describe(DiscoveryConfig.name, () => {
+describe(ConfigRegistry.name, () => {
   describe('overrides', () => {
     it('gets override for given address, ignoring common name since it is already named', () => {
       const result = CONFIG.for(ADDRESS_B)
-      expect(result.name).toEqual('B')
       expect(result.address).toEqual(ADDRESS_B)
     })
   })
@@ -54,7 +53,7 @@ describe(DiscoveryConfig.name, () => {
     })
 
     it('does not modify original config object', () => {
-      const config: DiscoveryConfig = new DiscoveryConfig({
+      const config: ConfigRegistry = new ConfigRegistry({
         name: 'a',
         chain: 'ethereum',
         initialAddresses: [

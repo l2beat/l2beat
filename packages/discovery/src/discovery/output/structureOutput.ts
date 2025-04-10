@@ -1,6 +1,6 @@
 import type { Hash256 } from '@l2beat/shared-pure'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import {
   transformToIssued,
@@ -9,7 +9,7 @@ import {
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   blockNumber: number,
   results: Analysis[],
 ): StructureOutput {

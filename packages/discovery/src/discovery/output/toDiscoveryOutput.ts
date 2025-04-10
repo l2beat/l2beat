@@ -9,13 +9,13 @@ import { merge } from 'lodash'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import { colorize } from '../colorize/colorize'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { neuterErrors } from './errors'
 import { getStructureOutput } from './structureOutput'
 
 export function toDiscoveryOutput(
   templateService: TemplateService,
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
@@ -37,7 +37,7 @@ export function toDiscoveryOutput(
 
 export function toRawDiscoveryOutput(
   templateService: TemplateService,
-  config: DiscoveryConfig,
+  config: ConfigRegistry,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
