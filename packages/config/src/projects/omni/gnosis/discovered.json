@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 39471784,
-  "configHash": "0xa518dc7f6a72ea57df88adc1ed5943b68d3c8ed0e8eaceae49d2501c69805ace",
+  "configHash": "0xc5aa3f517112d7dad74e0a13a29b78e7ef09365ed087b719e0ce431170fd8827",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -234,6 +234,11 @@
         "totalSupply": "2500000000000000000"
       },
       "derivedName": "ERC677BridgeToken"
+    },
+    {
+      "address": "0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafe",
@@ -780,6 +785,58 @@
       "derivedName": "GnosisSafeL2"
     },
     {
+      "name": "SP1Helios",
+      "address": "0xa809c536c85b63a2676CbAc3C4064748AD3a2562",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf80096ea7a47fdf03cff05c2b054950ec13c7697be27ad236c3634a8b91d89c2"
+      ],
+      "proxyType": "immutable",
+      "values": {
+        "$immutable": true,
+        "executionStateRoots": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "GENESIS_TIME": 1606824023,
+        "GENESIS_VALIDATORS_ROOT": "0x4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95",
+        "getCurrentEpoch": 357523,
+        "getSyncCommitteePeriod": [0, 0, 0, 0, 0],
+        "guardian": "0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
+        "head": 11440736,
+        "headers": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "heliosProgramVkey": "0x00ed996c6f79e241fd4879d34ebfef7514ad8b817d0b40ab82a9856460d298c0",
+        "SECONDS_PER_SLOT": 12,
+        "SLOTS_PER_EPOCH": 32,
+        "SLOTS_PER_PERIOD": 8192,
+        "SOURCE_CHAIN_ID": 1,
+        "syncCommittees": [
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "verifier": "0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b"
+      },
+      "errors": {
+        "executionStateRoots": "Processing error occurred.",
+        "getSyncCommitteePeriod": "Processing error occurred.",
+        "headers": "Processing error occurred.",
+        "syncCommittees": "Processing error occurred."
+      },
+      "derivedName": "SP1Helios"
+    },
+    {
       "name": "Hashi",
       "address": "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
       "type": "Contract",
@@ -865,6 +922,23 @@
       "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1HeliosAdapter",
+      "address": "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x60d07c93914cdb5d0143dd5d1680ecfcf5f6702a103d2e33513b564dbd55eb52"
+      ],
+      "proxyType": "immutable",
+      "values": {
+        "$immutable": true,
+        "PROVIDER": "sp1-helios",
+        "SOURCE_CHAIN_ID": 1,
+        "SOURCE_YAHO": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
+        "SP1_HELIOS_ADDRESS": "0xa809c536c85b63a2676CbAc3C4064748AD3a2562"
+      },
+      "derivedName": "SP1HeliosAdapter"
     },
     {
       "address": "0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -975,6 +1049,21 @@
       "address": "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x5ebb775f2803d074da1b09f713044da7c8b74dd951913810947e8560b3a45845"
+      ],
+      "proxyType": "immutable",
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x11b6a09d63d255ad425ee3a7f6211d5ec63fbde9805b40551c3136275b6f4eb4",
+        "VERSION": "v4.0.0-rc.3"
+      },
+      "derivedName": "SP1Verifier"
     },
     {
       "address": "0xE4Df0cdC9eF7e388eA906226010bBD1B9A6fFeD9",
@@ -1842,6 +1931,33 @@
     "0xA7a818aB3307B6C95Ef506634e08c35251c81D1C": [
       "constructor(address _singleton)"
     ],
+    "0xa809c536c85b63a2676CbAc3C4064748AD3a2562": [
+      "constructor(tuple(bytes32 executionStateRoot, uint256 genesisTime, bytes32 genesisValidatorsRoot, address guardian, uint256 head, bytes32 header, bytes32 heliosProgramVkey, uint256 secondsPerSlot, uint256 slotsPerEpoch, uint256 slotsPerPeriod, uint256 sourceChainId, bytes32 syncCommitteeHash, address verifier) params)",
+      "error HeaderRootAlreadySet(uint256 slot)",
+      "error SlotBehindHead(uint256 slot)",
+      "error StateRootAlreadySet(uint256 slot)",
+      "error SyncCommitteeAlreadySet(uint256 period)",
+      "error SyncCommitteeStartMismatch(bytes32 given, bytes32 expected)",
+      "event HeadUpdate(uint256 indexed slot, bytes32 indexed root)",
+      "event SyncCommitteeUpdate(uint256 indexed period, bytes32 indexed root)",
+      "function GENESIS_TIME() view returns (uint256)",
+      "function GENESIS_VALIDATORS_ROOT() view returns (bytes32)",
+      "function SECONDS_PER_SLOT() view returns (uint256)",
+      "function SLOTS_PER_EPOCH() view returns (uint256)",
+      "function SLOTS_PER_PERIOD() view returns (uint256)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function executionStateRoots(uint256) view returns (bytes32)",
+      "function getCurrentEpoch() view returns (uint256)",
+      "function getSyncCommitteePeriod(uint256 slot) view returns (uint256)",
+      "function guardian() view returns (address)",
+      "function head() view returns (uint256)",
+      "function headers(uint256) view returns (bytes32)",
+      "function heliosProgramVkey() view returns (bytes32)",
+      "function syncCommittees(uint256) view returns (bytes32)",
+      "function update(bytes proof, bytes publicValues)",
+      "function updateHeliosProgramVkey(bytes32 newVkey)",
+      "function verifier() view returns (address)"
+    ],
     "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
       "error AdaptersDisagree(address adapterOne, address adapterTwo)",
       "error HashNotAvailableInAdapter(address adapter)",
@@ -1895,6 +2011,28 @@
       "function dispatchMessagesToAdapters(uint256 targetChainId, uint256[] thresholds, address[] receivers, bytes[] data, address[] reporters, address[] adapters) payable returns (uint256[], bytes32[])",
       "function getPendingMessageHash(uint256 messageId) view returns (bytes32)",
       "function relayMessagesToAdapters(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) payable returns (bytes32[])"
+    ],
+    "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A": [
+      "constructor(address sp1HeliosAddress, uint256 sourceChainId, address sourceYaho)",
+      "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
+      "error ErrorParseReceipt()",
+      "error HeaderNotAvailable()",
+      "error InvalidBlockHashProof()",
+      "error InvalidBlockHeaderRLP()",
+      "error InvalidBlockNumberProof()",
+      "error InvalidEventSignature()",
+      "error InvalidEventSource()",
+      "error InvalidReceiptsRoot()",
+      "error UnsupportedTxType()",
+      "event HashStored(uint256 indexed id, bytes32 indexed hash)",
+      "function PROVIDER() view returns (string)",
+      "function SOURCE_CHAIN_ID() view returns (uint256)",
+      "function SOURCE_YAHO() view returns (address)",
+      "function SP1_HELIOS_ADDRESS() view returns (address)",
+      "function getHash(uint256 domain, uint256 id) view returns (bytes32)",
+      "function proveAncestralBlockHashes(uint256 chainId, bytes[] blockHeaders)",
+      "function storeBlockHeader(uint256 slot, uint256 blockNumber, bytes32[] blockNumberProof, bytes32 blockHash, bytes32[] blockHashProof)",
+      "function verifyAndStoreDispatchedMessage(uint64 headerSlot, uint64 txSlot, bytes32[] receiptsRootProof, bytes32 receiptsRoot, bytes[] receiptProof, bytes txIndexRLPEncoded, uint256 logIndex)"
     ],
     "0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": [
       "constructor(address _owner)",
@@ -1968,6 +2106,19 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": [
       "constructor(address _owner, address _tokenImage)",

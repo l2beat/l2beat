@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6a517704f622bb4c1c64f0ff7c4ebe2f0d77da6a
+Generated with discovered.json: 0xfa39c31428041398f6e2123987d5ef731c295306
 
-# Diff at Wed, 09 Apr 2025 14:31:38 GMT:
+# Diff at Thu, 10 Apr 2025 07:31:11 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - current block number: 39471784
@@ -127,6 +127,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract SP1Helios (0xa809c536c85b63a2676CbAc3C4064748AD3a2562)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
     +++ description: None
 ```
@@ -145,6 +151,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract SP1HeliosAdapter (0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract MultiTokenForwardingRulesManager (0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286)
     +++ description: None
 ```
@@ -152,6 +164,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract HomeAMBErc677ToErc677 (0xD9a3039cfC70aF84AC9E566A2526fD3b683B995B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b)
     +++ description: None
 ```
 

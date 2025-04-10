@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22230472,
-  "configHash": "0x9986abf001a2bf926a742db8de9c4f061062d496a503126898095ed89caf5c58",
+  "configHash": "0xb65da9bfffa9eeb5fb7570a2cd91b9f30e85f1d05cc73f62ec76bf2add0530b0",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -92,12 +92,10 @@
       "sinceBlock": 20724328,
       "values": {
         "$immutable": true,
-        "executed": [false, false, false, false, false],
         "HASHI": "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
         "SOURCE_CHAIN_ID": 100,
         "YAHO": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8"
       },
-      "errors": { "executed": "Processing error occurred." },
       "derivedName": "Yaru"
     },
     {
@@ -364,7 +362,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "HashiOwnerMS",
       "address": "0x670a3e447F4DE92C012777Ac5591D81E12aD0957",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -799,18 +797,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1720772543,
       "sinceBlock": 20289197,
-      "values": {
-        "$immutable": true,
-        "currentNonce": 14951,
-        "getPendingMessageHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ]
-      },
-      "errors": { "getPendingMessageHash": "Processing error occurred." },
+      "values": { "$immutable": true, "currentNonce": 14951 },
       "derivedName": "Yaho"
     },
     {

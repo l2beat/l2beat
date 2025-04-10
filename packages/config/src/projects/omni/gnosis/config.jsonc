@@ -3,7 +3,7 @@
   "name": "omni",
   "chain": "gnosis",
   "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": ["0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"],
+  "initialAddresses": ["0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d", "0xceb436489e9c6d9e4db76145a6cce2a06411ea0a"],
   "overrides": {
     "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
       //HomeOmnibridge

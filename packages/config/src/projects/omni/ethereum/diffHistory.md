@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5ea36a4aff4fc882e11d19695a4878c723d04198
+Generated with discovered.json: 0x5eafc1738a1ba8ee970984769ba1e329392eb113
 
-# Diff at Wed, 09 Apr 2025 11:56:43 GMT:
+# Diff at Thu, 10 Apr 2025 07:23:42 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: main@b04ae40394d41744c67519d82fd543837c6ad4a0 block: 22123489
@@ -44,6 +44,15 @@ Provide description of changes. This section will be preserved.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22123489 (main branch discovery), not current.
+
+```diff
+    contract HashiOwnerMS (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      name:
+-        "Safe"
++        "HashiOwnerMS"
+    }
+```
 
 ```diff
     contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
