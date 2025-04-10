@@ -158,10 +158,12 @@ export async function NavLayout({
         await ps.getProjects({
           select: ['ecosystemConfig'],
         })
-      ).map((ecosystem) => ({
-        title: ecosystem.name,
-        href: `/ecosystems/${ecosystem.slug}`,
-      })),
+      )
+        .map((ecosystem) => ({
+          title: ecosystem.name,
+          href: `/ecosystems/${ecosystem.slug}`,
+        }))
+        .sort((a, b) => a.title.localeCompare(b.title)),
     },
   ])
 
