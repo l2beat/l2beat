@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { getEnv } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import {
@@ -16,10 +17,10 @@ import {
 async function main() {
   try {
     const env = getEnv()
-    const timestamp = UnixTime.toStartOf(
-      UnixTime.now() - 2 * UnixTime.HOUR,
-      'hour',
-    )
+
+    const startDate = UnixTime(1575590400) // 6.12.2019
+    const endDate = UnixTime.toStartOf(UnixTime.now(), 'day')
+    const timestamps = generateDailyTimestamps(startDate, endDate)
 
     const projectService = new ProjectService()
     const scalingProjects = await projectService.getProjects({
@@ -40,70 +41,125 @@ async function main() {
       keepAlive: false,
     })
 
-    const tvsRecords = await db.tvsProjectValue.getByTimestampAndType(
-      timestamp,
-      'SUMMARY',
-    )
+    // Create a CSV file to store results
+    const csvStream = fs.createWriteStream('tvs_tvl_comparison.csv')
+    csvStream.write('Date,TVS,TVL,Diff,Correlation(%)\n')
 
-    const filteredTvsRecords = tvsRecords.filter((r) =>
-      projectIds.has(r.project),
-    )
-    const totalTvs = filteredTvsRecords.reduce(
-      (acc, curr) => acc + curr.value,
-      0,
-    )
+    // Create a CSV file for project-specific data
+    const projectCsvStream = fs.createWriteStream('project_comparison.csv')
+    projectCsvStream.write('Date,ProjectId,TVS,TVL,Diff,Correlation(%)\n')
 
-    const tvlRecords = await db.value.getValuesByProjectIdsAndTimeRange(
-      projectIdArray,
-      [timestamp, timestamp],
-    )
+    console.log(`Processing ${timestamps.length} timestamps...`)
 
-    const totalTvl = asNumber(
-      tvlRecords.reduce(
-        (acc, curr) =>
-          acc +
-          curr.nativeForTotal +
-          curr.externalForTotal +
-          curr.canonicalForTotal,
-        0n,
-      ),
-      2,
-    )
+    // Process each timestamp
+    for (let i = 0; i < timestamps.length; i++) {
+      const timestamp = timestamps[i]
+      const dateStr = UnixTime.toDate(timestamp).toISOString().split('T')[0]
 
-    printResults(totalTvs, totalTvl)
-    printProjectDiffs(db, timestamp, projectIds, tvlRecords)
+      console.log(`Processing ${dateStr} (${i + 1}/${timestamps.length})`)
+
+      try {
+        // Get TVS records for this timestamp
+        const tvsRecords = await db.tvsProjectValue.getByTimestampAndType(
+          timestamp,
+          'SUMMARY',
+        )
+
+        const filteredTvsRecords = tvsRecords.filter((r) =>
+          projectIds.has(r.project),
+        )
+        const totalTvs = filteredTvsRecords.reduce(
+          (acc, curr) => acc + curr.value,
+          0,
+        )
+
+        // Get TVL records for this timestamp
+        const tvlRecords = await db.value.getValuesByProjectIdsAndTimeRange(
+          projectIdArray,
+          [timestamp, timestamp],
+        )
+
+        const totalTvl = asNumber(
+          tvlRecords.reduce(
+            (acc, curr) =>
+              acc +
+              curr.nativeForTotal +
+              curr.externalForTotal +
+              curr.canonicalForTotal,
+            0n,
+          ),
+          2,
+        )
+
+        // Calculate differences
+        const diff = totalTvs - totalTvl
+        const percentageRatio = totalTvl > 0 ? (totalTvs / totalTvl) * 100 : 0
+        console.log(
+          UnixTime.toDate(timestamp).toISOString(),
+          diff,
+          percentageRatio,
+        )
+
+        if (percentageRatio >= 100.5 || percentageRatio <= 99.5) {
+          if (totalTvs !== 0 && totalTvl !== 0)
+            console.log(
+              `\x1b[41m Mismatch detected: ${formatPercent(percentageRatio)} $${formatLargeNumber(diff)} \x1b[0m`,
+            )
+        }
+
+        // Write to CSV
+        csvStream.write(
+          `${dateStr},${totalTvs},${totalTvl},${diff},${percentageRatio.toFixed(2)}\n`,
+        )
+
+        // Process project-specific differences
+        await processProjectDiffs(
+          db,
+          timestamp,
+          projectIds,
+          tvlRecords,
+          projectCsvStream,
+          dateStr,
+        )
+      } catch (error) {
+        console.error(`Error processing timestamp ${dateStr}:`, error)
+        // Continue with the next timestamp
+      }
+    }
+
+    csvStream.end()
+    projectCsvStream.end()
+
+    console.log('\nProcessing complete!')
+    console.log(
+      'Results saved to tvs_tvl_comparison.csv and project_comparison.csv',
+    )
   } catch (error) {
     console.error('Error in main function:', error)
     process.exit(1)
   }
 }
 
-function printResults(totalTvs: number, totalTvl: number) {
-  console.log(`\nTVS`)
-  console.log(`raw: ${totalTvs}`)
-  console.log(`formatted: $ ${formatLargeNumber(totalTvs)}`)
+function generateDailyTimestamps(start: UnixTime, end: UnixTime): UnixTime[] {
+  const timestamps: UnixTime[] = []
+  let current = start
 
-  console.log(`\nTVL`)
-  console.log(`raw: ${totalTvl}`)
-  console.log(`formatted: $ ${formatLargeNumber(totalTvl)}`)
+  while (current <= end) {
+    timestamps.push(current)
+    current = current + UnixTime.DAY
+  }
 
-  const diff = totalTvs - totalTvl
-  const percentageRatio = ((totalTvs / totalTvl) * 100).toFixed(2)
-
-  console.log(`\nDIFF`)
-  console.log('Diff (TVS - TVL):', formatLargeNumber(diff))
-  console.log(`Correlation (TVS/TVL): ${percentageRatio}%`)
+  return timestamps
 }
 
-async function printProjectDiffs(
+async function processProjectDiffs(
   db: Database,
   timestamp: UnixTime,
   projectIds: Set<string>,
   tvlRecords: ValueRecord[],
+  csvStream: fs.WriteStream,
+  dateStr: string,
 ) {
-  console.log('\nPER PROJECT DIFFERENCES:')
-  console.log('------------------------')
-
   const projectTvlMap = new Map<string, number>()
 
   for (const record of tvlRecords) {
@@ -121,6 +177,7 @@ async function printProjectDiffs(
     assert(previous !== undefined)
     projectTvlMap.set(projectId, previous + value)
   }
+
   const tvsRecords = (
     await db.tvsProjectValue.getByTimestampAndType(timestamp, 'PROJECT')
   ).filter((r) => projectIds.has(r.project))
@@ -135,34 +192,24 @@ async function printProjectDiffs(
     ...projectTvsMap.keys(),
   ])
 
-  const projectDiffs = []
-
   for (const projectId of allProjectIds) {
     const tvsValue = projectTvsMap.get(projectId) || 0
     const tvlValue = projectTvlMap.get(projectId) || 0
 
     const diff = tvsValue - tvlValue
-    const percentageDiff =
-      tvlValue > 0 ? ((tvsValue / tvlValue) * 100).toFixed(2) + '%' : 'N/A'
+    const percentageDiff = tvlValue > 0 ? (tvsValue / tvlValue) * 100 : 0
 
-    projectDiffs.push({
-      projectId,
-      tvsValue,
-      tvlValue,
-      diff: diff,
-      percentageDiff,
-    })
-  }
+    if (percentageDiff >= 100.5 || percentageDiff <= 99.5) {
+      if (tvlValue !== 0 && tvsValue !== 0)
+        console.log(
+          `\x1b[31m ${projectId}: ${formatPercent(percentageDiff)} ($${formatLargeNumber(diff)}) \x1b[0m`,
+        )
+    }
 
-  projectDiffs.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff))
-
-  for (const diff of projectDiffs) {
-    console.log(`Project: ${diff.projectId}`)
-    console.log(`  TVS: $${formatLargeNumber(diff.tvsValue)}`)
-    console.log(`  TVL: $${formatLargeNumber(diff.tvlValue)}`)
-    console.log(`  Diff: $${formatLargeNumber(diff.diff)}`)
-    console.log(`  Correlation (TVS/TVL): ${diff.percentageDiff}`)
-    console.log('------------------------')
+    // Write to CSV: Date,ProjectId,TVS,TVL,Diff,Correlation(%)
+    csvStream.write(
+      `${dateStr},${projectId},${tvsValue},${tvlValue},${diff},${percentageDiff.toFixed(2)}\n`,
+    )
   }
 }
 
@@ -170,3 +217,8 @@ main().catch((error) => {
   console.error('Unhandled error:', error)
   process.exit(1)
 })
+
+function formatPercent(value: number): string {
+  const formattedValue = value.toFixed(2)
+  return `${formattedValue}%`
+}
