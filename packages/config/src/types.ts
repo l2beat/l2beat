@@ -280,7 +280,11 @@ export interface ProjectBridgeInfo {
   validatedBy: string
 }
 
-export type BridgeCategory = 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+export type BridgeCategory =
+  | 'Token Bridge'
+  | 'Liquidity Network'
+  | 'Hybrid'
+  | 'Single-chain'
 
 export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue

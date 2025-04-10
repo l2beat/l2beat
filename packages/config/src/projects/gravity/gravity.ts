@@ -13,7 +13,7 @@ export const gravity: Bridge = {
   display: {
     name: 'Gravity',
     slug: 'gravity',
-    category: 'Token Bridge',
+    category: 'Single-chain',
     links: {
       websites: ['https://gravitybridge.net/'],
       explorers: ['https://mintscan.io/gravity-bridge'],

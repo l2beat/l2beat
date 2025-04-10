@@ -10,7 +10,7 @@ export const harmony: Bridge = {
     name: 'Harmony',
     slug: 'harmony',
     description: 'Externally Validated Token Bridge secured by a multisig.',
-    category: 'Token Bridge',
+    category: 'Single-chain',
     links: {
       websites: ['https://bridge.harmony.one/erc20'],
     },
