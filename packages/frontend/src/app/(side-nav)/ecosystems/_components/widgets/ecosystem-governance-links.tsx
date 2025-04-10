@@ -7,7 +7,6 @@ import { EcosystemWidget } from './ecosystem-widget'
 
 export interface EcosystemGovernanceLinks {
   review: string
-  reviewThumbnail: string
   topDelegates: string
   proposals: string
 }
@@ -25,11 +24,7 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
         className,
       )}
     >
-      <GovernanceLink
-        href={links.review}
-        thumbnail={links.reviewThumbnail}
-        className="sm:row-span-2"
-      />
+      <GovernanceLink href={links.review} className="sm:row-span-2" />
       <TopDelegatesLink href={links.topDelegates} />
       <ProposalsLink href={links.proposals} />
     </div>
@@ -38,42 +33,40 @@ export function EcosystemGovernanceLinks({ links, className }: Props) {
 
 function GovernanceLink({
   href,
-  thumbnail,
   className,
-}: { href: string; thumbnail: string; className?: string }) {
+}: { href: string; className?: string }) {
   return (
-    <>
-      <EcosystemWidget
-        className={cn('relative flex flex-col !p-0 max-sm:hidden', className)}
-      >
-        <Image
-          src={thumbnail}
-          alt="Governance Review"
-          width={1200}
-          height={674}
-          className="w-full rounded-t-xl"
-        />
-
-        <div className="my-auto px-6 py-5">
-          <Link
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link"
-            href={href}
-          >
-            Governance Review
-            <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
-          </Link>
+    <EcosystemWidget
+      className={cn('flex flex-col overflow-hidden !pt-0', className)}
+    >
+      <div className="relative flex h-full items-center justify-between gap-2 text-primary">
+        <div className="flex flex-col justify-center whitespace-nowrap">
+          <div className="text-2xs font-medium uppercase transition-opacity">
+            Governance
+          </div>
+          <div className="origin-left text-xl font-bold transition-all will-change-transform">
+            L2BEAT Review
+          </div>
         </div>
-      </EcosystemWidget>
-      <Link href={href} className="sm:hidden">
         <Image
-          src={thumbnail}
-          alt="Governance Review"
-          width={1200}
-          height={674}
-          className="max-h-56 w-full rounded-xl object-cover"
+          src="/ecosystems/governance-bank.png"
+          alt="Governance Bank"
+          className="py-4"
+          width={141}
+          height={130}
         />
-      </Link>
-    </>
+      </div>
+
+      <div>
+        <Link
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link"
+          href={href}
+        >
+          Governance Review
+          <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
+        </Link>
+      </div>
+    </EcosystemWidget>
   )
 }
 

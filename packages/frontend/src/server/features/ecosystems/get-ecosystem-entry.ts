@@ -216,6 +216,5 @@ function getGovernanceLinks(
     topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
     proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
-    reviewThumbnail: `/meta-images/governance/publications/${lastPublication.id}.png`,
   }
 }
