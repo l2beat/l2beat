@@ -10,8 +10,8 @@
     - [Proof system](./code_walkthroughs/arbitrum/proof_system.md)
     - [Admin operations](./code_walkthroughs/arbitrum/admin_ops.md)
 - [Optimism](./code_walkthroughs/optimism/README.md)
-    - [Withdrawals](./code_walkthroughs/optimism/withdrawals.md)
 
 # L2BEAT specs
 
 - [Permissions section](./l2b_specs/permissions.md)
+- [Finality page](./l2b_specs/finality.md)
