@@ -9405,6 +9405,20 @@
       }
     },
     {
+      "name": "Kinto Token",
+      "coingeckoId": "kinto",
+      "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
+      "symbol": "K",
+      "decimals": 18,
+      "deploymentTimestamp": 1718926428,
+      "coingeckoListingTimestamp": 1743379200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54964/large/k200.png?1742894885",
+      "chainId": 7887,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Aavegotchi GHST Token",
       "coingeckoId": "aavegotchi",
       "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",

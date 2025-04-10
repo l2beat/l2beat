@@ -6544,5 +6544,14 @@
         ]
       }
     }
+  ],
+  "kinto": [
+    {
+      "symbol": "K",
+      "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
+      "coingeckoId": "kinto",
+      "source": "native",
+      "supply": "circulatingSupply"
+    }
   ]
 }
