@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xa029aa3b82ac2f42cbd9209d941cdd1dadf33aac
+
+# Diff at Wed, 09 Apr 2025 13:42:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 323453444
+- current block number: 324576418
+
+## Description
+
+Add and remove a staker to call forceRefundStaker in the meantime:
+1) https://app.blocksec.com/explorer/tx/arbitrum/0x97c9635d50f195c8436470235f2cd2cff763957e7dead93a7b37102611dd9881
+2) https://app.blocksec.com/explorer/tx/arbitrum/0x40f73d3fed810719174d95929bc997e0d4ab616a3b8a6d997fa19ef15d1cf503
+3) https://app.blocksec.com/explorer/tx/arbitrum/0xe7519bdb47cdd3c541a8ad00f66eaa0f594dba07e4a9dac2a4b9a368bc1205de
+4) https://app.blocksec.com/explorer/tx/arbitrum/0x6dd01c6e9dba54dc9d6588afedca7ecb782beb0a5f130553ecd5aa036c225bab
+5) https://app.blocksec.com/explorer/tx/arbitrum/0xb8f3289bf52ec4879e501862935da01642b1b02b62ec697e414c0c3052d9bb08
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        5
+      values.stakerCount:
+-        2
++        1
+    }
+```
+
 Generated with discovered.json: 0xc858637d978412f3489052ed888978a1c8dbf748
 
 # Diff at Sun, 06 Apr 2025 07:31:03 GMT:

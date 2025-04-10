@@ -1,7 +1,11 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { TvsToken } from '@l2beat/config'
-import type { ProjectValueRecord } from '@l2beat/database'
-import { assert, type RemovalConfiguration } from '@l2beat/shared-pure'
+import type { ProjectValueRecord, TokenValueRecord } from '@l2beat/database'
+import {
+  assert,
+  type ProjectValueType,
+  type RemovalConfiguration,
+} from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -66,58 +70,9 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
       const tokensForTimestamp = tokens.filter((t) => t.timestamp === timestamp)
       const project = configurations[0].properties.project
 
-      const createBaseRecord = (type: string) => ({
-        timestamp,
-        project,
-        type,
-        value: 0,
-        canonical: 0,
-        external: 0,
-        native: 0,
-        ether: 0,
-        stablecoin: 0,
-        other: 0,
-        associated: 0,
-      })
-
-      const summaryRecord = createBaseRecord('SUMMARY')
-      const fullRecord = createBaseRecord('FULL')
-      const excludingAssociatedRecord = createBaseRecord(
-        'SUMMARY_EXCLUDING_ASSOCIATED',
+      records.push(
+        ...this.aggregateForTimestamp(project, timestamp, tokensForTimestamp),
       )
-
-      for (const token of tokensForTimestamp) {
-        const config = this.$.tokens.get(token.tokenId)
-        assert(config)
-
-        summaryRecord.value += token.valueForSummary
-        fullRecord.value += token.valueForProject
-        if (config.isAssociated === false) {
-          excludingAssociatedRecord.value += token.valueForSummary
-        }
-
-        const sourceField = config.source // canonical, external, or native
-        summaryRecord[sourceField] += token.valueForSummary
-        fullRecord[sourceField] += token.valueForProject
-        if (config.isAssociated === false) {
-          excludingAssociatedRecord[sourceField] += token.valueForSummary
-        }
-
-        const categoryField = config.category // ether, stablecoin, or other
-        summaryRecord[categoryField] += token.valueForSummary
-        fullRecord[categoryField] += token.valueForProject
-        if (config.isAssociated === false) {
-          excludingAssociatedRecord[categoryField] += token.valueForSummary
-        }
-
-        if (config.isAssociated) {
-          summaryRecord.associated += token.valueForSummary
-          fullRecord.associated += token.valueForProject
-          excludingAssociatedRecord.associated += token.valueForSummary
-        }
-      }
-
-      records.push(summaryRecord, fullRecord, excludingAssociatedRecord)
     }
 
     return async () => {
@@ -130,6 +85,70 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
 
       return timestamps[timestamps.length - 1]
     }
+  }
+
+  aggregateForTimestamp(
+    project: string,
+    timestamp: number,
+    tokensForTimestamp: TokenValueRecord[],
+  ) {
+    const createBaseRecord = (type: ProjectValueType) => ({
+      timestamp,
+      project,
+      type,
+      value: 0,
+      canonical: 0,
+      external: 0,
+      native: 0,
+      ether: 0,
+      stablecoin: 0,
+      other: 0,
+      associated: 0,
+    })
+
+    const summaryRecord = createBaseRecord('SUMMARY')
+    const summaryWaRecord = createBaseRecord('SUMMARY_WA')
+    const projectRecord = createBaseRecord('PROJECT')
+    const projectWaRecord = createBaseRecord('PROJECT_WA')
+
+    for (const token of tokensForTimestamp) {
+      const config = this.$.tokens.get(token.tokenId)
+      assert(config)
+
+      summaryRecord.value += token.valueForSummary
+      projectRecord.value += token.valueForProject
+      if (config.isAssociated === false) {
+        // only add if not associated
+        summaryWaRecord.value += token.valueForSummary
+        projectWaRecord.value += token.valueForProject
+      }
+
+      const source = config.source // canonical, external, or native
+      summaryRecord[source] += token.valueForSummary
+      projectRecord[source] += token.valueForProject
+      if (config.isAssociated === false) {
+        // only add if not associated
+        summaryWaRecord[source] += token.valueForSummary
+        projectWaRecord[source] += token.valueForProject
+      }
+
+      const category = config.category // ether, stablecoin, or other
+      summaryRecord[category] += token.valueForSummary
+      projectRecord[category] += token.valueForProject
+      if (config.isAssociated === false) {
+        // only add if not associated
+        summaryWaRecord[category] += token.valueForSummary
+        projectWaRecord[category] += token.valueForProject
+      }
+
+      if (config.isAssociated) {
+        summaryRecord.associated += token.valueForSummary
+        summaryWaRecord.associated += token.valueForSummary
+        projectRecord.associated += token.valueForProject
+        projectWaRecord.associated += token.valueForProject
+      }
+    }
+    return [summaryRecord, summaryWaRecord, projectRecord, projectWaRecord]
   }
 
   /**

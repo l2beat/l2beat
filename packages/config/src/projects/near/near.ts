@@ -34,12 +34,15 @@ const lockRequirementInWei = discovery.getContractValue<number>(
 )
 
 export const near: Bridge = {
+  isArchived: true,
   type: 'bridge',
   id: ProjectId('near'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',
+    warning:
+      'Deposits are paused and funds are being migrated to the new "Omnibridge". See the announcement [here](https://x.com/NEARProtocol/status/1908247501032824914).',
     links: {
       websites: ['https://near.org/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
@@ -167,4 +170,12 @@ export const near: Bridge = {
       ],
     },
   },
+  milestones: [
+    {
+      title: 'Bridge paused, migration in progress',
+      url: 'https://x.com/NEARProtocol/status/1908247501032824914',
+      date: '2025-04-04T00:00:00Z',
+      type: 'incident',
+    },
+  ],
 }
