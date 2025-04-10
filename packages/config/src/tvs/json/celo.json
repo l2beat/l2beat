@@ -32,7 +32,9 @@
         "type": "circulatingSupply",
         "apiId": "celo",
         "decimals": 18,
-        "sinceTimestamp": 1742960663
+        "sinceTimestamp": 1742960663,
+        "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+        "chain": "celo"
       },
       "category": "other",
       "source": "native",
@@ -49,7 +51,9 @@
         "type": "circulatingSupply",
         "apiId": "celo-euro",
         "decimals": 18,
-        "sinceTimestamp": 1742960663
+        "sinceTimestamp": 1742960663,
+        "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
+        "chain": "celo"
       },
       "category": "stablecoin",
       "source": "native",
@@ -121,7 +125,9 @@
         "type": "circulatingSupply",
         "apiId": "celo-dollar",
         "decimals": 18,
-        "sinceTimestamp": 1742960663
+        "sinceTimestamp": 1742960663,
+        "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
+        "chain": "celo"
       },
       "category": "stablecoin",
       "source": "native",
@@ -156,7 +162,9 @@
         "type": "circulatingSupply",
         "apiId": "plastiks",
         "decimals": 9,
-        "sinceTimestamp": 1742960663
+        "sinceTimestamp": 1742960663,
+        "address": "0x27cd006548dF7C8c8e9fdc4A67fa05C2E3CA5CF9",
+        "chain": "celo"
       },
       "category": "other",
       "source": "native",

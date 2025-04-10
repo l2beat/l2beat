@@ -32,7 +32,9 @@
         "type": "circulatingSupply",
         "apiId": "corn-3",
         "decimals": 18,
-        "sinceTimestamp": 1743120000
+        "sinceTimestamp": 1743120000,
+        "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+        "chain": "corn"
       },
       "category": "other",
       "source": "external",

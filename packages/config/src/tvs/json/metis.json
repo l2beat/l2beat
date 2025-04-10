@@ -131,7 +131,9 @@
             "type": "circulatingSupply",
             "apiId": "metis-token",
             "decimals": 18,
-            "sinceTimestamp": 1637077208
+            "sinceTimestamp": 1637077208,
+            "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",

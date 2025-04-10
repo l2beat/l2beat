@@ -51,7 +51,9 @@
         "type": "circulatingSupply",
         "apiId": "aerodrome-finance",
         "decimals": 18,
-        "sinceTimestamp": 1694736000
+        "sinceTimestamp": 1694736000,
+        "address": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -219,7 +221,9 @@
         "type": "circulatingSupply",
         "apiId": "b3",
         "decimals": 18,
-        "sinceTimestamp": 1739145600
+        "sinceTimestamp": 1739145600,
+        "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -293,7 +297,9 @@
         "type": "circulatingSupply",
         "apiId": "based-brett",
         "decimals": 18,
-        "sinceTimestamp": 1709164800
+        "sinceTimestamp": 1709164800,
+        "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -535,7 +541,9 @@
         "type": "circulatingSupply",
         "apiId": "degen-base",
         "decimals": 18,
-        "sinceTimestamp": 1705276800
+        "sinceTimestamp": 1705276800,
+        "address": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -609,7 +617,9 @@
         "type": "circulatingSupply",
         "apiId": "doginme",
         "decimals": 18,
-        "sinceTimestamp": 1707350400
+        "sinceTimestamp": 1707350400,
+        "address": "0x6921B130D297cc43754afba22e5EAc0FBf8Db75b",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -790,7 +800,9 @@
         "type": "circulatingSupply",
         "apiId": "freysa-ai",
         "decimals": 18,
-        "sinceTimestamp": 1733011200
+        "sinceTimestamp": 1733011200,
+        "address": "0xb33Ff54b9F7242EF1593d2C9Bcd8f9df46c77935",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -883,7 +895,9 @@
         "type": "circulatingSupply",
         "apiId": "friend-tech",
         "decimals": 18,
-        "sinceTimestamp": 1714694400
+        "sinceTimestamp": 1714694400,
+        "address": "0x0bD4887f7D41B35CD75DFF9FfeE2856106f86670",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -1051,7 +1065,9 @@
         "type": "circulatingSupply",
         "apiId": "kaito",
         "decimals": 18,
-        "sinceTimestamp": 1740009600
+        "sinceTimestamp": 1740009600,
+        "address": "0x98d0baa52b2D063E780DE12F615f963Fe8537553",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -1068,7 +1084,9 @@
         "type": "circulatingSupply",
         "apiId": "keyboard-cat-base",
         "decimals": 18,
-        "sinceTimestamp": 1711929600
+        "sinceTimestamp": 1711929600,
+        "address": "0x9a26F5433671751C3276a065f57e5a02D2817973",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -1236,7 +1254,9 @@
         "type": "circulatingSupply",
         "apiId": "mister-miggles",
         "decimals": 18,
-        "sinceTimestamp": 1721260800
+        "sinceTimestamp": 1721260800,
+        "address": "0xB1a03EdA10342529bBF8EB700a06C60441fEf25d",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -1253,7 +1273,9 @@
         "type": "circulatingSupply",
         "apiId": "mochi-thecatcoin",
         "decimals": 18,
-        "sinceTimestamp": 1700524800
+        "sinceTimestamp": 1700524800,
+        "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -1742,7 +1764,9 @@
         "type": "circulatingSupply",
         "apiId": "seamless-protocol",
         "decimals": 18,
-        "sinceTimestamp": 1702339200
+        "sinceTimestamp": 1702339200,
+        "address": "0x1C7a460413dD4e964f96D8dFC56E7223cE88CD85",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -2116,7 +2140,9 @@
         "type": "circulatingSupply",
         "apiId": "tn100x",
         "decimals": 18,
-        "sinceTimestamp": 1709596800
+        "sinceTimestamp": 1709596800,
+        "address": "0x5B5dee44552546ECEA05EDeA01DCD7Be7aa6144A",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -2133,7 +2159,9 @@
         "type": "circulatingSupply",
         "apiId": "toshi",
         "decimals": 18,
-        "sinceTimestamp": 1696863767
+        "sinceTimestamp": 1696863767,
+        "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -2188,7 +2216,9 @@
         "type": "circulatingSupply",
         "apiId": "base-god",
         "decimals": 18,
-        "sinceTimestamp": 1705363200
+        "sinceTimestamp": 1705363200,
+        "address": "0x0d97F261b1e88845184f678e2d1e7a98D9FD38dE",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -2224,7 +2254,9 @@
         "type": "circulatingSupply",
         "apiId": "unlockprotocoltoken",
         "decimals": 18,
-        "sinceTimestamp": 1731283200
+        "sinceTimestamp": 1731283200,
+        "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",
@@ -2409,7 +2441,9 @@
         "type": "circulatingSupply",
         "apiId": "venice-token",
         "decimals": 18,
-        "sinceTimestamp": 1737936000
+        "sinceTimestamp": 1737936000,
+        "address": "0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf",
+        "chain": "base"
       },
       "category": "other",
       "source": "native",

@@ -112,7 +112,9 @@
             "type": "circulatingSupply",
             "apiId": "arbius",
             "decimals": 18,
-            "sinceTimestamp": 1708734479
+            "sinceTimestamp": 1708734479,
+            "address": "0x8AFE4055Ebc86Bd2AFB3940c0095C9aca511d852",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",
@@ -329,7 +331,9 @@
         "type": "circulatingSupply",
         "apiId": "arbitrum",
         "decimals": 18,
-        "sinceTimestamp": 1679529600
+        "sinceTimestamp": 1679529600,
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -610,7 +614,9 @@
         "type": "circulatingSupply",
         "apiId": "boop-2",
         "decimals": 18,
-        "sinceTimestamp": 1703116800
+        "sinceTimestamp": 1703116800,
+        "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -664,7 +670,9 @@
         "type": "circulatingSupply",
         "apiId": "spacecatch",
         "decimals": 18,
-        "sinceTimestamp": 1718880774
+        "sinceTimestamp": 1718880774,
+        "address": "0xbC4c97Fb9befaa8B41448e1dFcC5236dA543217F",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -1130,7 +1138,9 @@
         "type": "circulatingSupply",
         "apiId": "dream-machine-token",
         "decimals": 18,
-        "sinceTimestamp": 1684901612
+        "sinceTimestamp": 1684901612,
+        "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -1298,7 +1308,9 @@
         "type": "circulatingSupply",
         "apiId": "eigenpie",
         "decimals": 18,
-        "sinceTimestamp": 1727222400
+        "sinceTimestamp": 1727222400,
+        "address": "0x7E7a7C916c19a45769f6BDAF91087f93c6C12F78",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -1448,7 +1460,9 @@
         "type": "circulatingSupply",
         "apiId": "equation",
         "decimals": 18,
-        "sinceTimestamp": 1698624000
+        "sinceTimestamp": 1698624000,
+        "address": "0x87AAfFdF26c6885f6010219208D5B161ec7609c0",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2088,7 +2102,9 @@
         "type": "circulatingSupply",
         "apiId": "gam3s-gg",
         "decimals": 18,
-        "sinceTimestamp": 1712620800
+        "sinceTimestamp": 1712620800,
+        "address": "0xc24A365A870821EB83Fd216c9596eDD89479d8d7",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2105,7 +2121,9 @@
         "type": "circulatingSupply",
         "apiId": "game7",
         "decimals": 18,
-        "sinceTimestamp": 1739404800
+        "sinceTimestamp": 1739404800,
+        "address": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2211,7 +2229,9 @@
         "type": "circulatingSupply",
         "apiId": "gmx",
         "decimals": 18,
-        "sinceTimestamp": 1631491200
+        "sinceTimestamp": 1631491200,
+        "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
+        "chain": "arbitrum"
       },
       "category": "stablecoin",
       "source": "native",
@@ -2322,7 +2342,9 @@
         "type": "circulatingSupply",
         "apiId": "camelot-token",
         "decimals": 18,
-        "sinceTimestamp": 1670371200
+        "sinceTimestamp": 1670371200,
+        "address": "0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2395,7 +2417,9 @@
         "type": "circulatingSupply",
         "apiId": "hydranet",
         "decimals": 18,
-        "sinceTimestamp": 1687566748
+        "sinceTimestamp": 1687566748,
+        "address": "0x3404149e9EE6f17Fb41DB1Ce593ee48FBDcD9506",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2563,7 +2587,9 @@
         "type": "circulatingSupply",
         "apiId": "jones-dao",
         "decimals": 18,
-        "sinceTimestamp": 1643500800
+        "sinceTimestamp": 1643500800,
+        "address": "0x10393c20975cF177a3513071bC110f7962CD67da",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2675,7 +2701,9 @@
         "type": "circulatingSupply",
         "apiId": "lodestar",
         "decimals": 18,
-        "sinceTimestamp": 1669075200
+        "sinceTimestamp": 1669075200,
+        "address": "0xF19547f9ED24aA66b03c3a552D181Ae334FBb8DB",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -2696,7 +2724,9 @@
             "type": "circulatingSupply",
             "apiId": "logx-2",
             "decimals": 18,
-            "sinceTimestamp": 1727136000
+            "sinceTimestamp": 1727136000,
+            "address": "0xa3F4341C3fEf5963AB04135D2014AC7d68222E19",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",
@@ -3190,7 +3220,9 @@
         "type": "circulatingSupply",
         "apiId": "mozaic",
         "decimals": 18,
-        "sinceTimestamp": 1694131200
+        "sinceTimestamp": 1694131200,
+        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -3207,7 +3239,9 @@
         "type": "circulatingSupply",
         "apiId": "mxc",
         "decimals": 18,
-        "sinceTimestamp": 1687777847
+        "sinceTimestamp": 1687777847,
+        "address": "0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -3300,7 +3334,9 @@
         "type": "circulatingSupply",
         "apiId": "neuron",
         "decimals": 18,
-        "sinceTimestamp": 1719187200
+        "sinceTimestamp": 1719187200,
+        "address": "0xdadeca1167fe47499e53Eb50F261103630974905",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -4393,7 +4429,9 @@
         "type": "circulatingSupply",
         "apiId": "spartadex",
         "decimals": 18,
-        "sinceTimestamp": 1691452800
+        "sinceTimestamp": 1691452800,
+        "address": "0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -4486,7 +4524,9 @@
         "type": "circulatingSupply",
         "apiId": "starheroes",
         "decimals": 18,
-        "sinceTimestamp": 1710201600
+        "sinceTimestamp": 1710201600,
+        "address": "0xB299751B088336E165dA313c33e3195B8c6663A6",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -5159,7 +5199,9 @@
         "type": "circulatingSupply",
         "apiId": "vela-token",
         "decimals": 18,
-        "sinceTimestamp": 1674864000
+        "sinceTimestamp": 1674864000,
+        "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -5328,7 +5370,9 @@
         "type": "circulatingSupply",
         "apiId": "winr-protocol",
         "decimals": 18,
-        "sinceTimestamp": 1679011200
+        "sinceTimestamp": 1679011200,
+        "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",
@@ -5491,7 +5535,9 @@
         "type": "circulatingSupply",
         "apiId": "xai-blockchain",
         "decimals": 18,
-        "sinceTimestamp": 1704758400
+        "sinceTimestamp": 1704758400,
+        "address": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
+        "chain": "arbitrum"
       },
       "category": "other",
       "source": "native",

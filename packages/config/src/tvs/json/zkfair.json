@@ -13,7 +13,9 @@
         "type": "circulatingSupply",
         "apiId": "zkfair",
         "decimals": 18,
-        "sinceTimestamp": 1704412800
+        "sinceTimestamp": 1704412800,
+        "address": "0x1cD3E2A23C45A690a18Ed93FD1412543f464158F",
+        "chain": "zkfair"
       },
       "category": "other",
       "source": "native",

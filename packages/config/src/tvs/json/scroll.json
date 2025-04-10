@@ -320,7 +320,9 @@
         "type": "circulatingSupply",
         "apiId": "scroll",
         "decimals": 18,
-        "sinceTimestamp": 1729641600
+        "sinceTimestamp": 1729641600,
+        "address": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+        "chain": "scroll"
       },
       "category": "other",
       "source": "native",

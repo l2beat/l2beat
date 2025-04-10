@@ -439,7 +439,9 @@
             "type": "circulatingSupply",
             "apiId": "zircuit",
             "decimals": 18,
-            "sinceTimestamp": 1732492800
+            "sinceTimestamp": 1732492800,
+            "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",

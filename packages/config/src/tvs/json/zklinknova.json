@@ -2563,7 +2563,9 @@
             "type": "circulatingSupply",
             "apiId": "zklink",
             "decimals": 18,
-            "sinceTimestamp": 1721606400
+            "sinceTimestamp": 1721606400,
+            "address": "0xfC385A1dF85660a7e041423DB512f779070FCede",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",
