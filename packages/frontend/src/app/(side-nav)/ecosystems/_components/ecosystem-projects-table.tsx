@@ -30,7 +30,7 @@ export function EcosystemProjectsTable({ entries }: Props) {
     },
   })
   return (
-    <EcosystemWidget>
+    <EcosystemWidget className="!pb-0 !pt-3">
       <RollupsTable table={table} />
     </EcosystemWidget>
   )
