@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xf1a5d592dc1b70cb25ca4b2419644a258d2c0a0d
+
+# Diff at Wed, 09 Apr 2025 13:23:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 22208553
+- current block number: 22231621
+
+## Description
+
+Upgrade to latest SN stack contracts (includes programHash).
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      sourceHashes.1:
+-        "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
++        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
+      values.$implementation:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.$pastUpgrades.3:
++        ["2023-07-20T11:05:35.000Z","0x7862f09db4097dc43ad1972ca9ee11eaf64a1fbfdb21fe6f84ad6b68d4b9fa56",["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]]
+      values.$pastUpgrades.2.2:
+-        "2023-07-20T11:05:35.000Z"
++        "2025-04-07T20:04:59.000Z"
+      values.$pastUpgrades.2.1:
+-        "0x7862f09db4097dc43ad1972ca9ee11eaf64a1fbfdb21fe6f84ad6b68d4b9fa56"
++        ["0x2793010E6711Acd5C46ed17f2183a9d58db71e04"]
+      values.$pastUpgrades.2.0:
+-        ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"]
++        "0x63d55b2c0cfa3b1866e99b66c6632e5474e177ce0e3b5d5b68ed8b801d76cc53"
+      values.$upgradeCount:
+-        3
++        4
+      values.aggregatorHashMapped:
+-        "StarkNet Aggregator (old)"
++        "Starknet Aggregator (since v0.13.4)"
+      values.aggregatorProgramHash:
+-        "1161178844461337253856226043908368523817098764221830529880464854589141231910"
++        "273279642033703284306509103355536170486431195329675679055627933497997642494"
+      values.identify:
+-        "StarkWare_Starknet_2024_9"
++        "StarkWare_Starknet_2025_10"
+      values.implementation:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ severity: HIGH
+      values.programHash:
+-        "853638403225561750106379562222782223909906501242604214771127703946595519856"
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.programHashHistory.5:
++        "853638403225561750106379562222782223909906501242604214771127703946595519856"
+      values.programHashMapped:
+-        "StarkNet OS (Paradex)"
++        "2534935718742676028234156221136000178296467523045214874259117268197132196876"
+      values.feeCollector:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22208553 => .flat}/Paradex/Starknet.sol | 207 ++++++++++++++++++---
+ 1 file changed, 176 insertions(+), 31 deletions(-)
+```
+
 Generated with discovered.json: 0x323a73c4e59a58ea7a4f67fc221fb8d9db8c4f25
 
 # Diff at Sun, 06 Apr 2025 08:03:15 GMT:

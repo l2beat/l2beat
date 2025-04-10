@@ -42,7 +42,7 @@ export async function getScalingDaEntries() {
       select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
       optional: ['customDa'],
       where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
     ps.getProjects({
       select: ['daLayer'],

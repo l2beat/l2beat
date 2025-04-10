@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 
@@ -16,8 +15,8 @@ const warningText = isPaused ? 'The bridge is currently paused.' : undefined
 export const polynetwork: Bridge = {
   type: 'bridge',
   id: ProjectId('polynetwork'),
-  isArchived: true,
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  archivedAt: UnixTime(1742256000), // 2025-03-18T00:00:00.000Z,
   display: {
     name: 'Poly Bridge',
     slug: 'polynetwork',

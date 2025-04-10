@@ -1,8 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 
@@ -37,9 +36,12 @@ export const near: Bridge = {
   type: 'bridge',
   id: ProjectId('near'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  archivedAt: UnixTime(1744156800), // 2024-04-09T00:00:00Z
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',
+    warning:
+      'Deposits are paused and funds are being migrated to the new "Omnibridge". See the announcement [here](https://x.com/NEARProtocol/status/1908247501032824914).',
     links: {
       websites: ['https://near.org/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
@@ -167,4 +169,12 @@ export const near: Bridge = {
       ],
     },
   },
+  milestones: [
+    {
+      title: 'Bridge paused, migration in progress',
+      url: 'https://x.com/NEARProtocol/status/1908247501032824914',
+      date: '2025-04-04T00:00:00Z',
+      type: 'incident',
+    },
+  ],
 }

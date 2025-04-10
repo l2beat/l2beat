@@ -64,7 +64,7 @@ export default async function Page(props: Props) {
     where: ['isBridge'],
     optional: [
       'chainConfig',
-      'isArchived',
+      'archivedAt',
       'isUpcoming',
       'milestones',
       'contracts',

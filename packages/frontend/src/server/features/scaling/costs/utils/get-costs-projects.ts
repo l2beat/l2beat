@@ -18,10 +18,10 @@ export type CostsProjectsFilter = z.infer<typeof CostsProjectsFilter>
 export async function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },
   previewRecategorisation = false,
-): Promise<Project<'trackedTxsConfig', 'isArchived'>[]> {
+): Promise<Project<'trackedTxsConfig', 'archivedAt'>[]> {
   const projects = await ps.getProjects({
     select: ['trackedTxsConfig', 'scalingInfo', 'statuses'],
-    optional: ['isArchived'],
+    optional: ['archivedAt'],
     whereNot: ['isUpcoming'],
   })
 

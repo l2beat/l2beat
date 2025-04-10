@@ -9,11 +9,11 @@ import {
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -46,11 +46,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const deversifi: ScalingProject = {
-  isArchived: true,
   type: 'layer2',
   id: ProjectId('deversifi'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1743724800), // 2025-04-04T00:00:00.000Z,
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,

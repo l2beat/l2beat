@@ -10,9 +10,9 @@ const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 
 export const blessnet: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
+  archivedAt: UnixTime(1739318400), // 2025-02-12T00:00:00.000Z,
   additionalPurposes: ['Interoperability'],
   additionalBadges: [BADGES.RaaS.Caldera],
-  isArchived: true,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

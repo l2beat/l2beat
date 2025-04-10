@@ -21,7 +21,7 @@ export async function getScalingArchivedEntries() {
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-      where: ['isScaling', 'isArchived'],
+      where: ['isScaling', 'archivedAt'],
     }),
   ])
 

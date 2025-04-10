@@ -40,7 +40,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['display', 'statuses', 'scalingInfo', 'scalingRisks', 'tvlInfo'],
-      whereNot: ['isArchived', 'isUpcoming'],
+      whereNot: ['archivedAt', 'isUpcoming'],
     }),
   ])
 

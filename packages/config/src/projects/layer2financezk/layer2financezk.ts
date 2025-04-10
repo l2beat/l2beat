@@ -23,7 +23,7 @@ export const layer2financezk: ScalingProject = {
   id: ProjectId('layer2financezk'),
   capability: 'universal',
   addedAt: UnixTime(1654522914), // 2022-06-06T13:41:54Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'L2.Finance-zk',
     slug: 'layer2financezk',

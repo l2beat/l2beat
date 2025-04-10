@@ -28,7 +28,7 @@ export async function getFinalityProjects() {
     ],
     optional: ['scalingDa'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   return projects

@@ -1,12 +1,12 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import {
+  DA_LAYERS,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -30,8 +30,8 @@ const daResolveWindow = formatSeconds(
 )
 
 export const gmnetwork: ScalingProject = opStackL2({
-  isArchived: true,
   addedAt: UnixTime(1732028588), // 2024-11-19T15:03:08
+  archivedAt: UnixTime(1743465600), // 2025-04-01T00:00:00.000Z,
   discovery,
   additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['AI'],

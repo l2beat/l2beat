@@ -31,7 +31,7 @@ export default async function Page() {
   const verifiers = await getVerifiers()
   const projects = await ps.getProjects({
     select: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   const entries = getZkCatalogEntries(projects, verifiers)
 

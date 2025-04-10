@@ -27,7 +27,7 @@ export function ProjectScalingSummary({ project }: Props) {
           <div className="w-full space-y-4 md:space-y-6">
             <ProjectHeader title={project.name} slug={project.slug} />
             <div className="space-y-2">
-              {project.isArchived && <ArchivedBar />}
+              {project.archivedAt && <ArchivedBar />}
               {project.isUpcoming && <UpcomingBar />}
               {project.underReviewStatus && (
                 <UnderReviewBar
@@ -71,7 +71,7 @@ export function ProjectScalingSummary({ project }: Props) {
               <ValueSecuredSummary
                 tvs={project.header.tvs}
                 detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
-                isArchived={project.isArchived}
+                archivedAt={project.archivedAt}
               />
               <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
               <ProjectScalingStats
