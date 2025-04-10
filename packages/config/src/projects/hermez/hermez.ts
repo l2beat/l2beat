@@ -21,7 +21,7 @@ export const hermez: ScalingProject = {
   id: ProjectId('hermez'),
   capability: 'universal',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  isArchived: true,
+  archivedAt: UnixTime(1680048000), // 2023-03-29T00:00:00.000Z,
   display: {
     name: 'Polygon Hermez',
     slug: 'hermez',

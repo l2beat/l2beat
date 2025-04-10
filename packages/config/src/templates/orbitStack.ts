@@ -153,7 +153,7 @@ interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ProjectRisk[]
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
-  isArchived?: boolean
+  archivedAt?: UnixTime
   /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
   customDa?: ProjectCustomDa
@@ -467,7 +467,7 @@ function orbitStackCommon(
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
-    isArchived: templateVars.isArchived ?? undefined,
+    archivedAt: templateVars.archivedAt ?? undefined,
     display: {
       architectureImage,
       stateValidationImage: isPostBoLD ? 'bold' : 'orbit',

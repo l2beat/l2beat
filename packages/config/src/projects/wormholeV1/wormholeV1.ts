@@ -7,7 +7,7 @@ export const wormholeV1: Bridge = {
   type: 'bridge',
   id: ProjectId('wormholeV1'),
   addedAt: UnixTime(1663149233), // 2022-09-14T09:53:53Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'Wormhole V1',
     slug: 'wormholev1',

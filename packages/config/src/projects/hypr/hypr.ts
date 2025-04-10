@@ -9,8 +9,8 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('hypr')
 
 export const hypr: ScalingProject = opStackL2({
-  isArchived: true,
   addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  archivedAt: UnixTime(1737072000), // 2025-01-17T00:00:00.000Z,
   daProvider: CELESTIA_DA_PROVIDER,
   additionalBadges: [BADGES.DA.Celestia],
   discovery,

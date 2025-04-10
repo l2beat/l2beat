@@ -3,9 +3,9 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   NEW_CRYPTOGRAPHY,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -30,8 +30,8 @@ const isForcedBatchDisallowed =
   '0x0000000000000000000000000000000000000000'
 
 export const astarzkevm: ScalingProject = polygonCDKStack({
-  isArchived: true,
   addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  archivedAt: UnixTime(1743465600), // 2025-04-01T00:00:00.000Z,
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,

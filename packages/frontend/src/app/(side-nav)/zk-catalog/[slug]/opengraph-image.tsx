@@ -14,7 +14,7 @@ const size = {
 export async function generateStaticParams() {
   const projects = await ps.getProjects({
     select: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   return projects.map((project) => ({
     slug: project.slug,

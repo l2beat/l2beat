@@ -3,9 +3,9 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   NEW_CRYPTOGRAPHY,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -30,7 +30,7 @@ const isForcedBatchDisallowed =
 
 export const witness: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  isArchived: true,
+  archivedAt: UnixTime(1738022400), // 2025-01-28T00:00:00.000Z,
   discovery,
   additionalBadges: [BADGES.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],

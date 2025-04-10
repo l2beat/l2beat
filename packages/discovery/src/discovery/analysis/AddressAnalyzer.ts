@@ -167,13 +167,17 @@ export class AddressAnalyzer {
       ([field, value]): HandlerResult => ({ field, value }),
     )
 
+    const handlerResults = results.map(
+      (result): HandlerResult => ({ ...result, value: values?.[result.field] }),
+    )
+
     const ignoredAddresses = [
       ...implementations,
       ...beacons,
       ...pastUpgrades.flatMap((e) => e[2]),
     ]
     const relatives = getRelativesWithSuggestedTemplates(
-      results.concat(proxyResults),
+      handlerResults.concat(proxyResults),
       config.ignoreRelatives,
       ignoredAddresses,
       config.fields,

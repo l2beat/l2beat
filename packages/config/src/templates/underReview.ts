@@ -20,7 +20,7 @@ interface UnderReviewConfigCommon {
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
   badges?: Badge[]
-  isArchived?: boolean
+  archivedAt?: UnixTime
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -43,7 +43,7 @@ export function underReviewL2(
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability,
-    isArchived: templateVars.isArchived ?? undefined,
+    archivedAt: templateVars.archivedAt ?? undefined,
     display: templateVars.display,
     stage: {
       stage:
@@ -82,7 +82,7 @@ export function underReviewL3(
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability,
-    isArchived: templateVars.isArchived ?? undefined,
+    archivedAt: templateVars.archivedAt ?? undefined,
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,

@@ -12,13 +12,13 @@ export async function getTrackedTxsConfig(
 ): Promise<TrackedTxsConfig> {
   const projects = await ps.getProjects({
     select: ['trackedTxsConfig'],
-    optional: ['isArchived'],
+    optional: ['archivedAt'],
   })
 
   return {
     projects: projects.map((p) => ({
       id: p.id,
-      isArchived: !!p.isArchived,
+      isArchived: p.archivedAt !== undefined,
       configurations: p.trackedTxsConfig.map((c) => ({
         ...c,
         id: createTrackedTxId(c),

@@ -20,7 +20,7 @@ export const omgnetwork: ScalingProject = {
   id: ProjectId('omgnetwork'),
   capability: 'universal',
   addedAt: UnixTime(1623332638), // 2021-06-10T13:43:58Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'OMG Network',
     slug: 'omgnetwork',
