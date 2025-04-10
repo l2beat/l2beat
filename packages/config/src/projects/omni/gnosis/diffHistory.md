@@ -1,27 +1,15 @@
-Generated with discovered.json: 0xfa39c31428041398f6e2123987d5ef731c295306
+Generated with discovered.json: 0xeab0ee2a4c5d18554c745b9012485e76403fbd5a
 
-# Diff at Thu, 10 Apr 2025 07:31:11 GMT:
+# Diff at Thu, 10 Apr 2025 10:02:52 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 39471784
+- current block number: 39485559
 
 ## Description
 
 Provide description of changes. This section will be preserved.
 
 ## Initial discovery
-
-```diff
-+   Status: CREATED
-    contract Treasury (0x0a1dF45fCB28616bd2f45512f8Aa6ca958829eF1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract HeaderStorage (0x117D7D593e6a7d9699a763C552BFA3177a46B957)
-    +++ description: None
-```
 
 ```diff
 +   Status: CREATED
@@ -32,30 +20,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract PermittableToken (0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SendUln302 (0x3C156b1f625D2B4E004D43E91aC2c3a719C29c7B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ERC677BridgeToken (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e)
     +++ description: None
 ```
 
@@ -103,25 +67,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ReceiveUln302 (0x9714Ccf1dedeF14BaB5013625DB92746C1358cb4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract BridgeValidators (0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract LayerZeroReporter (0xA3Bc83D557E3f2dDfF4D44966A96397760159D8B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0xA7a818aB3307B6C95Ef506634e08c35251c81D1C)
     +++ description: None
 ```
 
@@ -158,12 +104,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract MultiTokenForwardingRulesManager (0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract HomeAMBErc677ToErc677 (0xD9a3039cfC70aF84AC9E566A2526fD3b683B995B)
     +++ description: None
 ```
 

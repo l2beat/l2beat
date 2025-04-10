@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 22230472,
+  "blockNumber": 22237789,
   "configHash": "0xb65da9bfffa9eeb5fb7570a2cd91b9f30e85f1d05cc73f62ec76bf2add0530b0",
   "entries": [
     {
@@ -108,24 +108,6 @@
           "from": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
         }
       ]
-    },
-    {
-      "name": "DSGuard",
-      "address": "0x315cBb88168396D12e1a255f9Cb935408fe80710",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe564087efbc7938036d21eac0e71a9538331da0235d4e746598b7156d564bbee"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1513566769,
-      "sinceBlock": 4752020,
-      "values": {
-        "$immutable": true,
-        "ANY": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "authority": "0x0000000000000000000000000000000000000000",
-        "owner": "0x0000000000000000000000000000000000000000"
-      },
-      "derivedName": "DSGuard"
     },
     {
       "address": "0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
@@ -449,53 +431,6 @@
       "derivedName": "ReadLib1002"
     },
     {
-      "name": "ForeignBridgeErcToNative",
-      "address": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x10940c3a2b2e5b73ac54b730ec7ced1084630cd54e7e624a9f23094e06786301"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1576700999,
-      "sinceBlock": 9127277,
-      "values": {
-        "$immutable": true,
-        "dailyLimit": 0,
-        "decimalShift": 0,
-        "deployedAtBlock": 0,
-        "erc20token": "0x0000000000000000000000000000000000000000",
-        "executionDailyLimit": 0,
-        "executionMaxPerTx": 0,
-        "gasPrice": 0,
-        "getBridgeInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
-        "getBridgeMode": "0x18762d46",
-        "getCurrentDay": 20187,
-        "halfDuplexErc20token": "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359",
-        "isHDTokenBalanceAboveMinBalance": false,
-        "isInitialized": false,
-        "isTokenSwapAllowed": [true, true, true, true, true],
-        "maxPerTx": 0,
-        "minHDTokenBalance": 0,
-        "minPerTx": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "requiredBlockConfirmations": 0,
-        "totalExecutedPerDay": [0, 0, 0, 0, 0],
-        "totalSpentPerDay": [0, 0, 0, 0, 0],
-        "validatorContract": "0x0000000000000000000000000000000000000000",
-        "withinExecutionLimit": [true, false, false, false, false],
-        "withinLimit": [true, false, false, false, false]
-      },
-      "errors": {
-        "isTokenSwapAllowed": "Processing error occurred.",
-        "requiredSignatures": "Processing error occurred.",
-        "totalExecutedPerDay": "Processing error occurred.",
-        "totalSpentPerDay": "Processing error occurred.",
-        "withinExecutionLimit": "Processing error occurred.",
-        "withinLimit": "Processing error occurred."
-      },
-      "derivedName": "ForeignBridgeErcToNative"
-    },
-    {
       "name": "LayerZeroAdapter",
       "address": "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
       "type": "Contract",
@@ -649,28 +584,6 @@
       "derivedName": "ForeignOmnibridge"
     },
     {
-      "name": "DSToken",
-      "address": "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf02b6709ddade191949e8ee23e72430e17e2ba49fc67653340be414fdc86ebfd"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1513566638,
-      "sinceBlock": 4752008,
-      "values": {
-        "$immutable": true,
-        "authority": "0x315cBb88168396D12e1a255f9Cb935408fe80710",
-        "decimals": 18,
-        "name": "0x44616920537461626c65636f696e2076312e3000000000000000000000000000",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "stopped": false,
-        "symbol": "0x4441490000000000000000000000000000000000000000000000000000000000",
-        "totalSupply": "2683599995685693792307707"
-      },
-      "derivedName": "DSToken"
-    },
-    {
       "name": "HashiManager",
       "address": "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
       "type": "Contract",
@@ -797,7 +710,7 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1720772543,
       "sinceBlock": 20289197,
-      "values": { "$immutable": true, "currentNonce": 14951 },
+      "values": { "$immutable": true, "currentNonce": 15039 },
       "derivedName": "Yaho"
     },
     {
@@ -884,11 +797,6 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "address": "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE",
@@ -1200,22 +1108,6 @@
       "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
       "function executed(uint256) view returns (bool)"
     ],
-    "0x315cBb88168396D12e1a255f9Cb935408fe80710": [
-      "function setOwner(address owner_)",
-      "function forbid(address src, address dst, bytes32 sig)",
-      "function forbid(bytes32 src, bytes32 dst, bytes32 sig)",
-      "function setAuthority(address authority_)",
-      "function owner() view returns (address)",
-      "function ANY() view returns (bytes32)",
-      "function canCall(address src_, address dst_, bytes4 sig) view returns (bool)",
-      "function authority() view returns (address)",
-      "function permit(address src, address dst, bytes32 sig)",
-      "function permit(bytes32 src, bytes32 dst, bytes32 sig)",
-      "event LogPermit(bytes32 indexed src, bytes32 indexed dst, bytes32 indexed sig)",
-      "event LogForbid(bytes32 indexed src, bytes32 indexed dst, bytes32 indexed sig)",
-      "event LogSetAuthority(address indexed authority)",
-      "event LogSetOwner(address indexed owner)"
-    ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -1377,61 +1269,6 @@
       "function withdrawFee(address _to, uint256 _amount)",
       "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
     ],
-    "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": [
-      "function relayTokens(address _receiver, uint256 _amount)",
-      "function migrateToMCD()",
-      "function erc20token() view returns (address)",
-      "function relayedMessages(bytes32 _txHash) view returns (bool)",
-      "function executeSignatures(uint8[] vs, bytes32[] rs, bytes32[] ss, bytes message)",
-      "function totalSpentPerDay(uint256 _day) view returns (uint256)",
-      "function isHDTokenBalanceAboveMinBalance() view returns (bool)",
-      "function isInitialized() view returns (bool)",
-      "function setExecutionDailyLimit(uint256 _dailyLimit)",
-      "function getCurrentDay() view returns (uint256)",
-      "function requiredBlockConfirmations() view returns (uint256)",
-      "function minHDTokenBalance() view returns (uint256)",
-      "function getBridgeMode() pure returns (bytes4 _data)",
-      "function executionDailyLimit() view returns (uint256)",
-      "function upgradeToV250()",
-      "function totalExecutedPerDay(uint256 _day) view returns (uint256)",
-      "function relayTokens(address _from, address _receiver, uint256 _amount, address _token)",
-      "function isTokenSwapAllowed(uint256 _ts) view returns (bool)",
-      "function dailyLimit() view returns (uint256)",
-      "function claimTokens(address _token, address _to)",
-      "function setMinHDTokenBalance(uint256 _minBalance)",
-      "function swapTokens()",
-      "function withinExecutionLimit(uint256 _amount) view returns (bool)",
-      "function executionMaxPerTx() view returns (uint256)",
-      "function requiredSignatures() view returns (uint256)",
-      "function owner() view returns (address)",
-      "function validatorContract() view returns (address)",
-      "function deployedAtBlock() view returns (uint256)",
-      "function getBridgeInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
-      "function setMinPerTx(uint256 _minPerTx)",
-      "function halfDuplexErc20token() pure returns (address)",
-      "function setRequiredBlockConfirmations(uint256 _blockConfirmations)",
-      "function relayTokens(address _from, address _receiver, uint256 _amount)",
-      "function setDailyLimit(uint256 _dailyLimit)",
-      "function initialize(address _validatorContract, address _erc20token, uint256 _requiredBlockConfirmations, uint256 _gasPrice, uint256[] _dailyLimitMaxPerTxMinPerTxArray, uint256[] _homeDailyLimitHomeMaxPerTxArray, address _owner, uint256 _decimalShift, address _bridgeOnOtherSide) returns (bool)",
-      "function setGasPrice(uint256 _gasPrice)",
-      "function setMaxPerTx(uint256 _maxPerTx)",
-      "function decimalShift() view returns (uint256)",
-      "function minPerTx() view returns (uint256)",
-      "function relayTokens(address _receiver, uint256 _amount, address _token)",
-      "function withinLimit(uint256 _amount) view returns (bool)",
-      "function setExecutionMaxPerTx(uint256 _maxPerTx)",
-      "function transferOwnership(address newOwner)",
-      "function maxPerTx() view returns (uint256)",
-      "function gasPrice() view returns (uint256)",
-      "event TokensSwapped(address indexed from, address indexed to, uint256 value)",
-      "event RelayedMessage(address recipient, uint256 value, bytes32 transactionHash)",
-      "event UserRequestForAffirmation(address recipient, uint256 value)",
-      "event DailyLimitChanged(uint256 newLimit)",
-      "event ExecutionDailyLimitChanged(uint256 newLimit)",
-      "event GasPriceChanged(uint256 gasPrice)",
-      "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
-      "event OwnershipTransferred(address previousOwner, address newOwner)"
-    ],
     "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": [
       "constructor(address lzEndpoint, address delegate)",
       "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
@@ -1555,41 +1392,6 @@
       "function transferProxyOwnership(address newOwner)",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
-    ],
-    "0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359": [
-      "function name() view returns (bytes32)",
-      "function stop()",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function setOwner(address owner_)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function decimals() view returns (uint256)",
-      "function mint(address guy, uint256 wad)",
-      "function burn(uint256 wad)",
-      "function setName(bytes32 name_)",
-      "function balanceOf(address src) view returns (uint256)",
-      "function stopped() view returns (bool)",
-      "function setAuthority(address authority_)",
-      "function owner() view returns (address)",
-      "function symbol() view returns (bytes32)",
-      "function burn(address guy, uint256 wad)",
-      "function mint(uint256 wad)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function push(address dst, uint256 wad)",
-      "function move(address src, address dst, uint256 wad)",
-      "function start()",
-      "function authority() view returns (address)",
-      "function approve(address guy) returns (bool)",
-      "function allowance(address src, address guy) view returns (uint256)",
-      "function pull(address src, uint256 wad)",
-      "constructor(bytes32 symbol_)",
-      "event Mint(address indexed guy, uint256 wad)",
-      "event Burn(address indexed guy, uint256 wad)",
-      "event LogSetAuthority(address indexed authority)",
-      "event LogSetOwner(address indexed owner)",
-      "event LogNote(bytes4 indexed sig, address indexed guy, bytes32 indexed foo, bytes32 indexed bar, uint256 wad, bytes fax) anonymous",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)"
     ],
     "0x8eB3b7D8498a6716904577b2579e1c313d48E347": [
       "constructor(string _suffix)",

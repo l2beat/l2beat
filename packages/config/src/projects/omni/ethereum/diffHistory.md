@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5eafc1738a1ba8ee970984769ba1e329392eb113
+Generated with discovered.json: 0x44402dff7850a64aa9179e4354b09a63303e9660
 
-# Diff at Thu, 10 Apr 2025 07:23:42 GMT:
+# Diff at Thu, 10 Apr 2025 10:00:18 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: main@b04ae40394d41744c67519d82fd543837c6ad4a0 block: 22123489
-- current block number: 22230472
+- current block number: 22237789
 
 ## Description
 
@@ -13,29 +13,11 @@ Provide description of changes. This section will be preserved.
 ## Watched changes
 
 ```diff
-    contract ForeignBridgeErcToNative (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
-    +++ description: None
-      values.getCurrentDay:
--        20172
-+        20187
-    }
-```
-
-```diff
-    contract DSToken (0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359) {
-    +++ description: None
-      values.totalSupply:
--        "2683953813833779547195663"
-+        "2683599995685693792307707"
-    }
-```
-
-```diff
     contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
     +++ description: None
       values.currentNonce:
 -        13731
-+        14951
++        15039
     }
 ```
 
@@ -108,12 +90,6 @@ discovery. Values are for block 22123489 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract DSGuard (0x315cBb88168396D12e1a255f9Cb935408fe80710)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
     +++ description: None
 ```
@@ -126,19 +102,7 @@ discovery. Values are for block 22123489 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract ForeignBridgeErcToNative (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract LayerZeroAdapter (0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract DSToken (0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359)
     +++ description: None
 ```
 

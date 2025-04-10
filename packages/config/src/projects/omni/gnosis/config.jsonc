@@ -25,6 +25,14 @@
       // Yaho
       "ignoreMethods": ["getPendingMessageHash"]
     },
+    "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": {
+      // Yaru
+      "ignoreMethods": ["executed"]
+    },
+    "0xa809c536c85b63a2676CbAc3C4064748AD3a2562": {
+      // SP1Helios
+      "ignoreMethods": ["executionStateRoots", "getSyncCommitteePeriod", "headers", "syncCommittees"]
+    },
     "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": {
       // HashiManager
       "proxyType": "Eternal Storage proxy",
