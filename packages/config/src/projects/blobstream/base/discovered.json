@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 28449617,
-  "configHash": "0x42556d12dcbca343ce33f25ee67fd60fd92c28ab2e980269d8c37bf0e194a75d",
+  "configHash": "0x91c26eb0d1e5ed87c0c448a8b92b4832b870ce177092f0fdba42f27b4de41c75",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -527,9 +527,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "succinct/SP1Blobstream": "0x02756e6ddd521ab8a6e504462ea813ffa8f5a9dd17c7b583cb8b8a0f7ec1f292",
-    "succinct/SP1Verifier": "0x7192c1fd93b120af8dcc6df20782edbb56d212ad27e0761a9fb98c8fa23d9fac",
-    "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "succinct/SP1Blobstream": "0x886e792aba1703e94c7eb1c129babcca484bd908a355b129879c543fdca7d523",
+    "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752",
+    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   }
 }
