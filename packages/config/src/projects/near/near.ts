@@ -1,8 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 
@@ -34,10 +33,10 @@ const lockRequirementInWei = discovery.getContractValue<number>(
 )
 
 export const near: Bridge = {
-  isArchived: true,
   type: 'bridge',
   id: ProjectId('near'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  archivedAt: UnixTime(1744156800), // 2024-04-09T00:00:00Z
   display: {
     name: 'Rainbow Bridge',
     slug: 'near',

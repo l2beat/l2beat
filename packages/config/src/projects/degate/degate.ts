@@ -59,11 +59,11 @@ const permissionedAccount = discovery.formatPermissionedAccounts([owner1])
 assert(permissionedAccount[0].type === 'Contract', 'DeGate')
 
 export const degate: ScalingProject = {
-  isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
-  capability: 'appchain',
   addedAt: UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  archivedAt: UnixTime(1696032000), // 2023-09-30T00:00:00.000Z,
+  capability: 'appchain',
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.EthereumCalldata,

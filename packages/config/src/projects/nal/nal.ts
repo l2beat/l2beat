@@ -5,8 +5,8 @@ import { underReviewL2 } from '../../templates/underReview'
 export const nal: ScalingProject = underReviewL2({
   id: 'nal',
   capability: 'universal',
-  isArchived: true,
   addedAt: UnixTime(1726499832), // 2024-09-16T15:17:12Z
+  archivedAt: UnixTime(1741046400), // 2025-03-04T00:00:00.000Z,
   display: {
     name: 'Nal',
     slug: 'nal',

@@ -158,7 +158,7 @@ function layer2Or3ToProject(
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
-    isArchived: p.isArchived ? true : undefined,
+    archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasActivity: p.config.activityConfig ? true : undefined,
   }
@@ -243,7 +243,7 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     milestones: p.milestones,
     // tags
     isBridge: true,
-    isArchived: p.isArchived ? true : undefined,
+    archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
 }

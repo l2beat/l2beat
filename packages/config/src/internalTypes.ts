@@ -51,8 +51,8 @@ export interface ScalingProject {
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  /** Is this project archived? */
-  isArchived?: boolean
+  /** Date of archiving of the project */
+  archivedAt?: UnixTime
   /** Is this project an upcoming rollup? */
   isUpcoming?: boolean
   /** Has this project changed and is under review? */
@@ -241,7 +241,7 @@ export interface Bridge {
   id: ProjectId
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  isArchived?: boolean
+  archivedAt?: UnixTime
   isUpcoming?: boolean
   isUnderReview?: boolean
   display: BridgeDisplay
