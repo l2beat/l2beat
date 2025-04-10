@@ -172,7 +172,6 @@ function Display({
 }
 
 function CopyAddShapeCommand(props: {
-  text?: string
   chain: string
   address: string
   description: string
