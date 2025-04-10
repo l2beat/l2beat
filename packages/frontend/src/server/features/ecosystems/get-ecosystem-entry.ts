@@ -23,11 +23,14 @@ import {
 } from '../scaling/summary/get-scaling-summary-entries'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
-import { type DaLayersUsed, getDaLayersUsed } from './get-da-layers-used'
 import type { EcosystemProjectsCountData } from './get-ecosystem-projects-chart-data'
 import { getEcosystemProjectsChartData } from './get-ecosystem-projects-chart-data'
 import type { EcosystemToken } from './get-ecosystem-token'
 import { getEcosystemToken } from './get-ecosystem-token'
+import {
+  type ProjectsByDaLayer,
+  getProjectsByDaLayer,
+} from './get-projects-by-da-layer'
 import type { ProjectByRaas } from './get-projects-by-raas'
 import { getProjectsByRaas } from './get-projects-by-raas'
 import { type TvsByStage, getTvsByStage } from './get-tvs-by-stage'
@@ -52,7 +55,7 @@ export interface EcosystemEntry {
   }
   tvsByStage: TvsByStage
   tvsByTokenType: TvsByTokenType
-  daLayersUsed: DaLayersUsed
+  projectsByDaLayer: ProjectsByDaLayer
   projectsByRaas: ProjectByRaas
   token: EcosystemToken
   links: {
@@ -140,7 +143,7 @@ export async function getEcosystemEntry(
     },
     tvsByStage: getTvsByStage(ecosystemProjects, tvs),
     tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
-    daLayersUsed: getDaLayersUsed(ecosystemProjects),
+    projectsByDaLayer: getProjectsByDaLayer(ecosystemProjects),
     projectsByRaas: getProjectsByRaas(ecosystemProjects),
     token: await getEcosystemToken(ecosystem, ecosystemProjects),
     projectsChartData: getEcosystemProjectsChartData(

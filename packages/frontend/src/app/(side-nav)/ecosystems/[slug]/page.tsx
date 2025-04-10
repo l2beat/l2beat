@@ -9,7 +9,7 @@ import { EcosystemsTvsChart } from '../_components/charts/ecosystems-tvs-chart'
 import { EcosystemPageHeader } from '../_components/ecosystem-page-header'
 import { EcosystemProjectsTable } from '../_components/ecosystem-projects-table'
 import { EcosystemBuildOnLink } from '../_components/widgets/ecosystem-build-on-link'
-import { EcosystemDaLayersUsed } from '../_components/widgets/ecosystem-da-layers-used'
+import { EcosystemProjectsByDaLayer } from '../_components/widgets/ecosystem-da-layers-used'
 import { EcosystemGovernanceLinks } from '../_components/widgets/ecosystem-governance-links'
 import { EcosystemLearnMoreLink } from '../_components/widgets/ecosystem-learn-more-link'
 import { EcosystemMilestonesAndIncidents } from '../_components/widgets/ecosystem-milestones-and-incidents'
@@ -107,8 +107,8 @@ export default async function Page({ params }: Props) {
             tvsByStage={ecosystem.tvsByStage}
             className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
           />
-          <EcosystemDaLayersUsed
-            daLayersUsed={ecosystem.daLayersUsed}
+          <EcosystemProjectsByDaLayer
+            projectsByDaLayer={ecosystem.projectsByDaLayer}
             className="col-span-12 md:col-span-6 min-[1440px]:col-span-4"
           />
           <EcosystemsProjectsChart
