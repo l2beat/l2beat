@@ -5,7 +5,7 @@ export async function GET() {
   const projects = await ps.getProjects({
     optional: [
       'isUpcoming',
-      'isArchived',
+      'archivedAt',
       'bridgeInfo',
       'scalingInfo',
       'isBridge',
@@ -20,7 +20,7 @@ export async function GET() {
       type: project.scalingInfo?.layer ?? 'bridge',
       slug: project.slug,
       isUpcoming: project.isUpcoming,
-      isArchived: project.isArchived,
+      isArchived: !!project.archivedAt,
     }))
 
   return NextResponse.json(data, {

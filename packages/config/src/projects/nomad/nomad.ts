@@ -5,8 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 
@@ -20,7 +19,7 @@ export const nomad: Bridge = {
   type: 'bridge',
   id: ProjectId('nomad'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'Nomad',
     slug: 'nomad',

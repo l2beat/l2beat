@@ -17,10 +17,10 @@ import type { ScalingProject } from '../../internalTypes'
 const discovery = new ProjectDiscovery('aztecconnect')
 
 export const aztecconnect: ScalingProject = {
-  isArchived: true,
   type: 'layer2',
   id: ProjectId('aztecconnect'),
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1698278400), // 2023-10-26T00:00:00.000Z,
   capability: 'universal',
   display: {
     name: 'Zk.Money v2 (Aztec Connect)',

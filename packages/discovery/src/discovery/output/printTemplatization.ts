@@ -73,14 +73,18 @@ export function printTemplatization(
     }
   }
 
-  logs.push(chalk.redBright(chalk.bold('Untemplatized')))
-  for (const [i, contract] of untemplatized.entries()) {
-    const prefix = i === untemplatized.length - 1 ? `└─` : `├─`
-    const indent = ' '.repeat(2)
-    const name = chalk.blue(contract.name)
-    const log = `${contract.address} ${name}`
-    logs.push(`${indent}${chalk.gray(prefix)} ${log}`)
+  if (untemplatized.length > 0) {
+    logs.push(chalk.redBright(chalk.bold('Untemplatized')))
+    for (const [i, contract] of untemplatized.entries()) {
+      const prefix = i === untemplatized.length - 1 ? `└─` : `├─`
+      const indent = ' '.repeat(2)
+      const name = chalk.blue(contract.name)
+      const log = `${contract.address} ${name}`
+      logs.push(`${indent}${chalk.gray(prefix)} ${log}`)
+    }
   }
 
-  logger.log(formatAsciiBorder(logs, true))
+  if (logs.length > 0) {
+    logger.log(formatAsciiBorder(logs, true))
+  }
 }

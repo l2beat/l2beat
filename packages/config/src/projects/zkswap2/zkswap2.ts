@@ -19,7 +19,7 @@ export const zkswap2: ScalingProject = {
   id: ProjectId('zkswap2'),
   capability: 'universal',
   addedAt: UnixTime(1629199654), // 2021-08-17T11:27:34Z
-  isArchived: true,
+  archivedAt: UnixTime(1677196800), // 2023-02-24T00:00:00.000Z,
   display: {
     name: 'ZKSwap 2.0',
     slug: 'zkswap2',

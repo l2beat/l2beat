@@ -61,9 +61,30 @@ export class UpdateMonitor {
   }
 
   async update(timestamp: UnixTime) {
+    const targetDateIso = UnixTime.toDate(timestamp).toISOString()
+    const updateStart = UnixTime.now()
+
+    this.logger.info('Full update started', {
+      start: updateStart,
+      updateTarget: timestamp,
+      updateTargetDate: targetDateIso,
+      chainsCount: this.discoveryRunners.length,
+    })
+
     for (const runner of this.discoveryRunners) {
       await this.updateChain(runner, timestamp)
     }
+
+    const updateEnd = UnixTime.now()
+    const updateDuration = updateEnd - updateStart
+
+    this.logger.info('Full update finished', {
+      start: updateStart,
+      end: updateEnd,
+      duration: updateDuration,
+      updateTarget: timestamp,
+      updateTargetDate: targetDateIso,
+    })
 
     const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
@@ -108,6 +129,8 @@ export class UpdateMonitor {
   }
 
   async updateChain(runner: DiscoveryRunner, timestamp: UnixTime) {
+    const chainUpdateStart = UnixTime.now()
+
     // #region metrics
     errorCount.set(0)
     // #endregion
@@ -119,7 +142,7 @@ export class UpdateMonitor {
       runner.chain,
     )
 
-    this.logger.info('Update started', {
+    this.logger.info('Chain update started', {
       chain: runner.chain,
       projects: projectConfigs.length,
       blockNumber,
@@ -128,6 +151,7 @@ export class UpdateMonitor {
     })
 
     for (const projectConfig of projectConfigs) {
+      const projectUpdateStart = UnixTime.now()
       assert(
         projectConfig.chain === runner.chain,
         `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
@@ -149,15 +173,24 @@ export class UpdateMonitor {
         )
         errorCount.inc()
       }
+      const projectUpdateEnd = UnixTime.now()
       projectFinished()
 
       this.logger.info('Project update finished', {
         chain: runner.chain,
         project: projectConfig.name,
+        start: projectUpdateStart,
+        end: projectUpdateEnd,
+        duration: projectUpdateEnd - projectUpdateStart,
       })
     }
 
-    this.logger.info('Update finished', {
+    const chainUpdateEnd = UnixTime.now()
+
+    this.logger.info('Chain update finished', {
+      start: chainUpdateStart,
+      end: chainUpdateEnd,
+      duration: chainUpdateEnd - chainUpdateStart,
       chain: runner.chain,
       blockNumber,
       timestamp: timestamp,

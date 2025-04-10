@@ -23,7 +23,7 @@ export function BridgesProjectSummary({ project }: Props) {
         <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader title={project.name} slug={project.slug} />
           <div className="space-y-2">
-            {project.isArchived && <ArchivedBar />}
+            {project.archivedAt && <ArchivedBar />}
             {project.isUpcoming && <UpcomingBar />}
             {project.underReviewStatus && (
               <UnderReviewBar

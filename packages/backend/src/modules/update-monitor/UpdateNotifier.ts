@@ -165,6 +165,9 @@ export class UpdateNotifier {
     timestamp: UnixTime,
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
+      this.logger.info('Daily reminder not sent, not the right time', {
+        date: UnixTime.toDate(timestamp).toISOString(),
+      })
       return
     }
 
@@ -258,7 +261,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
   const scaling = await ps.getProjects({
     select: ['scalingInfo', 'discoveryInfo'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const stacks: string[] = [

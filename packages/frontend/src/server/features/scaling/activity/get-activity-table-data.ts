@@ -83,7 +83,7 @@ async function getActivityTableData(projects: Project[]) {
 async function getMockActivityTableData(): Promise<ActivityTableData> {
   const projects = await ps.getProjects({
     where: ['activityConfig'],
-    whereNot: ['isArchived', 'isUpcoming'],
+    whereNot: ['archivedAt', 'isUpcoming'],
   })
 
   return Object.fromEntries(

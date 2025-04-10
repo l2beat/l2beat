@@ -77,7 +77,7 @@ export default async function Page(props: Props) {
       'scalingDa',
       'customDa',
       'isUpcoming',
-      'isArchived',
+      'archivedAt',
       'milestones',
       'trackedTxsConfig',
     ],

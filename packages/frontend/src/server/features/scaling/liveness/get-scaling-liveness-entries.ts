@@ -37,7 +37,7 @@ export async function getScalingLivenessEntries() {
       ],
       optional: ['scalingDa'],
       where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 

@@ -10,7 +10,7 @@ export async function getActivityConfig(
 ): Promise<ActivityConfig> {
   const projects = await ps.getProjects({
     select: ['activityConfig', 'chainConfig'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
 
   return {

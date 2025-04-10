@@ -1,7 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -12,8 +11,8 @@ const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
 export const l3x: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718370384), // 2024-06-14T13:06:24Z
+  archivedAt: UnixTime(1743033600), // 2025-03-27T00:00:00.000Z,
   discovery,
-  isArchived: true,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

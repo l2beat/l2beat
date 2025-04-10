@@ -4,6 +4,7 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -25,7 +26,7 @@ import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associate
 export interface BridgesProjectEntry {
   name: string
   slug: string
-  isArchived: boolean
+  archivedAt: UnixTime | undefined
   isUpcoming: boolean
   underReviewStatus: UnderReviewStatus
   header: {
@@ -67,7 +68,7 @@ export async function getBridgesProjectEntry(
     | 'display',
     // optional
     | 'chainConfig'
-    | 'isArchived'
+    | 'archivedAt'
     | 'isUpcoming'
     | 'milestones'
     | 'contracts'
@@ -90,7 +91,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
+    archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     header: {
       description: project.display.description,
