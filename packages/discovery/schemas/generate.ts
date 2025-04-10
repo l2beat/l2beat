@@ -2,12 +2,16 @@ import { writeFileSync } from 'fs'
 import { z } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import {
-  CommonDiscoveryConfig,
-  ContractFieldSeverity,
+  ColorConfig,
+  ColorContract,
+  ColorContractField,
   ContractValueType,
   DiscoveryCategory,
-  DiscoveryCustomType,
   ExternalReference,
+} from '../src/discovery/config/ColorConfig'
+import {
+  ContractFieldSeverity,
+  DiscoveryCustomType,
   ManualProxyType,
   Permission,
   RawPermissionConfiguration,
@@ -34,23 +38,34 @@ async function generateAndSaveSchema(
       ContractValueType,
       ContractFieldSeverity,
       DiscoveryContractField: StructureContractField,
+      ColorContractField,
       DiscoveryCustomType,
       ExternalReference,
       DiscoveryCategory,
       ManualProxyType,
       DiscoveryContract: StructureContract,
-      CommonDiscoveryConfig,
+      ColorContract,
+      MergedContract: z.union([StructureContract, ColorContract]),
     } as const,
   })
   writeFileSync(filename, await toPrettyJson(schema))
 }
 
 async function main() {
-  await generateAndSaveSchema(StructureConfig, 'schemas/config.v2.schema.json')
-  await generateAndSaveSchema(
-    StructureContract,
-    'schemas/contract.v2.schema.json',
-  )
+  const MergedField = ColorContractField.merge(StructureContractField)
+  const MergedContract = z.object({
+    ...StructureContract.omit({ fields: true }).shape,
+    ...ColorContract.omit({ fields: true }).shape,
+    fields: z.record(MergedField).optional(),
+  })
+  const MergedConfig = z.object({
+    ...StructureConfig.omit({ overrides: true }).shape,
+    ...ColorConfig.omit({ overrides: true }).shape,
+    overrides: z.record(MergedContract).optional(),
+  })
+
+  await generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')
+  await generateAndSaveSchema(MergedContract, 'schemas/contract.v2.schema.json')
 }
 
 main().catch(console.error)
