@@ -37,6 +37,10 @@ export class TemplateService {
 
   constructor(private readonly rootPath: string) {}
 
+  getTemplatePath(template: string): string {
+    return path.join(this.rootPath, TEMPLATES_PATH, template)
+  }
+
   exists(template: string): boolean {
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     return existsSync(join(resolvedRootPath, template, 'template.jsonc'))
@@ -274,7 +278,7 @@ export class TemplateService {
     writeFileSync(shapePath, JSON.stringify(shapes, null, 2))
   }
 
-  private readShapeSchema(shapePath: string | undefined): ShapeSchema[] {
+  readShapeSchema(shapePath: string | undefined): ShapeSchema[] {
     if (shapePath === undefined) {
       return []
     }

@@ -7,6 +7,7 @@ import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
+import { DownloadShapes } from './DownloadShapes'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
 import { FetchFlatSources } from './FetchFlatSources'
@@ -41,6 +42,7 @@ export function getSubcommands() {
     CountUserOperations,
     DeploymentTimestamp,
     DetectProxy,
+    DownloadShapes,
     Discover,
     Events,
     FetchFlatSources,
