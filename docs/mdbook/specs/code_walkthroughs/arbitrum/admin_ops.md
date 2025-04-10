@@ -206,7 +206,7 @@ function setBaseStake(
 The function currently only allows to increase the base stake, not to decrease it, as an attacker might be able to steal honest funds from the contract.
 
 <figure>
-    <img src="../static/assets/stakeincreaseattack.svg" alt="Stake increase attack">
+    <img src="../../static/assets/stakeincreaseattack.svg" alt="Stake increase attack">
     <figcaption>An attack where it is possible to compromise honest parties' funds.</figcaption>
 </figure>
 
