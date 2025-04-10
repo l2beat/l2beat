@@ -103,7 +103,7 @@ export async function getEcosystemEntry(
       'scalingStage',
       'chainConfig',
       'milestones',
-      'isArchived',
+      'archivedAt',
     ],
     where: ['isScaling'],
     whereNot: ['isUpcoming'],
@@ -151,7 +151,7 @@ export async function getEcosystemEntry(
       allScalingProjects.length,
     ),
     projects: ecosystemProjects
-      .filter((p) => !p.isArchived)
+      .filter((p) => !p.archivedAt)
       .map((project) => ({
         ...getScalingSummaryEntry(
           project,

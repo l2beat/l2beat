@@ -11,7 +11,7 @@ export type EcosystemProjectsCountData = {
 }
 
 export function getEcosystemProjectsChartData(
-  entries: Project<'ecosystemInfo'>[],
+  entries: Project<'ecosystemInfo', 'archivedAt'>[],
   allScalingProjectsCount: number,
 ): EcosystemProjectsCountData {
   const minTimestamp = Math.min(
@@ -25,12 +25,11 @@ export function getEcosystemProjectsChartData(
     'daily',
   )
   const chart = timestamps.map((timestamp) => {
-    const projects = entries.filter(
-      (e) =>
-        (e.ecosystemInfo.sinceTimestamp ?? e.addedAt) <= timestamp &&
-        (!e.ecosystemInfo.untilTimestamp ||
-          e.ecosystemInfo.untilTimestamp > timestamp),
-    )
+    const projects = entries.filter((e) => {
+      const since = e.ecosystemInfo.sinceTimestamp ?? e.addedAt
+      const until = e.ecosystemInfo.untilTimestamp ?? e.archivedAt
+      return since <= timestamp && (!until || until > timestamp)
+    })
     return {
       timestamp,
       projectCount: projects.length,
