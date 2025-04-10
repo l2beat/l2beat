@@ -157,7 +157,7 @@ export const omni: Bridge = {
           ...upgrades,
           pausable,
         }),
-        discovery.getContractDetails('MultiTokenMediator', {
+        discovery.getContractDetails('ForeignOmnibridge', {
           description: 'Mediator contract and escrow.',
           ...upgrades,
         }),
