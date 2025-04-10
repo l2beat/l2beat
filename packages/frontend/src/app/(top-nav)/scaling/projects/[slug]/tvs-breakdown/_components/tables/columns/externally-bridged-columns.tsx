@@ -4,6 +4,8 @@ import { TokenSimpleAmountCell } from '../cells/token-simple-amount-cell'
 import { TokenSimpleValueCell } from '../cells/token-simple-value-cell'
 import type { ExternallyBridgedTokenEntry } from '../externally-bridges-table'
 import { TokenAddressCell } from '../cells/token-address-cell'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<ExternallyBridgedTokenEntry>()
 
@@ -41,5 +43,26 @@ export const externallyBridgedColumns = [
       align: 'right',
     },
     cell: (ctx) => <TokenSimpleAmountCell amount={ctx.row.original.amount} />,
+  }),
+  columnHelper.display({
+    id: 'expand',
+    meta: {
+      align: 'right',
+    },
+    cell: (ctx) => {
+      if (!ctx.row.getCanExpand()) return null
+      const isExpended = ctx.row.getIsExpanded()
+      const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
+
+      return (
+        <ChevronIcon
+          className={cn(
+            'w-[10px] cursor-pointer transition-transform duration-300',
+            isExpended && 'rotate-180',
+          )}
+          onClick={toggleExpandedHandler}
+        />
+      )
+    },
   }),
 ]

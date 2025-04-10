@@ -12,6 +12,7 @@ import type { ProjectTvsBreakdown } from '~/server/features/scaling/new-tvs/brea
 import { getCanonicallyBridgedColumns } from './columns/canonically-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
+import { renderFormulaSubComponent } from './formula-sub-row'
 
 export type CanonicallyBridgedTokenEntry =
   ProjectTvsBreakdown['canonical'][number]
@@ -34,6 +35,7 @@ export function CanonicallyBridgedTable(props: Props) {
     state: {
       expanded,
     },
+    getRowCanExpand: (row) => !!row.original.formula,
     onExpandedChange: setExpanded,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
@@ -45,7 +47,10 @@ export function CanonicallyBridgedTable(props: Props) {
         <a href={`#${props.id}`}>Canonically Bridged Value</a>
       </h2>
 
-      <TokenTable table={table} />
+      <TokenTable
+        table={table}
+        renderSubComponent={renderFormulaSubComponent}
+      />
       <TableSum amount={usdSum} />
     </div>
   )

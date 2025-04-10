@@ -11,13 +11,15 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
+import type { Row } from '@tanstack/react-table'
 
 interface Props<T> {
   table: TanstackTable<T>
+  renderSubComponent: (props: { row: Row<T> }) => React.ReactElement
   className?: string
 }
 
-export function TokenTable<T>({ table }: Props<T>) {
+export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
   if (table.getRowCount() === 0) {
     return <TableEmptyState />
   }
@@ -54,30 +56,35 @@ export function TokenTable<T>({ table }: Props<T>) {
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows.map((row) => (
-          <TableRow
-            slug={undefined}
-            key={row.id}
-            className={cn(
-              'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
-              (row.getIsExpanded() || row.getParentRow()?.getIsExpanded()) &&
-                'bg-[#CB980029]/20 hover:bg-black/[0.1] dark:hover:bg-white/[0.1]',
-            )}
-          >
-            {row.getVisibleCells().map((cell) => {
-              return (
-                <TableCell
-                  key={cell.id}
-                  align={cell.column.columnDef.meta?.align}
-                  className={cn(
-                    'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
-                    cell.column.columnDef.meta?.cellClassName,
-                  )}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          <>
+            <TableRow
+              slug={undefined}
+              key={row.id}
+              className="border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0"
+            >
+              {row.getVisibleCells().map((cell) => {
+                return (
+                  <TableCell
+                    key={cell.id}
+                    align={cell.column.columnDef.meta?.align}
+                    className={cn(
+                      'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
+                      cell.column.columnDef.meta?.cellClassName,
+                    )}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                )
+              })}
+            </TableRow>
+            {row.getIsExpanded() && (
+              <TableRow slug={undefined} key={`${row.id}-expanded`}>
+                <TableCell colSpan={row.getVisibleCells().length}>
+                  {renderSubComponent({ row })}
                 </TableCell>
-              )
-            })}
-          </TableRow>
+              </TableRow>
+            )}
+          </>
         ))}
       </TableBody>
     </Table>

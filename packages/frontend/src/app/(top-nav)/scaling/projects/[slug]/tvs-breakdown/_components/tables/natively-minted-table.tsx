@@ -5,6 +5,7 @@ import type { ProjectTvsBreakdown } from '~/server/features/scaling/new-tvs/brea
 import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
+import { renderFormulaSubComponent } from './formula-sub-row'
 
 export type NativelyMintedTokenEntry = ProjectTvsBreakdown['native'][number]
 
@@ -21,6 +22,7 @@ export function NativelyMintedTable(props: Props) {
     sortDescFirst: true,
     data: props.tokens,
     columns: nativelyMintedColumns,
+    getRowCanExpand: (row) => !!row.original.formula,
     getCoreRowModel: getCoreRowModel(),
   })
 
@@ -29,7 +31,10 @@ export function NativelyMintedTable(props: Props) {
       <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
         <a href={`#${props.id}`}>Natively Minted Value</a>
       </h2>
-      <TokenTable table={table} />
+      <TokenTable
+        table={table}
+        renderSubComponent={renderFormulaSubComponent}
+      />
       <TableSum amount={usdSum} />
     </div>
   )

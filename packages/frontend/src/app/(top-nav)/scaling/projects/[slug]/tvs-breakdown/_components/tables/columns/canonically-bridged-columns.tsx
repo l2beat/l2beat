@@ -4,6 +4,8 @@ import { TokenCanonicalAmountCell } from '../cells/token-canonical-amount-cell'
 import { TokenCanonicalValueCell } from '../cells/token-canonical-value-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
 import { TokenAddressCell } from '../cells/token-address-cell'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
 export function getCanonicallyBridgedColumns() {
@@ -68,6 +70,27 @@ export function getCanonicallyBridgedColumns() {
           <TokenCanonicalAmountCell
             amount={amount}
             isDescendant={isParentMultiEscrow}
+          />
+        )
+      },
+    }),
+    columnHelper.display({
+      id: 'expand',
+      meta: {
+        align: 'right',
+      },
+      cell: (ctx) => {
+        if (!ctx.row.getCanExpand()) return null
+        const isExpended = ctx.row.getIsExpanded()
+        const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
+
+        return (
+          <ChevronIcon
+            className={cn(
+              'w-[10px] cursor-pointer transition-transform duration-300',
+              isExpended && 'rotate-180',
+            )}
+            onClick={toggleExpandedHandler}
           />
         )
       },

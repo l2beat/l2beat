@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { TokenId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -73,6 +73,18 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'ETH',
           source: 'canonical',
           isAssociated: true,
+          formula: {
+            type: 'balanceOfEscrow',
+            sinceTimestamp: 0,
+            decimals: 18,
+            address: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            escrowAddress: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            chain: 'ethereum',
+          },
         },
         {
           amount: 100,
@@ -83,6 +95,19 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'ETH',
           source: 'canonical',
           isAssociated: true,
+
+          formula: {
+            type: 'balanceOfEscrow',
+            address: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            sinceTimestamp: 0,
+            decimals: 18,
+            escrowAddress: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            chain: 'ethereum',
+          },
         },
       ],
       native: [
@@ -95,6 +120,18 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'TKN',
           source: 'native',
           isAssociated: true,
+          formula: {
+            type: 'balanceOfEscrow',
+            address: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            escrowAddress: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            sinceTimestamp: 0,
+            decimals: 18,
+            chain: 'ethereum',
+          },
         },
       ],
       external: [
@@ -107,6 +144,18 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'TKN',
           source: 'external',
           isAssociated: true,
+          formula: {
+            type: 'balanceOfEscrow',
+            address: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            escrowAddress: EthereumAddress(
+              '0x0000000000000000000000000000000000000000',
+            ),
+            sinceTimestamp: 0,
+            decimals: 18,
+            chain: 'ethereum',
+          },
         },
       ],
     },

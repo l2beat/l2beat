@@ -1,4 +1,4 @@
-import type { ChainConfig, TvsToken } from '@l2beat/config'
+import type { ChainConfig, Formula, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
@@ -32,6 +32,7 @@ export async function getTvsBreakdown(
     const tokenWithValues: BaseAssetBreakdownData = {
       ...token,
       address,
+      formula: token.amount as Formula,
       iconUrl: token.iconUrl ?? '',
       usdValue: tokenValue.value,
       amount: tokenValue.amount,

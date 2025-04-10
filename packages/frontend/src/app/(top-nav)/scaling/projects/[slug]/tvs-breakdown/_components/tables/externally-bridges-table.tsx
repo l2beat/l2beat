@@ -5,6 +5,7 @@ import type { ProjectTvsBreakdown } from '~/server/features/scaling/new-tvs/brea
 import { externallyBridgedColumns } from './columns/externally-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
+import { renderFormulaSubComponent } from './formula-sub-row'
 
 export type ExternallyBridgedTokenEntry =
   ProjectTvsBreakdown['external'][number]
@@ -21,6 +22,7 @@ export function ExternallyBridgedTable(props: Props) {
     enableSortingRemoval: false,
     sortDescFirst: true,
     data: props.tokens,
+    getRowCanExpand: (row) => !!row.original.formula,
     columns: externallyBridgedColumns,
     getCoreRowModel: getCoreRowModel(),
   })
@@ -30,7 +32,10 @@ export function ExternallyBridgedTable(props: Props) {
       <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
         <a href={`#${props.id}`}>Externally Bridged Value</a>
       </h2>
-      <TokenTable table={table} />
+      <TokenTable
+        table={table}
+        renderSubComponent={renderFormulaSubComponent}
+      />
       <TableSum amount={usdSum} />
     </div>
   )
