@@ -101,7 +101,7 @@ function Display({
     <CopyAddShapeCommand
       chain={chain}
       address={address}
-      description={selected.name ?? '<<provide description>>'}
+      name={selected.name}
       blockNumber={blockNumber}
     />
   )
@@ -170,14 +170,14 @@ function Display({
 function CopyAddShapeCommand(props: {
   chain: string
   address: string
-  description: string
   blockNumber: number
+  name?: string
 }) {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     if (copied) {
-      const command = `l2b add-shape <<template>> ${props.chain} ${props.address} ${props.description} ${props.blockNumber}`
+      const command = `l2b add-shape ${props.chain} ${props.address} ${props.blockNumber} "${props.name ?? '<NAME>'}.sol" <TEMPLATE_NAME>`
 
       void navigator.clipboard.writeText(command)
       const timeout = setTimeout(() => setCopied(false), 1000)
