@@ -1,6 +1,7 @@
 import type { TvsToken } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import type { AmountConfig } from '../types'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 describe(extractPricesAndAmounts.name, () => {
@@ -80,13 +81,13 @@ describe(extractPricesAndAmounts.name, () => {
           sinceTimestamp: UnixTime(100),
           untilTimestamp: UnixTime(200),
         },
-        {
+        mockObject<AmountConfig>({
           id: '4ffda8b9b469',
           apiId: 'price-ARB',
           type: 'circulatingSupply',
           decimals: 18,
           sinceTimestamp: UnixTime(100),
-        },
+        }),
         {
           id: '9c352c5b1183',
           address: EthereumAddress(

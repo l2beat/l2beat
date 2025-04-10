@@ -123,6 +123,7 @@ export function createEscrowToken(
   )
 
   if (legacyToken.isPreminted) {
+    assert(legacyToken.address, `Native asset not supported`)
     amountFormula = {
       type: 'calculation',
       operator: 'min',
@@ -133,6 +134,8 @@ export function createEscrowToken(
           decimals: legacyToken.decimals ?? 0,
           sinceTimestamp,
           ...(untilTimestamp ? { untilTimestamp } : {}),
+          address: legacyToken.address,
+          chain: legacyToken.chainName,
         },
         {
           type: 'balanceOfEscrow',
@@ -245,12 +248,15 @@ export function createToken(
       break
 
     case 'circulatingSupply':
+      assert(legacyToken.address, 'Native asset not supported')
       amountFormula = {
         type: 'circulatingSupply',
         apiId: legacyToken.coingeckoId,
         decimals: legacyToken.decimals ?? 0,
         sinceTimestamp,
         ...(untilTimestamp ? { untilTimestamp } : {}),
+        address: legacyToken.address,
+        chain: legacyToken.chainName,
       }
       break
 

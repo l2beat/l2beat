@@ -99,6 +99,8 @@ describe(mapConfig.name, () => {
         apiId: 'arbitrum',
         decimals: 18,
         sinceTimestamp: UnixTime(1679529600),
+        address: '0x912CE59144191C1204E64559FE8253a0e49E6548',
+        chain: 'arbitrum',
       },
       category: 'other',
       source: 'native',
