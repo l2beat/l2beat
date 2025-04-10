@@ -28,7 +28,10 @@ export function getEcosystemProjectsChartData(
     const projects = entries.filter((e) => {
       const since = e.ecosystemInfo.sinceTimestamp ?? e.addedAt
       const until = e.ecosystemInfo.untilTimestamp ?? e.archivedAt
-      return since <= timestamp && (!until || until > timestamp)
+      return (
+        UnixTime.toStartOf(since, 'day') <= timestamp &&
+        (!until || UnixTime.toStartOf(until, 'day') > timestamp)
+      )
     })
     return {
       timestamp,
