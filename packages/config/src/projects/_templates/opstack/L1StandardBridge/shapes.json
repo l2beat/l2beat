@@ -1,135 +1,116 @@
-[
-  {
+{
+  "L1StandardBridge_l3": {
     "hash": "0xc2e94acadb171d22697955d74c58f48ceba2c8f3f9ea347b7f5a92f57181e178",
-    "description": "L1StandardBridge_l3",
     "address": "0x0Da314776B267D898dEE57F6Ede357ae28b3b83c",
     "chain": "base",
     "blockNumber": 28446407
   },
-  {
+  "L1StandardBridge_v1_0_0_kroma": {
     "hash": "0xe4eddca14af777a8abcb70781c5881acfaec17ce822a4231242061a4032ace9a",
-    "description": "L1StandardBridge_v1_0_0_kroma",
     "address": "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v1_1_0": {
     "hash": "0x79abdbd90460fe2ac0535b5cb7b4c45284322b49a0a090d1c509cdaf35dbc87e",
-    "description": "L1StandardBridge_v1_1_0",
     "address": "0x20F1380A78492227A9B2366242335D684aF22507",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v1_1_0_mantle": {
     "hash": "0x1cd5cb2fa146b2a5dfb07279a52cd93855b268115912df60292b18394cc532e8",
-    "description": "L1StandardBridge_v1_1_0_mantle",
     "address": "0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v1_1_1": {
     "hash": "0x9acaa683f4e228c0e24b38c1b79cf896a311a7b85c6f036e915d0fb8593a3ca5",
-    "description": "L1StandardBridge_v1_1_1",
     "address": "0x5c94e4b101EF3bC8554890c7D33Fae938Be737c0",
     "chain": "base",
     "blockNumber": 28446407
   },
-  {
+  "L1StandardBridge_v1_4_0": {
     "hash": "0x97db8b5a9741ddac67a8c6409fa1e545a9db896a6118f08c76f866f1ff767024",
-    "description": "L1StandardBridge_v1_4_0",
     "address": "0xC4De51792746960FC0ac78360b8e9c6E103F3B13",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v1_4_1": {
     "hash": "0xf5e9d1b6ac4bf84529eacc8e29c0731ef1524f2a84cbd91fb9840cf631cfff7c",
-    "description": "L1StandardBridge_v1_4_1",
     "address": "0xD2C23A5A280AFF9182b953579f62EDdDF1c7ff22",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_0_0": {
     "hash": "0x6799eb37a55a04ec21fc5819a2f479c30a69b3e79258d12ac41c10342b9f76b1",
-    "description": "L1StandardBridge_v2_0_0",
     "address": "0xE27083804bFf17Ec05f4300a43b7c40F3E01e486",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_1_0": {
     "hash": "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740",
-    "description": "L1StandardBridge_v2_1_0",
     "address": "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_1_0_bobanetwork": {
     "hash": "0x3ffed4eb8169f2ebc4abe07aaa71451c53653f6b89400b483cdd4be5dbc8513a",
-    "description": "L1StandardBridge_v2_1_0_bobanetwork",
     "address": "0x5Eb02901135865aF8Da6752aF92fbAe62258520F",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_1_0_zircuit": {
     "hash": "0x3a72e01a50e4baf0c333aa3ad2413675a95c2fc68a18d8a95b3a65179e98ccbc",
-    "description": "L1StandardBridge_v2_1_0_zircuit",
     "address": "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_1_0_zircuit_nothrottle": {
     "hash": "0x751d149755c8de663c6b1eb488f5d145ad3e9aa81561545e375a6cb8adbd0f6c",
-    "description": "L1StandardBridge_v2_1_0_zircuit_nothrottle",
     "address": "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_2_0": {
     "hash": "0xe3ebd11527e7e2cc700c4894d46405fa80fdd55e1f6074a122818a25141db5f2",
-    "description": "L1StandardBridge_v2_2_0",
     "address": "0x5Bf18b3c88b0B04BDC2C8F0c55362D14aCFB2168",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_2_0_allgas": {
     "hash": "0x0c1c0a5eff46fa1b105a2cabe6ce2b7a7fbac2f58af57392b196f8fe5768bd2a",
-    "description": "L1StandardBridge_v2_2_0_allgas",
     "address": "0xE62EaD0c8d90f602AdE7c9B0df89025AFB61AbA4",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_2_0_b3": {
     "hash": "0x820ad9099a42cd2ff75db54e775ccd8dc8cd7e806ced5e4e2a0db4d047133cdd",
-    "description": "L1StandardBridge_v2_2_0_b3",
     "address": "0x4bFC8d6bE2843626A1186bd6eEfAD1297650470a",
     "chain": "base",
     "blockNumber": 28446407
   },
-  {
+  "L1StandardBridge_v2_2_0_lightlink": {
     "hash": "0x1862b438ea6e79c6dda9db9eadf4cfc0582195a923d0ea24cbf669e0c4d2e27e",
-    "description": "L1StandardBridge_v2_2_0_lightlink",
     "address": "0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_2_1_beta1": {
     "hash": "0xd8042757e821cffcced80e87f1c0c7e6c7b813581828876d853c92cb6a47ad2e",
-    "description": "L1StandardBridge_v2_2_1_beta1",
     "address": "0x4634e74d04992BDd5192Cd75897CbD432971aAB6",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_2_1_beta2_celo": {
     "hash": "0x660d3bcc53c06135b0810d3b5ca347ffde4e6a49e66f0bb081771b45d0baa1e5",
-    "description": "L1StandardBridge_v2_2_1_beta2_celo",
     "address": "0x5e21245e97A7BB4733f72c412DcdDCED1f408587",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "L1StandardBridge_v2_2_2": {
     "hash": "0x4a2d83507f25be218f504b76815e4494138af88734cc54d34666c631aea88af5",
-    "description": "L1StandardBridge_v2_2_2",
     "address": "0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}

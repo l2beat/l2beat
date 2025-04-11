@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x60e0435f0f3c4ae272da6f155e342e1d09eb01be
+
+# Diff at Thu, 10 Apr 2025 14:43:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22217035
+- current block number: 22217035
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22217035 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
 Generated with discovered.json: 0xf5bcc3d05d835edb7babecab1d7e92990b2479e3
 
 # Diff at Wed, 02 Apr 2025 15:08:29 GMT:

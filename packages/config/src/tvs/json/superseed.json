@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -32,8 +33,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -41,6 +41,7 @@
       "priceId": "openusdt",
       "symbol": "oUSDT",
       "name": "OpenUSDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
       "amount": {
         "type": "totalSupply",
         "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
@@ -50,8 +51,7 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -59,6 +59,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "totalSupply",
         "address": "0xC316C8252B5F2176d0135Ebb0999E99296998F2e",
@@ -68,8 +69,7 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+      "isAssociated": false
     }
   ]
 }

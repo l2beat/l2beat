@@ -2,7 +2,7 @@ import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'
 
 import { codeIsEIP7702, codeIsEOA } from '../analysis/codeIsEOA'
-import type { ManualProxyType } from '../config/RawDiscoveryConfig'
+import type { ManualProxyType } from '../config/StructureConfig'
 import type { IProvider } from '../provider/IProvider'
 import { get$Implementations } from '../utils/extractors'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'

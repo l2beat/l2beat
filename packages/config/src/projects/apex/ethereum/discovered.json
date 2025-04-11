@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21981180,
-  "configHash": "0xcd9fab46b55154e992ce0023bd1e6cbd200c10ee7003a0ad49aee23561cf1e03",
+  "configHash": "0x0e97c69193976e350453b28fc53d98ebc961bbf12248dd4c238d5da1b9632b6f",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -29,7 +29,6 @@
         "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5"
       ],
       "proxyType": "immutable",
-      "displayName": "DACommittee",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
       "sinceTimestamp": 1671630143,
       "sinceBlock": 16233442,
@@ -67,7 +66,6 @@
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
       "proxyType": "immutable",
-      "displayName": "GpsFactRegistryAdapter",
       "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).",
       "sinceTimestamp": 1697631587,
       "sinceBlock": 18377195,
@@ -187,7 +185,6 @@
         "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a"
       ],
       "proxyType": "immutable",
-      "displayName": "DACommittee",
       "description": "Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.",
       "sinceTimestamp": 1697631587,
       "sinceBlock": 18377195,
@@ -250,7 +247,6 @@
         "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
       ],
       "proxyType": "StarkWare diamond",
-      "displayName": "StarkPerpetual",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
@@ -539,7 +535,6 @@
         "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
       ],
       "proxyType": "StarkWare diamond",
-      "displayName": "StarkPerpetual",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
@@ -692,7 +687,6 @@
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
       "proxyType": "immutable",
-      "displayName": "GpsFactRegistryAdapter",
       "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).",
       "sinceTimestamp": 1661254231,
       "sinceBlock": 15396280,
@@ -1408,9 +1402,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "starkex/Committee": "0xdd0de4efcc59e58eacde5dd5ae89cb67e8ca289b8701d2dde3cd78b38e06c4e0",
-    "starkex/GpsFactRegistryAdapter": "0xd25d19938656386c9c7d88accb6ce40d364c77e8fc0173bf9678eefbb7532a05",
-    "starkex/StarkPerpetual": "0xec008458974524ba3d784412d30c35c09a39d7cb6bebf364f574c53205f5ad16"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "starkex/Committee": "0x4e74d07ffe726ecd16f902b8a68904c3b387fdfb57b56c7b8e85ad79c99b55b6",
+    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7",
+    "starkex/StarkPerpetual": "0x491138cc31c40b798c5278ae5bfe2f45fad75a40f08728e4e9f82f32c8a7a9cc"
   }
 }

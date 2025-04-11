@@ -8,6 +8,7 @@
       "priceId": "pha",
       "symbol": "PHA",
       "name": "Phala",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12451/large/phala.png?1696512270",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E",
@@ -18,8 +19,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/12451/large/phala.png?1696512270"
+      "isAssociated": false
     }
   ]
 }

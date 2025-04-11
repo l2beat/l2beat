@@ -1,16 +1,14 @@
-[
-  {
+{
+  "GasPriceOracle_v1_3_0": {
     "hash": "0x6d0f92051952bf3dcccae9e0ff5cf654e3b386df386bc0609b0c7234a2a108bb",
-    "description": "GasPriceOracle_v1_3_0",
     "address": "0xa919894851548179A0750865e7974DA599C0Fac7",
     "chain": "optimism",
     "blockNumber": 134041720
   },
-  {
+  "GasPriceOracle_v1_3_1beta_1": {
     "hash": "0x6e5bd465cdf07c7fc7de194833be336109be5aceaeb509643962096c772ec26a",
-    "description": "GasPriceOracle_v1_3_1beta_1",
     "address": "0xc0d3C0d3C0d3c0D3C0D3C0d3C0d3C0D3C0D3000f",
     "chain": "ink",
     "blockNumber": 10183769
   }
-]
+}

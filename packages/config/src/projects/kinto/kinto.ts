@@ -77,6 +77,7 @@ export const kinto: ScalingProject = orbitStackL2({
       ],
     },
   },
+  associatedTokens: ['K'],
   chainConfig: {
     name: 'kinto',
     chainId: 7887,

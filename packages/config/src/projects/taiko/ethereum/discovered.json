@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 21973872,
-  "configHash": "0x453583c66c43b128aaf461b5fd6dabfa60abd57855ba8c4bcd9777ada2bc4807",
+  "configHash": "0x895152851eee8b7c416b59431cae698f27dd5497b2fdc1321cdd56a0ae4c09c0",
   "entries": [
     {
       "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
@@ -811,7 +811,6 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "displayName": "SP1Verifier",
       "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
       "sinceTimestamp": 1736742119,
       "sinceBlock": 21613149,
@@ -2548,7 +2547,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "succinct/SP1Verifier": "0x7192c1fd93b120af8dcc6df20782edbb56d212ad27e0761a9fb98c8fa23d9fac"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "succinct/SP1Verifier": "0x7cda5627d76d83ab27802439c4bef67945b0d2b551e81ad4330b50b5a4221752"
   }
 }

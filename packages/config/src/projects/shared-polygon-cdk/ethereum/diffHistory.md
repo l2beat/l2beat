@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xbfc77dff26f3163ca817d1b4291e7782aa36abdd
+
+# Diff at Fri, 11 Apr 2025 06:50:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22166600
+- current block number: 22244012
+
+## Description
+
+Okto sent first pessimistic proof. 
+their version: https://docs.okto.tech/docs/okto-layer/okto-chain#architecture-and-technology
+
+wallet with some test txs interacting with the shared bridge: https://etherscan.io/address/0x3899edd8656cdb21c0ecc06f3b7a2a0bf9d42ec4
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.1:
++        17
+    }
+```
+
+Generated with discovered.json: 0x6bb793b34d8bd60b4eb430b5973da13db3337741
+
+# Diff at Thu, 10 Apr 2025 14:43:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22166600
+- current block number: 22166600
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166600 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
 Generated with discovered.json: 0xd50d516713ea7febaf35ac98a821528e601a4751
 
 # Diff at Mon, 31 Mar 2025 11:28:33 GMT:
