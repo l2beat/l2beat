@@ -1,8 +1,8 @@
 import {
   ConfigReader,
   TemplateService,
+  buildProjectPageFacts,
   getDiscoveryPaths,
-  modelPermissionsForProject,
 } from '@l2beat/discovery'
 import { command, positional, string } from 'cmd-ts'
 
@@ -14,16 +14,17 @@ export const ModelPermissions = command({
       displayName: 'projectQuery',
     }),
   },
-  handler: (args) => {
+  handler: async (args) => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const permissions = modelPermissionsForProject(
+    const facts = await buildProjectPageFacts(
       args.projectQuery,
       configReader,
       templateService,
+      paths,
     )
-    console.log(permissions)
+    console.log(JSON.stringify(facts, null, 2))
   },
 })

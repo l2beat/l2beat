@@ -4,6 +4,7 @@ import type { RawPermissionConfiguration } from '../config/StructureConfig'
 import type { StructureEntry } from '../output/types'
 import type { ContractValue } from '../output/types'
 import { toAddressArray } from '../utils/extractors'
+import { interpolateString } from '../utils/interpolateString'
 import { interpolateModelTemplate } from './interpolate'
 
 interface InlineTemplate {
@@ -108,9 +109,18 @@ export function buildPermissionsModel(
       'permission.from': structureEntry.address,
       'permission.to': permission.to,
       'permission.type': permission.type,
-      'permission.delay': permission.delay,
-      'permission.description': permission.description,
-      'permission.condition': permission.condition,
+      'permission.delay':
+        typeof permission.delay === 'string'
+          ? interpolateString(permission.delay, structureEntry)
+          : permission.delay,
+      'permission.description': interpolateString(
+        permission.description,
+        structureEntry,
+      ),
+      'permission.condition': interpolateString(
+        permission.condition,
+        structureEntry,
+      ),
     }
 
     for (const template of [
@@ -139,10 +149,10 @@ export function getPermissionsDefinedOnFields(
     contractPermission.fields ?? {},
   ).flatMap(([field, values]) => {
     return (
-      values?.permissions?.flatMap((p) => {
+      values?.permissions?.flatMap((permission) => {
         return toAddressArray(structureEntry.values?.[field]).map((to) => {
           return {
-            ...p,
+            ...permission,
             to,
           }
         })

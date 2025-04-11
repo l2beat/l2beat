@@ -1,16 +1,58 @@
+import { readFileSync, unlinkSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionConfig } from '../config/PermissionConfig'
+import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { buildAddressToNameMap } from './build'
+import { parseClingoFact } from './clingoparser'
 import { interpolateModelTemplate } from './interpolate'
+import { runClingo } from './projectPageFacts'
 import {
   buildPermissionsModel,
   contractValuesForInterpolation,
 } from './relations2'
 
-export function modelPermissionsForProject(
+export async function buildProjectPageFacts(
+  project: string,
+  configReader: ConfigReader,
+  templateService: TemplateService,
+  paths: DiscoveryPaths,
+) {
+  const clingo = generateClingoForProject(
+    project,
+    configReader,
+    templateService,
+  )
+  const projectPageClingoFile = readProjectPageClingoFile(paths)
+  const combinedClingo = clingo + '\n' + projectPageClingoFile
+  const outputPath = configReader.getProjectPath(project)
+  const debugFilePath = join(outputPath, 'facts.debug.lp')
+  writeFileSync(debugFilePath, combinedClingo)
+  const clingoResult = await runClingo(combinedClingo)
+  if (clingoResult.Result === 'ERROR') {
+    throw new Error(clingoResult.Error)
+  }
+  if (clingoResult.Models.Number !== 1) {
+    throw new Error('Expected 1 model, got ' + clingoResult.Models.Number)
+  }
+  const facts = clingoResult.Call[0]?.Witnesses[0]?.Value
+  if (!facts) {
+    throw new Error('No facts found')
+  }
+  unlinkSync(debugFilePath)
+  const parsed = { facts: facts.map(parseClingoFact) }
+  return parsed
+}
+
+export function readProjectPageClingoFile(paths: DiscoveryPaths): string {
+  const path = join(paths.discovery, '_clingo', 'forProjectPage.lp')
+  return readFileSync(path, 'utf8')
+}
+
+export function generateClingoForProject(
   project: string,
   configReader: ConfigReader,
   templateService: TemplateService,
