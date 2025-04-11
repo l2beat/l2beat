@@ -38,7 +38,9 @@ export function EcosystemProjectsByDaLayer({
             <div className="size-0 border-y-8 border-r-[10px] border-y-transparent border-r-surface-secondary"></div>
           </div>
           <div className="flex flex-col items-center">
-            <h3 className="text-2xs font-medium text-secondary">Total data</h3>
+            <h3 className="text-2xs font-medium text-secondary">
+              Blobs posted
+            </h3>
             <p className="text-sm font-bold">
               {formatBytes(blobsData.totalData)}
             </p>
