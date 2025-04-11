@@ -47,20 +47,21 @@ export class DataFormulaExecutor {
       await this.preloadDataFromDB(prices, timestamp, amounts)
     }
 
-    // Block number need to be fetched before rest of data.
+    // Block number need to be fetched before rest of the data.
     // They are needed for onchain amounts fetching
     const blockNumbersToFetch = await this.processBlockNumbers(
       amounts,
       timestamp,
       isLatestMode,
     )
-    this.logger.info(
-      `Fetching block numbers (${blockNumbersToFetch.length})...`,
-    )
-    await Promise.all(blockNumbersToFetch)
-    this.logger.info(`Block numbers fetched`)
+    if (blockNumbersToFetch.length > 0) {
+      this.logger.info(
+        `Fetching block numbers (${blockNumbersToFetch.length})...`,
+      )
+      await Promise.all(blockNumbersToFetch)
+      this.logger.info(`Block numbers fetched`)
+    }
 
-    this.logger.info(`Fetching data, this will take longer time...`)
     const promises: Promise<void>[] = []
 
     const pricesToFetch = await this.processPrices(
@@ -68,16 +69,28 @@ export class DataFormulaExecutor {
       timestamp,
       isLatestMode,
     )
-    this.logger.info(`\tFetching prices (${pricesToFetch.length})...`)
     promises.push(...pricesToFetch)
 
-    promises.push(...this.processOnchainAmounts(amounts, timestamp))
-
-    promises.push(
-      ...this.processCirculatingSupplies(amounts, timestamp, isLatestMode),
+    const circulatingToFetch = await this.processCirculatingSupplies(
+      amounts,
+      timestamp,
+      isLatestMode,
     )
+    promises.push(...circulatingToFetch)
 
-    await Promise.all(promises)
+    const onchainToFetch = await this.processOnchainAmounts(amounts, timestamp)
+    promises.push(...onchainToFetch)
+
+    if (promises.length > 0) {
+      this.logger.info(`Fetching data, this will take longer time...`)
+      this.logger.info(`\t prices (${pricesToFetch.length})...`)
+      this.logger.info(
+        `\t circulating supplies (${circulatingToFetch.length})...`,
+      )
+      this.logger.info(`\t onchain amount (${onchainToFetch.length})...`)
+
+      await Promise.all(promises)
+    }
   }
 
   private async preloadDataFromDB(
@@ -193,6 +206,7 @@ export class DataFormulaExecutor {
           )
           if (cachedValue !== undefined) {
             this.logger.debug(`Cached value found for ${price.priceId}`)
+            return
           }
 
           const dbValue = await this.dbStorage?.getPrice(price.id, timestamp)
@@ -200,6 +214,7 @@ export class DataFormulaExecutor {
           if (dbValue !== undefined) {
             this.logger.debug(`DB value found for ${price.priceId}`)
             await this.localStorage.writePrice(price.id, timestamp, dbValue)
+            return
           }
 
           pricesToFetch.push(price)
@@ -213,57 +228,7 @@ export class DataFormulaExecutor {
     }
   }
 
-  private processOnchainAmounts(amounts: AmountConfig[], timestamp: UnixTime) {
-    return amounts
-      .filter((a) => a.type !== 'circulatingSupply' && a.type !== 'const')
-      .filter(
-        (a) =>
-          timestamp >= a.sinceTimestamp &&
-          (!a.untilTimestamp || timestamp < a.untilTimestamp),
-      )
-      .map(async (amount) => {
-        const cachedValue = await this.localStorage.getAmount(
-          amount.id,
-          timestamp,
-        )
-
-        if (cachedValue !== undefined) {
-          this.logger.debug(`Cached value found for ${amount.id}`)
-          return
-        }
-
-        const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
-
-        if (dbValue !== undefined) {
-          this.logger.debug(`DB value found for ${amount.id}`)
-          await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
-          return
-        }
-
-        const block = await this.localStorage.getBlockNumber(
-          amount.chain,
-          timestamp,
-        )
-        assert(block, `Block number not found for chain ${amount.chain}`)
-
-        switch (amount.type) {
-          case 'totalSupply': {
-            const value = await this.fetchTotalSupply(amount, block)
-            await this.localStorage.writeAmount(amount.id, timestamp, value)
-            break
-          }
-          case 'balanceOfEscrow': {
-            const value = await this.fetchEscrowBalance(amount, block)
-            await this.localStorage.writeAmount(amount.id, timestamp, value)
-            break
-          }
-          default:
-            assertUnreachable(amount)
-        }
-      })
-  }
-
-  private processCirculatingSupplies(
+  private async processCirculatingSupplies(
     amounts: AmountConfig[],
     timestamp: UnixTime,
     isLatestMode: boolean,
@@ -300,11 +265,60 @@ export class DataFormulaExecutor {
         })(),
       ]
     } else {
-      return circulatingAmounts.map(async (amount) => {
+      const amountsToFetch: AmountConfig[] = []
+
+      await Promise.all(
+        circulatingAmounts.map(async (amount) => {
+          const cachedValue = await this.localStorage.getAmount(
+            amount.id,
+            timestamp,
+          )
+          if (cachedValue !== undefined) {
+            this.logger.debug(`Cached value found for ${amount.id}`)
+            return
+          }
+
+          const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
+
+          if (dbValue !== undefined) {
+            this.logger.debug(`DB value found for ${amount.id}`)
+            await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
+            return
+          }
+
+          amountsToFetch.push(amount)
+        }),
+      )
+
+      return amountsToFetch.map(async (amount) => {
+        assert(amount.type === 'circulatingSupply')
+        const value = await this.fetchCirculatingSupply(amount, timestamp)
+        await this.localStorage.writeAmount(amount.id, timestamp, value)
+      })
+    }
+  }
+
+  private async processOnchainAmounts(
+    amounts: AmountConfig[],
+    timestamp: UnixTime,
+  ) {
+    const onchainAmounts = amounts
+      .filter((a) => a.type === 'balanceOfEscrow' || a.type === 'totalSupply')
+      .filter(
+        (a) =>
+          timestamp >= a.sinceTimestamp &&
+          (!a.untilTimestamp || timestamp < a.untilTimestamp),
+      )
+
+    const amountsToFetch: AmountConfig[] = []
+
+    await Promise.all(
+      onchainAmounts.map(async (amount) => {
         const cachedValue = await this.localStorage.getAmount(
           amount.id,
           timestamp,
         )
+
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${amount.id}`)
           return
@@ -318,10 +332,34 @@ export class DataFormulaExecutor {
           return
         }
 
-        const value = await this.fetchCirculatingSupply(amount, timestamp)
-        await this.localStorage.writeAmount(amount.id, timestamp, value)
-      })
-    }
+        amountsToFetch.push(amount)
+      }),
+    )
+
+    return amountsToFetch.map(async (amount) => {
+      assert(amount.type === 'balanceOfEscrow' || amount.type === 'totalSupply')
+      const block = await this.localStorage.getBlockNumber(
+        amount.chain,
+        timestamp,
+      )
+      assert(block, `Block number not found for chain ${amount.chain}`)
+
+      let value: bigint
+      switch (amount.type) {
+        case 'totalSupply': {
+          value = await this.fetchTotalSupply(amount, block)
+          break
+        }
+        case 'balanceOfEscrow': {
+          value = await this.fetchEscrowBalance(amount, block)
+          break
+        }
+        default:
+          assertUnreachable(amount)
+      }
+
+      await this.localStorage.writeAmount(amount.id, timestamp, value)
+    })
   }
 
   async fetchCirculatingSupply(
