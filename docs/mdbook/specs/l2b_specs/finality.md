@@ -4,6 +4,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [How to calculate time to inclusion](#how-to-calculate-time-to-inclusion)
+  - [OP stack](#op-stack)
 - [How to calculate withdrawal times (L2 -> L1)](#how-to-calculate-withdrawal-times-l2---l1)
   - [OP stack (with fraud proofs)](#op-stack-with-fraud-proofs)
     - [Why this approach?](#why-this-approach)
