@@ -39,7 +39,6 @@ const getCachedBlobsData = cache(
     const totalData = projects.reduce((acc, project) => {
       const projectRecord = recordsByProjectId[project.id]
       if (!projectRecord) {
-        console.info(`No record found for ${project.id}`)
         return acc
       }
       return acc + Number(projectRecord.totalSize)

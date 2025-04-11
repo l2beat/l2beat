@@ -58,7 +58,7 @@ function GovernanceLink({
       </div>
 
       <Link
-        className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link"
+        className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke bg-link/[0.07] px-3 py-2 text-[13px] font-bold leading-none text-link"
         href={href}
       >
         Governance Review
@@ -83,8 +83,8 @@ function TopDelegatesLink({
           className,
         )}
       >
-        <div className="absolute inset-0 origin-left rounded-lg bg-[url(/ecosystems/governance-delegates.png)] bg-cover transition-all ease-in-out group-hover:scale-125 md:rounded-xl" />
-        <div className="absolute inset-y-0 left-0 w-1/2 rounded-xl bg-gradient-to-r from-black"></div>
+        <div className="absolute inset-0 origin-left rounded-lg bg-[url(/ecosystems/governance-delegates.png)] bg-cover transition-all ease-in-out group-hover:scale-125" />
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black"></div>
         <div className="relative flex h-full flex-col justify-center">
           <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
             Governance

@@ -7,7 +7,7 @@ export function EcosystemWidget({
   className,
 }: { children: React.ReactNode; asChild?: boolean; className?: string }) {
   return (
-    <PrimaryCard asChild={asChild} className={cn('rounded-lg', className)}>
+    <PrimaryCard asChild={asChild} className={cn('!rounded-lg', className)}>
       {children}
     </PrimaryCard>
   )
