@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd6f99bf320613403cec5a74d4b496f987c9872a8
+
+# Diff at Fri, 11 Apr 2025 05:30:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22166600
+- current block number: 22243613
+
+## Description
+
+Okto sent one pessimistic proof. 
+their version: https://docs.okto.tech/docs/okto-layer/okto-chain#architecture-and-technology
+
+wallet with some test txs interacting with the shared bridge: https://etherscan.io/address/0x3899edd8656cdb21c0ecc06f3b7a2a0bf9d42ec4
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.1:
++        17
+    }
+```
+
 Generated with discovered.json: 0xd50d516713ea7febaf35ac98a821528e601a4751
 
 # Diff at Mon, 31 Mar 2025 11:28:33 GMT:
