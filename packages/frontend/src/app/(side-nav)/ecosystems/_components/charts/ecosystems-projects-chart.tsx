@@ -6,8 +6,6 @@ import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
   useChart,
@@ -54,6 +52,7 @@ export function EcosystemsProjectsChart({ data, className }: Props) {
         meta={chartMeta}
         data={data.chart}
         className="!h-[110px] !min-h-[110px]"
+        logoClassName="bottom-[42px]"
       >
         <AreaChart data={data.chart} accessibilityLayer margin={{ top: 20 }}>
           <defs>
@@ -82,7 +81,6 @@ export function EcosystemsProjectsChart({ data, className }: Props) {
             },
           })}
           <ChartTooltip content={<CustomTooltip />} />
-          <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
     </EcosystemWidget>

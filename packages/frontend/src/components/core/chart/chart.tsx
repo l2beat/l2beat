@@ -74,6 +74,7 @@ function ChartContainer<T extends { timestamp: number }>({
   isLoading,
   milestones,
   loaderClassName,
+  logoClassName,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -83,6 +84,7 @@ function ChartContainer<T extends { timestamp: number }>({
   data: T[] | undefined
   milestones?: Milestone[]
   loaderClassName?: string
+  logoClassName?: string
   isLoading?: boolean
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -117,7 +119,10 @@ function ChartContainer<T extends { timestamp: number }>({
         {isClient && (
           <Logo
             animated={false}
-            className="pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14 "
+            className={cn(
+              'pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              logoClassName,
+            )}
           />
         )}
         {!isLoading && milestones && (
