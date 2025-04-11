@@ -2,7 +2,7 @@
   "name": "superposition",
   "chain": "arbitrum",
   "blockNumber": 322777194,
-  "configHash": "0x6ef2b0d406964f2a5b9d5595db383f8ed8cd8ea5ecc04996f9ad25ba5d8cff83",
+  "configHash": "0x2a5e89a990e4415fb9a57a1f9c4b1b1ec23bb256954cd0ffe1285a451b92e37c",
   "entries": [
     {
       "name": "OneStepProverHostIo",

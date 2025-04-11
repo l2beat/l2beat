@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 22166659,
-  "configHash": "0x72cb87c1d12816690a7a227f2956af5d3e9943e59ba33b226db1ca6e884d3130",
+  "configHash": "0xc91714415424ebc1ba7bea2df219a343fa88066473e0fd251a3c3c3616d9fc35",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

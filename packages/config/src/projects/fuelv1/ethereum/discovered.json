@@ -2,7 +2,7 @@
   "name": "fuelv1",
   "chain": "ethereum",
   "blockNumber": 21594621,
-  "configHash": "0x3416762e9a2c7897e09dd1439045f9d3772185cd8e835b991062eb71cd8c5478",
+  "configHash": "0xbbc88815e23fb539689c14e9ed25c324e1d51370574ad69dda3455702f69e5e5",
   "entries": [
     {
       "name": "Fuel",

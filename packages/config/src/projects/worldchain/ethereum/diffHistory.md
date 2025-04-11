@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xfd0686f4f80f03b3c01d66d3d63e6297b04e7c52
+Generated with discovered.json: 0x5e0bc532f79f29693f016aa967fca1df15c9969d
 
-# Diff at Fri, 11 Apr 2025 13:07:13 GMT:
+# Diff at Fri, 11 Apr 2025 13:16:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b607477490db79d49274f7585039ac7263456118 block: 22194715
@@ -27,6 +27,8 @@ discovery. Values are for block 22194715 (main branch discovery), not current.
 +        "v1.5.0 (cannon64)"
       usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
 +        "v1.5.0"
+      usedTypes.0.arg.0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37:
++        "v1.4.0-unichain"
     }
 ```
 

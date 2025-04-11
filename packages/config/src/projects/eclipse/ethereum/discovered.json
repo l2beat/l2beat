@@ -2,7 +2,7 @@
   "name": "eclipse",
   "chain": "ethereum",
   "blockNumber": 21121371,
-  "configHash": "0x9aa1126cea8d98e021f1c7c8d5f0e6c7629fca27fcec47a0064362b390127dc4",
+  "configHash": "0x5b5f158b40a809d1529d38887ec148a30ba7d310b69cd83eac3c50ffcceb4ae6",
   "entries": [
     {
       "name": "GnosisSafe",

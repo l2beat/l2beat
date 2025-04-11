@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0x070982ae3578fad0ad3b88dff42f3edc3ed186d260834c90dbda58983c3727af",
+  "configHash": "0xb9817ee794c7a7a392995f32ec79776173edfd22215474ffb08bcd494c586899",
   "entries": [
     {
       "name": "PeggedTokenBridge",

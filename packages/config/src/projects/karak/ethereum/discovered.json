@@ -2,7 +2,7 @@
   "name": "karak",
   "chain": "ethereum",
   "blockNumber": 20920155,
-  "configHash": "0xb6854d0feadac93866e03b1abf24c0b3b50c0b295e19deb3ae2c50879cad3801",
+  "configHash": "0x3110f9c72cc7637a38ecbfd37367e52d47c19756e37623ffadf887256bea5aa2",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -2,7 +2,7 @@
   "name": "near",
   "chain": "ethereum",
   "blockNumber": 22230519,
-  "configHash": "0x65eb1b627e0675403ec5e2fd24b94f3c13438320935e3bd50ee7ab59956a4c22",
+  "configHash": "0x7cd5a45d024a7428d23cb8ec9e87ed224e680e3c61239ba7cbd30be9928c3e7e",
   "entries": [
     {
       "name": "NearProver",

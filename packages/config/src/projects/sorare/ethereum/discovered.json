@@ -2,7 +2,7 @@
   "name": "sorare",
   "chain": "ethereum",
   "blockNumber": 21981156,
-  "configHash": "0xdbeb323e0023f104e79e28777257fbfa835d6fb7ae89fdcc1dbace89713314d4",
+  "configHash": "0x0f8dba895def25ff2f0d368ebe436525f5a1b720a41185687ae2d0eec433f64e",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
