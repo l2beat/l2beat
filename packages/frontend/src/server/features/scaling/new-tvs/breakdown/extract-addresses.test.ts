@@ -20,6 +20,7 @@ describe(extractAddresses.name, () => {
     const add1 = EthereumAddress.random()
     const add2 = EthereumAddress.random()
     const add3 = EthereumAddress.random()
+    const add4 = EthereumAddress.random()
 
     const token = mockToken({
       type: 'calculation',
@@ -31,6 +32,11 @@ describe(extractAddresses.name, () => {
             address: add1,
             escrowAddress: add2,
             chain: '1',
+          }),
+          mockAmountFormula({
+            type: 'circulatingSupply',
+            address: add4,
+            chain: '2',
           }),
           mockAmountFormula({
             type: 'totalSupply',
@@ -48,11 +54,12 @@ describe(extractAddresses.name, () => {
       ],
     })
     const result = extractAddresses(token)
-    expect(result.addresses).toEqual([
+    expect(result.addresses).toEqualUnsorted([
       { address: add1, chain: '1' },
       { address: add2, chain: '1' },
+      { address: add4, chain: '2' },
     ])
-    expect(result.escrows).toEqual([
+    expect(result.escrows).toEqualUnsorted([
       { address: add2, chain: '1' },
       { address: add3, chain: '1' },
     ])
@@ -92,11 +99,11 @@ describe(extractAddresses.name, () => {
       ],
     })
     const result = extractAddresses(token)
-    expect(result.addresses).toEqual([
+    expect(result.addresses).toEqualUnsorted([
       { address: add1, chain: '1' },
       { address: add3, chain: '1' },
     ])
-    expect(result.escrows).toEqual([{ address: add2, chain: '1' }])
+    expect(result.escrows).toEqualUnsorted([{ address: add2, chain: '1' }])
   })
 
   it('should return empty array for types with no addresses', () => {
@@ -105,9 +112,6 @@ describe(extractAddresses.name, () => {
       operator: 'sum',
       arguments: [
         mockCalculationFormula([
-          mockAmountFormula({
-            type: 'circulatingSupply',
-          }),
           mockAmountFormula({
             type: 'const',
           }),

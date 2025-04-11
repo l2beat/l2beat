@@ -43,6 +43,7 @@ export function extractAddresses(token: TvsToken): {
         })
         break
       case 'totalSupply':
+      case 'circulatingSupply':
         if (formula.address !== 'native') {
           addresses.push({
             address: formula.address,
@@ -50,7 +51,6 @@ export function extractAddresses(token: TvsToken): {
           })
         }
         break
-      case 'circulatingSupply':
       case 'const':
       case 'value':
         // These types don't contain addresses
