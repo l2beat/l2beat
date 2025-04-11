@@ -9,11 +9,11 @@ import type {
 import type { RpcClient } from '@l2beat/shared'
 import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
-import type { MulticallRequest } from '../../../peripherals/multicall/types'
-import { createEscrowToken } from '../tools/mapConfig'
-import { getTimestampsRange } from '../tools/timestamps'
+import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
+import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
+import type { MulticallRequest } from '../../../../peripherals/multicall/types'
+import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
+import { createEscrowToken } from '../mapConfig'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -69,7 +69,7 @@ export async function getAggLayerTokens(
         response.data.toString(),
       )
 
-      const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+      const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
         escrow,
         chain,
         token,
@@ -107,7 +107,10 @@ export async function getAggLayerTokens(
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
     assert(escrow.sharedEscrow.wethAddress)
 
-    const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+    const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
+      escrow,
+      chain,
+    )
 
     etherOnL2 = {
       mode: 'auto' as const,
@@ -134,7 +137,10 @@ export async function getAggLayerTokens(
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
     assert(escrow.sharedEscrow.premintedAmount)
 
-    const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+    const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
+      escrow,
+      chain,
+    )
 
     etherOnL2 = {
       mode: 'auto' as const,

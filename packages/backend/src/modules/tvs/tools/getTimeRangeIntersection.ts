@@ -1,6 +1,6 @@
 import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
 
-export function getTimestampsRange(
+export function getTimeRangeIntersection(
   ...timestamps: {
     sinceTimestamp?: UnixTime | undefined
     untilTimestamp?: UnixTime | undefined
