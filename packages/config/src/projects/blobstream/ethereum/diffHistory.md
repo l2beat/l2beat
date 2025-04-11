@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0860ba31b4329f138618f9c1a24615d7f199f333
+Generated with discovered.json: 0x226953a30fe049051753f9c63e51b3400726a854
 
-# Diff at Thu, 10 Apr 2025 14:26:32 GMT:
+# Diff at Fri, 11 Apr 2025 05:44:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22188818
-- current block number: 22239118
+- current block number: 22243687
 
 ## Description
 
-vkey update.
+change vkey.
 
 ## Watched changes
 
