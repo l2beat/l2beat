@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { CustomLink } from '~/components/link/custom-link'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -9,7 +9,9 @@ interface Props {
 
 export function EcosystemLearnMoreLink({ name, href, className }: Props) {
   return (
-    <Link
+    <CustomLink
+      variant="plain"
+      underline={false}
       href={href}
       className={cn(
         'group relative min-h-[100px] select-none overflow-hidden rounded-lg bg-gradient-to-r from-[--ecosystem-primary] via-[--ecosystem-secondary] to-pure-white p-2',
@@ -24,6 +26,6 @@ export function EcosystemLearnMoreLink({ name, href, className }: Props) {
           Learn more about {name}
         </div>
       </div>
-    </Link>
+    </CustomLink>
   )
 }
