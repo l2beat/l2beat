@@ -2,7 +2,7 @@
   "name": "zkcandy",
   "chain": "ethereum",
   "blockNumber": 22223061,
-  "configHash": "0x7bade08e5a9827ae5466e472de3ca3531d0db7f22abf7f3a62112d9d68a3e0c7",
+  "configHash": "0x44c0fe8b045fe0c01a8fff1627da5f08dbbf268a157a351ac6e35d653c85405e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
