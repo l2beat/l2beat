@@ -17,8 +17,7 @@
 
 ### OP stack
 
-The OP stack RPC directly exposes a method, `optimism_syncStatus`, to fetch the latest `unsafe`, `safe` or `finalized` L2 block number. An `unsafe` block is a preconfirmed block but not yet published on L1, a `safe` block is a block that has been published on L1 but not yet finalized, and a `finalized` block is a block that has been finalized on L1. A PoC script can be found [here](https://gist.github.com/lucadonnoh/9bdd5efeb0c2a1397131c36e0b46d7fe).
-
+The OP stack RPC directly exposes a method, `optimism_syncStatus`, to fetch the latest `unsafe`, `safe` or `finalized` L2 block number. An `unsafe` block is a preconfirmed block but not yet published on L1, a `safe` block is a block that has been published on L1 but not yet finalized, and a `finalized` block is a block that has been finalized on L1.
 The method can be called as follows:
 
 ```zsh
@@ -128,7 +127,8 @@ Most RPCs do not support such method, but fortunately QuickNode does. An example
 }
 ```
 
-The time to inclusion of L2 blocks can be calculated by polling the method and checking when the `safe_l2` block number gets updated. The `safe_l2` value refers to the latest L2 block that has been published on L1, where the latest L1 block used by the derivation pipeline is the `current_l1` block. Assuming that all blocks in between the previous `safe_l2` value and the current `safe_l2` value are included in the `current_l1` block when the `safe_l2` value is updated, the time to inclusion of each L2 block between the previous `safe_l2+1` and the current `safe_l2` value can be calculated by subtracting the L2 block timestamp from the `current_l1` timestamp. The assumption has been lightly manually tested and seems to hold. 
+The time to inclusion of L2 blocks can be calculated by polling the method and checking when the `safe_l2` block number gets updated. The `safe_l2` value refers to the latest L2 block that has been published on L1, where the latest L1 block used by the derivation pipeline is the `current_l1` block. Assuming that all blocks in between the previous `safe_l2` value and the current `safe_l2` value are included in the `current_l1` block when the `safe_l2` value is updated, the time to inclusion of each L2 block between the previous `safe_l2+1` and the current `safe_l2` value can be calculated by subtracting the L2 block timestamp from the `current_l1` timestamp. The assumption has been lightly manually tested and seems to hold. A PoC script can be found [here](https://gist.github.com/lucadonnoh/9bdd5efeb0c2a1397131c36e0b46d7fe).
+
 
 ## How to calculate withdrawal times (L2 -> L1)
 
