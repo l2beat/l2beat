@@ -156,32 +156,30 @@ const OWNER_NAMES: Record<string, string> = {
   '0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF': 'Socket EOA 3',
 }
 
-// ===== Services =====
-class Logger {
-  static info(message: string): void {
-    console.log(message)
-  }
+// ===== Logging Functions =====
+function logInfo(message: string): void {
+  console.log(message)
+}
 
-  static warn(message: string): void {
-    console.warn(`⚠️  ${message}`)
-  }
+function logWarn(message: string): void {
+  console.warn(`⚠️  ${message}`)
+}
 
-  static error(message: string, error?: unknown): void {
-    const errorDetail =
-      error instanceof Error ? error.message : error ? String(error) : ''
+function logError(message: string, error?: unknown): void {
+  const errorDetail =
+    error instanceof Error ? error.message : error ? String(error) : ''
 
-    console.error(`❌ ${message}${errorDetail ? `: ${errorDetail}` : ''}`)
-  }
+  console.error(`❌ ${message}${errorDetail ? `: ${errorDetail}` : ''}`)
+}
 
-  static debug(message: string): void {
-    if (CONFIG.logging.verbose) {
-      console.log(`🔍 ${message}`)
-    }
+function logDebug(message: string): void {
+  if (CONFIG.logging.verbose) {
+    console.log(`🔍 ${message}`)
   }
+}
 
-  static success(message: string): void {
-    console.log(`✅ ${message}`)
-  }
+function logSuccess(message: string): void {
+  console.log(`✅ ${message}`)
 }
 
 // ===== Utilities =====
@@ -201,7 +199,7 @@ async function safeContractCall<T = unknown>(
     const errorMessage = error instanceof Error ? error.message : String(error)
     if (!errorMessage.includes('call revert exception')) {
       const context = logContext ? ` (${logContext})` : ''
-      Logger.debug(
+      logDebug(
         `Failed to call ${functionName} on ${contract.address}${context}: ${errorMessage}`,
       )
     }
@@ -214,11 +212,11 @@ async function safeContractCall<T = unknown>(
  */
 async function getERC20TokenInfo(tokenAddress: string): Promise<Erc20Info> {
   if (!ethers.utils.isAddress(tokenAddress)) {
-    Logger.warn(`Invalid token address format: ${tokenAddress}`)
+    logWarn(`Invalid token address format: ${tokenAddress}`)
     return { name: null, symbol: null, decimals: null }
   }
 
-  Logger.debug(`Fetching ERC20 info for token ${tokenAddress}`)
+  logDebug(`Fetching ERC20 info for token ${tokenAddress}`)
   const tokenContract = new ethers.Contract(tokenAddress, ABIS.ERC20, provider)
 
   const [nameResult, symbolResult, decimalsResult] = await Promise.allSettled([
@@ -233,11 +231,11 @@ async function getERC20TokenInfo(tokenAddress: string): Promise<Erc20Info> {
     decimalsResult.status === 'fulfilled' ? decimalsResult.value : null
 
   if (name === null || symbol === null || decimals === null) {
-    Logger.debug(
+    logDebug(
       `Incomplete ERC20 info for ${tokenAddress}. Name: ${name}, Symbol: ${symbol}, Decimals: ${decimals}`,
     )
   } else {
-    Logger.debug(`Fetched: ${symbol} (${name}), Decimals: ${decimals}`)
+    logDebug(`Fetched: ${symbol} (${name}), Decimals: ${decimals}`)
   }
 
   return { name, symbol, decimals }
@@ -252,7 +250,7 @@ async function getTokenTVL(
   account: string,
 ): Promise<{ tvl: number; tvlRaw: string | undefined }> {
   if (decimals === null) {
-    Logger.debug(`Cannot fetch TVL for ${tokenAddress} without decimals`)
+    logDebug(`Cannot fetch TVL for ${tokenAddress} without decimals`)
     return { tvl: 0, tvlRaw: undefined }
   }
 
@@ -260,7 +258,7 @@ async function getTokenTVL(
     !ethers.utils.isAddress(tokenAddress) ||
     !ethers.utils.isAddress(account)
   ) {
-    Logger.warn(
+    logWarn(
       `Invalid address for TVL check. Token: ${tokenAddress}, Account: ${account}`,
     )
     return { tvl: 0, tvlRaw: undefined }
@@ -280,10 +278,10 @@ async function getTokenTVL(
 
   try {
     const tvl = parseFloat(ethers.utils.formatUnits(balanceRaw, decimals))
-    Logger.debug(`Balance for ${tokenAddress} at ${account}: ${tvl}`)
+    logDebug(`Balance for ${tokenAddress} at ${account}: ${tvl}`)
     return { tvl, tvlRaw: balanceRaw.toString() }
   } catch (error) {
-    Logger.error(
+    logError(
       `Error formatting balance for ${tokenAddress} at ${account}`,
       error,
     )
@@ -298,7 +296,7 @@ async function fetchTokenPrices(
   tokensToFetch: Map<string, Set<string>>,
 ): Promise<Map<string, number>> {
   if (!ENV.coinGeckoApiKey) {
-    Logger.info('Skipping price fetch as CoinGecko API key is not configured')
+    logInfo('Skipping price fetch as CoinGecko API key is not configured')
     return new Map()
   }
 
@@ -306,13 +304,13 @@ async function fetchTokenPrices(
   const fetchPromises: Promise<void>[] = []
   const totalPlatforms = tokensToFetch.size
 
-  Logger.info(
+  logInfo(
     `Fetching USD prices from CoinGecko for ${totalPlatforms} platforms...`,
   )
 
   for (const [platformId, addressesSet] of tokensToFetch.entries()) {
     if (addressesSet.size === 0) continue
-    Logger.debug(`Platform: ${platformId}, Tokens: ${addressesSet.size}`)
+    logDebug(`Platform: ${platformId}, Tokens: ${addressesSet.size}`)
 
     const addresses = Array.from(addressesSet)
     const batchCount = Math.ceil(addresses.length / CONFIG.pricing.batchSize)
@@ -324,16 +322,14 @@ async function fetchTokenPrices(
 
       const fetchJob = cgLimit(async () => {
         const batchIndex = Math.floor(i / CONFIG.pricing.batchSize) + 1
-        Logger.debug(
-          `Fetching batch ${batchIndex}/${batchCount} for ${platformId}`,
-        )
+        logDebug(`Fetching batch ${batchIndex}/${batchCount} for ${platformId}`)
 
         try {
           const response = await fetch(url, {
             method: 'GET',
             headers: {
               accept: 'application/json',
-              'x-cg-pro-api-key': ENV.coinGeckoApiKey!,
+              'x-cg-pro-api-key': ENV.coinGeckoApiKey, // Removed non-null assertion
             },
           })
 
@@ -345,7 +341,7 @@ async function fetchTokenPrices(
               /* ignore */
             }
 
-            Logger.error(
+            logError(
               `CoinGecko API error for ${platformId} (batch ${batchIndex}/${batchCount})`,
               `${response.status} ${response.statusText}. ${errorBody.slice(0, 100)}`,
             )
@@ -367,7 +363,7 @@ async function fetchTokenPrices(
             }
           }
         } catch (error) {
-          Logger.error(
+          logError(
             `Failed to fetch CoinGecko data for ${platformId} (batch ${batchIndex})`,
             error,
           )
@@ -379,7 +375,7 @@ async function fetchTokenPrices(
   }
 
   await Promise.all(fetchPromises)
-  Logger.success(`Found prices for ${priceMap.size} tokens`)
+  logSuccess(`Found prices for ${priceMap.size} tokens`)
   return priceMap
 }
 
@@ -388,11 +384,11 @@ async function fetchTokenPrices(
  */
 async function explorePlugContract(address: string): Promise<Result | null> {
   if (!ethers.utils.isAddress(address)) {
-    Logger.warn(`Invalid plug address: ${address}`)
+    logWarn(`Invalid plug address: ${address}`)
     return null
   }
 
-  Logger.debug(`Exploring plug contract at ${address}`)
+  logDebug(`Exploring plug contract at ${address}`)
   const plugContract = new ethers.Contract(address, ABIS.PLUG, provider)
 
   const [hub, bridge, siblingChainSlugRaw, owner] = await Promise.all([
@@ -421,7 +417,7 @@ async function explorePlugContract(address: string): Promise<Result | null> {
       (await safeContractCall<string>(hubOrBridgeContract, 'token'))
 
     if (tokenAddress && ethers.utils.isAddress(tokenAddress)) {
-      Logger.debug(
+      logDebug(
         `Found token: ${tokenAddress} via Hub/Bridge ${hubOrBridgeAddress}`,
       )
       const erc20Info = await getERC20TokenInfo(tokenAddress)
@@ -445,7 +441,7 @@ async function explorePlugContract(address: string): Promise<Result | null> {
           ...erc20Info,
           tvl: 0,
         }
-        Logger.debug(
+        logDebug(
           `Could not calculate TVL for ${tokenAddress} (missing decimals)`,
         )
       }
@@ -468,7 +464,7 @@ async function explorePlugContract(address: string): Promise<Result | null> {
 function generateCopyPasta(groupedResults: {
   [key: string]: Result[]
 }): string[] {
-  Logger.info('Generating config snippets...')
+  logInfo('Generating config snippets...')
 
   const copypastaSections: { [key: string]: string[] } = {
     initialAddresses: [],
@@ -492,7 +488,10 @@ function generateCopyPasta(groupedResults: {
     if (!addedHubsPerProject.has(slugName)) {
       addedHubsPerProject.set(slugName, new Set<string>())
     }
-    const currentProjectAddedHubs = addedHubsPerProject.get(slugName)!
+
+    // Get the set safely without using non-null assertion
+    const currentProjectAddedHubs =
+      addedHubsPerProject.get(slugName) || new Set<string>()
 
     resultsForSlug.forEach((result) => {
       if (result.hubOrBridgeAddress && result.token && result.token.tvl > 0) {
@@ -595,7 +594,7 @@ const cgLimit = pLimit(CONFIG.concurrency.coinGecko)
 
 // ===== Main Function =====
 async function main(): Promise<void> {
-  Logger.info('Starting Socket plug exploration...')
+  logInfo('Starting Socket plug exploration...')
 
   // Create output directory if it doesn't exist
   fs.mkdirSync(CONFIG.paths.outputDir, { recursive: true })
@@ -625,17 +624,15 @@ async function main(): Promise<void> {
     }
 
     plugs = discoveredPlugs
-    Logger.info(`Found ${plugs.length} plugs via ProjectDiscovery`)
+    logInfo(`Found ${plugs.length} plugs via ProjectDiscovery`)
   } catch (error) {
-    Logger.error(`Failed to get plugs from ProjectDiscovery`, error)
-    Logger.error(
-      "Please ensure 'socket' project discovery is configured correctly",
-    )
+    logError(`Failed to get plugs from ProjectDiscovery`, error)
+    logError("Please ensure 'socket' project discovery is configured correctly")
     process.exit(1)
   }
 
   // Process all plug contracts concurrently (with rate limiting)
-  Logger.info('Exploring plug contracts...')
+  logInfo('Exploring plug contracts...')
   const settledResults = await Promise.allSettled(
     plugs.map((address) => limit(() => explorePlugContract(address))),
   )
@@ -646,11 +643,11 @@ async function main(): Promise<void> {
     if (result.status === 'fulfilled' && result.value !== null) {
       successfulResults.push(result.value)
     } else if (result.status === 'rejected') {
-      Logger.error(`Exploration failed for plug ${plugs[index]}`, result.reason)
+      logError(`Exploration failed for plug ${plugs[index]}`, result.reason)
     }
   })
 
-  Logger.success(
+  logSuccess(
     `Processed ${successfulResults.length} out of ${plugs.length} plugs`,
   )
 
@@ -663,7 +660,7 @@ async function main(): Promise<void> {
         if (!tokensForPriceFetch.has(platformId)) {
           tokensForPriceFetch.set(platformId, new Set<string>())
         }
-        tokensForPriceFetch.get(platformId)!.add(result.token.address)
+        tokensForPriceFetch.get(platformId)?.add(result.token.address)
       }
     })
   }
@@ -672,7 +669,7 @@ async function main(): Promise<void> {
   const priceData = await fetchTokenPrices(tokensForPriceFetch)
 
   if (priceData.size > 0) {
-    Logger.info('Updating results with price data...')
+    logInfo('Updating results with price data...')
     successfulResults.forEach((result) => {
       if (result.token?.address) {
         const priceKey = `ethereum-${result.token.address.toLowerCase()}`
@@ -690,7 +687,7 @@ async function main(): Promise<void> {
       }
     })
   } else {
-    Logger.info('No price data available, setting all USD values to 0')
+    logInfo('No price data available, setting all USD values to 0')
     successfulResults.forEach((result) => {
       if (result.token) {
         result.token.usdValue = 0
@@ -699,7 +696,7 @@ async function main(): Promise<void> {
   }
 
   // Group results by chain and sort by USD value
-  Logger.info('Grouping and sorting results...')
+  logInfo('Grouping and sorting results...')
   const groupedResults = successfulResults.reduce<{ [key: string]: Result[] }>(
     (acc, result) => {
       const slugKey = result.siblingChainSlug.toString()
@@ -728,7 +725,8 @@ async function main(): Promise<void> {
       if (!hubUsage.has(addr)) {
         hubUsage.set(addr, { count: 0, slugs: new Set() })
       }
-      const entry = hubUsage.get(addr)!
+      // Access the map value safely
+      const entry = hubUsage.get(addr) || { count: 0, slugs: new Set() }
       entry.count++
       entry.slugs.add(result.siblingChainSlug)
     }
@@ -746,12 +744,12 @@ async function main(): Promise<void> {
   })
 
   // Write detailed JSON output
-  Logger.info(`Writing detailed results to ${resultFilePath}`)
+  logInfo(`Writing detailed results to ${resultFilePath}`)
   try {
     fs.writeFileSync(resultFilePath, JSON.stringify(groupedResults, null, 2))
-    Logger.success('Results file created successfully')
+    logSuccess('Results file created successfully')
   } catch (error) {
-    Logger.error(`Error writing results file`, error)
+    logError(`Error writing results file`, error)
   }
 
   // Generate and write config snippets
@@ -759,18 +757,18 @@ async function main(): Promise<void> {
 
   try {
     fs.writeFileSync(copypastaFilePath, copypastaLines.join('\n'))
-    Logger.success(`Configuration snippets written to ${copypastaFilePath}`)
+    logSuccess(`Configuration snippets written to ${copypastaFilePath}`)
   } catch (error) {
-    Logger.error(`Error writing configuration snippets`, error)
+    logError(`Error writing configuration snippets`, error)
   }
 
   // Clean up
   provider.removeAllListeners()
-  Logger.success('Script completed successfully')
+  logSuccess('Script completed successfully')
 }
 
 // ===== Script Execution =====
 main().catch((error) => {
-  Logger.error('Unhandled error in main execution', error)
+  logError('Unhandled error in main execution', error)
   process.exit(1)
 })
