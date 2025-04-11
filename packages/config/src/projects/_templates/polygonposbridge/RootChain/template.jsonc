@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    }
+  },
+  "ignoreMethods": ["headerBlocks"],
+  "ignoreInWatchMode": [
+    "_nextHeaderBlock",
+    "getLastChildBlock",
+    "currentHeaderBlock"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "PREDICATES": {
+      "handler": {
+        "type": "event",
+        "select": "predicateAddress",
+        "add": { "event": "PredicateRegistered" }
+      }
+    }
+  }
+}
