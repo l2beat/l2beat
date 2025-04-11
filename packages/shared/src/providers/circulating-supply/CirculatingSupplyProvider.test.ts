@@ -54,30 +54,52 @@ describe(CirculatingSupplyProvider.name, () => {
 
   describe(CirculatingSupplyProvider.prototype.getLatestCirculatingSupplies
     .name, () => {
-    it('delegates to CoingeckoQueryService.getLatestMarketData', async () => {
-      const tokens = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
+    it('transforms market data to a map of circulating supplies', async () => {
+      const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
 
-      const expectedResult = new Map<string, { circulating: number }>([
+      const marketData = new Map<string, { circulating: number }>([
         ['ethereum', { circulating: 120000000 }],
         ['bitcoin', { circulating: 19000000 }],
       ])
 
+      const expectedResult = new Map<string, number>([
+        ['ethereum', 120000000],
+        ['bitcoin', 19000000],
+      ])
+
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().resolvesToOnce(expectedResult),
+        getLatestMarketData: mockFn().resolvesToOnce(marketData),
       })
 
       const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
-      const result = await provider.getLatestCirculatingSupplies(tokens)
+      const result = await provider.getLatestCirculatingSupplies(coingeckoIds)
 
       expect(
         coingeckoQueryService.getLatestMarketData,
-      ).toHaveBeenOnlyCalledWith(tokens)
+      ).toHaveBeenOnlyCalledWith(coingeckoIds)
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('handles empty market data', async () => {
+      const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
+
+      const marketData = new Map<string, { circulating: number }>()
+      const expectedResult = new Map<string, number>()
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getLatestMarketData: mockFn().resolvesToOnce(marketData),
+      })
+
+      const provider = new CirculatingSupplyProvider(coingeckoQueryService)
+
+      const result = await provider.getLatestCirculatingSupplies(coingeckoIds)
+
       expect(result).toEqual(expectedResult)
     })
 
     it('propagates errors from CoingeckoQueryService', async () => {
-      const tokens = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
+      const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
 
       const error = new Error('API rate limit exceeded')
 
@@ -88,7 +110,7 @@ describe(CirculatingSupplyProvider.name, () => {
       const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
       await expect(
-        provider.getLatestCirculatingSupplies(tokens),
+        provider.getLatestCirculatingSupplies(coingeckoIds),
       ).toBeRejectedWith('API rate limit exceeded')
     })
   })

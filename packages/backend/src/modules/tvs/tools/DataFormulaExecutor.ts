@@ -151,7 +151,7 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
     isLatestMode: boolean,
   ) {
-    const filteredAmounts = amounts
+    const circulatingAmounts = amounts
       .filter((a) => a.type === 'circulatingSupply')
       .filter(
         (a) =>
@@ -164,26 +164,26 @@ export class DataFormulaExecutor {
         (async () => {
           const latestCirculatingSupplies =
             await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
-              filteredAmounts.map((p) => CoingeckoId(p.apiId)),
+              circulatingAmounts.map((p) => CoingeckoId(p.apiId)),
             )
 
-          for (const c of filteredAmounts) {
-            const latest = latestCirculatingSupplies.get(c.apiId)
+          for (const c of circulatingAmounts) {
+            const latestValue = latestCirculatingSupplies.get(c.apiId)
             assert(
-              latest !== undefined,
+              latestValue !== undefined,
               `${c.apiId}: No latest circulating supply found`,
             )
 
             await this.localStorage.writeAmount(
               c.id,
               timestamp,
-              BigInt(latest.circulating * 10 ** c.decimals),
+              BigInt(latestValue * 10 ** c.decimals),
             )
           }
         })(),
       ]
     } else {
-      return filteredAmounts.map(async (amount) => {
+      return circulatingAmounts.map(async (amount) => {
         const cachedValue = await this.localStorage.getAmount(
           amount.id,
           timestamp,
@@ -220,17 +220,13 @@ export class DataFormulaExecutor {
           )
 
           for (const price of prices) {
-            const latest = latestPrices.get(price.priceId)
+            const latestPrice = latestPrices.get(price.priceId)
             assert(
-              latest !== undefined,
+              latestPrice !== undefined,
               `${price.priceId}: No latest price found`,
             )
 
-            await this.localStorage.writePrice(
-              price.id,
-              timestamp,
-              latest.price,
-            )
+            await this.localStorage.writePrice(price.id, timestamp, latestPrice)
           }
         })(),
       ]

@@ -54,16 +54,21 @@ describe(PriceProvider.name, () => {
   })
 
   describe(PriceProvider.prototype.getLatestPrices.name, () => {
-    it('delegates to CoingeckoQueryService.getLatestMarketData', async () => {
+    it('transforms market data into price map', async () => {
       const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
 
+      const marketData = new Map([
+        ['ethereum', { price: 1800.5, circulating: 120000000 }],
+        ['bitcoin', { price: 30000.75, circulating: 19000000 }],
+      ])
+
       const expectedResult = new Map([
-        ['ethereum', { price: 1800.5 }],
-        ['bitcoin', { price: 30000.75 }],
+        ['ethereum', 1800.5],
+        ['bitcoin', 30000.75],
       ])
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().resolvesToOnce(expectedResult),
+        getLatestMarketData: mockFn().resolvesToOnce(marketData),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
@@ -73,6 +78,33 @@ describe(PriceProvider.name, () => {
       expect(
         coingeckoQueryService.getLatestMarketData,
       ).toHaveBeenOnlyCalledWith(coingeckoIds)
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('handles zero prices correctly', async () => {
+      const coingeckoIds = [
+        CoingeckoId('ethereum'),
+        CoingeckoId('unknown-token'),
+      ]
+
+      const marketData = new Map([
+        ['ethereum', { price: 1800.5, circulating: 120000000 }],
+        ['unknown-token', { price: 0, circulating: 0 }],
+      ])
+
+      const expectedResult = new Map([
+        ['ethereum', 1800.5],
+        ['unknown-token', 0],
+      ])
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getLatestMarketData: mockFn().resolvesToOnce(marketData),
+      })
+
+      const provider = new PriceProvider(coingeckoQueryService)
+
+      const result = await provider.getLatestPrices(coingeckoIds)
+
       expect(result).toEqual(expectedResult)
     })
 
@@ -93,19 +125,17 @@ describe(PriceProvider.name, () => {
 
     it('handles empty array of coingeckoIds', async () => {
       const coingeckoIds: CoingeckoId[] = []
+      const marketData = new Map()
       const expectedResult = new Map()
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
-        getLatestMarketData: mockFn().resolvesToOnce(expectedResult),
+        getLatestMarketData: mockFn().resolvesToOnce(marketData),
       })
 
       const provider = new PriceProvider(coingeckoQueryService)
 
       const result = await provider.getLatestPrices(coingeckoIds)
 
-      expect(
-        coingeckoQueryService.getLatestMarketData,
-      ).toHaveBeenOnlyCalledWith(coingeckoIds)
       expect(result).toEqual(expectedResult)
     })
   })
