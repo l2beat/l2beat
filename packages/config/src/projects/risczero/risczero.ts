@@ -22,6 +22,11 @@ export const risczero: BaseProject = {
     isUnderReview: false,
     isUnverified: false,
   },
+  display: {
+    description: 'ZK verifier for RISC-V programs.',
+    links: {},
+    badges: [],
+  },
   proofVerification: {
     shortDescription: 'ZK verifier for RISC-V programs.',
     aggregation: true,
