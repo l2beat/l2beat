@@ -20,7 +20,7 @@ export function EcosystemLearnMoreLink({ name, href, className }: Props) {
         <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
           Interested in Ecosystem?
         </div>
-        <div className="origin-left text-balance text-lg font-bold !leading-tight transition-all will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
+        <div className="origin-left text-balance text-lg font-bold !leading-tight transition-all ease-in-out will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
           Learn more about {name}
         </div>
       </div>

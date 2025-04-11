@@ -83,13 +83,13 @@ function TopDelegatesLink({
           className,
         )}
       >
-        <div className="absolute inset-0 origin-left rounded-lg bg-[url(/ecosystems/governance-delegates.png)] bg-cover transition-all group-hover:scale-125 md:rounded-xl" />
+        <div className="absolute inset-0 origin-left rounded-lg bg-[url(/ecosystems/governance-delegates.png)] bg-cover transition-all ease-in-out group-hover:scale-125 md:rounded-xl" />
         <div className="absolute inset-y-0 left-0 w-1/2 rounded-xl bg-gradient-to-r from-black"></div>
         <div className="relative flex h-full flex-col justify-center">
           <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
             Governance
           </div>
-          <div className="origin-left text-xl font-bold transition-all will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125">
+          <div className="origin-left text-xl font-bold transition-all ease-in-out will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125">
             Top Delegates
           </div>
         </div>
