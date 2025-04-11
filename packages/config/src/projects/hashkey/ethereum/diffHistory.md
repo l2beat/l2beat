@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x83adbce79b441d33aabfb9b128dc48483d0413b1
+
+# Diff at Thu, 10 Apr 2025 14:27:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22081892
+- current block number: 22239123
+
+## Description
+
+batcherHash changed, added nonTemplateTrackedTransactions.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x3fEF4F3e99936E89A8bBdD9E08D83c471D5E152D"
++        "0x78075eA46A562c3201E61664645c0f0537a8DDd5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x3fEF4F3e99936E89A8bBdD9E08D83c471D5E152D)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract SystemConfig (0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0x9391791f7CB74F8BFDA65edc0749efd964311b55"
++        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
+      issuedPermissions.1.via.0:
++        {"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.to:
+-        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
++        "0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}
+      values.batcherHash:
+-        "0x9391791f7CB74F8BFDA65edc0749efd964311b55"
++        "0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f"
+      values.unsafeBlockSigner:
+-        "0xBc80De532cf87543aaD3267Cc8A4cAA2813130E7"
++        "0xCc467FdB41B5b5A4E23021CAd69ED27550a41694"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x78075eA46A562c3201E61664645c0f0537a8DDd5)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
 Generated with discovered.json: 0x8c13df2d3ddd442b26ce6819c5cd5c62cf6833e5
 
 # Diff at Fri, 04 Apr 2025 09:24:34 GMT:
