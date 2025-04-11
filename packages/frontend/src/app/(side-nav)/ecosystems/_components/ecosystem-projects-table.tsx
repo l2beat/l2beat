@@ -30,7 +30,7 @@ export function EcosystemProjectsTable({ entries }: Props) {
     },
   })
   return (
-    <EcosystemWidget className="-mx-4 rounded-b-none !pb-0 !pt-3">
+    <EcosystemWidget className="mt-[calc(var(--spacing)*1.5)] rounded-b-none !pb-0 !pt-3 max-md:-mx-4">
       <RollupsTable table={table} />
     </EcosystemWidget>
   )
