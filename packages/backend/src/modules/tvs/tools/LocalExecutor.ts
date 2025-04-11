@@ -2,6 +2,7 @@ import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainConfig, ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import {
+  BalanceProvider,
   BlockIndexerClient,
   BlockProvider,
   BlockTimestampProvider,
@@ -9,13 +10,12 @@ import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
+  MulticallV3Client,
   PriceProvider,
   RpcClient,
+  TotalSupplyProvider,
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import { BalanceProvider } from '../providers/BalanceProvider'
-import { RpcClientPOC } from '../providers/RpcClientPOC'
-import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import { ValueService } from '../services/ValueService'
 import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
 import { DBStorage } from './DBStorage'
@@ -47,7 +47,10 @@ export class LocalExecutor {
       projects.flatMap((c) => c.tokens),
     )
 
-    const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
+    const dataFormulaExecutor = await this.initDataFormulaExecutor(
+      amounts,
+      this.logger,
+    )
 
     await dataFormulaExecutor.execute(prices, amounts, timestamp, latestMode)
 
@@ -61,7 +64,10 @@ export class LocalExecutor {
     return result
   }
 
-  private async initDataFormulaExecutor(amounts: AmountConfig[]) {
+  private async initDataFormulaExecutor(
+    amounts: AmountConfig[],
+    logger: Logger,
+  ) {
     const http = new HttpClient()
     const coingeckoQueryService = this.initCoingecko(http)
     const { rpcs, blockProviders, blockTimestampProvider } =
@@ -72,8 +78,8 @@ export class LocalExecutor {
       coingeckoQueryService,
     )
 
-    const totalSupplyProvider = new TotalSupplyProvider(rpcs)
-    const balanceProvider = new BalanceProvider(rpcs)
+    const totalSupplyProvider = new TotalSupplyProvider(rpcs, logger)
+    const balanceProvider = new BalanceProvider(rpcs, logger)
 
     return new DataFormulaExecutor(
       this.localStorage,
@@ -124,7 +130,7 @@ export class LocalExecutor {
       }
     }
 
-    const rpcs = new Map<string, RpcClientPOC>()
+    const rpcs: RpcClient[] = []
     const blockProviders = new Map<string, BlockProvider>()
     const indexerClients: BlockIndexerClient[] = []
 
@@ -152,16 +158,23 @@ export class LocalExecutor {
         (contract) => contract.version === '3',
       )
 
-      rpcs.set(
-        chainConfig.name,
-        new RpcClientPOC(rpc, chainConfig.name, this.logger, {
-          ...(multicallV3?.address ? { multicallV3: multicallV3.address } : {}),
-          batchingEnabled:
-            multicallV3 ||
-            chainConfig.name === 'swell' ||
-            chainConfig.name === 'silicon'
-              ? false
-              : true,
+      const multicallClient = multicallV3
+        ? new MulticallV3Client(
+            multicallV3.address,
+            multicallV3.sinceBlock,
+            500,
+          )
+        : undefined
+
+      rpcs.push(
+        new RpcClient({
+          url,
+          http,
+          logger: this.logger,
+          retryStrategy: 'RELIABLE',
+          sourceName: chainConfig.name,
+          callsPerMinute: callsPerMinute,
+          multicallClient,
         }),
       )
       blockProviders.set(

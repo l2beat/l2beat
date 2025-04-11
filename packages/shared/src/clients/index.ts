@@ -23,3 +23,4 @@ export * from './rpc-celestia/CelestiaRpcClient'
 export * from './rpc-celestia/types'
 
 export * from './api-celestia/CelestiaApiClient'
+export * from './rpc/multicall/MulticallV3Client'

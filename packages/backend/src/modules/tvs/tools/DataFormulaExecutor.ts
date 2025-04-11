@@ -1,24 +1,17 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { BalanceOfEscrowAmountFormula } from '@l2beat/config'
 import type {
+  BalanceProvider,
   BlockProvider,
   BlockTimestampProvider,
   CirculatingSupplyProvider,
   PriceProvider,
+  TotalSupplyProvider,
 } from '@l2beat/shared'
-import {
-  assert,
-  CoingeckoId,
-  type UnixTime,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
-import type { BalanceProvider } from '../providers/BalanceProvider'
-import type { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
+import { assert, CoingeckoId, type UnixTime } from '@l2beat/shared-pure'
 import type {
   AmountConfig,
   CirculatingSupplyAmountConfig,
   PriceConfig,
-  TotalSupplyAmountConfig,
 } from '../types'
 import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
@@ -37,6 +30,7 @@ export class DataFormulaExecutor {
   ) {}
 
   /** Fetches data from APIs. Writes result to LocalStorage */
+  /** Fetches data from APIs. Writes result to LocalStorage */
   async execute(
     prices: PriceConfig[],
     amounts: AmountConfig[],
@@ -47,8 +41,8 @@ export class DataFormulaExecutor {
       await this.preloadDataFromDB(prices, timestamp, amounts)
     }
 
-    // Block number need to be fetched before rest of the data.
-    // They are needed for onchain amounts fetching
+    // Block number need to be fetched before onchain amounts.
+    // They are needed to fetch at certain block number.
     const blockNumbersToFetch = await this.processBlockNumbers(
       amounts,
       timestamp,
@@ -62,34 +56,56 @@ export class DataFormulaExecutor {
       this.logger.info(`Block numbers fetched`)
     }
 
-    const promises: Promise<void>[] = []
+    const onchainToFetch = await this.processOnchainAmounts(amounts, timestamp)
+
+    if (onchainToFetch.length > 0) {
+      const totalOnchainCount = onchainToFetch.reduce(
+        (sum, item) => sum + item.valuesCount,
+        0,
+      )
+      this.logger.info(`Fetching onchain amounts (${totalOnchainCount})...`)
+
+      const chainCounts = new Map<string, number>()
+      for (const item of onchainToFetch) {
+        const currentCount = chainCounts.get(item.chain) || 0
+        chainCounts.set(item.chain, currentCount + item.valuesCount)
+      }
+
+      for (const [chain, count] of chainCounts.entries()) {
+        this.logger.info(`\t ${chain}: ${count}`)
+      }
+
+      const now = new Date()
+      await Promise.all(onchainToFetch.map((o) => o.promise))
+      this.logger.info(
+        `Onchain amounts fetched in ${(new Date().getTime() - now.getTime()) / 1000} seconds`,
+      )
+    }
 
     const pricesToFetch = await this.processPrices(
       prices,
       timestamp,
       isLatestMode,
     )
-    promises.push(...pricesToFetch)
 
     const circulatingToFetch = await this.processCirculatingSupplies(
       amounts,
       timestamp,
       isLatestMode,
     )
-    promises.push(...circulatingToFetch)
 
-    const onchainToFetch = await this.processOnchainAmounts(amounts, timestamp)
-    promises.push(...onchainToFetch)
-
-    if (promises.length > 0) {
-      this.logger.info(`Fetching data, this will take longer time...`)
+    if (pricesToFetch.length > 0 || circulatingToFetch.length > 0) {
+      this.logger.info(`Fetching prices and circulating supplies...`)
       this.logger.info(`\t prices (${pricesToFetch.length})...`)
       this.logger.info(
         `\t circulating supplies (${circulatingToFetch.length})...`,
       )
-      this.logger.info(`\t onchain amount (${onchainToFetch.length})...`)
 
-      await Promise.all(promises)
+      const now = new Date()
+      await Promise.all([...pricesToFetch, ...circulatingToFetch])
+      this.logger.info(
+        `Prices and circulating supplies fetched in ${(new Date().getTime() - now.getTime()) / 1000} seconds`,
+      )
     }
   }
 
@@ -297,7 +313,6 @@ export class DataFormulaExecutor {
       })
     }
   }
-
   private async processOnchainAmounts(
     amounts: AmountConfig[],
     timestamp: UnixTime,
@@ -355,36 +370,62 @@ export class DataFormulaExecutor {
       }),
     )
 
-    const fetchPromises: Promise<void>[] = []
+    const fetchPromises: {
+      promise: Promise<void>
+      valuesCount: number
+      chain: string
+    }[] = []
 
     for (const [chain, typeMap] of amountsToFetch.entries()) {
       const block = await this.localStorage.getBlockNumber(chain, timestamp)
       assert(block, `Block number not found for chain ${chain}`)
 
       for (const [type, configs] of typeMap.entries()) {
-        for (const amount of configs) {
-          fetchPromises.push(
-            (async () => {
-              let value: bigint
-              switch (type) {
-                case 'totalSupply': {
-                  assert(amount.type === 'totalSupply')
-                  value = await this.fetchTotalSupply(amount, block)
-                  break
-                }
-                case 'balanceOfEscrow': {
-                  assert(amount.type === 'balanceOfEscrow')
-                  value = await this.fetchEscrowBalance(amount, block)
-                  break
-                }
-                default:
-                  assertUnreachable(type)
-              }
+        fetchPromises.push({
+          promise: (async () => {
+            switch (type) {
+              case 'totalSupply': {
+                assert(configs.every((c) => c.type === 'totalSupply'))
+                const values = await this.totalSupplyProvider.getTotalSupplies(
+                  configs.map((c) => c.address),
+                  block,
+                  chain,
+                )
 
-              await this.localStorage.writeAmount(amount.id, timestamp, value)
-            })(),
-          )
-        }
+                for (const [i, value] of values.entries()) {
+                  await this.localStorage.writeAmount(
+                    configs[i].id,
+                    timestamp,
+                    value,
+                  )
+                }
+                break
+              }
+              case 'balanceOfEscrow': {
+                assert(configs.every((c) => c.type === 'balanceOfEscrow'))
+                const values = await this.balanceProvider.getBalances(
+                  configs.map((c) => ({
+                    token: c.address,
+                    holder: c.escrowAddress,
+                  })),
+                  block,
+                  chain,
+                )
+
+                for (const [i, value] of values.entries()) {
+                  await this.localStorage.writeAmount(
+                    configs[i].id,
+                    timestamp,
+                    value,
+                  )
+                }
+                break
+              }
+            }
+          })(),
+          valuesCount: configs.length,
+          chain,
+        })
       }
     }
 
@@ -414,44 +455,6 @@ export class DataFormulaExecutor {
       )
       return 0n
     }
-  }
-
-  async fetchTotalSupply(
-    config: TotalSupplyAmountConfig,
-    blockNumber: number,
-  ): Promise<bigint> {
-    this.logger.debug(
-      `Fetching total supply for ${config.address} on ${config.chain}`,
-    )
-    return await this.totalSupplyProvider.getTotalSupply(
-      config.chain,
-      config.address,
-      blockNumber,
-    )
-  }
-
-  async fetchEscrowBalance(
-    config: BalanceOfEscrowAmountFormula,
-    blockNumber: number,
-  ): Promise<bigint> {
-    this.logger.debug(
-      `Fetching balance of ${config.address} token for escrow ${config.escrowAddress} on ${config.chain}`,
-    )
-    const escrowBalance =
-      config.address === 'native'
-        ? await this.balanceProvider.getNativeAssetBalance(
-            config.chain,
-            config.escrowAddress,
-            blockNumber,
-          )
-        : await this.balanceProvider.getTokenBalance(
-            config.chain,
-            config.address,
-            config.escrowAddress,
-            blockNumber,
-          )
-
-    return escrowBalance
   }
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
