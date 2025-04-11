@@ -1,7 +1,7 @@
 {
   "name": "pepeunchained",
   "chain": "ethereum",
-  "blockNumber": 22046072,
+  "blockNumber": 22243598,
   "configHash": "0x3f3ff58242eabb30591619f83cb4c0570c66a5cdb6a6ce5e059b554c9824749f",
   "entries": [
     {
@@ -206,7 +206,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 22046058
+          "prevBlockNum": 22243491
         },
         "paused": false,
         "superchainConfig": "0x11654D67e0360A82e5Badd272Ced336B80972135",
@@ -278,7 +278,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 58,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -380,7 +380,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "nonce": 91,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -437,7 +437,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620535",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620748",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -521,7 +521,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 101,
+        "nonce": 102,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -642,20 +642,30 @@
             "2024-12-02T09:46:11.000Z",
             "0x7ddb356a0db26991b791c1b16e67dc6e71f9f2177bc73637c8afe57ec20d594d",
             ["0x1Fd1be2e1c65F136020d2CcC073ED8A7269aE53f"]
+          ],
+          [
+            "2025-04-09T18:39:47.000Z",
+            "0x6a3c741de4a66f9e4f6ab204507d0d1e6c6c0e8ec2ca63bb03ad6c57e8e5d373",
+            ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2025-04-09T18:39:47.000Z",
+            "0x6a3c741de4a66f9e4f6ab204507d0d1e6c6c0e8ec2ca63bb03ad6c57e8e5d373",
+            ["0x1Fd1be2e1c65F136020d2CcC073ED8A7269aE53f"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "challenger": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "deletedOutputs": [],
-        "FINALIZATION_PERIOD_SECONDS": 604800,
-        "finalizationPeriodSeconds": 604800,
+        "FINALIZATION_PERIOD_SECONDS": 86400,
+        "finalizationPeriodSeconds": 86400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 4406400,
-        "latestOutputIndex": 407,
-        "nextBlockNumber": 4417200,
-        "nextOutputIndex": 408,
+        "latestBlockNumber": 5605200,
+        "latestOutputIndex": 518,
+        "nextBlockNumber": 5616000,
+        "nextOutputIndex": 519,
         "proposer": "0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B",
         "PROPOSER": "0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B",
         "startingBlockNumber": 0,
