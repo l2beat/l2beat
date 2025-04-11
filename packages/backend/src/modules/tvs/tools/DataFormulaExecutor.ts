@@ -30,7 +30,6 @@ export class DataFormulaExecutor {
   ) {}
 
   /** Fetches data from APIs. Writes result to LocalStorage */
-  /** Fetches data from APIs. Writes result to LocalStorage */
   async execute(
     prices: PriceConfig[],
     amounts: AmountConfig[],
@@ -52,8 +51,15 @@ export class DataFormulaExecutor {
       this.logger.info(
         `Fetching block numbers (${blockNumbersToFetch.length})...`,
       )
-      await Promise.all(blockNumbersToFetch)
-      this.logger.info(`Block numbers fetched`)
+      const chainNames = blockNumbersToFetch
+        .map((chain) => chain.name)
+        .join(', ')
+
+      this.logger.info(`\t${chainNames}`)
+      const startTime = Date.now()
+      await Promise.all(blockNumbersToFetch.map((chain) => chain.promise))
+      const duration = (Date.now() - startTime) / 1000
+      this.logger.info(`Block numbers fetched in ${duration.toFixed(2)}s`)
     }
 
     const onchainToFetch = await this.processOnchainAmounts(amounts, timestamp)
@@ -75,11 +81,10 @@ export class DataFormulaExecutor {
         this.logger.info(`\t ${chain}: ${count}`)
       }
 
-      const now = new Date()
+      const startTime = Date.now()
       await Promise.all(onchainToFetch.map((o) => o.promise))
-      this.logger.info(
-        `Onchain amounts fetched in ${(new Date().getTime() - now.getTime()) / 1000} seconds`,
-      )
+      const duration = (Date.now() - startTime) / 1000
+      this.logger.info(`Onchain amounts fetched in ${duration.toFixed(2)}s`)
     }
 
     const pricesToFetch = await this.processPrices(
@@ -101,10 +106,11 @@ export class DataFormulaExecutor {
         `\t circulating supplies (${circulatingToFetch.length})...`,
       )
 
-      const now = new Date()
+      const startTime = Date.now()
       await Promise.all([...pricesToFetch, ...circulatingToFetch])
+      const duration = (Date.now() - startTime) / 1000
       this.logger.info(
-        `Prices and circulating supplies fetched in ${(new Date().getTime() - now.getTime()) / 1000} seconds`,
+        `Prices and circulating supplies fetched in ${duration.toFixed(2)}s`,
       )
     }
   }
@@ -171,21 +177,10 @@ export class DataFormulaExecutor {
       }),
     )
 
-    return chainsToFetch.map(async (chain) => {
-      if (isLatestMode) {
-        const block = this.blockProviders.get(chain)
-        assert(block, `${chain}: No BlockProvider configured`)
-        const latestBlock = await block.getLatestBlockNumber()
-        await this.localStorage.writeBlockNumber(chain, timestamp, latestBlock)
-      } else {
-        const blockNumber =
-          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
-            timestamp,
-            chain,
-          )
-        await this.localStorage.writeBlockNumber(chain, timestamp, blockNumber)
-      }
-    })
+    return chainsToFetch.map((chain) => ({
+      name: chain,
+      promise: this.fetchBlockNumber(chain, timestamp, isLatestMode),
+    }))
   }
 
   private async processPrices(
@@ -432,28 +427,23 @@ export class DataFormulaExecutor {
     return fetchPromises
   }
 
-  async fetchCirculatingSupply(
-    config: CirculatingSupplyAmountConfig,
+  private async fetchBlockNumber(
+    chain: string,
     timestamp: UnixTime,
-  ): Promise<bigint> {
-    this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
-
-    try {
-      const circulating =
-        await this.circulatingSupplyProvider.getCirculatingSupplies(
-          CoingeckoId(config.apiId),
-          { from: timestamp, to: timestamp },
+    isLatestMode: boolean,
+  ): Promise<void> {
+    if (isLatestMode) {
+      const block = this.blockProviders.get(chain)
+      assert(block, `${chain}: No BlockProvider configured`)
+      const latestBlock = await block.getLatestBlockNumber()
+      await this.localStorage.writeBlockNumber(chain, timestamp, latestBlock)
+    } else {
+      const blockNumber =
+        await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+          timestamp,
+          chain,
         )
-      assert(
-        circulating.length === 1,
-        `${config.apiId}: Too many supplies fetched ${JSON.stringify(circulating)}`,
-      )
-      return BigInt(circulating[0].value * 10 ** config.decimals)
-    } catch {
-      this.logger.warn(
-        `Couldn't fetch circulating supply for ${config.apiId}. Assuming 0`,
-      )
-      return 0n
+      await this.localStorage.writeBlockNumber(chain, timestamp, blockNumber)
     }
   }
 
@@ -480,6 +470,31 @@ export class DataFormulaExecutor {
     } catch {
       this.logger.warn(`Couldn't fetch price for ${config.priceId}. Assuming 0`)
       return 0
+    }
+  }
+
+  async fetchCirculatingSupply(
+    config: CirculatingSupplyAmountConfig,
+    timestamp: UnixTime,
+  ): Promise<bigint> {
+    this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
+
+    try {
+      const circulating =
+        await this.circulatingSupplyProvider.getCirculatingSupplies(
+          CoingeckoId(config.apiId),
+          { from: timestamp, to: timestamp },
+        )
+      assert(
+        circulating.length === 1,
+        `${config.apiId}: Too many supplies fetched ${JSON.stringify(circulating)}`,
+      )
+      return BigInt(circulating[0].value * 10 ** config.decimals)
+    } catch {
+      this.logger.warn(
+        `Couldn't fetch circulating supply for ${config.apiId}. Assuming 0`,
+      )
+      return 0n
     }
   }
 }
