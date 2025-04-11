@@ -6,14 +6,84 @@ import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionConfig } from '../config/PermissionConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
+import { KnowledgeBase } from './KnowledgeBase'
 import { buildAddressToNameMap } from './build'
 import { parseClingoFact } from './clingoparser'
+import { type ClingoFact, ClingoFactFile } from './factTypes'
 import { interpolateModelTemplate } from './interpolate'
 import { runClingo } from './projectPageFacts'
 import {
   buildPermissionsModel,
   contractValuesForInterpolation,
 } from './relations2'
+
+export async function modelPermissions(
+  project: string,
+  configReader: ConfigReader,
+  templateService: TemplateService,
+  paths: DiscoveryPaths,
+) {
+  const facts = await buildProjectPageFacts(
+    project,
+    configReader,
+    templateService,
+    paths,
+  )
+  console.log(JSON.stringify(facts, null, 2))
+  const parsedFacts = ClingoFactFile.parse(facts)
+  const kb = new KnowledgeBase(parsedFacts.facts)
+  // const modelIdRegistry = new ModelIdRegistry(kb)
+  const transitivePermissionFacts = kb.getFacts('filteredTransitivePermission')
+  const ultimatePermissions = transitivePermissionFacts.map(
+    parseTransitivePermissionFact,
+  )
+  return JSON.stringify(ultimatePermissions, null, 2)
+}
+
+function orUndefined<V, C>(
+  caster: (value: V) => C,
+  value: V | undefined,
+): C | undefined {
+  return value === undefined ? undefined : caster(value)
+}
+
+export function parseTransitivePermissionFact(fact: ClingoFact) {
+  return {
+    receiver: String(fact.params[0]),
+    permission: String(fact.params[1]),
+    giver: String(fact.params[2]),
+    delay: Number(fact.params[3]),
+    description: orUndefined(String, fact.params[4]),
+    totalDelay: Number(fact.params[5]),
+    viaList:
+      fact.params[6] === undefined
+        ? undefined
+        : ((fact.params[6] as ClingoFact[]).map(parseTransitivePermissionVia) ??
+          undefined),
+    isFinal: fact.params[7] === 'isFinal',
+  }
+}
+
+// type ParsedTransitivePermissionFact = ReturnType<
+//   typeof parseTransitivePermissionFact
+// >
+
+// interface TransitivePermissionVia {
+//   atom: 'tuple'
+//   params: [string, string, number]
+// }
+
+// type ParsedTransitivePermissionVia = ReturnType<
+//   typeof parseTransitivePermissionVia
+// >
+
+export function parseTransitivePermissionVia(via: ClingoFact) {
+  return {
+    contract: String(via.params[0]),
+    permission: String(via.params[1]),
+    delay: Number(via.params[2]),
+  }
+}
 
 export async function buildProjectPageFacts(
   project: string,

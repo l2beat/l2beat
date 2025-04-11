@@ -1,6 +1,6 @@
 export { discover } from './cli/discoverCommand'
 export { colorize } from './discovery/colorize/colorize'
-export { buildProjectPageFacts } from './discovery/modelling/modelPermissions'
+export { modelPermissions } from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export { getChainConfig, getChainShortName } from './config/config.discovery'
 export type {
