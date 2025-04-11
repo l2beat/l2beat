@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x83adbce79b441d33aabfb9b128dc48483d0413b1
+Generated with discovered.json: 0x69b3fb825b0488aeddb52315a84360aea0fc6316
 
-# Diff at Thu, 10 Apr 2025 14:27:36 GMT:
+# Diff at Fri, 11 Apr 2025 05:24:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22081892
@@ -9,6 +9,7 @@ Generated with discovered.json: 0x83adbce79b441d33aabfb9b128dc48483d0413b1
 ## Description
 
 batcherHash changed, added nonTemplateTrackedTransactions.
+Config: anchorGame ignored.
 
 ## Watched changes
 
