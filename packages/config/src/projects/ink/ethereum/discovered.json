@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ethereum",
-  "blockNumber": 22194724,
+  "blockNumber": 22243979,
   "configHash": "0xaab26bc862a7626f4c92e7969e0730fa0fc269566e084eec13d55d0d33c78b0c",
   "entries": [
     {
@@ -138,7 +138,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 477,
+        "gameCount": 504,
         "gameImpls": [
           "0x69361c9134D620B704C2a72c58523a4373eCe86f",
           "0x4699D20479dfD20e15CaB4FCB6F2a7CC6fE35443",
@@ -232,6 +232,7 @@
           "via": [{ "address": "0xd56045E68956FCe2576E680c95a4750cf8241f79" }]
         }
       ],
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1743612623,
       "sinceBlock": 22182531,
       "values": {
@@ -245,11 +246,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x0000000000000000000000000000000000000000",
+        "anchorGame": "0xce0EC64Db85087f1e60eBaEDfcc6194350c560AC",
         "disputeGameFactory": "0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "getAnchorRoot": [
-          "0x95627c385332e0c5016043ed28a8d9505d0562d5febe996abeb718b9c34cc106",
-          9803340
+          "0xcbad7eb53e8aedf83c83c50b5e1cbac99945da270db26f83c7d116abe0d041bc",
+          10235598
         ],
         "portal": "0x5d66C1782664115999C47c9fA5cd031f495D3e4F",
         "respectedGameType": 0,
@@ -293,7 +294,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -618,8 +619,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 22194472
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 22243891
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -948,7 +949,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292627876",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628083",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1036,7 +1037,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1250,7 +1251,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 101,
+        "nonce": 102,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1439,7 +1440,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1679,7 +1680,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "2240000000000000000",
+        "totalSupply": "2720000000000000000",
         "version": "1.3.0"
       },
       "derivedName": "DelayedWETH"
@@ -2578,7 +2579,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
     "gnosisSafeModules/LivenessModule": "0xafb9aa875756d89f2d9c8673f33aad5a3959f8bc2d5a538d4772d4a62e1902be",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/AnchorStateRegistry": "0x77da377d9a7a26285765bd3b5f178a6e3e5780a21d0309218b7f65a40a96212b",
+    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
     "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
     "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
     "opstack/FaultDisputeGame": "0xa9a28602f784860b7406be90572479502e18809ed52cf398fb2256a803e3f78f",

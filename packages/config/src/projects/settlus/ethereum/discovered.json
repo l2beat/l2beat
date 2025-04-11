@@ -1,7 +1,7 @@
 {
   "name": "settlus",
   "chain": "ethereum",
-  "blockNumber": 22208464,
+  "blockNumber": 22244007,
   "configHash": "0xda52932ee5fb4a01f3a046f34dac117a200f620164813abafa6ea3f57097ab53",
   "entries": [
     {
@@ -291,7 +291,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 61,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -535,7 +535,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -679,7 +679,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 101,
+        "nonce": 102,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -900,6 +900,7 @@
           "via": [{ "address": "0xd35FeF329Bb6569baa373BDa702F3dfF59D57321" }]
         }
       ],
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1740171575,
       "sinceBlock": 21897258,
       "values": {
@@ -1048,7 +1049,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1261,7 +1262,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 700,
+        "gameCount": 779,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1271,7 +1272,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 700,
+        "permissionedGamesTotal": 779,
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory",
@@ -2257,7 +2258,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
     "gnosisSafeModules/LivenessModule": "0xafb9aa875756d89f2d9c8673f33aad5a3959f8bc2d5a538d4772d4a62e1902be",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/AnchorStateRegistry": "0x77da377d9a7a26285765bd3b5f178a6e3e5780a21d0309218b7f65a40a96212b",
+    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
     "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
     "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",

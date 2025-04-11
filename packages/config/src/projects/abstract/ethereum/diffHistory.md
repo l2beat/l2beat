@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x899dfe7d05bea1fbd03577d66eb5ffe518899b84
+
+# Diff at Fri, 11 Apr 2025 06:36:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22181510
+- current block number: 22243944
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract AbstractChainAdminMultisig (0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) {
+    +++ description: None
+      values.$members.11:
++        "0x1CdfBDED92D46261837827607e674110Ca5a0575"
+      values.$members.10:
++        "0xFC84E99984A3526dea97c408f5991A5E099f3Da2"
+      values.$members.9:
++        "0x57533344e91d29f927AAEBee364A33633Bd205Ab"
+      values.$members.8:
++        "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892"
+      values.$members.7:
++        "0x58536761C97F5037931b56efeE922471add0eEe8"
+      values.$members.6:
++        "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE"
+      values.$members.5:
++        "0x325407EEC948b97429068AF0cd8A8D95F06315a4"
+      values.$members.4:
++        "0xe7ea5B62F939611D11C0Ce7606B001207870C704"
+      values.$members.3:
+-        "0xB9f0C247cF1aB4a7F36974CB0A64244Ed4D017FE"
++        "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74"
+      values.$members.2:
+-        "0xe7ea5B62F939611D11C0Ce7606B001207870C704"
++        "0x77D1124E9061d238430Df3F4311111BDf69a4CFA"
+      values.$members.1:
+-        "0x80B9ee57A93d7Ff0B588682d3df0713489dC1b74"
++        "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB"
+      values.$threshold:
+-        2
++        4
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "4 of 12 (33%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x325407EEC948b97429068AF0cd8A8D95F06315a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x57533344e91d29f927AAEBee364A33633Bd205Ab)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x58536761C97F5037931b56efeE922471add0eEe8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       |    0
+ .../SafeProxy.p.sol                                |    0
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 12 files changed, 5625 insertions(+)
+```
+
 Generated with discovered.json: 0xc50137333d1456b4d679eb6cfabd17ad44785c4d
 
 # Diff at Thu, 10 Apr 2025 14:42:02 GMT:

@@ -152,6 +152,7 @@
           "via": [{ "address": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6" }]
         }
       ],
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1732696703,
       "sinceBlock": 21277945,
       "values": {
@@ -2330,7 +2331,7 @@
     "gnosisSafeModules/LivenessModule": "0xafb9aa875756d89f2d9c8673f33aad5a3959f8bc2d5a538d4772d4a62e1902be",
     "lido/L1ERC20TokenBridge": "0xbd7adee14900b864c43324092aea4dd72d87b31e6dcbfdd26a68d2e2b427ca8e",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
-    "opstack/AnchorStateRegistry": "0x77da377d9a7a26285765bd3b5f178a6e3e5780a21d0309218b7f65a40a96212b",
+    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
     "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
     "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
     "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",

@@ -1,7 +1,7 @@
 {
   "name": "b3",
   "chain": "base",
-  "blockNumber": 27584106,
+  "blockNumber": 28782094,
   "configHash": "0xf41fdeef475e17fb050f76d1470788aee6fffdaa519ed98764474bc2930e219c",
   "entries": [
     {
@@ -200,7 +200,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292650224",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651345",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -265,7 +265,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 27582736
+          "prevBlockNum": 28779978
         },
         "paused": false,
         "superchainConfig": "0xe736142a3e957660cBae61AC4bD61e5b65635140",
@@ -371,10 +371,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 1,
         "l2BlockTime": 1,
-        "latestBlockNumber": 19580400,
-        "latestOutputIndex": 5438,
-        "nextBlockNumber": 19584000,
-        "nextOutputIndex": 5439,
+        "latestBlockNumber": 21974400,
+        "latestOutputIndex": 6103,
+        "nextBlockNumber": 21978000,
+        "nextOutputIndex": 6104,
         "proposer": "0x9c9Db06722b3E33fa356C7347f7fBe328a26Dc7d",
         "PROPOSER": "0x9c9Db06722b3E33fa356C7347f7fBe328a26Dc7d",
         "startingBlockNumber": 0,
@@ -489,7 +489,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -585,7 +585,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefeeScalar": 4175613,
+        "basefeeScalar": 25053678,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "0x1af3F4e08a16B93ccBDF6887549697F17f9cf78A",
         "batchInbox": "0xFc536AB2Cc1e784Ae181ca8A23b3E9C828B934A8",
@@ -627,7 +627,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279131187530914838269",
+        "scalar": "452312848583266388373324160190187140051835877600158453279131187530935716334",
         "sequencerInbox": "0xFc536AB2Cc1e784Ae181ca8A23b3E9C828B934A8",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 17793752,

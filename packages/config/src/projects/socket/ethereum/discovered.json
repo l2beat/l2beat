@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 22046031,
+  "blockNumber": 22244020,
   "configHash": "0xf3108d8487b99f20dbf79afb46874564dc5e0adef03d9bcfa9f89cd16d94cf01",
   "entries": [
     {
@@ -304,7 +304,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 409,
+        "nonce": 413,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -639,7 +639,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332"
+        "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
       },
       "derivedName": "Vault"
     },
@@ -811,7 +811,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 12066,
+        "globalMessageCount": 13058,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -985,7 +985,11 @@
           "0x134643Df54DCaaAf343505361D1Eac58A7400b3d",
           "0x8E8D89410000A993d2537d26366e1C3010AB90ff",
           "0x5E72430EC945CCc183c34e2860FFC2b5bac712c2",
-          "0x15CEcd5190A43C7798dD2058308781D0662e678E"
+          "0x15CEcd5190A43C7798dD2058308781D0662e678E",
+          "0x7163FaC3fc420923810cCA5d15949c1523F69B4a",
+          "0x432684E7e764343c836d9c78b9245aa774323E40",
+          "0x4B4ed8b47EA37FB0230472fAdaFAF12658f05Ad7",
+          "0x52DB079d07fb8C2F5FA158C3311d877f3769B01e"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -1129,11 +1133,6 @@
       "derivedName": "Vault"
     },
     {
-      "address": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1191,7 +1190,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332"
+        "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
       },
       "derivedName": "Vault"
     },
@@ -1364,7 +1363,7 @@
         "$immutable": true,
         "bridgeType": "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876",
         "nominee": "0x0000000000000000000000000000000000000000",
-        "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332"
+        "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
       },
       "derivedName": "Vault"
     },
@@ -1587,7 +1586,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 220,
+        "nonce": 232,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
