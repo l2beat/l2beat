@@ -43,7 +43,7 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
       </div>
       <div className="ml-auto flex gap-3 max-md:hidden">
         {badges.map((badge) => (
-          <ProjectBadge key={badge.id} badge={badge} />
+          <ProjectBadge key={badge.id} badge={badge} disableTooltip />
         ))}
       </div>
     </header>
