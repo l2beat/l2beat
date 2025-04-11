@@ -134,23 +134,18 @@ export function EcosystemTvsByTokenType({
                 content={({ viewBox }) => {
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
+                      <text x="50%" y="50%" textAnchor="middle">
                         <tspan
-                          x={viewBox.cx}
-                          dy={-3}
-                          className="fill-secondary text-2xs font-medium"
+                          x="50%"
+                          dy={-1}
+                          className="fill-secondary text-2xs font-medium leading-none"
                         >
                           Token
                         </tspan>
                         <tspan
-                          x={viewBox.cx}
+                          x="50%"
                           dy={12}
-                          className="fill-secondary text-2xs font-medium"
+                          className="fill-secondary text-2xs font-medium leading-none"
                         >
                           types
                         </tspan>

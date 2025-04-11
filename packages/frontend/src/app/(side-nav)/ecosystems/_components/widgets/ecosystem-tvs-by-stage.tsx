@@ -134,25 +134,19 @@ export function EcosystemTvsByStage({
               paddingAngle={2}
             >
               <Label
-                content={({ viewBox }) => {
-                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
+                content={() => {
+                  return (
+                    <text x="50%" y="50%" textAnchor="middle">
+                      <tspan
+                        x="50%"
+                        y="50%"
+                        className="fill-secondary text-2xs font-medium leading-none"
+                        dy={5}
                       >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-secondary text-2xs font-medium"
-                        >
-                          Stages
-                        </tspan>
-                      </text>
-                    )
-                  }
+                        Stages
+                      </tspan>
+                    </text>
+                  )
                 }}
               />
             </Pie>
