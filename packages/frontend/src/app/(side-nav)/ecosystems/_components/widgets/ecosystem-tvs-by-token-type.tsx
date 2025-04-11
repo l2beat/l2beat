@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -9,6 +10,7 @@ import {
   useChart,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { useTailwindBreakpoint } from '~/hooks/use-tailwind-breakpoint'
 import type { TvsByTokenType } from '~/server/features/ecosystems/get-tvs-by-token-type'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -51,23 +53,26 @@ export function EcosystemTvsByTokenType({
   tvsByTokenType: TvsByTokenType
   className?: string
 }) {
-  const chartData = [
-    {
-      tokenType: 'ether' as const,
-      tvs: tvsByTokenType.ether,
-      fill: 'var(--ecosystem-primary)',
-    },
-    {
-      tokenType: 'stablecoins' as const,
-      tvs: tvsByTokenType.stablecoins,
-      fill: 'var(--ecosystem-primary-50)',
-    },
-    {
-      tokenType: 'other' as const,
-      tvs: tvsByTokenType.other,
-      fill: 'var(--ecosystem-primary-25)',
-    },
-  ]
+  const breakpoint = useTailwindBreakpoint()
+  const chartData = useMemo(() => {
+    return [
+      {
+        tokenType: 'ether' as const,
+        tvs: tvsByTokenType.ether,
+        fill: 'var(--ecosystem-primary)',
+      },
+      {
+        tokenType: 'stablecoins' as const,
+        tvs: tvsByTokenType.stablecoins,
+        fill: 'var(--ecosystem-primary-50)',
+      },
+      {
+        tokenType: 'other' as const,
+        tvs: tvsByTokenType.other,
+        fill: 'var(--ecosystem-primary-25)',
+      },
+    ]
+  }, [tvsByTokenType])
 
   const totalTvs =
     tvsByTokenType.ether + tvsByTokenType.stablecoins + tvsByTokenType.other
@@ -111,55 +116,18 @@ export function EcosystemTvsByTokenType({
           className="aspect-square h-[116px] min-h-[116px] xs:h-[140px] xs:min-h-[140px]"
         >
           <PieChart>
-            <ChartTooltip cursor={false} content={<CustomTooltip />} />
+            <ChartTooltip
+              cursor={false}
+              content={<CustomTooltip />}
+              position={breakpoint === 'xs' ? { x: -44, y: -46 } : undefined}
+            />
             <Pie
               data={chartData}
-              className="max-xs:hidden"
               dataKey="tvs"
               nameKey="tokenType"
               isAnimationActive={false}
-              innerRadius={35}
-              outerRadius={70}
-              paddingAngle={2}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          dy={-3}
-                          className="fill-secondary text-2xs font-medium"
-                        >
-                          Token
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          dy={12}
-                          className="fill-secondary text-2xs font-medium"
-                        >
-                          types
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
-              />
-            </Pie>
-            <Pie
-              data={chartData}
-              className="xs:hidden"
-              dataKey="tvs"
-              nameKey="tokenType"
-              isAnimationActive={false}
-              innerRadius={24}
-              outerRadius={58}
+              innerRadius={breakpoint === 'xs' ? 24 : 35}
+              outerRadius={breakpoint === 'xs' ? 58 : 70}
               paddingAngle={2}
             >
               <Label
@@ -207,7 +175,7 @@ export function CustomTooltip({
   if (!active || !payload) return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-28 flex-col gap-1">
+      <div className="flex w-36 flex-col gap-1">
         {payload.map((entry) => {
           if (entry.value === undefined) return null
           const config = meta[entry.name!]!
@@ -221,7 +189,7 @@ export function CustomTooltip({
                   backgroundColor={config.color}
                   type={config.indicatorType}
                 />
-                <span className="w-20 whitespace-nowrap leading-none sm:w-fit">
+                <span className="whitespace-nowrap leading-none sm:w-fit">
                   {config.label}
                 </span>
               </span>

@@ -12,6 +12,7 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { CssVariables } from '~/components/css-variables'
+import { useTailwindBreakpoint } from '~/hooks/use-tailwind-breakpoint'
 import type { TvsByStage } from '~/server/features/ecosystems/get-tvs-by-stage'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -40,7 +41,7 @@ const chartMeta = {
     },
   },
   notApplicable: {
-    label: 'Not Applicable',
+    label: 'N/A',
     color: 'var(--not-applicable)',
     indicatorType: {
       shape: 'square',
@@ -55,6 +56,8 @@ export function EcosystemTvsByStage({
   tvsByStage: TvsByStage
   className?: string
 }) {
+  const breakpoint = useTailwindBreakpoint()
+
   const chartData = [
     {
       stage: 'stage0',
@@ -112,22 +115,47 @@ export function EcosystemTvsByStage({
         </div>
         <SimpleChartContainer
           meta={chartMeta}
-          className="aspect-square h-[115px] min-h-[115px] xs:h-[140px] xs:min-h-[140px]"
+          className="aspect-square h-[116px] min-h-[116px] xs:h-[140px] xs:min-h-[140px]"
         >
           <PieChart>
-            <ChartTooltip cursor={false} content={<CustomTooltip />} />
-            {getPie({
-              data: chartData,
-              innerRadius: 35,
-              outerRadius: 70,
-              className: 'max-xs:hidden',
-            })}
-            {getPie({
-              data: chartData,
-              innerRadius: 24,
-              outerRadius: 58,
-              className: 'xs:hidden',
-            })}
+            <ChartTooltip
+              cursor={false}
+              content={<CustomTooltip />}
+              position={breakpoint === 'xs' ? { x: -22, y: -46 } : undefined}
+            />
+            <Pie
+              className={className}
+              data={chartData}
+              dataKey="tvs"
+              nameKey="stage"
+              isAnimationActive={false}
+              innerRadius={breakpoint === 'xs' ? 24 : 35}
+              outerRadius={breakpoint === 'xs' ? 58 : 70}
+              paddingAngle={2}
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-secondary text-2xs font-medium"
+                        >
+                          Stages
+                        </tspan>
+                      </text>
+                    )
+                  }
+                }}
+              />
+            </Pie>
           </PieChart>
         </SimpleChartContainer>
       </div>
@@ -143,7 +171,7 @@ export function CustomTooltip({
   if (!active || !payload) return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex min-w-28 flex-col gap-1">
+      <div className="flex w-32 flex-col gap-1">
         {payload.map((entry) => {
           if (entry.value === undefined) return null
           const config = meta[entry.name!]!
@@ -157,7 +185,7 @@ export function CustomTooltip({
                   backgroundColor={config.color}
                   type={config.indicatorType}
                 />
-                <span className="w-20 whitespace-nowrap leading-none sm:w-fit">
+                <span className="whitespace-nowrap leading-none sm:w-fit">
                   {config.label}
                 </span>
               </span>
@@ -169,57 +197,5 @@ export function CustomTooltip({
         })}
       </div>
     </ChartTooltipWrapper>
-  )
-}
-
-function getPie({
-  data,
-  innerRadius,
-  outerRadius,
-  className,
-}: {
-  data: {
-    stage: string
-    tvs: number
-    fill: string
-  }[]
-  innerRadius: number
-  outerRadius: number
-  className?: string
-}) {
-  return (
-    <Pie
-      className={className}
-      data={data}
-      dataKey="tvs"
-      nameKey="stage"
-      isAnimationActive={false}
-      innerRadius={innerRadius}
-      outerRadius={outerRadius}
-      paddingAngle={2}
-    >
-      <Label
-        content={({ viewBox }) => {
-          if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-            return (
-              <text
-                x={viewBox.cx}
-                y={viewBox.cy}
-                textAnchor="middle"
-                dominantBaseline="middle"
-              >
-                <tspan
-                  x={viewBox.cx}
-                  y={viewBox.cy}
-                  className="fill-secondary text-2xs font-medium"
-                >
-                  Stages
-                </tspan>
-              </text>
-            )
-          }
-        }}
-      />
-    </Pie>
   )
 }
