@@ -10384,6 +10384,20 @@
       }
     },
     {
+      "name": "Blend Token",
+      "coingeckoId": "blend-3",
+      "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
+      "symbol": "BLEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1737791442,
+      "coingeckoListingTimestamp": 1741478400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54778/large/Blend0.png?1741517155",
+      "chainId": 41923,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Aethir Token",
       "coingeckoId": "aethir",
       "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
