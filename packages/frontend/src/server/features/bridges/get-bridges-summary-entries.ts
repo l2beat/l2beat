@@ -5,6 +5,7 @@ import type {
   WarningWithSentiment,
 } from '@l2beat/config'
 import { compact } from 'lodash'
+import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
@@ -26,7 +27,7 @@ export async function getBridgesSummaryEntries() {
     }),
   ])
 
-  return projects
+  const entries = projects
     .map((project) =>
       getBridgesSummaryEntry(
         project,
@@ -35,6 +36,8 @@ export async function getBridgesSummaryEntries() {
       ),
     )
     .sort(compareTvs)
+
+  return groupByBridgeTabs(entries)
 }
 
 export interface BridgesSummaryEntry extends CommonBridgesEntry {

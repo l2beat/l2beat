@@ -5,7 +5,7 @@ import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesHeader } from '../_components/bridges-header'
-import { BridgesSummaryTable } from './_components/table/bridges-summary-table'
+import { BridgesSummaryTables } from './_components/bridges-summary-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -31,9 +31,7 @@ export default async function Page() {
           <PrimaryCard>
             <BridgesTvsChart />
           </PrimaryCard>
-          <PrimaryCard className="md:mt-6">
-            <BridgesSummaryTable entries={entries} />
-          </PrimaryCard>
+          <BridgesSummaryTables {...entries} />
         </TableFilterContextProvider>
       </HydrateClient>
     </>
