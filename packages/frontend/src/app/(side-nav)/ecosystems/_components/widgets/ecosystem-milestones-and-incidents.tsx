@@ -199,7 +199,8 @@ function MilestoneItem({
       onClick={onClick}
       className={cn(
         'absolute -top-2.5 scale-75 lg:scale-100',
-        isSelected && 'z-10 scale-100 transition-transform lg:scale-150',
+        isSelected &&
+          'z-10 scale-100 transition-transform duration-200 ease-in-out lg:scale-150',
       )}
       style={style}
     >
