@@ -91,6 +91,5 @@ export {
   getDiscoveryPaths,
   type DiscoveryPaths,
 } from './discovery/config/getDiscoveryPaths'
-export { ShapeSchema } from './discovery/config/ShapeSchema'
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
