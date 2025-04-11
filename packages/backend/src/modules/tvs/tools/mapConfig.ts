@@ -17,7 +17,7 @@ import { groupBy } from 'lodash'
 import { getAggLayerTokens } from '../providers/aggLayer'
 import { getElasticChainTokens } from '../providers/elasticChain'
 import type { ProjectTvsConfig } from '../types'
-import { getTimestampsRange } from './timestamps'
+import { getTimeRangeIntersection } from './getTimeRangeIntersection'
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
@@ -116,7 +116,7 @@ export function createEscrowToken(
 
   let amountFormula: CalculationFormula | AmountFormula
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     legacyToken,
     escrow,
     chainOfEscrow,
@@ -204,7 +204,7 @@ export function createToken(
   const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula | CalculationFormula
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     legacyToken,
     project.chainConfig,
   )
