@@ -44,7 +44,7 @@ const CONFIG: ScriptConfig = {
     coinGecko: 2, // Max concurrent CoinGecko API calls
   },
   paths: {
-    outputDir: 'scripts/socketcrawl/outfiles',
+    outputDir: 'outfiles',
     resultFile: 'socket-crawl-result.json',
     copypastaFile: 'socket-crawl-copypasta.txt',
     tokensConfigFile: '../../../config/src/tokens/tokens.jsonc', // Relative path to tokens config
