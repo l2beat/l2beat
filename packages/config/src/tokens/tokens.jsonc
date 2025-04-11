@@ -6563,5 +6563,13 @@
       "source": "native",
       "supply": "circulatingSupply"
     }
+  ],
+  "educhain": [
+    {
+      "symbol": "BLEND",
+      "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
+      "source": "native",
+      "supply": "circulatingSupply"
+    }
   ]
 }
