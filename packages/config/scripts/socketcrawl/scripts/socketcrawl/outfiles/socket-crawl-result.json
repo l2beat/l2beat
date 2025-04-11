@@ -17,10 +17,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x1967F0F374Eed3c0152d9CF0541F814206964041",
@@ -39,10 +36,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     }
   ],
   "957": [
@@ -58,8 +52,8 @@
         "tvl": 242.89381674,
         "tvlRaw": "24289381674",
         "isConfigured": true,
-        "usdValue": 19892760.69718926,
-        "usdPrice": 81899
+        "usdValue": 19956155.9833584,
+        "usdPrice": 82160
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -96,8 +90,8 @@
         "tvl": 1037.9737110786657,
         "tvlRaw": "1037973711078665589641",
         "isConfigured": true,
-        "usdValue": 1678237.4150204298,
-        "usdPrice": 1616.84
+        "usdValue": 1673192.8627845875,
+        "usdPrice": 1611.98
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -115,8 +109,8 @@
         "tvl": 677097.9399779849,
         "tvlRaw": "677097939977984850766324",
         "isConfigured": true,
-        "usdValue": 676120.2105526567,
-        "usdPrice": 0.998556
+        "usdValue": 676273.2346870917,
+        "usdPrice": 0.998782
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -134,8 +128,8 @@
         "tvl": 253.62145403360608,
         "tvlRaw": "253621454033606092885",
         "isConfigured": true,
-        "usdValue": 411462.7659514208,
-        "usdPrice": 1622.35
+        "usdValue": 410904.79875254695,
+        "usdPrice": 1620.15
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -153,14 +147,12 @@
         "tvl": 283991.544679,
         "tvlRaw": "283991544679",
         "isConfigured": true,
-        "usdValue": 283830.2374816223,
-        "usdPrice": 0.999432
+        "usdValue": 283831.37344780104,
+        "usdPrice": 0.999436
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
@@ -174,14 +166,12 @@
         "tvl": 283991.544679,
         "tvlRaw": "283991544679",
         "isConfigured": true,
-        "usdValue": 283830.2374816223,
-        "usdPrice": 0.999432
+        "usdValue": 283831.37344780104,
+        "usdPrice": 0.999436
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A",
@@ -195,14 +185,12 @@
         "tvl": 197278.654173,
         "tvlRaw": "197278654173",
         "isConfigured": true,
-        "usdValue": 197270.96030548724,
-        "usdPrice": 0.999961
+        "usdValue": 197274.7085999165,
+        "usdPrice": 0.99998
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x22d8360eB04F46195c7B02A66658C375948d8A99",
@@ -216,14 +204,12 @@
         "tvl": 197278.654173,
         "tvlRaw": "197278654173",
         "isConfigured": true,
-        "usdValue": 197270.96030548724,
-        "usdPrice": 0.999961
+        "usdValue": 197274.7085999165,
+        "usdPrice": 0.99998
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276",
@@ -237,8 +223,8 @@
         "tvl": 24718.633133155152,
         "tvlRaw": "24718633133155151477828",
         "isConfigured": true,
-        "usdValue": 24717.174733800293,
-        "usdPrice": 0.999941
+        "usdValue": 24717.66910646296,
+        "usdPrice": 0.999961
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -256,14 +242,12 @@
         "tvl": 12.985980763470877,
         "tvlRaw": "12985980763470877305",
         "isConfigured": true,
-        "usdValue": 20257.220972361127,
-        "usdPrice": 1559.93
+        "usdValue": 20231.89830987236,
+        "usdPrice": 1557.98
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0xf71A92D4bEFc2e18671c3b20377d45729790e880",
@@ -277,14 +261,12 @@
         "tvl": 12.985980763470877,
         "tvlRaw": "12985980763470877305",
         "isConfigured": true,
-        "usdValue": 20257.220972361127,
-        "usdPrice": 1559.93
+        "usdValue": 20231.89830987236,
+        "usdPrice": 1557.98
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x094570E556C8E58119E21f47759F02F50Ae3bB49",
@@ -298,8 +280,8 @@
         "tvl": 0.02929264,
         "tvlRaw": "2929264",
         "isConfigured": true,
-        "usdValue": 2389.22488896,
-        "usdPrice": 81564
+        "usdValue": 2404.57423232,
+        "usdPrice": 82088
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -317,8 +299,8 @@
         "tvl": 0.02432336,
         "tvlRaw": "2432336",
         "isConfigured": true,
-        "usdValue": 1996.6316523199998,
-        "usdPrice": 82087
+        "usdValue": 2004.244864,
+        "usdPrice": 82400
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -336,14 +318,12 @@
         "tvl": 0.00864154,
         "tvlRaw": "864154",
         "isConfigured": true,
-        "usdValue": 708.85688466,
-        "usdPrice": 82029
+        "usdValue": 711.25059124,
+        "usdPrice": 82306
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
@@ -357,14 +337,12 @@
         "tvl": 0.00864154,
         "tvlRaw": "864154",
         "isConfigured": true,
-        "usdValue": 708.85688466,
-        "usdPrice": 82029
+        "usdValue": 711.25059124,
+        "usdPrice": 82306
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x083Add2A9afa97Efb6412b293145ce965eCE3600",
@@ -397,8 +375,8 @@
         "tvl": 0.1397632731017087,
         "tvlRaw": "139763273101708686",
         "isConfigured": true,
-        "usdValue": 231.79599080645283,
-        "usdPrice": 1658.49
+        "usdValue": 231.90640379220318,
+        "usdPrice": 1659.28
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -416,14 +394,12 @@
         "tvl": 0.0719047235163969,
         "tvlRaw": "71904723516396897",
         "isConfigured": true,
-        "usdValue": 134.27919497793056,
-        "usdPrice": 1867.46
+        "usdValue": 134.23389500211522,
+        "usdPrice": 1866.83
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0xdCcFb24f983586144c085426dbfa3414045E19a3",
@@ -437,14 +413,12 @@
         "tvl": 0.0719047235163969,
         "tvlRaw": "71904723516396897",
         "isConfigured": true,
-        "usdValue": 134.27919497793056,
-        "usdPrice": 1867.46
+        "usdValue": 134.23389500211522,
+        "usdPrice": 1866.83
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E",
@@ -458,14 +432,12 @@
         "tvl": 60.007442163773526,
         "tvlRaw": "60007442163773528724",
         "isConfigured": true,
-        "usdValue": 38.29332916471693,
-        "usdPrice": 0.638143
+        "usdValue": 38.28738842794271,
+        "usdPrice": 0.638044
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x8F4e67C61232167584333e23D7d67BD73d80a4F5",
@@ -479,14 +451,12 @@
         "tvl": 60.007442163773526,
         "tvlRaw": "60007442163773528724",
         "isConfigured": true,
-        "usdValue": 38.29332916471693,
-        "usdPrice": 0.638143
+        "usdValue": 38.28738842794271,
+        "usdPrice": 0.638044
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x94104d7801f30d2f9069118C65Fe63A3A11515B1",
@@ -500,8 +470,8 @@
         "tvl": 0.000433486699889992,
         "tvlRaw": "433486699889992",
         "isConfigured": true,
-        "usdValue": 35.459645537701235,
-        "usdPrice": 81801
+        "usdValue": 35.63087278415778,
+        "usdPrice": 82196
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -519,8 +489,8 @@
         "tvl": 0.000316061676113395,
         "tvlRaw": "316061676113395",
         "isConfigured": true,
-        "usdValue": 25.339296697363103,
-        "usdPrice": 80172
+        "usdValue": 25.85258085937126,
+        "usdPrice": 81796
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -539,7 +509,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 0.999855
+        "usdPrice": 0.99976
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -581,10 +551,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35",
@@ -618,7 +585,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 0.999588
+        "usdPrice": 0.999358
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
@@ -641,10 +608,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xBEF69d0acC388091c7C9702aCbFB3b8A873e239e",
@@ -663,10 +627,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x1b882b9E87ABd7DD9B9b689Bee10Ed6a040033D0",
@@ -685,10 +646,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x5E72430EC945CCc183c34e2860FFC2b5bac712c2",
@@ -707,10 +665,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xb1178803A726e2077947754de9f2f0cbdA29A60F",
@@ -748,10 +703,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xB4e78DAEaE4aA911f2427FF4af4B10AFe70D9891",
@@ -770,10 +722,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166",
@@ -788,13 +737,11 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999432
+        "usdPrice": 0.999436
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B",
@@ -809,13 +756,11 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999432
+        "usdPrice": 0.999436
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x3f66F272d33B764960779a301c4183306ae50e10",
@@ -834,10 +779,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xD3a00E95658b05eBac3246e84f6583251dEd5D93",
@@ -856,10 +798,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     }
   ],
   "4665": [
@@ -876,7 +815,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999961
+        "usdPrice": 0.99998
       },
       "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
       "ownerName": "HookOwnerEOA",
@@ -895,7 +834,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1559.93
+        "usdPrice": 1557.98
       },
       "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
       "ownerName": "HookOwnerEOA",
@@ -915,8 +854,8 @@
         "tvl": 13541.572749308982,
         "tvlRaw": "13541572749308981485976",
         "isConfigured": true,
-        "usdValue": 18002573.06011384,
-        "usdPrice": 1329.43
+        "usdValue": 17908865.376688622,
+        "usdPrice": 1322.51
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -934,8 +873,8 @@
         "tvl": 4372.767940964406,
         "tvlRaw": "4372767940964406124045",
         "isConfigured": true,
-        "usdValue": 8165969.21903339,
-        "usdPrice": 1867.46
+        "usdValue": 8163214.3752305815,
+        "usdPrice": 1866.83
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -972,8 +911,8 @@
         "tvl": 203.58182259893013,
         "tvlRaw": "203581822598930129644",
         "isConfigured": true,
-        "usdValue": 337638.4169620996,
-        "usdPrice": 1658.49
+        "usdValue": 337799.24660195276,
+        "usdPrice": 1659.28
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1010,8 +949,8 @@
         "tvl": 287048.092047,
         "tvlRaw": "287048092047",
         "isConfigured": true,
-        "usdValue": 287036.89717141015,
-        "usdPrice": 0.999961
+        "usdValue": 287042.35108515905,
+        "usdPrice": 0.99998
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1029,8 +968,8 @@
         "tvl": 6825.7748,
         "tvlRaw": "6825774800000000000000",
         "isConfigured": true,
-        "usdValue": 85049.15400800001,
-        "usdPrice": 12.46
+        "usdValue": 85390.442748,
+        "usdPrice": 12.51
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1048,8 +987,8 @@
         "tvl": 82928.064781,
         "tvlRaw": "82928064781",
         "isConfigured": true,
-        "usdValue": 82880.96164020439,
-        "usdPrice": 0.999432
+        "usdValue": 82881.29335246352,
+        "usdPrice": 0.999436
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1067,8 +1006,8 @@
         "tvl": 34.884458685314534,
         "tvlRaw": "34884458685314536037",
         "isConfigured": true,
-        "usdValue": 54417.313636982704,
-        "usdPrice": 1559.93
+        "usdValue": 54349.288942546336,
+        "usdPrice": 1557.98
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1086,8 +1025,8 @@
         "tvl": 0.31807515,
         "tvlRaw": "31807515",
         "isConfigured": true,
-        "usdValue": 26091.386479349996,
-        "usdPrice": 82029
+        "usdValue": 26179.493295899996,
+        "usdPrice": 82306
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1105,8 +1044,8 @@
         "tvl": 0.29231972,
         "tvlRaw": "29231972",
         "isConfigured": true,
-        "usdValue": 23995.64885564,
-        "usdPrice": 82087
+        "usdValue": 24087.144928,
+        "usdPrice": 82400
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1124,8 +1063,8 @@
         "tvl": 180.503118287,
         "tvlRaw": "180503118287",
         "isConfigured": true,
-        "usdValue": 21207.31136753963,
-        "usdPrice": 117.49
+        "usdValue": 21326.443425609054,
+        "usdPrice": 118.15
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1143,8 +1082,8 @@
         "tvl": 25441.92373216,
         "tvlRaw": "2544192373216",
         "isConfigured": true,
-        "usdValue": 12970.063741341579,
-        "usdPrice": 0.509791
+        "usdValue": 13339.658567398666,
+        "usdPrice": 0.524318
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1162,8 +1101,8 @@
         "tvl": 11405.144363695726,
         "tvlRaw": "11405144363695726965651",
         "isConfigured": true,
-        "usdValue": 11388.67533523455,
-        "usdPrice": 0.998556
+        "usdValue": 11391.252897860744,
+        "usdPrice": 0.998782
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1181,8 +1120,8 @@
         "tvl": 11561.018447950246,
         "tvlRaw": "11561018447950246725852",
         "isConfigured": true,
-        "usdValue": 9693.63650416353,
-        "usdPrice": 0.838476
+        "usdValue": 10212.622183310465,
+        "usdPrice": 0.883367
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1200,8 +1139,8 @@
         "tvl": 15214.188549396646,
         "tvlRaw": "15214188549396645025026",
         "isConfigured": true,
-        "usdValue": 7210.658163666694,
-        "usdPrice": 0.473943
+        "usdValue": 7200.358158018753,
+        "usdPrice": 0.473266
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1219,8 +1158,8 @@
         "tvl": 8185.42149972027,
         "tvlRaw": "8185421499720269916660",
         "isConfigured": true,
-        "usdValue": 6613.656863343984,
-        "usdPrice": 0.80798
+        "usdValue": 6598.562946098499,
+        "usdPrice": 0.806136
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1238,8 +1177,8 @@
         "tvl": 20012.595004234452,
         "tvlRaw": "20012595004234452768737",
         "isConfigured": true,
-        "usdValue": 6360.342906460781,
-        "usdPrice": 0.317817
+        "usdValue": 6357.000803095073,
+        "usdPrice": 0.31765
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1257,8 +1196,8 @@
         "tvl": 43.04927038392368,
         "tvlRaw": "43049270383923680230",
         "isConfigured": true,
-        "usdValue": 5820.69184861032,
-        "usdPrice": 135.21
+        "usdValue": 5805.624603975948,
+        "usdPrice": 134.86
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1276,8 +1215,8 @@
         "tvl": 1203.01,
         "tvlRaw": "1203010000000000000000",
         "isConfigured": true,
-        "usdValue": 868.8174310300001,
-        "usdPrice": 0.722203
+        "usdValue": 864.9581749500001,
+        "usdPrice": 0.718995
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1295,8 +1234,8 @@
         "tvl": 0.250813,
         "tvlRaw": "250813",
         "isConfigured": true,
-        "usdValue": 811.99705498,
-        "usdPrice": 3237.46
+        "usdValue": 814.00606711,
+        "usdPrice": 3245.47
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1314,8 +1253,8 @@
         "tvl": 0.1607791866895183,
         "tvlRaw": "160779186689518302",
         "isConfigured": true,
-        "usdValue": 521.7332841830876,
-        "usdPrice": 3245.03
+        "usdValue": 523.9263122895326,
+        "usdPrice": 3258.67
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1333,8 +1272,8 @@
         "tvl": 1.849998308080382,
         "tvlRaw": "1849998308080381929",
         "isConfigured": true,
-        "usdValue": 6.160494365907672,
-        "usdPrice": 3.33
+        "usdValue": 6.271494264392495,
+        "usdPrice": 3.39
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1352,8 +1291,8 @@
         "tvl": 1.1,
         "tvlRaw": "1100000000000000000",
         "isConfigured": true,
-        "usdValue": 1.0999351,
-        "usdPrice": 0.999941
+        "usdValue": 1.0999571000000001,
+        "usdPrice": 0.999961
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1371,8 +1310,8 @@
         "tvl": 0.5833311108380841,
         "tvlRaw": "583331110838084089",
         "isConfigured": true,
-        "usdValue": 0.5832838610181063,
-        "usdPrice": 0.999919
+        "usdValue": 0.5831246116248474,
+        "usdPrice": 0.999646
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1391,7 +1330,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1757.86
+        "usdPrice": 1756.69
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1410,7 +1349,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1707.32
+        "usdPrice": 1703.46
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1448,7 +1387,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1755.34
+        "usdPrice": 1755.73
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1486,7 +1425,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.477336
+        "usdPrice": 0.47997
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1524,7 +1463,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1865.91
+        "usdPrice": 1864.68
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1562,7 +1501,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1557.85
+        "usdPrice": 1557.36
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1581,7 +1520,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1707.63
+        "usdPrice": 1706.91
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1600,7 +1539,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 0.999391
+        "usdPrice": 0.9994
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1619,7 +1558,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 1557.85
+        "usdPrice": 1557.36
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1638,7 +1577,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999941
+        "usdPrice": 0.999961
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1657,7 +1596,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 81877
+        "usdPrice": 82303
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1680,10 +1619,7 @@
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5",
@@ -1698,7 +1634,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.602897
+        "usdPrice": 0.612716
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1717,7 +1653,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 12.41
+        "usdPrice": 12.54
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1736,7 +1672,7 @@
         "tvlRaw": "0",
         "isConfigured": false,
         "usdValue": 0,
-        "usdPrice": 134.31
+        "usdPrice": 135.72
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1774,7 +1710,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1558.6
+        "usdPrice": 1557.06
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1793,7 +1729,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1.075
+        "usdPrice": 1.074
       },
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "ownerName": "KintoMultisig",
@@ -1869,7 +1805,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.160724
+        "usdPrice": 0.159966
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
@@ -1908,8 +1844,8 @@
         "tvl": 2074440.5817004924,
         "tvlRaw": "2074440581700492417489776",
         "isConfigured": true,
-        "usdValue": 1988853.3121806935,
-        "usdPrice": 0.958742
+        "usdValue": 1988067.099200229,
+        "usdPrice": 0.958363
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1944,8 +1880,8 @@
         "tvl": 1256847.049397,
         "tvlRaw": "1256847049397",
         "isConfigured": true,
-        "usdValue": 1256798.0323620737,
-        "usdPrice": 0.999961
+        "usdValue": 1256821.912456012,
+        "usdPrice": 0.99998
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1980,8 +1916,8 @@
         "tvl": 0.12587841211517745,
         "tvlRaw": "125878412115177444",
         "isConfigured": true,
-        "usdValue": 196.36151141082877,
-        "usdPrice": 1559.93
+        "usdValue": 196.11604850720417,
+        "usdPrice": 1557.98
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -1999,7 +1935,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 81801
+        "usdPrice": 82196
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -2017,7 +1953,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1867.46
+        "usdPrice": 1866.83
       },
       "owner": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8",
       "tags": []
@@ -2041,10 +1977,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x7Eee3241eC98ED0B47c8Bc0e9E3327B541BCDc1D",
@@ -2063,10 +1996,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x96E1e9c80619D2038afe30450b3cBeCb2A7D94cd",
@@ -2085,10 +2015,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x3F0dAfEB6386c710617180b376c118D7EcD6aC89",
@@ -2107,10 +2034,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x15CEcd5190A43C7798dD2058308781D0662e678E",
@@ -2129,10 +2053,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c",
@@ -2151,10 +2072,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x134643Df54DCaaAf343505361D1Eac58A7400b3d",
@@ -2173,10 +2091,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xd0711b9eBE84b778483709CDe62BacFDBAE13623",
@@ -2195,10 +2110,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x88444394f970B6F21C4f5101003ea513dE3E5406",
@@ -2217,10 +2129,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     }
   ],
   "34443": [
@@ -2241,10 +2150,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x00CE54B988D8C44bFCae4026C17c37c69C490A12",
@@ -2263,10 +2169,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x42F23C6d344d0322e13f254B9a8E187335AFB409",
@@ -2285,10 +2188,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a",
@@ -2307,10 +2207,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x716c339F41eAcfE2dc4775052411394A2Ed04743",
@@ -2329,10 +2226,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     }
   ],
   "42161": [
@@ -2353,10 +2247,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xaDA48ab8705Eb3904e5FA65D5622cd237a2341FF",
@@ -2375,10 +2266,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x56705F7F12D4e0433e26a20298fCd3532226d744",
@@ -2397,10 +2285,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xAda55E4762c3663f90D55Dc6ACC073B012D1e6eA",
@@ -2419,10 +2304,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x432684E7e764343c836d9c78b9245aa774323E40",
@@ -2441,10 +2323,7 @@
       },
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "ownerName": "KintoEOA",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x8E8D89410000A993d2537d26366e1C3010AB90ff",
@@ -2463,10 +2342,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D",
@@ -2485,10 +2361,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x67c97Bd542B3a7F1F1EcF85CBC4409421ccAe971",
@@ -2507,10 +2380,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     }
   ],
   "81457": [
@@ -2526,8 +2396,8 @@
         "tvl": 406746.7477,
         "tvlRaw": "406746747700000000000001",
         "isConfigured": true,
-        "usdValue": 4802.828989634307,
-        "usdPrice": 0.01180791
+        "usdValue": 4752.278503830151,
+        "usdPrice": 0.01168363
       },
       "owner": "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13",
       "ownerName": "LooksRareMultisig",
@@ -2550,10 +2420,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x49d446506D0f2db507AB4804563be9331BBc80E7",
@@ -2572,10 +2439,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xA07EB173d58F7aF2b0267F2B5f6a091E01c17f85",
@@ -2594,10 +2458,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a",
@@ -2616,10 +2477,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     },
     {
       "plugAddress": "0xDBa83C0C654DB1cd914FA2710bA743e925B53086",
@@ -2638,10 +2496,7 @@
       },
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "ownerName": "LyraMultisig",
-      "tags": [
-        "multiplug",
-        "multiproject"
-      ]
+      "tags": ["multiplug", "multiproject"]
     }
   ],
   "777777": [
@@ -2657,8 +2512,8 @@
         "tvl": 20920.518566,
         "tvlRaw": "20920518566",
         "isConfigured": true,
-        "usdValue": 20919.702665775923,
-        "usdPrice": 0.999961
+        "usdValue": 20920.10015562868,
+        "usdPrice": 0.99998
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2676,8 +2531,8 @@
         "tvl": 499.65,
         "tvlRaw": "499650000",
         "isConfigured": true,
-        "usdValue": 499.36619879999995,
-        "usdPrice": 0.999432
+        "usdValue": 499.3681974,
+        "usdPrice": 0.999436
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2695,8 +2550,8 @@
         "tvl": 326224.515955125,
         "tvlRaw": "326224515955125",
         "isConfigured": false,
-        "usdValue": 178.07943876958362,
-        "usdPrice": 0.00054588
+        "usdValue": 176.9833243959744,
+        "usdPrice": 0.00054252
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2733,7 +2588,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.00000684
+        "usdPrice": 0.00000689
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2752,7 +2607,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1559.93
+        "usdPrice": 1557.98
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2771,7 +2626,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.00001198
+        "usdPrice": 0.00001199
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2790,7 +2645,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 3.96359e-7
+        "usdPrice": 3.95571e-7
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2809,7 +2664,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.509791
+        "usdPrice": 0.524318
       },
       "owner": "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF",
       "ownerName": "Socket EOA 3",
@@ -2845,11 +2700,11 @@
         "name": "USD Coin",
         "symbol": "USDC",
         "decimals": 6,
-        "tvl": 1705743.079532,
-        "tvlRaw": "1705743079532",
+        "tvl": 1702687.718176,
+        "tvlRaw": "1702687718176",
         "isConfigured": true,
-        "usdValue": 1705676.5555518982,
-        "usdPrice": 0.999961
+        "usdValue": 1702653.6644216366,
+        "usdPrice": 0.99998
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2867,8 +2722,8 @@
         "tvl": 13195.984941350047,
         "tvlRaw": "13195984941350047766218",
         "isConfigured": false,
-        "usdValue": 13190.54819555421,
-        "usdPrice": 0.999588
+        "usdValue": 13187.5131190177,
+        "usdPrice": 0.999358
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2886,14 +2741,12 @@
         "tvl": 458.424,
         "tvlRaw": "458424000000000000000",
         "isConfigured": true,
-        "usdValue": 457.762035744,
-        "usdPrice": 0.998556
+        "usdValue": 457.86563956799995,
+        "usdPrice": 0.998782
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x91CE463148bD7695d4db41f4aA36088E502428F7",
@@ -2907,14 +2760,12 @@
         "tvl": 458.424,
         "tvlRaw": "458424000000000000000",
         "isConfigured": true,
-        "usdValue": 457.762035744,
-        "usdPrice": 0.998556
+        "usdValue": 457.86563956799995,
+        "usdPrice": 0.998782
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F",
@@ -2947,8 +2798,8 @@
         "tvl": 0.084,
         "tvlRaw": "84000000000000000",
         "isConfigured": true,
-        "usdValue": 131.03412,
-        "usdPrice": 1559.93
+        "usdValue": 130.87032000000002,
+        "usdPrice": 1557.98
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2966,8 +2817,8 @@
         "tvl": 0.0001,
         "tvlRaw": "10000",
         "isConfigured": true,
-        "usdValue": 8.2029,
-        "usdPrice": 82029
+        "usdValue": 8.2306,
+        "usdPrice": 82306
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -2986,13 +2837,11 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1867.46
+        "usdPrice": 1866.83
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0xcb473D87A56b4609A695753711F727E5c4335cCf",
@@ -3007,13 +2856,11 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 1867.46
+        "usdPrice": 1866.83
       },
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
       "ownerName": "socketadmin.eth EOA",
-      "tags": [
-        "multiplug"
-      ]
+      "tags": ["multiplug"]
     },
     {
       "plugAddress": "0x998d7C2257591cC38383B4F91474c5346111f2E6",
@@ -3028,7 +2875,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999941
+        "usdPrice": 0.999961
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
@@ -3047,7 +2894,7 @@
         "tvlRaw": "0",
         "isConfigured": true,
         "usdValue": 0,
-        "usdPrice": 0.999432
+        "usdPrice": 0.999436
       },
       "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
       "ownerName": "Socket EOA",
