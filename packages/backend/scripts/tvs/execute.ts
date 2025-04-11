@@ -41,6 +41,12 @@ const args = {
     short: 't',
     description: 'Timestamp to use for TVS calculation',
   }),
+  latestMode: flag({
+    type: boolean,
+    long: 'latest',
+    short: 'l',
+    description: 'Run in latest mode',
+  }),
 }
 
 const cmd = command({
@@ -82,8 +88,8 @@ const cmd = command({
             projectId: p.id,
             tokens: getEffectiveConfig(p.tvsConfig, timestampForTvs, false),
           })),
-        timestampForTvs,
-        false,
+        args.latestMode ? UnixTime.now() : timestampForTvs,
+        args.latestMode,
       )
 
       let totalTvs = 0
@@ -131,8 +137,8 @@ const cmd = command({
             tokens: effectiveConfig,
           },
         ],
-        timestampForTvs,
-        false,
+        args.latestMode ? UnixTime.now() : timestampForTvs,
+        args.latestMode,
       )
       const tvsForProject = tvs.get(project.id)
       assert(tvsForProject)
