@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { TokenId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { TokenValueRepository } from './repository'
@@ -136,6 +136,120 @@ describeDatabase(TokenValueRepository.name, (db) => {
         tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500),
         tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000),
       ])
+    })
+  })
+
+  describe(TokenValueRepository.prototype.getByProjectAndToken.name, () => {
+    beforeEach(async () => {
+      await repository.deleteAll()
+      await repository.insertMany([
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+        tokenValue('b', 'ethereum', UnixTime(110), 10, 10000, 8000, 5000),
+        tokenValue('b', 'ethereum', UnixTime(120), 20, 20000, 16000, 10000),
+        tokenValue('c', 'ethereum', UnixTime(115), 30, 30000, 24000, 15000),
+      ])
+    })
+
+    it('returns record for a project and token within the specified time range (inclusive) in ascending time order', async () => {
+      const result = await repository.getByProjectAndToken(
+        'ethereum',
+        'a' as TokenId,
+        UnixTime(105),
+        UnixTime(125),
+      )
+
+      expect(result).toEqual([
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+      ])
+    })
+
+    it('returns empty array when no records match the time range', async () => {
+      const result = await repository.getByProjectAndToken(
+        'ethereum',
+        'a' as TokenId,
+        UnixTime(130),
+        UnixTime(140),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when project does not exist', async () => {
+      const result = await repository.getByProjectAndToken(
+        'non-existent',
+        'a' as TokenId,
+        UnixTime(110),
+        UnixTime(120),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when token does not exist', async () => {
+      const result = await repository.getByProjectAndToken(
+        'ethereum',
+        'non-existent' as TokenId,
+        UnixTime(110),
+        UnixTime(120),
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it('handles single-point time range (from = to)', async () => {
+      const result = await repository.getByProjectAndToken(
+        'ethereum',
+        'a' as TokenId,
+        UnixTime(115),
+        UnixTime(115),
+      )
+
+      expect(result).toEqual([
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+      ])
+    })
+  })
+
+  describe(TokenValueRepository.prototype.getByProjectAndTimestamp.name, () => {
+    beforeEach(async () => {
+      await repository.deleteAll()
+      await repository.insertMany([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(200), 20, 20000, 16000, 10000),
+        tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
+      ])
+    })
+
+    it('returns all tokens for a project at a specific timestamp', async () => {
+      const result = await repository.getByProjectAndTimestamp(
+        'ethereum',
+        UnixTime(100),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+
+    it('returns empty array when no records match the timestamp', async () => {
+      const result = await repository.getByProjectAndTimestamp(
+        'ethereum',
+        UnixTime(150),
+      )
+
+      expect(result).toEqual([])
     })
   })
 
