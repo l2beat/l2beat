@@ -121,8 +121,8 @@ const getCached7dTokenBreakdown = cache(
               },
               changeExcludingAssociated: {
                 total: calculatePercentageChange(
-                  latestValue.value - latestValue.associated,
-                  oldestValues.value - oldestValues.associated,
+                  latestWithoutAssociated.value,
+                  oldestWithoutAssociated.value,
                 ),
                 native: calculatePercentageChange(
                   latestWithoutAssociated.native,
