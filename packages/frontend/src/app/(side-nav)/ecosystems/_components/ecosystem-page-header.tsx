@@ -20,8 +20,9 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
         <div className="flex h-20 items-center gap-2">
           <Image
             src={logo.light}
-            className={cn(logo.dark && 'dark:hidden')}
+            className={cn('h-10 w-auto', logo.dark && 'dark:hidden')}
             alt="Ecosystem logo"
+            quality={100}
             width={logo.width}
             height={logo.height}
             priority
@@ -29,8 +30,9 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
           {logo.dark && (
             <Image
               src={logo.dark}
-              className="hidden dark:block"
+              className="hidden h-10 w-auto dark:block"
               alt="Ecosystem logo"
+              quality={100}
               width={logo.width}
               height={logo.height}
               priority
