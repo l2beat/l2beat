@@ -1,18 +1,17 @@
 'use client'
 
-import type { ExpandedState } from '@tanstack/react-table'
 import {
   getCoreRowModel,
   getExpandedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { useState } from 'react'
 import { TokenTable } from '~/components/table/token-breakdown-table'
 import type { ProjectTvsBreakdown } from '~/server/features/scaling/new-tvs/breakdown/get-tvs-breakdown-for-project'
-import { getCanonicallyBridgedColumns } from './columns/canonically-bridged-columns'
+import { canonicallyBridgedColumns } from './columns/canonically-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 import { renderFormulaSubComponent } from './formula-sub-row'
+import { useMemo } from 'react'
 
 export type CanonicallyBridgedTokenEntry =
   ProjectTvsBreakdown['canonical'][number]
@@ -23,20 +22,14 @@ interface Props {
 }
 
 export function CanonicallyBridgedTable(props: Props) {
-  const usdSum = sumTokensValue(props.tokens)
-
-  const [expanded, setExpanded] = useState<ExpandedState>({})
+  const usdSum = useMemo(() => sumTokensValue(props.tokens), [props.tokens])
 
   const table = useReactTable({
     enableSortingRemoval: false,
     sortDescFirst: true,
     data: props.tokens,
-    columns: getCanonicallyBridgedColumns(),
-    state: {
-      expanded,
-    },
+    columns: canonicallyBridgedColumns,
     getRowCanExpand: (row) => !!row.original.formula,
-    onExpandedChange: setExpanded,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
   })

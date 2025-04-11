@@ -6,6 +6,7 @@ import { externallyBridgedColumns } from './columns/externally-bridged-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 import { renderFormulaSubComponent } from './formula-sub-row'
+import { useMemo } from 'react'
 
 export type ExternallyBridgedTokenEntry =
   ProjectTvsBreakdown['external'][number]
@@ -16,7 +17,7 @@ interface Props {
 }
 
 export function ExternallyBridgedTable(props: Props) {
-  const usdSum = sumTokensValue(props.tokens)
+  const usdSum = useMemo(() => sumTokensValue(props.tokens), [props.tokens])
 
   const table = useReactTable({
     enableSortingRemoval: false,

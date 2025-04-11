@@ -12,6 +12,7 @@ import {
 } from './table'
 import { TableEmptyState } from './table-empty-state'
 import type { Row } from '@tanstack/react-table'
+import { Fragment } from 'react'
 
 interface Props<T> {
   table: TanstackTable<T>
@@ -56,7 +57,7 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
       </TableHeader>
       <TableBody>
         {table.getRowModel().rows.map((row) => (
-          <>
+          <Fragment key={`element-${row.id}`}>
             <TableRow
               slug={undefined}
               key={row.id}
@@ -88,7 +89,7 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
                 </TableCell>
               </TableRow>
             )}
-          </>
+          </Fragment>
         ))}
       </TableBody>
     </Table>

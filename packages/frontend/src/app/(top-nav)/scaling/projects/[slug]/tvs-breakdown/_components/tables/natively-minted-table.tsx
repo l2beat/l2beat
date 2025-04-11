@@ -6,6 +6,7 @@ import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 import { renderFormulaSubComponent } from './formula-sub-row'
+import { useMemo } from 'react'
 
 export type NativelyMintedTokenEntry = ProjectTvsBreakdown['native'][number]
 
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export function NativelyMintedTable(props: Props) {
-  const usdSum = sumTokensValue(props.tokens)
+  const usdSum = useMemo(() => sumTokensValue(props.tokens), [props.tokens])
 
   const table = useReactTable({
     enableSortingRemoval: false,
