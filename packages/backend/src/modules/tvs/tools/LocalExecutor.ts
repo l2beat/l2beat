@@ -9,11 +9,11 @@ import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
+  PriceProvider,
   RpcClient,
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { BalanceProvider } from '../providers/BalanceProvider'
-import { PriceProvider } from '../providers/PriceProvider'
 import { RpcClientPOC } from '../providers/RpcClientPOC'
 import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import { ValueService } from '../services/ValueService'

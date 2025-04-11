@@ -12,6 +12,12 @@ export class PriceProvider {
     return await this.client.getUsdPriceHistoryHourly(coingeckoId, from, to)
   }
 
+  async getLatestPrices(
+    coingeckoIds: CoingeckoId[],
+  ): Promise<Map<string, { price: number }>> {
+    return await this.client.getLatestMarketData(coingeckoIds)
+  }
+
   getAdjustedTo(from: number, to: number): UnixTime {
     return CoingeckoQueryService.calculateAdjustedTo(
       UnixTime(from),

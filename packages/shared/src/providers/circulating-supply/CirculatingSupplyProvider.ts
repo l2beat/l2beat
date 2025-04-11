@@ -12,9 +12,9 @@ export class CirculatingSupplyProvider {
   }
 
   async getLatestCirculatingSupplies(
-    tokens: CoingeckoId[],
+    coingeckoIds: CoingeckoId[],
   ): Promise<Map<string, { circulating: number }>> {
-    return await this.client.getLatestMarketData(tokens)
+    return await this.client.getLatestMarketData(coingeckoIds)
   }
 
   getAdjustedTo(from: number, to: number): UnixTime {

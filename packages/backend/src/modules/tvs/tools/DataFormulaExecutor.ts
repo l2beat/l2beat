@@ -4,6 +4,7 @@ import type {
   BlockProvider,
   BlockTimestampProvider,
   CirculatingSupplyProvider,
+  PriceProvider,
 } from '@l2beat/shared'
 import {
   assert,
@@ -12,7 +13,6 @@ import {
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import type { BalanceProvider } from '../providers/BalanceProvider'
-import type { PriceProvider } from '../providers/PriceProvider'
 import type { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import type {
   AmountConfig,
@@ -216,7 +216,7 @@ export class DataFormulaExecutor {
       return [
         (async () => {
           const latestPrices = await this.priceProvider.getLatestPrices(
-            prices.map((p) => p.priceId),
+            prices.map((p) => CoingeckoId(p.priceId)),
           )
 
           for (const price of prices) {
@@ -226,7 +226,11 @@ export class DataFormulaExecutor {
               `${price.priceId}: No latest price found`,
             )
 
-            await this.localStorage.writePrice(price.id, timestamp, latest)
+            await this.localStorage.writePrice(
+              price.id,
+              timestamp,
+              latest.price,
+            )
           }
         })(),
       ]
@@ -327,9 +331,17 @@ export class DataFormulaExecutor {
         return 0
       }
 
-      // TODO think about getting prices from STAGING DB
       this.logger.debug(`Fetching price for ${config.priceId}`)
-      return await this.priceProvider.getPrice(config.priceId, timestamp)
+      const response = await this.priceProvider.getUsdPriceHistoryHourly(
+        CoingeckoId(config.priceId),
+        timestamp,
+        timestamp,
+      )
+      assert(
+        response.length === 1,
+        `${config.priceId}: Too many prices fetched ${JSON.stringify(response)}`,
+      )
+      return response[0].value
     } catch {
       this.logger.warn(`Couldn't fetch price for ${config.priceId}. Assuming 0`)
       return 0

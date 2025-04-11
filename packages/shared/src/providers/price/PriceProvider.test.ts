@@ -53,6 +53,63 @@ describe(PriceProvider.name, () => {
     })
   })
 
+  describe(PriceProvider.prototype.getLatestPrices.name, () => {
+    it('delegates to CoingeckoQueryService.getLatestMarketData', async () => {
+      const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
+
+      const expectedResult = new Map([
+        ['ethereum', { price: 1800.5 }],
+        ['bitcoin', { price: 30000.75 }],
+      ])
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getLatestMarketData: mockFn().resolvesToOnce(expectedResult),
+      })
+
+      const provider = new PriceProvider(coingeckoQueryService)
+
+      const result = await provider.getLatestPrices(coingeckoIds)
+
+      expect(
+        coingeckoQueryService.getLatestMarketData,
+      ).toHaveBeenOnlyCalledWith(coingeckoIds)
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('propagates errors from CoingeckoQueryService', async () => {
+      const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
+      const error = new Error('Failed to fetch latest prices')
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getLatestMarketData: mockFn().rejectsWithOnce(error),
+      })
+
+      const provider = new PriceProvider(coingeckoQueryService)
+
+      await expect(provider.getLatestPrices(coingeckoIds)).toBeRejectedWith(
+        'Failed to fetch latest prices',
+      )
+    })
+
+    it('handles empty array of coingeckoIds', async () => {
+      const coingeckoIds: CoingeckoId[] = []
+      const expectedResult = new Map()
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getLatestMarketData: mockFn().resolvesToOnce(expectedResult),
+      })
+
+      const provider = new PriceProvider(coingeckoQueryService)
+
+      const result = await provider.getLatestPrices(coingeckoIds)
+
+      expect(
+        coingeckoQueryService.getLatestMarketData,
+      ).toHaveBeenOnlyCalledWith(coingeckoIds)
+      expect(result).toEqual(expectedResult)
+    })
+  })
+
   describe(PriceProvider.prototype.getAdjustedTo.name, () => {
     it('delegates to CoingeckoQueryService.calculateAdjustedTo', () => {
       const from = 1600000000
