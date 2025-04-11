@@ -7,10 +7,11 @@
 - [How to calculate time to inclusion](#how-to-calculate-time-to-inclusion)
   - [OP stack](#op-stack)
     - [Why this approach?](#why-this-approach)
+    - [Example](#example)
 - [How to calculate withdrawal times (L2 -> L1)](#how-to-calculate-withdrawal-times-l2---l1)
   - [OP stack (with fraud proofs)](#op-stack-with-fraud-proofs)
     - [Why this approach?](#why-this-approach-1)
-    - [Example](#example)
+    - [Example](#example-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -128,12 +129,41 @@ Most RPCs do not support such method, but fortunately QuickNode does. An example
 }
 ```
 
-The time to inclusion of L2 blocks can be calculated by polling the method and checking when the `safe_l2` block number gets updated. The `safe_l2` value refers to the latest L2 block that has been published on L1, where the latest L1 block used by the derivation pipeline is the `current_l1` block. Assuming that all blocks in between the previous `safe_l2` value and the current `safe_l2` value are included in the `current_l1` block when the `safe_l2` value is updated, the time to inclusion of each L2 block between the previous `safe_l2+1` and the current `safe_l2` value can be calculated by subtracting the L2 block timestamp from the `current_l1` timestamp. The assumption has been lightly manually tested and seems to hold. A PoC script can be found [here](https://gist.github.com/lucadonnoh/9bdd5efeb0c2a1397131c36e0b46d7fe).
+The time to inclusion of L2 blocks can be calculated by polling the method and checking when the `safe_l2` block number gets updated. The `safe_l2` value refers to the latest L2 block that has been published on L1, where the latest L1 block used by the derivation pipeline is the `current_l1` block. Assuming that all blocks in between the previous `safe_l2` value and the current `safe_l2` value are included in the `current_l1` block when the `safe_l2` value is updated, the time to inclusion of each L2 block between the previous `safe_l2+1` and the current `safe_l2` value can be calculated by subtracting the L2 block timestamp from the `current_l1` timestamp. The assumption has been lightly manually tested and seems to hold.
 
 
 #### Why this approach?
 
 The very first approach to calculate the time to inclusion was to decode L2 batches posted to L1, get the list of transactions, and then calculate the difference between the L2 transactions timestamp and the L2 batch timestamp. This required a lot of maintaining, given that the batch format is generally not stable. There are a few possible approaches, like using the [batch decoder](https://github.com/ethereum-optimism/optimism/tree/a29cb96d30fab6fe4d86aaa5c4e6f0bb5270cb64/op-node/cmd/batch_decoder) provided by Optimism, but it's not guaranteed that OP stack forks properly maintain the tool and we might not have access to every project's batch decoder in the first place. A different approach involves using an external API to fetch info like shown in this [Blockscout's batches page](https://optimism.blockscout.com/batches), but they don't seem to expose an API for that.
+
+#### Example
+
+Here an output of a [PoC script](https://gist.github.com/lucadonnoh/9bdd5efeb0c2a1397131c36e0b46d7fe) that tracks the time to inclusion of L2 blocks using the `optimism_syncStatus` method:
+
+```
+------------------------------------------------------
+Fetched SyncStatus:
+  Safe L2 Block:
+    • Hash      : 0x504edd794afe4994f96825c2892e16e1e3cd8d68c303007b054f6ad790635c6b
+    • Number    : 134389152
+    • Prod. Time: 1744377081
+  Current L1 Block:
+    • Hash      : 0x45c4ef3f1d79101ba050f6a8af3073ef74917df89f84fe532ed3e8a2979619ef
+    • Number    : 22245928
+    • Time      : 1744377239
+------------------------------------------------------
+Current Safe L2 Block: 134389152 (Produced at: 1744377081)
+Current L1 Head (Inclusion Time Candidate): 1744377239
+New safe L2 blocks detected: Blocks 134388973 to 134389152
+Using current L1 timestamp as inclusion time: 1744377239
+
+------------------------------------------------------
+Batch Statistics for New Safe L2 Blocks:
+  Minimum Time-to-Inclusion: 2 min 38.00 sec
+  Maximum Time-to-Inclusion: 8 min 36.00 sec
+  Average Time-to-Inclusion: 5 min 37.00 sec
+------------------------------------------------------
+```
 
 ## How to calculate withdrawal times (L2 -> L1)
 
