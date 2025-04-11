@@ -10,8 +10,8 @@ import type { ProjectChanges } from '../projects-change-report/get-projects-chan
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import type { ProjectSevenDayTvsBreakdown } from '../scaling/new-tvs/utils/get-7d-tvs-breakdown'
 import { get7dTvsBreakdown } from '../scaling/new-tvs/utils/get-7d-tvs-breakdown'
-import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import { getAssociatedTokenWarning } from '../scaling/tvs/utils/get-associated-token-warning'
+import { compareTvs } from '../scaling/new-tvs/utils/compare-tvs'
+import { getAssociatedTokenWarning } from '../scaling/new-tvs/utils/get-associated-token-warning'
 import type { CommonBridgesEntry } from './get-common-bridges-entry'
 import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
