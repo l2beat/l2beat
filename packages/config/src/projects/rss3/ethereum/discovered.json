@@ -2,7 +2,7 @@
   "name": "rss3",
   "chain": "ethereum",
   "blockNumber": 21041870,
-  "configHash": "0xfda1967889ba16a175865c503f066a8890d90e4886c7905a00674356a697fb43",
+  "configHash": "0x6540b17e48c43e3228f4e163bad0d2566c102dcda0838fdb6e4cb3edbc0ea6cd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

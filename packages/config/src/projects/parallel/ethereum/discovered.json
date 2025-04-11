@@ -2,7 +2,7 @@
   "name": "parallel",
   "chain": "ethereum",
   "blockNumber": 22166274,
-  "configHash": "0xb144e38a2553b78ccc223df9a720eb524e071d0df55800511d16b077e357b858",
+  "configHash": "0x2920c50a82ed92e5a11a3cb95f5eb82f0e52dc171abd53087ab1037449644a2f",
   "entries": [
     {
       "address": "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",

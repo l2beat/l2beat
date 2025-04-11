@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 22243979,
-  "configHash": "0xaab26bc862a7626f4c92e7969e0730fa0fc269566e084eec13d55d0d33c78b0c",
+  "configHash": "0x22b0feb09d53e9bc343f59d6046ce11b2f6a9e1b07dd6315204c520900efcee5",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -319,7 +319,7 @@
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
-        "absolutePrestateDecoded": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
+        "absolutePrestateDecoded": "v1.5.0",
         "anchorStateRegistry": "0x2fc99fd16D8D3F6F66d164aA84E244c567E58A3d",
         "bondDistributionMode": 0,
         "challenger": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -369,6 +369,10 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
             "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
             "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
             "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
@@ -844,7 +848,7 @@
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
-        "absolutePrestateDecoded": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
+        "absolutePrestateDecoded": "v1.5.0",
         "anchorStateRegistry": "0x2fc99fd16D8D3F6F66d164aA84E244c567E58A3d",
         "bondDistributionMode": 0,
         "claimData": [],
@@ -892,6 +896,10 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
             "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
             "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
             "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",

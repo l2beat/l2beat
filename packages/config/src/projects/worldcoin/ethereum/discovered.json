@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 22208595,
-  "configHash": "0x275da597a7be6a146ba399a76dde23e4fecb14605d2505e68750dbbab816f8f0",
+  "configHash": "0xfa0607520a686ce871759b4898ff90f1120f3a8340994052c9de344eca02aede",
   "entries": [
     {
       "name": "GnosisSafe",

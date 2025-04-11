@@ -2,7 +2,7 @@
   "name": "omgnetwork",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x39284e5b37acb7a61a3b7079068d3d5a7a2acc3c603e5d1601c30b39aa233fc4",
+  "configHash": "0xe3f1053104e5f47ec39e772f939d9805d1db78f92f3680a63803c7bbd487f0dc",
   "entries": [
     {
       "name": "Erc20Vault",

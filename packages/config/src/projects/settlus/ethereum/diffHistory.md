@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x262b6467e35b3d94139d43c9abd6600517ce3829
+
+# Diff at Fri, 11 Apr 2025 13:06:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b607477490db79d49274f7585039ac7263456118 block: 22244007
+- current block number: 22244007
+
+## Description
+
+Config: global mapping updated for op stack prestates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22244007 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405:
++        "v1.5.1-rc.1 (cannon64)"
+      usedTypes.0.arg.0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01:
++        "v1.5.1-rc.1"
+      usedTypes.0.arg.0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef:
++        "v1.5.0 (cannon64)"
+      usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
++        "v1.5.0"
+    }
+```
+
 Generated with discovered.json: 0x8f258791e26a28a4fbcd34ad54d47a61bb860ccb
 
 # Diff at Thu, 10 Apr 2025 14:43:04 GMT:

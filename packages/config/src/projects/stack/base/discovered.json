@@ -2,7 +2,7 @@
   "name": "stack",
   "chain": "base",
   "blockNumber": 27754702,
-  "configHash": "0x6a32892994e6c5df78f59c720d7a3066cc06884e8b8046d19634c8e68076591b",
+  "configHash": "0x00342419cb615c0e9c85b970fdea9e8100cacd53c16554d3e681c075b78ed145",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

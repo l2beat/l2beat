@@ -2,7 +2,7 @@
   "name": "superseed",
   "chain": "ethereum",
   "blockNumber": 22165377,
-  "configHash": "0xe704213dd6fda27af6efb62f9d5ce22660a661fc31a1e6dbb5645d402ff02329",
+  "configHash": "0xffadaa72617400bd07fb49a07d00e22281152c98d1d93744fb76b65d534f8f61",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

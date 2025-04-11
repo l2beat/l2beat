@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 28782173,
-  "configHash": "0x91c26eb0d1e5ed87c0c448a8b92b4832b870ce177092f0fdba42f27b4de41c75",
+  "configHash": "0x7cb7668b5ed5581cce228cc8349d698a526f9f4b9a56ff6fb2f67c15a2347180",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",

@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 57909592,
-  "configHash": "0xcf7a273113f75d324983452b92187dd337b4afcb78079b60b352fee12841c94c",
+  "configHash": "0x3652fba6d9de9c180644ddad0fe9c7b719b6b5e41f2ff21ccc2a54e4fac6c7ea",
   "entries": [
     {
       "name": "ProtocolTimelockController",

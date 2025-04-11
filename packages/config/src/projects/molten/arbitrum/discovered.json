@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 287771961,
-  "configHash": "0xa9d51ca0a77bd4f449d7676dc1c3c2737b1a157d2e9d90676b296f09c4509ae2",
+  "configHash": "0x2e770f4d760b76b3e0c88977d3e08954c957532bead741837aefb802ef357705",
   "entries": [
     {
       "name": "OneStepProver0",

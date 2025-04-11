@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "blockNumber": 22194734,
-  "configHash": "0xc1670ae2404d104a3bd34a3e108e39510b2682d03b1513ca78a574774a072539",
+  "configHash": "0xf462b78191530f4d8311b3b3c161a9a86272f6f12c86b1de9e313ccbbe4d938e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -262,6 +262,10 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
             "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
             "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
             "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",

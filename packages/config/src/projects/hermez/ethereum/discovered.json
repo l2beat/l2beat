@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21778467,
-  "configHash": "0x0f311eed7d6dad3be73515d58a9a4a0bc21b291561fe8436c3a64a986064dc87",
+  "configHash": "0x5fce101ce9b22d119af013577ac54c8a31d55db7ce586cfec4f853913b93acf3",
   "entries": [
     {
       "name": "ProxyAdmin",
