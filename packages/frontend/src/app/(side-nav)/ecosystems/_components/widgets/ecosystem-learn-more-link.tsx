@@ -12,7 +12,7 @@ export function EcosystemLearnMoreLink({ name, href, className }: Props) {
     <Link
       href={href}
       className={cn(
-        'group relative min-h-[100px] overflow-hidden rounded-lg bg-gradient-to-r from-[--ecosystem-primary] via-[--ecosystem-secondary] to-pure-white p-2 md:rounded-xl',
+        'group relative min-h-[100px] select-none overflow-hidden rounded-lg bg-gradient-to-r from-[--ecosystem-primary] via-[--ecosystem-secondary] to-pure-white p-2 md:rounded-xl',
         className,
       )}
     >

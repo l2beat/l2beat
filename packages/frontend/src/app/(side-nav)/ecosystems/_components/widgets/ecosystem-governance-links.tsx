@@ -39,7 +39,7 @@ function GovernanceLink({
     <EcosystemWidget
       className={cn('flex flex-col overflow-hidden !pt-0', className)}
     >
-      <div className="relative flex h-full items-center justify-between gap-2 text-primary">
+      <div className="relative flex h-full select-none items-center justify-between gap-2 text-primary">
         <div className="flex flex-col justify-center whitespace-nowrap">
           <div className="text-2xs font-medium uppercase transition-opacity">
             Governance
@@ -57,15 +57,13 @@ function GovernanceLink({
         />
       </div>
 
-      <div>
-        <Link
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link"
-          href={href}
-        >
-          Governance Review
-          <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
-        </Link>
-      </div>
+      <Link
+        className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link"
+        href={href}
+      >
+        Governance Review
+        <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
+      </Link>
     </EcosystemWidget>
   )
 }
@@ -81,7 +79,7 @@ function TopDelegatesLink({
         underline={false}
         href={href}
         className={cn(
-          'group relative min-h-[100px] overflow-hidden text-pure-white',
+          'group relative min-h-[100px] select-none overflow-hidden text-pure-white',
           className,
         )}
       >
@@ -111,7 +109,7 @@ function ProposalsLink({
         underline={false}
         href={href}
         className={cn(
-          'group relative min-h-[100px] overflow-hidden text-primary',
+          'group relative min-h-[100px] select-none overflow-hidden text-primary',
           className,
         )}
       >
