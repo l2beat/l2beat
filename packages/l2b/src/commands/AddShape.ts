@@ -29,10 +29,10 @@ export const AddShape = command({
       displayName: 'blockNumber',
       description: 'block number of the contract',
     }),
-    description: positional({
+    fileName: positional({
       type: string,
-      displayName: 'description',
-      description: 'description of the contract',
+      displayName: 'fileName',
+      description: 'fileName of the contract',
     }),
     template: positional({
       type: string,
@@ -84,7 +84,7 @@ export const AddShape = command({
       args.template,
       args.chain,
       args.address,
-      args.description,
+      args.fileName,
       args.blockNumber,
       source,
     )
