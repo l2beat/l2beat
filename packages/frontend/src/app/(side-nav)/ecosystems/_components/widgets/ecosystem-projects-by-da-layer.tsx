@@ -48,7 +48,7 @@ export function EcosystemProjectsByDaLayer({
             progressClassName="bg-[--ecosystem-primary]"
             trackClassName="border-[--ecosystem-secondary]"
           />
-          <p className="mt-1 text-2xs text-secondary">
+          <p className="mt-1 text-center text-2xs text-secondary">
             {formatPercent(blobsData.blobsShare)} of total blob size
           </p>
         </div>
