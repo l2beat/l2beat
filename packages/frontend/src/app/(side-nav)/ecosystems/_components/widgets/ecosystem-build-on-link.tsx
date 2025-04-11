@@ -29,7 +29,7 @@ export function EcosystemBuildOnLink({ name, slug, href, className }: Props) {
           <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
             Ready to join {name}?
           </div>
-          <div className="origin-left text-xl font-bold transition-all will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125">
+          <div className="origin-left text-balance text-lg font-bold !leading-tight transition-all will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
             Build own chain on {name}
           </div>
         </div>
