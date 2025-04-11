@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { PercentChange } from '~/components/percent-change'
 import type { EcosystemToken } from '~/server/features/ecosystems/get-ecosystem-token'
 import { cn } from '~/utils/cn'
@@ -31,7 +32,8 @@ export function EcosystemToken({ token, className }: Props) {
           {token.description}
         </p>
       </div>
-      <div className="mt-4 grid grid-cols-3 gap-2">
+      <HorizontalSeparator className="my-4 sm:hidden" />
+      <div className="mt-4 grid sm:grid-cols-3 sm:gap-2">
         <DataTile label="Price">
           <span>{formatCurrency(token.data.price.value, 'usd')}</span>
           <PercentChange className="ml-0.5" value={token.data.price.change} />
@@ -60,11 +62,11 @@ function DataTile({
   return (
     <div
       className={cn(
-        'flex flex-col items-center gap-1 rounded border border-divider py-3',
+        'flex items-baseline gap-1 rounded border-divider max-sm:justify-between sm:flex-col sm:items-center sm:border sm:py-3',
         className,
       )}
     >
-      <p className="text-2xs font-medium leading-none text-secondary">
+      <p className="text-xs font-medium leading-none text-secondary sm:text-2xs">
         {label}
       </p>
       <p className="text-sm font-bold">{children}</p>
