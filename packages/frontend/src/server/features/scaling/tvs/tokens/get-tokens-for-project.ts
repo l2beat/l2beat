@@ -2,6 +2,7 @@ import type { Project, TvsToken } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
+import { env } from '~/env'
 
 export type ProjectTokens = Record<TvsToken['source'], ProjectToken[]>
 export type ProjectToken = TvsToken & {
@@ -11,6 +12,10 @@ export type ProjectToken = TvsToken & {
 export async function getTokensForProject(
   project: Project<'tvsConfig'>,
 ): Promise<ProjectTokens> {
+  if (env.MOCK) {
+    return getMockTokensForProject(project)
+  }
+
   const db = getDb()
   const tokenValues = await db.tvsTokenValue.getByProjectAndTimestamp(
     project.id,
@@ -59,4 +64,13 @@ function groupBySource(tokens: ProjectToken[]) {
     native,
     external,
   }
+}
+
+function getMockTokensForProject(project: Project<'tvsConfig'>) {
+  return groupBySource(
+    project.tvsConfig.map((t) => ({
+      ...t,
+      usdValue: 1000,
+    })),
+  )
 }
