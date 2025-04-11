@@ -102,9 +102,10 @@ const cmd = command({
 
         totalTvs += valueForSummary
 
-        logger.info(`TVS for project ${toDollarString(valueForProject)}`)
-        logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+        logger.info(`TVS for ${project.id} ${toDollarString(valueForProject)}`)
       }
+
+      logger.info(`Total TVS ${toDollarString(totalTvs)}`)
     } else {
       const project = await ps.getProject({
         id: ProjectId(args.project),
