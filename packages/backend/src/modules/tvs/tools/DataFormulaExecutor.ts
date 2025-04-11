@@ -49,13 +49,13 @@ export class DataFormulaExecutor {
     )
     if (blockNumbersToFetch.length > 0) {
       this.logger.info(
-        `Fetching block numbers (${blockNumbersToFetch.length})...`,
+        `Fetching block numbers from host chains(${blockNumbersToFetch.length})...`,
       )
       const chainNames = blockNumbersToFetch
         .map((chain) => chain.name)
         .join(', ')
 
-      this.logger.info(`\t${chainNames}`)
+      this.logger.debug(`\t${chainNames}`)
       const startTime = Date.now()
       await Promise.all(blockNumbersToFetch.map((chain) => chain.promise))
       const duration = (Date.now() - startTime) / 1000
@@ -78,7 +78,7 @@ export class DataFormulaExecutor {
       }
 
       for (const [chain, count] of chainCounts.entries()) {
-        this.logger.info(`\t ${chain}: ${count}`)
+        this.logger.debug(`\t ${chain}: ${count}`)
       }
 
       const startTime = Date.now()
@@ -101,10 +101,8 @@ export class DataFormulaExecutor {
 
     if (pricesToFetch.length > 0 || circulatingToFetch.length > 0) {
       this.logger.info(`Fetching prices and circulating supplies...`)
-      this.logger.info(`\t prices (${pricesToFetch.length})...`)
-      this.logger.info(
-        `\t circulating supplies (${circulatingToFetch.length})...`,
-      )
+      this.logger.info(`\t prices (${pricesToFetch.length})`)
+      this.logger.info(`\t circulating supplies (${circulatingToFetch.length})`)
 
       const startTime = Date.now()
       await Promise.all([...pricesToFetch, ...circulatingToFetch])

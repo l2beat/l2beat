@@ -77,6 +77,11 @@ export interface TvsBreakdown {
   }
 }
 
+export interface TvsProjectBreakdown {
+  tvs: number
+  projects: { projectId: string; value: number }[]
+}
+
 export interface AmountConfigBase {
   id: string
 }

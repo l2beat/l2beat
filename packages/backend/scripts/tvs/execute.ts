@@ -21,7 +21,11 @@ import {
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { getEffectiveConfig } from '../../src/modules/tvs/tools/getEffectiveConfig'
-import type { TokenValue, TvsBreakdown } from '../../src/modules/tvs/types'
+import type {
+  TokenValue,
+  TvsBreakdown,
+  TvsProjectBreakdown,
+} from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -78,7 +82,12 @@ const cmd = command({
         process.exit(1)
       }
 
-      logger.info(`Found ${projects.length} TVS projects`)
+      logger.info(
+        `Found ${projects.length} TVS projects` +
+          (args.includeBridges
+            ? ''
+            : ' (bridges not included, use --include-bridges flag)'),
+      )
 
       logger.info(`Executing TVS config for projects`)
       const tvs = await localExecutor.getTvs(
@@ -92,7 +101,10 @@ const cmd = command({
         args.latestMode,
       )
 
-      let totalTvs = 0
+      const projectBreakdown: TvsProjectBreakdown = {
+        tvs: 0,
+        projects: [],
+      }
 
       for (const project of projects.filter((p) => p.tvsConfig.length > 0)) {
         const tvsForProject = tvs.get(project.id)
@@ -106,12 +118,30 @@ const cmd = command({
           return acc + token.valueForSummary
         }, 0)
 
-        totalTvs += valueForSummary
-
-        logger.info(`TVS for ${project.id} ${toDollarString(valueForProject)}`)
+        projectBreakdown.tvs += valueForSummary
+        projectBreakdown.projects.push({
+          projectId: project.id,
+          value: valueForProject,
+        })
       }
 
-      logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+      logger.info(`TVS ${toDollarString(projectBreakdown.tvs)}`)
+      logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
+
+      fs.writeFileSync(
+        './scripts/tvs/breakdown.json',
+        JSON.stringify(
+          {
+            tvs: toDollarString(projectBreakdown.tvs),
+            projects: projectBreakdown.projects.map((p) => ({
+              projectId: p.projectId,
+              value: toDollarString(p.value),
+            })),
+          },
+          null,
+          2,
+        ),
+      )
     } else {
       const project = await ps.getProject({
         id: ProjectId(args.project),
@@ -352,7 +382,10 @@ function toDollarString(value: number) {
   } else if (value > 1e6) {
     return `$${(value / 1e6).toFixed(2)}M`
   } else {
-    return `$${value.toFixed(2)}`
+    return `$${value.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`
   }
 }
 
