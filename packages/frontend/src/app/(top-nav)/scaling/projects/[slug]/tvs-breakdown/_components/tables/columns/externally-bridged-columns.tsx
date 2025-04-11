@@ -55,13 +55,17 @@ export const externallyBridgedColumns = [
       const toggleExpandedHandler = ctx.row.getToggleExpandedHandler()
 
       return (
-        <ChevronIcon
-          className={cn(
-            'w-[10px] cursor-pointer transition-transform duration-300',
-            isExpended && 'rotate-180',
-          )}
+        <button
           onClick={toggleExpandedHandler}
-        />
+          className="h-full cursor-pointer px-2 align-middle"
+        >
+          <ChevronIcon
+            className={cn(
+              'w-[10px]   transition-transform duration-300',
+              isExpended && 'rotate-180',
+            )}
+          />
+        </button>
       )
     },
   }),

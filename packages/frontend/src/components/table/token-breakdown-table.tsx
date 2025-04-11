@@ -1,7 +1,6 @@
 import type { Table as TanstackTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import type { Row } from '@tanstack/react-table'
-import { Fragment } from 'react'
 import { cn } from '~/utils/cn'
 import {
   Table,
@@ -55,43 +54,41 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
           ))}
         </TableHeaderRow>
       </TableHeader>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <Fragment key={`element-${row.id}`}>
+      {table.getRowModel().rows.map((row) => (
+        <TableBody key={`row-${row.id}`} className="group">
+          <TableRow
+            slug={undefined}
+            key={row.id}
+            className="border-b border-b-black/10 group-hover:bg-black/5 dark:border-b-zinc-700 dark:group-hover:bg-white/5 md:border-b-0"
+          >
+            {row.getVisibleCells().map((cell) => {
+              return (
+                <TableCell
+                  key={cell.id}
+                  align={cell.column.columnDef.meta?.align}
+                  className={cn(
+                    'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
+                    cell.column.columnDef.meta?.cellClassName,
+                  )}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              )
+            })}
+          </TableRow>
+          {row.getIsExpanded() && (
             <TableRow
               slug={undefined}
-              key={row.id}
-              className="peer border-b border-b-black/10 hover:bg-black/5 dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0"
+              key={`${row.id}-expanded`}
+              className="group-hover:bg-black/5 dark:border-b-zinc-700 dark:group-hover:bg-white/5 md:border-b-0"
             >
-              {row.getVisibleCells().map((cell) => {
-                return (
-                  <TableCell
-                    key={cell.id}
-                    align={cell.column.columnDef.meta?.align}
-                    className={cn(
-                      'h-9 py-2 pr-2  first:pl-2 last:pr-2 md:h-10 first:md:pl-6 last:md:pr-6',
-                      cell.column.columnDef.meta?.cellClassName,
-                    )}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                )
-              })}
+              <TableCell colSpan={row.getVisibleCells().length}>
+                {renderSubComponent({ row })}
+              </TableCell>
             </TableRow>
-            {row.getIsExpanded() && (
-              <TableRow
-                slug={undefined}
-                key={`${row.id}-expanded`}
-                className="peer-hover:bg-black/5 dark:border-b-zinc-700 dark:peer-hover:bg-white/5 md:border-b-0"
-              >
-                <TableCell colSpan={row.getVisibleCells().length}>
-                  {renderSubComponent({ row })}
-                </TableCell>
-              </TableRow>
-            )}
-          </Fragment>
-        ))}
-      </TableBody>
+          )}
+        </TableBody>
+      ))}
     </Table>
   )
 }
