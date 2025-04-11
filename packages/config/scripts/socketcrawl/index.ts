@@ -6,13 +6,9 @@
  */
 import * as fs from 'node:fs'
 import * as path from 'node:path'
-import type { EthereumAddress } from '@l2beat/shared-pure'
 import * as dotenv from 'dotenv'
 import { type BigNumber, ethers } from 'ethers' // Use specific imports if possible
 import fetch from 'node-fetch'
-import pLimit from 'p-limit'
-// Assuming ProjectDiscovery is correctly located relative to this script
-// Use a type-only import if ProjectDiscovery class is only used for type annotations
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery' // Adjust path if needed
 
 // Load environment variables
@@ -164,6 +160,36 @@ interface PotentialNewToken {
   symbol: string // Use fallback if null
   address: string // Original casing address
   usdValue: number // Keep for potential future sorting/filtering
+}
+
+// Custom concurrency limiter to replace p-limit
+class ConcurrencyLimiter {
+  private running = 0
+  private queue: Array<() => void> = []
+
+  constructor(private readonly limit: number) {}
+
+  async add<T>(fn: () => Promise<T>): Promise<T> {
+    // Wait if at limit
+    if (this.running >= this.limit) {
+      await new Promise<void>((resolve) => {
+        this.queue.push(resolve)
+      })
+    }
+
+    // Execute function with proper cleanup
+    this.running++
+    try {
+      return await fn()
+    } finally {
+      this.running--
+      // Allow next queued function to run
+      if (this.queue.length > 0) {
+        const next = this.queue.shift()
+        if (next) next()
+      }
+    }
+  }
 }
 
 // ===== Constants =====
@@ -488,7 +514,7 @@ async function getTokenTVL(
 async function fetchTokenPrices(
   tokensToFetch: ReadonlyMap<string, ReadonlySet<string>>, // Use Readonly types
   apiKey: string, // Pass API key explicitly
-  concurrencyLimit: pLimit.Limit, // Pass pLimit instance
+  concurrencyLimiter: ConcurrencyLimiter, // Pass ConcurrencyLimiter instance
 ): Promise<Map<string, number>> {
   const priceMap = new Map<string, number>()
   const fetchPromises: Promise<void>[] = []
@@ -520,7 +546,7 @@ async function fetchTokenPrices(
       const contractAddressesParam = batch.join(',')
       const url = `https://pro-api.coingecko.com/api/v3/simple/token_price/${platformId}?contract_addresses=${contractAddressesParam}&vs_currencies=${CONFIG.pricing.currency}`
 
-      const fetchJob = concurrencyLimit(async () => {
+      const fetchJob = concurrencyLimiter.add(async () => {
         const batchIndex = Math.floor(i / CONFIG.pricing.batchSize) + 1
         logDebug(
           `Workspaceing batch ${batchIndex}/${batchCount} for ${platformId} (${batch.length} tokens)`,
@@ -934,10 +960,9 @@ function generateCopyPasta(
 // ===== Initialize Providers and Limits =====
 // Ensure RPC URL is defined due to check at the start
 const provider = new ethers.providers.JsonRpcProvider(ENV.rpcUrl)
-const limit = pLimit(CONFIG.concurrency.rpc)
-// Only create cgLimit if API key exists
-const cgLimit = ENV.coinGeckoApiKey
-  ? pLimit(CONFIG.concurrency.coinGecko)
+const rpcLimiter = new ConcurrencyLimiter(CONFIG.concurrency.rpc)
+const cgLimiter = ENV.coinGeckoApiKey
+  ? new ConcurrencyLimiter(CONFIG.concurrency.coinGecko)
   : null
 
 // ===== Main Function =====
@@ -970,7 +995,7 @@ async function main(): Promise<void> {
     // Assuming 'socket' discovery config exists and contains 'plugs'
     const discovery = new ProjectDiscovery('socket')
     // Type the expected return value
-    const discoveredPlugsRaw = discovery.getContractValue<EthereumAddress[]>(
+    const discoveredPlugsRaw = discovery.getContractValue<string[]>(
       'Socket', // Assuming 'Socket' is the contract name in discovery.json
       'plugs',
     )
@@ -979,7 +1004,7 @@ async function main(): Promise<void> {
     if (
       !Array.isArray(discoveredPlugsRaw) ||
       !discoveredPlugsRaw.every(
-        (p): p is string => typeof p === 'string' && ethers.utils.isAddress(p),
+        (p) => typeof p === 'string' && ethers.utils.isAddress(p),
       )
     ) {
       throw new Error(
@@ -1004,14 +1029,12 @@ async function main(): Promise<void> {
   // --- 3. Explore Plugs Concurrently ---
   logInfo(`Exploring ${plugs.length} plug contracts...`)
   // Explicitly type the settled results array
-  const settledResults: PromiseSettledResult<Result | null>[] =
-    await Promise.allSettled(
-      plugs.map((address) =>
-        limit(() =>
-          explorePlugContract(address, configuredEthereumTokens, provider),
-        ),
-      ),
-    )
+  const explorePromises = plugs.map((address) =>
+    rpcLimiter.add(() =>
+      explorePlugContract(address, configuredEthereumTokens, provider),
+    ),
+  )
+  const settledResults = await Promise.allSettled(explorePromises)
 
   // Filter successful results and log errors
   const successfulResults: Result[] = []
@@ -1035,7 +1058,7 @@ async function main(): Promise<void> {
   // --- 4. Fetch Token Prices ---
   let priceData = new Map<string, number>()
   // Check if API key and limit function exist
-  if (ENV.coinGeckoApiKey && cgLimit) {
+  if (ENV.coinGeckoApiKey && cgLimiter) {
     const tokensForPriceFetch = new Map<string, Set<string>>()
     for (const result of successfulResults) {
       if (result.token?.address) {
@@ -1053,7 +1076,7 @@ async function main(): Promise<void> {
     priceData = await fetchTokenPrices(
       tokensForPriceFetch,
       ENV.coinGeckoApiKey,
-      cgLimit,
+      cgLimiter,
     )
   } else {
     logInfo('Skipping price fetch (API key or limiter not available).')
@@ -1145,33 +1168,32 @@ async function main(): Promise<void> {
     return Number(a) - Number(b) // Sort numerically
   })
 
-  // Create the final sorted grouped results object
-  const groupedResultsSorted: Readonly<Record<string, ReadonlyArray<Result>>> =
-    {}
+  // Create a new mutable object for sorting results
+  const groupedResultsSorted: Record<string, Result[]> = {}
+
+  // Process each slug and add sorted results
   for (const slug of sortedSlugs) {
     const results = groupedResultsUnsorted[slug] ?? [] // Default to empty array
-    // Sort results within each group deterministically
-    groupedResultsSorted[slug] = [...results].sort(
-      // Create shallow copy before sorting
-      (a, b) => {
-        // Primary sort: USD Value (descending), default to 0
-        const usdDiff = (b.token?.usdValue ?? 0) - (a.token?.usdValue ?? 0)
-        if (usdDiff !== 0) {
-          return usdDiff
-        }
 
-        // Secondary sort: Hub/Bridge Address (ascending) - ensures stable sort
-        const addrA = a.hubOrBridgeAddress ?? '' // Default to empty string
-        const addrB = b.hubOrBridgeAddress ?? ''
-        const addrDiff = addrA.localeCompare(addrB)
-        if (addrDiff !== 0) {
-          return addrDiff
-        }
+    // Create a sorted copy of the results array
+    groupedResultsSorted[slug] = [...results].sort((a, b) => {
+      // Primary sort: USD Value (descending), default to 0
+      const usdDiff = (b.token?.usdValue ?? 0) - (a.token?.usdValue ?? 0)
+      if (usdDiff !== 0) {
+        return usdDiff
+      }
 
-        // Tertiary sort: Plug Address (ascending) - final tie-breaker
-        return (a.plugAddress ?? '').localeCompare(b.plugAddress ?? '')
-      },
-    )
+      // Secondary sort: Hub/Bridge Address (ascending) - ensures stable sort
+      const addrA = a.hubOrBridgeAddress ?? '' // Default to empty string
+      const addrB = b.hubOrBridgeAddress ?? ''
+      const addrDiff = addrA.localeCompare(addrB)
+      if (addrDiff !== 0) {
+        return addrDiff
+      }
+
+      // Tertiary sort: Plug Address (ascending) - final tie-breaker
+      return (a.plugAddress ?? '').localeCompare(b.plugAddress ?? '')
+    })
   }
 
   // --- 8. Write Detailed JSON Output ---
@@ -1202,10 +1224,6 @@ async function main(): Promise<void> {
       error,
     )
   }
-
-  // --- 10. Clean Up ---
-  // Ethers v5 provider cleanup is generally not needed for JsonRpcProvider unless explicit listeners were added.
-  // provider.removeAllListeners(); // Example if listeners were used
 
   logSuccess('Script completed successfully')
 }
