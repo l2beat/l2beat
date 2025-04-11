@@ -23,7 +23,6 @@
     "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856",
 
     // --- Kinto ---
-    "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2",
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
     "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
     "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
@@ -64,7 +63,9 @@
     "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB",
 
     // --- Reya ---
+    "0x0A5A19376064fED2A0A9f3120B2426c957BC289D",
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
+    "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E",
     "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35",
     "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3",
     "0x64dF894688c5052BeAdC35371cF69151Ebc5D658",
@@ -94,7 +95,6 @@
     "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856": "xSolvBTC Vault (Derive)",
 
     // --- Kinto ---
-    "0x0fC783f611A888A2cAbC3dA482Add3215334dCc2": "UNKNOWN_0x9f8F Vault (Kinto)",
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": "wstETH Vault (Kinto)",
     "0x43b718Aa5e678b08615CA984cbe25f690B085b32": "sUSDe Vault (Kinto)",
     "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": "weETH Vault (Kinto)",
@@ -135,7 +135,9 @@
     "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB": "USDT Vault (Zora)",
 
     // --- Reya ---
+    "0x0A5A19376064fED2A0A9f3120B2426c957BC289D": "sdeUSD Vault (Reya)",
     "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault (Reya)",
+    "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E": "deUSD Vault (Reya)",
     "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35": "USDe Vault (Reya)",
     "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3": "sUSDe Vault (Reya)",
     "0x64dF894688c5052BeAdC35371cF69151Ebc5D658": "WETH Vault (Reya)",
@@ -145,72 +147,244 @@
 "ignoreMethods": {
 
     // --- Derive ---
-    "LBTC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "sUSDe Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "rswETH Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDe Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "rsETH Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDT Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "DAI Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "WETH Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "eBTC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "cbBTC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "WBTC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "sDAI Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "weETH Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "wstETH Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "SNX Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "SolvBTC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
-    "xSolvBTC Vault (Derive)": {"ignoreMethods":["token","token__","hook__"]},
+    "0x76624ff43D610F64177Bb9c194A2503642e9B803": {
+      // LBTC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xE3E96892D30E0ee1a8131BAf87c891201F7137bf": {
+      // sUSDe Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": {
+      // rswETH Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A": {
+      // USDe Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x35d4D9bc79B0a543934b1769304B90d752691caD": {
+      // rsETH Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": {
+      // USDT Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": {
+      // USDC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91": {
+      // DAI Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": {
+      // WETH Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5": {
+      // eBTC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50": {
+      // cbBTC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": {
+      // WBTC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142": {
+      // sDAI Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x8180EcCC825b692ef65FF099a0A387743788bf78": {
+      // weETH Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": {
+      // wstETH Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": {
+      // SNX Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x383a4EdB30E896b8d2d044Be87079D45c0EA7065": {
+      // SolvBTC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856": {
+      // xSolvBTC Vault (Derive)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
 
     // --- Kinto ---
-    "UNKNOWN_0x9f8F Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "wstETH Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "sUSDe Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "weETH Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "sDAI Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDC Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "LINK Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDT Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "WETH Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "WBTC Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "cbBTC Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "SOL Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "SPX Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDe Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "ONDO Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "ETHFI Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "EIGEN Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "ENA Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "AAVE Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "LDO Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "XAUt Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "PAXG Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "PENDLE Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "DAI Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
-    "GHO Vault (Kinto)": {"ignoreMethods":["token","token__","hook__"]},
+    "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": {
+      // wstETH Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x43b718Aa5e678b08615CA984cbe25f690B085b32": {
+      // sUSDe Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": {
+      // weETH Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85": {
+      // sDAI Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x755cD5d147036E11c76F1EeffDd94794fC265f0d": {
+      // USDC Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013": {
+      // LINK Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x1D18263107a138C7fb0De65b4a78d193ff9664c1": {
+      // USDT Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": {
+      // WETH Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36": {
+      // WBTC Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9": {
+      // cbBTC Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8": {
+      // SOL Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8": {
+      // SPX Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e": {
+      // USDe Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD": {
+      // ONDO Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": {
+      // ETHFI Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xdb161cdc9c11892922F7121a409b196f3b00e640": {
+      // EIGEN Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd": {
+      // ENA Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9": {
+      // AAVE Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x54e60fef7c7f2f747900452D4151aF976EaeAb76": {
+      // LDO Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF": {
+      // XAUt Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2": {
+      // PAXG Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97": {
+      // PENDLE Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": {
+      // DAI Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x4F18853BE8C01d375889c02D61A77B476d3E59dd": {
+      // GHO Vault (Kinto)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
 
     // --- Polynomial ---
-    "USD0++ Vault (Polynomial)": {"ignoreMethods":["token","token__","hook__"]},
-    "sUSDe Vault (Polynomial)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDC Vault (Polynomial)": {"ignoreMethods":["token","token__","hook__"]},
-    "sDAI Vault (Polynomial)": {"ignoreMethods":["token","token__","hook__"]},
-    "WETH Vault (Polynomial)": {"ignoreMethods":["token","token__","hook__"]},
+    "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F": {
+      // USD0++ Vault (Polynomial)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xC6cfb996A7CFEB89813A68CD13942CD75553032b": {
+      // sUSDe Vault (Polynomial)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xDE1617Ddb7C8A250A409D986930001985cfad76F": {
+      // USDC Vault (Polynomial)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc": {
+      // sDAI Vault (Polynomial)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a": {
+      // WETH Vault (Polynomial)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
 
     // --- Blast ---
-    "LOOKS Vault (Blast)": {"ignoreMethods":["token","token__","hook__"]},
+    "0xa83B4006c16DAeAb2718294696c0122519195137": {
+      // LOOKS Vault (Blast)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
 
     // --- Zora ---
-    "USDC Vault (Zora)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDT Vault (Zora)": {"ignoreMethods":["token","token__","hook__"]},
+    "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8": {
+      // USDC Vault (Zora)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB": {
+      // USDT Vault (Zora)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
 
     // --- Reya ---
-    "USDC Vault (Reya)": {"ignoreMethods":["token","token__","hook__"]},
-    "USDe Vault (Reya)": {"ignoreMethods":["token","token__","hook__"]},
-    "sUSDe Vault (Reya)": {"ignoreMethods":["token","token__","hook__"]},
-    "WETH Vault (Reya)": {"ignoreMethods":["token","token__","hook__"]},
-    "WBTC Vault (Reya)": {"ignoreMethods":["token","token__","hook__"]}
+    "0x0A5A19376064fED2A0A9f3120B2426c957BC289D": {
+      // sdeUSD Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": {
+      // USDC Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E": {
+      // deUSD Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35": {
+      // USDe Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3": {
+      // sUSDe Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x64dF894688c5052BeAdC35371cF69151Ebc5D658": {
+      // WETH Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    },
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": {
+      // WBTC Vault (Reya)
+      "ignoreMethods": ["token", "token__", "hook__"]
+    }
 },
 
 
@@ -329,12 +503,6 @@ escrows: [
     }),
 
     // --- Kinto ---
-    discovery.getEscrowDetails({ // UNKNOWN_0x9f8F Vault (Kinto)
-      address: EthereumAddress('0x0fC783f611A888A2cAbC3dA482Add3215334dCc2'),
-      name: 'UNKNOWN_0x9f8F Vault (Kinto)',
-      description: 'Socket Vault holding Unknown Token (UNKNOWN_0x9f8F) associated with Kinto. Owned by KintoEOA.',
-      tokens: ['UNKNOWN_0x9f8F'], // Assumes symbol is the key in token list
-    }),
     discovery.getEscrowDetails({ // wstETH Vault (Kinto)
       address: EthereumAddress('0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc'),
       name: 'wstETH Vault (Kinto)',
@@ -535,11 +703,23 @@ escrows: [
     }),
 
     // --- Reya ---
+    discovery.getEscrowDetails({ // sdeUSD Vault (Reya)
+      address: EthereumAddress('0x0A5A19376064fED2A0A9f3120B2426c957BC289D'),
+      name: 'sdeUSD Vault (Reya)',
+      description: 'Socket Vault holding Staked deUSD (sdeUSD) associated with Reya. Owned by Socket EOA.',
+      tokens: ['sdeUSD'], // Assumes symbol is the key in token list
+    }),
     discovery.getEscrowDetails({ // USDC Vault (Reya)
       address: EthereumAddress('0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7'),
       name: 'USDC Vault (Reya)',
       description: 'Socket Vault holding USD Coin (USDC) associated with Reya. Owned by Socket EOA.',
       tokens: ['USDC'], // Assumes symbol is the key in token list
+    }),
+    discovery.getEscrowDetails({ // deUSD Vault (Reya)
+      address: EthereumAddress('0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E'),
+      name: 'deUSD Vault (Reya)',
+      description: 'Socket Vault holding deUSD (deUSD) associated with Reya. Owned by Socket EOA.',
+      tokens: ['deUSD'], // Assumes symbol is the key in token list
     }),
     discovery.getEscrowDetails({ // USDe Vault (Reya)
       address: EthereumAddress('0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35'),
@@ -566,15 +746,3 @@ escrows: [
       tokens: ['WBTC'], // Assumes symbol is the key in token list
     })
 ],
-
-
-// === tokens.jsonc additions (Potential New Tokens > $3000 TVL) ===
-// Add these to the "ethereum" array in your tokens.jsonc file:
-  {
-    "symbol": "deUSD",
-    "address": "0x15700B564Ca08D9439C58cA5053166E8317aa138"
-  },
-  {
-    "symbol": "sdeUSD",
-    "address": "0x5C5b196aBE0d54485975D1Ec29617D42D9198326"
-  }

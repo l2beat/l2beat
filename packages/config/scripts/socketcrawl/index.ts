@@ -61,7 +61,7 @@ const CONFIG: ScriptConfig = {
     verbose: false, // Set to true for detailed logs
   },
   newTokens: {
-    minUsdValueThreshold: 3000, // Minimum USD value to suggest a new token
+    minUsdValueThreshold: 1000, // Minimum USD value to suggest a new token
   },
 }
 
@@ -733,6 +733,17 @@ function generateCopyPasta(
           continue
         }
 
+        // Skip tokens with unknown symbols/tickers
+        if (
+          !result.token.symbol ||
+          result.token.symbol.startsWith('UNKNOWN_')
+        ) {
+          logDebug(
+            `Skipping token with unknown symbol: ${result.token.address}`,
+          )
+          continue
+        }
+
         // Check for duplicates safely
         if (currentProjectAddedHubs.has(hubAddr)) {
           logDebug(
@@ -763,10 +774,12 @@ function generateCopyPasta(
 
         projectInitialAddresses.push(`    "${hubAddr}",`)
         projectNames.push(`    "${hubAddr}": "${vaultName}",`)
+
+        // MODIFIED: Use hub address as key with vault name in comment
         projectIgnoreMethods.push(
-          `    "${vaultName}": ${JSON.stringify({ ignoreMethods: ['token', 'token__', 'hook__'] })},`,
+          `    "${hubAddr}": {\n      // ${vaultName}\n      "ignoreMethods": ["token", "token__", "hook__"]\n    },`,
         )
-        // Assuming EthereumAddress is a helper/type available in the target file
+
         projectEscrows.push(
           `    discovery.getEscrowDetails({ // ${vaultName}
       address: EthereumAddress('${hubAddr}'),
