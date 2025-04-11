@@ -43,6 +43,29 @@ export function useChart() {
   return context
 }
 
+const chartContainerClassNames = cn(
+  'group relative',
+  "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+  // Tooltip cursor line
+  '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary [&_.recharts-curve.recharts-tooltip-cursor]:stroke-2',
+  // Tooltip cursor bar
+  '[&_.recharts-rectangle.recharts-tooltip-cursor]:fill-primary/25',
+  // Tooltip
+  '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
+  // Active dots
+  "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none [&_.recharts-layer]:outline-none",
+  // Cartesian grid line
+  "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
+  // Cartesian X axis tick text
+  '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
+  // Cartesian Y axis tick text
+  '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
+  // Polar grid
+  "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
+  // Reference line
+  "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
+)
+
 function ChartContainer<T extends { timestamp: number }>({
   className,
   children,
@@ -50,6 +73,8 @@ function ChartContainer<T extends { timestamp: number }>({
   data,
   isLoading,
   milestones,
+  loaderClassName,
+  logoClassName,
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -58,6 +83,8 @@ function ChartContainer<T extends { timestamp: number }>({
   >['children']
   data: T[] | undefined
   milestones?: Milestone[]
+  loaderClassName?: string
+  logoClassName?: string
   isLoading?: boolean
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
@@ -68,26 +95,8 @@ function ChartContainer<T extends { timestamp: number }>({
       <div
         ref={ref}
         className={cn(
-          'group relative h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
-          "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
-          // Tooltip cursor line
-          '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary [&_.recharts-curve.recharts-tooltip-cursor]:stroke-2',
-          // Tooltip cursor bar
-          '[&_.recharts-rectangle.recharts-tooltip-cursor]:fill-primary/25',
-          // Tooltip
-          '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
-          // Active dots
-          "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none [&_.recharts-layer]:outline-none",
-          // Cartesian grid line
-          "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
-          // Cartesian X axis tick text
-          '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
-          // Cartesian Y axis tick text
-          '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
-          // Polar grid
-          "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
-          // Reference line
-          "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
+          chartContainerClassNames,
+          'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
           className,
         )}
         {...props}
@@ -101,9 +110,8 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              'top-[63px] group-has-[.recharts-legend-wrapper]:top-[58px]',
-              'md:top-[84px] md:group-has-[.recharts-legend-wrapper]:top-[78px]',
-              'xl:top-[98px] xl:group-has-[.recharts-legend-wrapper]:top-[93px]',
+              'top-[calc(50%_-_5px)] -translate-y-1/2 group-has-[.recharts-legend-wrapper]:top-[calc(50%_-_11px)]',
+              loaderClassName,
             )}
           />
         )}
@@ -111,7 +119,10 @@ function ChartContainer<T extends { timestamp: number }>({
         {isClient && (
           <Logo
             animated={false}
-            className="pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14 "
+            className={cn(
+              'pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              logoClassName,
+            )}
           />
         )}
         {!isLoading && milestones && (
@@ -122,6 +133,29 @@ function ChartContainer<T extends { timestamp: number }>({
   )
 }
 ChartContainer.displayName = 'Chart'
+
+function SimpleChartContainer({
+  className,
+  children,
+  meta,
+  ...props
+}: React.ComponentProps<'div'> & {
+  meta: ChartMeta
+  children: React.ComponentProps<
+    typeof RechartsPrimitive.ResponsiveContainer
+  >['children']
+}) {
+  return (
+    <ChartContext.Provider value={{ meta }}>
+      <div className={cn(chartContainerClassNames, className)} {...props}>
+        <RechartsPrimitive.ResponsiveContainer>
+          {children}
+        </RechartsPrimitive.ResponsiveContainer>
+      </div>
+    </ChartContext.Provider>
+  )
+}
+SimpleChartContainer.displayName = 'Chart'
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
@@ -225,8 +259,9 @@ function getPayloadConfigFromPayload(
 
 export {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipWrapper,
   ChartLegend,
   ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipWrapper,
+  SimpleChartContainer,
 }

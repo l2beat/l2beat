@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
+import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
@@ -8,10 +9,9 @@ import { TRPCReactProvider } from '~/trpc/react'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { TooltipProvider } from '../components/core/tooltip/tooltip'
 import { GlossaryContextProvider } from '../components/markdown/glossary-context'
-import { ProgressBar } from '../components/progress-bar'
+import { NavigationProgressBar } from '../components/navigation-progress-bar'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -59,7 +59,7 @@ export default async function RootLayout({
                       {children}
                     </RecategorisationPreviewContextProvider>
                   </SearchBarContextProvider>
-                  <ProgressBar />
+                  <NavigationProgressBar />
                 </GlossaryContextProvider>
               </TooltipProvider>
             </PlausibleProvider>

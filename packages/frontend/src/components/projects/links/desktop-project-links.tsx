@@ -59,7 +59,7 @@ function ProjectLinkItem({
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name}
-          <CustomLinkIcon className="fill-current" />
+          <CustomLinkIcon className="shrink-0 fill-current" />
         </NavigationMenuLink>
       </NavigationMenuItem>
     )
@@ -112,7 +112,7 @@ function MultiProjectLink({
                 />
               )}
               {parsedSocial ? parsedSocial.text : formatLink(link)}
-              <CustomLinkIcon className="fill-current" />
+              <CustomLinkIcon className="shrink-0 fill-current" />
             </NavigationMenuLink>
           )
         })}

@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { DERIVATION } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -35,8 +34,6 @@ export const mode: ScalingProject = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   },
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),

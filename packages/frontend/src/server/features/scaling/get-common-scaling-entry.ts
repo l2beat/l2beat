@@ -69,7 +69,7 @@ export function getCommonScalingEntry({
         id: 'hostChain',
         value: project.scalingInfo.hostChain.name,
       },
-      { id: 'daLayer', value: project.scalingInfo.daLayer },
+      { id: 'daLayer', value: project.scalingInfo.daLayer ?? 'Unknown' },
       {
         id: 'raas',
         value: project.scalingInfo.raas ?? 'No RaaS',

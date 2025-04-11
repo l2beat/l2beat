@@ -11,11 +11,12 @@ import {
   DA_LAYERS,
   DA_MODES,
   DERIVATION,
+  ESCROW,
   EXITS,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
 } from '../../common'
-import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
@@ -325,8 +326,6 @@ export const optimism: ScalingProject = {
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1725314400), // 2024-09-03T00:00:00Z
   },
   scopeOfAssessment: {
     inScope: [

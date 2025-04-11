@@ -4,6 +4,7 @@ import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { scalingSummaryColumns } from '../../scaling/summary/_components/table/columns'
+import { EcosystemWidget } from './widgets/ecosystem-widget'
 
 interface Props {
   entries: ScalingSummaryEntry[]
@@ -28,5 +29,9 @@ export function EcosystemProjectsTable({ entries }: Props) {
       ],
     },
   })
-  return <RollupsTable table={table} />
+  return (
+    <EcosystemWidget className="mt-[calc(var(--spacing)*1.5)] rounded-b-none !pb-0 !pt-3 max-md:-mx-4">
+      <RollupsTable table={table} />
+    </EcosystemWidget>
+  )
 }

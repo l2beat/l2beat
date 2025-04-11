@@ -193,8 +193,6 @@ const config: Config = {
       'chart-stacked-yellow': 'hsl(var(--chart-stacked-yellow))',
       'chart-stacked-pink': 'hsl(var(--chart-stacked-pink))',
       'chart-stacked-purple': 'hsl(var(--chart-stacked-purple))',
-      'ecosystem-primary': 'var(--ecosystem-primary)',
-      'ecosystem-secondary': 'var(--ecosystem-secondary)',
     },
     screens: {
       xs: '400px',

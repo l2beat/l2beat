@@ -129,6 +129,29 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
+  describe(DataAvailabilityRepository.prototype.getForDaLayerByTimestamp
+    .name, () => {
+    it('returns records for a DA layer at a specific timestamp', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 200n),
+        record('project-b', 'layer-a', START + 1 * UnixTime.DAY, 300n),
+        record('project-a', 'layer-a', START + 2 * UnixTime.DAY, 300n),
+        record('project-a', 'layer-a', START + 3 * UnixTime.DAY, 400n),
+      ])
+
+      const results = await repository.getForDaLayerByTimestamp(
+        'layer-a',
+        START + 1 * UnixTime.DAY,
+      )
+
+      expect(results).toEqualUnsorted([
+        record('project-a', 'layer-a', START + 1 * UnixTime.DAY, 200n),
+        record('project-b', 'layer-a', START + 1 * UnixTime.DAY, 300n),
+      ])
+    })
+  })
+
   describe(DataAvailabilityRepository.prototype.getByProjectIdsAndTimeRange
     .name, () => {
     it('should return records for projects in given time range', async () => {

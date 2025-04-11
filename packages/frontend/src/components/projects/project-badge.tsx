@@ -19,10 +19,12 @@ export interface BadgeWithParams extends Badge {
 export function ProjectBadge({
   badge,
   disableInteraction,
+  disableTooltip,
   className,
 }: {
   badge: BadgeWithParams
   className?: ClassNameValue
+  disableTooltip?: boolean
   disableInteraction?: boolean
 }) {
   const badgeImg = (
@@ -35,7 +37,7 @@ export function ProjectBadge({
         'h-16 w-auto lg:h-[4.5rem]',
         !disableInteraction &&
           badge.href &&
-          'transition-all hover:scale-[1.08]',
+          'transition-all ease-in-out hover:scale-[1.08]',
         className,
       )}
     />
@@ -47,7 +49,7 @@ export function ProjectBadge({
       badgeImg
     )
 
-  if (disableInteraction) return component
+  if (disableInteraction || disableTooltip) return component
 
   return (
     <Tooltip delayDuration={0}>

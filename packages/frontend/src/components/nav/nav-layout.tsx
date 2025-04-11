@@ -4,8 +4,10 @@ import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
+import { EcosystemsIcon } from '~/icons/pages/ecosystems'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
+import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
 import { HiringBadge } from '../badge/hiring-badge'
 import { SidebarProvider } from '../core/sidebar'
@@ -142,6 +144,26 @@ export async function NavLayout({
       icon: (
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
+    },
+    env.NEXT_PUBLIC_ECOSYSTEMS && {
+      type: 'multiple',
+      title: 'Ecosystems',
+      match: 'ecosystems',
+      disableMobileTabs: true,
+      icon: (
+        <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      ),
+      preventTitleNavigation: true,
+      links: (
+        await ps.getProjects({
+          select: ['ecosystemConfig'],
+        })
+      )
+        .map((ecosystem) => ({
+          title: ecosystem.name,
+          href: `/ecosystems/${ecosystem.slug}`,
+        }))
+        .sort((a, b) => a.title.localeCompare(b.title)),
     },
   ])
 

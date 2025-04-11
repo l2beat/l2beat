@@ -18,7 +18,7 @@ import {
 import { useGlobalShortcut } from '~/hooks/use-global-shortcut'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useTracking } from '~/hooks/use-tracking'
-import { useRouterWithProgressBar } from '../progress-bar'
+import { useRouterWithProgressBar } from '../navigation-progress-bar'
 import type { SearchBarCategory } from './search-bar-categories'
 import { searchBarCategories } from './search-bar-categories'
 import { useSearchBarContext } from './search-bar-context'

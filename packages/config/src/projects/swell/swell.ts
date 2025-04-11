@@ -44,8 +44,6 @@ export const swell = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1703030400), // 2024-12-19T00:00:00Z
   },
   finality: {
     type: 'OPStack',

@@ -11,13 +11,21 @@ import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'
 import type { ProjectLink } from './types'
 
+interface Props {
+  projectLinks: ProjectLink[]
+  className?: string
+  triggerClassName?: string
+}
+
 export function MobileProjectLinks({
   projectLinks,
-}: { projectLinks: ProjectLink[] }) {
+  className,
+  triggerClassName,
+}: Props) {
   return (
-    <Accordion type="single" collapsible={true}>
+    <Accordion type="single" collapsible={true} className={className}>
       <AccordionItem value="links">
-        <AccordionTrigger className="py-4">
+        <AccordionTrigger className={cn('py-4', triggerClassName)}>
           <span className="font-bold">
             Links:{' '}
             <span className="ml-2 font-medium text-secondary">
@@ -25,7 +33,7 @@ export function MobileProjectLinks({
             </span>
           </span>
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="py-2">
           <table className="w-full table-fixed border-collapse text-left text-xs">
             <tbody>
               {projectLinks.map(({ name, links }, i) => (

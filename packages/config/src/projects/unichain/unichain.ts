@@ -35,8 +35,6 @@ export const unichain: ScalingProject = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1728932992), // 2024-10-14T19:09:00Z
   },
   scopeOfAssessment: {
     inScope: [

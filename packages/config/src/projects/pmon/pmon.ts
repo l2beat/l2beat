@@ -36,6 +36,9 @@ export const pmon: ScalingProject = underReviewL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
   associatedTokens: ['PMON'],
   escrows: [
     {

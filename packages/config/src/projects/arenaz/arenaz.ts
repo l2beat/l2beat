@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,6 +13,9 @@ export const arenaz = opStackL2({
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Arena-Z',
     slug: 'arenaz',

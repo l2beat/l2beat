@@ -28,12 +28,12 @@ export function getXAxisProps<T extends { timestamp: number }>(
 
   return {
     ...common,
-    ticks: timestamps.filter(getCondition(actualRangeInDays)),
+    ticks: timestamps.filter(getTickCondition(actualRangeInDays)),
     tickFormatter: getTickFormatter(actualRangeInDays),
   }
 }
 
-function getCondition(actualRangeInDays: number) {
+export function getTickCondition(actualRangeInDays: number) {
   return (timestamp: number) => {
     const start = UnixTime(timestamp)
     const date = UnixTime.toDate(start)
@@ -67,7 +67,7 @@ function getCondition(actualRangeInDays: number) {
   }
 }
 
-function getTickFormatter(actualRangeInDays: number) {
+export function getTickFormatter(actualRangeInDays: number) {
   return (timestamp: number) => {
     const { month, day, time, year } = parseTimestamp(timestamp)
     if (actualRangeInDays <= 1) return time

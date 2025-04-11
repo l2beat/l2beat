@@ -143,12 +143,12 @@ function ChartMilestone({
   )
 }
 
-function MilestoneDrawerContent({
+export function MilestoneDrawerContent({
   milestoneIndex,
   allMilestones,
 }: {
   milestoneIndex: number
-  allMilestones: Milestone[]
+  allMilestones: (Milestone & { projectName?: string })[]
 }) {
   const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
     useState<number>(milestoneIndex)
@@ -167,6 +167,9 @@ function MilestoneDrawerContent({
         </DialogTitle>
         <p className="mb-4 ml-6 text-xs text-secondary">
           {formatDate(tooltipMilestone.date.slice(0, 10))}
+          {tooltipMilestone.projectName
+            ? ` • ${tooltipMilestone.projectName}`
+            : ''}
         </p>
         <p className="mb-2 text-sm leading-[140%]">
           {tooltipMilestone.description}

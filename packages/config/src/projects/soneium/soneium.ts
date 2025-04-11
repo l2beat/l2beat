@@ -37,8 +37,6 @@ export const soneium = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1733134753),
   },
   finality: {
     type: 'OPStack',

@@ -35,6 +35,9 @@ export const xrone: ScalingProject = underReviewL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
   chainConfig: {
     name: 'xrone',
     chainId: 273,
