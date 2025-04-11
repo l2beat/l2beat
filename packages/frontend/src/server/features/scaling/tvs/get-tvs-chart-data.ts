@@ -10,12 +10,12 @@ import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
+import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
 import {
   TvsProjectFilter,
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
-import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
 
 export const TvsChartDataParams = z.object({
   range: TvsChartRange,

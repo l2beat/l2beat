@@ -10,12 +10,12 @@ import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
+import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
 import {
   TvsProjectFilter,
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
-import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
 
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,

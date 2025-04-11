@@ -1,4 +1,4 @@
-import { TokenId, UnixTime } from '@l2beat/shared-pure'
+import { type TokenId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { TokenValueRepository } from './repository'
