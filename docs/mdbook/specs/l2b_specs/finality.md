@@ -11,6 +11,123 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## How to calculate time to inclusion
+
+### OP stack
+
+The OP stack RPC directly exposes a method, `optimism_syncStatus`, to fetch the latest `unsafe`, `safe` or `finalized` L2 block number. An `unsafe` block is a preconfirmed block but not yet published on L1, a `safe` block is a block that has been published on L1 but not yet finalized, and a `finalized` block is a block that has been finalized on L1. A PoC script can be found [here](https://gist.github.com/lucadonnoh/9bdd5efeb0c2a1397131c36e0b46d7fe).
+
+The method can be called as follows:
+
+```zsh
+cast rpc optimism_syncStatus --rpc-url <rpc-url>
+```
+
+Most RPCs do not support such method, but fortunately QuickNode does. An example of the output is as follows:
+
+```json
+{
+  "current_l1": {
+    "hash": "0x2cd7146cf93bae42f59ec1718034ab2f56a5ef2dcddf576e00b0a2538f63a840",
+    "number": 22244495,
+    "parentHash": "0x217b42bbdb4924495699403d2884373d10b24e63f45d2702c6087dee7024a099",
+    "timestamp": 1744359995
+  },
+  "current_l1_finalized": {
+    "hash": "0xbd1ee29567ddd0eda260b9e87e782dbb8253de95ba8f3802a3cbf3a3cac5ee8e",
+    "number": 22244412,
+    "parentHash": "0x13eb164b6245a7dca628ccac2c8a37780df35cc5b764d6fad345c9afac3ec6ec",
+    "timestamp": 1744358999
+  },
+  "head_l1": {
+    "hash": "0x2cd7146cf93bae42f59ec1718034ab2f56a5ef2dcddf576e00b0a2538f63a840",
+    "number": 22244495,
+    "parentHash": "0x217b42bbdb4924495699403d2884373d10b24e63f45d2702c6087dee7024a099",
+    "timestamp": 1744359995
+  },
+  "safe_l1": {
+    "hash": "0x609b0ca4539ff39a6521ff8ac46fa1fee5e717bd4a5931f2efce27f1d3d6ec70",
+    "number": 22244444,
+    "parentHash": "0xdd12087c45f149036c9ad5ce8f4d1880d42ed0c6029124b0a66882a68335647e",
+    "timestamp": 1744359383
+  },
+  "finalized_l1": {
+    "hash": "0xbd1ee29567ddd0eda260b9e87e782dbb8253de95ba8f3802a3cbf3a3cac5ee8e",
+    "number": 22244412,
+    "parentHash": "0x13eb164b6245a7dca628ccac2c8a37780df35cc5b764d6fad345c9afac3ec6ec",
+    "timestamp": 1744358999
+  },
+  "unsafe_l2": {
+    "hash": "0x9c3fba7839fa336e448407f387d8945e64f363afc48a3eed675728a3f4ff941c",
+    "number": 134380614,
+    "parentHash": "0xcb092179b9158964c02761a0511fd33c72b5e75df44ba2be245653940a28a69d",
+    "timestamp": 1744360005,
+    "l1origin": {
+      "hash": "0xb47909b847438d13914c629a49ca9113dd3828abab1a7c01e146c2817e739ae9",
+      "number": 22244484
+    },
+    "sequenceNumber": 2
+  },
+  "safe_l2": {
+    "hash": "0x778aa29f31e03923e2f8dd85aa2570504d4d956dbb1d6c94b00379c282eea5b5",
+    "number": 134380401,
+    "parentHash": "0x30977603570f5134cdf98922630095b52d25857bf24a8aa367d8fd01fda8a56b",
+    "timestamp": 1744359579,
+    "l1origin": {
+      "hash": "0x7ff5dde61b11bf0af83c93d8e8a51c519373495fd7cb5b74d74a4894c1e2d9ec",
+      "number": 22244448
+    },
+    "sequenceNumber": 5
+  },
+  "finalized_l2": {
+    "hash": "0x295df0a07e17c35f93422f83c47479f856e9fafde5b9d03c7714381d627035b2",
+    "number": 134379981,
+    "parentHash": "0xe110aa8531bcfb0c4c5e529f60a99751b9a9842797ef4d293b2cf514e496a4b7",
+    "timestamp": 1744358739,
+    "l1origin": {
+      "hash": "0xf999ff954c1a823b10ecc679c611bb2bc0c7cc7e5ef344c5468a4529204eab33",
+      "number": 22244379
+    },
+    "sequenceNumber": 0
+  },
+  "pending_safe_l2": {
+    "hash": "0x778aa29f31e03923e2f8dd85aa2570504d4d956dbb1d6c94b00379c282eea5b5",
+    "number": 134380401,
+    "parentHash": "0x30977603570f5134cdf98922630095b52d25857bf24a8aa367d8fd01fda8a56b",
+    "timestamp": 1744359579,
+    "l1origin": {
+      "hash": "0x7ff5dde61b11bf0af83c93d8e8a51c519373495fd7cb5b74d74a4894c1e2d9ec",
+      "number": 22244448
+    },
+    "sequenceNumber": 5
+  },
+  "cross_unsafe_l2": {
+    "hash": "0x9c3fba7839fa336e448407f387d8945e64f363afc48a3eed675728a3f4ff941c",
+    "number": 134380614,
+    "parentHash": "0xcb092179b9158964c02761a0511fd33c72b5e75df44ba2be245653940a28a69d",
+    "timestamp": 1744360005,
+    "l1origin": {
+      "hash": "0xb47909b847438d13914c629a49ca9113dd3828abab1a7c01e146c2817e739ae9",
+      "number": 22244484
+    },
+    "sequenceNumber": 2
+  },
+  "local_safe_l2": {
+    "hash": "0x778aa29f31e03923e2f8dd85aa2570504d4d956dbb1d6c94b00379c282eea5b5",
+    "number": 134380401,
+    "parentHash": "0x30977603570f5134cdf98922630095b52d25857bf24a8aa367d8fd01fda8a56b",
+    "timestamp": 1744359579,
+    "l1origin": {
+      "hash": "0x7ff5dde61b11bf0af83c93d8e8a51c519373495fd7cb5b74d74a4894c1e2d9ec",
+      "number": 22244448
+    },
+    "sequenceNumber": 5
+  }
+}
+```
+
+The time to inclusion of L2 blocks can be calculated by polling the method and checking when the `safe_l2` block number gets updated. The `safe_l2` value refers to the latest L2 block that has been published on L1, where the latest L1 block used by the derivation pipeline is the `current_l1` block. Assuming that all blocks in between the previous `safe_l2` value and the current `safe_l2` value are included in the `current_l1` block when the `safe_l2` value is updated, the time to inclusion of each L2 block between the previous `safe_l2+1` and the current `safe_l2` value can be calculated by subtracting the L2 block timestamp from the `current_l1` timestamp. The assumption has been lightly manually tested and seems to hold. 
+
 ## How to calculate withdrawal times (L2 -> L1)
 
 To calculate the withdrawal time from L2 to L1, we need to fetch the time when the withdrawal is initiated on L2 and the time when it is ready to be executed on L1 and calculate the interval.
