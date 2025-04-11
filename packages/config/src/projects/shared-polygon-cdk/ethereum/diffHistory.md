@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd6f99bf320613403cec5a74d4b496f987c9872a8
+Generated with discovered.json: 0x284376ef612620b61a9c6c7e90fb6481ef8a575c
 
-# Diff at Fri, 11 Apr 2025 05:30:44 GMT:
+# Diff at Fri, 11 Apr 2025 06:50:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22166600
-- current block number: 22243613
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22166600
+- current block number: 22244012
 
 ## Description
 
-Okto sent one pessimistic proof. 
+Okto sent first pessimistic proof. 
 their version: https://docs.okto.tech/docs/okto-layer/okto-chain#architecture-and-technology
 
 wallet with some test txs interacting with the shared bridge: https://etherscan.io/address/0x3899edd8656cdb21c0ecc06f3b7a2a0bf9d42ec4
@@ -21,6 +21,32 @@ wallet with some test txs interacting with the shared bridge: https://etherscan.
 +++ description: Lists any rollupID that sends a pessimistic proof.
       values.pessimisticProofSenders.1:
 +        17
+    }
+```
+
+Generated with discovered.json: 0x6bb793b34d8bd60b4eb430b5973da13db3337741
+
+# Diff at Thu, 10 Apr 2025 14:43:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22166600
+- current block number: 22166600
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166600 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
     }
 ```
 

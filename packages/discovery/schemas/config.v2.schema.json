@@ -2,29 +2,110 @@
   "type": "object",
   "properties": {
     "$schema": { "type": "string" },
-    "import": {
-      "$ref": "#/definitions/CommonDiscoveryConfig/properties/import"
-    },
-    "maxAddresses": {
-      "$ref": "#/definitions/CommonDiscoveryConfig/properties/maxAddresses"
-    },
-    "maxDepth": {
-      "$ref": "#/definitions/CommonDiscoveryConfig/properties/maxDepth"
-    },
-    "overrides": {
-      "$ref": "#/definitions/CommonDiscoveryConfig/properties/overrides"
-    },
-    "sharedModules": {
-      "$ref": "#/definitions/CommonDiscoveryConfig/properties/sharedModules"
-    },
-    "categories": {
-      "$ref": "#/definitions/CommonDiscoveryConfig/properties/categories"
-    },
-    "types": { "$ref": "#/definitions/CommonDiscoveryConfig/properties/types" },
-    "names": { "$ref": "#/definitions/CommonDiscoveryConfig/properties/names" },
     "name": { "type": "string", "minLength": 1 },
     "chain": { "type": "string", "minLength": 1 },
-    "initialAddresses": { "type": "array", "items": { "type": "string" } }
+    "initialAddresses": { "type": "array", "items": { "type": "string" } },
+    "import": { "type": "array", "items": { "type": "string" } },
+    "maxAddresses": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
+    "maxDepth": { "type": "number", "default": 6 },
+    "sharedModules": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "types": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/DiscoveryCustomType" }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
+    },
+    "names": { "type": "object", "additionalProperties": { "type": "string" } },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "extends": {
+            "$ref": "#/definitions/DiscoveryContract/properties/extends"
+          },
+          "canActIndependently": {
+            "$ref": "#/definitions/DiscoveryContract/properties/canActIndependently"
+          },
+          "ignoreDiscovery": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
+          },
+          "proxyType": {
+            "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
+          },
+          "displayName": {
+            "$ref": "#/definitions/ColorContract/properties/displayName"
+          },
+          "ignoreInWatchMode": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
+          },
+          "ignoreMethods": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreMethods"
+          },
+          "ignoreRelatives": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
+          },
+          "methods": {
+            "$ref": "#/definitions/DiscoveryContract/properties/methods"
+          },
+          "manualSourcePaths": {
+            "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
+          },
+          "types": {
+            "$ref": "#/definitions/DiscoveryContract/properties/types"
+          },
+          "categories": {
+            "$ref": "#/definitions/ColorContract/properties/categories"
+          },
+          "category": {
+            "$ref": "#/definitions/ColorContract/properties/category"
+          },
+          "description": {
+            "$ref": "#/definitions/ColorContract/properties/description"
+          },
+          "references": {
+            "$ref": "#/definitions/ColorContract/properties/references"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "$ref": "#/definitions/ColorContractField/properties/description"
+                },
+                "severity": {
+                  "$ref": "#/definitions/ColorContractField/properties/severity"
+                },
+                "type": {
+                  "$ref": "#/definitions/ColorContractField/properties/type"
+                },
+                "handler": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/handler"
+                },
+                "template": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/template"
+                },
+                "returnType": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/returnType"
+                },
+                "permissions": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/permissions"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
   },
   "required": ["name", "chain", "initialAddresses"],
   "additionalProperties": false,
@@ -504,13 +585,19 @@
       "properties": {
         "handler": { "$ref": "#/definitions/UserHandlerDefinition" },
         "template": { "type": "string" },
-        "description": { "type": "string" },
         "returnType": { "type": "string" },
-        "severity": { "$ref": "#/definitions/ContractFieldSeverity" },
         "permissions": {
           "type": "array",
           "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
-        },
+        }
+      },
+      "additionalProperties": false
+    },
+    "ColorContractField": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
         "type": {
           "anyOf": [
             { "$ref": "#/definitions/ContractValueType" },
@@ -594,7 +681,6 @@
           "additionalProperties": {
             "$ref": "#/definitions/DiscoveryContractField"
           },
-          "propertyNames": { "pattern": "^\\$?[a-z_][a-z\\d_]*$" },
           "default": {}
         },
         "methods": {
@@ -607,16 +693,6 @@
           "additionalProperties": { "type": "string" },
           "default": {}
         },
-        "categories": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
-        },
-        "category": { "type": "string" },
-        "description": { "type": "string" },
-        "references": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/ExternalReference" }
-        },
         "types": {
           "type": "object",
           "additionalProperties": {
@@ -627,33 +703,40 @@
       },
       "additionalProperties": false
     },
-    "CommonDiscoveryConfig": {
+    "ColorContract": {
       "type": "object",
       "properties": {
-        "import": { "type": "array", "items": { "type": "string" } },
-        "maxAddresses": { "type": "number", "exclusiveMinimum": 0 },
-        "maxDepth": { "type": "number" },
-        "overrides": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/definitions/DiscoveryContract" }
-        },
-        "sharedModules": { "type": "array", "items": { "type": "string" } },
+        "displayName": { "type": "string" },
         "categories": {
           "type": "object",
           "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
         },
-        "types": {
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "references": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ExternalReference" }
+        },
+        "fields": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/DiscoveryCustomType"
-          }
+            "$ref": "#/definitions/ColorContractField"
+          },
+          "default": {}
         },
-        "names": {
+        "manualSourcePaths": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "additionalProperties": { "type": "string" },
+          "default": {}
         }
       },
       "additionalProperties": false
+    },
+    "MergedContract": {
+      "anyOf": [
+        { "$ref": "#/definitions/DiscoveryContract" },
+        { "$ref": "#/definitions/ColorContract" }
+      ]
     }
   },
   "$schema": "http://json-schema.org/draft-07/schema#"

@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0x44d09412be1e78feb1b2aefe24812df4d39f1a91e8660a5d6af041fecf2d0fb7",
+  "configHash": "0x528f2044b782b6ef306c4c2e46f84027ddd1c0a8d028a16c972d002ac50b4755",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -1379,7 +1379,6 @@
         "0x395444e8f8af03cea56ff4137d997fc94a06817d06cea35a2b467a45c6ee136b"
       ],
       "proxyType": "immutable",
-      "displayName": "GpsFactRegistryAdapter",
       "description": "Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).",
       "sinceTimestamp": 1681722659,
       "sinceBlock": 17065528,
@@ -2596,6 +2595,6 @@
     ]
   },
   "usedTemplates": {
-    "starkex/GpsFactRegistryAdapter": "0xd25d19938656386c9c7d88accb6ce40d364c77e8fc0173bf9678eefbb7532a05"
+    "starkex/GpsFactRegistryAdapter": "0xc3ff6824d6a2d72c063373bdfe223df44165dc38b83d350a408f932288064af7"
   }
 }

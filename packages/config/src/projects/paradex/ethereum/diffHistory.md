@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x67207a4ae642a81a4d370136b8e35eae16b993d2
+Generated with discovered.json: 0xfea565ef449cfae54f7121a04a09ef03df8a5ef8
 
-# Diff at Fri, 11 Apr 2025 05:26:35 GMT:
+# Diff at Fri, 11 Apr 2025 06:46:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22231621
-- current block number: 22243595
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22231621
+- current block number: 22243995
 
 ## Description
 
@@ -23,6 +23,32 @@ MS signer changes.
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xc7b1f536b4e947a2b2af7a716168edbc6347c230
+
+# Diff at Thu, 10 Apr 2025 14:42:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22231621
+- current block number: 22231621
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231621 (main branch discovery), not current.
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      displayName:
+-        "Starknet"
     }
 ```
 

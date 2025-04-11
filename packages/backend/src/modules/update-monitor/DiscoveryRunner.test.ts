@@ -1,9 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  DiscoveryConfig,
+  ConfigRegistry,
   type DiscoveryEngine,
   type IProvider,
+  type TemplateService,
 } from '@l2beat/discovery'
 import { expect, mockFn, mockObject } from 'earl'
 
@@ -16,8 +17,8 @@ describe(DiscoveryRunner.name, () => {
   describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const sourceConfig: DiscoveryConfig = new DiscoveryConfig({
-        ...getMockConfig().raw,
+      const sourceConfig: ConfigRegistry = new ConfigRegistry({
+        ...getMockConfig().structure,
       })
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
@@ -29,6 +30,7 @@ describe(DiscoveryRunner.name, () => {
           }),
         }),
         engine,
+        mockObject<TemplateService>(),
         'ethereum',
       )
       await runner.discoverWithRetry(sourceConfig, 1, Logger.SILENT)
@@ -54,6 +56,7 @@ describe(DiscoveryRunner.name, () => {
             }),
           }),
           engine,
+          mockObject<TemplateService>(),
           'ethereum',
         )
 
@@ -79,6 +82,7 @@ describe(DiscoveryRunner.name, () => {
             }),
           }),
           engine,
+          mockObject<TemplateService>(),
           'ethereum',
         )
 
@@ -98,9 +102,12 @@ describe(DiscoveryRunner.name, () => {
 })
 
 const getMockConfig = () => {
-  return new DiscoveryConfig({
+  return new ConfigRegistry({
     name: 'project-a',
     chain: 'ethereum',
+    maxAddresses: 100,
+    maxDepth: 6,
     initialAddresses: [],
+    sharedModules: [],
   })
 }

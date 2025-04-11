@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6a608a0eacb901588996e375fb4ea2a139ec5462
+Generated with discovered.json: 0x3530aa3c431a2c7f09c63d96aa57949befa79997
 
-# Diff at Fri, 11 Apr 2025 05:45:06 GMT:
+# Diff at Fri, 11 Apr 2025 06:41:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 28449617
-- current block number: 28780476
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 28449617
+- current block number: 28782173
 
 ## Description
 
@@ -21,7 +21,7 @@ change vkey.
     }
 ```
 
-Generated with discovered.json: 0x864231a8c3398782ba012a823a5019de345e42f9
+Generated with discovered.json: 0x223b48d9dda015cbec48f8baff11716ec4147d18
 
 # Diff at Fri, 04 Apr 2025 09:34:38 GMT:
 

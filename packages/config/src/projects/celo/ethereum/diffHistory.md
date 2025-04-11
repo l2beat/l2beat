@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x5323fab98785e15567dcd04489ff626b005a6b43
+Generated with discovered.json: 0xc6bfbf9782002f1d1668cd99a53a81f4b7fc89d1
+
+# Diff at Thu, 10 Apr 2025 14:42:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208467
+- current block number: 22208467
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208467 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0xe4f4e4148ea7d08d17ba43eaf24f1693d6cc9a25
 
 # Diff at Fri, 04 Apr 2025 09:43:57 GMT:
 

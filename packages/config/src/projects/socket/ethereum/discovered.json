@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 22243667,
-  "configHash": "0x6ac125ade7ab7adde9e6a3c647f2d30f01532d8ec957e4baaf8c9aa287197406",
+  "blockNumber": 22244020,
+  "configHash": "0xf3108d8487b99f20dbf79afb46874564dc5e0adef03d9bcfa9f89cd16d94cf01",
   "entries": [
     {
       "name": "WETH Vault Kinto",
@@ -811,7 +811,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 13056,
+        "globalMessageCount": 13058,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -4309,6 +4309,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

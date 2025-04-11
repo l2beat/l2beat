@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "everclear",
   "blockNumber": 1077934,
-  "configHash": "0xb4539e757eed11d7d8b0a13c7f6fc6eaee3d2398b10092f09459b0aa2f4b0ace",
+  "configHash": "0x5e8afca5ded48bb75cdd0606b3c4db835005a7abfa3c8c090b88f6933e0b92d5",
   "entries": [
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -35,7 +35,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ERC1967Proxy",
+      "name": "EverclearHub",
       "address": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "sourceHashes": [
@@ -47,7 +47,6 @@
         "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
       ],
       "proxyType": "Everclear proxy",
-      "displayName": "EverclearHub",
       "issuedPermissions": [
         {
           "permission": "upgrade",

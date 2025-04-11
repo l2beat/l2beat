@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 22073290,
-  "configHash": "0x239b93e94d05393c785ac1eadf56210e41a9916c9f0d4281f5f7358dc6956228",
+  "configHash": "0x32ef0367033f4796b861ab1c0a74da41ea0313da091799be7e76c3d6241f5835",
   "entries": [
     {
       "name": "TokenBridge",
@@ -710,7 +710,6 @@
         "0xaf04cf94ef4bf759d6466fa262a5e8e54f6d5c9652286fe5d71c9a904de27e5c"
       ],
       "proxyType": "immutable",
-      "displayName": "L1Timelock",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
       "issuedPermissions": [
         {
@@ -1487,10 +1486,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "global/Timelock": "0x78c0e6200d758a9209bea4e159fd18076a0a2643ec0d7227e6cab48f6a65baeb",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "linea/LineaRollup": "0xb863bae919001d7f79ad87c9b2aef4587a823cfb2d06c9e3acee0de223a68645",
-    "linea/TokenBridge": "0x52ed4d3c34c92e4856877bfdbcaa5f64bcb84329a28dea72760feb6b1ffe4a04"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "linea/LineaRollup": "0xa5e5600e398ecaae720afd2c7832a6d3c139931b4bc984d0f7a744f01fab66d9",
+    "linea/TokenBridge": "0x143ff6245d17bfecca857c5e30ec63e65c322c5928fb473d739c6d64525571e7"
   }
 }

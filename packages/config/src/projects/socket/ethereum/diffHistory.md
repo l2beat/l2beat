@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x25855ab378025f44ba1ee6e4e6c857099fed5ed4
+Generated with discovered.json: 0x0972f8691146200f3531134341fb3f729d9f2d65
 
-# Diff at Fri, 11 Apr 2025 05:41:15 GMT:
+# Diff at Fri, 11 Apr 2025 06:52:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22046031
-- current block number: 22243667
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22046031
+- current block number: 22244020
 
 ## Description
 
@@ -631,7 +631,7 @@ polynomial sDai vault owner change.
     }
 ```
 
-Generated with discovered.json: 0xe63c6ede550545d4a014266e8168c476c980f52d
+Generated with discovered.json: 0xa3ed0442ecdf2959506a30f5183be81b673912d8
 
 # Diff at Tue, 18 Mar 2025 08:14:05 GMT:
 

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x69b3fb825b0488aeddb52315a84360aea0fc6316
+Generated with discovered.json: 0xf2343d384ae34d4a9cbc8b06f91a393e234e552b
 
-# Diff at Fri, 11 Apr 2025 05:24:50 GMT:
+# Diff at Fri, 11 Apr 2025 06:42:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22081892
-- current block number: 22239123
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22081892
+- current block number: 22243976
 
 ## Description
 
@@ -62,7 +62,7 @@ Config: anchorGame ignored.
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
 ```
 
-Generated with discovered.json: 0x8c13df2d3ddd442b26ce6819c5cd5c62cf6833e5
+Generated with discovered.json: 0x651dc10812ef91726304aa73dbe185bef077f2b4
 
 # Diff at Fri, 04 Apr 2025 09:24:34 GMT:
 

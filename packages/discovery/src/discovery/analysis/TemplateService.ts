@@ -1,20 +1,17 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
 import path, { join } from 'path'
-
-import { hashJson } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  type json,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import type { z } from 'zod'
 import { contractFlatteningHash, hashFirstSource } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { ColorContract } from '../config/ColorConfig'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
+import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
-import { deepSortByKeys } from '../config/getDiscoveryConfigEntries'
+import { StructureContract } from '../config/StructureConfig'
+import { hashJsonStable } from '../config/hashJsonStable'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -31,11 +28,15 @@ export interface Shape {
 }
 
 export class TemplateService {
-  private readonly loadedTemplates: Record<string, DiscoveryContract> = {}
+  private readonly loadedTemplates: Record<string, StructureContract> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
 
   constructor(private readonly rootPath: string) {}
+
+  getTemplatePath(template: string): string {
+    return path.join(this.rootPath, TEMPLATES_PATH, template)
+  }
 
   exists(template: string): boolean {
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
@@ -124,22 +125,53 @@ export class TemplateService {
     return filteredResult
   }
 
-  loadContractTemplate(template: string): DiscoveryContract {
-    const loadedTemplate = this.loadedTemplates[template]
+  loadContractTemplateBase<T extends z.ZodTypeAny>(
+    template: string,
+    keySuffix: string,
+    parser: T,
+  ): z.infer<T> {
+    const key = `${template}.${keySuffix}`
+    const loadedTemplate = this.loadedTemplates[key]
     if (loadedTemplate !== undefined) {
-      return loadedTemplate
+      return loadedTemplate as z.infer<T>
     }
+
     const templateJsonc = readJsonc(
       path.join(this.rootPath, TEMPLATES_PATH, template, 'template.jsonc'),
     )
-    const parsed = DiscoveryContract.parse(templateJsonc)
-    this.loadedTemplates[template] = parsed
+
+    const parsed = parser.parse(templateJsonc)
+    this.loadedTemplates[key] = parsed
     return parsed
+  }
+
+  loadContractTemplate(template: string): StructureContract {
+    return this.loadContractTemplateBase(
+      template,
+      'contract',
+      StructureContract,
+    )
+  }
+
+  loadContractTemplateColor(template: string | undefined): ColorContract {
+    if (template === undefined) {
+      return ColorContract.parse({})
+    }
+
+    return this.loadContractTemplateBase(template, 'color', ColorContract)
+  }
+
+  loadContractPermissionTemplate(template: string): ContractPermission {
+    return this.loadContractTemplateBase(
+      template,
+      'permission',
+      ContractPermission,
+    )
   }
 
   getTemplateHash(template: string): Hash256 {
     const templateJson = this.loadContractTemplate(template)
-    return hashJson(deepSortByKeys(templateJson) as json)
+    return hashJsonStable(templateJson)
   }
 
   getAllShapes(): Record<string, Shape> {
@@ -174,7 +206,7 @@ export class TemplateService {
   }
 
   // returns reason or undefined
-  discoveryNeedsRefresh(discovery: DiscoveryOutput, config: DiscoveryConfig) {
+  discoveryNeedsRefresh(discovery: DiscoveryOutput, config: ConfigRegistry) {
     const allTemplateHashes = this.getAllTemplateHashes()
     const allShapes = this.getAllShapes()
 
@@ -207,7 +239,10 @@ export class TemplateService {
         contract.template !== undefined &&
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
-        if (config.for(contract.address).extends === undefined) {
+        if (
+          makeEntryStructureConfig(config.structure, contract.address)
+            .extends === undefined
+        ) {
           if (matchingTemplates.length === 0) {
             return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
           }
@@ -220,7 +255,7 @@ export class TemplateService {
       }
     }
 
-    if (discovery.configHash !== config.hash) {
+    if (discovery.configHash !== hashJsonStable(config.structure)) {
       return 'project config or used template has changed'
     }
 
@@ -274,7 +309,7 @@ export class TemplateService {
     writeFileSync(shapePath, JSON.stringify(shapes, null, 2))
   }
 
-  private readShapeSchema(shapePath: string | undefined): ShapeSchema[] {
+  readShapeSchema(shapePath: string | undefined): ShapeSchema[] {
     if (shapePath === undefined) {
       return []
     }

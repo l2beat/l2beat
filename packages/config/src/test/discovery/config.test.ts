@@ -2,7 +2,10 @@ import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
   TemplateService,
+  colorize,
+  combineStructureAndColor,
   getDiscoveryPaths,
+  makeEntryStructureConfig,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -142,9 +145,11 @@ describe('discovery config.jsonc', () => {
     describe('every override correspond to existing contract', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
-          for (const key of Object.keys(c.raw.overrides ?? {})) {
+          for (const key of Object.keys(c.structure.overrides ?? {})) {
             it(`${c.name} on ${c.chain} with the override ${key}`, () => {
-              expect(() => c.for(EthereumAddress(key))).not.toThrow()
+              expect(() =>
+                makeEntryStructureConfig(c.structure, EthereumAddress(key)),
+              ).not.toThrow()
             })
           }
         }
@@ -155,7 +160,7 @@ describe('discovery config.jsonc', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
           it(`${c.name} on ${c.chain}`, () => {
-            for (const sharedModule of c.sharedModules) {
+            for (const sharedModule of c.structure.sharedModules) {
               assert(
                 chainConfigs?.flat()?.some((x) => x.name === sharedModule),
                 `Shared module ${sharedModule} does not exist (${c.name})`,
@@ -173,7 +178,10 @@ describe('discovery config.jsonc', () => {
           const discovery = configReader.readDiscovery(c.name, c.chain)
           it(`${c.name}:${c.chain}`, () => {
             for (const entry of discovery.entries) {
-              const fields = c.for(entry.address).fields
+              const fields = makeEntryStructureConfig(
+                c.structure,
+                entry.address,
+              ).fields
               for (const [key, value] of Object.entries(fields)) {
                 if (
                   value.handler?.type === 'accessControl' &&
@@ -192,13 +200,13 @@ describe('discovery config.jsonc', () => {
   it('every name in config.jsonc is unique', () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        if (c.raw.names === undefined) {
+        if (c.color.names === undefined) {
           continue
         }
 
         assert(
-          new Set(Object.values(c.raw.names)).size ===
-            Object.values(c.raw.names).length,
+          new Set(Object.values(c.color.names)).size ===
+            Object.values(c.color.names).length,
           `names field in ${c.name} configuration includes duplicate names`,
         )
       }
@@ -207,21 +215,35 @@ describe('discovery config.jsonc', () => {
 
   it('discovered.json hash matches the one stored in diffHistory.md', () => {
     for (const configs of chainConfigs ?? []) {
-      if (configs.length > 0) {
-        for (const c of configs) {
-          const currentHash = configReader.readDiscoveryHash(c.name, c.chain)
-          const savedHash = configReader.readDiffHistoryHash(c.name, c.chain)
-          assert(
-            savedHash !== undefined,
-            `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-          )
-          assert(
-            currentHash === savedHash,
-            `The hash for ${c.chain}:${
-              c.name
-            } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-          )
-        }
+      for (const c of configs) {
+        const currentHash = configReader.readDiscoveryHash(c.name, c.chain)
+        const savedHash = configReader.readDiffHistoryHash(c.name, c.chain)
+        assert(
+          savedHash !== undefined,
+          `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+        )
+        assert(
+          currentHash === savedHash,
+          `The hash for ${c.chain}:${
+            c.name
+          } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+        )
+      }
+    }
+  })
+
+  it('is colorized correctly', () => {
+    for (const configs of chainConfigs ?? []) {
+      for (const c of configs) {
+        const discovery = configReader.readDiscovery(c.name, c.chain)
+        const color = colorize(c.color, discovery, templateService)
+
+        const colorized = combineStructureAndColor(discovery, color)
+        const changed = JSON.stringify(discovery) !== JSON.stringify(colorized)
+        assert(
+          !changed,
+          `${c.name} is not colorized correctly. Run l2b colorize.`,
+        )
       }
     }
   })

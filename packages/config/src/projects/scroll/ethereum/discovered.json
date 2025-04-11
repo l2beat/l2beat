@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22123508,
-  "configHash": "0x12bd7a46339ed68761c68ec258ae504d32629da1b9e57277ea6b3503284f2b12",
+  "configHash": "0xd3ce2254c163b5ba8e528b5317f03ec6de5595a9a6a30c8de726aefd35a36500",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -3399,7 +3399,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }
