@@ -30,8 +30,8 @@ export function EcosystemProjectsByDaLayer({
             )}
           </tbody>
         </table>
-        <div className="relative -mt-4 rounded bg-surface-secondary p-4">
-          <div className="absolute left-0 top-[18px] -translate-x-full">
+        <div className="relative -mt-2 rounded bg-surface-secondary p-4">
+          <div className="absolute left-0 top-2.5 -translate-x-full">
             <div className="size-0 border-y-8 border-r-[10px] border-y-transparent border-r-surface-secondary"></div>
           </div>
           <div className="flex flex-col items-center">
@@ -43,7 +43,7 @@ export function EcosystemProjectsByDaLayer({
           <HorizontalSeparator className="my-2.5" />
           <ProgressBar
             progress={75}
-            className="mt-2 h-3 w-full"
+            className="h-3 w-full"
             progressClassName="bg-[--ecosystem-primary]"
             trackClassName="border-[--ecosystem-secondary]"
           />
