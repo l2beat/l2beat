@@ -74,39 +74,92 @@ export function EcosystemTvsByTokenType({
 
   return (
     <EcosystemWidget className={className}>
-      <EcosystemWidgetTitle>TVS breakdown by token type</EcosystemWidgetTitle>
+      <EcosystemWidgetTitle className="xs:hidden">
+        TVS by token type
+      </EcosystemWidgetTitle>
+      <EcosystemWidgetTitle className="max-xs:hidden">
+        TVS breakdown by token type
+      </EcosystemWidgetTitle>
+
       <div className="flex items-center justify-around">
-        <div>
-          {chartData.map((data) => {
-            return (
-              <div className="flex items-baseline gap-2" key={data.tokenType}>
-                <ChartDataIndicator
-                  backgroundColor={data.fill}
-                  type={{ shape: 'square' }}
-                />
-                <div className="text-xs font-medium">
-                  {tokenTypeLabels[data.tokenType]}
-                </div>
-                <div className="text-xs font-medium text-secondary">
-                  {formatPercent(data.tvs / totalTvs)}
-                </div>
-              </div>
-            )
-          })}
-        </div>
+        <table>
+          <tbody>
+            {chartData.map((data) => {
+              return (
+                <tr key={data.tokenType}>
+                  <td className="pr-2">
+                    <div className="flex items-center gap-2">
+                      <ChartDataIndicator
+                        backgroundColor={data.fill}
+                        type={{ shape: 'square' }}
+                      />
+                      <div className="text-xs font-medium">
+                        {tokenTypeLabels[data.tokenType]}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="text-xs font-medium text-secondary">
+                    {formatPercent(data.tvs / totalTvs)}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
         <SimpleChartContainer
           meta={chartMeta}
-          className="aspect-square h-[140px] min-h-[140px]"
+          className="aspect-square h-[116px] min-h-[116px] xs:h-[140px] xs:min-h-[140px]"
         >
           <PieChart>
             <ChartTooltip cursor={false} content={<CustomTooltip />} />
             <Pie
               data={chartData}
+              className="max-xs:hidden"
               dataKey="tvs"
               nameKey="tokenType"
               isAnimationActive={false}
               innerRadius={35}
               outerRadius={70}
+              paddingAngle={2}
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan
+                          x={viewBox.cx}
+                          dy={-3}
+                          className="fill-secondary text-2xs font-medium"
+                        >
+                          Token
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          dy={12}
+                          className="fill-secondary text-2xs font-medium"
+                        >
+                          types
+                        </tspan>
+                      </text>
+                    )
+                  }
+                }}
+              />
+            </Pie>
+            <Pie
+              data={chartData}
+              className="xs:hidden"
+              dataKey="tvs"
+              nameKey="tokenType"
+              isAnimationActive={false}
+              innerRadius={24}
+              outerRadius={58}
               paddingAngle={2}
             >
               <Label

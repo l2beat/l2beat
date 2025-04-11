@@ -15,6 +15,7 @@ export function EcosystemWidget({
 
 export function EcosystemWidgetTitle({
   children,
-}: { children: React.ReactNode }) {
-  return <h2 className="mb-6 text-xl font-bold">{children}</h2>
+  className,
+}: { children: React.ReactNode; className?: string }) {
+  return <h2 className={cn('mb-6 text-xl font-bold', className)}>{children}</h2>
 }

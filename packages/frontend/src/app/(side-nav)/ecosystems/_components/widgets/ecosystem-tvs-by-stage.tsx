@@ -90,7 +90,12 @@ export function EcosystemTvsByStage({
           },
         }}
       />
-      <EcosystemWidgetTitle>TVS breakdown by stage</EcosystemWidgetTitle>
+      <EcosystemWidgetTitle className="xs:hidden">
+        TVS by stage
+      </EcosystemWidgetTitle>
+      <EcosystemWidgetTitle className="max-xs:hidden">
+        TVS breakdown by stage
+      </EcosystemWidgetTitle>
       <div className="flex items-center justify-around">
         <div>
           {Object.entries(tvsByStage).map(([stage, tvs]) => {
@@ -107,43 +112,22 @@ export function EcosystemTvsByStage({
         </div>
         <SimpleChartContainer
           meta={chartMeta}
-          className="aspect-square h-[140px] min-h-[140px]"
+          className="aspect-square h-[115px] min-h-[115px] xs:h-[140px] xs:min-h-[140px]"
         >
           <PieChart>
             <ChartTooltip cursor={false} content={<CustomTooltip />} />
-
-            <Pie
-              data={chartData}
-              dataKey="tvs"
-              nameKey="stage"
-              isAnimationActive={false}
-              innerRadius={35}
-              outerRadius={70}
-              paddingAngle={2}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-secondary text-2xs font-medium"
-                        >
-                          Stages
-                        </tspan>
-                      </text>
-                    )
-                  }
-                }}
-              />
-            </Pie>
+            {getPie({
+              data: chartData,
+              innerRadius: 35,
+              outerRadius: 70,
+              className: 'max-xs:hidden',
+            })}
+            {getPie({
+              data: chartData,
+              innerRadius: 24,
+              outerRadius: 58,
+              className: 'xs:hidden',
+            })}
           </PieChart>
         </SimpleChartContainer>
       </div>
@@ -185,5 +169,57 @@ export function CustomTooltip({
         })}
       </div>
     </ChartTooltipWrapper>
+  )
+}
+
+function getPie({
+  data,
+  innerRadius,
+  outerRadius,
+  className,
+}: {
+  data: {
+    stage: string
+    tvs: number
+    fill: string
+  }[]
+  innerRadius: number
+  outerRadius: number
+  className?: string
+}) {
+  return (
+    <Pie
+      className={className}
+      data={data}
+      dataKey="tvs"
+      nameKey="stage"
+      isAnimationActive={false}
+      innerRadius={innerRadius}
+      outerRadius={outerRadius}
+      paddingAngle={2}
+    >
+      <Label
+        content={({ viewBox }) => {
+          if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+            return (
+              <text
+                x={viewBox.cx}
+                y={viewBox.cy}
+                textAnchor="middle"
+                dominantBaseline="middle"
+              >
+                <tspan
+                  x={viewBox.cx}
+                  y={viewBox.cy}
+                  className="fill-secondary text-2xs font-medium"
+                >
+                  Stages
+                </tspan>
+              </text>
+            )
+          }
+        }}
+      />
+    </Pie>
   )
 }
