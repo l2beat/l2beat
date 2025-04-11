@@ -2,7 +2,7 @@ import {
   ConfigReader,
   TemplateService,
   getDiscoveryPaths,
-  modelPermissions,
+  modelPermissionsForProject,
 } from '@l2beat/discovery'
 import { command, positional, string } from 'cmd-ts'
 
@@ -14,24 +14,16 @@ export const ModelPermissions = command({
       displayName: 'projectQuery',
     }),
   },
-  handler: async (args) => {
+  handler: (args) => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const chainConfigs = await Promise.all(
-      configReader
-        .readAllChainsForProject(args.projectQuery)
-        .flatMap((chain) => configReader.readConfig(args.projectQuery, chain)),
+    const permissions = modelPermissionsForProject(
+      args.projectQuery,
+      configReader,
+      templateService,
     )
-    for (const config of chainConfigs) {
-      const discovery = configReader.readDiscovery(config.name, config.chain)
-      const permissions = modelPermissions(
-        config.structure,
-        discovery,
-        templateService,
-      )
-      console.dir(permissions, { depth: null })
-    }
+    console.log(permissions)
   },
 })

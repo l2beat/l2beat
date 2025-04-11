@@ -72,7 +72,7 @@ export function contractValuesForInterpolation(
   }
 }
 
-export function buildRelationsModel(
+export function buildPermissionsModel(
   chain: string,
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
