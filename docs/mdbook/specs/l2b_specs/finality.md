@@ -45,7 +45,7 @@ Each `game` contract has a function that can be used to retrieve the L2 block nu
 function l2BlockNumber() public pure returns (uint256 l2BlockNumber_)
 ```
 
-The time when the withdrawal is ready to be executed can be calculated by tracking the `AnchorUpdated` event, specifically when its respective L2 block number becomes greater than the L2 block number of the `WithdrawalInitiated` event.
+The time when the withdrawal is ready to be executed can be calculated by tracking the `AnchorUpdated` event, specifically when its respective L2 block number becomes greater than the L2 block number of the `WithdrawalInitiated` event. If the goal is not to track the withdrawal time of a specific withdrawal but to more generally calculate an average, just tracking the `AnchorStateRegistry` and calculating its corresponding `l2BlockNumber` is good enough.
 
 #### Why this approach?
 Withdrawals are not directly executed based on the information in the `AnchorStateRegistry`, but rather based on games whose status is `GameStatus.DEFENDER_WINS`. Since the `AnchorStateRegistry`'s latest anchor root can be updated with the same condition, it is enough to track that to determine when a withdrawal is ready to be executed on L1. This assumes that the `AnchorStateRegistry` is always updated as soon as possible with the latest root that has been confirmed by the proof system. In practice the assumption holds since a game terminates with a `closeGame()` call, which also calls `setAnchorState()` on the `AnchorStateRegistry` to update the root if it is newer than the current saved one.
