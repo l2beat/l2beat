@@ -32,17 +32,26 @@ export async function mapConfig(
   }
 
   const sharedEscrows = project.tvlConfig.escrows.filter((e) => e.sharedEscrow)
+
+  if (sharedEscrows.length > 0) {
+    logger.info(
+      `Querying for shared escrow L2 tokens addresses for project ${project.id}...`,
+    )
+  }
+
   for (const escrow of sharedEscrows) {
     assert(escrow.sharedEscrow)
     if (rpcClient === undefined) {
-      logger.warn(`No rpc client passed, sharedEscrow support is not enabled`)
+      logger.warn(
+        `No rpc client configured, sharedEscrow support is not enabled`,
+      )
       continue
     }
 
     const chainOfL1Escrow = getChain(escrow.chain, chains)
 
     if (escrow.sharedEscrow.type === 'AggLayer') {
-      logger.info(`Querying for AggLayer L2 tokens addresses`)
+      logger.debug(`Querying for AggLayer L2 tokens addresses`)
       const aggLayerL2Tokens = await getAggLayerTokens(
         project,
         escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
@@ -53,7 +62,7 @@ export async function mapConfig(
     }
 
     if (escrow.sharedEscrow.type === 'ElasticChain') {
-      logger.info(`Querying for ElasticChain L2 tokens addresses`)
+      logger.debug(`Querying for ElasticChain L2 tokens addresses`)
 
       const elasticChainTokens = await getElasticChainTokens(
         project,
