@@ -141,7 +141,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
   describe(TokenValueRepository.prototype.getByProjectAndToken.name, () => {
     beforeEach(async () => {
-      await repository.deleteAll()
       await repository.insertMany([
         tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
         tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
@@ -220,7 +219,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
 
   describe(TokenValueRepository.prototype.getByProjectAndTimestamp.name, () => {
     beforeEach(async () => {
-      await repository.deleteAll()
       await repository.insertMany([
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
         tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),

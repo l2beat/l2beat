@@ -201,6 +201,65 @@ describeDatabase(ProjectValueRepository.name, (db) => {
     })
   })
 
+  describe(ProjectValueRepository.prototype.getForType.name, () => {
+    beforeEach(async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT', UnixTime(300), 3000),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1100),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(300), 1500),
+        projectValue('optimism', 'SUMMARY', UnixTime(100), 5000),
+        projectValue('optimism', 'SUMMARY', UnixTime(200), 10000),
+      ])
+    })
+
+    it('returns all records of the specified type within the range', async () => {
+      const result = await repository.getForType('PROJECT', [100, 200])
+
+      expect(result).toEqualUnsorted([
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+      ])
+    })
+
+    it('returns records in ascending timestamp order', async () => {
+      const result = await repository.getForType('PROJECT', [null, 300])
+
+      expect(result).toEqual([
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(300), 3000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(300), 1500),
+      ])
+    })
+
+    it('handles null start timestamp correctly', async () => {
+      const result = await repository.getForType('PROJECT', [null, 150])
+
+      expect(result).toEqual([
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+      ])
+    })
+
+    it('returns empty array when no records match the criteria', async () => {
+      const result = await repository.getForType(
+        'NON_EXISTENT_TYPE' as ProjectValueType,
+        [100, 300],
+      )
+
+      expect(result).toEqual([])
+    })
+  })
+
   describe(ProjectValueRepository.prototype.getLastestValues.name, () => {
     it('returns the latest values for a given type', async () => {
       await repository.upsertMany([
