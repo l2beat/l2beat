@@ -43,63 +43,177 @@ export class DataFormulaExecutor {
     timestamp: UnixTime,
     isLatestMode: boolean,
   ) {
-    const chains = extractUniqueChains(amounts)
-    /** Optimization to fetch block for timestamp only once per chain */
-    const blockNumbers = await this.getBlockNumbers(
-      chains,
+    if (this.dbStorage) {
+      await this.preloadDataFromDB(prices, timestamp, amounts)
+    }
+
+    // Block number need to be fetched before rest of data.
+    // They are needed for onchain amounts fetching
+    const blockNumbersToFetch = await this.processBlockNumbers(
+      amounts,
       timestamp,
       isLatestMode,
     )
+    this.logger.info(
+      `Fetching block numbers (${blockNumbersToFetch.length})...`,
+    )
+    await Promise.all(blockNumbersToFetch)
+    this.logger.info(`Block numbers fetched`)
 
-    if (this.dbStorage) {
-      this.logger.info(`Preloading prices and amounts from DB`)
-
-      const storedPrices = await Promise.all(
-        prices.map((price) => this.localStorage.getPrice(price.id, timestamp)),
-      )
-
-      await this.dbStorage.preloadPrices(
-        prices
-          .map((price) => price.id)
-          .filter((_, index) => storedPrices[index] === undefined),
-        [timestamp],
-      )
-
-      const storedAmounts = await Promise.all(
-        amounts.map((amount) =>
-          this.localStorage.getAmount(amount.id, timestamp),
-        ),
-      )
-
-      await this.dbStorage.preloadAmounts(
-        amounts
-          .map((amount) => amount.id)
-          .filter((_, index) => storedAmounts[index] === undefined),
-        [timestamp],
-      )
-    }
-
+    this.logger.info(`Fetching data, this will take longer time...`)
     const promises: Promise<void>[] = []
 
-    promises.push(
-      ...this.processOnchainAmounts(amounts, timestamp, blockNumbers),
+    const pricesToFetch = await this.processPrices(
+      prices,
+      timestamp,
+      isLatestMode,
     )
+    this.logger.info(`\tFetching prices (${pricesToFetch.length})...`)
+    promises.push(...pricesToFetch)
+
+    promises.push(...this.processOnchainAmounts(amounts, timestamp))
 
     promises.push(
       ...this.processCirculatingSupplies(amounts, timestamp, isLatestMode),
     )
 
-    promises.push(...this.processPrices(prices, timestamp, isLatestMode))
-
-    this.logger.info(`Fetching data...`)
     await Promise.all(promises)
   }
 
-  private processOnchainAmounts(
+  private async preloadDataFromDB(
+    prices: PriceConfig[],
+    timestamp: number,
+    amounts: AmountConfig[],
+  ) {
+    assert(this.dbStorage)
+    this.logger.info(`Preloading prices and amounts from DB`)
+
+    const storedPrices = await Promise.all(
+      prices.map((price) => this.localStorage.getPrice(price.id, timestamp)),
+    )
+
+    await this.dbStorage.preloadPrices(
+      prices
+        .map((price) => price.id)
+        .filter((_, index) => storedPrices[index] === undefined),
+      [timestamp],
+    )
+
+    const storedAmounts = await Promise.all(
+      amounts.map((amount) =>
+        this.localStorage.getAmount(amount.id, timestamp),
+      ),
+    )
+
+    await this.dbStorage.preloadAmounts(
+      amounts
+        .map((amount) => amount.id)
+        .filter((_, index) => storedAmounts[index] === undefined),
+      [timestamp],
+    )
+  }
+
+  private async processBlockNumbers(
     amounts: AmountConfig[],
     timestamp: UnixTime,
-    blockNumbers: Map<string, number>,
+    isLatestMode: boolean,
   ) {
+    const chains = extractUniqueChains(amounts)
+
+    const chainsToFetch: string[] = []
+
+    await Promise.all(
+      chains.map(async (chain) => {
+        if (isLatestMode) {
+          chainsToFetch.push(chain)
+        } else {
+          const cached = await this.localStorage.getBlockNumber(
+            chain,
+            timestamp,
+          )
+          if (cached) {
+            return
+          }
+
+          // TODO: add DB preload
+
+          chainsToFetch.push(chain)
+        }
+      }),
+    )
+
+    return chainsToFetch.map(async (chain) => {
+      if (isLatestMode) {
+        const block = this.blockProviders.get(chain)
+        assert(block, `${chain}: No BlockProvider configured`)
+        const latestBlock = await block.getLatestBlockNumber()
+        await this.localStorage.writeBlockNumber(chain, timestamp, latestBlock)
+      } else {
+        const blockNumber =
+          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
+            timestamp,
+            chain,
+          )
+        await this.localStorage.writeBlockNumber(chain, timestamp, blockNumber)
+      }
+    })
+  }
+
+  private async processPrices(
+    prices: PriceConfig[],
+    timestamp: UnixTime,
+    isLatestMode: boolean,
+  ) {
+    if (isLatestMode) {
+      return [
+        (async () => {
+          const latestPrices = await this.priceProvider.getLatestPrices(
+            prices.map((p) => CoingeckoId(p.priceId)),
+          )
+
+          for (const price of prices) {
+            const latestPrice = latestPrices.get(price.priceId)
+            assert(
+              latestPrice !== undefined,
+              `${price.priceId}: No latest price found`,
+            )
+
+            await this.localStorage.writePrice(price.id, timestamp, latestPrice)
+          }
+        })(),
+      ]
+    } else {
+      const pricesToFetch: PriceConfig[] = []
+
+      await Promise.all(
+        prices.map(async (price) => {
+          const cachedValue = await this.localStorage.getPrice(
+            price.id,
+            timestamp,
+          )
+          if (cachedValue !== undefined) {
+            this.logger.debug(`Cached value found for ${price.priceId}`)
+          }
+
+          const dbValue = await this.dbStorage?.getPrice(price.id, timestamp)
+
+          if (dbValue !== undefined) {
+            this.logger.debug(`DB value found for ${price.priceId}`)
+            await this.localStorage.writePrice(price.id, timestamp, dbValue)
+          }
+
+          pricesToFetch.push(price)
+        }),
+      )
+
+      return pricesToFetch.map(async (price) => {
+        const v = await this.fetchPrice(price, timestamp)
+        await this.localStorage.writePrice(price.id, timestamp, v)
+      })
+    }
+  }
+
+  private processOnchainAmounts(amounts: AmountConfig[], timestamp: UnixTime) {
     return amounts
       .filter((a) => a.type !== 'circulatingSupply' && a.type !== 'const')
       .filter(
@@ -126,7 +240,10 @@ export class DataFormulaExecutor {
           return
         }
 
-        const block = blockNumbers.get(amount.chain)
+        const block = await this.localStorage.getBlockNumber(
+          amount.chain,
+          timestamp,
+        )
         assert(block, `Block number not found for chain ${amount.chain}`)
 
         switch (amount.type) {
@@ -203,54 +320,6 @@ export class DataFormulaExecutor {
 
         const value = await this.fetchCirculatingSupply(amount, timestamp)
         await this.localStorage.writeAmount(amount.id, timestamp, value)
-      })
-    }
-  }
-
-  private processPrices(
-    prices: PriceConfig[],
-    timestamp: UnixTime,
-    isLatestMode: boolean,
-  ) {
-    if (isLatestMode) {
-      return [
-        (async () => {
-          const latestPrices = await this.priceProvider.getLatestPrices(
-            prices.map((p) => CoingeckoId(p.priceId)),
-          )
-
-          for (const price of prices) {
-            const latestPrice = latestPrices.get(price.priceId)
-            assert(
-              latestPrice !== undefined,
-              `${price.priceId}: No latest price found`,
-            )
-
-            await this.localStorage.writePrice(price.id, timestamp, latestPrice)
-          }
-        })(),
-      ]
-    } else {
-      return prices.map(async (price) => {
-        const cachedValue = await this.localStorage.getPrice(
-          price.id,
-          timestamp,
-        )
-        if (cachedValue !== undefined) {
-          this.logger.debug(`Cached value found for ${price.priceId}`)
-          return
-        }
-
-        const dbValue = await this.dbStorage?.getPrice(price.id, timestamp)
-
-        if (dbValue !== undefined) {
-          this.logger.debug(`DB value found for ${price.priceId}`)
-          await this.localStorage.writePrice(price.id, timestamp, dbValue)
-          return
-        }
-
-        const v = await this.fetchPrice(price, timestamp)
-        await this.localStorage.writePrice(price.id, timestamp, v)
       })
     }
   }
@@ -342,43 +411,6 @@ export class DataFormulaExecutor {
       this.logger.warn(`Couldn't fetch price for ${config.priceId}. Assuming 0`)
       return 0
     }
-  }
-
-  async getBlockNumbers(
-    chains: string[],
-    timestamp: UnixTime,
-    isLatestMode: boolean,
-  ) {
-    const result = new Map<string, number>()
-
-    for (const chain of chains) {
-      if (isLatestMode) {
-        const block = this.blockProviders.get(chain)
-        assert(block, `${chain}: No BlockProvider configured`)
-        this.logger.info(`Fetching latest block number on ${chain}`)
-        const latestBlock = await block.getLatestBlockNumber()
-        result.set(chain, latestBlock)
-      } else {
-        const cached = await this.localStorage.getBlockNumber(chain, timestamp)
-        if (cached) {
-          result.set(chain, cached)
-          continue
-        }
-
-        this.logger.info(
-          `Fetching block number for timestamp ${timestamp} on ${chain}`,
-        )
-        const blockNumber =
-          await this.blockTimestampProvider.getBlockNumberAtOrBefore(
-            timestamp,
-            chain,
-          )
-        result.set(chain, blockNumber)
-        await this.localStorage.writeBlockNumber(chain, timestamp, blockNumber)
-      }
-    }
-
-    return result
   }
 }
 
