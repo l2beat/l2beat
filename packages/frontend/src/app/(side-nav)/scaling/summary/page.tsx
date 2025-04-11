@@ -24,7 +24,6 @@ export default async function Page() {
     getScalingSummaryEntries(),
     api.tvs.recategorisedChart.prefetch({
       range: TIME_RANGE,
-      excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
       previewRecategorisation: false,
     }),

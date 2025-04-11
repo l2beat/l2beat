@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type ProjectValueType, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type ProjectValueRecord, toRecord, toRow } from './entity'
 
@@ -55,6 +55,50 @@ export class ProjectValueRepository extends BaseRepository {
 
   async getAll(): Promise<ProjectValueRecord[]> {
     const rows = await this.db.selectFrom('ProjectValue').selectAll().execute()
+    return rows.map(toRecord)
+  }
+
+  async getForType(
+    type: ProjectValueType,
+    range: [number | null, number],
+  ): Promise<ProjectValueRecord[]> {
+    const [from, to] = range
+    let query = this.db
+      .selectFrom('ProjectValue')
+      .selectAll()
+      .where('type', '=', type)
+      .where('timestamp', '<=', UnixTime.toDate(to))
+      .orderBy('timestamp', 'asc')
+
+    if (from !== null) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(from))
+    }
+
+    const rows = await query.execute()
+    return rows.map(toRecord)
+  }
+
+  async getLastestValues(
+    type: ProjectValueType,
+  ): Promise<ProjectValueRecord[]> {
+    const subQuery = this.db
+      .selectFrom('ProjectValue')
+      .select(['project', this.db.fn.max('timestamp').as('maxTimestamp')])
+      .where('type', '=', type)
+      .groupBy('project')
+      .as('latest')
+
+    const rows = await this.db
+      .selectFrom('ProjectValue as pv')
+      .innerJoin(subQuery, (join) =>
+        join
+          .onRef('pv.project', '=', 'latest.project')
+          .onRef('pv.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .where('pv.type', '=', type)
+      .selectAll('pv')
+      .execute()
+
     return rows.map(toRecord)
   }
 

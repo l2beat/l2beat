@@ -107,7 +107,7 @@ export async function getScalingProjectEntry(
     | 'scalingStage'
     | 'scalingTechnology'
     | 'tvlInfo'
-    | 'tvlConfig',
+    | 'tvsConfig',
     // optional
     | 'contracts'
     | 'permissions'
@@ -234,7 +234,7 @@ export async function getScalingProjectEntry(
             projectId: project.id,
           })
         : undefined,
-      getTokensForProject(project.id),
+      getTokensForProject(project),
     ])
 
   const sections: ProjectDetailsSection[] = []

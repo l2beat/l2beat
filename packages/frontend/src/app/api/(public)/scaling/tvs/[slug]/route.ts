@@ -23,7 +23,7 @@ const getCachedResponse = cache(
   async (slug: string, range: TvsChartRange) => {
     const project = await ps.getProject({
       slug,
-      where: ['tvlConfig', 'isScaling'],
+      where: ['tvsConfig', 'isScaling'],
     })
 
     if (!project) {

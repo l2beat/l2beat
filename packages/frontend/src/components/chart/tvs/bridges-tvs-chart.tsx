@@ -35,7 +35,7 @@ export function BridgesTvsChart() {
       const total = native + canonical + external
       return {
         timestamp,
-        value: unit === 'usd' ? total / 100 : total / ethPrice,
+        value: unit === 'usd' ? total : total / ethPrice,
       }
     },
   )

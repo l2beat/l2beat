@@ -61,7 +61,7 @@ export async function getBridgesProjectEntry(
   project: Project<
     | 'statuses'
     | 'tvlInfo'
-    | 'tvlConfig'
+    | 'tvsConfig'
     | 'bridgeInfo'
     | 'bridgeRisks'
     | 'bridgeTechnology'
@@ -137,7 +137,7 @@ export async function getBridgesProjectEntry(
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
-    getTokensForProject(project.id),
+    getTokensForProject(project),
   ])
 
   const sections: ProjectDetailsSection[] = []

@@ -18,7 +18,7 @@ const getCachedResponse = cache(
   async (slug: string) => {
     const project = await ps.getProject({
       slug,
-      select: ['tvlConfig'],
+      select: ['tvsConfig'],
       optional: ['chainConfig', 'contracts'],
     })
 

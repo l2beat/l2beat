@@ -1,11 +1,9 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
-import { groupBy, sum } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { sumValuesPerSource } from './sum-values-per-source'
 
 /*
   This function should only be used for ordering projects by S.
@@ -23,19 +21,14 @@ export type ProjectsLatestTvsUsd = Record<ProjectId, number>
 const getCachedProjectsLatestTvsUsd = cache(
   async (): Promise<Record<ProjectId, number>> => {
     const db = getDb()
-    const values = await db.value.getLatestValues()
-    const groupedByProject = groupBy(values, (e) => e.projectId)
+    const values = await db.tvsProjectValue.getLastestValues('PROJECT')
 
-    return Object.fromEntries(
-      Object.entries(groupedByProject).map(([projectId, records]) => {
-        const summedPerSource = sumValuesPerSource(records, {
-          forTotal: false,
-          excludeAssociatedTokens: false,
-        })
-        const summed = sum(Object.values(summedPerSource))
-        return [projectId, Number(summed) / 100]
-      }),
-    )
+    const groupedByProject: Record<ProjectId, number> = {}
+    for (const value of values) {
+      groupedByProject[value.project as ProjectId] = value.value
+    }
+
+    return groupedByProject
   },
   ['latestTvsUsd-v2'],
   {
@@ -45,7 +38,7 @@ const getCachedProjectsLatestTvsUsd = cache(
 )
 
 async function getMockProjectsLatestTvsUsd(): Promise<ProjectsLatestTvsUsd> {
-  const projects = await ps.getProjects({ where: ['tvlConfig'] })
+  const projects = await ps.getProjects({ where: ['tvsConfig'] })
   return Object.fromEntries(
     projects.map((project, i) => [project.id, projects.length - i]),
   )
