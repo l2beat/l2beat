@@ -1,3 +1,636 @@
+Generated with discovered.json: 0x25855ab378025f44ba1ee6e4e6c857099fed5ed4
+
+# Diff at Fri, 11 Apr 2025 05:41:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07552301e6670c1d1004817f5668cbd8c4aa4dde block: 22046031
+- current block number: 22243667
+
+## Description
+
+polynomial sDai vault owner change.
+
+## Watched changes
+
+```diff
+    contract sDAI Vault Polynomial (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc) {
+    +++ description: None
+      values.owner:
+-        "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332"
++        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.159:
++        "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.158:
++        "0x4B4ed8b47EA37FB0230472fAdaFAF12658f05Ad7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.157:
++        "0x67c97Bd542B3a7F1F1EcF85CBC4409421ccAe971"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.156:
++        "0x6B3614474eE19FA9A2d6D2079a2D73c04E567310"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.155:
+-        "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff"
++        "0x15CEcd5190A43C7798dD2058308781D0662e678E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.154:
+-        "0x67c97Bd542B3a7F1F1EcF85CBC4409421ccAe971"
++        "0xb1178803A726e2077947754de9f2f0cbdA29A60F"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.153:
+-        "0x6B3614474eE19FA9A2d6D2079a2D73c04E567310"
++        "0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.152:
+-        "0x15CEcd5190A43C7798dD2058308781D0662e678E"
++        "0x96E1e9c80619D2038afe30450b3cBeCb2A7D94cd"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.151:
+-        "0xb1178803A726e2077947754de9f2f0cbdA29A60F"
++        "0xA2bE759B86CeA53372C3e9a882047cdC3884D568"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.150:
+-        "0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff"
++        "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.149:
+-        "0x96E1e9c80619D2038afe30450b3cBeCb2A7D94cd"
++        "0x998d7C2257591cC38383B4F91474c5346111f2E6"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.148:
+-        "0xA2bE759B86CeA53372C3e9a882047cdC3884D568"
++        "0x6dED17643D7acFc0bE0e79ff6C4762F12AA5516E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.147:
+-        "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
++        "0x1734067c2CDcFb81ef9672F80DA2D7bfC2CFAE73"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.146:
+-        "0x998d7C2257591cC38383B4F91474c5346111f2E6"
++        "0x457379de638CAFeB1759a22457fe893b288E2e89"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.145:
+-        "0x6dED17643D7acFc0bE0e79ff6C4762F12AA5516E"
++        "0x65A9b862671de5Df85EcE387220C6b10a17230f7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.144:
+-        "0x1734067c2CDcFb81ef9672F80DA2D7bfC2CFAE73"
++        "0x8843557Fd6005d617A735731BF1bAb0461af55E4"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.143:
+-        "0x457379de638CAFeB1759a22457fe893b288E2e89"
++        "0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.142:
+-        "0x65A9b862671de5Df85EcE387220C6b10a17230f7"
++        "0x80f5143AF6BF51B38C038BaFF71465Be9b48cAEe"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.141:
+-        "0x8843557Fd6005d617A735731BF1bAb0461af55E4"
++        "0xFb0c284CD9929eB5139eB027aD7497097Ba25C87"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.140:
+-        "0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F"
++        "0xfa8c07E28461eb7c65b33De024DB97eE4C052C97"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.139:
+-        "0x80f5143AF6BF51B38C038BaFF71465Be9b48cAEe"
++        "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.138:
+-        "0xFb0c284CD9929eB5139eB027aD7497097Ba25C87"
++        "0xBEF69d0acC388091c7C9702aCbFB3b8A873e239e"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.137:
+-        "0xfa8c07E28461eb7c65b33De024DB97eE4C052C97"
++        "0x1b882b9E87ABd7DD9B9b689Bee10Ed6a040033D0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.136:
+-        "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660"
++        "0xd48A35a853858e344aFCbEcCDBf8FCbFaF8e1501"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.135:
+-        "0xBEF69d0acC388091c7C9702aCbFB3b8A873e239e"
++        "0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.134:
+-        "0x1b882b9E87ABd7DD9B9b689Bee10Ed6a040033D0"
++        "0x134643Df54DCaaAf343505361D1Eac58A7400b3d"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.133:
+-        "0xd48A35a853858e344aFCbEcCDBf8FCbFaF8e1501"
++        "0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.132:
+-        "0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8"
++        "0x9d13F2b3B694DE6a1cF58edb5044454CAE3B84E4"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.131:
+-        "0x134643Df54DCaaAf343505361D1Eac58A7400b3d"
++        "0xDABF17a0f13290E85a347119deEb8539B41eF4eB"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.130:
+-        "0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27"
++        "0x083Add2A9afa97Efb6412b293145ce965eCE3600"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.129:
+-        "0x9d13F2b3B694DE6a1cF58edb5044454CAE3B84E4"
++        "0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.128:
+-        "0xDABF17a0f13290E85a347119deEb8539B41eF4eB"
++        "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.127:
+-        "0x083Add2A9afa97Efb6412b293145ce965eCE3600"
++        "0x3553c0102684c20e2f8192d6F013c7242710b4b3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.126:
+-        "0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D"
++        "0x7Eee3241eC98ED0B47c8Bc0e9E3327B541BCDc1D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.125:
+-        "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3"
++        "0x4a43eD818411585fEAaf667a2D3E2605962084e0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.124:
+-        "0x3553c0102684c20e2f8192d6F013c7242710b4b3"
++        "0x3390ca7A0D7C80871B05C3FeBbeEee91307a35ba"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.123:
+-        "0x7Eee3241eC98ED0B47c8Bc0e9E3327B541BCDc1D"
++        "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.122:
+-        "0x4a43eD818411585fEAaf667a2D3E2605962084e0"
++        "0x37C24e7081eb7f2B16bde81b556d082c0839F754"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.121:
+-        "0x3390ca7A0D7C80871B05C3FeBbeEee91307a35ba"
++        "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.120:
+-        "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
++        "0x91CE463148bD7695d4db41f4aA36088E502428F7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.119:
+-        "0x37C24e7081eb7f2B16bde81b556d082c0839F754"
++        "0xcb473D87A56b4609A695753711F727E5c4335cCf"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.118:
+-        "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD"
++        "0x88444394f970B6F21C4f5101003ea513dE3E5406"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.117:
+-        "0x91CE463148bD7695d4db41f4aA36088E502428F7"
++        "0xf7a4a34d64E8fE4FCCffE2f3C985D43409Aa8c9a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.116:
+-        "0xcb473D87A56b4609A695753711F727E5c4335cCf"
++        "0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.115:
+-        "0x88444394f970B6F21C4f5101003ea513dE3E5406"
++        "0xab722902681A260762084A78A2d8f19CfA6A46Ef"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.114:
+-        "0xf7a4a34d64E8fE4FCCffE2f3C985D43409Aa8c9a"
++        "0x8F4e67C61232167584333e23D7d67BD73d80a4F5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.113:
+-        "0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00"
++        "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.112:
+-        "0xab722902681A260762084A78A2d8f19CfA6A46Ef"
++        "0x519Bc0379CA9C4061a6006B4EAc419bC00017B3E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.111:
+-        "0x8F4e67C61232167584333e23D7d67BD73d80a4F5"
++        "0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.110:
+-        "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D"
++        "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.109:
+-        "0x519Bc0379CA9C4061a6006B4EAc419bC00017B3E"
++        "0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.108:
+-        "0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a"
++        "0x254691C06Da387c1050C726cF498eFdA89083820"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.107:
+-        "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5"
++        "0x00CE54B988D8C44bFCae4026C17c37c69C490A12"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.106:
+-        "0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1"
++        "0x5D5a2999E91A336CA99da0cB636898ccB521f40a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.105:
+-        "0x254691C06Da387c1050C726cF498eFdA89083820"
++        "0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.104:
+-        "0x00CE54B988D8C44bFCae4026C17c37c69C490A12"
++        "0x88A05556Af1a8a5BB5964c46Be9D56C379a5E155"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.103:
+-        "0x5D5a2999E91A336CA99da0cB636898ccB521f40a"
++        "0x92469EEf05a071B0e56275b23597b1b701C15a71"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.102:
+-        "0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
++        "0xDBa83C0C654DB1cd914FA2710bA743e925B53086"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.101:
+-        "0x88A05556Af1a8a5BB5964c46Be9D56C379a5E155"
++        "0xFAB1efe6cA9435faEf9e29f40E575e27A74373A9"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.100:
+-        "0x92469EEf05a071B0e56275b23597b1b701C15a71"
++        "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.99:
+-        "0xDBa83C0C654DB1cd914FA2710bA743e925B53086"
++        "0x0c39a1b042AbfC68d10B78081AFE3F58a6523A35"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.98:
+-        "0xFAB1efe6cA9435faEf9e29f40E575e27A74373A9"
++        "0x895b6c1413243562128a9281a7f8891640Ca073f"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.97:
+-        "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D"
++        "0xBF3233Ef07B9552578987e2A2d25F760fBf192e5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.96:
+-        "0x0c39a1b042AbfC68d10B78081AFE3F58a6523A35"
++        "0x6A769e25081396a49a6702758d0830920ac1163A"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.95:
+-        "0x895b6c1413243562128a9281a7f8891640Ca073f"
++        "0x716c339F41eAcfE2dc4775052411394A2Ed04743"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.94:
+-        "0xBF3233Ef07B9552578987e2A2d25F760fBf192e5"
++        "0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.93:
+-        "0x6A769e25081396a49a6702758d0830920ac1163A"
++        "0x5366D4acCC96Ed297e30B8702FBC9b85daA3a459"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.92:
+-        "0x716c339F41eAcfE2dc4775052411394A2Ed04743"
++        "0xCf814e58f1649F94d37E51f730D6bF72409fA09c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.91:
+-        "0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a"
++        "0xf71A92D4bEFc2e18671c3b20377d45729790e880"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.90:
+-        "0x5366D4acCC96Ed297e30B8702FBC9b85daA3a459"
++        "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.89:
+-        "0xCf814e58f1649F94d37E51f730D6bF72409fA09c"
++        "0x50D46c3BB529276aDe59a6678C14302D6B61C853"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.88:
+-        "0xf71A92D4bEFc2e18671c3b20377d45729790e880"
++        "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.87:
+-        "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A"
++        "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.86:
+-        "0x50D46c3BB529276aDe59a6678C14302D6B61C853"
++        "0xF391E487FE3958F0728436Af84455Fd4eBC9c7c9"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.85:
+-        "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87"
++        "0xb5d5E523905bB397bCAfB36B252535a255d3E23C"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.84:
+-        "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E"
++        "0xC3875afddEde146DCfED7e72b2Ad12B853CA1241"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.83:
+-        "0xF391E487FE3958F0728436Af84455Fd4eBC9c7c9"
++        "0x55033cb4583f5526704Ee4C197e99504E504712c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.82:
+-        "0xb5d5E523905bB397bCAfB36B252535a255d3E23C"
++        "0xc706c946623C70B294b91Bd4961E91FaF7A74317"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.81:
+-        "0xC3875afddEde146DCfED7e72b2Ad12B853CA1241"
++        "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.80:
+-        "0x55033cb4583f5526704Ee4C197e99504E504712c"
++        "0xB1b7BC699cAEcB941e7377065c7CE82039889603"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.79:
+-        "0xc706c946623C70B294b91Bd4961E91FaF7A74317"
++        "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.78:
+-        "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35"
++        "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.77:
+-        "0xB1b7BC699cAEcB941e7377065c7CE82039889603"
++        "0x76C9129b44c637500c88760ADd2EbEF07472b549"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.76:
+-        "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
++        "0x76ddfc271089e58Af68D8597D41aEF52Fb53EC3D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.75:
+-        "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B"
++        "0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.74:
+-        "0x76C9129b44c637500c88760ADd2EbEF07472b549"
++        "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.73:
+-        "0x76ddfc271089e58Af68D8597D41aEF52Fb53EC3D"
++        "0x008244E37A90E090dc4abD70F37195075cbE8453"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.72:
+-        "0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c"
++        "0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.71:
+-        "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3"
++        "0xf1807B621efC3B072d1203dD28C880BBEDc56161"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.70:
+-        "0x008244E37A90E090dc4abD70F37195075cbE8453"
++        "0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.69:
+-        "0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67"
++        "0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.68:
+-        "0xf1807B621efC3B072d1203dD28C880BBEDc56161"
++        "0x3f66F272d33B764960779a301c4183306ae50e10"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.67:
+-        "0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276"
++        "0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.66:
+-        "0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252"
++        "0xCE0AB493716d96C0979E0B708BeF1915F3B07e01"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.65:
+-        "0x3f66F272d33B764960779a301c4183306ae50e10"
++        "0x12fBD04CB103c596B78110C70eEDF16821CBfcAE"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.64:
+-        "0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85"
++        "0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.63:
+-        "0xCE0AB493716d96C0979E0B708BeF1915F3B07e01"
++        "0x8E8D89410000A993d2537d26366e1C3010AB90ff"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.62:
+-        "0x12fBD04CB103c596B78110C70eEDF16821CBfcAE"
++        "0x32295769ea702BA9337EE5B65c6b42aFF75FEC62"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.61:
+-        "0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0"
++        "0x94104d7801f30d2f9069118C65Fe63A3A11515B1"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.60:
+-        "0x8E8D89410000A993d2537d26366e1C3010AB90ff"
++        "0xCF83efEe74f61771AF78b05DeA847773D3952C33"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.59:
+-        "0x32295769ea702BA9337EE5B65c6b42aFF75FEC62"
++        "0x432684E7e764343c836d9c78b9245aa774323E40"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.58:
+-        "0x94104d7801f30d2f9069118C65Fe63A3A11515B1"
++        "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.57:
+-        "0xCF83efEe74f61771AF78b05DeA847773D3952C33"
++        "0x12a4CC40a8F89E40F8C849c2F89741D5C9590a14"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.56:
+-        "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5"
++        "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.55:
+-        "0x12a4CC40a8F89E40F8C849c2F89741D5C9590a14"
++        "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.54:
+-        "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E"
++        "0x2B93891dc80ab9696814615f553fd15a3b98d3a2"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.53:
+-        "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166"
++        "0x52DB079d07fb8C2F5FA158C3311d877f3769B01e"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.52:
+-        "0x2B93891dc80ab9696814615f553fd15a3b98d3a2"
++        "0xE88F6b194BD3b43013710A785DDFF41454A19537"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.51:
+-        "0xE88F6b194BD3b43013710A785DDFF41454A19537"
++        "0xBbA3095f6ACA17ff23Df466833D621cc91Db7675"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.50:
+-        "0xBbA3095f6ACA17ff23Df466833D621cc91Db7675"
++        "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.49:
+-        "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
++        "0x223033E1F905eEd161a7B2EBeb786a158156fb8D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.48:
+-        "0x223033E1F905eEd161a7B2EBeb786a158156fb8D"
++        "0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.47:
+-        "0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738"
++        "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.46:
+-        "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96"
++        "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.45:
+-        "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2"
++        "0xdCcFb24f983586144c085426dbfa3414045E19a3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.44:
+-        "0xdCcFb24f983586144c085426dbfa3414045E19a3"
++        "0x876b81F74AD47cF10e5D62aAAc80f9E99f5587FC"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.43:
+-        "0x876b81F74AD47cF10e5D62aAAc80f9E99f5587FC"
++        "0x7E34B138e507570bDCC9b99230cFaA2745F0222C"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.42:
+-        "0x7E34B138e507570bDCC9b99230cFaA2745F0222C"
++        "0x7163FaC3fc420923810cCA5d15949c1523F69B4a"
+    }
+```
+
+```diff
+    contract sUSDe Vault Polynomial (0xC6cfb996A7CFEB89813A68CD13942CD75553032b) {
+    +++ description: None
+      values.owner:
+-        "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332"
++        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+    }
+```
+
+```diff
+    contract USDC Vault Polynomial (0xDE1617Ddb7C8A250A409D986930001985cfad76F) {
+    +++ description: None
+      values.owner:
+-        "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332"
++        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+    }
+```
+
 Generated with discovered.json: 0xe63c6ede550545d4a014266e8168c476c980f52d
 
 # Diff at Tue, 18 Mar 2025 08:14:05 GMT:
