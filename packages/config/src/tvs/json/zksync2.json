@@ -698,7 +698,9 @@
         "type": "circulatingSupply",
         "apiId": "holdstation",
         "decimals": 18,
-        "sinceTimestamp": 1701043200
+        "sinceTimestamp": 1701043200,
+        "address": "0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2",
+        "chain": "zksync2"
       },
       "category": "other",
       "source": "native",
@@ -913,7 +915,9 @@
         "type": "circulatingSupply",
         "apiId": "zeek-coin",
         "decimals": 18,
-        "sinceTimestamp": 1703894400
+        "sinceTimestamp": 1703894400,
+        "address": "0x79db8c67d0c33203da4Efb58F7D325E1e0d4d692",
+        "chain": "zksync2"
       },
       "category": "other",
       "source": "native",
@@ -1796,7 +1800,9 @@
         "type": "circulatingSupply",
         "apiId": "zkswap-finance",
         "decimals": 18,
-        "sinceTimestamp": 1694476800
+        "sinceTimestamp": 1694476800,
+        "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
+        "chain": "zksync2"
       },
       "category": "other",
       "source": "native",
@@ -1813,7 +1819,9 @@
         "type": "circulatingSupply",
         "apiId": "zksync",
         "decimals": 18,
-        "sinceTimestamp": 1718668800
+        "sinceTimestamp": 1718668800,
+        "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "chain": "zksync2"
       },
       "category": "other",
       "source": "native",
@@ -1848,7 +1856,9 @@
         "type": "circulatingSupply",
         "apiId": "zorro",
         "decimals": 18,
-        "sinceTimestamp": 1704758400
+        "sinceTimestamp": 1704758400,
+        "address": "0x244C238325fC1Bdf6EdeD726EE1b47d55895D944",
+        "chain": "zksync2"
       },
       "category": "other",
       "source": "native",

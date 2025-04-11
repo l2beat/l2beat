@@ -89,7 +89,9 @@
         "type": "circulatingSupply",
         "apiId": "catizen",
         "decimals": 18,
-        "sinceTimestamp": 1726617600
+        "sinceTimestamp": 1726617600,
+        "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "native",
@@ -143,7 +145,9 @@
         "type": "circulatingSupply",
         "apiId": "meth-protocol",
         "decimals": 18,
-        "sinceTimestamp": 1730160000
+        "sinceTimestamp": 1730160000,
+        "address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "external",
@@ -287,7 +291,9 @@
         "type": "circulatingSupply",
         "apiId": "lendle",
         "decimals": 18,
-        "sinceTimestamp": 1693958400
+        "sinceTimestamp": 1693958400,
+        "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "native",
@@ -375,7 +381,9 @@
         "type": "circulatingSupply",
         "apiId": "moe-3",
         "decimals": 18,
-        "sinceTimestamp": 1704844800
+        "sinceTimestamp": 1704844800,
+        "address": "0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "native",

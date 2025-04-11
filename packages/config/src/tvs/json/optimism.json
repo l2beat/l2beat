@@ -521,7 +521,9 @@
         "type": "circulatingSupply",
         "apiId": "exa",
         "decimals": 18,
-        "sinceTimestamp": 1691539200
+        "sinceTimestamp": 1691539200,
+        "address": "0x1e925De1c68ef83bD98eE3E130eF14a50309C01B",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",
@@ -538,7 +540,9 @@
         "type": "circulatingSupply",
         "apiId": "extra-finance",
         "decimals": 18,
-        "sinceTimestamp": 1689292800
+        "sinceTimestamp": 1689292800,
+        "address": "0x2dAD3a13ef0C6366220f989157009e501e7938F8",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",
@@ -834,7 +838,9 @@
         "type": "circulatingSupply",
         "apiId": "kite",
         "decimals": 18,
-        "sinceTimestamp": 1710201600
+        "sinceTimestamp": 1710201600,
+        "address": "0xf467C7d5a4A9C4687fFc7986aC6aD5A4c81E1404",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",
@@ -870,7 +876,9 @@
         "type": "circulatingSupply",
         "apiId": "kwenta",
         "decimals": 18,
-        "sinceTimestamp": 1668729600
+        "sinceTimestamp": 1668729600,
+        "address": "0x920Cf626a271321C151D027030D5d08aF699456b",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",
@@ -1077,7 +1085,9 @@
         "type": "circulatingSupply",
         "apiId": "optimism",
         "decimals": 18,
-        "sinceTimestamp": 1653955200
+        "sinceTimestamp": 1653955200,
+        "address": "0x4200000000000000000000000000000000000042",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",
@@ -1151,7 +1161,9 @@
         "type": "circulatingSupply",
         "apiId": "pika-protocol",
         "decimals": 18,
-        "sinceTimestamp": 1685318400
+        "sinceTimestamp": 1685318400,
+        "address": "0x9A601C5bb360811d96A23689066af316a30c3027",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",
@@ -1920,7 +1932,9 @@
         "type": "circulatingSupply",
         "apiId": "velodrome-finance",
         "decimals": 18,
-        "sinceTimestamp": 1687392369
+        "sinceTimestamp": 1687392369,
+        "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+        "chain": "optimism"
       },
       "category": "other",
       "source": "native",

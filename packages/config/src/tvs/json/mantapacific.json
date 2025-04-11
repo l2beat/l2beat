@@ -103,7 +103,9 @@
         "type": "circulatingSupply",
         "apiId": "manta-network",
         "decimals": 18,
-        "sinceTimestamp": 1705536000
+        "sinceTimestamp": 1705536000,
+        "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+        "chain": "mantapacific"
       },
       "category": "other",
       "source": "native",

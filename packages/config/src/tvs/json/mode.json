@@ -232,7 +232,9 @@
         "type": "circulatingSupply",
         "apiId": "mode",
         "decimals": 18,
-        "sinceTimestamp": 1715126400
+        "sinceTimestamp": 1715126400,
+        "address": "0xDfc7C877a950e49D2610114102175A06C2e3167a",
+        "chain": "mode"
       },
       "category": "other",
       "source": "native",

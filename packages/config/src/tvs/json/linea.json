@@ -183,7 +183,9 @@
         "type": "circulatingSupply",
         "apiId": "croak_on_linea",
         "decimals": 18,
-        "sinceTimestamp": 1718064000
+        "sinceTimestamp": 1718064000,
+        "address": "0xaCb54d07cA167934F57F829BeE2cC665e1A5ebEF",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",
@@ -346,7 +348,9 @@
         "type": "circulatingSupply",
         "apiId": "foxy",
         "decimals": 18,
-        "sinceTimestamp": 1712880000
+        "sinceTimestamp": 1712880000,
+        "address": "0x5FBDF89403270a1846F5ae7D113A989F850d1566",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",
@@ -494,7 +498,9 @@
         "type": "circulatingSupply",
         "apiId": "lube",
         "decimals": 18,
-        "sinceTimestamp": 1700524800
+        "sinceTimestamp": 1700524800,
+        "address": "0x1bE3735Dd0C0Eb229fB11094B6c277192349EBbf",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",
@@ -530,7 +536,9 @@
         "type": "circulatingSupply",
         "apiId": "lynex",
         "decimals": 18,
-        "sinceTimestamp": 1708041600
+        "sinceTimestamp": 1708041600,
+        "address": "0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",
@@ -565,7 +573,9 @@
         "type": "circulatingSupply",
         "apiId": "mendi-finance",
         "decimals": 18,
-        "sinceTimestamp": 1701216000
+        "sinceTimestamp": 1701216000,
+        "address": "0x43E8809ea748EFf3204ee01F08872F063e44065f",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",
@@ -601,7 +611,9 @@
         "type": "circulatingSupply",
         "apiId": "nile",
         "decimals": 18,
-        "sinceTimestamp": 1709078400
+        "sinceTimestamp": 1709078400,
+        "address": "0xAAAac83751090C6ea42379626435f805DDF54DC8",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",
@@ -1046,7 +1058,9 @@
         "type": "circulatingSupply",
         "apiId": "zerolend",
         "decimals": 18,
-        "sinceTimestamp": 1715040000
+        "sinceTimestamp": 1715040000,
+        "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
+        "chain": "linea"
       },
       "category": "other",
       "source": "native",

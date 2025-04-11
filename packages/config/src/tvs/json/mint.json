@@ -46,7 +46,9 @@
         "type": "circulatingSupply",
         "apiId": "mint-blockchain",
         "decimals": 18,
-        "sinceTimestamp": 1741305600
+        "sinceTimestamp": 1741305600,
+        "address": "0x8511138208529fe1b9a37b863c7EEE3Fe234b7Ab",
+        "chain": "mint"
       },
       "category": "other",
       "source": "native",
@@ -63,7 +65,9 @@
         "type": "circulatingSupply",
         "apiId": "mintswaptoken",
         "decimals": 18,
-        "sinceTimestamp": 1725321600
+        "sinceTimestamp": 1725321600,
+        "address": "0x9f7bd1Ce3412960524e86183B8F005271C09a5E0",
+        "chain": "mint"
       },
       "category": "other",
       "source": "native",

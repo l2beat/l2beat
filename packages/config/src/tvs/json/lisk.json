@@ -50,7 +50,9 @@
             "type": "circulatingSupply",
             "apiId": "lisk",
             "decimals": 18,
-            "sinceTimestamp": 1715865407
+            "sinceTimestamp": 1715865407,
+            "address": "0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",

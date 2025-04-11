@@ -65,7 +65,9 @@
         "type": "circulatingSupply",
         "apiId": "kroma",
         "decimals": 18,
-        "sinceTimestamp": 1730246400
+        "sinceTimestamp": 1730246400,
+        "address": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+        "chain": "kroma"
       },
       "category": "other",
       "source": "native",
