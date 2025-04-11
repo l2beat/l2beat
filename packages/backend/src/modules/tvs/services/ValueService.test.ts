@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import type {
   BalanceOfEscrowAmountFormula,
   CalculationFormula,
@@ -61,7 +62,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -189,7 +190,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -267,7 +268,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -344,7 +345,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -400,7 +401,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(undefined),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
@@ -447,7 +448,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(100),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       await expect(
         async () => await valueService.calculate(tvsConfig, [mockTimestamp]),
@@ -507,7 +508,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
@@ -581,7 +582,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(200),
       })
 
-      const valueService = new ValueService(mockDataStorage)
+      const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
       // Since both arguments resolve to undefined and are out of range,
       // we expect the calculation to throw an error

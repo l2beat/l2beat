@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22166600,
-  "configHash": "0x3002cf68fe62d01cbbffece237ccf70375e831dffa5356dc14db99af2620fe13",
+  "blockNumber": 22244012,
+  "configHash": "0x92fd09e740d1e3f6c7e98aa3e52fc28d6f6bc5eaa19ef763acfd614b225ca2a2",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -23,7 +23,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -230,7 +229,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x00c72cc40669aeb0d969f860ead1f5b8c1f396c3738a65db1c6e8abce146ef39",
+        "getRoot": "0x4b1e7ffeace96b3add49ec064f82a9b6677f9e441a923e5d687930ff58aaff48",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -500,7 +499,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x5af16a5309088814d02f17b5684db2dcbcb85046c5d47a187120f75a5024c161",
+        "getRollupExitRoot": "0x85c5cacd28ad0986361c0654ccb1e7ba3caaeeea7c4e27a1fe4879ee33381ca7",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -522,9 +521,9 @@
           [true],
           [false]
         ],
-        "lastAggregationTimestamp": 1743420371,
+        "lastAggregationTimestamp": 1744353575,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14],
+        "pessimisticProofSenders": [14, 17],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 17,
@@ -766,8 +765,8 @@
             "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           ]
         ],
-        "totalSequencedBatches": 694015,
-        "totalVerifiedBatches": 693521,
+        "totalSequencedBatches": 702532,
+        "totalVerifiedBatches": 702034,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -847,8 +846,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 56717,
-        "getRoot": "0x5838eee2ccefaa6dcb36f5bb88caabb3f6dfed52907ab4190ae7ebd8f5cb04a9",
+        "depositCount": 57136,
+        "getRoot": "0x4a050c3aa8a87268d8ea922c00aa4695e815852fe57ad98f75da4ede48e2f1ca",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",
@@ -1735,11 +1734,11 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "polygon-cdk/PolygonGlobalExitRootV2": "0x693e60b459e4f7121c3d6c13963e9ec69a24597acc348863da7d4b17829f6dc6",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0xb65a4492d17488bfba7ae9e61639af7578c45b38b100b9ab17889f6d8ba0587d",
-    "polygon-cdk/PolygonSharedBridge": "0x1b1809abb269c608fe1e92f707be653d5127a6b737f90508513411e92dad3e44",
-    "polygon-cdk/Timelock": "0x416148d58569ddf327ffa0f66aecc4d42f3a257b50ba286c765887b042a18340"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "polygon-cdk/PolygonGlobalExitRootV2": "0x92aeca1bb56e793c55e70cc6e4aae76578f5e47d5112483916c542be5eee9ddf",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x4be7947ee5f0407be5c3881d8da19fc790036e07baedd5ba5c618ce25e6d63e8",
+    "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
+    "polygon-cdk/Timelock": "0xe0aeb97ea2d17d5fca19d26982c3a5c34745dd2f238167e3d76fedb715ce3a76"
   }
 }

@@ -50,6 +50,22 @@
           "permissions": [{ "type": "validateZkStack" }]
         }
       }
+    },
+    // sub MS spam
+    "0x79CF3eCF9Bbfd793d8Be62ED44D98d9AfA657892": {
+      "category": "spam"
+    },
+    "0x325407EEC948b97429068AF0cd8A8D95F06315a4": {
+      "category": "spam"
+    },
+    "0x0807C9f0247084cf1C5aB86A8fb00e7c70Cd27eB": {
+      "category": "spam"
+    },
+    "0x57533344e91d29f927AAEBee364A33633Bd205Ab": {
+      "category": "spam"
+    },
+    "0x58536761C97F5037931b56efeE922471add0eEe8": {
+      "category": "spam"
     }
   }
 }

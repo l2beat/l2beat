@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 22022360,
-  "configHash": "0x3d5da3895886e8e89625bc5ec8f7bf8b3346a9fad586eb8190ec15966a2453ca",
+  "configHash": "0xc5f183a333a8e335aa8ae4360ed84d0824093472f87ff5a39f4d7ae34fa9c69e",
   "entries": [
     {
       "name": "Arbitrator",
@@ -105,7 +105,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1285,9 +1284,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a",
-    "zklinknova/secondaryZkLink": "0xdd6ae208e600e8a58e2bfc5a099e81722045a5388ba31c4c5cf94bea5e027113"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
+    "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   }
 }

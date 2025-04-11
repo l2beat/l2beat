@@ -149,7 +149,7 @@ export function initTvsModule(
 
   for (const project of config.tvs.projects) {
     const dbStorage = new DBStorage(database, logger)
-    const valueService = new ValueService(dbStorage)
+    const valueService = new ValueService(dbStorage, logger)
 
     const amountSources = project.amountSources.map((source) => {
       const indexer = amountIndexers.get(source)

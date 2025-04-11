@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 788507,
-  "configHash": "0x7971728483f9bee32ba0be4d33c06b592d840407834588a480e1e79e17eb046b",
+  "blockNumber": 834543,
+  "configHash": "0x6efe2711db163082a060b86c75e7efadc48b8e329676d2ce92759ba9e2e79478",
   "entries": [
     {
       "name": "NioGuardians",
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1743412887,
+        "clock": 1744353780,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -64,7 +64,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1743412887,
+        "clock": 1744353780,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -280,7 +280,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30613840406411840475",
+        "getDeposit": "29760006741745800475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -346,6 +346,13 @@
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -355,14 +362,14 @@
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 604800,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+          "delay": 1036800,
+          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 950400,
-          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+          "delay": 604800,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
         },
         {
           "permission": "interact",
@@ -565,7 +572,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4755,
+        "getNonce": 4833,
         "getOwnersCount": 4,
         "inRecovery": 0,
         "insurancePolicy": 0,
@@ -609,7 +616,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 18753,
+        "globalMessageCount": 47054,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -646,6 +653,19 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["totalSupply", "appCount"],
       "sinceTimestamp": 1704852483,
       "sinceBlock": 126,
@@ -916,7 +936,20 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
-      "directlyReceivedPermissions": [
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "via": []
+        }
+      ],
+      "receivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
@@ -1057,7 +1090,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 74448
+        "totalWallets": 75619
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory",
@@ -1120,19 +1153,19 @@
         {
           "permission": "interact",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "delay": 604800,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+          "delay": 1036800,
+          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
           "via": []
         },
         {
           "permission": "interact",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "delay": 950400,
-          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+          "delay": 604800,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
           "via": []
         }
       ],
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
@@ -1181,8 +1214,8 @@
               "members": [
                 {
                   "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-                  "since": 1742514140,
-                  "executionDelay": 950400
+                  "since": 1744300560,
+                  "executionDelay": 1036800
                 },
                 {
                   "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
@@ -1223,6 +1256,24 @@
                   "executionDelay": 950400
                 }
               ]
+            },
+            "RECOVERY_APPROVER_ROLE": {
+              "members": [
+                {
+                  "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+                  "since": 1744300898,
+                  "executionDelay": 0
+                }
+              ]
+            },
+            "SANCTIONER_ROLE": {
+              "members": [
+                {
+                  "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+                  "since": 1744300898,
+                  "executionDelay": 0
+                }
+              ]
             }
           },
           "targets": {
@@ -1240,9 +1291,10 @@
                 "UPGRADER_ROLE": [
                   "upgradeAllWalletImplementations(address)",
                   "upgradeTo(address)"
-                ]
+                ],
+                "RECOVERY_APPROVER_ROLE": ["approveWalletRecovery(address)"]
               },
-              "adminDelay": 950400
+              "adminDelay": 1036800
             },
             "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
               "roleFunctions": {
@@ -1253,21 +1305,26 @@
                   "updateReservedContracts(address[])"
                 ]
               },
-              "adminDelay": 950400
+              "adminDelay": 1036800
             },
             "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
-              "roleFunctions": { "UPGRADER_ROLE": ["upgradeTo(address)"] },
-              "adminDelay": 950400
+              "roleFunctions": {
+                "UPGRADER_ROLE": ["upgradeTo(address)"],
+                "SANCTIONER_ROLE": ["confirmSanction(address)"]
+              },
+              "adminDelay": 1036800
             }
           }
         },
         "AdditionalRoleLabels": {
           "NIO_GOVERNOR_ROLE": ["1635978423191113331"],
           "UPGRADER_ROLE": ["8663528507529876195"],
-          "SECURITY_COUNCIL_ROLE": ["14661544942390944024"]
+          "SECURITY_COUNCIL_ROLE": ["14661544942390944024"],
+          "RECOVERY_APPROVER_ROLE": ["2827137176883084373"],
+          "SANCTIONER_ROLE": ["565311800027786426"]
         },
         "ADMIN_ROLE": 0,
-        "edKintoMultisig2ADMIN": 950400,
+        "edKintoMultisig2ADMIN": 1036800,
         "edKintoMultisig2UPGRADER": 604800,
         "edScADMIN": 604800,
         "edScSECURITY_COUNCIL": 950400,
@@ -1407,6 +1464,12 @@
               "delay": 950400,
               "since": 1742514140,
               "newMember": false
+            },
+            {
+              "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+              "delay": 1036800,
+              "since": 1744300560,
+              "newMember": false
             }
           ],
           "1635978423191113331": [
@@ -1462,6 +1525,22 @@
               "since": 1742427194,
               "newMember": false
             }
+          ],
+          "2827137176883084373": [
+            {
+              "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+              "delay": 0,
+              "since": 1744300898,
+              "newMember": true
+            }
+          ],
+          "565311800027786426": [
+            {
+              "account": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+              "delay": 0,
+              "since": 1744300898,
+              "newMember": true
+            }
           ]
         },
         "RolesRevoked": {
@@ -1484,16 +1563,16 @@
         "tadKintoWalletFactory": 950400,
         "TargetAdminDelayUpdated": {
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
-            "delay": 950400,
-            "since": 1742859194
+            "delay": 1036800,
+            "since": 1744732365
           },
           "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
-            "delay": 950400,
-            "since": 1742859192
+            "delay": 1036800,
+            "since": 1744732365
           },
           "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
-            "delay": 950400,
-            "since": 1742859193
+            "delay": 1036800,
+            "since": 1744732364
           }
         },
         "TargetFunctionRoleUpdated": {
@@ -1504,7 +1583,8 @@
           ],
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": [
             { "selector": "0xf4f4b03a", "roleId": "8663528507529876195" },
-            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" }
+            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" },
+            { "selector": "0x456cf492", "roleId": "2827137176883084373" }
           ],
           "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": [
             { "selector": "0x3659cfe6", "roleId": "8663528507529876195" },
@@ -1513,7 +1593,8 @@
             { "selector": "0x72592851", "roleId": "14661544942390944024" }
           ],
           "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": [
-            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" }
+            { "selector": "0x3659cfe6", "roleId": "8663528507529876195" },
+            { "selector": "0xfb0b2940", "roleId": "565311800027786426" }
           ]
         }
       },
@@ -1644,8 +1725,31 @@
         },
         {
           "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "transfer KYC NFTs to a different address.",
+          "via": []
+        },
+        {
+          "permission": "interact",
           "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
@@ -1764,7 +1868,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1743409750,
+        "lastMonitoredAt": 1744350675,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3078,7 +3182,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 74770,
+        "totalSupply": 75286,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"

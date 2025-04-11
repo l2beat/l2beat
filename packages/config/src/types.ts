@@ -280,7 +280,11 @@ export interface ProjectBridgeInfo {
   validatedBy: string
 }
 
-export type BridgeCategory = 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+export type BridgeCategory =
+  | 'Token Bridge'
+  | 'Liquidity Network'
+  | 'Hybrid'
+  | 'Single-chain'
 
 export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
@@ -1106,6 +1110,8 @@ export const CirculatingSupplyAmountFormulaSchema = z.object({
   untilTimestamp: z.number().optional(),
   apiId: z.string(),
   decimals: z.number(),
+  address: stringAs(EthereumAddress), // for frontend only
+  chain: z.string(), // for frontend only
 })
 
 export type ConstAmountFormula = z.infer<typeof ConstAmountFormulaSchema>

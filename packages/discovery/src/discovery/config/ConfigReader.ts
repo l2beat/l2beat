@@ -1,22 +1,30 @@
 import { createHash } from 'crypto'
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path from 'path'
-import { assert, Hash160, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import {
+  assert,
+  Hash160,
+  type json,
+  stripAnsiEscapeCodes,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { merge } from 'lodash'
-import type { ZodError } from 'zod'
+import { type ZodError, z } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
-import { DiscoveryConfig } from './DiscoveryConfig'
-import { CommonDiscoveryConfig, RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
+
+const JustImport = z
+  .object({ import: z.optional(z.array(z.string())) })
+  .passthrough()
 
 export class ConfigReader {
   constructor(private rootPath: string) {}
 
-  readConfig(name: string, chain: string): DiscoveryConfig {
+  readConfig(name: string, chain: string): ConfigRegistry {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
@@ -29,7 +37,7 @@ export class ConfigReader {
     )
 
     const contents = readJsonc(path.join(basePath, 'config.jsonc'))
-    const parseResult = RawDiscoveryConfig.safeParse(contents)
+    const parseResult = JustImport.safeParse(contents)
     if (!parseResult.success) {
       const message = formatZodParsingError(parseResult.error, 'config.jsonc')
       console.log(message)
@@ -46,9 +54,9 @@ export class ConfigReader {
       )
     }
 
-    const config = new DiscoveryConfig(rawConfig, this)
+    const config = new ConfigRegistry(rawConfig)
 
-    assert(config.chain === chain, 'Chain mismatch in config.jsonc')
+    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
 
     return config
   }
@@ -96,14 +104,14 @@ export class ConfigReader {
     return [...chains]
   }
 
-  readAllConfigs(): DiscoveryConfig[] {
+  readAllConfigs(): ConfigRegistry[] {
     return this.readAllChains().flatMap((chain) =>
       this.readAllConfigsForChain(chain),
     )
   }
 
-  readAllConfigsForChain(chain: string): DiscoveryConfig[] {
-    const result: DiscoveryConfig[] = []
+  readAllConfigsForChain(chain: string): ConfigRegistry[] {
+    const result: ConfigRegistry[] = []
     const projects = this.readAllProjectsForChain(chain)
 
     for (const project of projects) {
@@ -229,8 +237,8 @@ export function resolveImports(
   basePath: string,
   imports: string[],
   visited: Set<string>,
-): CommonDiscoveryConfig {
-  let result: CommonDiscoveryConfig = {}
+): json {
+  let result: json = {}
   for (const importPath of imports) {
     const resolvedPath = path.resolve(basePath, importPath)
     if (visited.has(resolvedPath)) {
@@ -239,7 +247,7 @@ export function resolveImports(
     visited.add(resolvedPath)
 
     const contents = readJsonc(resolvedPath)
-    const parseResult = CommonDiscoveryConfig.safeParse(contents)
+    const parseResult = JustImport.safeParse(contents)
     if (!parseResult.success) {
       const message = formatZodParsingError(parseResult.error, importPath)
       console.log(message)

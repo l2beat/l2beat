@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "category": "ether",
       "source": "canonical",
       "amount": {
@@ -15,10 +16,9 @@
         "address": "0x000000000000000000000000000000000000800A",
         "chain": "zeronetwork",
         "decimals": 18,
-        "sinceTimestamp": 1729616414
+        "sinceTimestamp": 1739109131
       },
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -26,6 +26,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -34,9 +35,8 @@
         "address": "0x6a6394F47DD0BAF794808F2749C09bd4Ee874E70",
         "chain": "zeronetwork",
         "decimals": 6,
-        "sinceTimestamp": 1729616414
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+        "sinceTimestamp": 1739109131
+      }
     },
     {
       "mode": "auto",
@@ -44,6 +44,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -52,9 +53,8 @@
         "address": "0x6386dA73545ae4E2B2E0393688fA8B65Bb9a7169",
         "chain": "zeronetwork",
         "decimals": 6,
-        "sinceTimestamp": 1729616414
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
+        "sinceTimestamp": 1739109131
+      }
     },
     {
       "mode": "auto",
@@ -62,6 +62,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -70,9 +71,8 @@
         "address": "0xF1f9E08a0818594FDe4713AE0Db1E46672Ca960E",
         "chain": "zeronetwork",
         "decimals": 8,
-        "sinceTimestamp": 1729616414
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
+        "sinceTimestamp": 1739109131
+      }
     }
   ]
 }

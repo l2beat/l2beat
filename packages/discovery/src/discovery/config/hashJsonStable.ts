@@ -1,12 +1,17 @@
 import { isArray, isObject } from 'lodash'
 
-import type { RawDiscoveryConfig } from './RawDiscoveryConfig'
+import { hashJson } from '@l2beat/shared'
+import type { Hash256 } from '@l2beat/shared-pure'
+import type { StructureConfig } from './StructureConfig'
 
-export function getDiscoveryConfigEntries(
-  rawConfig: RawDiscoveryConfig,
-): string {
+export function getDiscoveryConfigEntries(rawConfig: StructureConfig): string {
   const sorted = deepSortByKeys(rawConfig)
   return JSON.stringify(sorted)
+}
+
+export function hashJsonStable(value: Record<string, unknown>): Hash256 {
+  const sorted = deepSortByKeys(value)
+  return hashJson(JSON.stringify(sorted))
 }
 
 // Inside discovery config there are fields that should not be sorted

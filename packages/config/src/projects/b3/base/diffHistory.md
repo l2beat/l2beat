@@ -1,4 +1,27 @@
-Generated with discovered.json: 0xfb0ef224769054ad2e1116a15103e4e30f601cc1
+Generated with discovered.json: 0xb665a95674ee10b25a2343d35bb0b33f78eec513
+
+# Diff at Fri, 11 Apr 2025 06:39:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 27584106
+- current block number: 28782094
+
+## Description
+
+fee increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        4175613
++        25053678
+    }
+```
+
+Generated with discovered.json: 0xf7250eb41f7cd91e94c6fb942897f215d13a0e20
 
 # Diff at Thu, 27 Mar 2025 11:16:03 GMT:
 

@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22181511,
-  "configHash": "0x0975ac8d87df33bdb3197ce4bdb56ec86494cd2ce2c79bb1ee45e04b0cbd2ff1",
+  "configHash": "0xfcc333d1c27ca0d0f4f9de2235b32927a58e5033be1f1a8bc6b557d03e01555e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -148,7 +148,7 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "TreasureZkEvm",
@@ -982,11 +982,11 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/v26/Diamond": "0xdeb3c7f37117cbbf5abc1704aa4bf4d0eef0bae68d2f635ae073df89e75803c0",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e",
-    "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
-    "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
+    "shared-zk-stack/v26/Diamond": "0x748a53ab23ca7de7668b62f01a1e436cda12fe5b08cf1bd1bfcde11f6dba8ffe",
+    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-zk-stack/ValidatorTimelock": "0xb0a9eee97036385e26460c74be8e8196ad5c4872d104d7ecd6d3a00bd59ac2f8",
+    "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

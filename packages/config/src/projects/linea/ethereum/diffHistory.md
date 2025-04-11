@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9682e0f94cbee9f09c62b342545bf44991354b89
+
+# Diff at Thu, 10 Apr 2025 14:42:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22073290
+- current block number: 22073290
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22073290 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      displayName:
+-        "L1Timelock"
+    }
+```
+
 Generated with discovered.json: 0x03420feeee1ba43cd09c3c31108e3f6f457358ba
 
 # Diff at Tue, 18 Mar 2025 10:53:25 GMT:

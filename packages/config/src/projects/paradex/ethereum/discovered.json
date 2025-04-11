@@ -1,8 +1,8 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22231621,
-  "configHash": "0xa7f64ef9ee5af9f6012eb30b7fb837810cc5b97cf7fa66704642dd78d8ef9245",
+  "blockNumber": 22243995,
+  "configHash": "0x5df92718539d40edef28e6779fa2906d6dd9fa62a051fca9727034460f67809e",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -92,6 +92,11 @@
     },
     {
       "address": "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -391,7 +396,6 @@
         "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
       ],
       "proxyType": "StarkWare proxy",
-      "displayName": "Starknet",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
@@ -470,7 +474,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 7743,
+        "l1ToL2MessageNonce": 7802,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -487,9 +491,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1034882301625899265113744407241035784917433952202039822908061072411599478432",
-        "stateBlockNumber": 570325,
-        "stateRoot": "841344718681799776606333245849000386940081617438494081902698281890887820049",
+        "stateBlockHash": "2709877246687651559458517431492096743085487221462199189773629565996601736668",
+        "stateBlockNumber": 578525,
+        "stateRoot": "855974602343891127691803574350548025433170972908975703607878123177360552126",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -579,6 +583,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
           "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
           "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
           "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
@@ -589,8 +594,8 @@
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -896,8 +901,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "starknet/Starknet": "0x24d52302fc33da36088c2be699d5ba801d9e2af6968f4787a619ae5a80713c08",
-    "starknet/StarknetERC20Bridge": "0x02f940891cb066b5cdb2aa7169ce1b4315d63272c11797d15d7138c8d8023716"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "starknet/Starknet": "0xe5e581bc97212bd8b2b1d7cce1791fadc7a90c2a31cdf90222904c9cc7977815",
+    "starknet/StarknetERC20Bridge": "0xb2c38ccbfd4ccacff566b10cdf6b4c97da8815ad2e6e8f2654b20f95fd0c7078"
   }
 }

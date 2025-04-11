@@ -8,6 +8,7 @@
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
@@ -18,8 +19,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -27,16 +27,18 @@
       "priceId": "corn-3",
       "symbol": "CORN",
       "name": "Corn",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54471/large/corn.jpg?1739933588",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "corn-3",
         "decimals": 18,
-        "sinceTimestamp": 1743120000
+        "sinceTimestamp": 1743120000,
+        "address": "0x44f49ff0da2498bCb1D3Dc7C0f999578F67FD8C6",
+        "chain": "corn"
       },
       "category": "other",
       "source": "external",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/54471/large/corn.jpg?1739933588"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -44,6 +46,7 @@
       "priceId": "ether-fi-staked-btc",
       "symbol": "eBTC",
       "name": "ether.fi BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
       "amount": {
         "type": "totalSupply",
         "address": "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
@@ -53,8 +56,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -62,6 +64,7 @@
       "priceId": "lombard-staked-btc",
       "symbol": "LBTC",
       "name": "Lombard Staked Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "amount": {
         "type": "totalSupply",
         "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
@@ -71,8 +74,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -80,6 +82,7 @@
       "priceId": "solv-btc",
       "symbol": "SolvBTC",
       "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "amount": {
         "type": "totalSupply",
         "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
@@ -89,8 +92,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -98,6 +100,7 @@
       "priceId": "solv-protocol-solvbtc-bbn",
       "symbol": "SolvBTC.BBN",
       "name": "SolvBTC Babylon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
       "amount": {
         "type": "totalSupply",
         "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
@@ -107,8 +110,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -116,6 +118,7 @@
       "priceId": "lorenzo-stbtc",
       "symbol": "stBTC",
       "name": "Lorenzo stBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
       "amount": {
         "type": "totalSupply",
         "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
@@ -125,8 +128,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -134,6 +136,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "Bridged USDC (Corn)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "totalSupply",
         "address": "0xDF0B24095e15044538866576754F3C964e902Ee6",
@@ -143,8 +146,7 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -152,6 +154,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -162,8 +165,7 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -171,6 +173,7 @@
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "amount": {
         "type": "totalSupply",
         "address": "0x85aDfA60dDf86b67E6fD493Bd2c774b2eD772D14",
@@ -180,8 +183,7 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -189,6 +191,7 @@
       "priceId": "ethereum",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
       "amount": {
         "type": "totalSupply",
         "address": "0x485BBC4F98c071C9BD74Ac255262E61F866f071a",
@@ -198,8 +201,7 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     }
   ]
 }

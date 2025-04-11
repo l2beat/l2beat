@@ -7,6 +7,7 @@
   "scripts": {
     "build": "./scripts/build.sh",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
+    "build:config": "cd ../config && pnpm build",
     "clean": "rm -rf build",
     "format": "biome format .",
     "format:fix": "biome format --write .",
@@ -26,7 +27,9 @@
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
     "db:inspect": "pnpm prisma studio",
-    "dev": "pnpm build:dependencies && pnpm start:dev"
+    "dev": "pnpm build:dependencies && pnpm start:dev",
+    "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
+    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.3.0",

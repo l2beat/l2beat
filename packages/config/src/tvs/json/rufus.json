@@ -8,6 +8,7 @@
       "priceId": "dogelon-mars",
       "symbol": "ELON",
       "name": "Dogelon",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14962/large/6GxcPRo3_400x400.jpg?1696514622",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -32,8 +33,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/14962/large/6GxcPRo3_400x400.jpg?1696514622"
+      "isAssociated": true
     }
   ]
 }
