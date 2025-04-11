@@ -42,6 +42,7 @@ export const educhain: ScalingProject = orbitStackL3({
     name: 'educhain',
     chainId: 41923,
     coingeckoPlatform: 'edu-chain',
+    sinceTimestamp: UnixTime(1721987935),
     apis: [
       {
         type: 'rpc',
