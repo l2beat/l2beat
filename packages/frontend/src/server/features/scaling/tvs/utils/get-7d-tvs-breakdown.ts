@@ -175,7 +175,7 @@ function createTvsBreakdownProjectFilter(
   }
 }
 async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
-  const projects = await ps.getProjects({ where: ['tvlConfig'] })
+  const projects = await ps.getProjects({ where: ['tvsConfig'] })
   return {
     total: 1000,
     projects: Object.fromEntries(
