@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22231621,
+  "blockNumber": 22243595,
   "configHash": "0xa7f64ef9ee5af9f6012eb30b7fb837810cc5b97cf7fa66704642dd78d8ef9245",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -92,6 +92,11 @@
     },
     {
       "address": "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -470,7 +475,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 7743,
+        "l1ToL2MessageNonce": 7799,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
@@ -487,9 +492,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1034882301625899265113744407241035784917433952202039822908061072411599478432",
-        "stateBlockNumber": 570325,
-        "stateRoot": "841344718681799776606333245849000386940081617438494081902698281890887820049",
+        "stateBlockHash": "2709877246687651559458517431492096743085487221462199189773629565996601736668",
+        "stateBlockNumber": 578525,
+        "stateRoot": "855974602343891127691803574350548025433170972908975703607878123177360552126",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -579,6 +584,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
           "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
           "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
           "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
@@ -589,8 +595,8 @@
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
