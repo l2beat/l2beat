@@ -5,6 +5,7 @@ import {
   BlockIndexerClient,
   BlockProvider,
   BlockTimestampProvider,
+  CirculatingSupplyProvider,
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
@@ -12,7 +13,6 @@ import {
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { BalanceProvider } from '../providers/BalanceProvider'
-import { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
 import { PriceProvider } from '../providers/PriceProvider'
 import { RpcClientPOC } from '../providers/RpcClientPOC'
 import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'

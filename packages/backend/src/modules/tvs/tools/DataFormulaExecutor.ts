@@ -1,9 +1,17 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BalanceOfEscrowAmountFormula } from '@l2beat/config'
-import type { BlockProvider, BlockTimestampProvider } from '@l2beat/shared'
-import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import type {
+  BlockProvider,
+  BlockTimestampProvider,
+  CirculatingSupplyProvider,
+} from '@l2beat/shared'
+import {
+  assert,
+  CoingeckoId,
+  type UnixTime,
+  assertUnreachable,
+} from '@l2beat/shared-pure'
 import type { BalanceProvider } from '../providers/BalanceProvider'
-import type { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
 import type { PriceProvider } from '../providers/PriceProvider'
 import type { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import type {
@@ -156,10 +164,7 @@ export class DataFormulaExecutor {
         (async () => {
           const latestCirculatingSupplies =
             await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
-              filteredAmounts.map((p) => ({
-                priceId: p.apiId,
-                decimals: p.decimals,
-              })),
+              filteredAmounts.map((p) => CoingeckoId(p.apiId)),
             )
 
           for (const c of filteredAmounts) {
@@ -169,7 +174,11 @@ export class DataFormulaExecutor {
               `${c.apiId}: No latest circulating supply found`,
             )
 
-            await this.localStorage.writeAmount(c.id, timestamp, latest)
+            await this.localStorage.writeAmount(
+              c.id,
+              timestamp,
+              BigInt(latest.circulating * 10 ** c.decimals),
+            )
           }
         })(),
       ]
@@ -253,11 +262,16 @@ export class DataFormulaExecutor {
     this.logger.debug(`Fetching circulating supply for ${config.apiId}`)
 
     try {
-      return await this.circulatingSupplyProvider.getCirculatingSupply(
-        config.apiId,
-        config.decimals,
-        timestamp,
+      const circulating =
+        await this.circulatingSupplyProvider.getCirculatingSupplies(
+          CoingeckoId(config.apiId),
+          { from: timestamp, to: timestamp },
+        )
+      assert(
+        circulating.length === 1,
+        `${config.apiId}: Too many supplies fetched ${JSON.stringify(circulating)}`,
       )
+      return BigInt(circulating[0].value * 10 ** config.decimals)
     } catch {
       this.logger.warn(
         `Couldn't fetch circulating supply for ${config.apiId}. Assuming 0`,
