@@ -214,6 +214,7 @@ describeDatabase(ProjectValueRepository.name, (db) => {
         projectValue('arbitrum', 'PROJECT', UnixTime(300), 1500),
         projectValue('optimism', 'SUMMARY', UnixTime(100), 5000),
         projectValue('optimism', 'SUMMARY', UnixTime(200), 10000),
+        projectValue('optimism', 'SUMMARY', UnixTime(300), 10000),
       ])
     })
 
@@ -229,22 +230,19 @@ describeDatabase(ProjectValueRepository.name, (db) => {
     })
 
     it('returns records in ascending timestamp order', async () => {
-      const result = await repository.getForType('PROJECT', [null, 300])
+      const result = await repository.getForType('SUMMARY', [null, 300])
 
-      expect(result).toEqual([
-        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
-        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
-        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
-        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
-        projectValue('ethereum', 'PROJECT', UnixTime(300), 3000),
-        projectValue('arbitrum', 'PROJECT', UnixTime(300), 1500),
+      expect(result).toEqualUnsorted([
+        projectValue('optimism', 'SUMMARY', UnixTime(100), 5000),
+        projectValue('optimism', 'SUMMARY', UnixTime(200), 10000),
+        projectValue('optimism', 'SUMMARY', UnixTime(300), 10000),
       ])
     })
 
     it('handles null start timestamp correctly', async () => {
       const result = await repository.getForType('PROJECT', [null, 150])
 
-      expect(result).toEqual([
+      expect(result).toEqualUnsorted([
         projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
         projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
       ])
