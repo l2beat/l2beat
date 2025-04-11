@@ -7,5 +7,9 @@
     "0xc3897302aB4B42931cB4857050Fa60f53B775870", //EtherPredicate
     "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa" //ERC20Predicate
   ],
-  "overrides": {}
+  "overrides": {
+    "0x5F683665ca87dbC3D1358913da80e3C71c328Fb0": {
+      "ignoreMethods": ["exits"]
+    }
+  }
 }

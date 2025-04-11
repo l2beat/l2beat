@@ -1,13 +1,13 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { DA_LAYERS, RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('shibarium')
 
-export const shibarium: ScalingProject = underReviewL2({
-  id: 'shibarium',
+export const shibarium: ScalingProject = {
+  id: ProjectId('shibarium'),
   capability: 'universal',
   addedAt: UnixTime(1738081310), // 2025-01-28T16:21:50+00:00
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
@@ -35,7 +35,22 @@ export const shibarium: ScalingProject = underReviewL2({
       ],
     },
   },
-  associatedTokens: ['SHIB', 'BONE', 'LEASH'],
+  stage: {
+    stage: 'NotApplicable',
+  },
+  config: {
+    associatedTokens: ['SHIB', 'BONE', 'LEASH'],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xc3897302aB4B42931cB4857050Fa60f53B775870'), // etherpredicate
+        tokens: ['ETH'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa'), // erc20predicate
+        tokens: '*',
+      }),
+    ],
+  },
   chainConfig: {
     name: 'shibarium',
     chainId: 109,
@@ -47,18 +62,16 @@ export const shibarium: ScalingProject = underReviewL2({
       },
     ],
   },
-  escrows: [
-    {
-      address: EthereumAddress('0xc3897302aB4B42931cB4857050Fa60f53B775870'), // etherpredicate
-      sinceTimestamp: UnixTime(1691475959),
-      tokens: ['ETH'],
-      chain: 'ethereum',
-    },
-    {
-      address: EthereumAddress('0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa'), // erc20predicate
-      sinceTimestamp: UnixTime(1691475539),
-      tokens: '*',
-      chain: 'ethereum',
-    },
-  ],
-})
+  dataAvailability: {
+    layer: DA_LAYERS.NONE, // StakeManager is unverified
+    bridge: {},
+    mode: {},
+  },
+  riskView: {
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL, // StakeManager is unverified
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW, // StakeManager is unverified
+  },
+}

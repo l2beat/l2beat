@@ -2,7 +2,7 @@
   "name": "shibarium",
   "chain": "ethereum",
   "blockNumber": 22231818,
-  "configHash": "0xd7c1e5014d0b85b05810e479eefe3d4ddc2aabdc09051936f2c775baefa2469b",
+  "configHash": "0x51e94a1b7cde4e6bf1f01abc5ff018f6ae087791fbe66b4b1abb46c62437d9c7",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -172,6 +172,7 @@
       "name": "Merkle",
       "address": "0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2",
       "type": "Contract",
+      "template": "polygonposbridge/Merkle",
       "sourceHashes": [
         "0xf1be6e7e57f3ffb6af67424c57b1907e1fd54a410e2020ae110857774ea0a4b7"
       ],
@@ -247,48 +248,6 @@
         "$immutable": false,
         "$implementation": "0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3",
         "exitNft": "0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307",
-        "exits": [
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            false,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            false,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            false,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            false,
-            "0x0000000000000000000000000000000000000000"
-          ],
-          [
-            0,
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            false,
-            "0x0000000000000000000000000000000000000000"
-          ]
-        ],
         "exitWindow": 0,
         "HALF_EXIT_PERIOD": 1,
         "implementation": "0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3",
@@ -297,7 +256,6 @@
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "proxyType": 2
       },
-      "errors": { "exits": "Processing error occurred." },
       "derivedName": ""
     },
     {
@@ -394,19 +352,14 @@
       "name": "ExitNFT",
       "address": "0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307",
       "type": "Contract",
+      "template": "polygonposbridge/ExitNFT",
       "sourceHashes": [
         "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
       ],
       "proxyType": "immutable",
       "sinceTimestamp": 1691243975,
       "sinceBlock": 17849221,
-      "values": {
-        "$immutable": true,
-        "exists": [false, false, false, false, false],
-        "getApproved": [],
-        "ownerOf": []
-      },
-      "errors": { "exists": "Processing error occurred." },
+      "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
       "derivedName": "ExitNFT"
     },
     {
@@ -639,6 +592,7 @@
       "name": "Governance",
       "address": "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
       "type": "Contract",
+      "template": "polygonposbridge/Governance",
       "sourceHashes": [
         "0x8694e089b35ef48bca7c4041191923b03d5a5c1350e09e9074b44199d1df6cc3",
         "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
@@ -1295,14 +1249,17 @@
     ]
   },
   "usedTemplates": {
-    "polygonposbridge/DepositManager": "0xcedd87ee682ee481f62622cb03e1cc9ac791a601a81695aaccfbe7723c6a07a5",
-    "polygonposbridge/predicate": "0xb77dacaa0fc6fab29ac4f30ab100ca5030665fc9a35fa65702cbee5526a7d0bc",
-    "polygonposbridge/Registry": "0xa02c46bbf8565bf20c5187a5bb9cd00d284b677d688d16719842a20f921eb156",
-    "polygonposbridge/RLPReader": "0xa02c46bbf8565bf20c5187a5bb9cd00d284b677d688d16719842a20f921eb156",
-    "polygonposbridge/RootChain": "0x73188fcd2fd921c369feb88dd37bd01455b0b76ba32d94bbf7420d24cd9a97aa",
-    "polygonposbridge/RootChainManager": "0xb8406d94ec5250357a1019508f8770a2f849a8ecc2758357c9089a783c38144f",
-    "polygonposbridge/SlashingManager": "0xa02c46bbf8565bf20c5187a5bb9cd00d284b677d688d16719842a20f921eb156",
-    "polygonposbridge/StakingInfo": "0xfb6db0e53c5a8b063ff5e3076ecb5992872a948e3b6e88d51ab4723d7c5e8acb",
-    "polygonposbridge/StateSender": "0xa317af937a7be72d6cad2bf162fcfea0d295635907aa047f6029ab6ec09b6f10"
+    "polygonposbridge/DepositManager": "0x9d583c67327fa25303d2c360e09eba2ecdf0b2e2130c2c62fa523f013e911bf9",
+    "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
+    "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
+    "polygonposbridge/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/RootChain": "0x7003f0a85bb930e268c1142754c69d675ff65aadc6d4f6144c117bc19519eb12",
+    "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
+    "polygonposbridge/SlashingManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
+    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
   }
 }
