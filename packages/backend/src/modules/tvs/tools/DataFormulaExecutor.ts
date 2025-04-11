@@ -310,7 +310,10 @@ export class DataFormulaExecutor {
           (!a.untilTimestamp || timestamp < a.untilTimestamp),
       )
 
-    const amountsToFetch: AmountConfig[] = []
+    const amountsToFetch = new Map<
+      string,
+      Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>
+    >()
 
     await Promise.all(
       onchainAmounts.map(async (amount) => {
@@ -332,34 +335,60 @@ export class DataFormulaExecutor {
           return
         }
 
-        amountsToFetch.push(amount)
+        if (!amountsToFetch.has(amount.chain)) {
+          amountsToFetch.set(
+            amount.chain,
+            new Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>(),
+          )
+        }
+
+        const chainMap = amountsToFetch.get(amount.chain)
+        assert(chainMap)
+
+        if (!chainMap.has(amount.type)) {
+          chainMap.set(amount.type, [])
+        }
+
+        const typeMap = chainMap.get(amount.type)
+        assert(typeMap)
+        typeMap.push(amount)
       }),
     )
 
-    return amountsToFetch.map(async (amount) => {
-      assert(amount.type === 'balanceOfEscrow' || amount.type === 'totalSupply')
-      const block = await this.localStorage.getBlockNumber(
-        amount.chain,
-        timestamp,
-      )
-      assert(block, `Block number not found for chain ${amount.chain}`)
+    const fetchPromises: Promise<void>[] = []
 
-      let value: bigint
-      switch (amount.type) {
-        case 'totalSupply': {
-          value = await this.fetchTotalSupply(amount, block)
-          break
+    for (const [chain, typeMap] of amountsToFetch.entries()) {
+      const block = await this.localStorage.getBlockNumber(chain, timestamp)
+      assert(block, `Block number not found for chain ${chain}`)
+
+      for (const [type, configs] of typeMap.entries()) {
+        for (const amount of configs) {
+          fetchPromises.push(
+            (async () => {
+              let value: bigint
+              switch (type) {
+                case 'totalSupply': {
+                  assert(amount.type === 'totalSupply')
+                  value = await this.fetchTotalSupply(amount, block)
+                  break
+                }
+                case 'balanceOfEscrow': {
+                  assert(amount.type === 'balanceOfEscrow')
+                  value = await this.fetchEscrowBalance(amount, block)
+                  break
+                }
+                default:
+                  assertUnreachable(type)
+              }
+
+              await this.localStorage.writeAmount(amount.id, timestamp, value)
+            })(),
+          )
         }
-        case 'balanceOfEscrow': {
-          value = await this.fetchEscrowBalance(amount, block)
-          break
-        }
-        default:
-          assertUnreachable(amount)
       }
+    }
 
-      await this.localStorage.writeAmount(amount.id, timestamp, value)
-    })
+    return fetchPromises
   }
 
   async fetchCirculatingSupply(
