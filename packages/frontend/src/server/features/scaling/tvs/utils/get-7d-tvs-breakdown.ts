@@ -153,7 +153,7 @@ const getCached7dTokenBreakdown = cache(
       projects,
     }
   },
-  ['getCached7dTokenBreakdown-new'],
+  ['getCached7dTokenBreakdown'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
