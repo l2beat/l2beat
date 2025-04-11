@@ -38,18 +38,27 @@ export class LocalExecutor {
     this.dbStorage = this.createDbStorage(env, logger)
   }
 
-  async run(
-    config: ProjectTvsConfig,
+  async getTvs(
+    projects: ProjectTvsConfig[],
     timestamp: UnixTime,
     latestMode: boolean,
-  ): Promise<TokenValue[]> {
-    const { prices, amounts } = extractPricesAndAmounts(config.tokens)
+  ): Promise<Map<string, TokenValue[]>> {
+    const { prices, amounts } = extractPricesAndAmounts(
+      projects.flatMap((c) => c.tokens),
+    )
 
     const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
 
     await dataFormulaExecutor.execute(prices, amounts, timestamp, latestMode)
 
-    return await this.valueService.calculate(config, [timestamp])
+    const result = new Map<string, TokenValue[]>()
+
+    for (const project of projects) {
+      const tvs = await this.valueService.calculate(project, [timestamp])
+      result.set(project.projectId, tvs)
+    }
+
+    return result
   }
 
   private async initDataFormulaExecutor(amounts: AmountConfig[]) {

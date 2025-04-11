@@ -74,34 +74,29 @@ const cmd = command({
 
       logger.info(`Found ${projects.length} TVS projects`)
 
+      logger.info(`Executing TVS config for projects`)
+      const tvs = await localExecutor.getTvs(
+        projects
+          .filter((p) => p.tvsConfig.length > 0)
+          .map((p) => ({
+            projectId: p.id,
+            tokens: getEffectiveConfig(p.tvsConfig, timestampForTvs, false),
+          })),
+        timestampForTvs,
+        false,
+      )
+
       let totalTvs = 0
-      for (const project of projects) {
-        logger.info(`Executing TVS config for project ${project.id}`)
 
-        if (project.tvsConfig.length === 0) {
-          continue
-        }
+      for (const project of projects.filter((p) => p.tvsConfig.length > 0)) {
+        const tvsForProject = tvs.get(project.id)
+        assert(tvsForProject)
 
-        const effectiveConfig = getEffectiveConfig(
-          project.tvsConfig,
-          timestampForTvs,
-          false,
-        )
-
-        const tvs = await localExecutor.run(
-          {
-            projectId: project.id,
-            tokens: effectiveConfig,
-          },
-          timestampForTvs,
-          false,
-        )
-
-        const valueForProject = tvs.reduce((acc, token) => {
+        const valueForProject = tvsForProject.reduce((acc, token) => {
           return acc + token.valueForProject
         }, 0)
 
-        const valueForSummary = tvs.reduce((acc, token) => {
+        const valueForSummary = tvsForProject.reduce((acc, token) => {
           return acc + token.valueForSummary
         }, 0)
 
@@ -128,18 +123,22 @@ const cmd = command({
         false,
       )
 
-      const tvs = await localExecutor.run(
-        {
-          projectId: project.id,
-          tokens: effectiveConfig,
-        },
+      const tvs = await localExecutor.getTvs(
+        [
+          {
+            projectId: project.id,
+            tokens: effectiveConfig,
+          },
+        ],
         timestampForTvs,
         false,
       )
+      const tvsForProject = tvs.get(project.id)
+      assert(tvsForProject)
 
       const tvsBreakdown = calculateBreakdown(
         project.tvsConfig,
-        tvs,
+        tvsForProject,
         timestampForTvs,
         args.project,
       )
