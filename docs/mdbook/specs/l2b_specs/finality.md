@@ -6,9 +6,10 @@
 
 - [How to calculate time to inclusion](#how-to-calculate-time-to-inclusion)
   - [OP stack](#op-stack)
+    - [Why this approach?](#why-this-approach)
 - [How to calculate withdrawal times (L2 -> L1)](#how-to-calculate-withdrawal-times-l2---l1)
   - [OP stack (with fraud proofs)](#op-stack-with-fraud-proofs)
-    - [Why this approach?](#why-this-approach)
+    - [Why this approach?](#why-this-approach-1)
     - [Example](#example)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
