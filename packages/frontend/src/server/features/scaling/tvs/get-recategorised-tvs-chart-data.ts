@@ -1,7 +1,7 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
-import { pick, uniq } from 'lodash'
+import { groupBy, pick, uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
@@ -15,6 +15,7 @@ import {
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
+import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
 
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
@@ -60,26 +61,19 @@ export const getCachedRecategorisedTvsChartData = cache(
       previewRecategorisation,
     )
 
-    const rollups = tvsProjects.filter(({ category }) => category === 'rollups')
-    const validiumsAndOptimiums = tvsProjects.filter(
-      ({ category }) => category === 'validiumsAndOptimiums',
-    )
-    const others = tvsProjects.filter(({ category }) => category === 'others')
-
     const tvsValues = await getTvsValuesForProjects(tvsProjects, range)
 
-    const rollupValues = pick(
-      tvsValues,
-      rollups.map(({ projectId }) => projectId),
-    )
-    const validiumAndOptimiumsValues = pick(
-      tvsValues,
-      validiumsAndOptimiums.map(({ projectId }) => projectId),
-    )
-    const othersValues = pick(
-      tvsValues,
-      others.map(({ projectId }) => projectId),
-    )
+    const groupedByType = groupBy(tvsProjects, 'category')
+    const rollups =
+      groupedByType.rollups?.map(({ projectId }) => projectId) ?? []
+    const validiumsAndOptimiums =
+      groupedByType.validiumsAndOptimiums?.map(({ projectId }) => projectId) ??
+      []
+    const others = groupedByType.others?.map(({ projectId }) => projectId) ?? []
+
+    const rollupValues = pick(tvsValues, rollups)
+    const validiumAndOptimiumsValues = pick(tvsValues, validiumsAndOptimiums)
+    const othersValues = pick(tvsValues, others)
 
     return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
   },
@@ -95,11 +89,11 @@ function getChartData(
   validiumAndOptimiumsValues: Dictionary<Dictionary<ProjectValueRecord>>,
   othersValues: Dictionary<Dictionary<ProjectValueRecord>>,
 ) {
-  const rollupTimestampValues = valuesToTimestampValues(rollupsValues)
-  const validiumAndOptimiumsTimestampValues = valuesToTimestampValues(
+  const rollupTimestampValues = groupValuesByTimestamp(rollupsValues)
+  const validiumAndOptimiumsTimestampValues = groupValuesByTimestamp(
     validiumAndOptimiumsValues,
   )
-  const othersTimestampValues = valuesToTimestampValues(othersValues)
+  const othersTimestampValues = groupValuesByTimestamp(othersValues)
 
   const timestamps = uniq([
     ...Object.keys(rollupTimestampValues),
@@ -146,17 +140,4 @@ function getMockTvsChartData({
   return timestamps.map((timestamp) => {
     return [timestamp, 3000, 2000, 1000]
   })
-}
-
-function valuesToTimestampValues(
-  values: Dictionary<Dictionary<ProjectValueRecord>>,
-) {
-  const timestampValues: Record<string, ProjectValueRecord[]> = {}
-  for (const projectValues of Object.values(values)) {
-    for (const [timestamp, value] of Object.entries(projectValues)) {
-      const map = timestampValues[timestamp] ?? []
-      timestampValues[timestamp] = map.concat(value)
-    }
-  }
-  return timestampValues
 }

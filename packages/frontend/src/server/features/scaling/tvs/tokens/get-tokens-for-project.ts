@@ -1,6 +1,5 @@
 import type { Project, TvsToken } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { uniqBy } from 'lodash'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 
@@ -33,9 +32,7 @@ export async function getTokensForProject(
 
   withUsdValue.sort((a, b) => b.usdValue - a.usdValue)
 
-  const unique = uniqBy(withUsdValue, (e) => e.id)
-
-  return groupBySource(unique)
+  return groupBySource(withUsdValue)
 }
 
 function groupBySource(tokens: ProjectToken[]) {

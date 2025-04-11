@@ -20,12 +20,13 @@ export async function getTvsValuesForProjects(
   const target = getTvsTargetTimestamp()
 
   const from =
-    days !== null &&
-    UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
-      days * UnixTime.DAY
+    days === null
+      ? null
+      : UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
+        days * UnixTime.DAY
 
   const valueRecords = await db.tvsProjectValue.getForType(type ?? 'SUMMARY', [
-    from || null,
+    from,
     target,
   ])
 
@@ -42,8 +43,6 @@ export async function getTvsValuesForProjects(
     for (const value of projectValues) {
       valuesByTimestamp[value.timestamp.toString()] = value
     }
-
-    const valuesByTimestampForProject: Dictionary<ProjectValueRecord> = {}
 
     let minTimestamp = projectValues[0]?.timestamp
 
@@ -66,6 +65,7 @@ export async function getTvsValuesForProjects(
       addTarget: true,
     })
 
+    const valuesByTimestampForProject: Dictionary<ProjectValueRecord> = {}
     for (const timestamp of timestamps) {
       const value = valuesByTimestamp[timestamp.toString()]
 

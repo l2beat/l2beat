@@ -15,6 +15,7 @@ import {
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
+import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
 
 export const TvsChartDataParams = z.object({
   range: TvsChartRange,
@@ -88,19 +89,12 @@ function getChartData(
   values: Dictionary<Dictionary<ProjectValueRecord>>,
   ethPrices: Record<number, number>,
 ) {
-  const timestampValues: Record<string, ProjectValueRecord[]> = {}
+  const groupedValues = groupValuesByTimestamp(values)
 
-  for (const projectValues of Object.values(values)) {
-    for (const [timestamp, values] of Object.entries(projectValues)) {
-      const map = timestampValues[timestamp] ?? []
-      timestampValues[timestamp] = map.concat(values)
-    }
-  }
-
-  const timestamps = uniq([...Object.keys(timestampValues)]).sort()
+  const timestamps = uniq([...Object.keys(groupedValues)]).sort()
 
   return timestamps.map((timestamp) => {
-    const values = timestampValues[timestamp]
+    const values = groupedValues[timestamp]
     const ethPrice = ethPrices[+timestamp]
     assert(ethPrice, 'No ETH price for ' + timestamp)
 
