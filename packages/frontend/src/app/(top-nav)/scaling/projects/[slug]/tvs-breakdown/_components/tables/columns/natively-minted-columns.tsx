@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
+import { TokenAddressCell } from '../cells/token-address-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
 import { TokenSimpleAmountCell } from '../cells/token-simple-amount-cell'
 import { TokenSimpleValueCell } from '../cells/token-simple-value-cell'
 import type { NativelyMintedTokenEntry } from '../natively-minted-table'
-import { TokenAddressCell } from '../cells/token-address-cell'
-import { ChevronIcon } from '~/icons/chevron'
-import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<NativelyMintedTokenEntry>()
 

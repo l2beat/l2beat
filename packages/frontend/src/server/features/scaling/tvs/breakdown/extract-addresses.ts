@@ -6,7 +6,7 @@ import type {
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
-import { assertUnreachable, type EthereumAddress } from '@l2beat/shared-pure'
+import { type EthereumAddress, assertUnreachable } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 
 export type Address = {

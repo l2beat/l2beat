@@ -1,5 +1,7 @@
 import type { Table as TanstackTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
+import { Fragment } from 'react'
 import { cn } from '~/utils/cn'
 import {
   Table,
@@ -11,8 +13,6 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
-import type { Row } from '@tanstack/react-table'
-import { Fragment } from 'react'
 
 interface Props<T> {
   table: TanstackTable<T>

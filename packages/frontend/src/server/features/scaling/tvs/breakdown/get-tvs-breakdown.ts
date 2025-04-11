@@ -1,14 +1,14 @@
 import type { ChainConfig, Formula, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
+import type { Address } from './extract-addresses'
+import { extractAddresses } from './extract-addresses'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import type {
   BaseAssetBreakdownData,
   BreakdownRecord,
   CanonicalAssetBreakdownData,
 } from './types'
-import type { Address } from './extract-addresses'
-import { extractAddresses } from './extract-addresses'
 
 export async function getTvsBreakdown(
   projectTokens: TvsToken[],

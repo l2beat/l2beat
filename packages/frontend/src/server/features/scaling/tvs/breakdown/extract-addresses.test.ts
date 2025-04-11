@@ -5,9 +5,9 @@ import type {
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
-import { extractAddresses } from './extract-addresses'
 import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { extractAddresses } from './extract-addresses'
 
 describe(extractAddresses.name, () => {
   it('returns empty array if no amount', () => {

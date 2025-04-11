@@ -3,9 +3,9 @@ import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 import { getTvsBreakdown } from './get-tvs-breakdown'
-import { ps } from '~/server/projects'
 
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 

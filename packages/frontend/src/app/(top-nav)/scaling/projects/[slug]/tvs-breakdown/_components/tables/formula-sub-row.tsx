@@ -1,5 +1,5 @@
-import type { Row } from '@tanstack/react-table'
 import type { Formula } from '@l2beat/config'
+import type { Row } from '@tanstack/react-table'
 
 export function renderFormulaSubComponent<T extends { formula: Formula }>({
   row,

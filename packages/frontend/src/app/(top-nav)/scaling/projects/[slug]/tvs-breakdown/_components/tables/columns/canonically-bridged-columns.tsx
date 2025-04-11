@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { ChevronIcon } from '~/icons/chevron'
+import { cn } from '~/utils/cn'
 import type { CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
+import { TokenAddressCell } from '../cells/token-address-cell'
 import { TokenCanonicalAmountCell } from '../cells/token-canonical-amount-cell'
 import { TokenCanonicalValueCell } from '../cells/token-canonical-value-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
-import { TokenAddressCell } from '../cells/token-address-cell'
-import { ChevronIcon } from '~/icons/chevron'
-import { cn } from '~/utils/cn'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
 export const canonicallyBridgedColumns = [

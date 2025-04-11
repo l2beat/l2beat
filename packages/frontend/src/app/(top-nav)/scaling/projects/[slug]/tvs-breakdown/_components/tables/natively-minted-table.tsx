@@ -1,12 +1,12 @@
 'use client'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { TokenTable } from '~/components/table/token-breakdown-table'
 import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
 import { nativelyMintedColumns } from './columns/natively-minted-columns'
+import { renderFormulaSubComponent } from './formula-sub-row'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
-import { renderFormulaSubComponent } from './formula-sub-row'
-import { useMemo } from 'react'
 
 export type NativelyMintedTokenEntry = ProjectTvsBreakdown['native'][number]
 
