@@ -2,7 +2,7 @@
   "name": "silicon",
   "chain": "ethereum",
   "blockNumber": 21766766,
-  "configHash": "0xa040bc3913106ed915b074cb34446527735426ee935db5afeab90ae7565967b5",
+  "configHash": "0x5df3b6f2ba50249a59e0689b6f586e18f66d3b23c92781b8880d36bf2f606cee",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

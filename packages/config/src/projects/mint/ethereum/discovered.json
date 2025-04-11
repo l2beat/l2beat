@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 22046068,
-  "configHash": "0x1160a52290096fc521a0449f2a569ba6c3278fc8076becbe2f5a080393115934",
+  "configHash": "0x84eb16c47edf5d23b6abe34b26eeb7310dfb391ee94ad8206ae3525226f0735d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

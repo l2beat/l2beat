@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21995398,
-  "configHash": "0x3501af9c2d91b55067bc7a75741f7792527f0e1e9c4fcccf71e9b2df61462d24",
+  "configHash": "0x75390fb8ca9f429f5d16aeece333673eeac81f2d6f6b3eba88dd93da91688447",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
