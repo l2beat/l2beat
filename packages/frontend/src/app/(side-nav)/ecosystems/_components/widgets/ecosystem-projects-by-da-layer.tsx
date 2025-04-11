@@ -2,6 +2,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import ProgressBar from '~/components/progress-bar'
 import type { BlobsData } from '~/server/features/ecosystems/get-blobs-data'
 import type { ProjectsByDaLayer } from '~/server/features/ecosystems/get-projects-by-da-layer'
+import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatBytes } from '~/utils/number-format/format-bytes'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
@@ -37,18 +38,18 @@ export function EcosystemProjectsByDaLayer({
           <div className="flex flex-col items-center">
             <h3 className="text-2xs font-medium text-secondary">Total data</h3>
             <p className="text-sm font-bold">
-              {formatBytes(blobsData.totalData.value)}
+              {formatBytes(blobsData.totalData)}
             </p>
           </div>
           <HorizontalSeparator className="my-2.5" />
           <ProgressBar
-            progress={75}
+            progress={blobsData.blobsShare * 100}
             className="h-3 w-full"
             progressClassName="bg-[--ecosystem-primary]"
             trackClassName="border-[--ecosystem-secondary]"
           />
           <p className="mt-1 text-2xs text-secondary">
-            {blobsData.blobsShare}% of total blob size
+            {formatPercent(blobsData.blobsShare)} of total blob size
           </p>
         </div>
       </div>
