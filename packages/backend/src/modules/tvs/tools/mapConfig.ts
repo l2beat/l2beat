@@ -14,10 +14,10 @@ import type { RpcClient } from '@l2beat/shared'
 import { assert, TokenId } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { getAggLayerTokens } from '../providers/aggLayer'
-import { getElasticChainTokens } from '../providers/elasticChain'
 import type { ProjectTvsConfig } from '../types'
 import { getTimeRangeIntersection } from './getTimeRangeIntersection'
+import { getAggLayerTokens } from './sharedEscrows/getAggLayerTokens'
+import { getElasticChainTokens } from './sharedEscrows/getElasticChainTokens'
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
