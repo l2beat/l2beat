@@ -77,7 +77,7 @@ export const getCachedTokenTvsChartData = cache(
 
     return data
   },
-  ['token-new-tvs-chart'],
+  ['token-tvs-chart'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,

@@ -8,7 +8,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getTokensForProject } from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
+import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { isTvsChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
@@ -20,8 +20,8 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/get-techn
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { get7dTvsBreakdown } from '../../scaling/new-tvs/utils/get-7d-tvs-breakdown'
-import { getAssociatedTokenWarning } from '../../scaling/new-tvs/utils/get-associated-token-warning'
+import { get7dTvsBreakdown } from '../../scaling/tvs/utils/get-7d-tvs-breakdown'
+import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
 
 export interface BridgesProjectEntry {
   name: string
@@ -126,13 +126,13 @@ export async function getBridgesProjectEntry(
     },
   }
 
-  await api.newTvs.chart.prefetch({
+  await api.tvs.chart.prefetch({
     range: '1y',
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens: false,
   })
   const [tvsChartData, tokens] = await Promise.all([
-    api.newTvs.chart({
+    api.tvs.chart({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,

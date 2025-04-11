@@ -28,8 +28,8 @@ import { useIsClient } from '~/hooks/use-is-client'
 import type {
   ProjectToken,
   ProjectTokens,
-} from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -71,7 +71,7 @@ export function ProjectTokenChart({
 }: Props) {
   const properUnit = unit === 'usd' ? 'usd' : token.symbol
 
-  const { data, isLoading } = api.newTvs.tokenChart.useQuery({
+  const { data, isLoading } = api.tvs.tokenChart.useQuery({
     token: {
       tokenId: token.id,
       projectId,

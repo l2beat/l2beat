@@ -77,7 +77,7 @@ export const getCachedTvsChartData = cache(
     ])
     return getChartData(values, ethPrices)
   },
-  ['new-tvs-chart-datax'],
+  ['tvs-chart-data'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,

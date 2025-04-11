@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getTvsValuesForProjects } from '../../scaling/new-tvs/utils/get-tvs-values-for-projects'
+import { getTvsValuesForProjects } from '../../scaling/tvs/utils/get-tvs-values-for-projects'
 
 export async function getDaProjectsTvs(projectIds: ProjectId[]) {
   if (env.MOCK) {

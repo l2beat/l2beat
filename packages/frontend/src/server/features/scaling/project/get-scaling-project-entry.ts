@@ -36,9 +36,9 @@ import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTokensForProject } from '../new-tvs/tokens/get-tokens-for-project'
-import { get7dTvsBreakdown } from '../new-tvs/utils/get-7d-tvs-breakdown'
-import { getAssociatedTokenWarning } from '../new-tvs/utils/get-associated-token-warning'
+import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
@@ -201,7 +201,7 @@ export async function getScalingProjectEntry(
   const daSolution = await getScalingDaSolution(project)
 
   await Promise.all([
-    api.newTvs.chart.prefetch({
+    api.tvs.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
@@ -219,7 +219,7 @@ export async function getScalingProjectEntry(
   ])
   const [tvsChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
-      api.newTvs.chart({
+      api.tvs.chart({
         range: '1y',
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,

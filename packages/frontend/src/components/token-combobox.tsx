@@ -8,7 +8,7 @@ import { ChevronIcon } from '~/icons/chevron'
 import type {
   ProjectToken,
   ProjectTokens,
-} from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { cn } from '~/utils/cn'
 import {
   Command,

@@ -33,7 +33,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { PercentChange } from '~/components/percent-change'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { ChevronIcon } from '~/icons/chevron'
-import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -68,7 +68,7 @@ export function ScalingSummaryTvsChart({
   timeRange,
 }: { unit: ChartUnit; timeRange: TvsChartRange }) {
   const { checked } = useRecategorisationPreviewContext()
-  const { data, isLoading } = api.newTvs.recategorisedChart.useQuery({
+  const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },
     previewRecategorisation: checked,

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
-import { getTvsBreakdownForProject } from '~/server/features/scaling/new-tvs/breakdown/get-tvs-breakdown-for-project'
+import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
 import { ps } from '~/server/projects'
 
 export async function GET(

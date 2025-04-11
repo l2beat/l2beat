@@ -1,5 +1,5 @@
 import { featureFlags } from '~/consts/feature-flags'
-import { compareTvs } from '../new-tvs/utils/compare-tvs'
+import { compareTvs } from '../tvs/utils/compare-tvs'
 
 interface StageTvsComparable {
   stageOrder: number

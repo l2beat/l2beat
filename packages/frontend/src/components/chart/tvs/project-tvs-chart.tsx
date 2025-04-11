@@ -5,8 +5,8 @@ import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wra
 import type {
   ProjectToken,
   ProjectTokens,
-} from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
@@ -85,7 +85,7 @@ function DefaultChart({
   setToken,
   token,
 }: DefaultChartProps) {
-  const { data, isLoading } = api.newTvs.chart.useQuery({
+  const { data, isLoading } = api.tvs.chart.useQuery({
     range: timeRange,
     filter: { type: 'projects', projectIds: [projectId] },
     excludeAssociatedTokens: false,

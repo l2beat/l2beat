@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import type { TvsChartRange } from '~/server/features/scaling/new-tvs/utils/range'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
@@ -24,7 +24,7 @@ export function BridgesTvsChart() {
   )
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
 
-  const { data, isLoading } = api.newTvs.chart.useQuery({
+  const { data, isLoading } = api.tvs.chart.useQuery({
     range: timeRange,
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,

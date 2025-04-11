@@ -83,7 +83,7 @@ export const getCachedRecategorisedTvsChartData = cache(
 
     return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
   },
-  ['recategorised-new-tvs-cxhart-xdaxta'],
+  ['recategorised-tvs-chart-data'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,

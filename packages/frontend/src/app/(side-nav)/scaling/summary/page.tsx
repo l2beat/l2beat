@@ -22,7 +22,7 @@ const UNIT = 'usd'
 export default async function Page() {
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
-    api.newTvs.recategorisedChart.prefetch({
+    api.tvs.recategorisedChart.prefetch({
       range: TIME_RANGE,
       filter: { type: 'layer2' },
       previewRecategorisation: false,

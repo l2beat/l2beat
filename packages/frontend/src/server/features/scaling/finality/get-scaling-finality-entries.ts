@@ -11,7 +11,7 @@ import type { ProjectChanges } from '../../projects-change-report/get-projects-c
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { getProjectsLatestTvsUsd } from '../new-tvs/utils/get-latest-tvs-usd'
+import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 import { getFinality } from './get-finality'
 import type { FinalityProjectData } from './schema'

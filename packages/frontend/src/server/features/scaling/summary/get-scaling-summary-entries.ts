@@ -21,9 +21,9 @@ import { getActivityLatestUops } from '../activity/get-activity-latest-tps'
 import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { get7dTvsBreakdown } from '../new-tvs/utils/get-7d-tvs-breakdown'
-import type { ProjectSevenDayTvsBreakdown } from '../new-tvs/utils/get-7d-tvs-breakdown'
-import { getAssociatedTokenWarning } from '../new-tvs/utils/get-associated-token-warning'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingSummaryEntries() {

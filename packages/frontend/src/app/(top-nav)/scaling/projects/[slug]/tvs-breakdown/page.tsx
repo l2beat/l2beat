@@ -4,9 +4,9 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { env } from '~/env'
-import { getTvsBreakdownForProject } from '~/server/features/scaling/new-tvs/breakdown/get-tvs-breakdown-for-project'
-import { getTokensForProject } from '~/server/features/scaling/new-tvs/tokens/get-tokens-for-project'
-import { get7dTvsBreakdown } from '~/server/features/scaling/new-tvs/utils/get-7d-tvs-breakdown'
+import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
+import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -75,7 +75,7 @@ export default async function Page(props: Props) {
   ] = await Promise.all([
     getTvsBreakdownForProject(project),
     getTokensForProject(project),
-    api.newTvs.chart.prefetch({
+    api.tvs.chart.prefetch({
       filter: { type: 'projects', projectIds: [project.id.toString()] },
       excludeAssociatedTokens: false,
       range: '1y',
