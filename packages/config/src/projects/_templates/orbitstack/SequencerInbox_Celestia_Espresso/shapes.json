@@ -1,9 +1,8 @@
-[
-  {
+{
+  "SequencerInbox": {
     "hash": "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c",
-    "description": "SequencerInbox",
     "address": "0x805dc3546d99AfB35EfB261b907679b67A08256e",
     "chain": "arbitrum",
     "blockNumber": 322488866
   }
-]
+}
