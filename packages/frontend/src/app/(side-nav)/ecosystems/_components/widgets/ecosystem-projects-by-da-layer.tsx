@@ -18,21 +18,23 @@ export function EcosystemProjectsByDaLayer({
   return (
     <EcosystemWidget className={className}>
       <EcosystemWidgetTitle>DA Layers used</EcosystemWidgetTitle>
-      <div className="grid grid-cols-2">
+      <div className="grid sm:grid-cols-2">
         <table className="h-min text-xs" cellPadding={0} cellSpacing={0}>
           <tbody>
             {Object.entries(projectsByDaLayer).map(
               ([daLayer, projectCount]) => (
                 <tr key={daLayer} className="h-min">
-                  <td className="pr-2 font-bold">{daLayer}</td>
-                  <td className="text-secondary">{projectCount} projects</td>
+                  <td className="font-bold">{daLayer}</td>
+                  <td className="text-secondary max-sm:text-right">
+                    {projectCount} projects
+                  </td>
                 </tr>
               ),
             )}
           </tbody>
         </table>
-        <div className="relative -mt-2 rounded bg-surface-secondary p-4">
-          <div className="absolute left-0 top-2.5 -translate-x-full">
+        <div className="relative mt-3 rounded bg-surface-secondary p-4 sm:-mt-2">
+          <div className="absolute left-0 top-2.5 -translate-x-full max-sm:hidden">
             <div className="size-0 border-y-8 border-r-[10px] border-y-transparent border-r-surface-secondary"></div>
           </div>
           <div className="flex flex-col items-center">
