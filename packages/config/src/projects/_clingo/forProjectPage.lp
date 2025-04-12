@@ -30,6 +30,7 @@ transitivePermission(Receiver, Permission, Giver, Delay, Description, Delay, nil
   defaultedPermissionDescription(Receiver, Permission, Giver, Description).
 
 transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay), IndirectVia))) :-
+  Receiver != Via, % deal with self-loops (e.g. timelock can act on timelock)
   transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, PreviousTotalDelay, IndirectVia),
   permission(Receiver, ViaPermission, Via),
   defaultedPermissionDelay(Receiver, ViaPermission, Via, ViaDelay),
@@ -67,9 +68,9 @@ showEoaInPermissionsSection(Address) :-
   addressType(Address, eoa).
 
 #show address/3.
-#show addressName/2.
-#show addressType/2.
-#show addressDescription/2.
+% #show addressName/2.
+% #show addressType/2.
+% #show addressDescription/2.
 #show filteredTransitivePermission/8.
-#show showContractInPermissionsSection/1.
-#show showEoaInPermissionsSection/1.
+% #show showContractInPermissionsSection/1.
+% #show showEoaInPermissionsSection/1.
