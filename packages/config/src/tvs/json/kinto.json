@@ -188,6 +188,25 @@
     },
     {
       "mode": "auto",
+      "id": "kinto-K",
+      "priceId": "kinto",
+      "symbol": "K",
+      "name": "Kinto Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54964/large/k200.png?1742894885",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "kinto",
+        "decimals": 18,
+        "sinceTimestamp": 1743379200,
+        "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
+        "chain": "kinto"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
       "id": "kinto-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",

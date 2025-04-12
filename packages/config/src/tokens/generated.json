@@ -1515,6 +1515,20 @@
       "supply": "zero"
     },
     {
+      "name": "deUSD",
+      "coingeckoId": "elixir-deusd",
+      "address": "0x15700B564Ca08D9439C58cA5053166E8317aa138",
+      "symbol": "deUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1721068655,
+      "coingeckoListingTimestamp": 1722470400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39494/large/deUSD_Logo_%281%29.png?1723689002",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "DEXTF Token",
       "coingeckoId": "dextf",
       "address": "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0",
@@ -5066,6 +5080,20 @@
       "coingeckoListingTimestamp": 1730764800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/51343/large/stAVAIL_200x200.png?1730824445",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Staked deUSD",
+      "coingeckoId": "elixir-staked-deusd",
+      "address": "0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
+      "symbol": "sdeUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1721142035,
+      "coingeckoListingTimestamp": 1734393600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52847/large/Staked_deUSD_%28sdeUSD%29_Logo.png?1734473339",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -10356,6 +10384,20 @@
       }
     },
     {
+      "name": "Blend Token",
+      "coingeckoId": "blend-3",
+      "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
+      "symbol": "BLEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1737791442,
+      "coingeckoListingTimestamp": 1741478400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54778/large/Blend0.png?1741517155",
+      "chainId": 41923,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Aethir Token",
       "coingeckoId": "aethir",
       "address": "0xc87B37a581ec3257B734886d9d3a581F5A9d056c",
@@ -11699,7 +11741,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/13161/large/icon-celo-dollar-color-1000-circle-cropped.png?1696512945",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Celo Euro",
@@ -11713,7 +11755,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16756/large/CEUR.png?1696516329",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Celo Kenyan Shilling",

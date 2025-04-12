@@ -1,6 +1,16 @@
 {
   "ethereum": [
     {
+      "symbol": "deUSD",
+      "category": "stablecoin",
+      "address": "0x15700b564ca08d9439c58ca5053166e8317aa138"
+    },
+    {
+      "symbol": "sdeUSD",
+      "category": "stablecoin",
+      "address": "0x5c5b196abe0d54485975d1ec29617d42d9198326"
+    },
+    {
       "symbol": "LGHO",
       "category": "stablecoin",
       "coingeckoId": "gho",
@@ -6415,14 +6425,14 @@
       "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
       "category": "stablecoin",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "cEURO",
       "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
       "category": "stablecoin",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "cREAL",
@@ -6550,6 +6560,14 @@
       "symbol": "K",
       "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
       "coingeckoId": "kinto",
+      "source": "native",
+      "supply": "circulatingSupply"
+    }
+  ],
+  "educhain": [
+    {
+      "symbol": "BLEND",
+      "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
       "source": "native",
       "supply": "circulatingSupply"
     }

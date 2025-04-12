@@ -194,7 +194,9 @@ export class TemplateService {
     for (const [templateId, { criteria, shapePath }] of Object.entries(
       allTemplates,
     )) {
-      const hashes = this.readShapeSchema(shapePath).map((shape) => shape.hash)
+      const hashes = Object.values(this.readShapeSchema(shapePath)).map(
+        (shape) => shape.hash,
+      )
       result[templateId] = { criteria, hashes }
     }
 
@@ -287,7 +289,7 @@ export class TemplateService {
     templateId: string,
     chain: string,
     address: EthereumAddress,
-    description: string,
+    fileName: string,
     blockNumber: number,
     source: ContractSource,
   ): void {
@@ -297,21 +299,20 @@ export class TemplateService {
     assert(entry !== undefined, 'Could not find template')
 
     const shapes =
-      entry.shapePath === undefined ? [] : this.readShapeSchema(entry.shapePath)
+      entry.shapePath === undefined ? {} : this.readShapeSchema(entry.shapePath)
     const hash = contractFlatteningHash(source)
     assert(hash !== undefined, 'Could not find hash')
 
-    if (shapes.some((s) => s.hash === hash)) {
+    if (Object.values(shapes).some((s) => s.hash === hash)) {
       return
     }
 
-    shapes.push({
+    shapes[fileName] = {
       hash: Hash256(hash),
-      description,
       address,
       chain,
       blockNumber,
-    })
+    }
 
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     const templatePath = join(resolvedRootPath, templateId)
@@ -319,18 +320,18 @@ export class TemplateService {
     writeFileSync(shapePath, JSON.stringify(shapes, null, 2))
   }
 
-  readShapeSchema(shapePath: string | undefined): ShapeSchema[] {
+  readShapeSchema(shapePath: string | undefined): ShapeSchema {
     if (shapePath === undefined) {
-      return []
+      return {}
     }
 
-    return JSON.parse(readFileSync(shapePath, 'utf8')) as ShapeSchema[]
+    return JSON.parse(readFileSync(shapePath, 'utf8')) as ShapeSchema
   }
 
   findShapeByTemplateAndHash(
     templateId: string,
     hash: Hash256,
-  ): ShapeSchema | undefined {
+  ): [string, ShapeSchema[string]] | undefined {
     const allTemplates = this.listAllTemplates()
     const entry = allTemplates[templateId]
     if (!entry || !entry.shapePath) {
@@ -338,7 +339,7 @@ export class TemplateService {
     }
 
     const shapes = this.readShapeSchema(entry.shapePath)
-    return shapes.find((s) => s.hash === hash)
+    return Object.entries(shapes).find(([_, s]) => s.hash === hash)
   }
 }
 

@@ -40,11 +40,12 @@ export const DownloadShapes = command({
     // 1. Download the source code and flatten it
     const outputFiles: Record<string, string> = {}
     const shapesFolder = join(templatePath, 'shapes')
-    for (const shape of shapeSchema) {
+    for (const fileName in shapeSchema) {
+      const shape = shapeSchema[fileName]
       const chainConfig = getChainConfig(shape.chain)
       const httpClient = new HttpClient()
       const client = getExplorerClient(httpClient, chainConfig.explorer)
-      logger.logLine(`Fetching source code of ${shape.description}`)
+      logger.logLine(`Fetching source code of ${fileName}`)
       const source = await client.getContractSource(shape.address)
       const flattenInput = Object.entries(source.files)
         .map(([fileName, content]) => ({
@@ -63,11 +64,12 @@ export const DownloadShapes = command({
         logger.logLine(`Error: hash mismatch!`)
         return
       }
+
       // Write the flattened source code to the shapes folder
-      const fileName = shape.description.endsWith('.sol')
-        ? shape.description
-        : `${shape.description}.sol`
-      const filePath = join(shapesFolder, fileName)
+      const outputFile = fileName.endsWith('.sol')
+        ? fileName
+        : `${fileName}.sol`
+      const filePath = join(shapesFolder, outputFile)
       outputFiles[filePath] = flattenOutput
     }
 

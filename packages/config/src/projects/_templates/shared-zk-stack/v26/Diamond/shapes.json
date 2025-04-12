@@ -1,37 +1,32 @@
-[
-  {
+{
+  "AdminFacet.1": {
     "hash": "0x28719e86c8042765405cbb88205d1fb130f39f3bb0923afe7fef6dd5ef798c31",
-    "description": "AdminFacet.1",
     "address": "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "DiamondProxy.p": {
     "hash": "0x46ab6472330f39b5dde71de5fc30609f34ecfa68c11673e09438f6db607279ea",
-    "description": "DiamondProxy.p",
     "address": "0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "ExecutorFacet.4": {
     "hash": "0x396f0e8e4bc223f186f87b7eabf2f4b537ce84f8515aa16c86400c4f10af79b1",
-    "description": "ExecutorFacet.4",
     "address": "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "GettersFacet.2": {
     "hash": "0x8337740067b4f9278182a83ca83d62ca2611966b8beca6e0a49394204c8f74da",
-    "description": "GettersFacet.2",
     "address": "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "MailboxFacet.3": {
     "hash": "0xf3a1cb3dd9315b2dfa9e9aca6d6b09e987a1eb463588f115e2eb142eaa2a4ac6",
-    "description": "MailboxFacet.3",
     "address": "0x36b026c39125964D99596CE302866B5A59E4dE27",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}
