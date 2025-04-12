@@ -29,8 +29,8 @@ export async function modelPermissions(
     templateService,
     paths,
   )
-  console.log(JSON.stringify(facts, null, 2))
-  const parsedFacts = ClingoFactFile.parse(facts)
+  // TODO, why reparsing?
+  const parsedFacts = ClingoFactFile.parse(JSON.parse(JSON.stringify(facts)))
   const kb = new KnowledgeBase(parsedFacts.facts)
   // const modelIdRegistry = new ModelIdRegistry(kb)
   const transitivePermissionFacts = kb.getFacts('filteredTransitivePermission')
