@@ -63,7 +63,7 @@ export const near: BaseProject = {
 ### Consensus
 NEAR's Nightshade consensus operates a Proof-of-Stake (PoS) system that enables parallel processing of transactions through a sharded architecture. As with any PoS system, validators are required to lock a stake to be eligible for block production and attestations.
 The main differentiator of the NEAR blockchain is that its blocks do not contain actual transactions but rather block headers of separate blockchains, known as shards.
-The ***main chain*** can contain many shards, and the current NEAR implementation supports 6 shards.
+The ***main chain*** can contain many shards, and the current NEAR implementation supports 8 shards.
 
 
 ![Near Shards](/images/da-layer-technology/near/nearShards.png#center)\n
@@ -147,9 +147,14 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
     pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
     throughput: [
       {
-        size: 16777216, // 16 MiB , 4MiB per 4 shard
+        size: 16777216, // 16 MiB , 4MiB per 4 shards
         frequency: 1, // 16 MiB/s
         sinceTimestamp: 1587513600, // 2020-04-22
+      },
+      {
+        size: 33554432, // 32 MiB , 4MiB per 8 shards
+        frequency: 1, // 32 MiB/s
+        sinceTimestamp: 1742342400, // 2025-03-19
       },
     ],
     risks: {
@@ -166,6 +171,13 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
     },
   },
   milestones: [
+    {
+      title: 'Near upgrades to 8 shards',
+      url: 'https://x.com/NEARProtocol/status/1903780872760988037',
+      date: '2025-03-19T00:00:00Z',
+      description: 'Near upgrades from 6 to 8 shards.',
+      type: 'general',
+    },
     {
       title: 'Near mainnet launch',
       url: 'https://near.org/blog/near-mainnet-genesis',
