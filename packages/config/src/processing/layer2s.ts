@@ -10,6 +10,7 @@ import { align } from '../projects/align/align'
 import { allo } from '../projects/allo/allo'
 import { ancient } from '../projects/ancient/ancient'
 import { apex } from '../projects/apex/apex'
+import { appchain } from '../projects/appchain/appchain'
 import { arbitrum } from '../projects/arbitrum/arbitrum'
 import { arcology } from '../projects/arcology/arcology'
 import { arenaz } from '../projects/arenaz/arenaz'
@@ -232,6 +233,7 @@ export const layer2s: ScalingProject[] = [
   allo,
   ancient,
   apex,
+  appchain,
   arbitrum,
   arcology,
   arenaz,
