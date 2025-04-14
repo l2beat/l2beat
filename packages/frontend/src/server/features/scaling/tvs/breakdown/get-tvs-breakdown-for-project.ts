@@ -31,7 +31,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
 
     const targetTimestamp = getTvsTargetTimestamp()
     const db = getDb()
-    const tokenValues = await db.tvsTokenValue.getByProjectAndTimestamp(
+    const tokenValues = await db.tvsTokenValue.getByProjectAtOrBefore(
       project.id,
       targetTimestamp,
     )

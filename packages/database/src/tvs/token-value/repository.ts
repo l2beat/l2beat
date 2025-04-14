@@ -46,15 +46,28 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectAndTimestamp(
+  async getByProjectAtOrBefore(
     project: string,
     timestamp: UnixTime,
   ): Promise<TokenValueRecord[]> {
+    const subquery = this.db
+      .selectFrom('TokenValue')
+      .select(['tokenId'])
+      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
+      .where('projectId', '=', project)
+      .where('timestamp', '<=', UnixTime.toDate(timestamp))
+      .groupBy(['tokenId'])
+      .as('latest')
+
     const rows = await this.db
       .selectFrom('TokenValue')
-      .selectAll()
-      .where('projectId', '=', project)
-      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .innerJoin(subquery, (join) =>
+        join
+          .onRef('TokenValue.tokenId', '=', 'latest.tokenId')
+          .onRef('TokenValue.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .where('TokenValue.projectId', '=', project)
+      .selectAll('TokenValue')
       .execute()
 
     return rows.map(toRecord)

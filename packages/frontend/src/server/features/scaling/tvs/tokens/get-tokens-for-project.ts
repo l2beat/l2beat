@@ -17,7 +17,7 @@ export async function getTokensForProject(
   }
 
   const db = getDb()
-  const tokenValues = await db.tvsTokenValue.getByProjectAndTimestamp(
+  const tokenValues = await db.tvsTokenValue.getByProjectAtOrBefore(
     project.id,
     getTvsTargetTimestamp(),
   )

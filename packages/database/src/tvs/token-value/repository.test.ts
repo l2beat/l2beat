@@ -202,19 +202,42 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
-  describe(TokenValueRepository.prototype.getByProjectAndTimestamp.name, () => {
+  describe(TokenValueRepository.prototype.getByProjectAtOrBefore.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
+        // Token A with multiple timestamps
         tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
+        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000),
+
+        // Token B with multiple timestamps
         tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000),
+
+        // Token C with a single timestamp
         tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(200), 20, 20000, 16000, 10000),
+
+        // Different project
         tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
+        tokenValue('d', 'arbitrum', UnixTime(200), 20, 20000, 16000, 10000),
       ])
     })
 
-    it('returns all tokens for a project at a specific timestamp', async () => {
-      const result = await repository.getByProjectAndTimestamp(
+    it('returns latest record for each token at or before timestamp', async () => {
+      const result = await repository.getByProjectAtOrBefore(
+        'ethereum',
+        UnixTime(180),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
+        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+
+    it('returns records exactly at the timestamp when available', async () => {
+      const result = await repository.getByProjectAtOrBefore(
         'ethereum',
         UnixTime(100),
       )
@@ -226,13 +249,39 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
     })
 
-    it('returns empty array when no records match the timestamp', async () => {
-      const result = await repository.getByProjectAndTimestamp(
+    it('returns records before the timestamp when no exact match', async () => {
+      const result = await repository.getByProjectAtOrBefore(
         'ethereum',
-        UnixTime(150),
+        UnixTime(170),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+
+    it('returns empty array when no records before or at timestamp', async () => {
+      const result = await repository.getByProjectAtOrBefore(
+        'ethereum',
+        UnixTime(50),
       )
 
       expect(result).toEqual([])
+    })
+
+    it('returns records up to the latest timestamp for each token', async () => {
+      const result = await repository.getByProjectAtOrBefore(
+        'ethereum',
+        UnixTime(250),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000),
+        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
     })
   })
 
