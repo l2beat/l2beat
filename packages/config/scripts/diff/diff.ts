@@ -27,6 +27,7 @@ export function diffAll(
 ): ProjectDiff[] {
   const beforeMap = new Map(projectsBefore.map((p) => [p.id, p]))
   const afterMap = new Map(projectsAfter.map((p) => [p.id, p]))
+
   const results: ProjectDiff[] = []
 
   for (const [id, before] of beforeMap) {
