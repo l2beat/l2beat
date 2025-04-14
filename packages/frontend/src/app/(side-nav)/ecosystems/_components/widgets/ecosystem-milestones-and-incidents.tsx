@@ -225,7 +225,7 @@ function Timeline({
     return (
       <span
         key={timestamp}
-        className="absolute top-2.5 text-3xs leading-none text-secondary"
+        className="absolute top-2.5 whitespace-nowrap text-3xs leading-none text-secondary"
         style={{ left: `${(index / timestamps.length) * 100}%` }}
       >
         {label}
