@@ -85,8 +85,7 @@ export const sanko: ScalingProject = orbitStackL3({
       title: 'Sanko Mainnet launch',
       url: 'https://x.com/SankoGameCorp/status/1792360032363000310',
       date: '2024-05-20T00:00:00Z',
-      description:
-        'Sanko launches its Mainnet.',
+      description: 'Sanko launches its Mainnet.',
       type: 'general',
     },
   ],

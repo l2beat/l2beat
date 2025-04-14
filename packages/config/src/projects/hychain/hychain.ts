@@ -57,8 +57,7 @@ export const hychain: ScalingProject = orbitStackL2({
       title: 'HYCHAIN Mainnet launch',
       url: 'https://x.com/WINRProtocol/status/1867223130684735514',
       date: '2024-03-09T00:00:00Z',
-      description:
-        'HYCHAIN launches its Mainnet.',
+      description: 'HYCHAIN launches its Mainnet.',
       type: 'general',
     },
   ],

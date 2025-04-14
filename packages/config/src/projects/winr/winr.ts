@@ -169,8 +169,7 @@ export const winr: ScalingProject = orbitStackL3({
       title: 'WINR Mainnet launch',
       url: 'https://x.com/WINRProtocol/status/1867223130684735514',
       date: '2024-12-16T00:00:00Z',
-      description:
-        'WINR launches its Mainnet.',
+      description: 'WINR launches its Mainnet.',
       type: 'general',
     },
   ],

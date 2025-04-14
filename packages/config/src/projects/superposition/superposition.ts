@@ -73,8 +73,7 @@ export const superposition: ScalingProject = orbitStackL3({
       title: 'Superposition Mainnet launch',
       url: 'https://x.com/Superpositionso/status/1878789316018926027',
       date: '2025-01-13T00:00:00Z',
-      description:
-        'Superposition launches its Mainnet.',
+      description: 'Superposition launches its Mainnet.',
       type: 'general',
     },
   ],

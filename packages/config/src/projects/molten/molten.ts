@@ -69,8 +69,7 @@ export const molten: ScalingProject = orbitStackL3({
       title: 'Molten Mainnet launch',
       url: 'https://x.com/MoltenL3/status/1774485708742205545',
       date: '2024-03-31T00:00:00Z',
-      description:
-        'Molten launches its Mainnet.',
+      description: 'Molten launches its Mainnet.',
       type: 'general',
     },
   ],

@@ -84,8 +84,7 @@ export const degen: ScalingProject = orbitStackL3({
       title: 'Degen Chain launches Mainnet',
       date: '2024-03-28T00:00:00Z',
       url: 'https://x.com/syndicateio/status/1773351144858750990',
-      description:
-        'Degen Chain launches its mainnet.',
+      description: 'Degen Chain launches its mainnet.',
       type: 'general',
     },
   ],

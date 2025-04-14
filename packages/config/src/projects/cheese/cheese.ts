@@ -45,5 +45,4 @@ export const cheese: ScalingProject = underReviewL3({
       tokens: '*',
     },
   ],
-},
-)
+})

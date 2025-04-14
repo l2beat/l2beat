@@ -70,8 +70,7 @@ export const popapex: ScalingProject = orbitStackL3({
       title: 'Proof of Play Apex Mainnet',
       date: '2024-02-29T00:00:00Z',
       url: 'https://x.com/ProofOfPlay/status/1763218718816092307',
-      description:
-        'Proof of Play Apex launches it mainnet.',
+      description: 'Proof of Play Apex launches it mainnet.',
       type: 'general',
     },
   ],
