@@ -1,4 +1,4 @@
-import { readFileSync, unlinkSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -34,7 +34,7 @@ export async function modelPermissions(
   const parsedFacts = ClingoFactFile.parse(JSON.parse(JSON.stringify(facts)))
   const kb = new KnowledgeBase(parsedFacts.facts)
   const modelIdRegistry = new ModelIdRegistry(kb)
-  const transitivePermissionFacts = kb.getFacts('filteredTransitivePermission')
+  const transitivePermissionFacts = kb.getFacts('ultimatePermission')
   const ultimatePermissions = transitivePermissionFacts.map((fact) =>
     parseTransitivePermissionFact(fact, modelIdRegistry),
   )
@@ -99,9 +99,11 @@ export async function buildProjectPageFacts(
   )
   const projectPageClingoFile = readProjectPageClingoFile(paths)
   const combinedClingo = clingo + '\n' + projectPageClingoFile
-  const outputPath = configReader.getProjectPath(project)
-  const debugFilePath = join(outputPath, 'facts.debug.lp')
-  writeFileSync(debugFilePath, combinedClingo)
+  const projectPath = configReader.getProjectPath(project)
+
+  const inputFilePath = join(projectPath, 'clingo.input.lp')
+  writeFileSync(inputFilePath, combinedClingo)
+
   const clingoResult = await runClingo(combinedClingo)
   if (clingoResult.Result === 'ERROR') {
     throw new Error(clingoResult.Error)
@@ -113,8 +115,14 @@ export async function buildProjectPageFacts(
   if (!facts) {
     throw new Error('No facts found')
   }
-  unlinkSync(debugFilePath)
+
+  const outputFilePath = join(projectPath, 'clingo.output.lp')
+  writeFileSync(outputFilePath, JSON.stringify(facts, null, 2))
+
   const parsed = { facts: facts.map(parseClingoFact) }
+
+  // unlinkSync(inputFilePath)
+  // unlinkSync(outputFilePath)
   return parsed
 }
 
