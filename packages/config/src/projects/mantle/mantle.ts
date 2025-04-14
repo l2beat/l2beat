@@ -16,7 +16,7 @@ export const mantle: ScalingProject = opStackL2({
   additionalBadges: [BADGES.DA.EigenDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
-    REASON_FOR_BEING_OTHER.SMALL_DAC,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
     name: 'Mantle',
