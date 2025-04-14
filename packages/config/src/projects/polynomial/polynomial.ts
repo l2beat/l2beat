@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('polynomial')
 export const polynomial: ScalingProject = opStackL2({
   addedAt: UnixTime(1726570826), // 2024-09-17T11:00:26Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Infra.Superchain],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   ecosystemInfo: {

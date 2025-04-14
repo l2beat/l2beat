@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('publicgoodsnetwork')
 export const publicgoodsnetwork: ScalingProject = opStackL2({
   addedAt: UnixTime(1690446197), // 2023-07-27T08:23:17Z
   archivedAt: UnixTime(1734048000), // 2024-12-13T00:00:00.000Z,
-  additionalBadges: [BADGES.Infra.Superchain, BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [

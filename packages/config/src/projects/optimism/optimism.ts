@@ -118,13 +118,7 @@ export const optimism: ScalingProject = {
   id: ProjectId('optimism'),
   capability: 'universal',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [
-    BADGES.VM.EVM,
-    BADGES.DA.EthereumBlobs,
-    BADGES.Stack.OPStack,
-    BADGES.Infra.Superchain,
-    BADGES.Other.Governance,
-  ],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Other.Governance],
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',

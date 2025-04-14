@@ -29,7 +29,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 export const xlayer: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],
+  additionalBadges: [BADGES.DA.DAC],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({

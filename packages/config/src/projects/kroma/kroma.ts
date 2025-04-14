@@ -1,22 +1,22 @@
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
@@ -52,12 +52,7 @@ export const kroma: ScalingProject = {
   id: ProjectId('kroma'),
   addedAt: UnixTime(1686820004), // 2023-06-15T09:06:44Z
   capability: 'universal',
-  badges: [
-    BADGES.VM.EVM,
-    BADGES.DA.EthereumBlobs,
-    BADGES.Stack.OPStack,
-    BADGES.Infra.Superchain,
-  ],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Kroma',

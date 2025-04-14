@@ -115,12 +115,10 @@ export const base: ScalingProject = {
   id: ProjectId('base'),
   capability: 'universal',
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  badges: [
-    BADGES.VM.EVM,
-    BADGES.DA.EthereumBlobs,
-    BADGES.Stack.OPStack,
-    BADGES.Infra.Superchain,
-  ],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Base',
     slug: 'base',
@@ -160,9 +158,6 @@ export const base: ScalingProject = {
       )} after it has been posted.`,
     },
     finality: { finalizationPeriod: maxClockDuration },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   config: {
     escrows: [

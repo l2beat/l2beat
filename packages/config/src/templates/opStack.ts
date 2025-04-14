@@ -1,9 +1,9 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
@@ -231,9 +231,13 @@ function opStackCommon(
     'opstack',
     postsToEthereum(templateVars) ? 'rollup' : 'optimium',
   ]
+
   const partOfSuperchain = isPartOfSuperchain(templateVars)
+
   if (partOfSuperchain) {
     architectureImage.push('superchain')
+  }
+  if (partOfSuperchain || templateVars.ecosystemInfo?.id === 'superchain') {
     automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
