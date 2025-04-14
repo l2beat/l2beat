@@ -10,7 +10,7 @@ import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
-import { groupValuesByTimestamp } from './utils/groupValuesByTimestamp'
+import { groupValuesByTimestamp } from './utils/group-values-by-timestamp'
 import {
   TvsProjectFilter,
   createTvsProjectsFilter,
