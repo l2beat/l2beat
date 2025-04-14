@@ -11,7 +11,7 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
-  addedAt: UnixTime(1721214420), // 2024-07-17T11:07:00Z
+  addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',

@@ -15,7 +15,7 @@ const discovery = new ProjectDiscovery('cronoszkevm')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const cronoszkevm: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1722430938), // 2024-07-31T13:02:18Z
+  addedAt: UnixTime(1723680000), // 2024-08-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],

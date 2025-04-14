@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('abstract')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const abstract: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1724863689), // 2024-08-28T16:48:09Z
+  addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
   display: {
     name: 'Abstract',
     slug: 'abstract',

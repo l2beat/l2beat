@@ -41,7 +41,7 @@ assert(
 )
 
 export const zksync2: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
+  addedAt: UnixTime(1679616000), // 2023-03-24T00:00:00Z
   discovery,
   display: {
     name: 'ZKsync Era',
