@@ -22,7 +22,7 @@ export function EcosystemBuildOnLink({ name, slug, href, className }: Props) {
         )}
       >
         <div
-          className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
+          className="absolute inset-0 origin-left rounded-lg bg-cover bg-center transition-all ease-in-out group-hover:scale-125"
           style={{ backgroundImage: `url(/ecosystems/${slug}/build-on.png)` }}
         />
         <div className="relative flex h-full flex-col justify-center">
