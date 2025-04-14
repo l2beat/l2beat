@@ -22,6 +22,11 @@ permission(Receiver, "act", Msig) :-
   msig(Msig, Threshold),
   Threshold == 1.
 
+% admins get upgrade permissions with 0 delay if there's not an existing upgrade permission yet
+permission(Admin, "upgrade", Receiver) :-
+  hasField(Receiver, "$admin", Admin).
+  % not permission(_, "upgrade", Receiver).
+
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
 transitivePermission(Receiver, Permission, Giver, Delay, Description, Delay, nil) :-
@@ -43,6 +48,14 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
   OriginalPermission != "act",
   canActIndependently(Receiver).
 
+canActIndependently(Msig) :-
+  msig(Msig, Threshold),
+  Threshold > 1.
+
+canActIndependently(Actor) :-
+  address(Actor, _, _),
+  not permission(_, "act", Actor).
+
 % % 2. Filtering permission to only those we want to display
 % % a) Show only final permissions (which don't give "act" to someone else)
 % filteredTransitivePermission(Receiver, Permission, Giver, Delay, Description, TotalDelay, Via, isFinal) :-
@@ -55,13 +68,6 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
 %   Via == nil,
 %   permission(_, "act", Receiver).
 
-canActIndependently(Msig) :-
-  msig(Msig, Threshold),
-  Threshold > 1.
-
-canActIndependently(Actor) :-
-  address(Actor, _, _),
-  not permission(_, "act", Actor).
 
 #show address/3.
 % #show addressName/2.
@@ -69,5 +75,6 @@ canActIndependently(Actor) :-
 % #show addressDescription/2.
 % #show filteredTransitivePermission/8.
 % #show canActIndependently/1.
-% #show transitivePermission/7.
+#show hasField/3.
+#show transitivePermission/7.
 #show ultimatePermission/8.

@@ -3,7 +3,7 @@ import type { ContractPermission } from '../config/PermissionConfig'
 import type { RawPermissionConfiguration } from '../config/StructureConfig'
 import type { StructureEntry } from '../output/types'
 import type { ContractValue } from '../output/types'
-import { toAddressArray } from '../utils/extractors'
+import { get$Admins, toAddressArray } from '../utils/extractors'
 import { interpolateString } from '../utils/interpolateString'
 import { interpolateModelTemplate } from './interpolate'
 
@@ -33,6 +33,14 @@ addressType(
   @self,
   eoa).`,
   when: (c) => c.type === 'EOA',
+}
+const adminFieldTemplate: InlineTemplate = {
+  content: `
+hasField(
+  @self,
+  "$admin",
+  &$admin).`,
+  when: (c) => get$Admins(c.values).length > 0,
 }
 const permissionTemplate: InlineTemplate = {
   content: `
@@ -87,6 +95,7 @@ export function buildPermissionsModel(
     addressTemplate,
     addressTypeContractTemplate,
     addressTypeEOATemplate,
+    adminFieldTemplate,
   ]) {
     if (template.when(structureEntry)) {
       const interpolated = interpolateModelTemplate(
