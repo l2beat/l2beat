@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x440b55ba0c6ff98a1b202a66d99df730d816470e
+Generated with discovered.json: 0xd0d871211e1987eadd1af7cec3f1aeb8bcb9654d
 
-# Diff at Mon, 14 Apr 2025 10:22:39 GMT:
+# Diff at Mon, 14 Apr 2025 10:46:54 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 22266376
+- current block number: 22266722
 
 ## Description
 
@@ -80,7 +80,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SlashingManager (0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce)
-    +++ description: None
+    +++ description: Contract that allows the consensus supermajority to slash validators.
 ```
 
 ```diff
@@ -110,7 +110,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Governance (0xC476E20c2F7FA3B35aC242aBE71B59e902242f06)
-    +++ description: None
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
 ```
 
 ```diff

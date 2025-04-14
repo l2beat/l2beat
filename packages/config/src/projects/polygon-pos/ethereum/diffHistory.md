@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6935b3d6134fde53454f0c1648e52221caa7cea8
+Generated with discovered.json: 0x7b76f3054f84e7cee89240d2b5ccd4b670709b15
 
-# Diff at Mon, 14 Apr 2025 10:22:40 GMT:
+# Diff at Mon, 14 Apr 2025 10:36:13 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
@@ -78,9 +78,11 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
-    +++ description: None
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
       template:
 +        "polygonposbridge/Governance"
+      description:
++        "Simple contract that allows the owner to call an `update` function on arbitrary contracts."
     }
 ```
 

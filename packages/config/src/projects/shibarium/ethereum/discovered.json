@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
   "chain": "ethereum",
-  "blockNumber": 22266376,
+  "blockNumber": 22266722,
   "configHash": "0x51e94a1b7cde4e6bf1f01abc5ff018f6ae087791fbe66b4b1abb46c62437d9c7",
   "entries": [
     {
@@ -372,6 +372,21 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "0x885fcE983b6a01633f764325B8c3c5D31032C995",
+          "description": "can update the root chain it references."
+        },
+        {
+          "permission": "interact",
+          "from": "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
+          "description": "can update how much of the slashed funds go to the proposer and reporter."
+        },
+        {
+          "permission": "interact",
+          "from": "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
+          "description": "can delete arbitrary checkpoints."
+        },
+        {
           "permission": "upgrade",
           "from": "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
         },
@@ -412,6 +427,14 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "description": "can update the root chain it references.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1691243951,
       "sinceBlock": 17849219,
       "values": {
@@ -440,6 +463,15 @@
         "0x64d3fd0840fb5d9eedf5977cce8c443d31adfc2323458db3d2d9461d889ea994"
       ],
       "proxyType": "immutable",
+      "description": "Contract that allows the consensus supermajority to slash validators.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "description": "can update how much of the slashed funds go to the proposer and reporter.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1691243891,
       "sinceBlock": 17849214,
       "values": {
@@ -603,6 +635,7 @@
         "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
       ],
       "proxyType": "EIP897 proxy",
+      "description": "Simple contract that allows the owner to call an `update` function on arbitrary contracts.",
       "sinceTimestamp": 1691242715,
       "sinceBlock": 17849117,
       "values": {
@@ -626,6 +659,14 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
+          "description": "can delete arbitrary checkpoints.",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
@@ -634,7 +675,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 243180000,
+        "_nextHeaderBlock": 243200000,
         "$immutable": false,
         "$implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -643,8 +684,8 @@
           "_registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 243170000,
-        "getLastChildBlock": 10460700,
+        "currentHeaderBlock": 243190000,
+        "getLastChildBlock": 10461724,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -1256,16 +1297,16 @@
     ]
   },
   "usedTemplates": {
-    "polygonposbridge/DepositManager": "0x9d583c67327fa25303d2c360e09eba2ecdf0b2e2130c2c62fa523f013e911bf9",
+    "polygonposbridge/DepositManager": "0x508d4444e3c21f1361f9b0948976412f48fe067c7d529bf6121ac18a4cabd004",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/Merkle": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
     "polygonposbridge/Registry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/RLPReader": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "polygonposbridge/RootChain": "0x7003f0a85bb930e268c1142754c69d675ff65aadc6d4f6144c117bc19519eb12",
+    "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
-    "polygonposbridge/SlashingManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/SlashingManager": "0xff988e17661283d80f937c5ed6b0b648c510181283f32327373a7ece9c12584d",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
   }

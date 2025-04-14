@@ -7,6 +7,14 @@
         "type": "constructorArgs",
         "nameArgs": true
       }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can delete arbitrary checkpoints."
+        }
+      ]
     }
   },
   "ignoreMethods": ["headerBlocks"],
