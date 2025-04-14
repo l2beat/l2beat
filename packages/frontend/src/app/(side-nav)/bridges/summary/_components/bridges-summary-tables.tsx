@@ -31,9 +31,7 @@ export function BridgesSummaryTables(props: Props) {
   return (
     <>
       <HorizontalSeparator className="my-4 max-md:hidden" />
-      <div className="mr-4 md:mr-0">
-        <TableFilters entries={[...props.singleChain, ...props.others]} />
-      </div>
+      <TableFilters entries={[...props.singleChain, ...props.others]} />
       <DirectoryTabs defaultValue="singleChain">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="singleChain">

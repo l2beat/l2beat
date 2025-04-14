@@ -29,9 +29,7 @@ export function BridgesArchivedTables(props: Props) {
 
   return (
     <>
-      <div className="mr-4 md:mr-0">
-        <TableFilters entries={[...props.singleChain, ...props.others]} />
-      </div>
+      <TableFilters entries={[...props.singleChain, ...props.others]} />
       <DirectoryTabs defaultValue="singleChain">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="singleChain">
