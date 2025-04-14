@@ -1,4 +1,4 @@
-import { decodeFunctionData, parseAbi, type Block } from 'viem'
+import { type Block, decodeFunctionData, parseAbi } from 'viem'
 import type { ChainInfo, CrossChainSend } from './types'
 
 export type BlockWithTxs = Block<bigint, true, 'latest'>

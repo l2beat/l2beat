@@ -1,7 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
+import { http, type PublicClient, createPublicClient } from 'viem'
+import type { TxService } from './TxService'
+import { type BlockWithTxs, analyzeBlock } from './analyze'
 import type { ChainInfo } from './types'
-import { type PublicClient, createPublicClient, http } from 'viem'
-import { analyzeBlock, type BlockWithTxs } from './analyze'
 
 export class ChainListener {
   private client: PublicClient
@@ -9,6 +10,7 @@ export class ChainListener {
   constructor(
     private chain: ChainInfo,
     rpcUrl: string,
+    private txService: TxService,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).configure({ tag: chain.name })
@@ -32,7 +34,7 @@ export class ChainListener {
     this.logger.info('Received block', { number: Number(block.number) })
     const txs = analyzeBlock(block, this.chain)
     for (const tx of txs) {
-      console.log(tx)
+      this.txService.save(tx)
     }
   }
 }

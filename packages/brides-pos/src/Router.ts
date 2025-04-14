@@ -1,14 +1,33 @@
 import type { Server } from 'http'
 import type { Logger } from '@l2beat/backend-tools'
-import express from 'express'
+import express, { type Request, type Response } from 'express'
+import type { TxService } from './TxService'
 import type { Config } from './config'
 
-export function createRouter(config: Config, logger: Logger) {
+export function createRouter(
+  config: Config,
+  txService: TxService,
+  logger: Logger,
+) {
   const app = express()
 
-  app.get('/', (_req, res) => {
-    res.send('Hello World!')
-  })
+  app.get(
+    '/stream',
+    handleSSE((send) => {
+      return txService.listen((tx) =>
+        send({
+          timestamp: new Date(tx.timestamp * 1000).toISOString(),
+          protocol: tx.protocol,
+          source: tx.source.chain,
+          destination: tx.destination.chain,
+          token: tx.source.token,
+          amount: tx.source.amount.toString(),
+        }),
+      )
+    }),
+  )
+
+  app.use(express.static('public'))
 
   return {
     start: (): Promise<Server> => {
@@ -19,5 +38,24 @@ export function createRouter(config: Config, logger: Logger) {
         })
       })
     },
+  }
+}
+
+function handleSSE(cb: (send: (value: unknown) => void) => () => void) {
+  return function (_req: Request, res: Response) {
+    res.writeHead(200, {
+      Connection: 'keep-alive',
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'text/event-stream',
+    })
+
+    const close = cb(function (value) {
+      res.write(`${JSON.stringify(value)}\n\n`)
+    })
+
+    res.on('close', () => {
+      close()
+      res.end()
+    })
   }
 }
