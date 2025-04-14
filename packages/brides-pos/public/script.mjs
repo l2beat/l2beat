@@ -7,6 +7,7 @@ connect(onMessage)
 
 function onMessage(message) {
   messages.unshift(message)
+  messages.sort((a, b) => b.timestamp.localeCompare(a.timestamp))
   if (messages.length > MAX_MESSAGES) {
     messages.pop()
   }
