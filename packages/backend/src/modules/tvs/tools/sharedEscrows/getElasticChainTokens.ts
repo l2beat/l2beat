@@ -5,7 +5,7 @@ import type {
   ProjectTvlEscrow,
   TvsToken,
 } from '@l2beat/config'
-import type { RpcClient } from '@l2beat/shared'
+import { type RpcClient, encodeTotalSupply } from '@l2beat/shared'
 import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
@@ -47,8 +47,8 @@ export async function getElasticChainTokens(
   const block = await rpcClient.getLatestBlockNumber()
   const responses = await multicallClient.multicall(encoded, block)
 
-  const l2TokensTvsConfigs = responses
-    .map((response, index) => {
+  const l2TokensTvsConfigs = await Promise.all(
+    responses.map(async (response, index) => {
       const token = l2Tokens[index]
       if (
         response.data.toString() === '0x' ||
@@ -63,36 +63,43 @@ export async function getElasticChainTokens(
         response.data.toString(),
       )
 
-      const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
-        escrow,
-        chain,
-        token,
-      )
+      try {
+        // try fetching totalSupply, if it does not fail then add token
+        await rpcClient.call(encodeTotalSupply(address), block)
 
-      return {
-        mode: 'auto' as const,
-        id: TokenId.create(project.id, token.symbol),
-        priceId: token.coingeckoId,
-        symbol: token.symbol,
-        name: token.name,
-        iconUrl: token.iconUrl,
-        category: token.category,
-        source: 'canonical' as const,
-        isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-          token.symbol,
-        ),
-        amount: {
-          type: 'totalSupply' as const,
-          address: address,
-          chain: project.id,
-          // Assumption: decimals on destination network are the same
-          decimals: token.decimals,
-          sinceTimestamp,
-          ...(untilTimestamp ? { untilTimestamp } : {}),
-        },
+        const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
+          escrow,
+          chain,
+          token,
+        )
+
+        return {
+          mode: 'auto' as const,
+          id: TokenId.create(project.id, token.symbol),
+          priceId: token.coingeckoId,
+          symbol: token.symbol,
+          name: token.name,
+          iconUrl: token.iconUrl,
+          category: token.category,
+          source: 'canonical' as const,
+          isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+            token.symbol,
+          ),
+          amount: {
+            type: 'totalSupply' as const,
+            address: address,
+            chain: project.id,
+            // Assumption: decimals on destination network are the same
+            decimals: token.decimals,
+            sinceTimestamp,
+            ...(untilTimestamp ? { untilTimestamp } : {}),
+          },
+        }
+      } catch {
+        return undefined
       }
-    })
-    .filter(notUndefined)
+    }),
+  )
 
   const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     escrow,
@@ -132,5 +139,9 @@ export async function getElasticChainTokens(
     }
   }
 
-  return [...l2TokensTvsConfigs, etherOnL2, ...tokensToAssignFromL1]
+  return [
+    ...l2TokensTvsConfigs.filter(notUndefined),
+    etherOnL2,
+    ...tokensToAssignFromL1,
+  ]
 }
