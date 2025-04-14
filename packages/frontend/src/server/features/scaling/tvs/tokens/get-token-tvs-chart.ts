@@ -1,11 +1,5 @@
 import type { TokenValueRecord } from '@l2beat/database'
-import {
-  assert,
-  ProjectId,
-  TokenId,
-  UnixTime,
-  branded,
-} from '@l2beat/shared-pure'
+import { assert, TokenId, UnixTime, branded } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -51,8 +45,7 @@ export const getCachedTokenTvsChartData = cache(
       now: targetTimestamp,
     })
 
-    const tokenValues = await db.tvsTokenValue.getByProjectAndToken(
-      ProjectId(token.projectId),
+    const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
       token.tokenId,
       from ?? 0,
       to,

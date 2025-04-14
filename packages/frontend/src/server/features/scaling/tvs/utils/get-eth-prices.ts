@@ -4,7 +4,7 @@ import { getDb } from '~/server/database'
 export async function getEthPrices() {
   const db = getDb()
   const prices = await db.tvsPrice.getPricesInRangeByPriceId(
-    ['ethereum'],
+    'ethereum',
     0,
     UnixTime.now(),
   )

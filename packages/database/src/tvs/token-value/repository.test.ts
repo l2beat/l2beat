@@ -202,6 +202,40 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
+  describe(TokenValueRepository.prototype.getByProjectAndTimestamp.name, () => {
+    beforeEach(async () => {
+      await repository.insertMany([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(200), 20, 20000, 16000, 10000),
+        tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
+      ])
+    })
+
+    it('returns all tokens for a project at a specific timestamp', async () => {
+      const result = await repository.getByProjectAndTimestamp(
+        'ethereum',
+        UnixTime(100),
+      )
+
+      expect(result).toEqualUnsorted([
+        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
+        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
+        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
+      ])
+    })
+
+    it('returns empty array when no records match the timestamp', async () => {
+      const result = await repository.getByProjectAndTimestamp(
+        'ethereum',
+        UnixTime(150),
+      )
+
+      expect(result).toEqual([])
+    })
+  })
+
   describe(TokenValueRepository.prototype.deleteByConfigInTimeRange
     .name, () => {
     it('deletes data in range for matching config', async () => {
