@@ -1,5 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS, DA_LAYERS, DA_MODES, RISK_VIEW } from '../../common'
+import {
+  CONTRACTS,
+  DA_LAYERS,
+  DA_MODES,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -8,6 +14,10 @@ const discovery = new ProjectDiscovery('shibarium')
 
 export const shibarium: ScalingProject = {
   id: ProjectId('shibarium'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   type: 'layer2',
   capability: 'universal',
   addedAt: UnixTime(1738081310), // 2025-01-28T16:21:50+00:00
