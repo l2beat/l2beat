@@ -7,7 +7,7 @@ Generated with discovered.json: 0xd0d871211e1987eadd1af7cec3f1aeb8bcb9654d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Polygon PoS fork controlled by EOA and lots of unverified contracts.
 
 ## Initial discovery
 
