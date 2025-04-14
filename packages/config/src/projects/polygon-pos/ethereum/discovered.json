@@ -142,6 +142,7 @@
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
       "type": "Contract",
+      "template": "polygonposbridge/StateSender",
       "sourceHashes": [
         "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
       ],
@@ -327,6 +328,7 @@
       "name": "DepositManager",
       "address": "0x401F6c983eA34274ec46f84D70b31C151321188b",
       "type": "Contract",
+      "template": "polygonposbridge/DepositManager",
       "sourceHashes": [
         "0x56357b4fdb898e49aff0370db0c900b81a28004a5c5932d0cbe0f8ac8e017b39",
         "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9"
@@ -710,6 +712,7 @@
       "name": "Governance",
       "address": "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
       "type": "Contract",
+      "template": "polygonposbridge/Governance",
       "sourceHashes": [
         "0x0df18be01283a9eaa99600142abf19bdd63f71974788d53044022ba32643a2f7",
         "0x5a4efa55552545ebc05194d3649859f5731b5beb3358f26dadb38330cec78719"
@@ -847,6 +850,7 @@
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
       "type": "Contract",
+      "template": "polygonposbridge/RootChain",
       "sourceHashes": [
         "0xf3a9eafd244e85252bdcfb1873e8503ed1e03781a220e97d71c01fa9dc3a5b33",
         "0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c"
@@ -1048,6 +1052,7 @@
       "name": "RootChainManager",
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
       "type": "Contract",
+      "template": "polygonposbridge/RootChainManager",
       "sourceHashes": [
         "0xbbbf27b3fdffff6edc7bb78c7f8d8b0e49e427ea37c77f6c0ee0824742a1480a",
         "0x0f4d3951fb826a28e98a0923400b0173d459b26141d47b08227689849ce11141"
@@ -1187,6 +1192,7 @@
       "name": "StakingInfo",
       "address": "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B",
       "type": "Contract",
+      "template": "polygonposbridge/StakingInfo",
       "sourceHashes": [
         "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
       ],
@@ -1394,6 +1400,7 @@
       "name": "ExitNFT",
       "address": "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca",
       "type": "Contract",
+      "template": "polygonposbridge/ExitNFT",
       "sourceHashes": [
         "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
       ],
@@ -2742,6 +2749,13 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
+    "polygonposbridge/DepositManager": "0x9d583c67327fa25303d2c360e09eba2ecdf0b2e2130c2c62fa523f013e911bf9",
+    "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
+    "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
+    "polygonposbridge/RootChain": "0x7003f0a85bb930e268c1142754c69d675ff65aadc6d4f6144c117bc19519eb12",
+    "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
+    "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
+    "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
   }
 }

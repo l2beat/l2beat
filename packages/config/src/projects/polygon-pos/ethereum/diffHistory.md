@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x424ef4b03afef19cb9b27ca5f1e7feb2cc4aed80
+Generated with discovered.json: 0x80b76a6c6ed019a1b93249093c7190aa08eef8c8
+
+# Diff at Mon, 14 Apr 2025 07:40:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
+- current block number: 22123500
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123500 (main branch discovery), not current.
+
+```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: None
+      template:
++        "polygonposbridge/StateSender"
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: None
+      template:
++        "polygonposbridge/DepositManager"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: None
+      template:
++        "polygonposbridge/Governance"
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: None
+      template:
++        "polygonposbridge/RootChain"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: None
+      template:
++        "polygonposbridge/RootChainManager"
+    }
+```
+
+```diff
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: None
+      template:
++        "polygonposbridge/StakingInfo"
+    }
+```
+
+```diff
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
+    +++ description: None
+      template:
++        "polygonposbridge/ExitNFT"
+    }
+```
+
+Generated with discovered.json: 0x3930fe05edaa97b0251870d452b18c8553e0170c
 
 # Diff at Tue, 25 Mar 2025 11:04:26 GMT:
 

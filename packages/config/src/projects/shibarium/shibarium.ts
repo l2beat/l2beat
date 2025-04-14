@@ -8,6 +8,7 @@ const discovery = new ProjectDiscovery('shibarium')
 
 export const shibarium: ScalingProject = {
   id: ProjectId('shibarium'),
+  type: 'layer2',
   capability: 'universal',
   addedAt: UnixTime(1738081310), // 2025-01-28T16:21:50+00:00
   badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
