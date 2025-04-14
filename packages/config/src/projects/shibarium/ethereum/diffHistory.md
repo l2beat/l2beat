@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xaedc106760237fd1aa4e76ffd8647aea4d235697
+Generated with discovered.json: 0x440b55ba0c6ff98a1b202a66d99df730d816470e
 
-# Diff at Mon, 14 Apr 2025 10:17:41 GMT:
+# Diff at Mon, 14 Apr 2025 10:22:39 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22266376
@@ -74,7 +74,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract DepositManager (0x885fcE983b6a01633f764325B8c3c5D31032C995)
-    +++ description: None
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
 ```
 
 ```diff

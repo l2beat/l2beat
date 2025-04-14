@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4c052367409d067126131fd1f45224df7f4017bb
+Generated with discovered.json: 0x6935b3d6134fde53454f0c1648e52221caa7cea8
 
-# Diff at Mon, 14 Apr 2025 10:17:42 GMT:
+# Diff at Mon, 14 Apr 2025 10:22:40 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
@@ -58,9 +58,11 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
-    +++ description: None
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
       template:
 +        "polygonposbridge/DepositManager"
+      description:
++        "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens."
     }
 ```
 

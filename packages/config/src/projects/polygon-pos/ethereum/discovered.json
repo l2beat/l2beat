@@ -303,6 +303,7 @@
         "0xc5b5f88996b07c7bbc95a43cde9d9dd36d460beb6780e633858131ed36e1cbc9"
       ],
       "proxyType": "EIP897 proxy",
+      "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
       "sinceTimestamp": 1590850640,
       "sinceBlock": 10167767,
       "values": {
