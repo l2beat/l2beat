@@ -28,14 +28,15 @@ export function getBridgesSummaryActiveColumns(isOthers?: boolean) {
       sortingFn: (a, b) =>
         sortTableValues(a.original.validatedBy, b.original.validatedBy),
     }),
-    isOthers && columnHelper.accessor('type', {
-      header: 'Type',
-      meta: {
-        tooltip:
-          'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
-      },
-      cell: (ctx) => <TypeInfo>{ctx.getValue()}</TypeInfo>,
-    }),
+    isOthers &&
+      columnHelper.accessor('type', {
+        header: 'Type',
+        meta: {
+          tooltip:
+            'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
+        },
+        cell: (ctx) => <TypeInfo>{ctx.getValue()}</TypeInfo>,
+      }),
     columnHelper.accessor((e) => e.tvs.breakdown?.total, {
       id: 'total',
       header: 'Total',

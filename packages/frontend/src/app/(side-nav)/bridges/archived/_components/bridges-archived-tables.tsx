@@ -9,8 +9,8 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
+import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
 import { BridgesArchivedTable } from './table/bridges-archived-table'
 
 type Props = TabbedBridgeEntries<BridgesArchivedEntry>

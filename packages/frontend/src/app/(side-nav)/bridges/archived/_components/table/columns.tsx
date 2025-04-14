@@ -29,14 +29,15 @@ export function getBridgesArchivedColumns(isOthers?: boolean) {
       sortingFn: (a, b) =>
         sortTableValues(a.original.validatedBy, b.original.validatedBy),
     }),
-    isOthers && columnHelper.accessor('type', {
-      header: 'Type',
-      cell: (ctx) => <TypeInfo>{ctx.getValue()}</TypeInfo>,
-      meta: {
-        tooltip:
-          'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
-      },
-    }),
+    isOthers &&
+      columnHelper.accessor('type', {
+        header: 'Type',
+        cell: (ctx) => <TypeInfo>{ctx.getValue()}</TypeInfo>,
+        meta: {
+          tooltip:
+            'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
+        },
+      }),
     columnHelper.accessor('totalTvs', {
       id: 'total',
       header: 'Total value secured',
@@ -70,4 +71,3 @@ export function getBridgesArchivedColumns(isOthers?: boolean) {
     }),
   ])
 }
-
