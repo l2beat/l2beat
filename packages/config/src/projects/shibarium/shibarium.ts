@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { DA_LAYERS, RISK_VIEW } from '../../common'
+import { CONTRACTS, DA_LAYERS, DA_MODES, RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('shibarium')
 
@@ -64,8 +64,13 @@ export const shibarium: ScalingProject = {
   },
   dataAvailability: {
     layer: DA_LAYERS.NONE, // StakeManager is unverified
-    bridge: {},
-    mode: {},
+    bridge: {
+      value: 'Unknown',
+      sentiment: 'bad',
+      description:
+        'Since the bridge is not verified, the specifics of the DA bridge are unknown.',
+    },
+    mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
@@ -73,5 +78,36 @@ export const shibarium: ScalingProject = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW, // StakeManager is unverified
+  },
+  technology: {
+    stateCorrectness: {
+      name: 'No state validation',
+      description:
+        'As a fork of Polygon PoS, state updates are supposed to be settled if signed by at least 2/3+1 of the Shibarium validators stake, without checking whether the state transition is valid. Since some contracts are not verified, it is not possible to verify the exact mechanism.',
+      references: [],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'validators on Shibarium decide to not mint tokens after observing an event on Ethereum.',
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+        },
+      ],
+    },
+  },
+  contracts: {
+    addresses: {
+      [discovery.chain]: discovery.getDiscoveredContracts(),
+    },
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  permissions: {
+    [discovery.chain]: discovery.getDiscoveredPermissions(),
   },
 }
