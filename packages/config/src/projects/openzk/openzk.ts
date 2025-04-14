@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
@@ -8,9 +8,6 @@ export const openzk: ScalingProject = underReviewL2({
   capability: 'universal',
   addedAt: UnixTime(1742310729), //18.03.2025 15:12:09
   badges: [BADGES.DA.EthereumBlobs, BADGES.VM.EVM, BADGES.RaaS.Caldera],
-  ecosystemInfo: {
-    id: ProjectId('the-elastic-network'),
-  },
   display: {
     name: 'OpenZK',
     slug: 'openzk',
