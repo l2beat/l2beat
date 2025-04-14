@@ -44,8 +44,8 @@ export function ProjectsUsedIn({
     </span>
   ) : (
     <Tooltip>
-      <TooltipTrigger>
-        <span className="text-2xs leading-none text-zinc-800 dark:text-gray-50">
+      <TooltipTrigger asChild>
+        <span className="cursor-default text-2xs leading-none text-zinc-800 dark:text-gray-50">
           +{rest.length} more
         </span>
       </TooltipTrigger>
@@ -91,7 +91,12 @@ export function ProjectsUsedIn({
                 </TooltipTrigger>
               </LinkWithOnHoverPrefetch>
             )}
-            <TooltipContent>{project.name}</TooltipContent>
+            <TooltipContent>
+              <p className="font-bold">{project.name}</p>
+              <p className="text-xs text-secondary">
+                Click to view project page
+              </p>
+            </TooltipContent>
           </Tooltip>
         )
       })}

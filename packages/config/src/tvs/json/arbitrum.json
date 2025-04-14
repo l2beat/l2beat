@@ -548,6 +548,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BITCOIN-1",
+      "priceId": "harrypotterobamasonic10in",
+      "symbol": "BITCOIN",
+      "name": "HarryPotterObamaSonic10Inu",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30323/large/hpos10i_logo_casino_night-dexview.png?1696529224",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x72e4f9F808C49A2a61dE9C5896298920Dc4EEEa9",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 8,
+        "sinceTimestamp": 1684108800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BLUR-1",
       "priceId": "blur",
       "symbol": "BLUR",

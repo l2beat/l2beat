@@ -46,6 +46,17 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve()
   }
 
+  async writeAmounts(
+    timestamp: UnixTime,
+    entries: { id: string; amount: bigint }[],
+  ): Promise<void> {
+    entries.forEach(({ id, amount }) =>
+      this.amounts.set(key(id, timestamp), amount.toString()),
+    )
+    this.saveToFile()
+    return await Promise.resolve()
+  }
+
   async getAmount(
     id: string,
     timestamp: UnixTime,

@@ -163,8 +163,6 @@ export const base: ScalingProject = {
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   },
   config: {
     escrows: [

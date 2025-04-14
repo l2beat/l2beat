@@ -1,5 +1,4 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { TokenId, stringAs } from '@l2beat/shared-pure'
 import {
   type ChainId,
   EthereumAddress,
@@ -7,8 +6,10 @@ import {
   type StringWithAutocomplete,
   type Token,
   type TokenBridgedUsing,
+  TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
+  stringAs,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
@@ -322,7 +323,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
-  daLayer: string
+  daLayer: string | undefined
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
@@ -886,7 +887,7 @@ export interface AvailDaTrackingConfig {
 
 export interface ProjectEcosystemInfo {
   id: ProjectId
-  sinceTimestamp: UnixTime
+  sinceTimestamp?: UnixTime
   untilTimestamp?: UnixTime
 }
 
@@ -895,19 +896,19 @@ export interface ProjectEcosystemConfig {
     primary: `#${string}`
     secondary: `#${string}`
   }
-  ecosystemToken?: {
-    name: string
-    chain: string
+  token: {
+    tokenId: string
+    projectId: ProjectId
     description: string
   }
-  links?: {
+  links: {
+    buildOn: string
+    learnMore: string
+    governanceTopDelegates: string
+    governanceProposals: string
     tools?: string[]
-    forBuilders?: string
     grants?: string
-    governanceTopDelegates?: string
-    governanceLatestProposals?: string
   }
-  governanceReviews: boolean
 }
 // #endregion
 

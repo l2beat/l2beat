@@ -123,7 +123,10 @@ function NavCollapsibleItem({
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
-      {breakpoint === 'mobile' || breakpoint === 'tablet' ? (
+      {breakpoint === 'xs' ||
+      breakpoint === 'sm' ||
+      breakpoint === 'md' ||
+      group.preventTitleNavigation ? (
         <CollapsibleTrigger
           className="group flex items-center gap-1.5 p-1.5"
           data-active={isActive}

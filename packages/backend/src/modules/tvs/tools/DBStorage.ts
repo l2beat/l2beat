@@ -131,4 +131,14 @@ export class DBStorage implements DataStorage {
 
     return fallback?.amount
   }
+
+  async getTimestamp(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
+    return await this.db.tvsBlockTimestamp.findBlockNumberByChainAndTimestamp(
+      chain,
+      timestamp,
+    )
+  }
 }
