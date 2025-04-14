@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 export const winr: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1734307200), // 2024-12-16T00:00:00Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -164,4 +164,14 @@ export const winr: ScalingProject = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: 'WINR Mainnet launch',
+      url: 'https://x.com/WINRProtocol/status/1867223130684735514',
+      date: '2024-12-16T00:00:00Z',
+      description:
+        'WINR launches its Mainnet.',
+      type: 'general',
+    },
+  ],
 })

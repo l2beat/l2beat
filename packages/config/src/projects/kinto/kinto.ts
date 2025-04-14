@@ -52,7 +52,7 @@ const sanctionExpirySeconds = l2discovery.getContractValue<number>(
 
 export const kinto: ScalingProject = orbitStackL2({
   capability: 'appchain',
-  addedAt: UnixTime(1695735468), // 2023-09-26T13:37:48Z
+  addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   overridingPurposes: ['KYC-ed DeFi'],

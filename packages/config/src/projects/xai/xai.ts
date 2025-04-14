@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
 export const xai: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1701958025), // 2023-12-07T14:07:05Z
+  addedAt: UnixTime(1704758400), // 2024-01-09T00:00:00Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],

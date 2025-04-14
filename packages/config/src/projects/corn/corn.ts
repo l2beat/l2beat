@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('corn')
 
 export const corn: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1733880840),
+  addedAt: UnixTime(1724284800), //2024-08-22
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
