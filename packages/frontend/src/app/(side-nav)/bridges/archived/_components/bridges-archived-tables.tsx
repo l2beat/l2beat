@@ -29,7 +29,7 @@ export function BridgesArchivedTables(props: Props) {
 
   return (
     <>
-      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+      <div className="mr-4 md:mr-0">
         <TableFilters entries={[...props.singleChain, ...props.others]} />
       </div>
       <DirectoryTabs defaultValue="singleChain">
