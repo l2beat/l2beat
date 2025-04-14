@@ -7,6 +7,7 @@ import type { PermissionConfig } from '../config/PermissionConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
+import { ModelIdRegistry } from './ModelIdRegistry'
 import { buildAddressToNameMap } from './build'
 import { parseClingoFact } from './clingoparser'
 import { type ClingoFact, ClingoFactFile } from './factTypes'
@@ -32,34 +33,31 @@ export async function modelPermissions(
   // TODO, why reparsing?
   const parsedFacts = ClingoFactFile.parse(JSON.parse(JSON.stringify(facts)))
   const kb = new KnowledgeBase(parsedFacts.facts)
-  // const modelIdRegistry = new ModelIdRegistry(kb)
+  const modelIdRegistry = new ModelIdRegistry(kb)
   const transitivePermissionFacts = kb.getFacts('filteredTransitivePermission')
-  const ultimatePermissions = transitivePermissionFacts.map(
-    parseTransitivePermissionFact,
+  const ultimatePermissions = transitivePermissionFacts.map((fact) =>
+    parseTransitivePermissionFact(fact, modelIdRegistry),
   )
-  return JSON.stringify(ultimatePermissions, null, 2)
+  return ultimatePermissions.filter((p) => p.isFinal)
 }
 
-function orUndefined<V, C>(
-  caster: (value: V) => C,
-  value: V | undefined,
-): C | undefined {
-  return value === undefined ? undefined : caster(value)
-}
-
-export function parseTransitivePermissionFact(fact: ClingoFact) {
+export function parseTransitivePermissionFact(
+  fact: ClingoFact,
+  modelIdRegistry: ModelIdRegistry,
+) {
   return {
-    receiver: String(fact.params[0]),
+    receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
     permission: String(fact.params[1]),
-    giver: String(fact.params[2]),
+    giver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
     delay: Number(fact.params[3]),
     description: orUndefined(String, fact.params[4]),
     totalDelay: Number(fact.params[5]),
     viaList:
       fact.params[6] === undefined
         ? undefined
-        : ((fact.params[6] as ClingoFact[]).map(parseTransitivePermissionVia) ??
-          undefined),
+        : ((fact.params[6] as ClingoFact[]).map((x) =>
+            parseTransitivePermissionVia(x, modelIdRegistry),
+          ) ?? undefined),
     isFinal: fact.params[7] === 'isFinal',
   }
 }
@@ -77,9 +75,12 @@ export function parseTransitivePermissionFact(fact: ClingoFact) {
 //   typeof parseTransitivePermissionVia
 // >
 
-export function parseTransitivePermissionVia(via: ClingoFact) {
+export function parseTransitivePermissionVia(
+  via: ClingoFact,
+  modelIdRegistry: ModelIdRegistry,
+) {
   return {
-    contract: String(via.params[0]),
+    contract: modelIdRegistry.idToChainPrefixedAddress(String(via.params[0])),
     permission: String(via.params[1]),
     delay: Number(via.params[2]),
   }
@@ -224,4 +225,11 @@ export function generateClingoFromModelLp(
     return interpolated
   }
   return ''
+}
+
+function orUndefined<V, C>(
+  caster: (value: V) => C,
+  value: V | undefined,
+): C | undefined {
+  return value === undefined ? undefined : caster(value)
 }

@@ -23,7 +23,7 @@ complexFact(
 )
     `
     const asObject = { facts: [parseClingoFact(clingoFact)] }
-    const asJson = JSON.stringify(asObject, null, 2)
+    const asJson = JSON.stringify(asObject, undefined, 2)
     const facts = parseExportedFacts(asJson)
     expect(facts).toEqual({
       facts: [
@@ -38,7 +38,7 @@ complexFact(
               params: ['a', 'b', 123],
             },
             -12.345,
-            null,
+            undefined,
             ['a', 'b'],
             [
               {

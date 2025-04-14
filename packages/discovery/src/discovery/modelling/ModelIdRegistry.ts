@@ -76,6 +76,11 @@ export class ModelIdRegistry {
     return data
   }
 
+  idToChainPrefixedAddress(modelId: string): string {
+    const data = this.getAddressData(modelId)
+    return `${data.chain}:${data.address}`
+  }
+
   replaceIdsWithNames(s: string): string {
     return s.replace(
       /@@([a-zA-Z0-9_]+)/g,
