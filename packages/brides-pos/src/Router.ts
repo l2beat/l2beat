@@ -1,8 +1,10 @@
 import type { Server } from 'http'
 import type { Logger } from '@l2beat/backend-tools'
 import express, { type Request, type Response } from 'express'
+import { formatUnits } from 'viem'
 import type { TxService } from './TxService'
 import type { Config } from './config'
+import { getToken } from './tokens'
 
 export function createRouter(
   config: Config,
@@ -14,16 +16,18 @@ export function createRouter(
   app.get(
     '/stream',
     handleSSE((send) => {
-      return txService.listen((tx) =>
+      return txService.listen((tx) => {
+        const token = getToken(tx.source.token)
+        const amount = formatUnits(tx.source.amount, token.decimals)
         send({
           timestamp: new Date(tx.timestamp * 1000).toISOString(),
           protocol: tx.protocol,
           source: tx.source.chain,
           destination: tx.destination.chain,
-          token: tx.source.token,
-          amount: tx.source.amount.toString(),
-        }),
-      )
+          token: token.name,
+          amount,
+        })
+      })
     }),
   )
 
