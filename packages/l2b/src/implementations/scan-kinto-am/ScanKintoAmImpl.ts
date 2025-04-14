@@ -52,24 +52,24 @@ const addressNames: Record<string, string> = {
   [KINTO_ID_ADDRESS.toLowerCase()]: 'KintoID',
   '0x793500709506652fcc61f0d2d0fda605638d4293': 'Treasury',
   [ACCESS_MANAGER_ADDRESS.toLowerCase()]: 'AccessManager',
-  [KINTO_WALLET_EXAMPLE_ADDRESS.toLowerCase()]: 'Kinto Multisig 2 (Wallet)', // Used for RECOVERY_TIME example
+  [KINTO_WALLET_EXAMPLE_ADDRESS.toLowerCase()]: 'Kinto Multisig 2', // Used for RECOVERY_TIME example
   '0x0000000000000000000000000000000000000000': 'Zero Address', // Added for clarity in decodings
 }
 
 // Function selector mapping (lowercase keys)
 const functionSignatures: Record<string, string> = {
   // Upgrade functions
-  [ethers.utils
-    .id('upgradeAllWalletImplementations(address)')
-    .substring(0, 10)]: 'upgradeAllWalletImplementations(address)', // Selector: 0x91a221d3
-  [ethers.utils.id('upgradeTo(address)').substring(0, 10)]:
-    'upgradeTo(address)', // Selector: 0x3659cfe6
-  [ethers.utils.id('updateSystemApps(address[])').substring(0, 10)]:
-    'updateSystemApps(address[])',
-  [ethers.utils.id('updateSystemContracts(address[])').substring(0, 10)]:
-    'updateSystemContracts(address[])',
-  [ethers.utils.id('updateReservedContracts(address[])').substring(0, 10)]:
-    'updateReservedContracts(address[])',
+  '0xf4f4b03a': 'upgradeAllWalletImplementations(address)',
+  '0x3659cfe6': 'upgradeTo(address)',
+  '0xc233e2a3': 'updateSystemApps(address[])',
+  '0x0e6ff432': 'updateSystemContracts(address[])',
+  '0x72592851': 'updateReservedContracts(address[])',
+
+  // sanctions
+  '0xfb0b2940': 'confirmSanction(address)',
+
+  // recovery
+  '0x456cf492': 'approveWalletRecovery(address)',
 
   // AccessManager functions
   '0xd6bb62c6': 'cancel(address,address,bytes)',

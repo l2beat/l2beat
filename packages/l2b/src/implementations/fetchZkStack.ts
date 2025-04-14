@@ -60,6 +60,7 @@ export class ZkStackDataFetcher {
     '0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A': 'MAGIC',
     '0x03F5BE358fc2C4DF88723a63148bd829B8AA5c91': 'ozETH',
     '0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a': 'LGHO',
+    '0x0Df3a853e4B604fC2ac0881E9Dc92db27fF7f51b': 'LAC',
   }
 
   private pubdataModes: PubdataModeMap = {
@@ -84,6 +85,7 @@ export class ZkStackDataFetcher {
     '9637': 'Lumoz',
     '320': 'ZKcandy',
     '232': 'Lens',
+    '2904': 'LaChain',
   }
 
   private tableFields: TableField[] = [

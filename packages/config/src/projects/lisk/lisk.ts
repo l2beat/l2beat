@@ -41,7 +41,7 @@ export const lisk: ScalingProject = opStackL2({
     },
   },
   l1StandardBridgePremintedTokens: ['LSK'],
-  nonTemplateExcludedTokens: ['USDC'],
+  nonTemplateExcludedTokens: ['USDC', 'wstETH'],
   finality: {
     type: 'OPStack',
     genesisTimestamp: UnixTime(1714728791),
