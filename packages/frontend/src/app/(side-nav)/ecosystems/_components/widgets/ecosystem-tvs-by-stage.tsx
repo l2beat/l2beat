@@ -12,7 +12,7 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { CssVariables } from '~/components/css-variables'
-import { useTailwindBreakpoint } from '~/hooks/use-tailwind-breakpoint'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import type { TvsByStage } from '~/server/features/ecosystems/get-tvs-by-stage'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -56,7 +56,7 @@ export function EcosystemTvsByStage({
   tvsByStage: TvsByStage
   className?: string
 }) {
-  const breakpoint = useTailwindBreakpoint()
+  const breakpoint = useBreakpoint()
 
   const chartData = [
     {

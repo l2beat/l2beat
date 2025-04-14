@@ -178,7 +178,7 @@ function MilestoneItem({
   const Icon = milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
   const isSelected = milestone.index === selectedMilestoneIndex
 
-  if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+  if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Drawer>
         <DrawerTrigger className="absolute -top-2.5" style={style}>

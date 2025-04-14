@@ -9,7 +9,7 @@ import {
 import NProgress from 'nprogress'
 import type { JSX } from 'react'
 import React, { Suspense, useEffect } from 'react'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 
 export function NavigationProgressBar() {
   return (

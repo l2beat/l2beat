@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Button } from '~/components/core/button'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
 import type { GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
 import { GovernanceCard } from '../governance-card'
