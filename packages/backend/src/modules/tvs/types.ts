@@ -78,8 +78,10 @@ export interface TvsBreakdown {
 }
 
 export interface TvsProjectBreakdown {
-  tvs: number
-  projects: { projectId: string; value: number }[]
+  scalingTvs: number
+  scalingProjects: { projectId: string; value: number }[]
+  bridgesTvs: number
+  bridgesProjects: { projectId: string; value: number }[]
 }
 
 export interface AmountConfigBase {

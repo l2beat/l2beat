@@ -53,12 +53,12 @@ const cmd = command({
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
-    let projects: Project<'tvlConfig', 'chainConfig'>[] | undefined
+    let projects: Project<'tvlConfig', 'chainConfig' | 'isBridge'>[] | undefined
 
     if (!args.project) {
       projects = await ps.getProjects({
         select: ['tvlConfig'],
-        optional: ['chainConfig'],
+        optional: ['chainConfig', 'isBridge'],
       })
 
       if (!projects) {
@@ -69,7 +69,7 @@ const cmd = command({
       const project = await ps.getProject({
         id: ProjectId(args.project),
         select: ['tvlConfig'],
-        optional: ['chainConfig'],
+        optional: ['chainConfig', 'isBridge'],
       })
 
       if (!project) {
@@ -106,8 +106,10 @@ const cmd = command({
     )
 
     const projectBreakdown: TvsProjectBreakdown = {
-      tvs: 0,
-      projects: [],
+      scalingTvs: 0,
+      scalingProjects: [],
+      bridgesTvs: 0,
+      bridgesProjects: [],
     }
 
     for (const project of regeneratedProjects) {
@@ -126,11 +128,22 @@ const cmd = command({
           return acc + token.valueForSummary
         }, 0)
 
-        projectBreakdown.tvs += valueForSummary
-        projectBreakdown.projects.push({
-          projectId: project.projectId,
-          value: valueForProject,
-        })
+        const projectConfig = projects.find((p) => p.id === project.projectId)
+        assert(projectConfig, `${project.projectId} config not found`)
+
+        if (projectConfig.isBridge) {
+          projectBreakdown.bridgesTvs += valueForSummary
+          projectBreakdown.bridgesProjects.push({
+            projectId: project.projectId,
+            value: valueForProject,
+          })
+        } else {
+          projectBreakdown.scalingTvs += valueForSummary
+          projectBreakdown.scalingProjects.push({
+            projectId: project.projectId,
+            value: valueForProject,
+          })
+        }
 
         newConfig = tvsForProject
           .filter((token) => token.value !== 0 || args.includeZeroAmounts)
@@ -159,15 +172,25 @@ const cmd = command({
       }
     }
 
-    logger.info(`TVS ${toDollarString(projectBreakdown.tvs)}`)
+    logger.info(
+      `TVS for scaling projects ${toDollarString(projectBreakdown.scalingTvs)}`,
+    )
+    logger.info(
+      `TVS for bridges ${toDollarString(projectBreakdown.bridgesTvs)}`,
+    )
     logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
 
     fs.writeFileSync(
       './scripts/tvs/breakdown.json',
       JSON.stringify(
         {
-          tvs: toDollarString(projectBreakdown.tvs),
-          projects: projectBreakdown.projects.map((p) => ({
+          scalingTvs: toDollarString(projectBreakdown.scalingTvs),
+          scalingProjects: projectBreakdown.scalingProjects.map((p) => ({
+            projectId: p.projectId,
+            value: toDollarString(p.value),
+          })),
+          bridgesTvs: toDollarString(projectBreakdown.bridgesTvs),
+          bridgesProjects: projectBreakdown.bridgesProjects.map((p) => ({
             projectId: p.projectId,
             value: toDollarString(p.value),
           })),

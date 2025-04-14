@@ -33,12 +33,6 @@ const args = {
     displayName: 'projectId',
     description: 'Project for which tvs will be executed',
   }),
-  includeBridges: flag({
-    type: boolean,
-    long: 'include-bridges',
-    short: 'ib',
-    description: 'Include bridges in the TVS calculation',
-  }),
   timestamp: option({
     type: optional(number),
     long: 'timestamp',
@@ -73,8 +67,7 @@ const cmd = command({
     if (!args.project) {
       const projects = await ps.getProjects({
         select: ['tvsConfig'],
-        optional: ['chainConfig'],
-        ...(args.includeBridges ? {} : { whereNot: ['isBridge'] }),
+        optional: ['chainConfig', 'isBridge'],
       })
 
       if (!projects) {
@@ -82,12 +75,7 @@ const cmd = command({
         process.exit(1)
       }
 
-      logger.info(
-        `Found ${projects.length} TVS projects` +
-          (args.includeBridges
-            ? ''
-            : ' (bridges not included, use --include-bridges flag)'),
-      )
+      logger.info(`Found ${projects.length} TVS projects`)
 
       logger.info(`Executing TVS config for projects`)
       const tvs = await localExecutor.getTvs(
@@ -102,8 +90,10 @@ const cmd = command({
       )
 
       const projectBreakdown: TvsProjectBreakdown = {
-        tvs: 0,
-        projects: [],
+        scalingTvs: 0,
+        scalingProjects: [],
+        bridgesTvs: 0,
+        bridgesProjects: [],
       }
 
       for (const project of projects.filter((p) => p.tvsConfig.length > 0)) {
@@ -118,22 +108,40 @@ const cmd = command({
           return acc + token.valueForSummary
         }, 0)
 
-        projectBreakdown.tvs += valueForSummary
-        projectBreakdown.projects.push({
-          projectId: project.id,
-          value: valueForProject,
-        })
+        if (project.isBridge) {
+          projectBreakdown.bridgesTvs += valueForSummary
+          projectBreakdown.bridgesProjects.push({
+            projectId: project.id,
+            value: valueForProject,
+          })
+        } else {
+          projectBreakdown.scalingTvs += valueForSummary
+          projectBreakdown.scalingProjects.push({
+            projectId: project.id,
+            value: valueForProject,
+          })
+        }
       }
 
-      logger.info(`TVS ${toDollarString(projectBreakdown.tvs)}`)
+      logger.info(
+        `TVS for scaling projects ${toDollarString(projectBreakdown.scalingTvs)}`,
+      )
+      logger.info(
+        `TVS for bridges ${toDollarString(projectBreakdown.bridgesTvs)}`,
+      )
       logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
 
       fs.writeFileSync(
         './scripts/tvs/breakdown.json',
         JSON.stringify(
           {
-            tvs: toDollarString(projectBreakdown.tvs),
-            projects: projectBreakdown.projects.map((p) => ({
+            scalingTvs: toDollarString(projectBreakdown.scalingTvs),
+            scalingProjects: projectBreakdown.scalingProjects.map((p) => ({
+              projectId: p.projectId,
+              value: toDollarString(p.value),
+            })),
+            bridgesTvs: toDollarString(projectBreakdown.bridgesTvs),
+            bridgesProjects: projectBreakdown.bridgesProjects.map((p) => ({
               projectId: p.projectId,
               value: toDollarString(p.value),
             })),
