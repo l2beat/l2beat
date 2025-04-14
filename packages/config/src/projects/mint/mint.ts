@@ -8,7 +8,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('mint')
 
 export const mint: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],

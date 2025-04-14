@@ -116,7 +116,7 @@ export const optimism: ScalingProject = {
   type: 'layer2',
   id: ProjectId('optimism'),
   capability: 'universal',
-  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1629331200), // 2021-08-19T00:00:00Z
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,

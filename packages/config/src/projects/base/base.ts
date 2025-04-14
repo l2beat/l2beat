@@ -113,7 +113,7 @@ export const base: ScalingProject = {
   type: 'layer2',
   id: ProjectId('base'),
   capability: 'universal',
-  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
