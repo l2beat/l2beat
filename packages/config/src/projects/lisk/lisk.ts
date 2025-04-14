@@ -71,5 +71,12 @@ export const lisk: ScalingProject = opStackL2({
         'Custom externally governed escrow for USDC bridged to Lisk.',
       tokens: ['USDC'],
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+    }),
   ],
 })

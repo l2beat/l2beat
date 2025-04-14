@@ -78,7 +78,10 @@ function getChainDiscoveryConfig(
     : undefined
 
   const explorerApi = chainConfig.apis.find(
-    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+    (x) =>
+      x.type === 'etherscan' ||
+      x.type === 'routescan' ||
+      x.type === 'blockscout',
   )
 
   if (!explorerApi) {
@@ -109,7 +112,7 @@ function getChainDiscoveryConfig(
     ]),
     multicall: multicallConfig,
     explorer:
-      explorerApi.type === 'blockscout'
+      explorerApi.type === 'blockscout' || explorerApi.type === 'routescan'
         ? {
             type: explorerApi.type,
             url: explorerApi.url,
