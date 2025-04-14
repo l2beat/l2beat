@@ -15,7 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useRouterWithProgressBar } from '~/components/progress-bar'
+import { useRouterWithProgressBar } from '~/components/navigation-progress-bar'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'

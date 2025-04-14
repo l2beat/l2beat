@@ -146,6 +146,9 @@ export function polygonCDKStack(
     id: ProjectId(templateVars.discovery.projectName),
     capability: templateVars.capability ?? 'universal',
     archivedAt: templateVars.archivedAt,
+    ecosystemInfo: {
+      id: ProjectId('agglayer'),
+    },
     display: {
       ...templateVars.display,
       upgradesAndGovernanceImage: 'polygoncdk',

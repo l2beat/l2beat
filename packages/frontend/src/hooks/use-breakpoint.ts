@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useEventListener } from './use-event-listener'
 
-type Breakpoint = 'mobile' | 'tablet' | 'desktop'
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export function useBreakpoint() {
   const [breakpoint, setBreakpoint] = useState<Breakpoint>()
 
   function onResize() {
     const breakpoint =
-      window.innerWidth >= 1200
-        ? 'desktop'
-        : window.innerWidth >= 768
-          ? 'tablet'
-          : 'mobile'
+      window.innerWidth >= 1920
+        ? 'xl'
+        : window.innerWidth >= 1200
+          ? 'lg'
+          : window.innerWidth >= 768
+            ? 'md'
+            : window.innerWidth >= 550
+              ? 'sm'
+              : 'xs'
     setBreakpoint(breakpoint)
   }
 
@@ -20,9 +24,4 @@ export function useBreakpoint() {
   useEventListener('resize', onResize)
 
   return breakpoint
-}
-
-export function useIsMobile() {
-  const breakpoint = useBreakpoint()
-  return breakpoint === 'mobile'
 }

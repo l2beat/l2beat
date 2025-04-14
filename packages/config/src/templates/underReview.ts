@@ -5,6 +5,7 @@ import type {
   Badge,
   ChainConfig,
   ProjectActivityConfig,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectScalingCapability,
 } from '../types'
@@ -14,6 +15,7 @@ interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
   capability: ProjectScalingCapability
+  ecosystemInfo?: ProjectEcosystemInfo
   activityConfig?: ProjectActivityConfig
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
@@ -62,6 +64,7 @@ export function underReviewL2(
         },
       ),
     },
+    ecosystemInfo: templateVars.ecosystemInfo,
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
@@ -103,6 +106,7 @@ export function underReviewL3(
           ? 'UnderReview'
           : 'NotApplicable',
     },
+    ecosystemInfo: templateVars.ecosystemInfo,
     riskView: UNDER_REVIEW_RISK_VIEW,
     stackedRiskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,

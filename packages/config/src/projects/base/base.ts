@@ -11,13 +11,14 @@ import {
   DA_LAYERS,
   DA_MODES,
   DERIVATION,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
@@ -162,8 +163,6 @@ export const base: ScalingProject = {
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   },
   config: {
     escrows: [

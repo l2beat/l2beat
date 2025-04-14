@@ -24,34 +24,38 @@ export function StageCell({ stageConfig, isAppchain, href }: StageCellProps) {
     stageConfig.stage !== 'NotApplicable' &&
     !!stageConfig.additionalConsiderations
 
+  const content = (
+    <div className="flex gap-1">
+      <StageBadge
+        stage={stageConfig.stage}
+        isAppchain={isAppchain}
+        className="flex flex-col gap-px"
+      />
+      {hasNotice && (
+        <CircleQuestionMarkIcon
+          className={cn(
+            '-mt-px size-5 fill-current md:mt-px',
+            getCircleQuestionMarkClassName(stageConfig.stage),
+          )}
+          questionMarkClassName={getQuestionMarkClassName(stageConfig.stage)}
+        />
+      )}
+      {stageConfig.stage !== 'NotApplicable' &&
+        stageConfig.stage !== 'UnderReview' &&
+        stageConfig.downgradePending && (
+          <StopwatchIcon className="mt-px md:mt-[3px]" />
+        )}
+    </div>
+  )
+
+  if (stageConfig.stage === 'NotApplicable') {
+    return content
+  }
+
   return (
     <Tooltip>
       <TooltipTrigger disabledOnMobile className="h-full">
-        <TableLink href={href}>
-          <div className="flex gap-1">
-            <StageBadge
-              stage={stageConfig.stage}
-              isAppchain={isAppchain}
-              className="flex flex-col gap-px"
-            />
-            {hasNotice && (
-              <CircleQuestionMarkIcon
-                className={cn(
-                  '-mt-px size-5 fill-current md:mt-px',
-                  getCircleQuestionMarkClassName(stageConfig.stage),
-                )}
-                questionMarkClassName={getQuestionMarkClassName(
-                  stageConfig.stage,
-                )}
-              />
-            )}
-            {stageConfig.stage !== 'NotApplicable' &&
-              stageConfig.stage !== 'UnderReview' &&
-              stageConfig.downgradePending && (
-                <StopwatchIcon className="mt-px md:mt-[3px]" />
-              )}
-          </div>
-        </TableLink>
+        <TableLink href={href}>{content}</TableLink>
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />

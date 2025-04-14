@@ -67,13 +67,13 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
             tickFormatter: (value: number) => formatCurrency(value, unit),
           },
         })}
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
+        <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
       </AreaChart>
     </ChartContainer>
   )
 }
 
-function CustomTooltip({
+export function TvsCustomTooltip({
   active,
   payload,
   label,
