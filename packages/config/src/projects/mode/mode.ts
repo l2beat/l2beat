@@ -105,7 +105,7 @@ export const mode: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan-etherscan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
       },
     ],

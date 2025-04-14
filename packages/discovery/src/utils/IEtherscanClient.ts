@@ -2,6 +2,7 @@ import type { HttpClient } from '@l2beat/shared'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { BlockscoutClient } from './BlockscoutClient'
 import { EtherscanClient } from './EtherscanClient'
+import { RoutescanClient } from './RoutescanClient'
 
 // If a given instance of Etherscan does not support some endpoint set a
 // corresponding variable to true, otherwise do not set to anything -
@@ -11,7 +12,7 @@ export interface EtherscanUnsupportedMethods {
 }
 
 interface EtherscanExplorerConfig {
-  type: 'etherscan'
+  type: 'etherscan' | 'routescan-etherscan'
   url: string
   apiKey: string
   unsupported?: EtherscanUnsupportedMethods
@@ -62,6 +63,14 @@ export function getExplorerClient(
   switch (config.type) {
     case 'etherscan': {
       return EtherscanClient.createForDiscovery(
+        httpClient,
+        config.url,
+        config.apiKey,
+        config.unsupported,
+      )
+    }
+    case 'routescan-etherscan': {
+      return RoutescanClient.createForDiscovery(
         httpClient,
         config.url,
         config.apiKey,
