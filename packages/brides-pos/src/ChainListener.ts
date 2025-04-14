@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { http, type PublicClient, createPublicClient } from 'viem'
+import { type Log, createPublicClient, http, type PublicClient } from 'viem'
 import type { TxService } from './TxService'
-import { type BlockWithTxs, analyzeBlock } from './analyze'
 import type { ChainInfo } from './types'
+import { analyzeLogs } from './analyze'
 
 export class ChainListener {
   private client: PublicClient
@@ -21,18 +21,14 @@ export class ChainListener {
 
   start() {
     this.logger.info('Started')
-    this.client.watchBlocks({
-      emitMissed: true,
-      includeTransactions: true,
-      emitOnBegin: true,
-      blockTag: 'latest',
-      onBlock: this.onBlock.bind(this),
+    this.client.watchEvent({
+      onLogs: this.onLogs.bind(this),
     })
   }
 
-  onBlock(block: BlockWithTxs) {
-    this.logger.info('Received block', { number: Number(block.number) })
-    const txs = analyzeBlock(block, this.chain)
+  onLogs(logs: Log[]) {
+    this.logger.info('Received logs', { count: logs.length })
+    const txs = analyzeLogs(logs, this.chain)
     for (const tx of txs) {
       this.txService.save(tx)
     }
