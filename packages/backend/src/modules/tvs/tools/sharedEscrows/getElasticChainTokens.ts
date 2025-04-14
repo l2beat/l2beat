@@ -65,7 +65,10 @@ export async function getElasticChainTokens(
 
       try {
         // try fetching totalSupply, if it does not fail then add token
-        await rpcClient.call(encodeTotalSupply(address), block)
+        const res = await rpcClient.call(encodeTotalSupply(address), block)
+        if (res.length === 0) {
+          throw new Error('Token does not exist')
+        }
 
         const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
           escrow,
@@ -96,7 +99,7 @@ export async function getElasticChainTokens(
           },
         }
       } catch {
-        return undefined
+        return
       }
     }),
   )
