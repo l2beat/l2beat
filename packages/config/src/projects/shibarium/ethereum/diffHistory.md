@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x38ab3adf4f89378c12e22291e76aee08d6b638e4
+Generated with discovered.json: 0xa9160ff95085cda3e4ba21accb72830f5e3c1764
 
-# Diff at Fri, 11 Apr 2025 14:53:40 GMT:
+# Diff at Mon, 14 Apr 2025 09:36:57 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 22231818
+- current block number: 22266376
 
 ## Description
 
@@ -49,13 +49,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0)
+    contract WithdrawalManager (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0x65218A41Fb92637254B4f8c97448d3dF343A3064)
+    contract StakeManager (0x65218A41Fb92637254B4f8c97448d3dF343A3064)
     +++ description: None
 ```
 
@@ -91,7 +91,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3)
+    contract ERC721Predicate (0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3)
     +++ description: None
 ```
 
@@ -121,13 +121,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0xdaF14950155DF895E9D0fd2521D05477d26F462c)
+    contract ERC20Predicate (0xdaF14950155DF895E9D0fd2521D05477d26F462c)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract  (0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6)
+    contract ValidatorShare (0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6)
     +++ description: None
 ```
 

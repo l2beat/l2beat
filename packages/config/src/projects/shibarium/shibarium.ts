@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CONTRACTS, DA_LAYERS, DA_MODES, RISK_VIEW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { CONTRACTS, DA_LAYERS, DA_MODES, RISK_VIEW } from '../../common'
 
 const discovery = new ProjectDiscovery('shibarium')
 

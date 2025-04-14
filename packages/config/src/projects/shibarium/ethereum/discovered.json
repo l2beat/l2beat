@@ -1,7 +1,7 @@
 {
   "name": "shibarium",
   "chain": "ethereum",
-  "blockNumber": 22231818,
+  "blockNumber": 22266376,
   "configHash": "0x51e94a1b7cde4e6bf1f01abc5ff018f6ae087791fbe66b4b1abb46c62437d9c7",
   "entries": [
     {
@@ -196,7 +196,7 @@
       "sinceBlock": 17849217,
       "values": {
         "$immutable": true,
-        "counter": 39725,
+        "counter": 39764,
         "isOwner": false,
         "owner": "0x80Cc222EA02F4334F67e9E55E7412fed62599004",
         "REGISTRATIONS": [
@@ -237,7 +237,7 @@
       "derivedName": "StakingInfo"
     },
     {
-      "name": "",
+      "name": "WithdrawalManager",
       "address": "0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
       "type": "Contract",
       "unverified": true,
@@ -259,7 +259,7 @@
       "derivedName": ""
     },
     {
-      "name": "",
+      "name": "StakeManager",
       "address": "0x65218A41Fb92637254B4f8c97448d3dF343A3064",
       "type": "Contract",
       "unverified": true,
@@ -511,7 +511,7 @@
       "derivedName": "ERC721Predicate"
     },
     {
-      "name": "",
+      "name": "ERC721Predicate",
       "address": "0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3",
       "type": "Contract",
       "unverified": true,
@@ -628,7 +628,7 @@
       "sinceTimestamp": 1691243771,
       "sinceBlock": 17849204,
       "values": {
-        "_nextHeaderBlock": 241560000,
+        "_nextHeaderBlock": 243180000,
         "$immutable": false,
         "$implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "CHAINID": 109,
@@ -637,8 +637,8 @@
           "_registry": "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB",
           "_heimdallId": "heimdall-109"
         },
-        "currentHeaderBlock": 241550000,
-        "getLastChildBlock": 10377756,
+        "currentHeaderBlock": 243170000,
+        "getLastChildBlock": 10460700,
         "heimdallId": "0x2d1b61c7cbff527a84da0d1da4e5ba94d46c39894530664ecfb67e21036736f1",
         "implementation": "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA",
         "isOwner": false,
@@ -650,7 +650,7 @@
       "derivedName": "RootChain"
     },
     {
-      "name": "",
+      "name": "ERC20Predicate",
       "address": "0xdaF14950155DF895E9D0fd2521D05477d26F462c",
       "type": "Contract",
       "unverified": true,
@@ -661,7 +661,7 @@
       "derivedName": ""
     },
     {
-      "name": "",
+      "name": "ValidatorShare",
       "address": "0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6",
       "type": "Contract",
       "unverified": true,
