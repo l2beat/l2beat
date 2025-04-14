@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x80b76a6c6ed019a1b93249093c7190aa08eef8c8
+Generated with discovered.json: 0x989fb696229c8f64d24e224a0b905c1c322c3095
 
-# Diff at Mon, 14 Apr 2025 07:40:09 GMT:
+# Diff at Mon, 14 Apr 2025 07:52:56 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
-- current block number: 22123500
+- current block number: 22265851
 
 ## Description
 
@@ -17,6 +17,26 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
     contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
     +++ description: None
       template:
@@ -25,10 +45,30 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77","0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]}}
+    }
+```
+
+```diff
     contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
     +++ description: None
       template:
 +        "polygonposbridge/DepositManager"
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
     }
 ```
 
@@ -49,6 +89,16 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
     contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
     +++ description: None
       template:
@@ -65,10 +115,38 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
     contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
     +++ description: None
       template:
 +        "polygonposbridge/ExitNFT"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      template:
+-        "polygonposbridge/predicate"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
+    }
+```
+
+```diff
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166) {
+    +++ description: None
+      values.signers:
+-        []
     }
 ```
 
