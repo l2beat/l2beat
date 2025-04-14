@@ -6,6 +6,7 @@ import {
   InMemoryCache,
   LeveledCache,
   RedisCache,
+  TemplateService,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
@@ -46,7 +47,13 @@ export function createDiscoveryRunner(
     chain,
   )
 
-  return new DiscoveryRunner(allProviders, discoveryEngine, chain)
+  const templateService = new TemplateService(paths.discovery)
+  return new DiscoveryRunner(
+    allProviders,
+    discoveryEngine,
+    templateService,
+    chain,
+  )
 }
 
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {

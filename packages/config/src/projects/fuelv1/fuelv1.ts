@@ -34,8 +34,10 @@ export const fuelv1: ScalingProject = {
     category: 'Optimistic Rollup',
 
     links: {
-      websites: ['https://fuel.sh/'],
-      documentation: ['https://docs.fuel.network/'],
+      websites: ['https://github.com/FuelLabs/fuel-v1-contracts/tree/master'],
+      documentation: [
+        'https://github.com/FuelLabs/docs/tree/c0266db9cfdbf420cccf46eccaa937bab96a2bd0/src/v1.0.0',
+      ],
       explorers: ['https://mainnet.fuel.sh/network/'],
       repositories: [
         'https://github.com/FuelLabs/fuel-core',
@@ -107,6 +109,11 @@ export const fuelv1: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/cartesi/rollups/tree/v1.0.2/offchain',
+      additionalConsiderations: {
+        short:
+          'Fuel v1 provides the infrastructure to support token transfers and HTLC swaps. Arbitrary contracts are not supported.',
+        long: 'Fuel v1 provides the infrastructure to support token transfers and HTLC swaps. Arbitrary contracts are not supported.',
+      },
     },
   ),
   technology: {

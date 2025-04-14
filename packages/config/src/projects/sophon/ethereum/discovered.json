@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 22181511,
-  "configHash": "0x66322a3d440de12a5289665752da3c4962e31374ebbda77d925fa0237d24908e",
+  "configHash": "0x067325c65f8d4bfffa0997e17f5ba89748b20c5fa9fb518bb2994a397aee6b67",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -371,7 +371,7 @@
         ]
       },
       "derivedName": "ValidatorTimelock",
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
@@ -1078,12 +1078,12 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "shared-zk-stack/ChainAdmin": "0x172abf28fc80b16cdf57ce983156416ca3577aa03998cfdfbb25bf89a401f30c",
-    "shared-zk-stack/L1USDCBridge": "0x38101ee641e95b308e8437435c3de4baf5094c656fcf7c11b653e865050549ac",
-    "shared-zk-stack/v26/Diamond": "0xdeb3c7f37117cbbf5abc1704aa4bf4d0eef0bae68d2f635ae073df89e75803c0",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x2ebed2819bbcedf83be5c3e62cdbf15be137f0aa435fdd1a07ef041ec685f19e",
-    "shared-zk-stack/ValidatorTimelock": "0xc4191ea67746b7254716039eec3bc57567706d1da349cd8990ad6511804d9656",
-    "shared-zk-stack/Verifier": "0x512886ff2c8cebfc0599cf26b106b2f7cddb5653db9495ddf5a3e2ab346cb68d"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
+    "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
+    "shared-zk-stack/v26/Diamond": "0x748a53ab23ca7de7668b62f01a1e436cda12fe5b08cf1bd1bfcde11f6dba8ffe",
+    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-zk-stack/ValidatorTimelock": "0xb0a9eee97036385e26460c74be8e8196ad5c4872d104d7ecd6d3a00bd59ac2f8",
+    "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import path from 'path'
+import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
@@ -10,15 +10,16 @@ import { badgesCompareFn } from '../common/badges'
 import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
 import { getTokenList } from '../tokens/tokens'
-import type {
-  BaseProject,
-  ProjectCostsInfo,
-  ProjectDiscoveryInfo,
-  ProjectEscrow,
-  ProjectLivenessInfo,
-  ProjectTvlConfig,
-  ProjectTvlEscrow,
-  TvsToken,
+import {
+  type BaseProject,
+  type ProjectCostsInfo,
+  type ProjectDiscoveryInfo,
+  type ProjectEscrow,
+  type ProjectLivenessInfo,
+  type ProjectTvlConfig,
+  type ProjectTvlEscrow,
+  ProjectTvsConfigSchema,
+  type TvsToken,
 } from '../types'
 import {
   areContractsDiscoveryDriven,
@@ -157,7 +158,7 @@ function layer2Or3ToProject(
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
-    isArchived: p.isArchived ? true : undefined,
+    archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
     hasActivity: p.config.activityConfig ? true : undefined,
   }
@@ -242,7 +243,7 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     milestones: p.milestones,
     // tags
     isBridge: true,
-    isArchived: p.isArchived ? true : undefined,
+    archivedAt: p.archivedAt,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
 }
@@ -380,13 +381,21 @@ function getTvsConfig(
   project: ScalingProject | Bridge,
 ): TvsToken[] | undefined {
   const fileName = `${project.id.replace('=', '').replace(';', '')}.json`
-  const filePath = path.join(__dirname, `../../src/tvs/json/${fileName}`)
+  const filePath = join(__dirname, `../../src/tvs/json/${fileName}`)
 
-  if (!fs.existsSync(filePath)) {
+  if (!existsSync(filePath)) {
     return undefined
   }
 
-  const json = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+  const result = ProjectTvsConfigSchema.safeParse(
+    JSON.parse(readFileSync(filePath, 'utf8')),
+  )
 
-  return json.tokens as TvsToken[]
+  if (!result.success) {
+    throw new Error(
+      `Invalid TVS config for project ${project.id}: ${result.error.toString()}`,
+    )
+  }
+
+  return result.data.tokens
 }

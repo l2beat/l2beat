@@ -8,11 +8,14 @@
       "priceId": "zkfair",
       "symbol": "ZKF",
       "name": "ZKF",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "zkfair",
         "decimals": 18,
-        "sinceTimestamp": 1704412800
+        "sinceTimestamp": 1704412800,
+        "address": "0x1cD3E2A23C45A690a18Ed93FD1412543f464158F",
+        "chain": "zkfair"
       },
       "category": "other",
       "source": "native",
@@ -24,6 +27,7 @@
       "priceId": "zkspace",
       "symbol": "ZKS",
       "name": "Zks",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13585/large/image_2024-01-16_172847810.png?1705397359",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",

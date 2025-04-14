@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 22194605,
-  "configHash": "0x0a2c8cd4417ace9f0113d358be61e1733cfe2e8034dad6e7d7701541b061fe4a",
+  "configHash": "0x997f17fe0e0cb1133efc7bfa031756ef0cfe6d829932c8609c4c0b5bcb6246b1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -139,6 +139,7 @@
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
         }
       ],
+      "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1743612623,
       "sinceBlock": 22182531,
       "values": {
@@ -201,7 +202,6 @@
         "0x1c7d0fda5ed6d8fc7f5b5f7df5e307f0fcfd173fa5833ea9fce8875d5d44d86a"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "DelayedWETH",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
@@ -419,7 +419,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "1d 16h",
+        "timeSinceLastL2beatInteraction": "8d 20h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -539,7 +539,6 @@
         "0x1c7d0fda5ed6d8fc7f5b5f7df5e307f0fcfd173fa5833ea9fce8875d5d44d86a"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "DelayedWETH",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
       "issuedPermissions": [
         {
@@ -628,7 +627,7 @@
         "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
       ],
       "proxyType": "immutable",
-      "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1625675683,
       "sinceBlock": 12781427,
       "values": {
@@ -669,7 +668,6 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1009,7 +1007,6 @@
         "0xee07202651af1cf311f14f1f29908dd5524a050efc650832b6ee88c9a9cf86fd"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "L1ERC20TokenBridge",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
       "sinceTimestamp": 1659687799,
       "sinceBlock": 15281202,
@@ -1424,7 +1421,7 @@
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
-        "absolutePrestateDecoded": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
+        "absolutePrestateDecoded": "v1.5.0",
         "anchorStateRegistry": "0x1c68ECfbf9C8B1E6C0677965b3B9Ecf9A104305b",
         "bondDistributionMode": 0,
         "claimData": [],
@@ -1472,10 +1469,15 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
             "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
             "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
             "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
             "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+            "0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37": "v1.4.0-unichain",
             "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
             "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
             "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
@@ -1508,7 +1510,6 @@
         "0x67ee16b5b6c32cdcc862bea390e45017908e6945cfaa01d3ef75dc9de7c9d946"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "OptimismPortal2",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "issuedPermissions": [
         {
@@ -1706,7 +1707,7 @@
       "values": {
         "$immutable": true,
         "absolutePrestate": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
-        "absolutePrestateDecoded": "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9",
+        "absolutePrestateDecoded": "v1.5.0",
         "anchorStateRegistry": "0x1c68ECfbf9C8B1E6C0677965b3B9Ecf9A104305b",
         "bondDistributionMode": 0,
         "challenger": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
@@ -1756,10 +1757,15 @@
         {
           "typeCaster": "Mapping",
           "arg": {
+            "0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405": "v1.5.1-rc.1 (cannon64)",
+            "0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01": "v1.5.1-rc.1",
+            "0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef": "v1.5.0 (cannon64)",
+            "0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9": "v1.5.0",
             "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
             "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
             "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
             "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+            "0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37": "v1.4.0-unichain",
             "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
             "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
             "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
@@ -2884,26 +2890,26 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "gnosisSafeModules/DeputyGuardianModule": "0x5f298bc59cbf29e7b1e8d20a3b4f84589941f57f29331cecd5aad842af268195",
-    "gnosisSafeModules/LivenessModule": "0x152bbb5a93d94b2969af21c844bf245a00a1c81531536582e070c94a6f7252a8",
-    "lido/L1LidoTokensBridge": "0x75a3f618032de75b98f976e42bbdd2c2503a6a641857f03b266a2234798a6800",
-    "maker/L1Escrow": "0x87c1d15632c3136185601f5c6e886055b0dfd744dab40ee4f9c37bcd39cfb254",
-    "opstack/AddressManager": "0xcc0e1362c44c1c5d9bc5adf37551f6967def0f18b38b017280b2a456e5932d20",
-    "opstack/AnchorStateRegistry": "0xabb04d2bdcf27b6e57bc350430bcb087ea957c291964c5144db874275b24e98c",
-    "opstack/DelayedWETH": "0x698d758bb7eabad7aba68b8a9da310c6f6cf2176978d24bf5e136e673bf28921",
-    "opstack/DisputeGameFactory": "0x616625467da398dd8b8fa222c96e38458c084339bc4891cfe1c27b8fe01dc0f6",
-    "opstack/FaultDisputeGame": "0xc3420a1d7f361a33032b17c841737647c20c55c5387c7da1049264a131cd6d3f",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
-    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
-    "opstack/MIPS": "0x35b078559035a7f0d1a0b572ee90e86975d972a54e54e063ec43689711b90b24",
-    "opstack/OptimismMintableERC20Factory": "0xd3169a0737182f43695ebece6a1d938818fd109666348266ac11025c63621ed0",
-    "opstack/OptimismPortal2": "0x765a88a0b62cb0291f85d5f300102de3b4e8fec9e2c026f6d3912c499d03e056",
-    "opstack/PermissionedDisputeGame": "0x8cd96f8de5cf042b7416ad54aebeee74fa507bac86b2c612ffdb15f13588a9d2",
-    "opstack/PreimageOracle": "0x388cadeb94c1575458e295e7eab36ef23f4727ca238524e5a7d9e72d1861eee4",
-    "opstack/SuperchainConfig": "0xe9ed91e5df551d67902341d4abcc2662a5637682f18b2606eb518c434c0f9c26",
-    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "gnosisSafeModules/DeputyGuardianModule": "0xd911497328040fd7474cf431b7a10bb4c01176865c85e9ef9b2d9db1a998f4d5",
+    "gnosisSafeModules/LivenessModule": "0xafb9aa875756d89f2d9c8673f33aad5a3959f8bc2d5a538d4772d4a62e1902be",
+    "lido/L1LidoTokensBridge": "0x8cb6e28132e5ef736ea3e03d1d51b04ddbf1bf6e90e383d0e59e39934cf6d45e",
+    "maker/L1Escrow": "0xb42f4a4e99cd96e0fdced856d5700812b16948444eb8bf9b0d9f41c6faec9de4",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/AnchorStateRegistry": "0x64c42dca8e662e16e764da7e30d7caec236b6659545dc9f9e74b6d06db459319",
+    "opstack/DelayedWETH": "0x73601ca51404eec35480ebb24b30b0cb1b913ab499a0ef70f1fd1949ed13fd3e",
+    "opstack/DisputeGameFactory": "0x0aa38a9503137b3dc23cb1987e2ea2dae817ecdf1fc1e10d22a26376daa632b6",
+    "opstack/FaultDisputeGame": "0xa9a28602f784860b7406be90572479502e18809ed52cf398fb2256a803e3f78f",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/MIPS": "0xd12d2689d2079778eb7b76ccef58c6919f21c6631fc03341b6287a2a84b4fe89",
+    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
+    "opstack/OptimismPortal2": "0x5ba77f6b8361011141fe9735a9f73c434c1b306dae23a1689845371e79d68d5f",
+    "opstack/PermissionedDisputeGame": "0x6eae084a3d86ff3b3f4ea8fc8591bda5a4145c5e0d9a896bb7eb74b6de964f9c",
+    "opstack/PreimageOracle": "0xdad9efe0df74ac3a11918603d36b0b60b59ea7690452f74d581d6712a2675d82",
+    "opstack/SuperchainConfig": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
 }

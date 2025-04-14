@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "settlus",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "settlus-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xFc1D560eB01443e31B0EB56620703E80e42A7E4e",
+            "decimals": 18,
+            "sinceTimestamp": 1740171575
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xFD4918e51d1e5aa2195C42654CF769b152C9d9C0",
+            "decimals": 18,
+            "sinceTimestamp": 1740171575
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

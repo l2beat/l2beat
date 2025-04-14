@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 22188901,
-  "configHash": "0x2c22a3db294155abbc5295ff982f6eae1e4b4a9e7daf468d825e78cb150a395e",
+  "configHash": "0x3569c6cfa9bf554f1e1bfe199cbfd36a11bdbacdf8d4d24cedbdd31daeb3ff24",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -576,6 +576,9 @@
         "verifier": ["0x0000000000000000000000000000000000000000", false]
       },
       "fieldMeta": {
+        "verifier": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
+        },
         "oldVerifier": {
           "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
         },
@@ -590,9 +593,6 @@
         },
         "oldVerifier5": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
-        },
-        "verifier": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
       },
       "derivedName": "SP1VerifierGateway"
@@ -2712,13 +2712,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "global/Timelock": "0x78c0e6200d758a9209bea4e159fd18076a0a2643ec0d7227e6cab48f6a65baeb",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1ERC721Bridge": "0xebeecf15f9c44025a71c3ec633e5ae04da5b84ccdd5285667c89b3d07dfa071c",
-    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
-    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1",
-    "succinct/SP1VerifierGateway": "0x7aa62a8c3f19cced2807ba30465bf97b7a3c6261513dc474b85e634577e44a1c"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44",
+    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
   }
 }

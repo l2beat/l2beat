@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x5d079272d41e073753e1e6e389e69bc93d65f856
+Generated with discovered.json: 0x48bb6bd892af6cac6614ffa9223694098bcf28fc
+
+# Diff at Fri, 11 Apr 2025 06:47:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22046072
+- current block number: 22244001
+
+## Description
+
+storageSetter upgrade for changing the challenge period (1d).
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.2:
++        ["2025-04-09T18:39:47.000Z","0x6a3c741de4a66f9e4f6ab204507d0d1e6c6c0e8ec2ca63bb03ad6c57e8e5d373",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.1:
++        ["2025-04-09T18:39:47.000Z","0x6a3c741de4a66f9e4f6ab204507d0d1e6c6c0e8ec2ca63bb03ad6c57e8e5d373",["0x1Fd1be2e1c65F136020d2CcC073ED8A7269aE53f"]]
+      values.$upgradeCount:
+-        1
++        3
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        604800
++        86400
+      values.finalizationPeriodSeconds:
+-        604800
++        86400
+    }
+```
+
+Generated with discovered.json: 0x3cc31776ff2f7ea42a8f5bdbac490b0ad6b0c065
 
 # Diff at Thu, 27 Mar 2025 11:14:52 GMT:
 

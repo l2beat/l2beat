@@ -8,6 +8,7 @@
       "priceId": "arbitrum",
       "symbol": "ARB",
       "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -36,6 +37,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "native",
@@ -64,6 +66,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
@@ -92,6 +95,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC.e",
       "name": "USD Coin (Arb1)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
@@ -120,6 +124,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -148,6 +153,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -176,6 +182,7 @@
       "priceId": "winr-protocol",
       "symbol": "WINR",
       "name": "WINR",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29340/large/WINR.png?1696528290",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",

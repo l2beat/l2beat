@@ -8,6 +8,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -26,6 +27,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "native",
@@ -44,6 +46,7 @@
       "priceId": "renbtc",
       "symbol": "renBTC",
       "name": "renBTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1696511287",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
@@ -62,6 +65,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",

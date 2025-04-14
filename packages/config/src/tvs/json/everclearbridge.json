@@ -8,6 +8,7 @@
       "priceId": "pufeth",
       "symbol": "pufETH",
       "name": "pufETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
@@ -26,6 +27,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -122,6 +124,7 @@
       "priceId": "bridged-usd-coin-linea",
       "symbol": "USDC",
       "name": "USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31270/large/USDC-icon.png?1696530094",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
@@ -150,6 +153,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -210,6 +214,7 @@
       "priceId": "bridged-usdt",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35001/large/logo.png?1706959346",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
@@ -238,6 +243,7 @@
       "priceId": "bridged-tether-linea",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
@@ -266,6 +272,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "calculation",
         "operator": "sum",

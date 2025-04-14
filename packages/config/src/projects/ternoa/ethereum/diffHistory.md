@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xcbe40dcf1147be8a3aebdb7b1a434ae5d178905e
+
+# Diff at Thu, 10 Apr 2025 14:43:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208591
+- current block number: 22208591
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208591 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
 Generated with discovered.json: 0xdd1caef02796c9a0262e3047a044d23ca6b9ab50
 
 # Diff at Sun, 06 Apr 2025 08:11:00 GMT:

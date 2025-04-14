@@ -1,3 +1,137 @@
+Generated with discovered.json: 0xbc76f24b1f3e501d9953fb5dbd10864aa466c47d
+
+# Diff at Thu, 10 Apr 2025 14:42:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22231350
+- current block number: 22231350
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231350 (main branch discovery), not current.
+
+```diff
+    contract OrbitProxyAdmin (0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract StrategiesProxyAdmin (0xa5f13fbc57f14Bf322C900Cae0F67b4819364281) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0xd0129264745a9d6d7abc10d6487f381cf0f2ed9d
+
+# Diff at Wed, 09 Apr 2025 12:29:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 21993999
+- current block number: 22231350
+
+## Description
+
+Small Bridge upgrade introducing custom decimals for the gas token and eip 7702 support (known contracts).
+
+## Watched changes
+
+```diff
+    contract Bridge (0x6B595398152999bBc759D5D8ed8169793F915488) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x057de68a7007d55f4394ba6eafb2c802efcaf13583ff9342ea4d0ee3924d9be1"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
+      values.$implementation:
+-        "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"
++        "0x75Ef99D9D2c166579fEB09c9015CC99e0Ca44a10"
+      values.$pastUpgrades.1:
++        ["2024-03-22T01:00:23.000Z","0x9a69d7f74c80826a8d5c84398da524ff12f3bef236ff9115094e086382a33810",["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"]]
+      values.$pastUpgrades.0.2.0:
+-        "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"
++        "0x75Ef99D9D2c166579fEB09c9015CC99e0Ca44a10"
+      values.$pastUpgrades.0.1:
+-        "0x9a69d7f74c80826a8d5c84398da524ff12f3bef236ff9115094e086382a33810"
++        "0x6bbb4ef7e5fa8da1f41817558cbe9615c86c81a59d9eeecb90085ab91dd1beea"
+      values.$pastUpgrades.0.0:
+-        "2024-03-22T01:00:23.000Z"
++        "2025-04-07T16:23:23.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.nativeTokenDecimals:
++        18
+    }
+```
+
+```diff
+    contract Inbox (0xf51551afD112a50Fc5EDa0454111078fE6E6096E) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.0:
+-        "0xcb390b491549387c8fcc09fb22fbea7adf54cc74b7247a0c738369ddd7049b92"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"
++        "0xd29ED48868E393248645680ee4432999812eb30e"
+      values.$pastUpgrades.1:
++        ["2024-03-22T01:00:23.000Z","0x9a69d7f74c80826a8d5c84398da524ff12f3bef236ff9115094e086382a33810",["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]]
+      values.$pastUpgrades.0.2:
+-        "0x9a69d7f74c80826a8d5c84398da524ff12f3bef236ff9115094e086382a33810"
++        "0x1ead0e15dc06839305e7101c4f6ceeea0573e53ed013c571e3e66cd988906a1c"
+      values.$pastUpgrades.0.1:
+-        ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"]
++        "2025-04-07T18:51:47.000Z"
+      values.$pastUpgrades.0.0:
+-        "2024-03-22T01:00:23.000Z"
++        ["0xd29ED48868E393248645680ee4432999812eb30e"]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract SequencerInbox (0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x5054375f50f36812d1C45E6091b167aaFC3cA5b6"
++        "0x87Ca4B22A63c546eB998c26Ebec0aFE2821FC03C"
+      values.$pastUpgrades.2:
++        ["2025-04-07T18:51:47.000Z","0x1ead0e15dc06839305e7101c4f6ceeea0573e53ed013c571e3e66cd988906a1c",["0x87Ca4B22A63c546eB998c26Ebec0aFE2821FC03C"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.reader4844:
+-        "0x4Cc63d9A2aA0E0168F5EDfFA2D31d1F8cF0C270E"
++        "0x6607189DAA612804Bf9C992e19fba5D7E0740cED"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridge/ERC20Bridge.sol                         | 54 +++++++++++++
+ .../{.flat@21993999 => .flat}/Inbox/ERC20Inbox.sol | 92 +++++++++++++++++++---
+ .../SequencerInbox/SequencerInbox.sol              | 24 ++++--
+ 3 files changed, 152 insertions(+), 18 deletions(-)
+```
+
 Generated with discovered.json: 0xeb560d580d5ea11723f4765704a5aaaf2f1357e0
 
 # Diff at Fri, 07 Mar 2025 09:07:17 GMT:

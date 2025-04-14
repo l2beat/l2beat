@@ -8,6 +8,7 @@
       "priceId": "alchemix-usd",
       "symbol": "alUSD",
       "name": "Alchemix USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
@@ -26,6 +27,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -44,6 +46,7 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
@@ -62,6 +65,7 @@
       "priceId": "metis-token",
       "symbol": "Metis",
       "name": "Metis Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
@@ -80,6 +84,7 @@
       "priceId": "connext",
       "symbol": "NEXT",
       "name": "Connext",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31293/large/photo_2024-06-03_12-14-59.png?1717638614",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a",
@@ -98,6 +103,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -116,6 +122,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -134,6 +141,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",

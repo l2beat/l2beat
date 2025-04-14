@@ -1,15 +1,15 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
 import type {
-  DiscoveryContract,
   DiscoveryCustomType,
-} from '../config/RawDiscoveryConfig'
+  StructureContract,
+} from '../config/StructureConfig'
 import type { EntryParameters } from '../output/types'
 import { TypeApplier } from '../type-casters/TypeApplier'
 import type { HandlerResult } from './Handler'
 
 export function decodeHandlerResults(
   results: HandlerResult[],
-  fieldOverrides: DiscoveryContract['fields'],
+  fieldOverrides: StructureContract['fields'],
   types: Record<string, DiscoveryCustomType>,
 ): {
   values: EntryParameters['values']

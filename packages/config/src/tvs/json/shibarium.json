@@ -8,6 +8,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -26,6 +27,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -58,6 +60,7 @@
       "priceId": "k9-finance-dao",
       "symbol": "KNINE",
       "name": "K9 Finance DAO",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
@@ -76,6 +79,7 @@
       "priceId": "leash",
       "symbol": "LEASH",
       "name": "DOGE KILLER",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15802/large/Leash.png?1696515425",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x27C70Cd1946795B66be9d954418546998b546634",
@@ -94,6 +98,7 @@
       "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
@@ -112,6 +117,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -130,6 +136,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -148,6 +155,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",

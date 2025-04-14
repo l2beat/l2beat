@@ -8,6 +8,7 @@
       "priceId": "arcana-2",
       "symbol": "arcUSD",
       "name": "arcUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38490/large/USDa.png?1717688209",
       "amount": {
         "type": "totalSupply",
         "address": "0xAEC9e50e3397f9ddC635C6c429C8C7eca418a143",
@@ -25,6 +26,7 @@
       "priceId": "coinbase-wrapped-btc",
       "symbol": "cbBTC",
       "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
@@ -39,27 +41,11 @@
     },
     {
       "mode": "auto",
-      "id": "real-MORE",
-      "priceId": "stack-2",
-      "symbol": "MORE",
-      "name": "MORE",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
-        "chain": "real",
-        "decimals": 18,
-        "sinceTimestamp": 1718236800
-      },
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "real-PEARL",
       "priceId": "pearl",
       "symbol": "PEARL",
       "name": "Pearl",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30799/large/Yp9H3agr_400x400.jpg?1696529660",
       "amount": {
         "type": "totalSupply",
         "address": "0xCE1581d7b4bA40176f0e219b2CaC30088Ad50C7A",
@@ -77,6 +63,7 @@
       "priceId": "re-al",
       "symbol": "RWA",
       "name": "re.al",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632",
       "amount": {
         "type": "totalSupply",
         "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
@@ -94,6 +81,7 @@
       "priceId": "staked-ether",
       "symbol": "stETH",
       "name": "Liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1696513206",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -112,6 +100,7 @@
       "priceId": "bridged-usdc-re-al",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50540/large/usd-coin-usdc-logo-200x200.png?1728269501",
       "amount": {
         "type": "totalSupply",
         "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
@@ -129,6 +118,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -147,6 +137,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -165,6 +156,7 @@
       "priceId": "real-us-t-bill",
       "symbol": "USTB",
       "name": "US T-Bill",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38174/large/ustb.png?1716780607",
       "amount": {
         "type": "totalSupply",
         "address": "0x83feDBc0B85c6e29B589aA6BdefB1Cc581935ECD",
@@ -182,6 +174,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",

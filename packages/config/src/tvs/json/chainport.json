@@ -8,6 +8,7 @@
       "priceId": "tenset",
       "symbol": "10SET",
       "name": "10Set Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14629/large/PNG_Tenset_Sign-back_RGB.png?1696514307",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -80,6 +81,7 @@
       "priceId": "1inch",
       "symbol": "1INCH",
       "name": "1INCH Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13469/large/1inch-token.png?1696513230",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -152,6 +154,7 @@
       "priceId": "aleph",
       "symbol": "ALEPH",
       "name": "aleph.im v2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11676/large/Aleph-Logo-BW.png?1696511566",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -224,6 +227,7 @@
       "priceId": "ankr",
       "symbol": "ANKR",
       "name": "Ankr Network",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -296,6 +300,7 @@
       "priceId": "anyswap",
       "symbol": "ANY",
       "name": "Anyswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12242/large/anyswap.jpg?1696512074",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -368,6 +373,7 @@
       "priceId": "arpa",
       "symbol": "ARPA",
       "name": "ARPA Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -440,6 +446,7 @@
       "priceId": "basic-attention-token",
       "symbol": "BAT",
       "name": "Basic Attention Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -512,6 +519,7 @@
       "priceId": "boba-network",
       "symbol": "BOBA",
       "name": "Boba Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20285/large/Boba-200x200---white.png?1696519690",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -584,6 +592,7 @@
       "priceId": "bone-shibaswap",
       "symbol": "BONE",
       "name": "BONE SHIBASWAP",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16916/large/bone_icon.png?1696516487",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -656,6 +665,7 @@
       "priceId": "brokoli",
       "symbol": "BRKL",
       "name": "Brokoli Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18763/large/brkl.png?1696518228",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -728,6 +738,7 @@
       "priceId": "binance-usd",
       "symbol": "BUSD",
       "name": "BUSD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9576/large/BUSDLOGO.jpg?1696509654",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -800,6 +811,7 @@
       "priceId": "compound-ether",
       "symbol": "cETH",
       "name": "Compound Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10643/large/ceth.png?1696510617",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -872,6 +884,7 @@
       "priceId": "chiliz",
       "symbol": "CHZ",
       "name": "chiliZ",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8834/large/CHZ_Token_updated.png?1696508986",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -944,6 +957,7 @@
       "priceId": "cornucopias",
       "symbol": "COPI",
       "name": "Cornucopias",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21452/large/g56WwJDA_400x400.jpg?1696520814",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1016,6 +1030,7 @@
       "priceId": "credefi",
       "symbol": "CREDI",
       "name": "CREDI",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21396/large/e1QbZ4qQ_400x400.jpg?1696520760",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1088,6 +1103,7 @@
       "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1160,6 +1176,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1232,6 +1249,7 @@
       "priceId": "dao-maker",
       "symbol": "DAO",
       "name": "DAO Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13915/large/4.png?1696513656",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1304,6 +1322,7 @@
       "priceId": "ethereum-name-service",
       "symbol": "ENS",
       "name": "Ethereum Name Service",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19785/large/acatxTm8_400x400.jpg?1696519207",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1376,6 +1395,7 @@
       "priceId": "epik-prime",
       "symbol": "EPIK",
       "name": "Epik Prime",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17907/large/EPIK_Prime_LOGO.jpg?1696517427",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1448,6 +1468,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1520,6 +1541,7 @@
       "priceId": "shapeshift-fox-token",
       "symbol": "FOX",
       "name": "FOX",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9988/large/fox_token.png?1728373561",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1592,6 +1614,7 @@
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1664,6 +1687,7 @@
       "priceId": "wrapped-fantom",
       "symbol": "FTM",
       "name": "Fantom Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16036/large/Fantom.png?1696515646",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1736,6 +1760,7 @@
       "priceId": "gains",
       "symbol": "GAINS",
       "name": "GAINS",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14681/large/200x200.png?1696514354",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1808,6 +1833,7 @@
       "priceId": "gala",
       "symbol": "GALA",
       "name": "Gala",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12493/large/GALA-COINGECKO.png?1696512310",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1936,6 +1962,7 @@
       "priceId": "gamestarter",
       "symbol": "GAME",
       "name": "Game Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17604/large/gpMi14-r_400x400.jpg?1696517136",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2008,6 +2035,7 @@
       "priceId": "governance-ohm",
       "symbol": "gOHM",
       "name": "Governance OHM",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21129/large/token_wsOHM_logo.png?1696520508",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2080,6 +2108,7 @@
       "priceId": "the-graph",
       "symbol": "GRT",
       "name": "Graph Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2152,6 +2181,7 @@
       "priceId": "ledgity-token",
       "symbol": "LDY",
       "name": "Ledgity Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35046/large/ldy-token.png?1707204910",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2224,6 +2254,7 @@
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2296,6 +2327,7 @@
       "priceId": "decentraland",
       "symbol": "MANA",
       "name": "Decentraland MANA",
+      "iconUrl": "https://assets.coingecko.com/coins/images/878/large/decentraland-mana.png?1696502010",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2368,6 +2400,7 @@
       "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2440,6 +2473,7 @@
       "priceId": "nftrade",
       "symbol": "NFTD",
       "name": "NFTrade Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18578/large/nftrade.png?1696518055",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2512,6 +2546,7 @@
       "priceId": "numbers-protocol",
       "symbol": "NUM",
       "name": "NUM Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20495/large/NP_Social_media_profile_pic.png?1696519902",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2584,6 +2619,7 @@
       "priceId": "orbofi-ai",
       "symbol": "OBI",
       "name": "ORBOFI",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30216/large/new_V_test2.png?1696529127",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2656,6 +2692,7 @@
       "priceId": "orion-money",
       "symbol": "ORION",
       "name": "Orion Money Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18630/large/YtrqPIWc.png?1696518102",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2728,6 +2765,7 @@
       "priceId": "ovr",
       "symbol": "OVR",
       "name": "OVR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13429/large/LOGO-OVER-ICON-200X200PX.png?1699396496",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2800,6 +2838,7 @@
       "priceId": "paribus",
       "symbol": "PBX",
       "name": "Paribus",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18410/large/paribus.PNG?1696517900",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2872,6 +2911,7 @@
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -2944,6 +2984,7 @@
       "priceId": "polychain-monsters",
       "symbol": "PMON",
       "name": "Polkamon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3016,6 +3057,7 @@
       "priceId": "chainport",
       "symbol": "PORTX",
       "name": "ChainPort Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24490/large/VE-tUL-q_400x400.png?1696523670",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3088,6 +3130,7 @@
       "priceId": "vulcan-forged",
       "symbol": "PYR",
       "name": "PYR Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14770/large/1617088937196.png?1696514439",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3160,6 +3203,7 @@
       "priceId": "quant-network",
       "symbol": "QNT",
       "name": "Quant",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1696504070",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3232,6 +3276,7 @@
       "priceId": "radio-caca",
       "symbol": "RACA",
       "name": "Radio Caca V2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17841/large/ez44_BSs_400x400.jpg?1696517365",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3304,6 +3349,7 @@
       "priceId": "render-token",
       "symbol": "RNDR",
       "name": "Render Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11636/large/rndr.png?1696511529",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3376,6 +3422,7 @@
       "priceId": "thorchain",
       "symbol": "RUNE",
       "name": "THORChain ETH.RUNE",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6595/large/Rune200x200.png?1696506946",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3448,6 +3495,7 @@
       "priceId": "the-sandbox",
       "symbol": "SAND",
       "name": "SAND",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3520,6 +3568,7 @@
       "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3592,6 +3641,7 @@
       "priceId": "swipe",
       "symbol": "SXP",
       "name": "Swipe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9368/large/swipe.png?1696509466",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3664,6 +3714,7 @@
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3736,6 +3787,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3808,6 +3860,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3880,6 +3933,7 @@
       "priceId": "vent-finance",
       "symbol": "VENT",
       "name": "VENT",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17925/large/Artboard_29.png?1696517445",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -3952,6 +4006,7 @@
       "priceId": "veritaseum",
       "symbol": "VERI",
       "name": "Veritaseum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/695/large/veritaseum.png?1696501884",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -4024,6 +4079,7 @@
       "priceId": "velas",
       "symbol": "VLX",
       "name": "VLX",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9651/large/logo_blue.png?1696509720",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -4096,6 +4152,7 @@
       "priceId": "binance-coin-wormhole",
       "symbol": "WBNB",
       "name": "Wrapped BNB",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22884/large/BNB_wh_small.png?1696522182",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -4168,6 +4225,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -4240,6 +4298,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -4312,6 +4371,7 @@
       "priceId": "woo-network",
       "symbol": "WOO",
       "name": "Wootrade Network",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12921/large/WOO_Logos_2023_Profile_Pic_WOO.png?1696512709",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -4384,6 +4444,7 @@
       "priceId": "xcad-network",
       "symbol": "XCAD",
       "name": "XCAD Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15857/large/logoWhiteX.jpg?1696515473",
       "amount": {
         "type": "calculation",
         "operator": "sum",

@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 22144824,
-  "configHash": "0xc18f43b7b447dde77fb8297cae100a40dcb11ac625318e7f80d01479b14b80d6",
+  "configHash": "0xb02ca4b2fdbf240785b9918fd779ebf7f43aac485d6b9361dea58fca161bfa23",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -1132,7 +1132,6 @@
         "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5"
       ],
       "proxyType": "immutable",
-      "displayName": "L1EscrowDAI",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
       "sinceTimestamp": 1666446647,
       "sinceBlock": 15804056,
@@ -4431,16 +4430,16 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "maker/L1Escrow": "0x87c1d15632c3136185601f5c6e886055b0dfd744dab40ee4f9c37bcd39cfb254",
-    "starknet/DelayedExecutor": "0x15e94d1c02d9509d0d1e1495450e6b5815355f1922d14400f3510ebc00e61d6b",
-    "starknet/L1EscrowDAI": "0xc76e00534799bac0d75e4fde066a64f4f336521ce912294cdc63235c1dd0cbef",
-    "starknet/LordsL1Bridge": "0xbf38772f38d14d6f0266bb951311c51e3799d84286455740232f5c1a2b3e34a1",
-    "starknet/StarkgateManager": "0xfb136b426652269cd1d92bed2d94d34484afa458e2c8a006869076c38a65df63",
-    "starknet/StarkgateRegistry": "0x4e28ffbb1827dac094072d0de1c4652ebe5bacaf94ae75f3b5b6998e5d630373",
-    "starknet/Starknet": "0x24d52302fc33da36088c2be699d5ba801d9e2af6968f4787a619ae5a80713c08",
-    "starknet/StarknetERC20Bridge": "0x02f940891cb066b5cdb2aa7169ce1b4315d63272c11797d15d7138c8d8023716",
-    "starknet/StarknetEthBridge": "0x7682aadc3f45c3e91905df28d9bdcc55ac76138df20520d35c5cd3ea66ad1b30",
-    "starknet/StarknetMultiBridge": "0xf2f6f30900d78dcb02ad3f80ae701056511ef738d70aa38a6fa23cb2a21830da"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "maker/L1Escrow": "0xb42f4a4e99cd96e0fdced856d5700812b16948444eb8bf9b0d9f41c6faec9de4",
+    "starknet/DelayedExecutor": "0x026087a4929557999632c673a7814201d74d1cad2349660781a65dbda488fdde",
+    "starknet/L1EscrowDAI": "0x11860373e3ee0b340522a4db6b06453800bfca89646791df878b7e935c5dc6d8",
+    "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
+    "starknet/StarkgateManager": "0x74cd8ae86590963abb3809a0f4f1dc2d5c6600a8c54d63bdcb9d727e4735d45b",
+    "starknet/StarkgateRegistry": "0xf97ce3e8949e1a09811b01712acc2c09b944bad3bb8505e4b5f817c75a11c3ae",
+    "starknet/Starknet": "0xe5e581bc97212bd8b2b1d7cce1791fadc7a90c2a31cdf90222904c9cc7977815",
+    "starknet/StarknetERC20Bridge": "0xb2c38ccbfd4ccacff566b10cdf6b4c97da8815ad2e6e8f2654b20f95fd0c7078",
+    "starknet/StarknetEthBridge": "0x595db5b701545bfae85b84ad13c29d85f9c1a2114407f47d3733e67ea63ef9a7",
+    "starknet/StarknetMultiBridge": "0x61321009feca9bb05ddf52331ab3017dfcf7a1f09b3b248cc6bb1fe910cedb07"
   }
 }

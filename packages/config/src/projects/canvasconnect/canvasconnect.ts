@@ -45,7 +45,7 @@ export const canvasconnect: ScalingProject = {
   id: ProjectId('canvasconnect'),
   capability: 'universal',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  isArchived: true,
+  archivedAt: UnixTime(1715644800), // 2024-05-14T00:00:00.000Z,
   display: {
     name: 'Canvas Connect',
     slug: 'canvasconnect',

@@ -1,8 +1,8 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 22208553,
-  "configHash": "0xa7f64ef9ee5af9f6012eb30b7fb837810cc5b97cf7fa66704642dd78d8ef9245",
+  "blockNumber": 22243995,
+  "configHash": "0x75b01e71bcecec119b4af78c11def06e55006a267e7ff5c6dc3d13b07f672ae9",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -65,7 +65,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -92,6 +92,11 @@
     },
     {
       "address": "0x31fB42E93b573F1e84a51Cc1a5792e3D63FDE7A6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -388,10 +393,9 @@
       "template": "starknet/Starknet",
       "sourceHashes": [
         "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
-        "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
+        "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe"
       ],
       "proxyType": "StarkWare proxy",
-      "displayName": "Starknet",
       "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
       "issuedPermissions": [
         {
@@ -434,7 +438,7 @@
           "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
         ],
         "$immutable": false,
-        "$implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
+        "$implementation": "0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
         "$pastUpgrades": [
           [
             "2023-07-20T11:05:35.000Z",
@@ -450,39 +454,46 @@
             "2024-09-08T16:05:35.000Z",
             "0xe78b11cbf1332af60b8da9b2eaf51ec52cdc5bdc7cc0a89af3c2fbb0936c14d8",
             ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
+          ],
+          [
+            "2025-04-07T20:04:59.000Z",
+            "0x63d55b2c0cfa3b1866e99b66c6632e5474e177ce0e3b5d5b68ed8b801d76cc53",
+            ["0x2793010E6711Acd5C46ed17f2183a9d58db71e04"]
           ]
         ],
-        "$upgradeCount": 3,
-        "aggregatorHashMapped": "StarkNet Aggregator (old)",
-        "aggregatorProgramHash": "1161178844461337253856226043908368523817098764221830529880464854589141231910",
+        "$upgradeCount": 4,
+        "aggregatorHashMapped": "Starknet Aggregator (since v0.13.4)",
+        "aggregatorProgramHash": "273279642033703284306509103355536170486431195329675679055627933497997642494",
         "configHash": "2741190170141984203224468507008497105532196084369172236871397222510074358631",
+        "feeCollector": "0x0000000000000000000000000000000000000000",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
-        "identify": "StarkWare_Starknet_2024_9",
-        "implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
+        "identify": "StarkWare_Starknet_2025_10",
+        "implementation": "0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 7495,
+        "l1ToL2MessageNonce": 7802,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
-        "programHash": "853638403225561750106379562222782223909906501242604214771127703946595519856",
+        "programHash": "2534935718742676028234156221136000178296467523045214874259117268197132196876",
         "programHashHistory": [
           "3258367057337572248818716706664617507069572185152472699066582725377748079373",
           "54878256403880350656938046611252303365750679698042371543935159963667935317",
           "2479841346739966073527450029179698923866252973805981504232089731754042431018",
           "109586309220455887239200613090920758778188956576212125550190099009305121410",
-          "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+          "3383082961563516565935611087683915026448707331436034043529592588079494402084",
+          "853638403225561750106379562222782223909906501242604214771127703946595519856"
         ],
-        "programHashMapped": "StarkNet OS (Paradex)",
+        "programHashMapped": "2534935718742676028234156221136000178296467523045214874259117268197132196876",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2394290915808747880091067688828136799111388123893493676657323887343673231193",
-        "stateBlockNumber": 553545,
-        "stateRoot": "1895914952974984567826883859937758389905849174944946307317857475638139717137",
+        "stateBlockHash": "2709877246687651559458517431492096743085487221462199189773629565996601736668",
+        "stateBlockNumber": 578525,
+        "stateRoot": "855974602343891127691803574350548025433170972908975703607878123177360552126",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -572,6 +583,7 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512",
           "0xFE5956a7cD804b93379DE807cB0BE8D0Ad0Cb571",
           "0x661B48092a5af3F8d5B551D66f5B3F639deD3155",
           "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B",
@@ -582,8 +594,8 @@
         "domainSeparator": "0x79153287c895edf58c6e5294023273405c02b4865dae9e64742d80f476d9b88d",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 5,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -592,6 +604,66 @@
   "abis": {
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [
       "constructor(address _singleton)"
+    ],
+    "0x2793010E6711Acd5C46ed17f2183a9d58db71e04": [
+      "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
+      "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event Finalized()",
+      "event LogMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event LogMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce, uint256 fee)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogOperatorAdded(address operator)",
+      "event LogOperatorRemoved(address operator)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
+      "event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)",
+      "event MessageToL2Canceled(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event MessageToL2CancellationStarted(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event ProgramHashChanged(address indexed changedBy, uint256 oldProgramHash, uint256 newProgramHash)",
+      "function aggregatorProgramHash() view returns (uint256)",
+      "function cancelL1ToL2Message(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function configHash() view returns (uint256)",
+      "function consumeMessageFromL2(uint256 fromAddress, uint256[] payload) returns (bytes32)",
+      "function feeCollector() view returns (address)",
+      "function finalize()",
+      "function getMaxL1MsgFee() pure returns (uint256)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isFinalized() view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isOperator(address user) view returns (bool)",
+      "function l1ToL2MessageCancellations(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MessageNonce() view returns (uint256)",
+      "function l1ToL2Messages(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MsgHash(address fromAddress, uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) pure returns (bytes32)",
+      "function l2ToL1Messages(bytes32 msgHash) view returns (uint256)",
+      "function l2ToL1MsgHash(uint256 fromAddress, address toAddress, uint256[] payload) pure returns (bytes32)",
+      "function messageCancellationDelay() view returns (uint256)",
+      "function programHash() view returns (uint256)",
+      "function registerOperator(address newOperator)",
+      "function safeAddImplementation(address newImplementation, bytes data)",
+      "function sendMessageToL2(uint256 toAddress, uint256 selector, uint256[] payload) payable returns (bytes32, uint256)",
+      "function setAggregatorProgramHash(uint256 newAggregatorProgramHash)",
+      "function setConfigHash(uint256 newConfigHash)",
+      "function setFeeCollectionAddress(address collector)",
+      "function setMessageCancellationDelay(uint256 delayInSeconds)",
+      "function setProgramHash(uint256 newProgramHash)",
+      "function starknetAcceptGovernance()",
+      "function starknetCancelNomination()",
+      "function starknetIsGovernor(address user) view returns (bool)",
+      "function starknetNominateNewGovernor(address newGovernor)",
+      "function starknetRemoveGovernor(address governorForRemoval)",
+      "function startL1ToL2MessageCancellation(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function stateBlockHash() view returns (uint256)",
+      "function stateBlockNumber() view returns (int256)",
+      "function stateRoot() view returns (uint256)",
+      "function unregisterOperator(address removedOperator)",
+      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
+      "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
     ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -640,61 +712,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC": [
-      "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
-      "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
-      "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
-      "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
-      "event Finalized()",
-      "event LogMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
-      "event LogMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce, uint256 fee)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogOperatorAdded(address operator)",
-      "event LogOperatorRemoved(address operator)",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
-      "event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)",
-      "event MessageToL2Canceled(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
-      "event MessageToL2CancellationStarted(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
-      "event ProgramHashChanged(address indexed changedBy, uint256 oldProgramHash, uint256 newProgramHash)",
-      "function aggregatorProgramHash() view returns (uint256)",
-      "function cancelL1ToL2Message(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
-      "function configHash() view returns (uint256)",
-      "function consumeMessageFromL2(uint256 fromAddress, uint256[] payload) returns (bytes32)",
-      "function finalize()",
-      "function getMaxL1MsgFee() pure returns (uint256)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes data)",
-      "function isFinalized() view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isOperator(address user) view returns (bool)",
-      "function l1ToL2MessageCancellations(bytes32 msgHash) view returns (uint256)",
-      "function l1ToL2MessageNonce() view returns (uint256)",
-      "function l1ToL2Messages(bytes32 msgHash) view returns (uint256)",
-      "function l2ToL1Messages(bytes32 msgHash) view returns (uint256)",
-      "function messageCancellationDelay() view returns (uint256)",
-      "function programHash() view returns (uint256)",
-      "function registerOperator(address newOperator)",
-      "function sendMessageToL2(uint256 toAddress, uint256 selector, uint256[] payload) payable returns (bytes32, uint256)",
-      "function setAggregatorProgramHash(uint256 newAggregatorProgramHash)",
-      "function setConfigHash(uint256 newConfigHash)",
-      "function setMessageCancellationDelay(uint256 delayInSeconds)",
-      "function setProgramHash(uint256 newProgramHash)",
-      "function starknetAcceptGovernance()",
-      "function starknetCancelNomination()",
-      "function starknetIsGovernor(address user) view returns (bool)",
-      "function starknetNominateNewGovernor(address newGovernor)",
-      "function starknetRemoveGovernor(address governorForRemoval)",
-      "function startL1ToL2MessageCancellation(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
-      "function stateBlockHash() view returns (uint256)",
-      "function stateBlockNumber() view returns (int256)",
-      "function stateRoot() view returns (uint256)",
-      "function unregisterOperator(address removedOperator)",
-      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
-      "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
     ],
     "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77": [
       "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
@@ -884,8 +901,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "starknet/Starknet": "0x24d52302fc33da36088c2be699d5ba801d9e2af6968f4787a619ae5a80713c08",
-    "starknet/StarknetERC20Bridge": "0x02f940891cb066b5cdb2aa7169ce1b4315d63272c11797d15d7138c8d8023716"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "starknet/Starknet": "0xe5e581bc97212bd8b2b1d7cce1791fadc7a90c2a31cdf90222904c9cc7977815",
+    "starknet/StarknetERC20Bridge": "0xb2c38ccbfd4ccacff566b10cdf6b4c97da8815ad2e6e8f2654b20f95fd0c7078"
   }
 }

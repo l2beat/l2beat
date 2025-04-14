@@ -22,7 +22,7 @@ export async function getBridgesSummaryEntries() {
     ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvlInfo'],
       where: ['isBridge'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 

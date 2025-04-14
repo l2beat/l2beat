@@ -1,4 +1,33 @@
-Generated with discovered.json: 0xd78ff3a60cc2e24fc613726e92c6c73c635da653
+Generated with discovered.json: 0xec98cd69992257a9ad296440e0d88daeb132bbe1
+
+# Diff at Thu, 10 Apr 2025 14:44:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 1077934
+- current block number: 1077934
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1077934 (main branch discovery), not current.
+
+```diff
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      name:
+-        "ERC1967Proxy"
++        "EverclearHub"
+      displayName:
+-        "EverclearHub"
+    }
+```
+
+Generated with discovered.json: 0xf763ad9b042251968d1cbc9c2c5f4a5bbb7eb51b
 
 # Diff at Thu, 03 Apr 2025 09:39:36 GMT:
 

@@ -8,6 +8,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -40,6 +41,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "native",
@@ -58,6 +60,7 @@
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -76,6 +79,7 @@
       "priceId": "governance-ohm",
       "symbol": "gOHM",
       "name": "Governance OHM",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21129/large/token_wsOHM_logo.png?1696520508",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f",
@@ -94,6 +98,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -126,6 +131,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -158,6 +164,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -176,6 +183,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",

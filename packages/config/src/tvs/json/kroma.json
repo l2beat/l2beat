@@ -8,6 +8,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -26,6 +27,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -58,11 +60,14 @@
       "priceId": "kroma",
       "symbol": "KRO",
       "name": "Kroma",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30830/large/Kroma-symbol.png?1696529683",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "kroma",
         "decimals": 18,
-        "sinceTimestamp": 1730246400
+        "sinceTimestamp": 1730246400,
+        "address": "0x25500000d700bbE27104577CCcce8eAbCC96c8ad",
+        "chain": "kroma"
       },
       "category": "other",
       "source": "native",
@@ -74,6 +79,7 @@
       "priceId": "merlin-s-seal-btc",
       "symbol": "M-BTC",
       "name": "Merlin BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
       "amount": {
         "type": "totalSupply",
         "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
@@ -91,6 +97,7 @@
       "priceId": "wrapped-eeth",
       "symbol": "spETH",
       "name": "Spectrum Staked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
@@ -109,6 +116,7 @@
       "priceId": "uniswap",
       "symbol": "UNI",
       "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
@@ -127,6 +135,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -145,6 +154,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -163,6 +173,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -181,6 +192,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -199,6 +211,7 @@
       "priceId": "wemix-token",
       "symbol": "WEMIX.e",
       "name": "WEMIX.e",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12998/large/wemixcoin_color_200.png?1696512788",
       "amount": {
         "type": "totalSupply",
         "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",

@@ -8,6 +8,7 @@
       "priceId": "axie-infinity",
       "symbol": "AXS",
       "name": "Axie Infinity Shard",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -40,6 +41,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -72,6 +74,7 @@
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -104,6 +107,7 @@
       "priceId": "matic-network",
       "symbol": "MATIC",
       "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -136,6 +140,7 @@
       "priceId": "smooth-love-potion",
       "symbol": "SLP",
       "name": "Smooth Love Potion",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xCC8Fa225D80b9c7D42F96e9570156c65D6cAAa25",
@@ -154,6 +159,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -186,6 +192,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -218,6 +225,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "calculation",
         "operator": "sum",

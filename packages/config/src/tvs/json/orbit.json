@@ -8,6 +8,7 @@
       "priceId": "cdai",
       "symbol": "cDAI",
       "name": "Compound Dai",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9281/large/cDAI.png?1696509390",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
@@ -26,6 +27,7 @@
       "priceId": "compound-usd-coin",
       "symbol": "cUSDC",
       "name": "Compound USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9442/large/Compound_USDC.png?1696509534",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
@@ -44,6 +46,7 @@
       "priceId": "compound-wrapped-btc",
       "symbol": "cWBTC",
       "name": "Compound Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10823/large/cwbtc.png?1696510780",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xccF4429DB6322D5C611ee964527D42E5d685DD6a",

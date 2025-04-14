@@ -23,7 +23,7 @@ export const xdai: Bridge = {
   display: {
     name: 'xDai Bridge',
     slug: 'xdai',
-    category: 'Token Bridge',
+    category: 'Single-chain',
     links: {
       websites: ['https://bridge.gnosischain.com/'],
       apps: ['https://bridge.gnosischain.com/'],

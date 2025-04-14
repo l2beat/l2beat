@@ -8,6 +8,7 @@
       "priceId": "cheese-2",
       "symbol": "CHEESE",
       "name": "CHEESE",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37156/large/cheese_icon_500x500.png?1713499473",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",

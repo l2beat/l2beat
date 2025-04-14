@@ -1,10 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
-  DiscoveryConfig,
+  ConfigRegistry,
   type DiscoveryDiff,
   type DiscoveryOutput,
   type EntryParameters,
+  hashJsonStable,
 } from '@l2beat/discovery'
 import {
   ChainConverter,
@@ -315,7 +316,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: DISCOVERY_RESULT,
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
         upsert: async () => undefined,
       })
@@ -358,7 +359,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: DISCOVERY_RESULT,
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
         upsert: async () => undefined,
       })
@@ -403,7 +404,7 @@ describe(UpdateMonitor.name, () => {
         findLatest: async () => ({
           ...mockRecord,
           discovery: { ...DISCOVERY_RESULT, blockNumber: BLOCK_NUMBER - 1 },
-          configHash: config.hash,
+          configHash: hashJsonStable(config.structure),
           blockNumber: BLOCK_NUMBER - 1,
         }),
         upsert: async () => undefined,
@@ -562,7 +563,7 @@ describe(UpdateMonitor.name, () => {
       const dbEntry = {
         ...mockRecord,
         discovery: { ...mockProject, entries: COMMITTED },
-        configHash: mockConfig(PROJECT_A).hash,
+        configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
       }
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -626,7 +627,7 @@ describe(UpdateMonitor.name, () => {
             ...mockProject,
             entries: dbEntry,
           },
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
       })
 
@@ -644,7 +645,7 @@ describe(UpdateMonitor.name, () => {
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         // different config hash
-        new DiscoveryConfig({
+        new ConfigRegistry({
           name: PROJECT_A,
           chain: 'ethereum',
           initialAddresses: [EthereumAddress.ZERO],
@@ -665,7 +666,7 @@ describe(UpdateMonitor.name, () => {
             entries: dbEntry,
             blockNumber: BLOCK_NUMBER - 1,
           },
-          configHash: mockConfig(PROJECT_A).hash,
+          configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
       })
 
@@ -930,8 +931,8 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   }
 }
 
-function mockConfig(name: string, chain = 'ethereum'): DiscoveryConfig {
-  return new DiscoveryConfig({
+function mockConfig(name: string, chain = 'ethereum'): ConfigRegistry {
+  return new ConfigRegistry({
     name,
     chain,
     initialAddresses: [],

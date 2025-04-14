@@ -1,3 +1,174 @@
+Generated with discovered.json: 0x4eb1c2b8872298d3dac8ce33c53eeb80bc08e5cd
+
+# Diff at Thu, 10 Apr 2025 14:42:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21678827
+- current block number: 21678827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678827 (main branch discovery), not current.
+
+```diff
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: Official Facet implementation of the Ether Bridge.
+      displayName:
+-        "FacetEtherBridge"
+      issuedPermissions.3:
++        {"permission":"interact","to":"0x314d660b083675f415cCAA9c545FeedF377d1006","description":"can sign arbitrary withdrawals for users.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","description":"can withdraw all funds from the bridge.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]}
+      issuedPermissions.1.to:
+-        "0x314d660b083675f415cCAA9c545FeedF377d1006"
++        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      issuedPermissions.1.description:
+-        "can sign arbitrary withdrawals for users."
++        "can withdraw all funds from the bridge."
+      issuedPermissions.0.to:
+-        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
+      issuedPermissions.0.via.0:
++        {"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}
+    }
+```
+
+```diff
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","description":"set and change address mappings.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xDB866fD9241cd32851Df760c1Ec536f3199B22cE","description":"set and change address mappings.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+    }
+```
+
+```diff
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF) {
+    +++ description: Module that allows the Safe to send Facet transactions.
+      receivedPermissions:
++        [{"permission":"guard","from":"0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"guard","from":"0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"interact","from":"0x0000000000000b07ED001607f5263D85bf28Ce4C","description":"can withdraw all funds from the bridge.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"interact","from":"0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA","description":"set and change address mappings.","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"interact","from":"0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0x8F75466D69a52EF53C7363F38834bEfC027A2909","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]}]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0xDB866fD9241cd32851Df760c1Ec536f3199B22cE","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.3:
++        {"permission":"guard","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]}
+      issuedPermissions.2:
++        {"permission":"guard","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[]}
+      issuedPermissions.1.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.1.via.0:
++        {"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.to:
+-        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
+      issuedPermissions.0.via.0.address:
+-        "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xDB866fD9241cd32851Df760c1Ec536f3199B22cE","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+    }
+```
+
+```diff
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e) {
+    +++ description: None
+      displayName:
+-        "SystemConfig_facet"
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0xDB866fD9241cd32851Df760c1Ec536f3199B22cE","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]}
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.via.0:
+-        {"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}
+      issuedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      issuedPermissions.0.to:
+-        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
+      issuedPermissions.0.via.0:
++        {"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0xDB866fD9241cd32851Df760c1Ec536f3199B22cE","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+    }
+```
+
+```diff
+    contract EthscriptionsSafeModule (0xDB866fD9241cd32851Df760c1Ec536f3199B22cE) {
+    +++ description: Module that allows the Safe to interact with Ethscriptions.
+      receivedPermissions:
++        [{"permission":"guard","from":"0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"guard","from":"0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"interact","from":"0x0000000000000b07ED001607f5263D85bf28Ce4C","description":"can withdraw all funds from the bridge.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"interact","from":"0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA","description":"set and change address mappings.","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"interact","from":"0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0x8F75466D69a52EF53C7363F38834bEfC027A2909","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]},{"permission":"upgrade","from":"0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","via":[{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"},{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]}]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0xDB866fD9241cd32851Df760c1Ec536f3199B22cE","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"},{"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      issuedPermissions.3:
++        {"permission":"guard","to":"0x3235AdE33cF7013f5b5A51089390396e931e6BCF","via":[{"address":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525"}]}
+      issuedPermissions.2:
++        {"permission":"guard","to":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","via":[]}
+      issuedPermissions.1.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.1.via.0:
++        {"address":"0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.to:
+-        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
+      issuedPermissions.0.via.0.address:
+-        "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+    }
+```
+
 Generated with discovered.json: 0xc219cca3f6dab70a9bb3826599568a00f9ae57f2
 
 # Diff at Thu, 27 Mar 2025 11:14:19 GMT:

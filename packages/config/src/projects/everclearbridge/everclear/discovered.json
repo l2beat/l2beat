@@ -1,8 +1,8 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 1041412,
-  "configHash": "0x03c6ae0f420939feef4cbb3555de358586f7ea6a563a56c446f6390f752b5a54",
+  "blockNumber": 1077934,
+  "configHash": "0x5e8afca5ded48bb75cdd0606b3c4db835005a7abfa3c8c090b88f6933e0b92d5",
   "entries": [
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -35,7 +35,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ERC1967Proxy",
+      "name": "EverclearHub",
       "address": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "sourceHashes": [
@@ -47,7 +47,6 @@
         "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
       ],
       "proxyType": "Everclear proxy",
-      "displayName": "EverclearHub",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -55,7 +54,7 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig"],
+      "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig", "paymentNonce"],
       "sinceTimestamp": 1726461018,
       "sinceBlock": 382,
       "values": {
@@ -94,7 +93,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 199402,
+        "getCurrentEpoch": 200507,
         "hubGateway": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -102,7 +101,7 @@
         "minSolverSupportedDomains": 2,
         "owner": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
         "paused": false,
-        "paymentNonce": 3,
+        "paymentNonce": 6,
         "PROCESS_QUEUE_VIA_RELAYER_TYPEHASH": "0x9ee676d393dd5facc07ae4ba72101da49596c33d1358807aba1cc4687c098eb9",
         "proposedOwner": "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8",
         "proposedOwnershipTimestamp": 1731649154,

@@ -8,6 +8,7 @@
       "priceId": "crypto-com-chain",
       "symbol": "CRO",
       "name": "CRO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7310/large/cro_token_logo.png?1696507599",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -16,7 +17,7 @@
         "address": "0xBCaA34FF9D5BFD0d948b18Cf6Bf39a882F4a1cBD",
         "chain": "cronoszkevm",
         "decimals": 8,
-        "sinceTimestamp": 1722394995
+        "sinceTimestamp": 1739109131
       }
     },
     {
@@ -25,6 +26,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "category": "ether",
       "source": "canonical",
       "amount": {
@@ -32,7 +34,7 @@
         "address": "0x898B3560AFFd6D955b1574D87EE09e46669c60eA",
         "chain": "cronoszkevm",
         "decimals": 18,
-        "sinceTimestamp": 1722394995
+        "sinceTimestamp": 1739109131
       },
       "isAssociated": false
     },
@@ -42,6 +44,7 @@
       "priceId": "ebisusbay-fortune",
       "symbol": "FRTN",
       "name": "Fortune",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30768/large/fortune_token.png?1696529636",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -50,7 +53,7 @@
         "address": "0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26",
         "chain": "cronoszkevm",
         "decimals": 18,
-        "sinceTimestamp": 1723511591
+        "sinceTimestamp": 1739109131
       }
     },
     {
@@ -59,6 +62,7 @@
       "priceId": "fulcrom",
       "symbol": "FUL",
       "name": "FUL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29684/large/FUL_Token_%281%29.png?1696528618",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -67,7 +71,7 @@
         "address": "0xFB3338E2cA713B344D6A45B36525c3db156e492F",
         "chain": "cronoszkevm",
         "decimals": 18,
-        "sinceTimestamp": 1722578039
+        "sinceTimestamp": 1739109131
       }
     },
     {
@@ -76,6 +80,7 @@
       "priceId": "moonflow",
       "symbol": "MOON",
       "name": "Moonflow",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34862/large/profile_pic_test_%281%29.jpg?1716085666",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -84,7 +89,7 @@
         "address": "0xC80B437c4c0f9C74CFb2e2D063A58ffB4F82D4F0",
         "chain": "cronoszkevm",
         "decimals": 18,
-        "sinceTimestamp": 1723714163
+        "sinceTimestamp": 1739109131
       }
     },
     {
@@ -93,6 +98,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -101,7 +107,7 @@
         "address": "0xaa5b845F8C9c047779bEDf64829601d8B264076c",
         "chain": "cronoszkevm",
         "decimals": 6,
-        "sinceTimestamp": 1722394995
+        "sinceTimestamp": 1739109131
       }
     },
     {
@@ -110,6 +116,7 @@
       "priceId": "veno-eth",
       "symbol": "vETH",
       "name": "Veno ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39776/large/Screenshot_2024-08-19_at_5.07.51%E2%80%AFPM.png?1724058891",
       "amount": {
         "type": "totalSupply",
         "address": "0x271602A97027ee1dd03b1E6e5dB153eB659A80b1",
@@ -127,6 +134,7 @@
       "priceId": "veno-usd",
       "symbol": "vUSD",
       "name": "Veno USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39775/large/Screenshot_2024-08-19_at_5.09.13%E2%80%AFPM.png?1724058679",
       "amount": {
         "type": "totalSupply",
         "address": "0x5b91e29Ae5A71d9052620Acb813d5aC25eC7a4A2",
@@ -144,6 +152,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -152,8 +161,27 @@
         "address": "0xD65E5DbA71231D35A5802bA83dC6cB6746c9758d",
         "chain": "cronoszkevm",
         "decimals": 8,
-        "sinceTimestamp": 1722394995
+        "sinceTimestamp": 1739109131
       }
+    },
+    {
+      "mode": "auto",
+      "id": "cronoszkevm-zkCRO",
+      "priceId": "cronos-zkevm-cro",
+      "symbol": "zkCRO",
+      "name": "Cronos zkEVM CRO",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39734/large/Screenshot_2024-08-16_at_10.42.41%E2%80%AFAM.png?1723776225",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
+        "chain": "ethereum",
+        "escrowAddress": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
     }
   ]
 }

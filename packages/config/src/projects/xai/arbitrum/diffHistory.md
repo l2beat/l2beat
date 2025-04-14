@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x8f19702da64c174355ec26be13fff5b7615412ea
+
+# Diff at Wed, 09 Apr 2025 13:48:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 323463446
+- current block number: 324577860
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract XaiFundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.6:
+-        "0xbBE90F6748C82623F130A4486722a436c5a72440"
+      values.$members.5:
+-        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
++        "0xbBE90F6748C82623F130A4486722a436c5a72440"
+      values.$members.4:
+-        "0xd427165292B2E39cdac102eD963B14fFBACc964a"
++        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xb0fb1d63799d5c0dd6a5264899b8600c4c5723a5
 
 # Diff at Sun, 06 Apr 2025 08:12:50 GMT:

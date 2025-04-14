@@ -8,6 +8,7 @@
       "priceId": "forta",
       "symbol": "FORT",
       "name": "Forta",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25060/large/Forta_lgo_%281%29.png?1696524210",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x3A1429d50E0cBBc45c997aF600541Fe1cc3D2923",

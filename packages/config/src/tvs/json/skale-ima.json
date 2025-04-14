@@ -8,6 +8,7 @@
       "priceId": "dai",
       "symbol": "DAI",
       "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -26,6 +27,7 @@
       "priceId": "divi",
       "symbol": "DIVI",
       "name": "Divi",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/1273/large/red_logomark.png?1696502345",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77",
@@ -44,6 +46,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -76,6 +79,7 @@
       "priceId": "exorde",
       "symbol": "EXD",
       "name": "Exorde Network Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28684/large/logo-exorde.png?1696527668",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x02dE007D412266a2e0Fa9287C103474170F06560",
@@ -94,6 +98,7 @@
       "priceId": "hitmakr",
       "symbol": "HMKR",
       "name": "HITMAKR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36660/large/HITMAKR_logo.png?1712042884",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x3300b02efa180c99a2F61f4731665b51e4E254C4",
@@ -112,6 +117,7 @@
       "priceId": "chainlink",
       "symbol": "LINK",
       "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
@@ -130,6 +136,7 @@
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
@@ -148,6 +155,7 @@
       "priceId": "razor-network",
       "symbol": "RAZOR",
       "name": "RAZOR",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13797/large/icon.png?1696513545",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd",
@@ -166,6 +174,7 @@
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
       "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
@@ -184,6 +193,7 @@
       "priceId": "skale",
       "symbol": "SKL",
       "name": "SKALE",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13245/large/SKALE_token_300x300.png?1696513021",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7",
@@ -202,6 +212,7 @@
       "priceId": "unipoly",
       "symbol": "UNP",
       "name": "Unipoly Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32510/large/20231018_231410.png?1698398961",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x23d7Ff057c696fEE679c60cEf61Fee6614218f04",
@@ -220,6 +231,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -238,6 +250,7 @@
       "priceId": "paxos-standard",
       "symbol": "USDP",
       "name": "Pax Dollar",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6013/large/Pax_Dollar.png?1696506427",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
@@ -256,6 +269,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -274,6 +288,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",

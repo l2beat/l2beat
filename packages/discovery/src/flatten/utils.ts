@@ -1,6 +1,6 @@
 import { createHash } from 'crypto'
 import { Hash256 } from '@l2beat/shared-pure'
-import type { ContractSources } from '../discovery/source/SourceCodeService'
+import type { PerContractSource } from '../discovery/source/SourceCodeService'
 import type { ContractSource } from '../utils/IEtherscanClient'
 import type { FileContent } from './ParsedFilesManager'
 import { flattenStartingFrom } from './flatten'
@@ -25,13 +25,18 @@ const cache: Map<string, Hash256> = new Map()
 // even when there are multiple sources.
 // In the future it may be reimplemented to support
 // all sources for comparison with templates.
-export function hashFirstSource(sources: ContractSources): Hash256 | undefined {
-  if (!sources.isVerified || sources.sources.length < 1) {
+export function hashFirstSource(
+  isVerified: boolean,
+  perContractSources: PerContractSource[],
+): Hash256 | undefined {
+  if (!isVerified || perContractSources.length < 1) {
     return undefined
   }
 
   const source =
-    sources.sources.length === 1 ? sources.sources[0] : sources.sources[1]
+    perContractSources.length === 1
+      ? perContractSources[0]
+      : perContractSources[1]
 
   if (source === undefined) {
     throw Error('No sources found')

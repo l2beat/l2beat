@@ -8,6 +8,7 @@
       "priceId": "automata",
       "symbol": "ATA",
       "name": "Automata",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15985/large/ATA_Icon_%28Profile_2%29.png?1720487988",
       "amount": {
         "type": "calculation",
         "operator": "sum",

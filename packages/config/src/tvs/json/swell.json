@@ -8,6 +8,7 @@
       "priceId": "ethena",
       "symbol": "ENA",
       "name": "ENA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
       "amount": {
         "type": "totalSupply",
         "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
@@ -25,6 +26,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -57,6 +59,7 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
       "amount": {
         "type": "totalSupply",
         "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -74,6 +77,7 @@
       "priceId": "renzo-restaked-lst",
       "symbol": "pzETH",
       "name": "Renzo Restaked LST",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
       "amount": {
         "type": "totalSupply",
         "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
@@ -91,6 +95,7 @@
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "amount": {
         "type": "totalSupply",
         "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
@@ -108,6 +113,7 @@
       "priceId": "swell-network",
       "symbol": "rSWELL",
       "name": "rSWELL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28777/large/swell1.png?1727899715",
       "amount": {
         "type": "totalSupply",
         "address": "0x939f1cC163fDc38a77571019eb4Ad1794873bf8c",
@@ -125,6 +131,7 @@
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
       "amount": {
         "type": "totalSupply",
         "address": "0x18d33689AE5d02649a859A1CF16c9f0563975258",
@@ -142,6 +149,7 @@
       "priceId": "lorenzo-stbtc",
       "symbol": "stBTC",
       "name": "Lorenzo stBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50978/large/a.jpg?1730208372",
       "amount": {
         "type": "totalSupply",
         "address": "0xf6718b2701D4a6498eF77D7c152b2137Ab28b8A3",
@@ -159,6 +167,7 @@
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "amount": {
         "type": "totalSupply",
         "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
@@ -176,6 +185,7 @@
       "priceId": "swell-restaked-btc",
       "symbol": "swBTC",
       "name": "swBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39682/large/swBTC200x200.png?1723652322",
       "amount": {
         "type": "totalSupply",
         "address": "0x1cf7b5f266A0F39d6f9408B90340E3E71dF8BF7B",
@@ -193,6 +203,7 @@
       "priceId": "swell-network",
       "symbol": "SWELL",
       "name": "Swell Governance Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28777/large/swell1.png?1727899715",
       "amount": {
         "type": "totalSupply",
         "address": "0x2826D136F5630adA89C1678b64A61620Aab77Aea",
@@ -210,6 +221,7 @@
       "priceId": "sweth",
       "symbol": "swETH",
       "name": "swETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
       "amount": {
         "type": "totalSupply",
         "address": "0x09341022ea237a4DB1644DE7CCf8FA0e489D85B7",
@@ -227,6 +239,7 @@
       "priceId": "wrapped-bitcoin-universal",
       "symbol": "uBTC",
       "name": "uBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50252/large/UA-BTC_1.png?1726721793",
       "amount": {
         "type": "totalSupply",
         "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
@@ -244,6 +257,7 @@
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
       "amount": {
         "type": "totalSupply",
         "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -261,6 +275,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "totalSupply",
         "address": "0xb89c6ED617f5F46175E41551350725A09110bbCE",
@@ -278,6 +293,7 @@
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "amount": {
         "type": "totalSupply",
         "address": "0xA6cB988942610f6731e664379D15fFcfBf282b44",
@@ -295,6 +311,7 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",

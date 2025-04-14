@@ -751,6 +751,13 @@ export const scroll: ScalingProject = {
   },
   milestones: [
     {
+      title: 'SCR token launch',
+      url: 'https://scroll.io/blog/scr-token',
+      date: '2024-10-19T00:00:00.00Z',
+      description: 'Scroll launches its SCR token.',
+      type: 'general',
+    },
+    {
       title: 'Batches reverted',
       url: 'https://status.scroll.io/incidents/44k6s4qg6kcs',
       date: '2024-07-05T00:00:00Z',

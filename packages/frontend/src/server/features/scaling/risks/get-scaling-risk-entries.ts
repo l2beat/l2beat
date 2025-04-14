@@ -15,7 +15,7 @@ export async function getScalingRiskEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
       where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
   ])
 

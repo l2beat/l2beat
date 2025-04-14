@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type ProjectValueType, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { ProjectValueRepository } from './repository'
@@ -9,8 +9,8 @@ describeDatabase(ProjectValueRepository.name, (db) => {
   describe(ProjectValueRepository.prototype.upsertMany.name, () => {
     it('inserts new records', async () => {
       const records = [
-        projectValue('ethereum', 'tvl', UnixTime(100), 1000),
-        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
       ]
 
       const inserted = await repository.upsertMany(records)
@@ -20,19 +20,17 @@ describeDatabase(ProjectValueRepository.name, (db) => {
       expect(result).toEqualUnsorted(records)
     })
 
-    it('updates existing records on conflict', async () => {
+    it('updates existing records on primary key conflict', async () => {
       await repository.upsertMany([
-        projectValue('ethereum', 'tvl', UnixTime(100), 1000),
-        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
       ])
 
       const updatedRecords = [
-        projectValue('ethereum', 'tvl', UnixTime(100), 1500, {
-          ...projectValue('ethereum', 'tvl', UnixTime(100), 1000),
-          canonical: 800,
-          external: 700,
-        }),
-        projectValue('arbitrum', 'tvl', UnixTime(100), 600),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 2000),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 2500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 1500),
       ]
 
       await repository.upsertMany(updatedRecords)
@@ -50,7 +48,7 @@ describeDatabase(ProjectValueRepository.name, (db) => {
       const records = []
       for (let i = 0; i < 1500; i++) {
         records.push(
-          projectValue(`project${i}`, 'tvl', UnixTime(100), 1000 + i),
+          projectValue(`project${i}`, 'PROJECT', UnixTime(100), 1000 + i),
         )
       }
 
@@ -61,91 +59,145 @@ describeDatabase(ProjectValueRepository.name, (db) => {
       expect(result.length).toEqual(1500)
     })
 
-    it('handles complex breakdown values', async () => {
-      const record = projectValue('ethereum', 'tvl', UnixTime(100), 1000, {
-        canonical: 400,
-        external: 300,
-        native: 200,
-        ether: 100,
-        stablecoin: 0,
-        other: 0,
-        associated: 0,
-      })
+    it('updates only specified fields on conflict', async () => {
+      const initialRecord = projectValue(
+        'ethereum',
+        'PROJECT',
+        UnixTime(100),
+        1000,
+        {
+          canonical: 400,
+          external: 300,
+          native: 200,
+          ether: 100,
+          stablecoin: 50,
+          other: 25,
+          associated: 25,
+        },
+      )
 
-      await repository.upsertMany([record])
+      await repository.upsertMany([initialRecord])
+
+      const partialUpdate = {
+        ...initialRecord,
+        value: 1500,
+        canonical: 800,
+        external: 700,
+      }
+
+      await repository.upsertMany([partialUpdate])
 
       const result = await repository.getAll()
-      expect(result[0]).toEqual(record)
+      expect(result[0]).toEqual({
+        ...initialRecord,
+        value: 1500,
+        canonical: 800,
+        external: 700,
+      })
     })
   })
 
   describe(ProjectValueRepository.prototype.trimProject.name, () => {
-    beforeEach(async () => {
-      await repository.upsertMany([
-        projectValue('ethereum', 'tvl', UnixTime(50), 500),
-        projectValue('ethereum', 'tvl', UnixTime(100), 1000),
-        projectValue('ethereum', 'tvl', UnixTime(150), 1500),
-        projectValue('ethereum', 'tvl', UnixTime(200), 2000),
-        projectValue('ethereum', 'tvl', UnixTime(250), 2500),
-        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
-        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
-      ])
-    })
-
     it('deletes records outside the specified time range for a project', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT', UnixTime(250), 2500),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1100),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+      ])
+
       const deleted = await repository.trimProject('ethereum', 100, 200)
 
       expect(deleted).toEqual(2)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted([
-        projectValue('ethereum', 'tvl', UnixTime(100), 1000),
-        projectValue('ethereum', 'tvl', UnixTime(150), 1500),
-        projectValue('ethereum', 'tvl', UnixTime(200), 2000),
-        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
-        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1100),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
       ])
     })
 
     it('only deletes records before sinceTimestamp when untilTimestamp is null', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT', UnixTime(250), 2500),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1100),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+      ])
+
       const deleted = await repository.trimProject('ethereum', 150, null)
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toEqual(3)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted([
-        projectValue('ethereum', 'tvl', UnixTime(150), 1500),
-        projectValue('ethereum', 'tvl', UnixTime(200), 2000),
-        projectValue('ethereum', 'tvl', UnixTime(250), 2500),
-        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
-        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT', UnixTime(250), 2500),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
       ])
     })
 
     it('only affects the specified project', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT', UnixTime(250), 2500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+      ])
+
       await repository.trimProject('ethereum', 100, 200)
 
       const allRecords = await repository.getAll()
       const arbitrumRecords = allRecords.filter((r) => r.project === 'arbitrum')
 
       expect(arbitrumRecords).toEqualUnsorted([
-        projectValue('arbitrum', 'tvl', UnixTime(100), 500),
-        projectValue('arbitrum', 'tvl', UnixTime(200), 1000),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
       ])
     })
 
-    it('returns 0 when no records are deleted', async () => {
-      const deleted = await repository.trimProject('ethereum', 0, 300)
-      expect(deleted).toEqual(0)
+    it('deletes all types for a project within the time range', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'SUMMARY', UnixTime(50), 550),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(100), 1100),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT_WA', UnixTime(200), 2100),
+        projectValue('ethereum', 'PROJECT', UnixTime(250), 2500),
+        projectValue('ethereum', 'SUMMARY', UnixTime(250), 2550),
+      ])
 
-      const allRecords = await repository.getAll()
-      const ethereumRecords = allRecords.filter((r) => r.project === 'ethereum')
+      const deleted = await repository.trimProject('ethereum', 100, 200)
+
+      expect(deleted).toEqual(4)
+
+      const result = await repository.getAll()
+      const ethereumRecords = result.filter((r) => r.project === 'ethereum')
+
       expect(ethereumRecords.length).toEqual(5)
-    })
-
-    it('returns 0 when project does not exist', async () => {
-      const deleted = await repository.trimProject('non-existent', 100, 200)
-      expect(deleted).toEqual(0)
     })
   })
 
@@ -156,7 +208,7 @@ describeDatabase(ProjectValueRepository.name, (db) => {
 
 function projectValue(
   project: string,
-  type: string,
+  type: ProjectValueType,
   timestamp: UnixTime,
   value: number,
   breakdown = {

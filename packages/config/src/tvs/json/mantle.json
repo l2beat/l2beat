@@ -8,6 +8,7 @@
       "priceId": "apex-token-2",
       "symbol": "APEX",
       "name": "ApeX Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25266/large/CxpMECpk_400x400_%281%29.png?1696524406",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x52A8845DF664D76C69d2EEa607CD793565aF42B8",
@@ -26,6 +27,7 @@
       "priceId": "baby-doge-coin",
       "symbol": "BabyDoge",
       "name": "Baby Doge Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/16125/large/babydoge.jpg?1696515731",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B",
@@ -44,6 +46,7 @@
       "priceId": "bella-protocol",
       "symbol": "BEL",
       "name": "Bella",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12478/large/Bella.png?1696512296",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14",
@@ -62,6 +65,7 @@
       "priceId": "bitdao",
       "symbol": "BIT",
       "name": "BitDAO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17627/large/rI_YptK8.png?1696517158",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5",
@@ -80,11 +84,14 @@
       "priceId": "catizen",
       "symbol": "CATI",
       "name": "Catizen",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50236/large/cati.png?1726638258",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "catizen",
         "decimals": 18,
-        "sinceTimestamp": 1726617600
+        "sinceTimestamp": 1726617600,
+        "address": "0x1Bdd8878252DaddD3Af2ba30628813271294eDc0",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "native",
@@ -96,6 +103,7 @@
       "priceId": "mantle-restaked-eth",
       "symbol": "cmETH",
       "name": "cmETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51114/large/symbol.png?1730117724",
       "amount": {
         "type": "totalSupply",
         "address": "0xE6829d9a7eE3040e1276Fa75293Bde931859e8fA",
@@ -113,6 +121,7 @@
       "priceId": "compound-governance-token",
       "symbol": "COMP",
       "name": "Compound",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
@@ -131,11 +140,14 @@
       "priceId": "meth-protocol",
       "symbol": "COOK",
       "name": "COOK",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50969/large/Logomark-Gradient_Official.png?1729620221",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "meth-protocol",
         "decimals": 18,
-        "sinceTimestamp": 1730160000
+        "sinceTimestamp": 1730160000,
+        "address": "0x9F0C013016E8656bC256f948CD4B79ab25c7b94D",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "external",
@@ -147,6 +159,7 @@
       "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -165,6 +178,7 @@
       "priceId": "crvusd",
       "symbol": "crvUSD",
       "name": "Curve.Fi USD Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30118/large/crvusd.jpeg?1696529040",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
@@ -183,6 +197,7 @@
       "priceId": "dodo",
       "symbol": "DODO",
       "name": "DODO bird",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12651/large/dodo_logo.png?1696512458",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd",
@@ -201,6 +216,7 @@
       "priceId": "equilibria-finance",
       "symbol": "EQB",
       "name": "Equilibria Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30645/large/QLLK8pmR_400x400.jpg?1696529516",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B",
@@ -219,6 +235,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -251,6 +268,7 @@
       "priceId": "ignition-fbtc",
       "symbol": "FBTC",
       "name": "Fire Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
       "amount": {
         "type": "totalSupply",
         "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
@@ -268,11 +286,14 @@
       "priceId": "lendle",
       "symbol": "LEND",
       "name": "Lendle Protocol Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31588/large/lendle_logo_200_200_cg.png?1696530405",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "lendle",
         "decimals": 18,
-        "sinceTimestamp": 1693958400
+        "sinceTimestamp": 1693958400,
+        "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "native",
@@ -284,6 +305,7 @@
       "priceId": "liquity-usd",
       "symbol": "LUSD",
       "name": "LUSD Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14666/large/Group_3.png?1696514341",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
@@ -302,6 +324,7 @@
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
@@ -320,6 +343,7 @@
       "priceId": "mantle",
       "symbol": "MNT",
       "name": "Mantle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -352,11 +376,14 @@
       "priceId": "moe-3",
       "symbol": "MOE",
       "name": "Moe Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34422/large/MOE.png?1704821927",
       "amount": {
         "type": "circulatingSupply",
         "apiId": "moe-3",
         "decimals": 18,
-        "sinceTimestamp": 1704844800
+        "sinceTimestamp": 1704844800,
+        "address": "0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
+        "chain": "mantle"
       },
       "category": "other",
       "source": "native",
@@ -368,6 +395,7 @@
       "priceId": "pendle",
       "symbol": "PENDLE",
       "name": "Pendle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x808507121B80c02388fAd14726482e061B8da827",
@@ -386,6 +414,7 @@
       "priceId": "pepe",
       "symbol": "PEPE",
       "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
@@ -404,6 +433,7 @@
       "priceId": "puff-the-dragon",
       "symbol": "Puff",
       "name": "Puff",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35950/large/photo_2024-03-11_10.18.27.jpeg?1710240090",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6",
@@ -422,6 +452,7 @@
       "priceId": "shiba-inu",
       "symbol": "SHIB",
       "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
@@ -440,6 +471,7 @@
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "amount": {
         "type": "totalSupply",
         "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
@@ -457,6 +489,7 @@
       "priceId": "tellor",
       "symbol": "TRB",
       "name": "Tellor Tributes",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9644/large/Blk_icon_current.png?1696509713",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
@@ -475,6 +508,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -493,6 +527,7 @@
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
       "amount": {
         "type": "totalSupply",
         "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -510,6 +545,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -528,6 +564,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -546,6 +583,7 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",

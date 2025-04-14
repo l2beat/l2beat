@@ -1,135 +1,116 @@
-[
-  {
+{
+  "SystemConfig_v1_0_0": {
     "hash": "0x579a99eb751c6e2b976e753d11220cfa89229ac2225f9ce87d4dfdabc7371ff0",
-    "description": "SystemConfig_v1_0_0",
     "address": "0x2af8a383C395EBa6551E674EeD02344936fE36f5",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_10_0": {
     "hash": "0x8c104e5ac734cb73cbe75544fcd4f1f7f3bfefd5b61947c5d716d02c89866d64",
-    "description": "SystemConfig_v1_10_0",
     "address": "0x01D5303F326B992845eef2782D4c9a7c6DdE4470",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_10_0_blast": {
     "hash": "0x5287b087cec2244d57a3cea230c0c70a9b5fd8d4fdca71f7d85d34a8a22792b1",
-    "description": "SystemConfig_v1_10_0_blast",
     "address": "0xA150f19B681a06E1a0B7E03934299a9bf9238cb7",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_11_0": {
     "hash": "0x23906eab59a5d34b78a6e0c14f84da0cf651dab8b02049d1dd24c9ca2ed38d25",
-    "description": "SystemConfig_v1_11_0",
     "address": "0x164883d49DaEe18b3D621A24560D9bcD19Ad5407",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_12_0": {
     "hash": "0xdf9a11b46747139bfe0135df8a65a2728a2dbd60a689e2398c45627915cdd752",
-    "description": "SystemConfig_v1_12_0",
     "address": "0x726C6ac8A53061e56AfB2c890545348ba6f0DF0E",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_12_0_zircuit": {
     "hash": "0x06f2d961bb4a244d73779f83003fd66fcda3cc297693cd348d8ac1aa8c29dc63",
-    "description": "SystemConfig_v1_12_0_zircuit",
     "address": "0xA03E2f3Ee6dBa20411A2326D7FA9CCCc6a9A53de",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_3_0": {
     "hash": "0x29908eb7685943ff431cd384af851ce36a30997bbad880f9b4385bfc3abb86a2",
-    "description": "SystemConfig_v1_3_0",
     "address": "0xA872bca05c9F8A97CC36D879e43B33dB8ed7b69E",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_3_0_mantle": {
     "hash": "0xb2a3bda11c08328ecb46ec5789f3264be5d816bc218a5024a4cafd1c59017160",
-    "description": "SystemConfig_v1_3_0_mantle",
     "address": "0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v1_3_1": {
     "hash": "0x5afa3e86b6524528383af0276ca7f40885c1eb2ae2e9932f65dabc6b58a99643",
-    "description": "SystemConfig_v1_3_1",
     "address": "0x157B6514c57D506A589b72F076d9F87b24E23Eac",
     "chain": "base",
     "blockNumber": 28446407
   },
-  {
+  "SystemConfig_v2_2_0": {
     "hash": "0xbbb92920a096eced30e3ce67bbc443f134b217e8847433fbb192ecb9fdddcbc2",
-    "description": "SystemConfig_v2_2_0",
     "address": "0xF56D96B2535B932656d3c04Ebf51baBff241D886",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_2_0_gastoken": {
     "hash": "0x958268b83f73163b36af36fa55f5c0905421c07369bff2791652da02fa692a42",
-    "description": "SystemConfig_v2_2_0_gastoken",
     "address": "0xe9670A42Fd1433c29Eda37eE63EF96A3277A9b93",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0": {
     "hash": "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c",
-    "description": "SystemConfig_v2_3_0",
     "address": "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0_beta_1": {
     "hash": "0x5c566f7b9bd649708500a4ea89e4031d2dad1273ce56f6cb5e67d0193f136eb1",
-    "description": "SystemConfig_v2_3_0_beta_1",
     "address": "0xcb32593E7eD1FBbf6db22348d444e2b1dDe71Fe6",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0_beta_2": {
     "hash": "0x8594410431f0c8cc86d641b9954c3ad91e81fecc79f25ec8d62b294c44201533",
-    "description": "SystemConfig_v2_3_0_beta_2",
     "address": "0x2705B4628552F8F9E5f39DBb5a3Ec47B20cf6EA3",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0_beta_2_soon": {
     "hash": "0xe25c80e0504b1ab9202b66f81f2f479e695d2440a0b5fe1ad31a300a75e64f2a",
-    "description": "SystemConfig_v2_3_0_beta_2_soon",
     "address": "0x9711256c6F2dFFabff9671dBaf1B4A3F7FB3Cffb",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0_beta_2_soon2": {
     "hash": "0xc55288826f56a35e98165958789bfe8d6d7b222e1d4b406ef195bb4a390bfd71",
-    "description": "SystemConfig_v2_3_0_beta_2_soon2",
     "address": "0x2B0634e5b534BA765e24640281b4eB636d446dF3",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0_beta_3": {
     "hash": "0xa49e39ce5420cad79f28224507ee4639c68c6d017b42f844b9d31e9cfc5c2c6f",
-    "description": "SystemConfig_v2_3_0_beta_3",
     "address": "0xbc10fE919504D53953d27989CD5B48B9A7c08Be0",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_3_0_beta_5": {
     "hash": "0xe8f575933bc08fd1b1839c74e98447d0a629845c07c4281981ee0ba86ce88298",
-    "description": "SystemConfig_v2_3_0_beta_5",
     "address": "0xb52F8f5D1285e3bc13F9C53D27C6F7336a3B50A9",
     "chain": "ethereum",
     "blockNumber": 22188285
   },
-  {
+  "SystemConfig_v2_4_0": {
     "hash": "0x6e293d82eb36a83fb5d8b06268cd4fbf46027b87eea77fcc68f78e4b010a3774",
-    "description": "SystemConfig_v2_4_0",
     "address": "0x760C48C62A85045A6B69f07F4a9f22868659CbCc",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}

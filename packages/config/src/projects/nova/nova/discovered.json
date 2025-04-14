@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 82818646,
-  "configHash": "0xf6e68858da784e8e4197330b796dec4bb0dfcd3785238d30db8fc86b6568bea1",
+  "configHash": "0x72afbee758e360346c4e4f8120b8f3560555b7b85a34495bb52d2ac41e21b7da",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -241,7 +241,6 @@
         "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "UpgradeExecutor",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
@@ -339,7 +338,6 @@
         "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
       ],
       "proxyType": "immutable",
-      "displayName": "L2SurplusFee",
       "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678990053,
       "sinceBlock": 3162026,
@@ -393,7 +391,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -689,7 +686,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1176,12 +1172,12 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "orbitstack/layer2/L2ERC20Gateway": "0x1cee9e90c8980af1a7c50bc87b2ba48d645ce595958e4fd5ba406bc66ab8ef55",
-    "orbitstack/layer2/L2GatewayRouter": "0x1d4f249082baa0e166cb5506766722ee490240305c822505eb17ea016d317f96",
-    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x525c2c86f5126236f2eb6eaef248d1569882bf6fdacb69a5ec8fa1c87233c531",
-    "orbitstack/layer2/L2SurplusFee": "0xd62429d6d88fd69a980d6741ad6dbfa1d27404910cbff7e876485a6ff5e7b483",
-    "orbitstack/layer2/L2WethGateway": "0xd122e07fbe8e90b6c800672254eb9291f42c187b77050cd6d607243eac92b608",
-    "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "orbitstack/layer2/L2ERC20Gateway": "0x129644abce2f1b3b9d9940a21c1b9a24480cd6fad7b7e523c6400c67f16fdad1",
+    "orbitstack/layer2/L2GatewayRouter": "0xd84fecc81e93cccb7d46a40be659c647ea46623b470bb2550235f621a90b14f0",
+    "orbitstack/layer2/L2SecurityCouncilEmergency": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
+    "orbitstack/layer2/L2SurplusFee": "0x1c53b5bca08d45fff3778cd66cff20fb1583158bc8b2c7b7df2efcaed10751e5",
+    "orbitstack/layer2/L2WethGateway": "0xa5776691f5bead6b28b8e18ebe70995ade4dfc5cf25d7dd7e2b8484f86c9ddb1",
+    "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04"
   }
 }

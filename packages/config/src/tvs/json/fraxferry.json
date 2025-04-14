@@ -8,6 +8,7 @@
       "priceId": "frax-price-index",
       "symbol": "FPI",
       "name": "Frax Price Index",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -80,6 +81,7 @@
       "priceId": "frax-price-index-share",
       "symbol": "FPIS",
       "name": "Frax Price Index Share",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -152,6 +154,7 @@
       "priceId": "frax",
       "symbol": "FRAX",
       "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -280,6 +283,7 @@
       "priceId": "frax-ether",
       "symbol": "frxETH",
       "name": "Frax Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -368,6 +372,7 @@
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -472,6 +477,7 @@
       "priceId": "staked-frax",
       "symbol": "sFRAX",
       "name": "Staked FRAX",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -536,6 +542,7 @@
       "priceId": "staked-frax-ether",
       "symbol": "sfrxETH",
       "name": "Staked Frax Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
       "amount": {
         "type": "calculation",
         "operator": "sum",

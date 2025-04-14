@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -40,6 +41,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "totalSupply",
         "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
@@ -57,6 +59,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "totalSupply",
         "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",

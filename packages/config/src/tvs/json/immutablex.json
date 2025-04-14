@@ -8,6 +8,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "native",
@@ -26,6 +27,7 @@
       "priceId": "immutable-x",
       "symbol": "IMX",
       "name": "Immutable X",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17233/large/immutableX-symbol-BLK-RGB.png?1696516787",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF",
@@ -44,6 +46,7 @@
       "priceId": "ecomi",
       "symbol": "OMI",
       "name": "OMI Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4428/large/ECOMI.png?1696505023",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e",
@@ -62,6 +65,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",

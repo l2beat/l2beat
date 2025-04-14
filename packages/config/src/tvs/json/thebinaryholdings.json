@@ -8,6 +8,7 @@
       "priceId": "binary-holdings",
       "symbol": "BNRY",
       "name": "Binary Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37521/large/Vector-1.png?1714634222",
       "amount": {
         "type": "calculation",
         "operator": "sum",

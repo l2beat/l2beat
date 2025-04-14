@@ -8,6 +8,7 @@
       "priceId": "curve-dao-token",
       "symbol": "CRV",
       "name": "Curve DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -26,6 +27,7 @@
       "priceId": "crvusd",
       "symbol": "crvUSD",
       "name": "Curve.Fi USD Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30118/large/crvusd.jpeg?1696529040",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
@@ -44,6 +46,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -76,6 +79,7 @@
       "priceId": "usdt0",
       "symbol": "USD₮0",
       "name": "USD₮0",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "totalSupply",
         "address": "0x0200C29006150606B650577BBE7B6248F58470c1",

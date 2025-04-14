@@ -8,6 +8,7 @@
       "priceId": "ethena",
       "symbol": "ENA",
       "name": "ENA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
       "amount": {
         "type": "totalSupply",
         "address": "0x813635891aA06bd55036bbd8f7d1A34aB3de9a0F",
@@ -25,6 +26,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -57,6 +59,7 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
       "amount": {
         "type": "totalSupply",
         "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -74,6 +77,7 @@
       "priceId": "ignition-fbtc",
       "symbol": "FBTC",
       "name": "Fire Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
@@ -92,6 +96,7 @@
       "priceId": "lombard-staked-btc",
       "symbol": "LBTC",
       "name": "Lombard Staked Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x8236a87084f8B84306f72007F36F2618A5634494",
@@ -110,6 +115,7 @@
       "priceId": "liquid-staked-ethereum",
       "symbol": "LsETH",
       "name": "Liquid Staked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28848/large/LsETH-receipt-token-circle.png?1696527824",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549",
@@ -128,6 +134,7 @@
       "priceId": "mantle-staked-ether",
       "symbol": "mETH",
       "name": "mETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
@@ -146,6 +153,7 @@
       "priceId": "pumpbtc",
       "symbol": "pumpBTC",
       "name": "pumpBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
       "amount": {
         "type": "totalSupply",
         "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
@@ -163,6 +171,7 @@
       "priceId": "renzo-restaked-lst",
       "symbol": "pzETH",
       "name": "Renzo Restaked LST",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
       "amount": {
         "type": "totalSupply",
         "address": "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7",
@@ -180,6 +189,7 @@
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
       "name": "KelpDao Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "amount": {
         "type": "totalSupply",
         "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
@@ -197,6 +207,7 @@
       "priceId": "restaked-swell-eth",
       "symbol": "rswETH",
       "name": "rswETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
       "amount": {
         "type": "totalSupply",
         "address": "0xD8b29106d4ceBad087C30B10c0E41BAa3A9ea703",
@@ -214,6 +225,7 @@
       "priceId": "stakestone-ether",
       "symbol": "STONE",
       "name": "StakeStone Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "amount": {
         "type": "totalSupply",
         "address": "0x80137510979822322193FC997d400D5A6C747bf7",
@@ -231,6 +243,7 @@
       "priceId": "ethena-staked-usde",
       "symbol": "sUSDe",
       "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "amount": {
         "type": "totalSupply",
         "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
@@ -248,6 +261,7 @@
       "priceId": "sweth",
       "symbol": "swETH",
       "name": "swETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
       "amount": {
         "type": "totalSupply",
         "address": "0x850CDF416668210ED0c36bfFF5d21921C7adA3b8",
@@ -265,6 +279,7 @@
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -283,6 +298,7 @@
       "priceId": "ethena-usde",
       "symbol": "USDe",
       "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
       "amount": {
         "type": "totalSupply",
         "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -300,6 +316,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -318,6 +335,7 @@
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -336,6 +354,7 @@
       "priceId": "wrapped-eeth",
       "symbol": "weETH",
       "name": "Wrapped eETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
@@ -354,6 +373,7 @@
       "priceId": "etherfi-weeths",
       "symbol": "weETHs",
       "name": "Super Symbiotic LRT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40058/large/weETHs.jpeg?1725450281",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88",
@@ -372,6 +392,7 @@
       "priceId": "weth",
       "symbol": "WETH",
       "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -390,6 +411,7 @@
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -408,6 +430,7 @@
       "priceId": "zircuit",
       "symbol": "ZRC",
       "name": "Zircuit",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35960/large/zircuit_token_icon_2.png?1732502352",
       "amount": {
         "type": "calculation",
         "operator": "min",
@@ -416,7 +439,9 @@
             "type": "circulatingSupply",
             "apiId": "zircuit",
             "decimals": 18,
-            "sinceTimestamp": 1732492800
+            "sinceTimestamp": 1732492800,
+            "address": "0xfd418e42783382E86Ae91e445406600Ba144D162",
+            "chain": "ethereum"
           },
           {
             "type": "balanceOfEscrow",
