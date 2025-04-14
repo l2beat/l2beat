@@ -302,10 +302,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         },
       ),
       daTracking: getDaTracking(templateVars),
-      trackedTxs:
-        daProvider !== undefined
-          ? undefined
-          : (templateVars.nonTemplateTrackedTxs ?? []),
+      trackedTxs: templateVars.nonTemplateTrackedTxs, // difficult to templatize as upgrades are not synced
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig && {
