@@ -12,16 +12,20 @@
     "0x88ad09518695c6c3712AC10a214bE5109a655671": "ForeignOmnibridge",
     "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": "ForeignAMB",
     "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": "BridgeValidators",
-    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "OmniBridgeGovernance",
+    "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "Gnosis Bridge Multisig",
     "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": "GnosisSafe",
     "0x87D48c565D0D85770406D248efd7dc3cbd41e729": "AAVEInterestERC20",
     "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5": "AAVEIncentivesController",
     "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9": "AAVELendingPool",
     "0x4da27a545c0c5B758a6BA100e3a049001de870f5": "stkAAVEToken",
     "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": "HashiManager",
-    "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "HashiOwnerMS"
+    "0x670a3e447F4DE92C012777Ac5591D81E12aD0957": "Hashi Multisig"
   },
   "overrides": {
+    "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": {
+      // LayerZero Adapter for Hashi
+      "ignoreRelatives": ["LAYER_ZERO_ENDPOINT", "endpoint"]
+    },
     "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": {
       // HashiManager
       "proxyType": "Eternal Storage proxy",
@@ -44,7 +48,7 @@
         },
         "threshold": {
           "description": "Threshold of the adapters on GnosisChain",
-          "severity": "HIGH",
+          "severity": "HIGH"
         },
         "AdaptersFromStorage": {
           "handler": {
@@ -89,11 +93,11 @@
     },
     "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": {
       // Yaho
-      "ignoreMethods": ["getPendingMessageHash"]
+      "ignoreMethods": ["getPendingMessageHash", "currentNonce"]
     },
     "0x30f64a297cc66a873FB603d1e89D5891962C25ba": {
       // Yaru
       "ignoreMethods": ["executed"]
-    },
+    }
   }
 }

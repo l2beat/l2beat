@@ -3,7 +3,10 @@
   "name": "omni",
   "chain": "gnosis",
   "import": ["../../ethereumConfig.jsonc"],
-  "initialAddresses": ["0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d", "0xceb436489e9c6d9e4db76145a6cce2a06411ea0a"],
+  "initialAddresses": [
+    "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+    "0xceb436489e9c6d9e4db76145a6cce2a06411ea0a"
+  ],
   "overrides": {
     "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
       //HomeOmnibridge
@@ -31,7 +34,12 @@
     },
     "0xa809c536c85b63a2676CbAc3C4064748AD3a2562": {
       // SP1Helios
-      "ignoreMethods": ["executionStateRoots", "getSyncCommitteePeriod", "headers", "syncCommittees"]
+      "ignoreMethods": [
+        "executionStateRoots",
+        "getSyncCommitteePeriod",
+        "headers",
+        "syncCommittees"
+      ]
     },
     "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": {
       // HashiManager
@@ -54,7 +62,7 @@
         },
         "threshold": {
           "description": "Threshold of the adapters on Ethereum",
-          "severity": "HIGH",
+          "severity": "HIGH"
         },
         "AdaptersFromStorage": {
           "handler": {
@@ -65,5 +73,5 @@
         }
       }
     }
-  },
+  }
 }
