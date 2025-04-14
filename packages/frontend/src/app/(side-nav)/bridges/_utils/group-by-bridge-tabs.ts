@@ -2,7 +2,7 @@ import type { CommonBridgesEntry } from '~/server/features/bridges/get-common-br
 
 export type TabbedBridgeEntries<T extends CommonBridgesEntry> = {
   singleChain: T[]
-  multichain: T[]
+  others: T[]
 }
 
 export function groupByBridgeTabs<T extends CommonBridgesEntry>(
@@ -10,6 +10,6 @@ export function groupByBridgeTabs<T extends CommonBridgesEntry>(
 ): TabbedBridgeEntries<T> {
   return {
     singleChain: projects.filter((p) => p.category === 'Single-chain'),
-    multichain: projects.filter((p) => p.category !== 'Single-chain'),
+    others: projects.filter((p) => p.category !== 'Single-chain'),
   }
 }

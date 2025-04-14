@@ -20,7 +20,7 @@ export function BridgesSummaryTables(props: Props) {
 
   const entries = {
     singleChain: props.singleChain.filter(filterEntries),
-    multichain: props.multichain.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
 
   const initialSort = {
@@ -32,16 +32,16 @@ export function BridgesSummaryTables(props: Props) {
     <>
       <HorizontalSeparator className="my-4 max-md:hidden" />
       <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
-        <TableFilters entries={[...props.singleChain, ...props.multichain]} />
+        <TableFilters entries={[...props.singleChain, ...props.others]} />
       </div>
       <DirectoryTabs defaultValue="singleChain">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="singleChain">
             Single-chain <CountBadge>{entries.singleChain.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="multichain">
-            Multichain
-            <CountBadge>{entries.multichain.length}</CountBadge>
+          <DirectoryTabsTrigger value="others">
+            Others
+            <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
@@ -50,8 +50,8 @@ export function BridgesSummaryTables(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="multichain">
-            <BridgesSummaryTable entries={entries.multichain} />
+          <DirectoryTabsContent value="others">
+            <BridgesSummaryTable entries={entries.others} />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
