@@ -96,6 +96,7 @@ export const ink: ScalingProject = opStackL2({
     chainId: 57073,
     explorerUrl: 'https://explorer.inkonchain.com',
     sinceTimestamp: genesisTimestamp,
+    coingeckoPlatform: 'ink',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
