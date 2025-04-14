@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
         }}
       />
       {/* eslint-disable-next-line tailwindcss/no-contradicting-classname */}
-      <div className="absolute right-[20%] top-44 -z-1 h-[180vh] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
+      <div className="absolute right-[20%] top-44 -z-1 h-[400vh] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
       <div>
         <EcosystemPageHeader
           logo={ecosystem.logo}
