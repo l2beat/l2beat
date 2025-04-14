@@ -22,11 +22,6 @@ permission(Receiver, "act", Msig) :-
   msig(Msig, Threshold),
   Threshold == 1.
 
-% admins get upgrade permissions with 0 delay if there's not an existing upgrade permission yet
-permission(Admin, "upgrade", Receiver) :-
-  hasField(Receiver, "$admin", Admin).
-  % not permission(_, "upgrade", Receiver).
-
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
 transitivePermission(Receiver, Permission, Giver, Delay, Description, Delay, nil) :-

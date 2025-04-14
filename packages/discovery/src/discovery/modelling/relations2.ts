@@ -34,14 +34,6 @@ addressType(
   eoa).`,
   when: (c) => c.type === 'EOA',
 }
-const adminFieldTemplate: InlineTemplate = {
-  content: `
-hasField(
-  @self,
-  "$admin",
-  &$admin).`,
-  when: (c) => get$Admins(c.values).length > 0,
-}
 const permissionTemplate: InlineTemplate = {
   content: `
 permission(
@@ -95,7 +87,6 @@ export function buildPermissionsModel(
     addressTemplate,
     addressTypeContractTemplate,
     addressTypeEOATemplate,
-    adminFieldTemplate,
   ]) {
     if (template.when(structureEntry)) {
       const interpolated = interpolateModelTemplate(
@@ -168,5 +159,28 @@ export function getPermissionsDefinedOnFields(
       }) ?? []
     )
   })
+  const adminPermissions = getPermissionsForAdmins(structureEntry)
+  adminPermissions.forEach((ap) => {
+    // add admin permission only if there's no existing upgrade permission for that address
+    if (
+      issuedPermissions.find((p) => p.type === 'upgrade' && p.to === ap.to) ===
+      undefined
+    ) {
+      issuedPermissions.push(ap)
+    }
+  })
   return issuedPermissions
+}
+
+export function getPermissionsForAdmins(
+  structureEntry: StructureEntry,
+): (RawPermissionConfiguration & { to: EthereumAddress })[] {
+  const admins = get$Admins(structureEntry.values)
+  return admins.map((admin) => {
+    return {
+      to: admin,
+      type: 'upgrade',
+      delay: 0,
+    }
+  })
 }
