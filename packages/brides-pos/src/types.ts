@@ -4,6 +4,7 @@ export type Address = `${string}:${string}`
 
 export interface CrossChainSend {
   timestamp: UnixTime
+  protocol: string
   source: {
     chain: string
     txHash: string

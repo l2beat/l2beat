@@ -20,7 +20,8 @@
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@types/express": "^5.0.0",
-    "express": "^5.0.0"
+    "express": "^5.0.0",
+    "viem": "^2.8.14"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*"

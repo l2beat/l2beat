@@ -266,6 +266,9 @@ importers:
       express:
         specifier: ^5.0.0
         version: 5.1.0
+      viem:
+        specifier: ^2.8.14
+        version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
