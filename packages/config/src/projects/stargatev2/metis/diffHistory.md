@@ -1,3 +1,136 @@
+Generated with discovered.json: 0x41246b01f4ecee3a6fc369d28d01d153296fb0f4
+
+# Diff at Mon, 14 Apr 2025 08:25:09 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@d60c203675834f0cc90497736882e171abe8e0d0 block: 19714541
+- current block number: 20186255
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19714541 (main branch discovery), not current.
+
+```diff
+    contract  (0x36ed193dc7160D3858EC250e69D12B03Ca087D08) {
+    +++ description: None
+      name:
+-        "StargatePool"
++        ""
+      sourceHashes:
+-        ["0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"]
+      values.approvalRequired:
+-        true
+      values.deficitOffset:
+-        0
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig:
+-        {"feeLib":"0xe8CDF27AcD73a434D661C84887215F7598e7d0d3","planner":"0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5","treasurer":"0x3da4f8E456AC648c489c286B99Ca37B666be7C4C","tokenMessaging":"0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a","creditMessaging":"0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F","lzToken":"0x0000000000000000000000000000000000000000"}
+      values.localEid:
+-        30151
+      values.lpToken:
+-        "0x16C58802FD464D2Ac33B8f1DB57D7717f8365d91"
+      values.oftVersion:
+-        {"interfaceId":"0x02e49c2c","version":0}
+      values.owner:
+-        "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E"
+      values.sharedDecimals:
+-        6
+      values.stargateType:
+-        0
+      values.status:
+-        1
+      values.token:
+-        "0x420000000000000000000000000000000000000A"
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125) {
+    +++ description: None
+      name:
+-        "StargatePoolMigratable"
++        ""
+      sourceHashes:
+-        ["0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"]
+      values.approvalRequired:
+-        true
+      values.burnAdmin:
+-        "0x0000000000000000000000000000000000000000"
+      values.burnAllowanceSD:
+-        0
+      values.deficitOffset:
+-        0
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig:
+-        {"feeLib":"0x19cFCE47eD54a88614648DC3f19A5980097007dD","planner":"0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5","treasurer":"0x3da4f8E456AC648c489c286B99Ca37B666be7C4C","tokenMessaging":"0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a","creditMessaging":"0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F","lzToken":"0x0000000000000000000000000000000000000000"}
+      values.localEid:
+-        30151
+      values.lpToken:
+-        "0x222A9a6dD812CA5a27fFfEC39816A2DF6837D396"
+      values.oftVersion:
+-        {"interfaceId":"0x02e49c2c","version":0}
+      values.owner:
+-        "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E"
+      values.sharedDecimals:
+-        6
+      values.stargateType:
+-        0
+      values.status:
+-        1
+      values.token:
+-        "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC"
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract  (0xD9050e7043102a0391F81462a3916326F86331F0) {
+    +++ description: None
+      name:
+-        "StargatePool"
++        ""
+      sourceHashes:
+-        ["0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"]
+      values.approvalRequired:
+-        true
+      values.deficitOffset:
+-        0
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig:
+-        {"feeLib":"0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0","planner":"0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5","treasurer":"0x3da4f8E456AC648c489c286B99Ca37B666be7C4C","tokenMessaging":"0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a","creditMessaging":"0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F","lzToken":"0x0000000000000000000000000000000000000000"}
+      values.localEid:
+-        30151
+      values.lpToken:
+-        "0x2D4848d502B8B16b8ad86945d3D4e92F2d229dFF"
+      values.oftVersion:
+-        {"interfaceId":"0x02e49c2c","version":0}
+      values.owner:
+-        "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E"
+      values.sharedDecimals:
+-        6
+      values.stargateType:
+-        0
+      values.status:
+-        1
+      values.token:
+-        "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x5acd2019fff7361b677c8eb288ded511774e5b56
 
 # Diff at Tue, 04 Mar 2025 10:42:44 GMT:
