@@ -189,6 +189,124 @@ export class DataFormulaExecutor {
     }))
   }
 
+  private async processOnchainAmounts(
+    amounts: AmountConfig[],
+    timestamp: UnixTime,
+  ) {
+    const onchainAmounts = amounts
+      .filter((a) => a.type === 'balanceOfEscrow' || a.type === 'totalSupply')
+      .filter(
+        (a) =>
+          timestamp >= a.sinceTimestamp &&
+          (!a.untilTimestamp || timestamp < a.untilTimestamp),
+      )
+
+    const amountsToFetch = new Map<
+      string,
+      Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>
+    >()
+
+    await Promise.all(
+      onchainAmounts.map(async (amount) => {
+        const cachedValue = await this.localStorage.getAmount(
+          amount.id,
+          timestamp,
+        )
+
+        if (cachedValue !== undefined) {
+          this.logger.debug(`Cached value found for ${amount.id}`)
+          return
+        }
+
+        const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
+
+        if (dbValue !== undefined) {
+          this.logger.debug(`DB value found for ${amount.id}`)
+          await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
+          return
+        }
+
+        if (!amountsToFetch.has(amount.chain)) {
+          amountsToFetch.set(
+            amount.chain,
+            new Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>(),
+          )
+        }
+
+        const chainMap = amountsToFetch.get(amount.chain)
+        assert(chainMap)
+
+        if (!chainMap.has(amount.type)) {
+          chainMap.set(amount.type, [])
+        }
+
+        const typeMap = chainMap.get(amount.type)
+        assert(typeMap)
+        typeMap.push(amount)
+      }),
+    )
+
+    const fetchPromises: {
+      promise: Promise<void>
+      valuesCount: number
+      chain: string
+    }[] = []
+
+    for (const [chain, typeMap] of amountsToFetch.entries()) {
+      const block = await this.localStorage.getBlockNumber(chain, timestamp)
+      assert(block, `Block number not found for chain ${chain}`)
+
+      for (const [type, configs] of typeMap.entries()) {
+        fetchPromises.push({
+          promise: (async () => {
+            switch (type) {
+              case 'totalSupply': {
+                assert(configs.every((c) => c.type === 'totalSupply'))
+                const values = await this.totalSupplyProvider.getTotalSupplies(
+                  configs.map((c) => c.address),
+                  block,
+                  chain,
+                )
+                await this.localStorage.writeAmounts(
+                  timestamp,
+                  Array.from(values.values()).map((value, i) => ({
+                    id: configs[i].id,
+                    amount: value,
+                  })),
+                )
+                break
+              }
+              case 'balanceOfEscrow': {
+                assert(configs.every((c) => c.type === 'balanceOfEscrow'))
+                const values = await this.balanceProvider.getBalances(
+                  configs.map((c) => ({
+                    token: c.address,
+                    holder: c.escrowAddress,
+                  })),
+                  block,
+                  chain,
+                )
+
+                await this.localStorage.writeAmounts(
+                  timestamp,
+                  Array.from(values.values()).map((value, i) => ({
+                    id: configs[i].id,
+                    amount: value,
+                  })),
+                )
+                break
+              }
+            }
+          })(),
+          valuesCount: configs.length,
+          chain,
+        })
+      }
+    }
+
+    return fetchPromises
+  }
+
   private async processPrices(
     prices: PriceConfig[],
     timestamp: UnixTime,
@@ -314,123 +432,6 @@ export class DataFormulaExecutor {
       })
     }
   }
-  private async processOnchainAmounts(
-    amounts: AmountConfig[],
-    timestamp: UnixTime,
-  ) {
-    const onchainAmounts = amounts
-      .filter((a) => a.type === 'balanceOfEscrow' || a.type === 'totalSupply')
-      .filter(
-        (a) =>
-          timestamp >= a.sinceTimestamp &&
-          (!a.untilTimestamp || timestamp < a.untilTimestamp),
-      )
-
-    const amountsToFetch = new Map<
-      string,
-      Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>
-    >()
-
-    await Promise.all(
-      onchainAmounts.map(async (amount) => {
-        const cachedValue = await this.localStorage.getAmount(
-          amount.id,
-          timestamp,
-        )
-
-        if (cachedValue !== undefined) {
-          this.logger.debug(`Cached value found for ${amount.id}`)
-          return
-        }
-
-        const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
-
-        if (dbValue !== undefined) {
-          this.logger.debug(`DB value found for ${amount.id}`)
-          await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
-          return
-        }
-
-        if (!amountsToFetch.has(amount.chain)) {
-          amountsToFetch.set(
-            amount.chain,
-            new Map<'balanceOfEscrow' | 'totalSupply', AmountConfig[]>(),
-          )
-        }
-
-        const chainMap = amountsToFetch.get(amount.chain)
-        assert(chainMap)
-
-        if (!chainMap.has(amount.type)) {
-          chainMap.set(amount.type, [])
-        }
-
-        const typeMap = chainMap.get(amount.type)
-        assert(typeMap)
-        typeMap.push(amount)
-      }),
-    )
-
-    const fetchPromises: {
-      promise: Promise<void>
-      valuesCount: number
-      chain: string
-    }[] = []
-
-    for (const [chain, typeMap] of amountsToFetch.entries()) {
-      const block = await this.localStorage.getBlockNumber(chain, timestamp)
-      assert(block, `Block number not found for chain ${chain}`)
-
-      for (const [type, configs] of typeMap.entries()) {
-        fetchPromises.push({
-          promise: (async () => {
-            switch (type) {
-              case 'totalSupply': {
-                assert(configs.every((c) => c.type === 'totalSupply'))
-                const values = await this.totalSupplyProvider.getTotalSupplies(
-                  configs.map((c) => c.address),
-                  block,
-                  chain,
-                )
-                await this.localStorage.writeAmounts(
-                  timestamp,
-                  Array.from(values.values()).map((value, i) => ({
-                    id: configs[i].id,
-                    amount: value,
-                  })),
-                )
-                break
-              }
-              case 'balanceOfEscrow': {
-                assert(configs.every((c) => c.type === 'balanceOfEscrow'))
-                const values = await this.balanceProvider.getBalances(
-                  configs.map((c) => ({
-                    token: c.address,
-                    holder: c.escrowAddress,
-                  })),
-                  block,
-                  chain,
-                )
-
-                await this.localStorage.writeAmounts(
-                  timestamp,
-                  Array.from(values.values()).map((value, i) => ({
-                    id: configs[i].id,
-                    amount: value,
-                  })),
-                )
-                break
-              }
-            }
-          })(),
-          valuesCount: configs.length,
-          chain,
-        })
-      }
-    }
-
-    return fetchPromises
-  }
 
   private async fetchBlockNumber(
     chain: string,
@@ -454,13 +455,6 @@ export class DataFormulaExecutor {
 
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
     try {
-      if (
-        timestamp < config.sinceTimestamp ||
-        (config.untilTimestamp && timestamp > config.untilTimestamp)
-      ) {
-        return 0
-      }
-
       this.logger.debug(`Fetching price for ${config.priceId}`)
       const response = await this.priceProvider.getUsdPriceHistoryHourly(
         CoingeckoId(config.priceId),
