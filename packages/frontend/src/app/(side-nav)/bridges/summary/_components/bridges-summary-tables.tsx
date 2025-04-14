@@ -51,7 +51,7 @@ export function BridgesSummaryTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            <BridgesSummaryTable entries={entries.others} />
+            <BridgesSummaryTable entries={entries.others} isOthers />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
