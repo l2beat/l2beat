@@ -26,6 +26,7 @@ import {
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
+import type { TvsProjectBreakdown } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -104,7 +105,10 @@ const cmd = command({
       false,
     )
 
-    let totalTvs = 0
+    const projectBreakdown: TvsProjectBreakdown = {
+      tvs: 0,
+      projects: [],
+    }
 
     for (const project of regeneratedProjects) {
       let newConfig: TvsToken[] = []
@@ -122,10 +126,11 @@ const cmd = command({
           return acc + token.valueForSummary
         }, 0)
 
-        totalTvs += valueForSummary
-
-        logger.info(`TVS for project ${toDollarString(valueForProject)}`)
-        logger.info(`Total TVS ${toDollarString(totalTvs)}`)
+        projectBreakdown.tvs += valueForSummary
+        projectBreakdown.projects.push({
+          projectId: project.projectId,
+          value: valueForProject,
+        })
 
         newConfig = tvsForProject
           .filter((token) => token.value !== 0 || args.includeZeroAmounts)
@@ -137,9 +142,7 @@ const cmd = command({
             return tokenConfig
           })
       } else {
-        logger.info('No tokens found')
         if (fs.existsSync(filePath)) {
-          logger.info(`Deleting file: ${filePath}`)
           fs.unlinkSync(filePath)
         }
       }
@@ -152,10 +155,27 @@ const cmd = command({
       )
 
       if (mergedTokens.length > 0) {
-        logger.info(`Writing results to file: ${filePath}`)
         writeToFile(filePath, project.projectId, mergedTokens)
       }
     }
+
+    logger.info(`TVS ${toDollarString(projectBreakdown.tvs)}`)
+    logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
+
+    fs.writeFileSync(
+      './scripts/tvs/breakdown.json',
+      JSON.stringify(
+        {
+          tvs: toDollarString(projectBreakdown.tvs),
+          projects: projectBreakdown.projects.map((p) => ({
+            projectId: p.projectId,
+            value: toDollarString(p.value),
+          })),
+        },
+        null,
+        2,
+      ),
+    )
 
     process.exit(0)
   },

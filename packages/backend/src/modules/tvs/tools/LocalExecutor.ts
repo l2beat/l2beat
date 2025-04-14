@@ -162,7 +162,7 @@ export class LocalExecutor {
         ? new MulticallV3Client(
             multicallV3.address,
             multicallV3.sinceBlock,
-            500,
+            150,
           )
         : undefined
 
