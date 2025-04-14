@@ -64,7 +64,7 @@ export const metal: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      title: 'Metal Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/MarshallHayner/status/1773873542373028121',
       date: '2024-03-29T00:00:00Z',
       description: 'Metal Mainnet is now live.',

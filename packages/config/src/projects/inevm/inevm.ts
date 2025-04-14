@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -68,7 +67,7 @@ export const inevm: ScalingProject = orbitStackL3({
   customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
-      title: 'inEVM Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/injective/status/1765755882216841264',
       date: '2024-03-07T00:00:00Z',
       description: 'inEVM launches its Mainnet.',

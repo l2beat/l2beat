@@ -113,7 +113,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://zero.network/blog/zer-mainnet-welcome-to-a-world-without-gas-fees',
       date: '2024-11-12T00:00:00Z',
       description: 'ZERϴ launches their mainnet.',

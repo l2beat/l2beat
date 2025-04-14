@@ -103,7 +103,7 @@ export const corn: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.usecorn.com/corn-the-genesis-of-the-super-yield-network-f52170ffbe84',
       date: '2024-08-22T00:00:00Z',
       description: 'Corn launches its super yield network.',

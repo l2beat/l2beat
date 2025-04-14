@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { DaEconomicSecurityRisk } from '../../common'
+import { DaEconomicSecurityRisk, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -101,7 +100,7 @@ export const xai: ScalingProject = orbitStackL3({
   ],
   milestones: [
     {
-      title: 'XAI Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/XAI_GAMES/status/1744815749410242568',
       date: '2024-01-09T00:00:00Z',
       description: 'XAI launches on Arbitrum One.',

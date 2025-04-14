@@ -59,7 +59,7 @@ export const alienx: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      title: 'AlienX Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://medium.com/@ALIENXchain/alienx-mainnet-launch-join-the-genesis-voyage-and-claim-your-passcard-for-aix-airdrop-9bdf6a2a0472',
       date: '2024-06-24T00:00:00Z',
       description: 'AlienX launches their public mainnet.',

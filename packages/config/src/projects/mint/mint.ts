@@ -60,7 +60,7 @@ export const mint: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1715608931),
   milestones: [
     {
-      title: 'Mint Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
       date: '2024-05-14T00:00:00Z',
       description: 'Mint Mainnet is now live.',

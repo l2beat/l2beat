@@ -54,7 +54,7 @@ export const hychain: ScalingProject = orbitStackL2({
   customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
-      title: 'HYCHAIN Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/WINRProtocol/status/1867223130684735514',
       date: '2024-03-09T00:00:00Z',
       description: 'HYCHAIN launches its Mainnet.',

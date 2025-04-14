@@ -66,7 +66,7 @@ export const molten: ScalingProject = orbitStackL3({
   customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
-      title: 'Molten Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/MoltenL3/status/1774485708742205545',
       date: '2024-03-31T00:00:00Z',
       description: 'Molten launches its Mainnet.',

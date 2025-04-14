@@ -1,8 +1,8 @@
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -12,8 +12,8 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -535,7 +535,7 @@ If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWin
       type: 'general',
     },
     {
-      title: 'Taiko Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
       description: 'Taiko is deployed on Ethereum mainnet.',

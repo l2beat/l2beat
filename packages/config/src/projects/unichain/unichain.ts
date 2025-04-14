@@ -122,7 +122,7 @@ export const unichain: ScalingProject = opStackL2({
   },
   milestones: [
     {
-      title: 'Unichain Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/unichain/status/1889313993296064770',
       date: '2025-02-12T00:00:00Z',
       type: 'general',

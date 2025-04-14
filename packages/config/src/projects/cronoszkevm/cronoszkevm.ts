@@ -139,7 +139,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Alpha Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
       date: '2024-08-15T00:00:00Z',
       description: 'Cronos zkEVM Launches Its Alpha Mainnet powered by ZKsync.',

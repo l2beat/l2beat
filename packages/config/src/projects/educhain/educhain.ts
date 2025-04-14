@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -75,7 +74,7 @@ export const educhain: ScalingProject = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://medium.com/edu-chain', //TODO
       date: '2025-01-17T00:00:00Z',
       description: 'Educhain L3 opens its mainnet to all users.',

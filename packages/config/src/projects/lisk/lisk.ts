@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -40,7 +39,7 @@ export const lisk: ScalingProject = opStackL2({
   },
   milestones: [
     {
-      title: 'Lisk Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',
       date: '2024-11-12T00:00:00Z',
       description: 'Lisk launches its User Mainnet.',

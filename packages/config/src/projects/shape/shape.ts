@@ -58,7 +58,7 @@ export const shape: ScalingProject = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('SHAPE'),
   milestones: [
     {
-      title: 'Shape Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://www.alchemy.com/blog/shape-is-live',
       date: '2024-09-30T00:00:00Z',
       description: 'Shape Mainnet is now live.',

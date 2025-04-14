@@ -147,7 +147,7 @@ export const treasure: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/Treasure_DAO/status/1865101292752040255',
       date: '2024-12-11T00:00:00Z',
       description: 'Treasure mainnet launches for all users.',

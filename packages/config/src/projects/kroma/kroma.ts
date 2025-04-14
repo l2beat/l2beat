@@ -1,22 +1,22 @@
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
@@ -410,7 +410,7 @@ export const kroma: ScalingProject = {
       type: 'general',
     },
     {
-      title: 'Kroma Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
       date: '2023-09-06T00:00:00Z',
       description: 'Kroma is live on mainnet.',

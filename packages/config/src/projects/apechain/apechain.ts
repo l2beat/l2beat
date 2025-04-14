@@ -53,7 +53,7 @@ export const apechain: ScalingProject = orbitStackL3({
   customDa: AnytrustDAC({ discovery }),
   milestones: [
     {
-      title: 'ApeChain Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/apecoin/status/1847731593437155673',
       date: '2024-10-19T00:00:00Z',
       description: 'ApeChain launches its Mainnet.',

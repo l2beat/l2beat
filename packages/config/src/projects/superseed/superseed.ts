@@ -57,7 +57,7 @@ export const superseed: ScalingProject = opStackL2({
   genesisTimestamp,
   milestones: [
     {
-      title: 'Superseed Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/SuperseedXYZ/status/1906710602506195433',
       date: '2025-03-31T00:00:00Z',
       description: 'Superseed Mainnet is now live.',

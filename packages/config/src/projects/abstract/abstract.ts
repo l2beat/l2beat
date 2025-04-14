@@ -109,7 +109,7 @@ export const abstract: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/AbstractChain/status/1883939915169423777',
       date: '2025-01-27T00:00:00Z',
       description: 'Abstract launches their mainnet, opening for all users.',

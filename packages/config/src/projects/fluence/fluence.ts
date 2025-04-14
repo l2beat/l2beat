@@ -60,7 +60,7 @@ export const fluence: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.fluence.network/welcome-to-fluence-staking-stake-shape-the-cloudless-future/',
       date: '2024-09-20T00:00:00Z',
       description: 'Fluence launches FLT staking on Layer 2.',

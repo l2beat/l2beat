@@ -11,13 +11,14 @@ import {
   DA_LAYERS,
   DA_MODES,
   DERIVATION,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
@@ -517,7 +518,7 @@ export const base: ScalingProject = {
       type: 'general',
     },
     {
-      title: 'Base Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
       date: '2023-07-13T00:00:00.00Z',
       description: 'Base is live on mainnet.',
