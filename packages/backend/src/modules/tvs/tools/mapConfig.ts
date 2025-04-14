@@ -43,7 +43,7 @@ export async function mapConfig(
     assert(escrow.sharedEscrow)
     if (rpcClient === undefined) {
       logger.warn(
-        `No rpc client configured, sharedEscrow support is not enabled`,
+        `${project.id}: No rpc client configured, sharedEscrow support is not enabled`,
       )
       continue
     }
