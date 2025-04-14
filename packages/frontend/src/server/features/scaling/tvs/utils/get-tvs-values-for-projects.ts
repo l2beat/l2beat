@@ -65,12 +65,21 @@ export async function getTvsValuesForProjects(
       addTarget: true,
     })
 
+    const latestKnownProjectValue = projectValues.at(-1)
+
     const valuesByTimestampForProject: Dictionary<ProjectValueRecord> = {}
     for (const timestamp of timestamps) {
       const value = valuesByTimestamp[timestamp.toString()]
 
       if (value) {
         valuesByTimestampForProject[timestamp.toString()] = value
+      } else if (
+        latestKnownProjectValue &&
+        timestamp > latestKnownProjectValue.timestamp
+      ) {
+        // Interpolate values with latest known value
+        valuesByTimestampForProject[timestamp.toString()] =
+          latestKnownProjectValue
       }
     }
 
