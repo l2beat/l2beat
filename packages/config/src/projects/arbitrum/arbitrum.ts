@@ -98,7 +98,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   usesBlobs: true,
   display: {
-    name: 'Arbitrum One',
+    name: 'Arbitrum One X',
     slug: 'arbitrum',
     warning: undefined,
     architectureImage: 'arbitrumwithbold',
@@ -111,7 +111,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://docs.arbitrum.foundation/',
       ],
       explorers: [
-        'https://arbiscan.io',
         'https://explorer.arbitrum.io/',
         'https://arbitrum.l2scan.co/',
       ],
@@ -250,13 +249,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     },
   ],
   scopeOfAssessment: {
-    inScope: [
-      SOA.l1Contracts,
-      SOA.l2Contracts,
-      SOA.gasToken,
-      SOA.derivationSpec,
-      SOA.sourceCodeToProgramHash,
-    ],
+    inScope: [SOA.gasToken, SOA.derivationSpec, SOA.sourceCodeToProgramHash],
     notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
 
@@ -297,7 +290,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     },
   ),
   stateDerivation: {
-    nodeSoftware: `The rollup node (Arbitrum Nitro) consists of four parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
+    nodeSoftware: `The The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state and [a fork of wasmer](https://github.com/OffchainLabs/wasmer) that is used for native WASM execution. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,
     compressionScheme: `The Sequencer's batches are compressed using a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli), configured to its highest compression setting.`,
     genesisState:
       'They performed a regenesis from Classic to Nitro, and that file represents the [last Classic state](https://snapshot.arbitrum.foundation/arb1/nitro-genesis.tar). To sync from the initial Classic state, instructions can be found [here](https://docs.arbitrum.io/migration/state-migration).',
