@@ -7,7 +7,7 @@ import { useTable } from '~/hooks/use-table'
 
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { bridgesArchivedOthersColumns, bridgesArchivedSingleChainColumns } from './columns'
+import { getBridgesArchivedColumns } from './columns'
 
 export interface Props {
   entries: BridgesArchivedEntry[]
@@ -24,9 +24,7 @@ export function BridgesArchivedTable({ entries, isOthers }: Props) {
 
   const activeTable = useTable({
     data: filteredEntries,
-    columns: isOthers
-      ? bridgesArchivedOthersColumns
-      : bridgesArchivedSingleChainColumns,
+    columns: getBridgesArchivedColumns(isOthers),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
