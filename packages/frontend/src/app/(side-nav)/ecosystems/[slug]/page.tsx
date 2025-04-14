@@ -52,7 +52,7 @@ export default async function Page({ params }: Props) {
   ])
 
   return (
-    <div className="relative z-[0] max-md:px-4">
+    <div className="relative z-[0] max-md:px-4" data-hide-overflow-x>
       <CssVariables
         variables={{
           'ecosystem-primary': ecosystem.colors.primary,
@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
         }}
       />
       {/* eslint-disable-next-line tailwindcss/no-contradicting-classname */}
-      <div className="fixed right-[20%] top-44 -z-1 h-[2400px] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
+      <div className="absolute right-[20%] top-44 -z-1 h-[180vh] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
       <div>
         <EcosystemPageHeader
           logo={ecosystem.logo}

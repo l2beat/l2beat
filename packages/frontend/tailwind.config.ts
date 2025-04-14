@@ -322,7 +322,7 @@ const config: Config = {
       },
       backgroundImage: {
         'gradient-radial':
-          'radial-gradient(circle closest-side, var(--tw-gradient-stops))',
+          'radial-gradient(closest-side, var(--tw-gradient-stops))',
       },
     },
   },

@@ -238,7 +238,12 @@ export async function NavLayout({
           sideLinks={sideLinks}
           topNavbar={!!topNavbar}
         />
-        <div className={cn('min-w-0 flex-1', !topNavbar && 'lg:ml-3')}>
+        <div
+          className={cn(
+            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
+            !topNavbar && 'lg:ml-3',
+          )}
+        >
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
