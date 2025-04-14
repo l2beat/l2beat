@@ -6425,14 +6425,14 @@
       "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
       "category": "stablecoin",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "cEURO",
       "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
       "category": "stablecoin",
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "symbol": "cREAL",

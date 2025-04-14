@@ -2,7 +2,7 @@
   "name": "race",
   "chain": "ethereum",
   "blockNumber": 21242938,
-  "configHash": "0x407e06dcb3b342042d532b46c70987fcd4dcecb8832bb73c7209a968024e0ac6",
+  "configHash": "0xb1320b58c32f881ed5b6480227b97b8b0a3c28813e65bec808d6dd466079c099",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

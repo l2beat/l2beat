@@ -2,7 +2,7 @@
   "name": "donatuz",
   "chain": "base",
   "blockNumber": 27754690,
-  "configHash": "0x698a521f19892402001308bd8c30af7835c71a7d4016d5f287c957a894e359ee",
+  "configHash": "0x5d90c56da63b171025b952f15e7d552487b1854771f66e8c369f90fd8ba6358b",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -11741,7 +11741,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/13161/large/icon-celo-dollar-color-1000-circle-cropped.png?1696512945",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Celo Euro",
@@ -11755,7 +11755,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16756/large/CEUR.png?1696516329",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Celo Kenyan Shilling",

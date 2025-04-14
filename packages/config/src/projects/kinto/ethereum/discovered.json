@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 22137242,
-  "configHash": "0x35ec4829e0da5664ed04d2711028a11bb538e4d5f6eab8a52e577ae65a7cdb46",
+  "configHash": "0xb2cc9653f1f7a8c65a88fa74187c01d3e346f83d8239f4b2ddfa8fd71e321ede",
   "entries": [
     {
       "name": "Hypernative",
