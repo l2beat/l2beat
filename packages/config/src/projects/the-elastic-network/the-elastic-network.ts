@@ -1,8 +1,8 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
-import type { BaseProject } from '../../types'
+import type { Ecosystem } from '../../internalTypes'
 
-export const theElasticNetwork: BaseProject = {
+export const theElasticNetwork: Ecosystem = {
   id: ProjectId('the-elastic-network'),
   slug: 'the-elastic-network',
   name: 'The Elastic Network',

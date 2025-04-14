@@ -17,6 +17,8 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectDiscoveryInfo,
+  ProjectDisplay,
+  ProjectEcosystemConfig,
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
@@ -270,4 +272,14 @@ export interface BridgeDisplay {
 export interface BridgeConfig {
   associatedTokens?: string[]
   escrows: ProjectEscrow[]
+}
+
+export interface Ecosystem {
+  id: ProjectId
+  slug: string
+  name: string
+  shortName: string | undefined
+  addedAt: UnixTime
+  display?: ProjectDisplay
+  ecosystemConfig: ProjectEcosystemConfig
 }

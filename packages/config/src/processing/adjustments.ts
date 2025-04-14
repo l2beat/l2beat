@@ -1,10 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'
-import type { Bridge, ScalingProject } from '../internalTypes'
+import type { Bridge, Ecosystem, ScalingProject } from '../internalTypes'
 import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
 import { bridges } from './bridges'
+import { ecosystems } from './ecosystems'
 import { getDiscoveryInfo } from './getProjects'
 import { isProjectVerified, isVerified } from './isVerified'
 import { layer2s } from './layer2s'
@@ -33,9 +34,12 @@ export function runConfigAdjustments() {
 
   layer2s.forEach((p) => {
     adjustLegacy(p, chains)
-    adjustBadges(p, layer3s)
+    adjustBadges(p, ecosystems, layer3s)
   })
-  layer3s.forEach((p) => adjustLegacy(p, chains))
+  layer3s.forEach((p) => {
+    adjustLegacy(p, chains)
+    adjustBadges(p, ecosystems)
+  })
   bridges.forEach((p) => adjustLegacy(p, chains))
   refactored.forEach((p) => adjustRefactored(p, chains))
 }
@@ -96,12 +100,23 @@ function adjustContracts(
   }
 }
 
-function adjustBadges(project: ScalingProject, l3s: ScalingProject[]) {
-  const hostsL3 = l3s.some((l3) => l3.hostChain === project.id)
+function adjustBadges(
+  project: ScalingProject,
+  ecosystems: Ecosystem[],
+  l3s?: ScalingProject[],
+) {
+  const hostsL3 = l3s?.some((l3) => l3.hostChain === project.id)
   if (hostsL3) {
     project.badges = mergeBadges(project.badges ?? [], [
       BADGES.Other.L3HostChain,
     ])
+  }
+  const ecosystem = ecosystems.find((e) => e.id === project.ecosystemInfo?.id)
+  if (ecosystem) {
+    project.badges = mergeBadges(
+      project.badges ?? [],
+      ecosystem.display?.badges ?? [],
+    )
   }
 }
 

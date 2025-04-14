@@ -1,8 +1,8 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
-import type { BaseProject } from '../../types'
+import type { Ecosystem } from '../../internalTypes'
 
-export const agglayer: BaseProject = {
+export const agglayer: Ecosystem = {
   id: ProjectId('agglayer'),
   slug: 'agglayer',
   name: 'AggLayer',

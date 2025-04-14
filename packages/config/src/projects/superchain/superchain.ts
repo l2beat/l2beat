@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
-import type { BaseProject } from '../../types'
+import type { Ecosystem } from '../../internalTypes'
 
-export const superchain: BaseProject = {
+export const superchain: Ecosystem = {
   id: ProjectId('superchain'),
   slug: 'superchain',
   name: 'Superchain',

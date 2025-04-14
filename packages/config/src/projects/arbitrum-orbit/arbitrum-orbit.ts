@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
-import type { BaseProject } from '../../types'
+import type { Ecosystem } from '../../internalTypes'
 
-export const arbitrumOrbit: BaseProject = {
+export const arbitrumOrbit: Ecosystem = {
   id: ProjectId('arbitrum-orbit'),
   slug: 'arbitrum-orbit',
   name: 'Arbitrum Orbit',
