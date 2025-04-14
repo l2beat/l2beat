@@ -160,15 +160,23 @@ export class DataFormulaExecutor {
         if (isLatestMode) {
           chainsToFetch.push(chain)
         } else {
-          const cached = await this.localStorage.getBlockNumber(
+          const cachedValue = await this.localStorage.getBlockNumber(
             chain,
             timestamp,
           )
-          if (cached) {
+
+          if (cachedValue !== undefined) {
+            this.logger.debug(`Cached value found for ${chain}`)
             return
           }
 
-          // TODO: add DB preload
+          const dbValue = await this.dbStorage?.getTimestamp(chain, timestamp)
+
+          if (dbValue !== undefined) {
+            this.logger.debug(`DB value found for ${chain}`)
+            await this.localStorage.writeBlockNumber(chain, timestamp, dbValue)
+            return
+          }
 
           chainsToFetch.push(chain)
         }
