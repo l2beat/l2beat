@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6291ea1c1f7afe8a52090efe1b6499adaddd9ff8
+Generated with discovered.json: 0xaedc106760237fd1aa4e76ffd8647aea4d235697
 
-# Diff at Mon, 14 Apr 2025 10:12:35 GMT:
+# Diff at Mon, 14 Apr 2025 10:17:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22266376
@@ -116,7 +116,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract RootChain (0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9)
-    +++ description: None
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
 ```
 
 ```diff

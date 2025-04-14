@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x55ee8c50fc92891493adc78f1b5e68270931555e
+Generated with discovered.json: 0x4c052367409d067126131fd1f45224df7f4017bb
 
-# Diff at Mon, 14 Apr 2025 10:12:36 GMT:
+# Diff at Mon, 14 Apr 2025 10:17:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
@@ -84,9 +84,11 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
-    +++ description: None
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
       template:
 +        "polygonposbridge/RootChain"
+      description:
++        "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators."
     }
 ```
 

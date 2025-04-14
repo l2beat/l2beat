@@ -52,7 +52,7 @@ export const shibarium: ScalingProject = {
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x885fcE983b6a01633f764325B8c3c5D31032C995'), // DepositManager
-        tokens: ['BONE'],
+        tokens: '*',
       }),
     ],
   },

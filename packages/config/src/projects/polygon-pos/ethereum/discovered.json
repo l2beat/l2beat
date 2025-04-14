@@ -813,6 +813,7 @@
         "0xd35b67d8f30e644710988f565f06bbc06eee75ae1ed4b4d46c3e193266e7163c"
       ],
       "proxyType": "EIP897 proxy",
+      "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
