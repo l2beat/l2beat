@@ -217,7 +217,7 @@
         "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
       ],
       "proxyType": "immutable",
-      "description": "Contains logging and getter functions about staking",
+      "description": "Contains logging and getter functions about staking.",
       "sinceTimestamp": 1691243831,
       "sinceBlock": 17849209,
       "values": {

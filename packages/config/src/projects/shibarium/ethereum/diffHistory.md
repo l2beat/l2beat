@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x84933b8b81be8fde39b4f6dc4642a25b6682950f
+Generated with discovered.json: 0x6291ea1c1f7afe8a52090efe1b6499adaddd9ff8
 
-# Diff at Mon, 14 Apr 2025 10:03:13 GMT:
+# Diff at Mon, 14 Apr 2025 10:12:35 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22266376
@@ -44,7 +44,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract StakingInfo (0x539964b3d225194717fb896D26c8b3E635b8A1aE)
-    +++ description: Contains logging and getter functions about staking
+    +++ description: Contains logging and getter functions about staking.
 ```
 
 ```diff

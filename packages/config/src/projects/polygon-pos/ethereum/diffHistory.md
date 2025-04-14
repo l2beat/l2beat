@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x18001e03d4fea4eabf771f29f193272ac4c72c2f
+Generated with discovered.json: 0x55ee8c50fc92891493adc78f1b5e68270931555e
 
-# Diff at Mon, 14 Apr 2025 10:03:15 GMT:
+# Diff at Mon, 14 Apr 2025 10:12:36 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
@@ -112,11 +112,11 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
-    +++ description: Contains logging and getter functions about staking
+    +++ description: Contains logging and getter functions about staking.
       template:
 +        "polygonposbridge/StakingInfo"
       description:
-+        "Contains logging and getter functions about staking"
++        "Contains logging and getter functions about staking."
     }
 ```
 
