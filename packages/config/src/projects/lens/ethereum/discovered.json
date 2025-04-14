@@ -2,7 +2,7 @@
   "name": "lens",
   "chain": "ethereum",
   "blockNumber": 22223308,
-  "configHash": "0xf9a668c99030571f5ea42a80c2b3cbc458412522de0164704c3623f4c922c99c",
+  "configHash": "0xee3b4265698e9cee795d53898769ae5119e67924ec10e0c8cf17de1dc773ec35",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

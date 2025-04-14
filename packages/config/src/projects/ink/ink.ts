@@ -39,8 +39,6 @@ export const ink: ScalingProject = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   },
   finality: {
     type: 'OPStack',
@@ -96,6 +94,7 @@ export const ink: ScalingProject = opStackL2({
     chainId: 57073,
     explorerUrl: 'https://explorer.inkonchain.com',
     sinceTimestamp: genesisTimestamp,
+    coingeckoPlatform: 'ink',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

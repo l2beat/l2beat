@@ -139,7 +139,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
   })
 
-  describe(TokenValueRepository.prototype.getByProjectAndToken.name, () => {
+  describe(TokenValueRepository.prototype.getByTokenIdInTimeRange.name, () => {
     beforeEach(async () => {
       await repository.insertMany([
         tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
@@ -154,8 +154,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
 
     it('returns record for a project and token within the specified time range (inclusive) in ascending time order', async () => {
-      const result = await repository.getByProjectAndToken(
-        'ethereum',
+      const result = await repository.getByTokenIdInTimeRange(
         'a' as TokenId,
         UnixTime(105),
         UnixTime(125),
@@ -171,8 +170,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
 
     it('returns empty array when no records match the time range', async () => {
-      const result = await repository.getByProjectAndToken(
-        'ethereum',
+      const result = await repository.getByTokenIdInTimeRange(
         'a' as TokenId,
         UnixTime(130),
         UnixTime(140),
@@ -181,20 +179,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(result).toEqual([])
     })
 
-    it('returns empty array when project does not exist', async () => {
-      const result = await repository.getByProjectAndToken(
-        'non-existent',
-        'a' as TokenId,
-        UnixTime(110),
-        UnixTime(120),
-      )
-
-      expect(result).toEqual([])
-    })
-
     it('returns empty array when token does not exist', async () => {
-      const result = await repository.getByProjectAndToken(
-        'ethereum',
+      const result = await repository.getByTokenIdInTimeRange(
         'non-existent' as TokenId,
         UnixTime(110),
         UnixTime(120),
@@ -204,8 +190,7 @@ describeDatabase(TokenValueRepository.name, (db) => {
     })
 
     it('handles single-point time range (from = to)', async () => {
-      const result = await repository.getByProjectAndToken(
-        'ethereum',
+      const result = await repository.getByTokenIdInTimeRange(
         'a' as TokenId,
         UnixTime(115),
         UnixTime(115),
@@ -214,40 +199,6 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(result).toEqual([
         tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
       ])
-    })
-  })
-
-  describe(TokenValueRepository.prototype.getByProjectAndTimestamp.name, () => {
-    beforeEach(async () => {
-      await repository.insertMany([
-        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
-        tokenValue('a', 'ethereum', UnixTime(200), 20, 20000, 16000, 10000),
-        tokenValue('d', 'arbitrum', UnixTime(100), 10, 10000, 8000, 5000),
-      ])
-    })
-
-    it('returns all tokens for a project at a specific timestamp', async () => {
-      const result = await repository.getByProjectAndTimestamp(
-        'ethereum',
-        UnixTime(100),
-      )
-
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500),
-      ])
-    })
-
-    it('returns empty array when no records match the timestamp', async () => {
-      const result = await repository.getByProjectAndTimestamp(
-        'ethereum',
-        UnixTime(150),
-      )
-
-      expect(result).toEqual([])
     })
   })
 

@@ -11,13 +11,14 @@ import {
   DA_LAYERS,
   DA_MODES,
   DERIVATION,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
@@ -162,8 +163,6 @@ export const base: ScalingProject = {
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   },
   config: {
     escrows: [
@@ -323,12 +322,12 @@ export const base: ScalingProject = {
         {
           title:
             'DisputeGameFactory.sol - Etherscan source code, create() function',
-          url: 'https://etherscan.io/address/0xc641A33cab81C559F2bd4b21EA34C290E2440C2B#code',
+          url: 'https://etherscan.io/address/0x4bbA758F006Ef09402eF31724203F316ab74e4a0#code',
         },
         {
           title:
             'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          url: 'https://etherscan.io/address/0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e#code',
+          url: 'https://etherscan.io/address/0x13FbBDefa7D9B147A1777a8A5B0f30379E007ac3#code',
         },
       ],
     },

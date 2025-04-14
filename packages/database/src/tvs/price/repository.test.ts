@@ -128,25 +128,9 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       ])
     })
 
-    it('returns prices for given priceIds in time range', async () => {
-      const result = await repository.getPricesInRangeByPriceId(
-        ['eth', 'btc'],
-        UnixTime(100),
-        UnixTime(200),
-      )
-
-      expect(result).toEqualUnsorted([
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
-        tvsPrice('c', 'eth', UnixTime(150), 1050.25),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
-      ])
-    })
-
     it('returns only records for the specified priceId', async () => {
       const result = await repository.getPricesInRangeByPriceId(
-        ['eth'],
+        'eth',
         UnixTime(100),
         UnixTime(200),
       )
@@ -160,7 +144,7 @@ describeDatabase(TvsPriceRepository.name, (db) => {
 
     it('returns empty array when no data', async () => {
       const result = await repository.getPricesInRangeByPriceId(
-        ['eth'],
+        'eth',
         UnixTime(225),
         UnixTime(275),
       )

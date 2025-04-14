@@ -45,6 +45,9 @@ export const onchain: ScalingProject = underReviewL3({
       },
     ],
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
   escrows: [
     {
       address: EthereumAddress('0x2e5AfeEfeA725e23d0B54f9e28Fd9ACDD4c312E9'), // bridge (native token: POP)

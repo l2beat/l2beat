@@ -37,6 +37,7 @@ import type {
   ProjectActivityConfig,
   ProjectContract,
   ProjectDaTrackingConfig,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectPermissions,
@@ -102,6 +103,7 @@ export interface ZkStackConfigCommon {
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  ecosystemInfo?: ProjectEcosystemInfo
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
@@ -302,16 +304,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         },
       ),
       daTracking: getDaTracking(templateVars),
-      trackedTxs:
-        daProvider !== undefined
-          ? undefined
-          : (templateVars.nonTemplateTrackedTxs ?? []),
+      trackedTxs: templateVars.nonTemplateTrackedTxs, // difficult to templatize as upgrades are not synced
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
       gasTokens: templateVars.chainConfig?.gasTokens ?? ['ETH'],
     },
+    ecosystemInfo: templateVars.ecosystemInfo,
     dataAvailability: {
       layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
       bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,

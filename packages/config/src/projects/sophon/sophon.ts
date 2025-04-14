@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -12,7 +12,8 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
-
+const chainId = 50104
+const trackedTxsSince = UnixTime(1742940287)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const sophon: ScalingProject = zkStackL2({
@@ -40,9 +41,12 @@ export const sophon: ScalingProject = zkStackL2({
     },
   },
   associatedTokens: ['SOPH'],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   chainConfig: {
     name: 'sophon',
-    chainId: 50104,
+    chainId,
     gasTokens: ['SOPH'],
     explorerUrl: 'https://explorer.sophon.xyz',
     sinceTimestamp: UnixTime(1729531437),
@@ -106,6 +110,50 @@ export const sophon: ScalingProject = zkStackL2({
     sinceBlock: 0, // Edge Case: config added @ DA Module start
     appId: '17',
   },
+  nonTemplateTrackedTxs: [
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: discovery.getContract('ValidatorTimelock').address,
+        selector: '0x6edd4f12',
+        functionSignature:
+          'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
+        sinceTimestamp: trackedTxsSince,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: discovery.getContract('ValidatorTimelock').address,
+        selector: '0xc37533bb',
+        functionSignature:
+          'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
+        sinceTimestamp: trackedTxsSince,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: discovery.getContract('ValidatorTimelock').address,
+        selector: '0x6f497ac6',
+        functionSignature:
+          'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
+        sinceTimestamp: trackedTxsSince,
+      },
+    },
+  ],
   milestones: [
     {
       title: 'Mainnet public launch',

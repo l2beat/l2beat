@@ -4,8 +4,10 @@ import { externalLinks } from '~/consts/external-links'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
+import { EcosystemsIcon } from '~/icons/pages/ecosystems'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
+import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
 import { HiringBadge } from '../badge/hiring-badge'
 import { SidebarProvider } from '../core/sidebar'
@@ -143,6 +145,26 @@ export async function NavLayout({
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
+    env.NEXT_PUBLIC_ECOSYSTEMS && {
+      type: 'multiple',
+      title: 'Ecosystems',
+      match: 'ecosystems',
+      disableMobileTabs: true,
+      icon: (
+        <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      ),
+      preventTitleNavigation: true,
+      links: (
+        await ps.getProjects({
+          select: ['ecosystemConfig'],
+        })
+      )
+        .map((ecosystem) => ({
+          title: ecosystem.name,
+          href: `/ecosystems/${ecosystem.slug}`,
+        }))
+        .sort((a, b) => a.title.localeCompare(b.title)),
+    },
   ])
 
   const sideLinks = [
@@ -205,18 +227,19 @@ export async function NavLayout({
         {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileTopNavbar
-          groups={groups}
-          logoLink={logoLink}
-          className={cn(!topNavbar && 'md:mb-5')}
-        />
+        <MobileTopNavbar groups={groups} logoLink={logoLink} />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
           sideLinks={sideLinks}
           topNavbar={!!topNavbar}
         />
-        <div className={cn('min-w-0 flex-1', !topNavbar && 'lg:ml-3')}>
+        <div
+          className={cn(
+            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
+            !topNavbar && 'md:pt-5 lg:ml-3 lg:pt-0',
+          )}
+        >
           {!topNavbar && topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}

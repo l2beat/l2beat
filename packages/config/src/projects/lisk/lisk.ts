@@ -1,6 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -15,6 +14,9 @@ export const lisk: ScalingProject = opStackL2({
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -70,6 +72,13 @@ export const lisk: ScalingProject = opStackL2({
       description:
         'Custom externally governed escrow for USDC bridged to Lisk.',
       tokens: ['USDC'],
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
   ],
 })

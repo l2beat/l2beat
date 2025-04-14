@@ -92,7 +92,7 @@ function Sidebar({
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
-  if (breakpoint === 'mobile' || breakpoint === 'tablet') {
+  if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent

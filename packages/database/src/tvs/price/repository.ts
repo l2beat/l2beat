@@ -44,16 +44,17 @@ export class TvsPriceRepository extends BaseRepository {
   }
 
   async getPricesInRangeByPriceId(
-    priceIds: string[],
+    priceId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<TvsPriceRecord[]> {
     const rows = await this.db
       .selectFrom('TvsPrice')
       .select(['timestamp', 'configurationId', 'priceId', 'priceUsd'])
-      .where('priceId', 'in', priceIds)
+      .where('priceId', '=', priceId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map(toRecord)

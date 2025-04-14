@@ -1,4 +1,4 @@
-import { type TokenId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type TokenValueRecord, toRecord, toRow } from './entity'
 
@@ -29,16 +29,14 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectAndToken(
-    project: string,
-    tokenId: TokenId,
+  async getByTokenIdInTimeRange(
+    tokenId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<TokenValueRecord[]> {
     const rows = await this.db
       .selectFrom('TokenValue')
       .selectAll()
-      .where('projectId', '=', project)
       .where('tokenId', '=', tokenId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
