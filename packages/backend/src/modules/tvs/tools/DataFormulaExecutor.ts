@@ -384,14 +384,13 @@ export class DataFormulaExecutor {
                   block,
                   chain,
                 )
-
-                for (const [i, value] of values.entries()) {
-                  await this.localStorage.writeAmount(
-                    configs[i].id,
-                    timestamp,
-                    value,
-                  )
-                }
+                await this.localStorage.writeAmounts(
+                  timestamp,
+                  Array.from(values.values()).map((value, i) => ({
+                    id: configs[i].id,
+                    amount: value,
+                  })),
+                )
                 break
               }
               case 'balanceOfEscrow': {
@@ -405,13 +404,13 @@ export class DataFormulaExecutor {
                   chain,
                 )
 
-                for (const [i, value] of values.entries()) {
-                  await this.localStorage.writeAmount(
-                    configs[i].id,
-                    timestamp,
-                    value,
-                  )
-                }
+                await this.localStorage.writeAmounts(
+                  timestamp,
+                  Array.from(values.values()).map((value, i) => ({
+                    id: configs[i].id,
+                    amount: value,
+                  })),
+                )
                 break
               }
             }
