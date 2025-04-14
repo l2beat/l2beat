@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa9160ff95085cda3e4ba21accb72830f5e3c1764
+Generated with discovered.json: 0x84933b8b81be8fde39b4f6dc4642a25b6682950f
 
-# Diff at Mon, 14 Apr 2025 09:36:57 GMT:
+# Diff at Mon, 14 Apr 2025 10:03:13 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22266376
@@ -26,7 +26,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract RootChainManager (0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82)
-    +++ description: None
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
 ```
 
 ```diff
@@ -38,13 +38,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract StateSender (0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C)
-    +++ description: None
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract StakingInfo (0x539964b3d225194717fb896D26c8b3E635b8A1aE)
-    +++ description: None
+    +++ description: Contains logging and getter functions about staking
 ```
 
 ```diff
@@ -68,7 +68,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ExitNFT (0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307)
-    +++ description: None
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
 ```
 
 ```diff
@@ -134,5 +134,5 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Registry (0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB)
-    +++ description: None
+    +++ description: Maintains the addresses of the contracts used in the system.
 ```

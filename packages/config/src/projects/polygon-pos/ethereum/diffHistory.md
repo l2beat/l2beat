@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x989fb696229c8f64d24e224a0b905c1c322c3095
+Generated with discovered.json: 0x18001e03d4fea4eabf771f29f193272ac4c72c2f
 
-# Diff at Mon, 14 Apr 2025 07:52:56 GMT:
+# Diff at Mon, 14 Apr 2025 10:03:15 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
@@ -38,9 +38,11 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
-    +++ description: None
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
       template:
 +        "polygonposbridge/StateSender"
+      description:
++        "Smart contract allowing whitelisted addresses to send messages to contracts on the child chain."
     }
 ```
 
@@ -100,17 +102,21 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
-    +++ description: None
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
       template:
 +        "polygonposbridge/RootChainManager"
+      description:
++        "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router."
     }
 ```
 
 ```diff
     contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
-    +++ description: None
+    +++ description: Contains logging and getter functions about staking
       template:
 +        "polygonposbridge/StakingInfo"
+      description:
++        "Contains logging and getter functions about staking"
     }
 ```
 
@@ -126,9 +132,11 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 
 ```diff
     contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
-    +++ description: None
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
       template:
 +        "polygonposbridge/ExitNFT"
+      description:
++        "NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager)."
     }
 ```
 

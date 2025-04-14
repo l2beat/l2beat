@@ -1,3 +1,4 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json"
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Maintains the addresses of the contracts used in the system."
 }

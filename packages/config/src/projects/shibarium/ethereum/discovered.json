@@ -124,6 +124,7 @@
         "0x8e1112329013d39a3a696d494a2238f100b58f447fef589f88c6ad0cf0f90fee"
       ],
       "proxyType": "Polygon proxy",
+      "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -191,6 +192,7 @@
         "0x2f6878db7119cba5b64851fc04d0bd822ce210db74bf11ca1255f000eb88065f"
       ],
       "proxyType": "immutable",
+      "description": "Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.",
       "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1691243927,
       "sinceBlock": 17849217,
@@ -215,6 +217,7 @@
         "0x6f083446e02260d9c548d8b66bfe0bf437ae747e1e7163a71a5f1a6c4cabcd54"
       ],
       "proxyType": "immutable",
+      "description": "Contains logging and getter functions about staking",
       "sinceTimestamp": 1691243831,
       "sinceBlock": 17849209,
       "values": {
@@ -357,6 +360,7 @@
         "0x8ab86a61175e5d05a7397611f3be4b4979a70b9c498bf772de63c31455e9393d"
       ],
       "proxyType": "immutable",
+      "description": "NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).",
       "sinceTimestamp": 1691243975,
       "sinceBlock": 17849221,
       "values": { "$immutable": true, "getApproved": [], "ownerOf": [] },
@@ -685,6 +689,7 @@
         "0x8629d952a05ac151ee3cf2d7096112e2b03c6404c26409be4a6f9dfd8cdc30ba"
       ],
       "proxyType": "immutable",
+      "description": "Maintains the addresses of the contracts used in the system.",
       "sinceTimestamp": 1691243735,
       "sinceBlock": 17849201,
       "values": {
