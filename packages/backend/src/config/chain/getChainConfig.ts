@@ -33,6 +33,12 @@ export async function getChainConfig(
             apiKey: env.string(Env.key(chain, 'ETHERSCAN_API_KEY')),
           })
           break
+        case 'routescan':
+          indexerApis.push({
+            type: api.type,
+            url: api.url,
+          })
+          break
         case 'blockscout':
           indexerApis.push({
             type: api.type,

@@ -90,7 +90,7 @@ export const metis: ScalingProject = {
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
       },
     ],

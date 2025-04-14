@@ -252,6 +252,7 @@ export type ChainApiConfig =
   | ChainExplorerApi<'etherscan'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
+  | ChainExplorerApi<'routescan'>
   | ChainStarkexApi
 
 export interface ChainBasicApi<T extends string> {
