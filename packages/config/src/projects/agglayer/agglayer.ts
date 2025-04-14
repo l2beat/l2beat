@@ -32,7 +32,7 @@ export const agglayer: BaseProject = {
       tokenId: 'polygonzkevm-POL',
       projectId: ProjectId('polygonzkevm'),
       description:
-        'POL is the native token of Polygon that enables users to interact dApps across Polygon blockchains. It is also used to secure the network through staking.',
+        'The POL token is used for governance across the Polygon ecosystem, including Polygon PoS and AggLayer chains. It also secures the Polygon PoS network and functions as a gas token on the chain.',
     },
   },
 }
