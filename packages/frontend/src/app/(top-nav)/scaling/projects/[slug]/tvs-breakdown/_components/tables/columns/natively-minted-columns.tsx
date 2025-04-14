@@ -3,8 +3,8 @@ import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import { TokenAddressCell } from '../cells/token-address-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
-import { TokenSimpleAmountCell } from '../cells/token-simple-amount-cell'
-import { TokenSimpleValueCell } from '../cells/token-simple-value-cell'
+import { TokenAmountCell } from '../cells/token-amount-cell'
+import { TokenValueCell } from '../cells/token-value-cell'
 import type { NativelyMintedTokenEntry } from '../natively-minted-table'
 
 const columnHelper = createColumnHelper<NativelyMintedTokenEntry>()
@@ -34,7 +34,7 @@ export const nativelyMintedColumns = [
     meta: {
       align: 'right',
     },
-    cell: (ctx) => <TokenSimpleValueCell {...ctx.row.original} />,
+    cell: (ctx) => <TokenValueCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'amount',
@@ -42,7 +42,7 @@ export const nativelyMintedColumns = [
     meta: {
       align: 'right',
     },
-    cell: (ctx) => <TokenSimpleAmountCell amount={ctx.row.original.amount} />,
+    cell: (ctx) => <TokenAmountCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'expand',

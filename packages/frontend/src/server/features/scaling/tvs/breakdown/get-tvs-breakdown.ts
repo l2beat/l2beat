@@ -1,5 +1,6 @@
 import type { ChainConfig, Formula, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
 import type { Address } from './extract-addresses'
 import { extractAddresses } from './extract-addresses'
@@ -9,11 +10,13 @@ import type {
   BreakdownRecord,
   CanonicalAssetBreakdownData,
 } from './types'
+import { formatTimestamp } from '~/utils/dates'
 
 export async function getTvsBreakdown(
   projectTokens: TvsToken[],
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
+  targetTimestamp: UnixTime,
   gasTokens?: string[],
 ) {
   const breakdown: BreakdownRecord = {
@@ -37,6 +40,7 @@ export async function getTvsBreakdown(
       usdValue: tokenValue.value,
       amount: tokenValue.amount,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
+      syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
     }
 
     switch (token.source) {
@@ -80,4 +84,13 @@ function processAddresses(
     }
   }
   return undefined
+}
+
+function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
+  if (valueTimestamp < targetTimestamp) {
+    return `Token data is not synced since ${formatTimestamp(valueTimestamp, {
+      mode: 'datetime',
+      longMonthName: true,
+    })}.`
+  }
 }

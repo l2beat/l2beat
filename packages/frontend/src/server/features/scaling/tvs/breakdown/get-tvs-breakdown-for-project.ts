@@ -44,6 +44,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
       project.tvsConfig,
       tokenValuesMap,
       chains,
+      targetTimestamp,
       project.chainConfig?.gasTokens,
     )
 

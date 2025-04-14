@@ -3,9 +3,9 @@ import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import type { CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { TokenAddressCell } from '../cells/token-address-cell'
-import { TokenCanonicalAmountCell } from '../cells/token-canonical-amount-cell'
-import { TokenCanonicalValueCell } from '../cells/token-canonical-value-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
+import { TokenValueCell } from '../cells/token-value-cell'
+import { TokenAmountCell } from '../cells/token-amount-cell'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
 export const canonicallyBridgedColumns = [
@@ -49,9 +49,7 @@ export const canonicallyBridgedColumns = [
       align: 'right',
     },
     cell: (ctx) => {
-      const { usdValue } = ctx.row.original
-
-      return <TokenCanonicalValueCell usdValue={usdValue} />
+      return <TokenValueCell {...ctx.row.original} />
     },
   }),
   columnHelper.display({
@@ -60,18 +58,7 @@ export const canonicallyBridgedColumns = [
     meta: {
       align: 'right',
     },
-    cell: (ctx) => {
-      const isParentMultiEscrow = false
-
-      const { amount } = ctx.row.original
-
-      return (
-        <TokenCanonicalAmountCell
-          amount={amount}
-          isDescendant={isParentMultiEscrow}
-        />
-      )
-    },
+    cell: (ctx) => <TokenAmountCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'expand',

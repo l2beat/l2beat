@@ -19,6 +19,7 @@ export type BaseAssetBreakdownData = {
   isGasToken?: boolean
   address?: AddressData
   formula: Formula
+  syncStatus?: string
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
