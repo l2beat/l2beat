@@ -43,8 +43,7 @@ export const lisk: ScalingProject = opStackL2({
       title: 'Lisk Mainnet Launch',
       url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',
       date: '2024-11-12T00:00:00Z',
-      description:
-        "Lisk launches its User Mainnet.",
+      description: 'Lisk launches its User Mainnet.',
       type: 'general',
     },
   ],
