@@ -227,11 +227,7 @@ export async function NavLayout({
         {!topNavbar && topChildren && (
           <div className="block lg:hidden">{topChildren}</div>
         )}
-        <MobileTopNavbar
-          groups={groups}
-          logoLink={logoLink}
-          className={cn(!topNavbar && 'md:mb-5')}
-        />
+        <MobileTopNavbar groups={groups} logoLink={logoLink} />
         <NavSidebar
           logoLink={logoLink}
           groups={groups}
@@ -241,7 +237,7 @@ export async function NavLayout({
         <div
           className={cn(
             'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
-            !topNavbar && 'lg:ml-3',
+            !topNavbar && 'md:pt-5 lg:ml-3 lg:pt-0',
           )}
         >
           {!topNavbar && topChildren && (
