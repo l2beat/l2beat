@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { BADGES } from '../../common/badges'
 import type { Ecosystem } from '../../internalTypes'
 
 export const arbitrumOrbit: Ecosystem = {
@@ -13,7 +12,7 @@ export const arbitrumOrbit: Ecosystem = {
     links: {
       websites: ['https://arbitrum.io'],
     },
-    badges: [BADGES.Stack.Orbit],
+    badges: [],
   },
   ecosystemConfig: {
     links: {
