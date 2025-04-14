@@ -5999,6 +5999,19 @@
   ],
   "ink": [
     {
+      "symbol": "kBTC",
+      "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA" // there is a premint but we are ignoring it until tvs4
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USD₮0",
       "address": "0x0200C29006150606B650577BBE7B6248F58470c1",
       "coingeckoId": "usdt0",
