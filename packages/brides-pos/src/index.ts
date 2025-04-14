@@ -1,13 +1,6 @@
-import express from 'express'
+import { Application } from './Application'
+import { getConfig } from './config'
 
-const PORT = 3000
-
-const app = express()
-
-app.get('/', (_req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`)
-})
+const config = getConfig()
+const app = new Application(config)
+app.start()

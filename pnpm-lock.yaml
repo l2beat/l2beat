@@ -251,9 +251,15 @@ importers:
 
   packages/brides-pos:
     dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
       '@l2beat/shared':
         specifier: workspace:*
         version: link:../shared
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
