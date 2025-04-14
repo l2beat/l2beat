@@ -12,6 +12,7 @@ export const bitlazer: ScalingProject = underReviewL3({
     BADGES.RaaS.Caldera,
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.DAC,
+    BADGES.Stack.Orbit,
     BADGES.VM.EVM,
   ],
   display: {

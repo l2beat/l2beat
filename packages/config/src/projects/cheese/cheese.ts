@@ -11,7 +11,7 @@ export const cheese: ScalingProject = underReviewL3({
   badges: [
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.Celestia,
-
+    BADGES.Stack.Orbit,
     BADGES.VM.EVM,
     BADGES.RaaS.Caldera,
   ],
