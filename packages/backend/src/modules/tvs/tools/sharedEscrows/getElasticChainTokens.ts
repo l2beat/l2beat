@@ -5,14 +5,14 @@ import type {
   ProjectTvlEscrow,
   TvsToken,
 } from '@l2beat/config'
-import type { RpcClient } from '@l2beat/shared'
+import { type RpcClient, encodeTotalSupply } from '@l2beat/shared'
 import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
-import { toMulticallConfigEntry } from '../../../peripherals/multicall/MulticallConfig'
-import type { MulticallRequest } from '../../../peripherals/multicall/types'
-import { createEscrowToken } from '../tools/mapConfig'
-import { getTimestampsRange } from '../tools/timestamps'
+import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
+import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
+import type { MulticallRequest } from '../../../../peripherals/multicall/types'
+import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
+import { createEscrowToken } from '../mapConfig'
 
 export const bridgeInterface = new utils.Interface([
   'function l2TokenAddress(address _l1Token) view returns (address)',
@@ -47,8 +47,8 @@ export async function getElasticChainTokens(
   const block = await rpcClient.getLatestBlockNumber()
   const responses = await multicallClient.multicall(encoded, block)
 
-  const l2TokensTvsConfigs = responses
-    .map((response, index) => {
+  const l2TokensTvsConfigs = await Promise.all(
+    responses.map(async (response, index) => {
       const token = l2Tokens[index]
       if (
         response.data.toString() === '0x' ||
@@ -63,38 +63,51 @@ export async function getElasticChainTokens(
         response.data.toString(),
       )
 
-      const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
-        escrow,
-        chain,
-        token,
-      )
+      try {
+        // try fetching totalSupply, if it does not fail then add token
+        const res = await rpcClient.call(encodeTotalSupply(address), block)
+        if (res.length === 0) {
+          throw new Error('Token does not exist')
+        }
 
-      return {
-        mode: 'auto' as const,
-        id: TokenId.create(project.id, token.symbol),
-        priceId: token.coingeckoId,
-        symbol: token.symbol,
-        name: token.name,
-        iconUrl: token.iconUrl,
-        category: token.category,
-        source: 'canonical' as const,
-        isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-          token.symbol,
-        ),
-        amount: {
-          type: 'totalSupply' as const,
-          address: address,
-          chain: project.id,
-          // Assumption: decimals on destination network are the same
-          decimals: token.decimals,
-          sinceTimestamp,
-          ...(untilTimestamp ? { untilTimestamp } : {}),
-        },
+        const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
+          escrow,
+          chain,
+          token,
+        )
+
+        return {
+          mode: 'auto' as const,
+          id: TokenId.create(project.id, token.symbol),
+          priceId: token.coingeckoId,
+          symbol: token.symbol,
+          name: token.name,
+          iconUrl: token.iconUrl,
+          category: token.category,
+          source: 'canonical' as const,
+          isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+            token.symbol,
+          ),
+          amount: {
+            type: 'totalSupply' as const,
+            address: address,
+            chain: project.id,
+            // Assumption: decimals on destination network are the same
+            decimals: token.decimals,
+            sinceTimestamp,
+            ...(untilTimestamp ? { untilTimestamp } : {}),
+          },
+        }
+      } catch {
+        return
       }
-    })
-    .filter(notUndefined)
+    }),
+  )
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(escrow, chain)
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
+    escrow,
+    chain,
+  )
 
   const etherOnL2 = {
     mode: 'auto' as const,
@@ -129,5 +142,9 @@ export async function getElasticChainTokens(
     }
   }
 
-  return [...l2TokensTvsConfigs, etherOnL2, ...tokensToAssignFromL1]
+  return [
+    ...l2TokensTvsConfigs.filter(notUndefined),
+    etherOnL2,
+    ...tokensToAssignFromL1,
+  ]
 }
