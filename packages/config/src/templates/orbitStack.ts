@@ -1,9 +1,9 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
+  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'

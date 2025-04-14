@@ -2,9 +2,9 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,

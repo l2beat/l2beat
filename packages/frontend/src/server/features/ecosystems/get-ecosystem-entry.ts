@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import type {
   Milestone,
   Project,
@@ -5,8 +7,6 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { existsSync, readFileSync } from 'fs'
-import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
@@ -23,7 +23,7 @@ import {
 } from '../scaling/summary/get-scaling-summary-entries'
 import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
-import { getBlobsData, type BlobsData } from './get-blobs-data'
+import { type BlobsData, getBlobsData } from './get-blobs-data'
 import type { EcosystemProjectsCountData } from './get-ecosystem-projects-chart-data'
 import { getEcosystemProjectsChartData } from './get-ecosystem-projects-chart-data'
 import type { EcosystemToken } from './get-ecosystem-token'
