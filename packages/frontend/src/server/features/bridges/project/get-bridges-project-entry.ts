@@ -209,6 +209,24 @@ export async function getBridgesProjectEntry(
     })
   }
 
+  if (project.bridgeTechnology.upgradesAndGovernance) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: project.bridgeTechnology.upgradesAndGovernance,
+        diagram: {
+          type: 'upgrades-and-governance',
+          slug:
+            project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
+        },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+        isUnderReview: project.statuses.isUnderReview,
+      },
+    })
+  }
+
   const contractUtils = await getContractUtils()
 
   const permissionsSection = getPermissionsSection(

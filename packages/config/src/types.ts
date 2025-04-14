@@ -302,6 +302,8 @@ export interface ProjectBridgeTechnology {
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
   detailedDescription?: string
+  upgradesAndGovernance?: string
+  upgradesAndGovernanceImage?: string
 }
 // #endregion
 
