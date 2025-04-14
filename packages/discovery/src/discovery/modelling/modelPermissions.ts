@@ -62,9 +62,9 @@ export function parseTransitivePermissionFact(
   }
 }
 
-// type ParsedTransitivePermissionFact = ReturnType<
-//   typeof parseTransitivePermissionFact
-// >
+export type ParsedTransitivePermissionFact = ReturnType<
+  typeof parseTransitivePermissionFact
+>
 
 // interface TransitivePermissionVia {
 //   atom: 'tuple'

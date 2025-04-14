@@ -4,6 +4,7 @@ import type {
   ContractFieldSeverity,
   Permission,
 } from '../config/StructureConfig'
+import type { ParsedTransitivePermissionFact } from '../modelling/modelPermissions'
 
 export type ContractValue =
   | string
@@ -103,6 +104,7 @@ export type ColorEntry = {
   fieldMeta?: Record<string, FieldMeta>
   issuedPermissions?: IssuedPermission[]
   receivedPermissions?: ReceivedPermission[]
+  permissions?: ParsedTransitivePermissionFact[]
   directlyReceivedPermissions?: ReceivedPermission[]
   references?: ExternalReference[]
   category?: ContractCategory

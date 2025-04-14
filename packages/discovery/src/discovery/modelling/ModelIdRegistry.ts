@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { KnowledgeBase } from './KnowledgeBase'
 import type { ClingoFact } from './factTypes'
 
@@ -78,7 +79,7 @@ export class ModelIdRegistry {
 
   idToChainPrefixedAddress(modelId: string): string {
     const data = this.getAddressData(modelId)
-    return `${data.chain}:${data.address}`
+    return `${data.chain}:${EthereumAddress(data.address)} (${modelId})`
   }
 
   replaceIdsWithNames(s: string): string {

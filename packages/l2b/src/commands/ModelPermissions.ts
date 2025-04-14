@@ -1,11 +1,12 @@
-
 import {
   ConfigReader,
   TemplateService,
   getDiscoveryPaths,
   modelPermissions,
+  saveDiscoveredJson,
 } from '@l2beat/discovery'
 import { command, positional, string } from 'cmd-ts'
+import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
 export const ModelPermissions = command({
   name: 'model-permissions',
@@ -28,13 +29,33 @@ export const ModelPermissions = command({
     }
     for (const project of projects) {
       console.log(`Modelling: ${project}`)
-      const facts = await modelPermissions(
+      const ultimatePermissions = await modelPermissions(
         project,
         configReader,
         templateService,
         paths,
       )
-      console.log(JSON.stringify(facts, null, 2))
+      const chainConfigs = configReader
+        .readAllChainsForProject(project)
+        .flatMap((chain) => configReader.readConfig(project, chain))
+      for (const config of chainConfigs) {
+        const discovery = configReader.readDiscovery(config.name, config.chain)
+        for (const entry of discovery.entries) {
+          const ultimatePermissionsForEntry = ultimatePermissions.filter((p) =>
+            p.receiver.startsWith(`${config.chain}:${entry.address}`),
+          )
+          if (ultimatePermissionsForEntry.length > 0) {
+            entry.permissions = ultimatePermissionsForEntry
+          }
+        }
+        const projectDiscoveryFolder = configReader.getProjectChainPath(
+          config.name,
+          config.chain,
+        )
+        await saveDiscoveredJson(discovery, projectDiscoveryFolder)
+
+        updateDiffHistory(config.name, config.chain)
+      }
     }
   },
 })
