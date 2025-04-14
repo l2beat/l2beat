@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 22081889,
-  "configHash": "0xfd7a5199595fb750d108c5700e9a9cef13a64fd1f48f2ff3690197262ebba180",
+  "configHash": "0xd99aaf8a1c8512895f38c62d98ca0683d30cb05b1b62050f5f55adcd6f0aec83",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
@@ -35,7 +35,7 @@
         "0x9e054d18af00f58f7fa36e7a0fd5b04b9dacfb8c411d84c3591e57aa72faff9d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1046,7 +1046,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1099,7 +1098,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1591,7 +1589,6 @@
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1654,7 +1651,6 @@
         "0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -1741,7 +1737,6 @@
         "0x6c09a44175196122c17b285af0789d13088361d0f4244fbe65f00f40d3036cb8"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ChallengeManager",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
       "issuedPermissions": [
         {
@@ -1859,7 +1854,6 @@
         "0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "CustomGateway",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
@@ -5120,27 +5114,27 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "orbitstack/Bridge": "0x845301f405250de17dac319b98e789faa82ba4b2112fa393bc9e5543309f6fdb",
-    "orbitstack/CustomGateway2": "0x78314a060f1a0ab63c8cc610f3f65e2ee3db899773f5185db3fb2c77205421d1",
-    "orbitstack/EdgeChallengeManager": "0xabd3efc522d4618ae82b266ac049b345f7e5f1ffbf72f930274626712d0baa54",
-    "orbitstack/ERC20Gateway2": "0x63632fcac1466b2923623e42af2a7978e01a51e509df0aea710023c7b6e7c01c",
-    "orbitstack/GatewayRouter": "0x4ffc754ff04b3640c99118d12b09b5ca5762dceb37509e5fdff23a8f43bb1180",
-    "orbitstack/Inbox": "0xd0dac54a5086572ce3617a54758925dc0549cddf5901e35abeabc6a82c8e4125",
-    "orbitstack/L1DaiGateway": "0xed9eadf5f30a090c39f8acc11bb104f8dd9224e387a59429c0f3c1f1e38a10e6",
-    "orbitstack/OneStepProofEntry": "0x074184951191630feeaa1da3328d97eb4b6b01fcab82d65b95edbab72a8f3f24",
-    "orbitstack/OneStepProver0": "0x559f6ee495bd31dc9c44eb080b7465809cc4be6b4320e9eaaa57688d40e5393f",
-    "orbitstack/OneStepProverHostIo": "0x005f15de59af5ea5756cd602e399228055af398efab35e1838bc380b50b40d9c",
-    "orbitstack/OneStepProverMath": "0x9b4bb3e22278824fe310f080640053b421ec7571e8b89875e70c6a428073c9e4",
-    "orbitstack/OneStepProverMemory": "0xe7c75f6dbf6da1c4532a8bdc920a2159d59c38ad05c35e4c49405d5e2939ecb9",
-    "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
-    "orbitstack/ParentToChildRewardRouter": "0xd1fc25e6b72699ba6f65f536c0ca7b0887b0aeca045570aec48939c258b685d0",
-    "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
-    "orbitstack/RollupProxyBoLD": "0x79979c974399e5668cea2ff24e5a09bc2c46b88573d3e9dac56c9f88caa4eeca",
-    "orbitstack/SecurityCouncil": "0xdcb84d1f43f14da797bf12ed87af05af6333de2c64ea3612938d02331ef96263",
-    "orbitstack/SequencerInbox": "0x6c9fb56a71e6c16fcf572638338a9ca472776731ab17ec214ed873a63f006223",
-    "orbitstack/Timelock": "0x584240f3909a1061aab7560daa6d114df6cf3c1d9f7abad51516c5554fd3e61d",
-    "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "orbitstack/Bridge": "0x90031b4e4f9fcb7d87cf53eb46e1eac9602ede912abdfa54f17d7d3aa96e3ea0",
+    "orbitstack/CustomGateway2": "0x96e6b623f5bcc7788ad0c01a5d7520bec15eda0a761a0907a47d87cdb752d4e7",
+    "orbitstack/EdgeChallengeManager": "0x43577685a8a9a542b402c4a038c55829c62a4df66410c614c93a6b02d2fa9166",
+    "orbitstack/ERC20Gateway2": "0x954f4e419b2ad254564d4333d088d57aea3283edccc516bcf07e5d4467f48f77",
+    "orbitstack/GatewayRouter": "0xe69c43c0e257aac7722518bb22b4ac48768f06e16a25c0be3b4a03d8ffc6d264",
+    "orbitstack/Inbox": "0x45f9b69916c043d8a695844685a99374143c20e6d5a13ceb145fdf6a1121825b",
+    "orbitstack/L1DaiGateway": "0x5669a02d7dfb9f107a228c722c82007ebd9470820e7ed0289a2bd453859fc684",
+    "orbitstack/OneStepProofEntry": "0x9eb54e580161778d86b080078e2ee2b9780cc0cdc39d271fe6202028901f2589",
+    "orbitstack/OneStepProver0": "0xd52943a596387edc0931848e22e526893c934fa609baf10454c9f11b46bce1b1",
+    "orbitstack/OneStepProverHostIo": "0x8cef93d8938073b743f7a540589ae5a108425a5a9c6f16ba080df9c88fd0ad62",
+    "orbitstack/OneStepProverMath": "0x46314b895c9439d9614366eaf21a39c387137bbd00b4af934add687a1ad0131e",
+    "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
+    "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
+    "orbitstack/ParentToChildRewardRouter": "0x3bc52fbc107b492c070b5063cc4929371d1081db3de56e70a32d0069e660d89a",
+    "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
+    "orbitstack/RollupProxyBoLD": "0x800d67eca5e66e01ed2b263576314f5176ab6003683a37b80e93839459bf7c01",
+    "orbitstack/SecurityCouncil": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
+    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/Timelock": "0x4110c0fb129bc71f5c897676352cabfbe4d46b768669fd206b28e1151e2f532e",
+    "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04"
   }
 }

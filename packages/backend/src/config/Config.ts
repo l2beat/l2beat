@@ -158,6 +158,11 @@ export interface EtherscanChainConfig {
   readonly url: string
 }
 
+export interface RoutescanChainConfig {
+  readonly type: 'routescan'
+  readonly url: string
+}
+
 export interface ChainTvlConfig {
   readonly name: string
   readonly providerUrl: string
@@ -166,6 +171,7 @@ export interface ChainTvlConfig {
   readonly blockExplorerConfig:
     | EtherscanChainConfig
     | BlockscoutChainConfig
+    | RoutescanChainConfig
     | undefined
   readonly multicallConfig: MulticallConfigEntry[]
 }

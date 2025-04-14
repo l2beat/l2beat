@@ -38,6 +38,7 @@ export function printTemplatization(
         templateService,
         contract,
       )
+
       const firstLinePrefix = i === templatized.length - 1 ? `└─` : `├─`
       const nestedLinePrefix = i === templatized.length - 1 ? `  ` : `│ `
       const indent = ' '.repeat(2)
@@ -48,13 +49,19 @@ export function printTemplatization(
           ? chalk.green(template)
           : chalk.yellow(template)
 
-      const nestedLines = matchedShape
-        ? [
-            matchedShape.description,
-            `${matchedShape.chain} @ ${matchedShape.blockNumber} (${matchedShape.address})`,
-            `hash: ${matchedShape.hash}`,
-          ]
-        : []
+      const nestedLines = []
+      if (matchedShape !== undefined) {
+        const [shapeFileName, { chain, blockNumber, hash, address }] =
+          matchedShape
+
+        nestedLines.push(
+          ...[
+            shapeFileName,
+            `${chain} @ ${blockNumber} (${address})`,
+            `hash: ${hash}`,
+          ],
+        )
+      }
 
       const shapeData = nestedLines.map((line, index) => {
         const isLastLine = index === nestedLines.length - 1

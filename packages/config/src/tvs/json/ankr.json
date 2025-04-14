@@ -8,6 +8,7 @@
       "priceId": "ankr",
       "symbol": "ANKR",
       "name": "Ankr Network",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4",
@@ -18,8 +19,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -27,6 +27,7 @@
       "priceId": "ankreth",
       "symbol": "ankrETH",
       "name": "Ankr Staked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13403/large/aETHc.png?1696513165",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
@@ -37,8 +38,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/13403/large/aETHc.png?1696513165"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -46,6 +46,7 @@
       "priceId": "ankr-reward-earning-matic",
       "symbol": "ankrPOL",
       "name": "Ankr Staked POL",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25742/large/a-matic-c-da4ec10dc9723e695700e25dbf8c8edf.png?1696524833",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C",
@@ -56,8 +57,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/25742/large/a-matic-c-da4ec10dc9723e695700e25dbf8c8edf.png?1696524833"
+      "isAssociated": false
     }
   ]
 }

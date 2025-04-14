@@ -8,6 +8,7 @@
       "priceId": "blur",
       "symbol": "BLUR",
       "name": "Blur",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28453/large/blur.png?1696527448",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -17,8 +18,7 @@
         "chain": "lumia",
         "decimals": 18,
         "sinceTimestamp": 1719499031
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/28453/large/blur.png?1696527448"
+      }
     },
     {
       "mode": "auto",
@@ -26,6 +26,7 @@
       "priceId": "convex-finance",
       "symbol": "CVX",
       "name": "Convex Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15585/large/convex.png?1696515221",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -35,8 +36,7 @@
         "chain": "lumia",
         "decimals": 18,
         "sinceTimestamp": 1719499031
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/15585/large/convex.png?1696515221"
+      }
     },
     {
       "mode": "auto",
@@ -44,6 +44,7 @@
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "category": "ether",
       "source": "canonical",
       "amount": {
@@ -53,8 +54,7 @@
         "decimals": 18,
         "sinceTimestamp": 1719499031
       },
-      "isAssociated": false,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628"
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -62,6 +62,7 @@
       "priceId": "lumia",
       "symbol": "LUMIA",
       "name": "Lumia Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
@@ -72,8 +73,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true,
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993"
+      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -81,6 +81,7 @@
       "priceId": "the-open-network",
       "symbol": "TONCOIN",
       "name": "Wrapped TON Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17980/large/ton_symbol.png?1696517498",
       "category": "other",
       "source": "canonical",
       "isAssociated": false,
@@ -90,8 +91,7 @@
         "chain": "lumia",
         "decimals": 9,
         "sinceTimestamp": 1719499031
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/17980/large/photo_2024-09-10_17.09.00.jpeg?1725963446"
+      }
     },
     {
       "mode": "auto",
@@ -99,6 +99,7 @@
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -108,8 +109,7 @@
         "chain": "lumia",
         "decimals": 6,
         "sinceTimestamp": 1719499031
-      },
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661"
+      }
     }
   ]
 }

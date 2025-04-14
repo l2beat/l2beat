@@ -1,10 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
+  hashJsonStable,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -200,7 +201,7 @@ export class UpdateMonitor {
 
   private async updateProject(
     runner: DiscoveryRunner,
-    projectConfig: DiscoveryConfig,
+    projectConfig: ConfigRegistry,
     blockNumber: number,
     timestamp: UnixTime,
   ) {
@@ -256,7 +257,7 @@ export class UpdateMonitor {
       timestamp,
       blockNumber,
       discovery,
-      configHash: projectConfig.hash,
+      configHash: hashJsonStable(projectConfig.structure),
     })
 
     await this.db.flatSources.upsert({
@@ -286,14 +287,17 @@ export class UpdateMonitor {
 
   async getPreviousDiscovery(
     runner: DiscoveryRunner,
-    projectConfig: DiscoveryConfig,
+    projectConfig: ConfigRegistry,
   ): Promise<DiscoveryOutput | undefined> {
     const databaseEntry = await this.db.updateMonitor.findLatest(
       projectConfig.name,
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
     let previousDiscovery: DiscoveryOutput
-    if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
+    if (
+      databaseEntry &&
+      databaseEntry.configHash === hashJsonStable(projectConfig.structure)
+    ) {
       this.logger.info('Using database record', {
         chain: runner.chain,
         project: projectConfig.name,
@@ -322,7 +326,7 @@ export class UpdateMonitor {
   private async handleDiff(
     diff: DiscoveryDiff[],
     discovery: DiscoveryOutput,
-    projectConfig: DiscoveryConfig,
+    projectConfig: ConfigRegistry,
     blockNumber: number,
     chain: string,
     timestamp: UnixTime,

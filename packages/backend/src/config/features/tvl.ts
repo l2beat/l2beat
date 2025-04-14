@@ -70,7 +70,10 @@ export function getChainTvlConfig(
 
   const rpcApi = chain.apis.find((x) => x.type === 'rpc')
   const explorerApi = chain.apis.find(
-    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+    (x) =>
+      x.type === 'etherscan' ||
+      x.type === 'routescan' ||
+      x.type === 'blockscout',
   )
 
   const ENV_NAME = chain.name.toUpperCase()

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc07ff2f61e4291befb77e270e73e168b320776f3
+
+# Diff at Thu, 10 Apr 2025 14:43:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22144824
+- current block number: 22144824
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22144824 (main branch discovery), not current.
+
+```diff
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      displayName:
+-        "L1EscrowDAI"
+    }
+```
+
 Generated with discovered.json: 0x4c7487b1e6311f885d2fcc2f4e77223606e2c005
 
 # Diff at Fri, 28 Mar 2025 10:30:21 GMT:

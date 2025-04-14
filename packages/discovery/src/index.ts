@@ -1,4 +1,7 @@
 export { discover } from './cli/discoverCommand'
+export { colorize } from './discovery/colorize/colorize'
+export { modelPermissions } from './discovery/modelling/modelPermissions'
+export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export { getChainConfig, getChainShortName } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
@@ -8,13 +11,13 @@ export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
-export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+export { ConfigRegistry } from './discovery/config/ConfigRegistry'
 export {
   Permission,
-  RawDiscoveryConfig,
   BasePermissionEntries,
   RolePermissionEntries,
-} from './discovery/config/RawDiscoveryConfig'
+} from './discovery/config/StructureConfig'
+export type { DiscoveryConfig } from './discovery/config/ConfigSchema'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
 export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
@@ -22,6 +25,7 @@ export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSo
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export { neuterErrors } from './discovery/output/errors'
+export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   diffDiscovery,
   type DiscoveryDiff,
@@ -54,7 +58,10 @@ export {
   buildSimilarityHashmap,
   estimateSimilarity,
 } from './flatten/utils'
-export type { ContractConfig } from './discovery/config/ContractConfig'
+export {
+  type StructureContractConfig as ContractConfig,
+  makeEntryStructureConfig,
+} from './discovery/config/structureUtils'
 export type { ExplorerConfig } from './utils/IEtherscanClient'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
@@ -84,4 +91,5 @@ export {
   getDiscoveryPaths,
   type DiscoveryPaths,
 } from './discovery/config/getDiscoveryPaths'
-export { ShapeSchema } from './discovery/config/ShapeSchema'
+export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
+export { makeEntryColorConfig } from './discovery/config/colorUtils'

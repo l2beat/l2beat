@@ -24,6 +24,7 @@ import {
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
 const args = {
@@ -95,7 +96,19 @@ const cmd = command({
 
       if (tvsConfig.tokens.length > 0) {
         logger.info('Executing TVS to exclude zero-valued tokens')
-        const tvs = await localExecutor.run(tvsConfig, timestamp, false)
+
+        const tokensWhereTimestampInSyncRange = tvsConfig.tokens.filter(
+          (token) => isInTokenSyncRange(token, timestamp),
+        )
+
+        const tvs = await localExecutor.run(
+          {
+            projectId: project.id,
+            tokens: tokensWhereTimestampInSyncRange,
+          },
+          timestamp,
+          false,
+        )
 
         const valueForProject = tvs.reduce((acc, token) => {
           return acc + token.valueForProject

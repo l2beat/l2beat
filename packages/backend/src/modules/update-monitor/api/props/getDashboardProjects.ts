@@ -1,7 +1,7 @@
 import type { Database } from '@l2beat/database'
 import {
   type ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
@@ -11,11 +11,11 @@ import { ChainId } from '@l2beat/shared-pure'
 export interface DashboardProject {
   name: string
   diff?: DiscoveryDiff[]
-  config?: DiscoveryConfig
+  config?: ConfigRegistry
 }
 
 export async function getDashboardProjects(
-  configs: DiscoveryConfig[],
+  configs: ConfigRegistry[],
   configReader: ConfigReader,
   db: Database,
   chain: string,

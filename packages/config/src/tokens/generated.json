@@ -1515,6 +1515,20 @@
       "supply": "zero"
     },
     {
+      "name": "deUSD",
+      "coingeckoId": "elixir-deusd",
+      "address": "0x15700B564Ca08D9439C58cA5053166E8317aa138",
+      "symbol": "deUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1721068655,
+      "coingeckoListingTimestamp": 1722470400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39494/large/deUSD_Logo_%281%29.png?1723689002",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "DEXTF Token",
       "coingeckoId": "dextf",
       "address": "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0",
@@ -2137,6 +2151,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1687435091,
       "coingeckoListingTimestamp": 1689552000,
+      "untilTimestamp": 1742428800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
       "chainId": 1,
@@ -5070,6 +5085,20 @@
       "supply": "zero"
     },
     {
+      "name": "Staked deUSD",
+      "coingeckoId": "elixir-staked-deusd",
+      "address": "0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
+      "symbol": "sdeUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1721142035,
+      "coingeckoListingTimestamp": 1734393600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52847/large/Staked_deUSD_%28sdeUSD%29_Logo.png?1734473339",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
@@ -5693,6 +5722,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1705196147,
       "coingeckoListingTimestamp": 1706918400,
+      "untilTimestamp": 1742169600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34992/large/PNG_-_Logo_-_3485x.png?1706943532",
       "chainId": 1,
@@ -9405,6 +9435,20 @@
       }
     },
     {
+      "name": "Kinto Token",
+      "coingeckoId": "kinto",
+      "address": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
+      "symbol": "K",
+      "decimals": 18,
+      "deploymentTimestamp": 1718926428,
+      "coingeckoListingTimestamp": 1743379200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54964/large/k200.png?1742894885",
+      "chainId": 7887,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Aavegotchi GHST Token",
       "coingeckoId": "aavegotchi",
       "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
@@ -10338,6 +10382,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Blend Token",
+      "coingeckoId": "blend-3",
+      "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
+      "symbol": "BLEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1737791442,
+      "coingeckoListingTimestamp": 1741478400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54778/large/Blend0.png?1741517155",
+      "chainId": 41923,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Aethir Token",
@@ -11683,7 +11741,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/13161/large/icon-celo-dollar-color-1000-circle-cropped.png?1696512945",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Celo Euro",
@@ -11697,7 +11755,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16756/large/CEUR.png?1696516329",
       "chainId": 42220,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "totalSupply"
     },
     {
       "name": "Celo Kenyan Shilling",
@@ -12093,6 +12151,27 @@
           {
             "name": "Stargate v2 (Hydra mode)",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kraken Wrapped Bitcoin",
+      "coingeckoId": "kraken-wrapped-btc",
+      "address": "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98",
+      "symbol": "kBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1741953292,
+      "coingeckoListingTimestamp": 1730160000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50879/large/kBTC.png?1730321084",
+      "chainId": 57073,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
           }
         ]
       }
@@ -12920,6 +12999,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715905323,
       "coingeckoListingTimestamp": 1718236800,
+      "untilTimestamp": 1742990400,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38671/large/Stack.png?1718290662",
       "chainId": 111188,

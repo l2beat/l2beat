@@ -2,7 +2,7 @@
   "name": "polygon-pos",
   "chain": "ethereum",
   "blockNumber": 22123500,
-  "configHash": "0xbb6973df774d56700748cb05319b530ba31e5d62cf035ab9531aea01cad9d5f6",
+  "configHash": "0x406acf8a72b3ffa99a590fa6125816953034e52cc5c0353bd66f0ba4967c0ba6",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -2741,7 +2741,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "polygonposbridge/predicate": "0xb77dacaa0fc6fab29ac4f30ab100ca5030665fc9a35fa65702cbee5526a7d0bc"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   }
 }

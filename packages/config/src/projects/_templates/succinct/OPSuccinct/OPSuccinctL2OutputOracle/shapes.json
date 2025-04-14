@@ -1,9 +1,8 @@
-[
-  {
+{
+  "OPSuccinctL2OutputOracle": {
     "hash": "0x709a766c251331fb7c079ad2f2bd400a1e94ef7a1cbb118dc889fd93d8233165",
-    "description": "OPSuccinctL2OutputOracle",
     "address": "0xE41997Df2A412ed5B56ac9f3997A72B6BeE9d888",
     "chain": "ethereum",
     "blockNumber": 22188285
   }
-]
+}
