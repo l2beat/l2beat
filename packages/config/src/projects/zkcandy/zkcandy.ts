@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -35,6 +35,9 @@ export const zkcandy: ScalingProject = zkStackL2({
         'https://t.me/zkcandy',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
   discovery,
   diamondContract: discovery.getContract('zkCandyZkEvm'),

@@ -246,12 +246,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
-      [
-        BADGES.Stack.ZKStack,
-        BADGES.Infra.ElasticChain,
-        BADGES.VM.EVM,
-        BADGES.DA.EthereumBlobs,
-      ],
+      [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
       templateVars.additionalBadges ?? [],
     ),
     display: {

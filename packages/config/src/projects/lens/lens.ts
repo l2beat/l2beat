@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -17,6 +17,9 @@ const trackedTxsSince = UnixTime(1742928599)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const lens: ScalingProject = zkStackL2({
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   capability: 'universal',
   additionalPurposes: ['Social'],
   additionalBadges: [BADGES.DA.Avail],
