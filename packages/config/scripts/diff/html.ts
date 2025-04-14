@@ -50,6 +50,8 @@ function diffToHtml(diff: ProjectDiff, _index: number, diffs: ProjectDiff[]) {
     <span>${diff.id}</span>
     <code><span class="added">+${diff.added}</span> <span class="removed">-${diff.removed}</span></code>
   </h2>
+  <input type="checkbox" id="${diff.id}" name="${diff.id}">
+  <label for="${diff.id}">Viewed</label><br>
   <ul class="field" x-show="open">${diff.fields.map(fieldDiffToHtml).join('')}</ul>
 </li>`
 }
