@@ -13,7 +13,7 @@ import {
   type TvsToken,
 } from '@l2beat/config'
 import { HttpClient, RpcClient } from '@l2beat/shared'
-import { assert, ProjectId, type TokenId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   boolean,
   command,
@@ -89,7 +89,18 @@ const cmd = command({
     logger.info(`Generating new TVS config for projects`)
     const regeneratedProjects = await Promise.all(
       projects.map(async (project) => {
-        return await generateConfigForProject(project, chains, logger)
+        const newConfig = await generateConfigForProject(
+          project,
+          chains,
+          logger,
+        )
+        // we need to read the current config to include custom tokens
+        const currentConfig = readFromFile(getProjectConfigFilePath(project.id))
+
+        return {
+          ...newConfig,
+          tokens: mergeWithExistingConfig(newConfig.tokens, currentConfig),
+        }
       }),
     )
 
@@ -114,7 +125,7 @@ const cmd = command({
 
     for (const project of regeneratedProjects) {
       let newConfig: TvsToken[] = []
-      const filePath = `./../config/src/tvs/json/${project.projectId.replace('=', '').replace(';', '')}.json`
+      const filePath = getProjectConfigFilePath(project.projectId)
 
       if (project.tokens.length > 0) {
         const tvsForProject = tvs.get(project.projectId)
@@ -160,12 +171,9 @@ const cmd = command({
         }
       }
 
+      // we need to merge 2nd time to make sure custom tokens where not removed
       const currentConfig = readFromFile(filePath)
-      const mergedTokens = mergeWithExistingConfig(
-        newConfig,
-        currentConfig,
-        logger,
-      )
+      const mergedTokens = mergeWithExistingConfig(newConfig, currentConfig)
 
       if (mergedTokens.length > 0) {
         writeToFile(filePath, project.projectId, mergedTokens)
@@ -276,17 +284,12 @@ function readFromFile(filePath: string) {
 }
 
 function mergeWithExistingConfig(
-  nonZeroTokens: TvsToken[],
+  newConfig: TvsToken[],
   currentConfig: TvsToken[],
-  logger: Logger,
 ) {
   const resultMap = new Map<string, TvsToken>()
-  nonZeroTokens.forEach((token) => {
-    if (resultMap.has(token.id)) {
-      logger.warn(`Duplicate detected: ${token.id}`)
-      token.id = (token.id + '-duplicate') as TokenId
-    }
-
+  newConfig.forEach((token) => {
+    assert(!resultMap.has(token.id), `Duplicate token ${token.id} found`)
     resultMap.set(token.id, token)
   })
 
@@ -304,6 +307,13 @@ function toDollarString(value: number) {
   } else if (value > 1e6) {
     return `$${(value / 1e6).toFixed(2)}M`
   } else {
-    return `$${value.toFixed(2)}`
+    return `$${value.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`
   }
+}
+
+function getProjectConfigFilePath(projectId: string) {
+  return `./../config/src/tvs/json/${projectId.replace('=', '').replace(';', '')}.json`
 }
