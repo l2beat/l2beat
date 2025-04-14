@@ -1,0 +1,26 @@
+{
+  "name": "@l2beat/bridges-poc",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./build/data.json",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "start": "node -r source-map-support/register build/index.js",
+    "dev": "node -r esbuild-register src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@l2beat/shared": "workspace:*",
+    "@types/express": "^5.0.0",
+    "express": "^5.0.0"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
+  }
+}
