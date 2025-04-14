@@ -18,7 +18,16 @@ export function createRouter(
     handleSSE((send) => {
       return txService.listen((tx) => {
         const token = getToken(tx.source.token)
-        const amount = formatUnits(tx.source.amount, token.decimals)
+
+        if (token.name.startsWith('???')) {
+          // Spam token filtering
+          return
+        }
+
+        let amount = formatUnits(tx.source.amount, token.decimals)
+        const [a, b = ''] = amount.split('.')
+        amount = `${a}.${b.slice(0, 3).padEnd(3, '0')}`
+
         send({
           timestamp: new Date(tx.timestamp * 1000).toISOString(),
           protocol: tx.protocol,

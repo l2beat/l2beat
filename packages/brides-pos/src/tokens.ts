@@ -15,7 +15,7 @@ export function getToken(address: Address) {
   return (
     tokenMap.get(address) ?? {
       address,
-      name: address,
+      name: '??? ' + address.split(':')[1].slice(0, 10),
       decimals: 0,
     }
   )

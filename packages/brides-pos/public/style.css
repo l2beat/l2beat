@@ -7,17 +7,34 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
+  font-family: Avenir, Montserrat, Corbel, "URW Gothic", source-sans-pro,
+    sans-serif;
+  font-weight: normal;
 }
 
 table {
-  margin: 0 auto;
+  margin: 20px auto;
   min-width: 900px;
   max-width: 900px;
+  border-collapse: collapse;
+}
+
+table th {
+  text-align: left;
+  text-transform: uppercase;
+  padding: 1px 6px;
 }
 
 table td {
+  text-align: left;
   white-space: pre;
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 1px 6px;
+}
+
+table th:last-child,
+table td:last-child {
+  text-align: right;
 }
