@@ -99,7 +99,7 @@ export const cyber: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'routescan-etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
       },
     ],

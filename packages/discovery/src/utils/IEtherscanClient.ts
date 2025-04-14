@@ -12,7 +12,7 @@ export interface EtherscanUnsupportedMethods {
 }
 
 interface EtherscanExplorerConfig {
-  type: 'etherscan' | 'routescan-etherscan'
+  type: 'etherscan'
   url: string
   apiKey: string
   unsupported?: EtherscanUnsupportedMethods
@@ -24,13 +24,22 @@ interface BlockscoutExplorerConfig {
   unsupported?: EtherscanUnsupportedMethods
 }
 
+interface RoutescanExplorerConfig {
+  type: 'routescan'
+  url: string
+  unsupported?: EtherscanUnsupportedMethods
+}
+
 export interface Transaction {
   input: string
   to: EthereumAddress
   hash: Hash256
 }
 
-export type ExplorerConfig = EtherscanExplorerConfig | BlockscoutExplorerConfig
+export type ExplorerConfig =
+  | EtherscanExplorerConfig
+  | BlockscoutExplorerConfig
+  | RoutescanExplorerConfig
 
 export interface ContractSource {
   name: string
@@ -69,11 +78,11 @@ export function getExplorerClient(
         config.unsupported,
       )
     }
-    case 'routescan-etherscan': {
+    case 'routescan': {
       return RoutescanClient.createForDiscovery(
         httpClient,
         config.url,
-        config.apiKey,
+        '',
         config.unsupported,
       )
     }

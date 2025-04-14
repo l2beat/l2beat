@@ -190,7 +190,7 @@ export const bobanetwork: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'routescan-etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
       },
     ],

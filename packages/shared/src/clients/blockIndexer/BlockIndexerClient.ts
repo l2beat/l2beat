@@ -16,6 +16,12 @@ interface BlockscoutOptions {
   chain: string
 }
 
+interface RoutescanOptions {
+  type: 'routescan'
+  url: string
+  chain: string
+}
+
 // TODO: add retries, use HttpClient
 export class BlockIndexerClient {
   chain: string
@@ -29,18 +35,23 @@ export class BlockIndexerClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly rateLimiter: RateLimiter,
-    private readonly options: EtherscanOptions | BlockscoutOptions,
+    private readonly options:
+      | EtherscanOptions
+      | BlockscoutOptions
+      | RoutescanOptions,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.binTimeWidth = options.type === 'etherscan' ? 10 : 1
-    this.maximumCallsForBlockTimestamp = options.type === 'etherscan' ? 3 : 10
+    this.binTimeWidth =
+      options.type === 'etherscan' || options.type === 'routescan' ? 10 : 1
+    this.maximumCallsForBlockTimestamp =
+      options.type === 'etherscan' || options.type === 'routescan' ? 3 : 10
     this.chain = options.chain
   }
 
   static create(
     services: { httpClient: HttpClient; logger: Logger },
     rateLimiter: RateLimiter,
-    options: EtherscanOptions | BlockscoutOptions,
+    options: EtherscanOptions | BlockscoutOptions | RoutescanOptions,
   ) {
     return new BlockIndexerClient(services.httpClient, rateLimiter, options)
   }

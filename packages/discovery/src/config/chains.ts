@@ -10,7 +10,7 @@ interface ChainConfig {
   // See: https://github.com/safe-global/safe-core-sdk/blob/9b64da33bc55615349d527909d4b792e05bb9826/packages/protocol-kit/src/utils/eip-3770/config.ts
   shortName: string
   explorer: {
-    type: 'etherscan' | 'blockscout' | 'routescan-etherscan'
+    type: 'etherscan' | 'blockscout' | 'routescan'
     url: string
     unsupported?: EtherscanUnsupportedMethods
   }
@@ -183,7 +183,7 @@ export const chains: ChainConfig[] = [
     shortName: 'mantle',
     multicall: getMulticall3Config(304717),
     explorer: {
-      type: 'routescan-etherscan',
+      type: 'routescan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
     },
   },
@@ -193,7 +193,7 @@ export const chains: ChainConfig[] = [
     shortName: 'metis-andromeda',
     multicall: getMulticall3Config(2338552),
     explorer: {
-      type: 'routescan-etherscan',
+      type: 'routescan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
     },
   },
@@ -203,7 +203,7 @@ export const chains: ChainConfig[] = [
     shortName: 'boba',
     multicall: getMulticall3Config(446859),
     explorer: {
-      type: 'routescan-etherscan',
+      type: 'routescan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
     },
   },
@@ -213,7 +213,7 @@ export const chains: ChainConfig[] = [
     shortName: 'mode',
     multicall: getMulticall3Config(2465882),
     explorer: {
-      type: 'routescan-etherscan',
+      type: 'routescan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
     },
   },

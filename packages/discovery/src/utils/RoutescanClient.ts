@@ -24,12 +24,11 @@ export class RoutescanClient
   constructor(
     httpClient: HttpClient,
     url: string,
-    apiKey: string,
     minTimestamp: UnixTime,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
     logger = Logger.SILENT,
   ) {
-    super(httpClient, url, apiKey, minTimestamp, unsupportedMethods, logger)
+    super(httpClient, url, '', minTimestamp, unsupportedMethods, logger)
   }
 
   /**
@@ -38,10 +37,10 @@ export class RoutescanClient
   static override createForDiscovery(
     httpClient: HttpClient,
     url: string,
-    apiKey: string,
+    _apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
   ): RoutescanClient {
-    return new RoutescanClient(httpClient, url, apiKey, 0, unsupportedMethods)
+    return new RoutescanClient(httpClient, url, 0, unsupportedMethods)
   }
 
   public override async callWithRetries(
