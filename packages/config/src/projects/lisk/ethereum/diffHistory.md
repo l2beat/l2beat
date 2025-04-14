@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x56c991491c342daa6d0a992cffba612dec3430f2
+
+# Diff at Mon, 14 Apr 2025 08:37:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51cb72b175a19516796629e400e8354f50e161ac block: 21635783
+- current block number: 22266078
+
+## Description
+
+Add custom wstETH escrow.
+
+## Watched changes
+
+```diff
+    contract L1ERC20TokenBridge (0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf) {
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      name:
++        "L1ERC20TokenBridge"
+      template:
++        "lido/L1ERC20TokenBridge"
+      sourceHashes:
++        ["0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135","0xc4b0423b7d0fcada3862027e805c2fc79676feb6f4bc3978e5a86b390bfd7be3"]
+      description:
++        "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally."
+      sinceTimestamp:
++        1737623423
+      sinceBlock:
++        21686205
+      values:
++        {"$admin":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","$implementation":"0xC7315f4FaaB2F700fc6b4704BB801c46ff6327AC","$pastUpgrades":[["2025-01-23T09:10:23.000Z","0xc46d4a4110ff87720804f018aa5be922d1a401d1b869ea4f7fee645ee6ba1b60",["0xC7315f4FaaB2F700fc6b4704BB801c46ff6327AC"]]],"$upgradeCount":1,"DEFAULT_ADMIN_ROLE":"0x0000000000000000000000000000000000000000000000000000000000000000","DEPOSITS_DISABLER_ROLE":"0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6","DEPOSITS_ENABLER_ROLE":"0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a","isDepositsEnabled":true,"isInitialized":true,"isWithdrawalsEnabled":true,"l1Token":"0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0","l2Token":"0x76D8de471F54aAA87784119c60Df1bbFc852C415","l2TokenBridge":"0xca498Ee83eD3546321d4DC25e2789B0624F15f68","messenger":"0x31B72D76FB666844C41EdF08dF0254875Dbb7edB","proxy__getAdmin":"0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c","proxy__getImplementation":"0xC7315f4FaaB2F700fc6b4704BB801c46ff6327AC","proxy__getIsOssified":false,"WITHDRAWALS_DISABLER_ROLE":"0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c","WITHDRAWALS_ENABLER_ROLE":"0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"}
+      derivedName:
++        "L1ERC20TokenBridge"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1ERC20TokenBridge/L1ERC20TokenBridge.sol      | 1078 ++++++++++++++++++++
+ .../.flat/L1ERC20TokenBridge/OssifiableProxy.p.sol |  614 +++++++++++
+ 2 files changed, 1692 insertions(+)
+```
+
 Generated with discovered.json: 0xc5aae6763bd4dd2a45aabf15a3545fff4224a75f
 
 # Diff at Thu, 27 Mar 2025 11:14:35 GMT:
