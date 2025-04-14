@@ -49,16 +49,16 @@ function diffToHtml(diff: ProjectDiff, _index: number, diffs: ProjectDiff[]) {
     ${diff.type === 'added' ? `<code class="added">[ADDED]</code>` : ''}
     <span>${diff.id}</span>
     <code><span class="added">+${diff.added}</span> <span class="removed">-${diff.removed}</span></code>
+    <input type="checkbox" id="${diff.id}" name="${diff.id}" style="margin-left: 12px;">
+    <label for="${diff.id}">Viewed</label>
   </h2>
-  <input type="checkbox" id="${diff.id}" name="${diff.id}">
-  <label for="${diff.id}">Viewed</label><br>
-  <ul class="field" x-show="open">${diff.fields.map(fieldDiffToHtml).join('')}</ul>
+  <ul class="field" x-show="open">${diff.fields.map((field) => fieldDiffToHtml(diff.id, field, diff.fields)).join('')}</ul>
 </li>`
 }
 
 function fieldDiffToHtml(
+  diffId: string,
   field: FieldDiff,
-  _index: number,
   fields: FieldDiff[],
 ) {
   const initialOpen = fields.length === 1
@@ -72,6 +72,8 @@ function fieldDiffToHtml(
     ${hasFull ? expandButton : ''}
     <span>${field.field}</span>
     <code><span class="added">+${field.added}</span> <span class="removed">-${field.removed}</span></code>
+    <input type="checkbox" id="${diffId}-${field.field}" name="${diffId}-${field.field}" style="margin-left: 12px;">
+    <label for="${diffId}-${field.field}">Viewed</label>
   </h3>
   <pre x-show="open" class="lines" :class="expand && 'expand'"><code>${field.diff.map(lineToHtml).join('')}</code></pre>
 </li>`
@@ -171,8 +173,11 @@ ul {
   padding-left: 0;
   margin: 0;
 }
+input[type="checkbox"] {
+  margin: 0;
+}
 .field {
   margin-left: 16px;
-}
+}  
 `
 }
