@@ -1,9 +1,9 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -434,7 +434,7 @@ function orbitStackCommon(
   //     'validatorWhitelistDisabled',
   //   )
 
-  const automaticBadges = [BADGES.Stack.Orbit, BADGES.VM.EVM, daProvider.badge]
+  const automaticBadges = [BADGES.VM.EVM, daProvider.badge]
 
   if (isUsingEspressoSequencer) {
     automaticBadges.push(BADGES.Other.EspressoPreconfs)

@@ -8,7 +8,7 @@ export const blockfit: ScalingProject = underReviewL3({
   capability: 'universal',
   addedAt: UnixTime(1739285196), // 2025-02-11T14:46:36Z
   hostChain: ProjectId('nova'),
-  badges: [BADGES.Stack.Orbit, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
+  badges: [BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'BlockFit',
     slug: 'blockfit',
