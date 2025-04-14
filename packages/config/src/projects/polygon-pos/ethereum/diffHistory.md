@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7b76f3054f84e7cee89240d2b5ccd4b670709b15
+Generated with discovered.json: 0x1bd08702efaa31c97f10fec8b9b1e635f099082b
 
-# Diff at Mon, 14 Apr 2025 10:36:13 GMT:
+# Diff at Mon, 14 Apr 2025 10:47:33 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@5c2aac66fe721b1dae5119989e9768dbfcaacd4b block: 22123500
@@ -63,6 +63,8 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 +        "polygonposbridge/DepositManager"
       description:
 +        "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens."
+      issuedPermissions:
++        [{"permission":"interact","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"can update the root chain it references.","via":[]}]
     }
 ```
 
@@ -93,6 +95,8 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 +        "polygonposbridge/RootChain"
       description:
 +        "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators."
+      issuedPermissions:
++        [{"permission":"interact","to":"0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf","description":"can delete arbitrary checkpoints.","via":[]}]
     }
 ```
 
@@ -123,6 +127,56 @@ discovery. Values are for block 22123500 (main branch discovery), not current.
 +        "polygonposbridge/StakingInfo"
       description:
 +        "Contains logging and getter functions about staking."
+    }
+```
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"}
+      receivedPermissions.9.from:
+-        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+      receivedPermissions.8.from:
+-        "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
++        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
++        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      receivedPermissions.7.description:
++        "can delete arbitrary checkpoints."
+      receivedPermissions.6.from:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      receivedPermissions.5.from:
+-        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      receivedPermissions.4.from:
+-        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      receivedPermissions.3.from:
+-        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+      receivedPermissions.2.from:
+-        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      receivedPermissions.1.from:
+-        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "0x401F6c983eA34274ec46f84D70b31C151321188b"
+      receivedPermissions.0.description:
++        "can update the root chain it references."
     }
 ```
 

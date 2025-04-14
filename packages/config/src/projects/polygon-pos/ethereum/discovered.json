@@ -304,6 +304,14 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+          "description": "can update the root chain it references.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1590850640,
       "sinceBlock": 10167767,
       "values": {
@@ -816,6 +824,14 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+          "description": "can delete arbitrary checkpoints.",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
@@ -1207,6 +1223,16 @@
       ],
       "proxyType": "immutable",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+          "description": "can update the root chain it references."
+        },
+        {
+          "permission": "interact",
+          "from": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+          "description": "can delete arbitrary checkpoints."
+        },
         {
           "permission": "upgrade",
           "from": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
@@ -2675,11 +2701,11 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "polygonposbridge/DepositManager": "0x9d583c67327fa25303d2c360e09eba2ecdf0b2e2130c2c62fa523f013e911bf9",
+    "polygonposbridge/DepositManager": "0x508d4444e3c21f1361f9b0948976412f48fe067c7d529bf6121ac18a4cabd004",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
-    "polygonposbridge/RootChain": "0x7003f0a85bb930e268c1142754c69d675ff65aadc6d4f6144c117bc19519eb12",
+    "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd"
