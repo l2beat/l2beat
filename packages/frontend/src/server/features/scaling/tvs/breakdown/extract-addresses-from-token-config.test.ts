@@ -7,12 +7,12 @@ import type {
 } from '@l2beat/config'
 import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { extractAddresses } from './extract-addresses'
+import { extractAddressesFromTokenConfig } from './extract-addresses-from-token-config'
 
-describe(extractAddresses.name, () => {
+describe(extractAddressesFromTokenConfig.name, () => {
   it('returns empty array if no amount', () => {
     const token = mockToken()
-    const result = extractAddresses(token)
+    const result = extractAddressesFromTokenConfig(token)
     expect(result).toEqual({ addresses: [], escrows: [] })
   })
 
@@ -53,7 +53,7 @@ describe(extractAddresses.name, () => {
         ]),
       ],
     })
-    const result = extractAddresses(token)
+    const result = extractAddressesFromTokenConfig(token)
     expect(result.addresses).toEqualUnsorted([
       { address: add1, chain: '1' },
       { address: add2, chain: '1' },
@@ -98,7 +98,7 @@ describe(extractAddresses.name, () => {
         ]),
       ],
     })
-    const result = extractAddresses(token)
+    const result = extractAddressesFromTokenConfig(token)
     expect(result.addresses).toEqualUnsorted([
       { address: add1, chain: '1' },
       { address: add3, chain: '1' },
@@ -119,7 +119,7 @@ describe(extractAddresses.name, () => {
         ]),
       ],
     })
-    const result = extractAddresses(token)
+    const result = extractAddressesFromTokenConfig(token)
     expect(result.addresses).toEqual([])
     expect(result.escrows).toEqual([])
   })

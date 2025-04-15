@@ -3,8 +3,8 @@ import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
-import type { Address } from './extract-addresses'
-import { extractAddresses } from './extract-addresses'
+import type { Address } from './extract-addresses-from-token-config'
+import { extractAddressesFromTokenConfig } from './extract-addresses-from-token-config'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import type {
   BaseAssetBreakdownData,
@@ -29,7 +29,7 @@ export async function getTvsBreakdown(
     const tokenValue = tokenValuesMap.get(token.id)
     if (!tokenValue) continue
 
-    const { addresses, escrows } = extractAddresses(token)
+    const { addresses, escrows } = extractAddressesFromTokenConfig(token)
     const address = processAddresses(addresses, chains)
 
     const tokenWithValues: BaseAssetBreakdownData = {
