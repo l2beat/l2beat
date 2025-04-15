@@ -20,7 +20,7 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/get-techn
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { get7dTvsBreakdown } from '../../scaling/tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../../scaling/tvs/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
 
 export interface BridgesProjectEntry {

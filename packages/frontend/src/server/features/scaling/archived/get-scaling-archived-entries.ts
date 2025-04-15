@@ -12,8 +12,8 @@ import { getProjectsChangeReport } from '../../projects-change-report/get-projec
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { compareTvs } from '../tvs/utils/compare-tvs'
-import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
-import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/get-7d-tvs-breakdown'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([

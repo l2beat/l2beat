@@ -4,7 +4,7 @@ import { TvsBreakdownSummaryBox } from '~/app/(top-nav)/scaling/projects/[slug]/
 import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get-7d-tvs-breakdown'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './project-section'
 import type { ProjectSectionProps } from './types'

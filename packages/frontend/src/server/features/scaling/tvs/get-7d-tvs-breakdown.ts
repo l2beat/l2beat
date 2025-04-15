@@ -7,8 +7,8 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
-import { getTvsProjects } from './get-tvs-projects'
-import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
+import { getTvsProjects } from './utils/get-tvs-projects'
+import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 
 export function get7dTvsBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>
