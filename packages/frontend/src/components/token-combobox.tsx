@@ -167,15 +167,13 @@ interface TokenItemProps {
 function TokenItem({ token }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
-      {token.iconUrl && (
-        <Image
-          src={token.iconUrl}
-          alt={token.name}
-          width={18}
-          height={18}
-          className="rounded-full"
-        />
-      )}
+      <Image
+        src={token.iconUrl ?? '/images/token-placeholder.png'}
+        alt={token.name}
+        width={18}
+        height={18}
+        className="rounded-full"
+      />
       <span className="text-sm font-bold">{token.name}</span>
       <span className="max-xs:hidden">({token.symbol})</span>
     </div>
