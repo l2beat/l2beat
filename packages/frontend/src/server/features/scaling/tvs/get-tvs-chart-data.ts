@@ -15,7 +15,8 @@ import {
   TvsProjectFilter,
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
-import { TvsChartRange, getRangeConfig } from './utils/range'
+import { TvsChartRange, rangeToResolution } from './utils/range'
+import { getRangeWithMax } from '~/utils/range/range'
 
 export const TvsChartDataParams = z.object({
   range: TvsChartRange,
@@ -121,13 +122,15 @@ function getChartData(
 }
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
-  const { days, resolution } = getRangeConfig(range)
-  const target = UnixTime.toStartOf(
-    getTvsTargetTimestamp(),
-    resolution === 'hourly' ? 'hour' : 'day',
+  const resolution = rangeToResolution(range)
+  const target = getTvsTargetTimestamp()
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: target,
+  })
+  const timestamps = generateTimestamps(
+    [from ?? MIN_TIMESTAMPS.tvs, to],
+    resolution,
   )
-  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
-  const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
     return [timestamp, 3000, 2000, 1000, 1200]

@@ -7,7 +7,8 @@ import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
 import type { TvsChartRange } from './range'
-import { getRangeConfig } from './range'
+import { rangeToResolution } from './range'
+import { getRangeWithMax } from '~/utils/range/range'
 
 export async function getTvsValuesForProjects(
   projectIds: ProjectId[],
@@ -15,18 +16,15 @@ export async function getTvsValuesForProjects(
   type?: ProjectValueType,
 ) {
   const db = getDb()
-  const { days, resolution } = getRangeConfig(range)
+  const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
-
-  const from =
-    days === null
-      ? null
-      : UnixTime.toStartOf(target, resolution === 'hourly' ? 'hour' : 'day') -
-        days * UnixTime.DAY
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: target,
+  })
 
   const valueRecords = await db.tvsProjectValue.getForType(type ?? 'SUMMARY', [
     from,
-    target,
+    to,
   ])
 
   const valuesByProject = groupBy(valueRecords, (v) => v.project)
@@ -38,7 +36,7 @@ export async function getTvsValuesForProjects(
       continue
     }
 
-    const valuesByTimestamp: Dictionary<ProjectValueRecord> = {}
+    const valuesByTimestamp: Record<string, ProjectValueRecord> = {}
     for (const value of projectValues) {
       valuesByTimestamp[value.timestamp.toString()] = value
     }
@@ -66,7 +64,7 @@ export async function getTvsValuesForProjects(
 
     const latestKnownProjectValue = projectValues.at(-1)
 
-    const valuesByTimestampForProject: Dictionary<ProjectValueRecord> = {}
+    const valuesByTimestampForProject: Record<string, ProjectValueRecord> = {}
     for (const timestamp of timestamps) {
       const value = valuesByTimestamp[timestamp.toString()]
 
