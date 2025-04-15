@@ -703,7 +703,7 @@ function getRiskViewStateValidation(
     case 'None': {
       return {
         ...RISK_VIEW.STATE_NONE,
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissioned': {
@@ -713,13 +713,13 @@ function getRiskViewStateValidation(
           RISK_VIEW.STATE_FP_INT.description +
           ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
         sentiment: 'bad',
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
     case 'Permissionless': {
       return {
         ...RISK_VIEW.STATE_FP_INT,
-        secondLine: formatChallengePeriod(getFinalizationPeriod(templateVars)),
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
   }
@@ -1357,6 +1357,35 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
+      )
+    }
+  }
+}
+
+function getChallengePeriod(templateVars: OpStackConfigCommon): number {
+  const fraudProofType = getFraudProofType(templateVars)
+
+  switch (fraudProofType) {
+    case 'None': {
+      const l2OutputOracle =
+        templateVars.l2OutputOracle ??
+        templateVars.discovery.getContract('L2OutputOracle')
+
+      return templateVars.discovery.getContractValue<number>(
+        l2OutputOracle.name ?? l2OutputOracle.address,
+        'FINALIZATION_PERIOD_SECONDS',
+      )
+    }
+    case 'Permissioned': {
+      return templateVars.discovery.getContractValue<number>(
+        'PermissionedDisputeGame',
+        'maxClockDuration',
+      )
+    }
+    case 'Permissionless': {
+      return templateVars.discovery.getContractValue<number>(
+        'FaultDisputeGame',
+        'maxClockDuration',
       )
     }
   }
