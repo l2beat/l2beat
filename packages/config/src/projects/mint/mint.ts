@@ -8,7 +8,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('mint')
 
 export const mint: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
@@ -63,7 +63,7 @@ export const mint: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1715608931),
   milestones: [
     {
-      title: 'Mint Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
       date: '2024-05-14T00:00:00Z',
       description: 'Mint Mainnet is now live.',

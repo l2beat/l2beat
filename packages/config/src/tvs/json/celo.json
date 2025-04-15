@@ -48,12 +48,11 @@
       "name": "Celo Euro",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/16756/large/CEUR.png?1696516329",
       "amount": {
-        "type": "circulatingSupply",
-        "apiId": "celo-euro",
-        "decimals": 18,
-        "sinceTimestamp": 1742960663,
+        "type": "totalSupply",
         "address": "0xD8763CBa276a3738E6DE85b4b3bF5FDed6D6cA73",
-        "chain": "celo"
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
       },
       "category": "stablecoin",
       "source": "native",
@@ -122,12 +121,11 @@
       "name": "Celo Dollar",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/13161/large/icon-celo-dollar-color-1000-circle-cropped.png?1696512945",
       "amount": {
-        "type": "circulatingSupply",
-        "apiId": "celo-dollar",
-        "decimals": 18,
-        "sinceTimestamp": 1742960663,
+        "type": "totalSupply",
         "address": "0x765DE816845861e75A25fCA122bb6898B8B1282a",
-        "chain": "celo"
+        "chain": "celo",
+        "decimals": 18,
+        "sinceTimestamp": 1742960663
       },
       "category": "stablecoin",
       "source": "native",

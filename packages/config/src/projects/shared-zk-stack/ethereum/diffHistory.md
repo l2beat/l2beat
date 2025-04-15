@@ -1,3 +1,159 @@
+Generated with discovered.json: 0x93bc0e69ffc00980d10b7c93ca33bd2cc8f335ca
+
+# Diff at Mon, 14 Apr 2025 12:41:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22d5bd9958c2ffcb130d83154e0650da7c63f262 block: 22208565
+- current block number: 22267290
+
+## Description
+
+new rollup deployed: [LaChain by Ripio](https://www.lachain.network/).
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.12:
++        {"chainId":9637,"chainTypeManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.11.chainId:
+-        9637
++        388
+      values.chainsCreated.11.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.10.chainId:
+-        388
++        325
+      values.chainsCreated.10.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.9.chainId:
+-        325
++        320
+      values.chainsCreated.9.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.8.chainId:
+-        320
++        324
+      values.chainsCreated.8.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.7.chainId:
+-        324
++        50104
+      values.chainsCreated.7.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.chainsCreated.6.chainId:
+-        50104
++        543210
+      values.chainsCreated.6.chainGovernance:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      values.chainsCreated.5.chainId:
+-        543210
++        1217
+      values.chainsCreated.5.chainGovernance:
+-        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
+      values.chainsCreated.4.chainId:
+-        1217
++        2741
+      values.chainsCreated.4.chainGovernance:
+-        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
++        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
+      values.chainsCreated.3.chainId:
+-        2741
++        1345
+      values.chainsCreated.3.chainGovernance:
+-        "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
++        "0x49664fFe2c2335c28631629606E26a6971aEf261"
+      values.chainsCreated.2.chainId:
+-        1345
++        232
+      values.chainsCreated.2.chainGovernance:
+-        "0x49664fFe2c2335c28631629606E26a6971aEf261"
++        "0x0000000000000000000000000000000000000000"
+      values.chainsCreated.1.chainId:
+-        232
++        61166
+      values.chainsCreated.1.chainGovernance:
+-        "0x0000000000000000000000000000000000000000"
++        "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+      values.chainsCreated.0.chainId:
+-        61166
++        2904
+      values.chainsCreated.0.chainGovernance:
+-        "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
++        "0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
+      values.getAllZKChainChainIDs.12:
++        388
+      values.getAllZKChainChainIDs.11:
+-        388
++        325
+      values.getAllZKChainChainIDs.10:
+-        325
++        324
+      values.getAllZKChainChainIDs.9:
+-        324
++        320
+      values.getAllZKChainChainIDs.8:
+-        320
++        232
+      values.getAllZKChainChainIDs.7:
+-        232
++        9637
+      values.getAllZKChainChainIDs.6:
+-        9637
++        2904
+      values.getAllZKChains.12:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllZKChains.11:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      values.getAllZKChains.10:
+-        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
+      values.getAllZKChains.9:
+-        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
++        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.getAllZKChains.8:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
+      values.getAllZKChains.7:
+-        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
+      values.getAllZKChains.6:
+-        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.getAllZKChains.5:
+-        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "0x89f90748A9a36C30A324481133fa198f4E16A824"
+      values.getAllZKChains.4:
+-        "0x89f90748A9a36C30A324481133fa198f4E16A824"
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.getAllZKChains.3:
+-        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
++        "0x742A28e22277945BBAAa34810393bf6e8512576C"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        13
++        14
+      values.getAggregatedRoot:
+-        "0x619372ea4d229fc7921bbdcd7b46a64f151d566c0bf6d43cf1807bc6aa4629ad"
++        "0x3b831e3946c9e482436b4dd704221715c4a0737d68f4f4761ea6075405805771"
+    }
+```
+
 Generated with discovered.json: 0x7269f33b27d3266c8d92c522d58572023b8467e4
 
 # Diff at Sun, 06 Apr 2025 08:05:42 GMT:

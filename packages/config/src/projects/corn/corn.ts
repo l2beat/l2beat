@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('corn')
 
 export const corn: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1733880840),
+  addedAt: UnixTime(1724284800), //2024-08-22
   additionalPurposes: ['Bitcoin DApps'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
@@ -103,7 +103,7 @@ export const corn: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.usecorn.com/corn-the-genesis-of-the-super-yield-network-f52170ffbe84',
       date: '2024-08-22T00:00:00Z',
       description: 'Corn launches its super yield network.',

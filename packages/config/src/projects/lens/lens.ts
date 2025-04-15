@@ -142,7 +142,7 @@ export const lens: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://lens.xyz/news/build-socialfi-apps-faster-with-lens-now-on-mainnet',
       date: '2025-04-04T00:00:00Z',
       description: 'Lens mainnet launches for all users.',
