@@ -148,12 +148,7 @@ function tryParsingEigenDaBlobInfo(
   possibleCommitment: string,
 ): EigenDaBlobInfo | null {
   try {
-    // Sometimes it's prefixed with 00, sometimes it's not.
-    const noTypeCommitment = possibleCommitment.startsWith('00')
-      ? possibleCommitment.slice(2)
-      : possibleCommitment
-
-    const rlp = RLP.decode('0x' + noTypeCommitment)
+    const rlp = RLP.decode('0x' + possibleCommitment)
 
     return EigenDaBlobInfo.parse(rlp)
   } catch {
