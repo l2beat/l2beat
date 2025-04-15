@@ -21,7 +21,7 @@ export const mawari: ScalingProject = upcomingL2({
         'https://t.me/mawarinet',
         'https://x.com/mawariXR',
         'https://discord.com/invite/mawari',
-        'https://linkedin.com/company/mawari/'
+        'https://linkedin.com/company/mawari/',
       ],
     },
   },
