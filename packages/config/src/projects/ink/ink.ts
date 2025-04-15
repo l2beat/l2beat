@@ -61,7 +61,7 @@ export const ink: ScalingProject = opStackL2({
     ],
     notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
-
+  hasSuperchainScUpgrades: true,
   stage: getStage(
     {
       stage0: {

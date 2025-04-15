@@ -44,18 +44,7 @@ export const optimism: ScalingProject = opStackL2({
       rollupCodes: 'https://rollup.codes/optimism',
     },
   },
-  nonTemplateRiskView: {
-    exitWindow: {
-      value: 'None',
-      description:
-        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
-      sentiment: 'bad',
-      orderHint: -discovery.getContractValue<number>(
-        'OptimismPortal2',
-        'proofMaturityDelaySeconds',
-      ), // 0-7 days
-    },
-  },
+  hasSuperchainScUpgrades: true,
   associatedTokens: ['OP'],
   nonTemplateExcludedTokens: ['rsETH'],
   nonTemplateEscrows: [

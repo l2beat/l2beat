@@ -158,6 +158,7 @@ interface OpStackConfigCommon {
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   ecosystemInfo?: ProjectEcosystemInfo
+  hasSuperchainScUpgrades?: boolean
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
   }
@@ -729,7 +730,15 @@ function getRiskViewExitWindow(
   templateVars: OpStackConfigCommon,
 ): TableReadyValue {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
-
+  if (templateVars.hasSuperchainScUpgrades) {
+    return {
+      value: 'None',
+      description:
+        'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
+      sentiment: 'bad',
+      orderHint: -finalizationPeriod,
+    }
+  }
   return RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod)
 }
 

@@ -32,6 +32,7 @@ export const arenaz = opStackL2({
       socialMedia: ['https://x.com/OfficialArenaZ'],
     },
   },
+  hasSuperchainScUpgrades: true,
   chainConfig: {
     name: 'arenaz',
     chainId: 7897,
