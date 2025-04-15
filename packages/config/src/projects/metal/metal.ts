@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -9,11 +9,14 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('metal')
 
 export const metal: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1711670400), // 2024-03-29T00:00:00Z
   discovery,
   associatedTokens: ['MTL'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Metal',
     slug: 'metal',
@@ -62,4 +65,13 @@ export const metal: ScalingProject = opStackL2({
   // Set explicitly since finality calculation returns weird results
   finality: undefined,
   isNodeAvailable: 'UnderReview',
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/MarshallHayner/status/1773873542373028121',
+      date: '2024-03-29T00:00:00Z',
+      description: 'Metal Mainnet is now live.',
+      type: 'general',
+    },
+  ],
 })

@@ -2,20 +2,20 @@ import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainConfig, ProjectService } from '@l2beat/config'
 import { createDatabase } from '@l2beat/database'
 import {
+  BalanceProvider,
   BlockIndexerClient,
   BlockProvider,
   BlockTimestampProvider,
+  CirculatingSupplyProvider,
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
+  MulticallV3Client,
+  PriceProvider,
   RpcClient,
+  TotalSupplyProvider,
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import { BalanceProvider } from '../providers/BalanceProvider'
-import { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
-import { PriceProvider } from '../providers/PriceProvider'
-import { RpcClientPOC } from '../providers/RpcClientPOC'
-import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import { ValueService } from '../services/ValueService'
 import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
 import { DBStorage } from './DBStorage'
@@ -38,21 +38,36 @@ export class LocalExecutor {
     this.dbStorage = this.createDbStorage(env, logger)
   }
 
-  async run(
-    config: ProjectTvsConfig,
+  async getTvs(
+    projects: ProjectTvsConfig[],
     timestamp: UnixTime,
     latestMode: boolean,
-  ): Promise<TokenValue[]> {
-    const { prices, amounts } = extractPricesAndAmounts(config.tokens)
+  ): Promise<Map<string, TokenValue[]>> {
+    const { prices, amounts } = extractPricesAndAmounts(
+      projects.flatMap((c) => c.tokens),
+    )
 
-    const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
+    const dataFormulaExecutor = await this.initDataFormulaExecutor(
+      amounts,
+      this.logger,
+    )
 
     await dataFormulaExecutor.execute(prices, amounts, timestamp, latestMode)
 
-    return await this.valueService.calculate(config, [timestamp])
+    const result = new Map<string, TokenValue[]>()
+
+    for (const project of projects) {
+      const tvs = await this.valueService.calculate(project, [timestamp])
+      result.set(project.projectId, tvs)
+    }
+
+    return result
   }
 
-  private async initDataFormulaExecutor(amounts: AmountConfig[]) {
+  private async initDataFormulaExecutor(
+    amounts: AmountConfig[],
+    logger: Logger,
+  ) {
     const http = new HttpClient()
     const coingeckoQueryService = this.initCoingecko(http)
     const { rpcs, blockProviders, blockTimestampProvider } =
@@ -63,8 +78,8 @@ export class LocalExecutor {
       coingeckoQueryService,
     )
 
-    const totalSupplyProvider = new TotalSupplyProvider(rpcs)
-    const balanceProvider = new BalanceProvider(rpcs)
+    const totalSupplyProvider = new TotalSupplyProvider(rpcs, logger)
+    const balanceProvider = new BalanceProvider(rpcs, logger)
 
     return new DataFormulaExecutor(
       this.localStorage,
@@ -80,7 +95,7 @@ export class LocalExecutor {
   }
 
   private initCoingecko(http: HttpClient) {
-    const coingeckoApiKey = this.env.optionalString('COINGECKO_API_KEY')
+    const coingeckoApiKey = this.env.string('COINGECKO_API_KEY')
     const coingeckoClient = new CoingeckoClient({
       apiKey: coingeckoApiKey,
       retryStrategy: 'RELIABLE',
@@ -115,7 +130,7 @@ export class LocalExecutor {
       }
     }
 
-    const rpcs = new Map<string, RpcClientPOC>()
+    const rpcs: RpcClient[] = []
     const blockProviders = new Map<string, BlockProvider>()
     const indexerClients: BlockIndexerClient[] = []
 
@@ -127,7 +142,7 @@ export class LocalExecutor {
       )
       const callsPerMinute = this.env.integer(
         `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi?.callsPerMinute,
+        rpcApi?.callsPerMinute ?? 120,
       )
 
       const rpc = new RpcClient({
@@ -143,16 +158,23 @@ export class LocalExecutor {
         (contract) => contract.version === '3',
       )
 
-      rpcs.set(
-        chainConfig.name,
-        new RpcClientPOC(rpc, chainConfig.name, this.logger, {
-          ...(multicallV3?.address ? { multicallV3: multicallV3.address } : {}),
-          batchingEnabled:
-            multicallV3 ||
-            chainConfig.name === 'swell' ||
-            chainConfig.name === 'silicon'
-              ? false
-              : true,
+      const multicallClient = multicallV3
+        ? new MulticallV3Client(
+            multicallV3.address,
+            multicallV3.sinceBlock,
+            150,
+          )
+        : undefined
+
+      rpcs.push(
+        new RpcClient({
+          url,
+          http,
+          logger: this.logger,
+          retryStrategy: 'RELIABLE',
+          sourceName: chainConfig.name,
+          callsPerMinute: callsPerMinute,
+          multicallClient,
         }),
       )
       blockProviders.set(

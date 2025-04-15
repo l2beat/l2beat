@@ -4,7 +4,7 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import React, { useRef, useState } from 'react'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { mergeRefs } from '~/utils/merge-refs'
 import {
   TooltipTriggerContextProvider,
@@ -99,8 +99,8 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 export {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
   tooltipContentVariants,
   TooltipProvider,
+  TooltipTrigger,
 }

@@ -29,8 +29,8 @@ export function ChartTimeRangeControls<T extends string>({
   const isClient = useIsClient()
   const breakpoint = useBreakpoint()
   const showSelect = projectSection
-    ? breakpoint === 'tablet' || breakpoint === 'mobile'
-    : breakpoint === 'mobile'
+    ? breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md'
+    : breakpoint === 'xs' || breakpoint === 'sm'
 
   if (!isClient) {
     return (

@@ -8,6 +8,7 @@ export const airas: ScalingProject = underReviewL2({
   capability: 'universal',
   addedAt: UnixTime(1742829632), //24 March 2025 15:20:32
   badges: [BADGES.VM.EVM, BADGES.RaaS.Zeeve, BADGES.Stack.PolygonCDK],
+  archivedAt: UnixTime(1744629590), // 2025-04-14T11:20:00.000Z,
   display: {
     name: 'AIRAS',
     slug: 'airas',

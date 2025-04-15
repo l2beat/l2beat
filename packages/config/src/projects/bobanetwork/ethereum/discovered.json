@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 21428646,
+  "blockNumber": 22267281,
   "configHash": "0x083ba30a38abaa71a5f2ed76547a856ba38773c2380910cf0be2059d3c9f1ce4",
   "entries": [
     {
@@ -250,17 +250,16 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd",
           "0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63",
           "0x6976498e37E4941E167161fC3BC5191EEDc302ab",
           "0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x3e1e6f01b53c63c1d9a6768542de75a2e5a4de16021b351a4e90bd9a948f99be",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 17,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -316,7 +315,7 @@
         ],
         "$upgradeCount": 5,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677007",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292677020",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -393,11 +392,6 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "address": "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "OptimismPortal",
       "address": "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e",
       "type": "Contract",
@@ -442,7 +436,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 21423033
+          "prevBlockNum": 22255348
         },
         "paused": false,
         "superchainConfig": "0x996ffD627901f10C80A7d4B72A12316D2e77c076",
@@ -641,10 +635,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 11752819,
-        "latestOutputIndex": 5890,
-        "nextBlockNumber": 11754619,
-        "nextOutputIndex": 5891,
+        "latestBlockNumber": 16814419,
+        "latestOutputIndex": 8702,
+        "nextBlockNumber": 16816219,
+        "nextOutputIndex": 8703,
         "proposer": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "PROPOSER": "0xbfBAB4363034A930687B9320599a69DfBf1D21d0",
         "startingBlockNumber": 1149019,

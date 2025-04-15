@@ -25,35 +25,41 @@ function isChainAddress(value: string): boolean {
 export function discoveryToNodes(discovery: DiscoveryOutput): Node[] {
   const chain = discovery.chain
 
-  const contractNodes = discovery.contracts.map((contract): Node => {
-    const implementations = getAsStringArray(contract.values?.$implementation)
-    const { addressType, name } = getDisplay(contract, implementations)
-    return {
-      id: encodeChainAddress(chain, contract.address),
-      address: contract.address,
-      addressType,
-      name,
-      box: { x: 0, y: 0, width: 0, height: 0 },
-      color: 0,
-      hueShift: 0,
-      fields: mapFields(contract.values, chain, implementations),
-      data: contract,
-    }
-  })
+  const contractNodes = discovery.entries
+    .filter((e) => e.type === 'Contract')
+    .map((contract): Node => {
+      const implementations = getAsStringArray(contract.values?.$implementation)
+      const { addressType, name } = getDisplay(contract, implementations)
+      return {
+        id: encodeChainAddress(chain, contract.address),
+        address: contract.address,
+        addressType,
+        name,
+        box: { x: 0, y: 0, width: 0, height: 0 },
+        color: 0,
+        hueShift: 0,
+        fields: mapFields(contract.values, chain, implementations),
+        hiddenFields: [],
+        data: contract,
+      }
+    })
 
-  const eoaNodes = discovery.eoas.map(
-    (eoa): Node => ({
-      id: encodeChainAddress(chain, eoa.address),
-      address: eoa.address,
-      addressType: 'EOA',
-      name: `EOA ${eoa.address.slice(0, 6)}…${eoa.address.slice(-4)}`,
-      box: { x: 0, y: 0, width: 0, height: 0 },
-      color: 0,
-      hueShift: 0,
-      fields: [],
-      data: eoa,
-    }),
-  )
+  const eoaNodes = discovery.entries
+    .filter((e) => e.type === 'EOA')
+    .map(
+      (eoa): Node => ({
+        id: encodeChainAddress(chain, eoa.address),
+        address: eoa.address,
+        addressType: 'EOA',
+        name: `EOA ${eoa.address.slice(0, 6)}…${eoa.address.slice(-4)}`,
+        box: { x: 0, y: 0, width: 0, height: 0 },
+        color: 0,
+        hueShift: 0,
+        fields: [],
+        hiddenFields: [],
+        data: eoa,
+      }),
+    )
 
   return [...contractNodes, ...eoaNodes]
 }

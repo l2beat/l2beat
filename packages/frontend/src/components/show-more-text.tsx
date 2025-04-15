@@ -1,8 +1,8 @@
 'use client'
 import type { ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
 import {
   Drawer,

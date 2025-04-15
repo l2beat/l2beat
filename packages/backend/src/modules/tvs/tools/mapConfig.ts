@@ -14,10 +14,10 @@ import type { RpcClient } from '@l2beat/shared'
 import { assert, TokenId } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { getAggLayerTokens } from '../providers/aggLayer'
-import { getElasticChainTokens } from '../providers/elasticChain'
 import type { ProjectTvsConfig } from '../types'
-import { getTimestampsRange } from './timestamps'
+import { getTimeRangeIntersection } from './getTimeRangeIntersection'
+import { getAggLayerTokens } from './sharedEscrows/getAggLayerTokens'
+import { getElasticChainTokens } from './sharedEscrows/getElasticChainTokens'
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
@@ -32,17 +32,26 @@ export async function mapConfig(
   }
 
   const sharedEscrows = project.tvlConfig.escrows.filter((e) => e.sharedEscrow)
+
+  if (sharedEscrows.length > 0) {
+    logger.info(
+      `Querying for shared escrow L2 tokens addresses for project ${project.id}...`,
+    )
+  }
+
   for (const escrow of sharedEscrows) {
     assert(escrow.sharedEscrow)
     if (rpcClient === undefined) {
-      logger.warn(`No rpc client passed, sharedEscrow support is not enabled`)
+      logger.warn(
+        `${project.id}: No rpc client configured, sharedEscrow support is not enabled`,
+      )
       continue
     }
 
     const chainOfL1Escrow = getChain(escrow.chain, chains)
 
     if (escrow.sharedEscrow.type === 'AggLayer') {
-      logger.info(`Querying for AggLayer L2 tokens addresses`)
+      logger.debug(`Querying for AggLayer L2 tokens addresses`)
       const aggLayerL2Tokens = await getAggLayerTokens(
         project,
         escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
@@ -53,7 +62,7 @@ export async function mapConfig(
     }
 
     if (escrow.sharedEscrow.type === 'ElasticChain') {
-      logger.info(`Querying for ElasticChain L2 tokens addresses`)
+      logger.debug(`Querying for ElasticChain L2 tokens addresses`)
 
       const elasticChainTokens = await getElasticChainTokens(
         project,
@@ -116,7 +125,7 @@ export function createEscrowToken(
 
   let amountFormula: CalculationFormula | AmountFormula
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     legacyToken,
     escrow,
     chainOfEscrow,
@@ -204,7 +213,7 @@ export function createToken(
   const id = TokenId.create(project.id, legacyToken.symbol)
   let amountFormula: AmountFormula | CalculationFormula
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     legacyToken,
     project.chainConfig,
   )

@@ -11,11 +11,12 @@ import {
   DA_LAYERS,
   DA_MODES,
   DERIVATION,
+  ESCROW,
   EXITS,
+  OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
 } from '../../common'
-import { ESCROW, OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
@@ -116,7 +117,7 @@ export const optimism: ScalingProject = {
   type: 'layer2',
   id: ProjectId('optimism'),
   capability: 'universal',
-  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1629331200), // 2021-08-19T00:00:00Z
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
@@ -325,8 +326,6 @@ export const optimism: ScalingProject = {
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1725314400), // 2024-09-03T00:00:00Z
   },
   scopeOfAssessment: {
     inScope: [

@@ -1,6 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,12 +8,15 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('lisk')
 
 export const lisk: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   discovery,
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -38,8 +40,17 @@ export const lisk: ScalingProject = opStackL2({
       ],
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',
+      date: '2024-11-12T00:00:00Z',
+      description: 'Lisk launches its User Mainnet.',
+      type: 'general',
+    },
+  ],
   l1StandardBridgePremintedTokens: ['LSK'],
-  nonTemplateExcludedTokens: ['USDC'],
+  nonTemplateExcludedTokens: ['USDC', 'wstETH'],
   finality: {
     type: 'OPStack',
     genesisTimestamp: UnixTime(1714728791),

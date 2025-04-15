@@ -9,6 +9,7 @@ import {
   FuelClient,
   HttpClient,
   LoopringClient,
+  MulticallV3Client,
   PolkadotRpcClient,
   RpcClient,
   StarkexClient,
@@ -16,7 +17,6 @@ import {
   ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import { MulticallV3Client } from '@l2beat/shared/build/clients/rpc/multicall/MulticallV3Client'
 import type { Config } from '../config/Config'
 
 export interface Clients {

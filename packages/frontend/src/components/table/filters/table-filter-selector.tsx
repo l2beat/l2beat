@@ -15,8 +15,8 @@ import {
   PopoverTrigger,
   popoverTriggerClasses,
 } from '~/components/core/popover'
-import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useGlobalShortcut } from '~/hooks/use-global-shortcut'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { useTracking } from '~/hooks/use-tracking'
 import { FilterIcon } from '~/icons/filter'
 import { PlusIcon } from '~/icons/plus'
@@ -157,7 +157,7 @@ function Content({
             filterId={selectedId}
             values={uniq(
               entries.map(
-                (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
+                (e) => e.filterable?.find((f) => f.id === selectedId)?.value,
               ),
             ).filter(notUndefined)}
           />

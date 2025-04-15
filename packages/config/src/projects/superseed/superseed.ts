@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -10,9 +10,12 @@ const genesisTimestamp = UnixTime(1726179683)
 
 export const superseed: ScalingProject = opStackL2({
   capability: 'universal',
-  addedAt: UnixTime(1714316238), // 2024-04-28T14:57:18Z
+  addedAt: UnixTime(1743379200), // 2025-03-31T00:00:00Z
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Superseed',
     slug: 'superseed',
@@ -55,4 +58,13 @@ export const superseed: ScalingProject = opStackL2({
   },
   discovery,
   genesisTimestamp,
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/SuperseedXYZ/status/1906710602506195433',
+      date: '2025-03-31T00:00:00Z',
+      description: 'Superseed Mainnet is now live.',
+      type: 'general',
+    },
+  ],
 })

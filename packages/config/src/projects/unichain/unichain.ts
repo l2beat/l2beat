@@ -10,7 +10,7 @@ const l2discovery = new ProjectDiscovery('unichain', 'unichain')
 const genesisTimestamp = UnixTime(1730748359)
 
 export const unichain: ScalingProject = opStackL2({
-  addedAt: UnixTime(1728932992), // 2024-10-14T19:09:00Z
+  addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
   additionalDiscoveries: { ['unichain']: l2discovery },
   additionalPurposes: ['Exchange'],
@@ -35,8 +35,6 @@ export const unichain: ScalingProject = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1728932992), // 2024-10-14T19:09:00Z
   },
   scopeOfAssessment: {
     inScope: [
@@ -122,7 +120,7 @@ export const unichain: ScalingProject = opStackL2({
   },
   milestones: [
     {
-      title: 'Unichain Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/unichain/status/1889313993296064770',
       date: '2025-02-12T00:00:00Z',
       type: 'general',

@@ -11,7 +11,7 @@ const l2Discovery = new ProjectDiscovery('ink', 'ink')
 const genesisTimestamp = UnixTime(1733498411)
 
 export const ink: ScalingProject = opStackL2({
-  addedAt: UnixTime(1729797861), // 2024-10-24T21:24:21Z
+  addedAt: UnixTime(1734480000), // 2024-10-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,
   additionalDiscoveries: { ['ink']: l2Discovery },
@@ -39,8 +39,6 @@ export const ink: ScalingProject = opStackL2({
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
-    // FAKE DATE
-    sinceTimestamp: UnixTime(1729797861), // 2024-10-24T21:24:21Z
   },
   finality: {
     type: 'OPStack',

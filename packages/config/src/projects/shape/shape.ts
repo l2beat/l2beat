@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -8,10 +8,13 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('shape')
 
 export const shape: ScalingProject = opStackL2({
-  addedAt: UnixTime(1730131160), // 2024-10-28
+  addedAt: UnixTime(1727654400), // 2024-09-30
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Shape',
     slug: 'shape',
@@ -56,4 +59,13 @@ export const shape: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1721744473),
   stateDerivation: DERIVATION.OPSTACK('SHAPE'),
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://www.alchemy.com/blog/shape-is-live',
+      date: '2024-09-30T00:00:00Z',
+      description: 'Shape Mainnet is now live.',
+      type: 'general',
+    },
+  ],
 })
