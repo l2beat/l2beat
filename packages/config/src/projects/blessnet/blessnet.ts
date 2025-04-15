@@ -10,9 +10,9 @@ const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 
 export const blessnet: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
+  archivedAt: UnixTime(1739318400), // 2025-02-12T00:00:00.000Z,
   additionalPurposes: ['Interoperability'],
   additionalBadges: [BADGES.RaaS.Caldera],
-  isArchived: true,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -20,8 +20,6 @@ export const blessnet: ScalingProject = orbitStackL3({
   display: {
     name: 'Blessnet',
     slug: 'blessnet',
-    headerWarning:
-      'The operator has stopped servicing this Optimium (the last state update was posted on 2025-01-24).',
     description:
       'Blessnet is an Orbit stack Optimium aiming to create a more interconnected and efficient Ethereum ecosystem, where users can interact safely across multiple chains while keeping their valuable assets secure on established networks.',
     links: {
@@ -73,4 +71,14 @@ export const blessnet: ScalingProject = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: '2 months of operator downtime',
+      date: '2025-01-24T00:00:00Z',
+      url: 'https://arbiscan.io/tx/0x2be551799d320e67a84ba0a80fb5cf6f86d379ad05a849ada0eaab3644e917e1',
+      description:
+        'The permissioned Operator stopped updating state roots from Jan-24-2025 until Mar-27-2025.',
+      type: 'incident',
+    },
+  ],
 })

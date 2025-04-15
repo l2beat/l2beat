@@ -12,7 +12,7 @@ type SqliteType =
   | 'TEXT NOT NULL'
   | 'INTEGER'
   | 'INTEGER NOT NULL'
-
+  | 'BOOLEAN'
 type Schema<T> = {
   [K in keyof T]-?: SqliteType
 }
@@ -49,6 +49,7 @@ const schema = {
 
   tvlInfo: 'TEXT',
   tvlConfig: 'TEXT',
+  tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
   livenessInfo: 'TEXT',
   livenessConfig: 'TEXT',
@@ -57,18 +58,20 @@ const schema = {
   finalityInfo: 'TEXT',
   finalityConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
+  ecosystemInfo: 'TEXT',
+  ecosystemConfig: 'TEXT',
 
   permissions: 'TEXT',
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
 
-  isBridge: 'INTEGER',
-  isScaling: 'INTEGER',
-  isZkCatalog: 'INTEGER',
-  isDaLayer: 'INTEGER',
-  isUpcoming: 'INTEGER',
-  isArchived: 'INTEGER',
-  hasActivity: 'INTEGER',
+  isBridge: 'BOOLEAN',
+  isScaling: 'BOOLEAN',
+  isZkCatalog: 'BOOLEAN',
+  isDaLayer: 'BOOLEAN',
+  isUpcoming: 'BOOLEAN',
+  archivedAt: 'INTEGER',
+  hasActivity: 'BOOLEAN',
 } satisfies Schema<BaseProject>
 
 export class ProjectDatabase {
@@ -210,6 +213,7 @@ function toSqliteValue(key: keyof BaseProject, value: unknown) {
       return value !== undefined ? JSON.stringify(value) : null
     case 'INTEGER':
     case 'INTEGER NOT NULL':
+    case 'BOOLEAN':
       return value !== undefined ? Number(value) : null
     default:
       assertUnreachable(type)
@@ -224,8 +228,10 @@ function fromSqliteValue(key: keyof BaseProject, value: unknown): unknown {
   switch (type) {
     case 'TEXT':
       return value !== null ? JSON.parse(value as string) : undefined
-    case 'INTEGER':
+    case 'BOOLEAN':
       return value !== null ? Boolean(value) : undefined
+    case 'INTEGER':
+      return value !== null ? Number(value) : undefined
     case 'TEXT PRIMARY KEY':
     case 'TEXT NOT NULL':
     case 'INTEGER NOT NULL':

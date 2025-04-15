@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -12,6 +12,9 @@ export const shape: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   display: {
     name: 'Shape',
     slug: 'shape',
@@ -19,7 +22,10 @@ export const shape: ScalingProject = opStackL2({
       "Shape is a Rollup on Ethereum based on the OP Stack. It is a chain for creators, innovating by giving creators 80% of the Sequencer fee as 'gasback'.",
     links: {
       websites: ['https://shape.network/'],
-      apps: ['https://superbridge.app/shape-mainnet'],
+      apps: [
+        'https://superbridge.app/shape-mainnet',
+        'https://shape-mainnet.bridge.alchemy.com/',
+      ],
       documentation: ['https://docs.shape.network/documentation/introduction'],
       explorers: ['https://shapescan.xyz/'],
       repositories: ['https://github.com/shape-network'],

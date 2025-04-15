@@ -2,7 +2,7 @@
   "name": "connext",
   "chain": "ethereum",
   "blockNumber": 21285557,
-  "configHash": "0x5c707dc5b643f049b69406f17a8b8e1a317b60ba8e5b0e126037b2c3189b11d6",
+  "configHash": "0xb4a9fed5fd12314981a4e86c47eb267501a3ac8cb10c3dcd0b51dd170e07073b",
   "entries": [
     {
       "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
@@ -35,7 +35,8 @@
         "proposedTimestamp": 0,
         "renounced": false,
         "routerOwnershipTimestamp": 0
-      }
+      },
+      "derivedName": "TransactionManager"
     },
     {
       "name": "FulfillInterpreter",
@@ -50,7 +51,8 @@
       "values": {
         "$immutable": true,
         "getTransactionManager": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"
-      }
+      },
+      "derivedName": "FulfillInterpreter"
     }
   ],
   "abis": {

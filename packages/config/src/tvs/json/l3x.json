@@ -1,0 +1,123 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "l3x",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "l3x-ETH-1",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
+            "decimals": 18,
+            "sinceTimestamp": 1714618907
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
+            "decimals": 18,
+            "sinceTimestamp": 1714620855
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1714618907
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1714620855
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "l3x-ezETH-2",
+      "priceId": "renzo-restaked-eth",
+      "symbol": "ezETH",
+      "name": "Renzo Restaked ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+        "chain": "arbitrum",
+        "escrowAddress": "0x0809F0Ee8e72b2e2069e0f618cBbCB2399D452c7",
+        "decimals": 18,
+        "sinceTimestamp": 1713781465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1713781465
+        },
+        "priceId": "renzo-restaked-eth"
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "l3x-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "escrowAddress": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
+        "decimals": 6,
+        "sinceTimestamp": 1714620855
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1714620855
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

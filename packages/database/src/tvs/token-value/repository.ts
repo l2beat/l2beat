@@ -29,6 +29,22 @@ export class TokenValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByTokenIdInTimeRange(
+    tokenId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<TokenValueRecord[]> {
+    const rows = await this.db
+      .selectFrom('TokenValue')
+      .selectAll()
+      .where('tokenId', '=', tokenId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,

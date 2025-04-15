@@ -17,6 +17,7 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectDiscoveryInfo,
+  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -50,8 +51,8 @@ export interface ScalingProject {
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  /** Is this project archived? */
-  isArchived?: boolean
+  /** Date of archiving of the project */
+  archivedAt?: UnixTime
   /** Is this project an upcoming rollup? */
   isUpcoming?: boolean
   /** Has this project changed and is under review? */
@@ -62,6 +63,8 @@ export interface ScalingProject {
   config: ProjectScalingConfig
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  /** Ecosystem information */
+  ecosystemInfo?: ProjectEcosystemInfo
   /** Data availability of scaling project */
   dataAvailability?: ProjectScalingDa
   /** Details about the custom availability solution */
@@ -73,13 +76,13 @@ export interface ScalingProject {
   /** Rollup stage */
   stage: ProjectScalingStage
   /** Deep dive into project technology */
-  technology: ProjectScalingTechnology
+  technology?: ProjectScalingTechnology
   /** Open-source node details */
   stateDerivation?: ProjectScalingStateDerivation
   /** Explains how project validates state */
   stateValidation?: ProjectScalingStateValidation
   /** List of smart contracts used in the project */
-  contracts: ProjectContracts
+  contracts?: ProjectContracts
   /** List of permissioned addresses on a given chain */
   permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
@@ -238,7 +241,7 @@ export interface Bridge {
   id: ProjectId
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  isArchived?: boolean
+  archivedAt?: UnixTime
   isUpcoming?: boolean
   isUnderReview?: boolean
   display: BridgeDisplay

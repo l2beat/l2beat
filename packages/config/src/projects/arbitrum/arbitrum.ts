@@ -250,14 +250,14 @@ export const arbitrum: ScalingProject = orbitStackL2({
     },
   ],
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
 
   nonTemplateRiskView: {
@@ -312,11 +312,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         l2TimelockDelay,
       ),
     ],
-  },
-  stateValidation: {
-    isUnderReview: true,
-    description: '.',
-    categories: [],
   },
   milestones: [
     {

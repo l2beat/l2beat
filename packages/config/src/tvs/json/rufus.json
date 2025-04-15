@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "rufus",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "rufus-ELON",
+      "priceId": "dogelon-mars",
+      "symbol": "ELON",
+      "name": "Dogelon",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14962/large/6GxcPRo3_400x400.jpg?1696514622",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
+            "chain": "ethereum",
+            "escrowAddress": "0x0E1a60c49b3aAABa3313918f63F6CC6c55746B17",
+            "decimals": 18,
+            "sinceTimestamp": 1733961947
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
+            "chain": "ethereum",
+            "escrowAddress": "0x7F6300B8d3be27aAe2c7b5f9B5dB95152279D926",
+            "decimals": 18,
+            "sinceTimestamp": 1733961983
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

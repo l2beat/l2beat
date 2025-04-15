@@ -1,4 +1,33 @@
-Generated with discovered.json: 0xb84672aab4080dcbf0229708e60f1640bbc42694
+Generated with discovered.json: 0xd57f614dfb80612be4055cdb83d996ad33cb7c4e
+
+# Diff at Thu, 27 Mar 2025 11:14:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21235441
+- current block number: 21235441
+
+## Description
+
+ARCHIVED.
+NOTE 25/04/09: Upgraded to an unverified bridge contract and [withdrew all remaining funds](https://etherscan.io/tx/0x0d5111c670dce75cb206d7f0976ed2c2f0ba03e465eda6fbdbb0ce06392c4a9b).
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235441 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xCD749A3e59543B31658b725136Ef3616bE7001bc) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x5f44661c820663b7534f027489acae7e88a379f6
 
 # Diff at Wed, 19 Mar 2025 13:04:46 GMT:
 

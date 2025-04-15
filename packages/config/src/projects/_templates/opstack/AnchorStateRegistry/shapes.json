@@ -1,0 +1,38 @@
+{
+  "AnchorStateRegistry_v1_0_0": {
+    "hash": "0x9276015f2765194b8fc3bda15ecb50e1dacb7d171c9fd9dc4902b05944d949b0",
+    "address": "0x8e2961B885E7Ede5fEDf3eE90Bb2648c81A2C43A",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AnchorStateRegistry_v2_0_0": {
+    "hash": "0x6ceb1548721dae770e84e1c1059e5415381a07285cd687fdb032aa2d320e1f20",
+    "address": "0x60F1Ea7B3359a4008655df44560B6899B1877a15",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AnchorStateRegistry_v2_0_1_beta2": {
+    "hash": "0x88cfbfe4e8c24313e1768a2a9c3f32f86b69ae2436400bdd7bae6e251bc4c4e0",
+    "address": "0xE5a698154470AF2626b27fEecb684F8fb265F2E0",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AnchorStateRegistry_v2_0_1_beta3": {
+    "hash": "0x7f1a7c8a5f60e80fb2b4f7a96f5441f62a68b8f4c8866bb4527710d9d3f8ccc1",
+    "address": "0x64c805c4d7afbA7bF79E94a8eE1113Ec70F88ae9",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AnchorStateRegistry_v2_0_1_beta4_celo": {
+    "hash": "0xa35c2125746e4b0c7cee6c3e9df5898e11755a5786756f9deb2ce3ffcc4efb5a",
+    "address": "0x17B8E21aEC1B119321d2e3090B12F331845C9eAc",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AnchorStateRegistry_v2_2_2": {
+    "hash": "0x5d50c259a38eef46641553e8ec1910a443c1b25062ea558d0b3e0bc7218adae1",
+    "address": "0x7b465370BB7A333f99edd19599EB7Fb1c2D3F8D2",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

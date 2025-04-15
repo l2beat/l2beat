@@ -37,5 +37,6 @@ export function getTotalSupplyEntry(
     symbol: token.symbol,
     type: type,
     untilTimestamp: token.untilTimestamp,
+    premint: token.premint,
   }
 }

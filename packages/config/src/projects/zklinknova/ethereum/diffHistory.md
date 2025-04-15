@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x18b5420a3a72fa0bafad5c3ef91dd85a20248afb
+Generated with discovered.json: 0x27cdf7b6270cd9573a85cf166ced3f8dc488e7cc
+
+# Diff at Thu, 10 Apr 2025 14:43:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22022360
+- current block number: 22022360
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022360 (main branch discovery), not current.
+
+```diff
+    contract EthereumProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x205f6ff36f7fc2614e4d4a9d9f1e6e0a6c4c9cbb
 
 # Diff at Tue, 11 Mar 2025 08:13:06 GMT:
 

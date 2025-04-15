@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "snaxchain",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "snaxchain-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x936D881b4760D5e9b6D55b774f65c509236b4743",
+            "decimals": 18,
+            "sinceTimestamp": 1723562291
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xA5fb68C24b02852e8B514E98A1014faf12547Fa5",
+            "decimals": 18,
+            "sinceTimestamp": 1723562291
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

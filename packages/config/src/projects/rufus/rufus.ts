@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
@@ -45,6 +45,9 @@ export const rufus: ScalingProject = underReviewL2({
         callsPerMinute: 1500,
       },
     ],
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
   activityConfig: {
     type: 'block',

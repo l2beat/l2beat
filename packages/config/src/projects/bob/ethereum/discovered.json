@@ -1,8 +1,8 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22094600,
-  "configHash": "0xb8d43454b86ef0c1e259431b17491cb7bda03f20610650a1f0eb7e6add4f4a93",
+  "blockNumber": 22187675,
+  "configHash": "0x52204df44c3593f4162ee1d9ba00a4845507746ea800383010bf34971864ee09",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -59,7 +59,8 @@
         "proxy__getIsOssified": false,
         "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
         "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
-      }
+      },
+      "derivedName": "L1ERC20TokenBridge"
     },
     {
       "name": "ProxyAdmin",
@@ -101,7 +102,8 @@
         "addressManager": "0xF2dc77c697e892542cC53336178a78Bb313DFDC7",
         "isUpgrading": false,
         "owner": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
@@ -155,6 +157,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -186,7 +189,8 @@
         "owner": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
         "paused": false,
         "version": "2.1.0"
-      }
+      },
+      "derivedName": "L1UsdcBridge"
     },
     {
       "address": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
@@ -242,16 +246,22 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 21000,
-          "prevBlockNum": 22094435
+          "prevBlockNum": 22186969
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+      "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -316,7 +326,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279133814289959323296",
+        "scalar": "452312848583266388373324160190187140051835877600158453279133814289969223296",
         "sequencerInbox": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xB18AD28cB78fD2eAfAc6941c24c5135515B796f0",
@@ -329,6 +339,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -404,16 +415,16 @@
           "0x32B8325b7f12ADB06763D6D04c951AC94e36C3D7",
           "0x3C30D693b23F77d55e14b8e0CFB6C00075ff93aB",
           "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
-          "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+          "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
         ],
         "$threshold": 4,
         "domainSeparator": "0xd13aae4320fc999ac2fee9682e98cbad2d45dbfd6a0c461b85455b30b3980418",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 8,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -469,10 +480,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 14839200,
-        "latestOutputIndex": 686,
-        "nextBlockNumber": 14860800,
-        "nextOutputIndex": 687,
+        "latestBlockNumber": 15400800,
+        "latestOutputIndex": 712,
+        "nextBlockNumber": 15422400,
+        "nextOutputIndex": 713,
         "PROPOSER": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "startingBlockNumber": 0,
         "startingTimestamp": 1712861987,
@@ -487,6 +498,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -520,7 +532,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292659830",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660067",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -534,6 +546,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -543,11 +556,6 @@
     },
     {
       "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -574,7 +582,9 @@
       "values": {
         "$immutable": true,
         "owner": "0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
@@ -953,15 +963,15 @@
     ]
   },
   "usedTemplates": {
-    "circle/L1ERC20TokenBridge": "0x4d352d828583ec4c6ef0a3ae6f63937ddee5a3d813708a4e2450b3b31222de13",
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "lido/L1ERC20TokenBridge": "0x44d20eeab0d047608977415a93b298af0794106bce88430721828b7aebb83626",
-    "opstack/AddressManager": "0xdce2903f9a604505aa9785e7bfe472e6af5ec2b08d0a6408e5b79a86148344b3",
-    "opstack/L1CrossDomainMessenger": "0xde2a916ff69f6b7310088054466bd1ff30bd91e359db75b6f8b0da9c1b23b1b0",
-    "opstack/L1StandardBridge": "0xf27b89c7dc7d718e47969109bf6470d680395ee0ce530dac25d74ec0fb77957a",
-    "opstack/L2OutputOracle": "0x22fe6c814f54c1a5de78dbf69b450ae3f13ead484e6fbc675f78c00b0f754405",
-    "opstack/OptimismPortal": "0x86dc78550214d6e43fda82cc0465fa27db3db49de0104c52918b711d004f7665",
-    "opstack/SystemConfig": "0x5ddc5eebebef91bf7b53c131698e8d76b94d355b28d20a9dcc14b59eb1dc68b1"
+    "circle/L1ERC20TokenBridge": "0xf1601e881b800616e1e5c3aef4e2da5f141e5de42dc41e9f8aab37b0020d15f1",
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "lido/L1ERC20TokenBridge": "0xbd7adee14900b864c43324092aea4dd72d87b31e6dcbfdd26a68d2e2b427ca8e",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
 }

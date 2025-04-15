@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "blockNumber": 19532229,
-  "configHash": "0x1a9d5a192bb69b3fd2588c0ec3367917b32c5588247e389762bc4b7cf202ce7e",
+  "configHash": "0xbe07b593ef9d90b57147475ede63a6b9d524c46f183441290ac43c731c3ddacf",
   "entries": [
     {
       "address": "0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
@@ -34,7 +34,8 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "FeeHandlerRouter"
     },
     {
       "name": "Permissionless Generic Handler",
@@ -72,7 +73,8 @@
         "handler1": "0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
         "handler2": "0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
         "paused": false
-      }
+      },
+      "derivedName": "Bridge"
     },
     {
       "address": "0x5a288b42dC222190D8cF5014A330c978ee42A5df",
@@ -109,7 +111,8 @@
         "_feeHandlerRouterAddress": "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
         "$immutable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "BasicFeeHandler"
     },
     {
       "address": "0xa399460Ce767b06297457178D2F9F8f144017E77",
@@ -247,7 +250,8 @@
         "role_startKeyGen": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
         "role_unpauseTransfers": "0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
         "role_Withdraw": "0xc4d8b2F5501C765dE0C5E12550118F397B197D05"
-      }
+      },
+      "derivedName": "AccessControlSegregator"
     }
   ],
   "abis": {
@@ -438,6 +442,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

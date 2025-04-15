@@ -1,0 +1,20 @@
+{
+  "OneStepProverMemory": {
+    "hash": "0x731b4466319a83c95ce227d1a6c85aa03864f5d2bed03bda186843033a8b8d61",
+    "address": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OneStepProverMemory_BoLD": {
+    "hash": "0x9da1c11f886667abb57a92659891b066372dde4fe1a3eebce72c722ecf872874",
+    "address": "0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OneStepProverMemory_v32": {
+    "hash": "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf",
+    "address": "0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

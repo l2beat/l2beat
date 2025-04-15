@@ -45,6 +45,20 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getForDaLayerByTimestamp(
+    daLayer: string,
+    timestamp: UnixTime,
+  ): Promise<DataAvailabilityRecord[]> {
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('daLayer', '=', daLayer)
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getByProjectIdsAndTimeRange(
     projectIds: string[],
     timeRange: [UnixTime | null, UnixTime],

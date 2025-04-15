@@ -1,0 +1,115 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "superlumio",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "superlumio-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x9C93982cb4861311179aE216d1B7fD61232DE1f0",
+            "decimals": 18,
+            "sinceTimestamp": 1708984751
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
+            "decimals": 18,
+            "sinceTimestamp": 1708984787
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superlumio-PEPE",
+      "priceId": "pepe",
+      "symbol": "PEPE",
+      "name": "Pepe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+        "chain": "ethereum",
+        "escrowAddress": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
+        "decimals": 18,
+        "sinceTimestamp": 1708984787
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superlumio-PORK",
+      "priceId": "pepefork",
+      "symbol": "PORK",
+      "name": "PepeFork",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34913/large/pork.png?1706606047",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xb9f599ce614Feb2e1BBe58F180F370D05b39344E",
+        "chain": "ethereum",
+        "escrowAddress": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
+        "decimals": 18,
+        "sinceTimestamp": 1708984787
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superlumio-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
+        "decimals": 6,
+        "sinceTimestamp": 1708984787
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superlumio-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc",
+        "decimals": 6,
+        "sinceTimestamp": 1708984787
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

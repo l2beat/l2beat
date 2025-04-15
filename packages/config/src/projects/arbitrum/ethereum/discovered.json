@@ -2,14 +2,13 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 22081889,
-  "configHash": "0xe01129cc1335f10c587ac15efb14bfd826bca9d761fcd086e4c1fb56be81a45e",
+  "configHash": "0xd99aaf8a1c8512895f38c62d98ca0683d30cb05b1b62050f5f55adcd6f0aec83",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x07D4692291B9E30E326fd31706f686f83f331B82",
@@ -36,7 +35,7 @@
         "0x9e054d18af00f58f7fa36e7a0fd5b04b9dacfb8c411d84c3591e57aa72faff9d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.",
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -322,6 +321,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       },
+      "derivedName": "Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -421,6 +421,7 @@
         "implementation": "0xc4940069140142236D4065b866018f7b2BeC77fD",
         "owner": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
+      "derivedName": "UpgradeableBeacon",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -475,7 +476,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1661457944,
       "sinceBlock": 15411056,
       "values": {
@@ -563,6 +569,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -574,8 +581,7 @@
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -589,7 +595,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397379,
       "sinceBlock": 21418842,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
@@ -706,6 +713,7 @@
           "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -728,7 +736,8 @@
         "minGasPrice": 100000000,
         "NATIVE_CURRENCY": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "parentChainGatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
-      }
+      },
+      "derivedName": "ParentToChildRewardRouter"
     },
     {
       "name": "OneStepProofEntry",
@@ -748,21 +757,20 @@
         "proverHostIo": "0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
         "proverMath": "0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921",
         "proverMem": "0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
@@ -868,6 +876,7 @@
         "paused": false,
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
       },
+      "derivedName": "Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -991,6 +1000,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1036,7 +1046,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1089,7 +1098,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1163,28 +1171,26 @@
         "$upgradeCount": 2,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
-      }
+      },
+      "derivedName": "RollupEventInbox"
     },
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7",
@@ -1427,8 +1433,7 @@
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
@@ -1554,28 +1559,26 @@
           "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
+      "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GoncaloMagalhaes-Immunefi",
       "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GatewaysAdmin",
@@ -1586,7 +1589,6 @@
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1622,7 +1624,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397775,
       "sinceBlock": 21418875,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "L1Escrow",
@@ -1635,6 +1638,7 @@
       "sinceTimestamp": 1632133470,
       "sinceBlock": 13262081,
       "values": { "$immutable": true },
+      "derivedName": "L1Escrow",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1647,7 +1651,6 @@
         "0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ERC20Gateway",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
       "issuedPermissions": [
         {
@@ -1721,6 +1724,7 @@
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
+      "derivedName": "L1ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -1733,7 +1737,6 @@
         "0x6c09a44175196122c17b285af0789d13088361d0f4244fbe65f00f40d3036cb8"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "ChallengeManager",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
       "issuedPermissions": [
         {
@@ -1782,6 +1785,7 @@
         "stakeAmounts": [0, "555000000000000000000", "79000000000000000000"],
         "stakeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "derivedName": "EdgeChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1801,7 +1805,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397631,
       "sinceBlock": 21418863,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
@@ -1836,6 +1841,7 @@
         "numRemaining": 0,
         "root": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
+      "derivedName": "OutboxEntry",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -1848,7 +1854,6 @@
         "0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "CustomGateway",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
       "issuedPermissions": [
         {
@@ -1926,6 +1931,7 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
+      "derivedName": "L1CustomGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -1992,6 +1998,7 @@
         "l2Counterpart": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
         "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
       },
+      "derivedName": "L1DaiGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -2006,14 +2013,14 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397511,
       "sinceBlock": 21418853,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "gzeon-OffchainLabs",
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L1Timelock",
@@ -5107,27 +5114,27 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "orbitstack/Bridge": "0x845301f405250de17dac319b98e789faa82ba4b2112fa393bc9e5543309f6fdb",
-    "orbitstack/CustomGateway2": "0x78314a060f1a0ab63c8cc610f3f65e2ee3db899773f5185db3fb2c77205421d1",
-    "orbitstack/EdgeChallengeManager": "0xabd3efc522d4618ae82b266ac049b345f7e5f1ffbf72f930274626712d0baa54",
-    "orbitstack/ERC20Gateway2": "0x63632fcac1466b2923623e42af2a7978e01a51e509df0aea710023c7b6e7c01c",
-    "orbitstack/GatewayRouter": "0x4ffc754ff04b3640c99118d12b09b5ca5762dceb37509e5fdff23a8f43bb1180",
-    "orbitstack/Inbox": "0xd0dac54a5086572ce3617a54758925dc0549cddf5901e35abeabc6a82c8e4125",
-    "orbitstack/L1DaiGateway": "0xed9eadf5f30a090c39f8acc11bb104f8dd9224e387a59429c0f3c1f1e38a10e6",
-    "orbitstack/OneStepProofEntry": "0x074184951191630feeaa1da3328d97eb4b6b01fcab82d65b95edbab72a8f3f24",
-    "orbitstack/OneStepProver0": "0x559f6ee495bd31dc9c44eb080b7465809cc4be6b4320e9eaaa57688d40e5393f",
-    "orbitstack/OneStepProverHostIo": "0x005f15de59af5ea5756cd602e399228055af398efab35e1838bc380b50b40d9c",
-    "orbitstack/OneStepProverMath": "0x9b4bb3e22278824fe310f080640053b421ec7571e8b89875e70c6a428073c9e4",
-    "orbitstack/OneStepProverMemory": "0xe7c75f6dbf6da1c4532a8bdc920a2159d59c38ad05c35e4c49405d5e2939ecb9",
-    "orbitstack/Outbox": "0xc10e243b743384d55d03accc7e87313f0d3928160f4bbc7542fb7263b477e6ba",
-    "orbitstack/ParentToChildRewardRouter": "0xd1fc25e6b72699ba6f65f536c0ca7b0887b0aeca045570aec48939c258b685d0",
-    "orbitstack/RollupEventInbox": "0x3595225eeb70fac31bb4956d7a85fe36e2dc41e296ea3aca04d02f00ab56672b",
-    "orbitstack/RollupProxyBoLD": "0x79979c974399e5668cea2ff24e5a09bc2c46b88573d3e9dac56c9f88caa4eeca",
-    "orbitstack/SecurityCouncil": "0xdcb84d1f43f14da797bf12ed87af05af6333de2c64ea3612938d02331ef96263",
-    "orbitstack/SequencerInbox": "0x581e8e0864016d59378fd3c4a3f5c55fa43e3d4fbad9554c10598cd15ac03ea9",
-    "orbitstack/Timelock": "0x584240f3909a1061aab7560daa6d114df6cf3c1d9f7abad51516c5554fd3e61d",
-    "orbitstack/UpgradeExecutor": "0x08963d43011c21d1756bbf66e6e16480551aaafe1608fc4775c9e3c7da846f19"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "orbitstack/Bridge": "0x90031b4e4f9fcb7d87cf53eb46e1eac9602ede912abdfa54f17d7d3aa96e3ea0",
+    "orbitstack/CustomGateway2": "0x96e6b623f5bcc7788ad0c01a5d7520bec15eda0a761a0907a47d87cdb752d4e7",
+    "orbitstack/EdgeChallengeManager": "0x43577685a8a9a542b402c4a038c55829c62a4df66410c614c93a6b02d2fa9166",
+    "orbitstack/ERC20Gateway2": "0x954f4e419b2ad254564d4333d088d57aea3283edccc516bcf07e5d4467f48f77",
+    "orbitstack/GatewayRouter": "0xe69c43c0e257aac7722518bb22b4ac48768f06e16a25c0be3b4a03d8ffc6d264",
+    "orbitstack/Inbox": "0x45f9b69916c043d8a695844685a99374143c20e6d5a13ceb145fdf6a1121825b",
+    "orbitstack/L1DaiGateway": "0x5669a02d7dfb9f107a228c722c82007ebd9470820e7ed0289a2bd453859fc684",
+    "orbitstack/OneStepProofEntry": "0x9eb54e580161778d86b080078e2ee2b9780cc0cdc39d271fe6202028901f2589",
+    "orbitstack/OneStepProver0": "0xd52943a596387edc0931848e22e526893c934fa609baf10454c9f11b46bce1b1",
+    "orbitstack/OneStepProverHostIo": "0x8cef93d8938073b743f7a540589ae5a108425a5a9c6f16ba080df9c88fd0ad62",
+    "orbitstack/OneStepProverMath": "0x46314b895c9439d9614366eaf21a39c387137bbd00b4af934add687a1ad0131e",
+    "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
+    "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
+    "orbitstack/ParentToChildRewardRouter": "0x3bc52fbc107b492c070b5063cc4929371d1081db3de56e70a32d0069e660d89a",
+    "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
+    "orbitstack/RollupProxyBoLD": "0x800d67eca5e66e01ed2b263576314f5176ab6003683a37b80e93839459bf7c01",
+    "orbitstack/SecurityCouncil": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
+    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/Timelock": "0x4110c0fb129bc71f5c897676352cabfbe4d46b768669fd206b28e1151e2f532e",
+    "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04"
   }
 }

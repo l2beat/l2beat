@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "linea",
   "blockNumber": 15810734,
-  "configHash": "0x2f24fbfcea12edd2a982827d8226a7d69f4d47f865788f9ecfbf5f80025b17b2",
+  "configHash": "0x9c2252bd593768424bfffc27db7f52659af5b0d0f4cfa959d23acc01b1ac3766",
   "entries": [
     {
       "name": "TokenMessaging",
@@ -47,7 +47,8 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      }
+      },
+      "derivedName": "TokenMessaging"
     },
     {
       "name": "StargatePoolNative",
@@ -92,7 +93,8 @@
         "token": "0x0000000000000000000000000000000000000000",
         "treasuryFee": 28120607,
         "tvl": "4456999350000000000000"
-      }
+      },
+      "derivedName": "StargatePoolNative"
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",

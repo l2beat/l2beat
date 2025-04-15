@@ -6,6 +6,7 @@ const LOG_LEVELS = [
   'INFO',
   'DEBUG',
   'TRACE',
+  'METRIC',
 ] as const
 export type LogLevel = (typeof LOG_LEVELS)[number]
 export const LEVEL = {} as Record<LogLevel, number>

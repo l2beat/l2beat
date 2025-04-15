@@ -1,0 +1,14 @@
+{
+  "EAS_v1_0_1": {
+    "hash": "0x662edc082d445c579bb50a631e8c4137c8d9d9016da29683e3f1ccf24b835092",
+    "address": "0x4E0275Ea5a89e7a3c1B58411379D1a0eDdc5b088",
+    "chain": "optimism",
+    "blockNumber": 134041720
+  },
+  "EAS_v1_4_1_beta1": {
+    "hash": "0x0ca562554163a2c4d87d76cd922699bca2c35809d5595ca3737d56db3d87b9f9",
+    "address": "0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021",
+    "chain": "ink",
+    "blockNumber": 10183769
+  }
+}

@@ -6,10 +6,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -23,6 +23,7 @@ export const bugbuster: ScalingProject = {
   id: ProjectId('bugbuster'),
   capability: 'appchain',
   addedAt: UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  archivedAt: UnixTime(1743897600), // 2025-04-06T00:00:00.000Z,
   hostChain: ProjectId('optimism'),
   badges: [
     BADGES.Stack.Cartesi,

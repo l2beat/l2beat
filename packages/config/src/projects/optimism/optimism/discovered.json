@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 132493968,
-  "configHash": "0xfa87b336ad1255af7fef79bf1e50399e12e5881a288134a0f8a83ff1079ce422",
+  "configHash": "0x34ad13991fdcbd135aefd701e37f0f61ffcc621f9e2016978ffe7d26abce7aa0",
   "entries": [
     {
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -80,7 +80,8 @@
         "$upgradeCount": 0,
         "owner": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "DeployerWhitelist"
     },
     {
       "name": "L2CrossDomainMessenger",
@@ -120,7 +121,8 @@
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.4.0"
-      }
+      },
+      "derivedName": "L2CrossDomainMessenger"
     },
     {
       "name": "GasPriceOracle",
@@ -170,7 +172,8 @@
         "isFjord": true,
         "l1BaseFee": 1654611049,
         "version": "1.3.0"
-      }
+      },
+      "derivedName": "GasPriceOracle"
     },
     {
       "name": "L2StandardBridge",
@@ -202,7 +205,8 @@
         "MESSENGER": "0x4200000000000000000000000000000000000007",
         "OTHER_BRIDGE": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "L2StandardBridge"
     },
     {
       "name": "SequencerFeeVault",
@@ -233,7 +237,8 @@
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "SequencerFeeVault"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -262,7 +267,8 @@
         "$upgradeCount": 0,
         "BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "name": "L1BlockNumber",
@@ -290,7 +296,8 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "L1BlockNumber"
     },
     {
       "name": "L2ERC721Bridge",
@@ -328,7 +335,8 @@
         "OTHER_BRIDGE": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "otherBridge": "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "L2ERC721Bridge"
     },
     {
       "name": "L1Block",
@@ -382,7 +390,8 @@
         "sequenceNumber": 0,
         "timestamp": 1740586643,
         "version": "1.2.0"
-      }
+      },
+      "derivedName": "L1Block"
     },
     {
       "name": "L2ToL1MessagePasser",
@@ -411,7 +420,8 @@
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
         "version": "1.0.0"
-      }
+      },
+      "derivedName": "L2ToL1MessagePasser"
     },
     {
       "name": "OptimismMintableERC721Factory",
@@ -441,7 +451,8 @@
         "BRIDGE": "0x4200000000000000000000000000000000000014",
         "REMOTE_CHAIN_ID": 1,
         "version": "1.2.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC721Factory"
     },
     {
       "name": "ProxyAdmin",
@@ -536,7 +547,8 @@
         "addressManager": "0x0000000000000000000000000000000000000000",
         "isUpgrading": false,
         "owner": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "BaseFeeVault",
@@ -566,7 +578,8 @@
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "BaseFeeVault"
     },
     {
       "name": "L1FeeVault",
@@ -596,7 +609,8 @@
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "L1FeeVault"
     },
     {
       "name": "SchemaRegistry",
@@ -630,7 +644,8 @@
         ],
         "$upgradeCount": 1,
         "version": "1.0.1"
-      }
+      },
+      "derivedName": "SchemaRegistry"
     },
     {
       "name": "EAS",
@@ -669,7 +684,8 @@
         "getRevokeTypeHash": "0xa98d02348410c9c76735e0d0bb1396f4015ac2bb9615f9c2611d19d7a8a99650",
         "getSchemaRegistry": "0x4200000000000000000000000000000000000020",
         "version": "1.0.1"
-      }
+      },
+      "derivedName": "EAS"
     },
     {
       "name": "OPToken",
@@ -726,7 +742,8 @@
         "MINT_PERIOD": 31536000,
         "mintPermittedAfter": 0,
         "owner": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
-      }
+      },
+      "derivedName": "MintManager"
     },
     {
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
@@ -1373,21 +1390,21 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "opstack/Layer2/BaseFeeVault": "0x8ac3d4d02e60f9d0fc5d1b3bb4d0fd144402bddf02d54e01810b634978000c62",
-    "opstack/Layer2/EAS": "0x544625cb6730381fe1dd5389cefeed7886901b154fbf10f9a3cb134e42ff2173",
-    "opstack/Layer2/GasPriceOracle": "0x98613b8b76dab2084336195d79927dfe87cab8bf2c7f92b855fdb25500c0e63f",
-    "opstack/Layer2/L1Block": "0xae883e6710bcb5f0f7074b3d7666d33f74f8adcd1ec572b0758104af1ac24246",
-    "opstack/Layer2/L1BlockNumber": "0x09a7d99039caa076ae26fc79331e2653bbefdf9a9efe083f3428ecf6df6e2220",
-    "opstack/Layer2/L1FeeVault": "0xbe152bc5a515a30943a5d439fad723b9fd4ee04d68882526043248db73c61847",
-    "opstack/Layer2/L2CrossDomainMessenger": "0x05066a856424429898e25025458ca628bf5303d5522f22f706e1df91aa16f0b3",
-    "opstack/Layer2/L2ERC721Bridge": "0x644697262bc7ef1d94db87e01ff4b4e29d630d90b37a33b34ef22c611a333661",
-    "opstack/Layer2/L2StandardBridge": "0xa3f1df939baca30632b5ffcdac284af5eacd42a15fc6fc8adf2a1e3ddf5c7559",
-    "opstack/Layer2/L2ToL1MessagePasser": "0xf46a7ab8a1471c982b2994a70ac0e6503118d153e19b6fd4d0cdaf4037964408",
-    "opstack/Layer2/OptimismMintableERC20Factory": "0x9d5a3f4adcea192ed605c14cd14a034f2fcb5cfd3d6620a0202dcf010499fa33",
-    "opstack/Layer2/OptimismMintableERC721Factory": "0x051481764ef505e8cdcd9bc207d1e9374219d23ef8541bc4bc409e29d9a5b678",
-    "opstack/Layer2/SchemaRegistry": "0x2b2e5b40b1ba5e7d9d13df6e72a7803eab26ed8d0860160fc9271f33b88e0978",
-    "opstack/Layer2/SequencerFeeVault": "0x305f40bd865fb7d166ae19b5fae4b12eb9ee28180718da92aacbfe7d9c91f789"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/GasPriceOracle": "0xed55fe1e61604ea2a3cd0199651c7b01bfb5afc47dd9a6f74bb53f4b09da4662",
+    "opstack/Layer2/L1Block": "0xb30fc0927b540f3268ac3fa4e2cd159149792010b6d7b337b6cc53b2da677dfb",
+    "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
+    "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
+    "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
+    "opstack/Layer2/L2ERC721Bridge": "0x9014fd221c67a8a11045cd252fd4bd75e36e7dcea7eaf8d98eb22da2a0d2e919",
+    "opstack/Layer2/L2StandardBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0xbb8ec39d7870faca409a8c1ff8da350ef80d61228a6aa0e950e8de4b9294f909",
+    "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   }
 }

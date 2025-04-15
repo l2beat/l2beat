@@ -381,24 +381,29 @@ function getEtherscanClient(chain: string, chains: ChainConfig[]) {
   const config = chains.find((c) => c.name === chain)
 
   const api = config?.apis.find(
-    (x) => x.type === 'etherscan' || x.type === 'blockscout',
+    (x) =>
+      x.type === 'etherscan' ||
+      x.type === 'routescan' ||
+      x.type === 'blockscout',
   )
+
   assert(api)
   const chainConfig =
     api.type === 'etherscan'
       ? {
+          chain,
           type: api.type,
           apiKey: env.string([
             `${config?.name.toUpperCase()}_ETHERSCAN_API_KEY`,
           ]),
           url: api.url,
         }
-      : { type: api.type, url: api.url }
+      : { chain, type: api.type, url: api.url }
 
   return new BlockIndexerClient(
     new HttpClient(),
     new RateLimiter({ callsPerMinute: 120 }),
-    { chain, ...chainConfig },
+    chainConfig,
   )
 }
 

@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { ProjectService, type TvsToken } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,
   ProjectId,
+  TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { type Token, TokenId } from '../types'
 import { mapConfig } from './mapConfig'
 
 describe(mapConfig.name, () => {
@@ -19,17 +19,27 @@ describe(mapConfig.name, () => {
     })
     assert(arbitrum, 'Arbitrum not found')
 
-    const result = await mapConfig(arbitrum, Logger.SILENT)
+    const projectsWithChain = (
+      await ps.getProjects({ select: ['chainConfig'] })
+    ).map((p) => p.chainConfig)
+
+    const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
+
+    const result = await mapConfig(arbitrum, chains, Logger.SILENT)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
-    expect(result.tokens.find((t: Token) => t.id === 'arbitrum-ETH')).toEqual({
+    expect(
+      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH-1'),
+    ).toEqual({
       mode: 'auto',
-      id: TokenId('arbitrum-ETH'),
+      id: TokenId('arbitrum-ETH-1'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
+      iconUrl:
+        'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
       amount: {
         type: 'calculation',
         operator: 'sum',
@@ -73,31 +83,39 @@ describe(mapConfig.name, () => {
 
     expect(
       result.tokens.find(
-        (t: Token) =>
-          t.id === 'arbitrum-ARB' && t.amount.type === 'circulatingSupply',
+        (t: TvsToken) =>
+          t.id === 'arbitrum-ARB-1' && t.amount.type === 'circulatingSupply',
       ),
     ).toEqual({
       mode: 'auto',
-      id: TokenId('arbitrum-ARB'),
+      id: TokenId('arbitrum-ARB-1'),
       symbol: 'ARB',
       name: 'Arbitrum',
+      iconUrl:
+        'https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242',
       priceId: 'arbitrum',
       amount: {
         type: 'circulatingSupply',
         apiId: 'arbitrum',
         decimals: 18,
         sinceTimestamp: UnixTime(1679529600),
+        address: '0x912CE59144191C1204E64559FE8253a0e49E6548',
+        chain: 'arbitrum',
       },
       category: 'other',
       source: 'native',
       isAssociated: true,
     })
 
-    expect(result.tokens.find((t: Token) => t.id === 'arbitrum-ATH')).toEqual({
+    expect(
+      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ATH'),
+    ).toEqual({
       mode: 'auto',
       id: TokenId('arbitrum-ATH'),
       symbol: 'ATH',
       name: 'Aethir Token',
+      iconUrl:
+        'https://coin-images.coingecko.com/coins/images/36179/large/logogram_circle_dark_green_vb_green_%281%29.png?1718232706',
       priceId: 'aethir',
       amount: {
         type: 'totalSupply',

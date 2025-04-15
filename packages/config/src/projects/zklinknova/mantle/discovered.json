@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantle",
   "blockNumber": 76775244,
-  "configHash": "0x7565e5b9b5a8c189cd8cfa86a25e5bf65172555fedc48347a22e4285638cf8ae",
+  "configHash": "0x320114ce85af588f282f5855f5d79a0e6d5d7ea6ecf3462edac5c2b5ddfadea3",
   "entries": [
     {
       "name": "MantleOwner",
@@ -118,7 +118,8 @@
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      }
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -271,7 +272,8 @@
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "ZKLINK": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
-      }
+      },
+      "derivedName": "MantleL2Gateway"
     },
     {
       "name": "MantleProxyAdmin",
@@ -282,7 +284,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -516,9 +517,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a",
-    "zklinknova/secondaryZkLink": "0xdd6ae208e600e8a58e2bfc5a099e81722045a5388ba31c4c5cf94bea5e027113"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
+    "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   }
 }

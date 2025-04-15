@@ -1,4 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
+import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import type { BasicTableProps } from '../basic-table'
 
@@ -30,7 +31,7 @@ export function getRowClassNames(rowType: RowType) {
     case 'ethereum':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
     case 'unverified':
-      return 'bg-red-100/70 dark:bg-red-900/70'
+      return UNVERIFIED_DA_CLASSNAME
     case 'under-review':
       return 'bg-yellow-200/10'
     default:

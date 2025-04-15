@@ -1,26 +1,31 @@
+import { RiskBanner } from '~/components/projects/risk-banner'
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../types'
-import { SingleGrissiniDetails } from './single-grissini-details'
+
+interface Props {
+  values: RosetteValue[]
+  className?: string
+  descriptionAsTooltip?: boolean
+  info?: 'compact' | 'full'
+  size?: 'small' | 'regular'
+}
 
 export function GrissiniDetails({
   values,
   className,
-  showTooltip,
+  descriptionAsTooltip,
+  info,
   size,
-}: {
-  values: RosetteValue[]
-  className?: string
-  showTooltip?: boolean
-  size?: 'small' | 'regular'
-}) {
+}: Props) {
   return (
     <div className={cn('flex w-[264px] flex-col gap-2 md:gap-4', className)}>
       {values.map((value) => (
-        <SingleGrissiniDetails
+        <RiskBanner
           key={value.name}
           {...value}
-          showTooltip={showTooltip}
+          descriptionAsTooltip={descriptionAsTooltip}
           size={size}
+          info={info}
         />
       ))}
     </div>

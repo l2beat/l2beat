@@ -1,4 +1,176 @@
-Generated with discovered.json: 0x175284b5b339d07c5778b54e18aeeca436dd8076
+Generated with discovered.json: 0x57f8c415786249bc0469444ec857339573099715
+
+# Diff at Sun, 06 Apr 2025 07:54:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 22081891
+- current block number: 22208508
+
+## Description
+
+signer/perms changes.
+
+## Watched changes
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      values.$members.7:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.6:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.5:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.4:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.3:
+-        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
++        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+      values.$members.2:
+-        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.multisigThreshold:
+-        "1 of 8 (13%)"
++        "1 of 6 (17%)"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      issuedPermissions.19:
+-        {"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      issuedPermissions.18:
+-        {"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      issuedPermissions.17.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.17.description:
+-        "can pause the DA bridge"
+      issuedPermissions.17.via.0.address:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.16.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.16.to:
+-        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.16.description:
+-        "can pause the DA bridge"
+      issuedPermissions.16.via.2:
++        {"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}
+      issuedPermissions.16.via.1.address:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.16.via.0.address:
+-        "0x5050389572f2d220ad927CcbeA0D406831012390"
++        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      issuedPermissions.15.to:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0xFEA47018D632A77bA579846c840d5706705Dc598"
+      issuedPermissions.15.via.1.address:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      issuedPermissions.15.via.0.address:
+-        "0x5050389572f2d220ad927CcbeA0D406831012390"
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+      issuedPermissions.14.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.14.to:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+      issuedPermissions.14.via.2:
+-        {"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}
+      issuedPermissions.14.via.1.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+      issuedPermissions.14.via.0.address:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "0x5050389572f2d220ad927CcbeA0D406831012390"
+      issuedPermissions.14.description:
++        "can pause the DA bridge"
+      issuedPermissions.13.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.13.to:
+-        "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
++        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      issuedPermissions.13.description:
+-        "can create rewards submissions."
+      issuedPermissions.13.via.2:
++        {"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}
+      issuedPermissions.13.via.1:
++        {"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}
+      issuedPermissions.13.via.0:
++        {"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}
+      issuedPermissions.12.to:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
+      issuedPermissions.12.description:
+-        "can pause the DA bridge"
++        "can create rewards submissions."
+      issuedPermissions.12.via.1:
+-        {"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}
+      issuedPermissions.12.via.0:
+-        {"address":"0x5050389572f2d220ad927CcbeA0D406831012390"}
+      issuedPermissions.11.to:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      issuedPermissions.11.via.2:
+-        {"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}
+      issuedPermissions.11.via.1.address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+      issuedPermissions.11.via.0.address:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "0x5050389572f2d220ad927CcbeA0D406831012390"
+      issuedPermissions.10.via.2:
++        {"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}
+      issuedPermissions.10.via.1:
++        {"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"}
+      issuedPermissions.9.to:
+-        "0x4a3CD82B73821d075799680AcDff3e884B726777"
++        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      issuedPermissions.9.via.1:
+-        {"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}
+      issuedPermissions.9.via.0.address:
+-        "0x5050389572f2d220ad927CcbeA0D406831012390"
++        "0x0c431C66F4dE941d089625E5B423D00707977060"
+      issuedPermissions.8.to:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "0x4a3CD82B73821d075799680AcDff3e884B726777"
+      issuedPermissions.7.to:
+-        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.4:
+-        "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02"
++        "0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
+      values.$members.3:
+-        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
++        "0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
+      values.$members.2:
+-        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
+      values.$members.1:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
+      values.$members.0:
+-        "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1"
++        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+    }
+```
+
+Generated with discovered.json: 0x0c00fde35dd786374f379b2545436eeb527dfc1f
 
 # Diff at Wed, 19 Mar 2025 15:44:58 GMT:
 

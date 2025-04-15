@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../common'
+import { UPCOMING_RISK_VIEW } from '../../common'
 import type { ScalingProject } from '../../internalTypes'
 
 export const reddiozkvm: ScalingProject = {
@@ -38,6 +38,4 @@ export const reddiozkvm: ScalingProject = {
     escrows: [],
   },
   riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-  contracts: CONTRACTS.EMPTY,
 }

@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0x3ab7f95900d4121969334c254c469fdfe8f5e353a35071c048736c2cc4f84ab8",
+  "configHash": "0x21c57e9cf05206a807ef29fd21dbdbf457da0ff9d6b01694e25595a89fed3035",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -158,7 +158,8 @@
         "KERNEL_APP_ID": "0x3b4bf6bf3ad5000ecf0f989d5befde585c6860fea3e574a4fab4c49d1c177d9c",
         "proxyType": 2,
         "recoveryVaultAppId": "0x7e852e0fcfce6551c13800f1e7476f982525c2b5277ba14b24339c68416336d1"
-      }
+      },
+      "derivedName": "Kernel"
     },
     {
       "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
@@ -207,7 +208,8 @@
         "proxyType": 1,
         "REGISTRY_ADD_EXECUTOR_ROLE": "0xc4e90f38eea8c4212a009ca7b8947943ba4d4a58d19b683417f65291d1cd9ed2",
         "REGISTRY_MANAGER_ROLE": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
-      }
+      },
+      "derivedName": "EVMScriptRegistry"
     },
     {
       "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45",
@@ -240,7 +242,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1564624915,
       "sinceBlock": 8262062,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "MiniMeTokenFactory"
     },
     {
       "name": "pNetwork Multisig",
@@ -293,7 +296,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20",
@@ -333,7 +337,8 @@
         "proxyType": 2,
         "REVOKE_VESTINGS_ROLE": "0x95ffc68daedf1eb334cfcd22ee24a5eeb5a8e58aa40679f2ad247a84140f8d6e",
         "token": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
-      }
+      },
+      "derivedName": "TokenManager"
     },
     {
       "name": "PProxyAdmin",
@@ -354,7 +359,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
-      }
+      },
+      "derivedName": "PProxyAdmin"
     },
     {
       "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132",
@@ -447,7 +453,8 @@
         "totalSupply": "8926751749751332015693664",
         "transfersEnabled": false,
         "version": "MMT_0.1"
-      }
+      },
+      "derivedName": "MiniMeToken"
     },
     {
       "name": "EthPntv2",
@@ -512,7 +519,8 @@
         "totalSupply": "14960000000000000000000000",
         "yearlyRateCap": 2000,
         "yearlyWithdrawableLimit": "19355045741928169125886545"
-      }
+      },
+      "derivedName": "EthPntv2"
     },
     {
       "name": "ACL",
@@ -543,7 +551,8 @@
         "kernel": "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b",
         "NO_PERMISSION": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "proxyType": 2
-      }
+      },
+      "derivedName": "ACL"
     },
     {
       "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
@@ -1064,8 +1073,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "tokens/Lido/EVMScriptRegistry": "0xf15bea0ce9ca2fce59f1d42d128e15a18b05a3c54aeebc6bb4bcceb2986f3fc9",
-    "tokens/Lido/MiniMeToken": "0xe6377d7d81dcc6db240e3c8d3c229509e5d86c3f075135c8f21ddae7920d27ef"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
+    "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
   }
 }

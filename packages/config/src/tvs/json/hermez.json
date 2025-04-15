@@ -1,0 +1,500 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "hermez",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "hermez-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-ANT",
+      "priceId": "aragon",
+      "symbol": "ANT",
+      "name": "Aragon Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/681/large/Avatar_Circle_x6.png?1696501871",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-BAL",
+      "priceId": "balancer",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1696511572",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3D",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-BAT",
+      "priceId": "basic-attention-token",
+      "symbol": "BAT",
+      "name": "Basic Attention Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-BNT",
+      "priceId": "bancor",
+      "symbol": "BNT",
+      "name": "Bancor Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/736/large/bancor-bnt.png?1696501892",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-COMP",
+      "priceId": "compound-governance-token",
+      "symbol": "COMP",
+      "name": "Compound",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-CRV",
+      "priceId": "curve-dao-token",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12124/large/Curve.png?1696511967",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-GNO",
+      "priceId": "gnosis",
+      "symbol": "GNO",
+      "name": "Gnosis Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/662/large/logo_square_simple_300px.png?1696501854",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-GRT",
+      "priceId": "the-graph",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-GTC",
+      "priceId": "gitcoin",
+      "symbol": "GTC",
+      "name": "Gitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1621900800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-HEZ",
+      "priceId": "hermez-network-token",
+      "symbol": "HEZ",
+      "name": "Hermez Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12826/large/hermez_logo.png?1696512617",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-MKR",
+      "priceId": "maker",
+      "symbol": "MKR",
+      "name": "Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-SNT",
+      "priceId": "status",
+      "symbol": "SNT",
+      "name": "Status Network Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/779/large/status.png?1696501931",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-SUSHI",
+      "priceId": "sushi",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 6,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 6,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 8,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 6,
+        "sinceTimestamp": 1635679310
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hermez-ZRX",
+      "priceId": "0x",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/863/large/0x.png?1696501996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498",
+        "chain": "ethereum",
+        "escrowAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "decimals": 18,
+        "sinceTimestamp": 1616482490
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

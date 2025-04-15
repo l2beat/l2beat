@@ -16,7 +16,7 @@ export function Panel(props: {
   return (
     <div
       className={clsx(
-        'flex flex-col border-coffee-600 border-r',
+        'flex flex-col border-coffee-600 md:border-r',
         hidden && 'hidden',
       )}
       id={`panel-${props.id}`}

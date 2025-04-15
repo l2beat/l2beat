@@ -1,0 +1,139 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "wormholeV1",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "wormholeV1-BUSD",
+      "priceId": "binance-usd",
+      "symbol": "BUSD",
+      "name": "BUSD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9576/large/BUSDLOGO.jpg?1696509654",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 18,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wormholeV1-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 18,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wormholeV1-FRAX",
+      "priceId": "frax",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 18,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wormholeV1-HUSD",
+      "priceId": "husd",
+      "symbol": "HUSD",
+      "name": "HUSD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9567/large/HUSD.jpg?1696509647",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdF574c24545E5FfEcb9a659c229253D4111d87e1",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 8,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wormholeV1-SRM",
+      "priceId": "serum",
+      "symbol": "SRM",
+      "name": "Serum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11970/large/serum-logo.png?1696511829",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 6,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wormholeV1-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 8,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wormholeV1-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xf92cD566Ea4864356C5491c177A430C222d7e678",
+        "decimals": 18,
+        "sinceTimestamp": 1611084766
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

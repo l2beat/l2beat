@@ -1,4 +1,4 @@
-import type { ChartSectionProps } from './chart-section'
+import type { ActivitySectionProps } from './activity-section'
 import type { ContractsSectionProps } from './contracts/contracts-section'
 import type { CostsSectionProps } from './costs/costs-section'
 import type { DaRiskSummarySectionProps } from './da-risk-summary-section'
@@ -13,11 +13,13 @@ import type { ExtendedProjectSectionProps } from './project-section'
 import type { RiskAnalysisSectionProps } from './risk-analysis-section'
 import type { RiskSummarySectionProps } from './risk-summary-section'
 import type { SequencingSectionProps } from './sequencing-section'
+import type { StackedTvsSectionProps } from './stacked-tvs-section'
 import type { StageSectionProps } from './stage-section'
 import type { StateDerivationSectionProps } from './state-derivation-section'
 import type { StateValidationSectionProps } from './state-validation-section'
 import type { TechnologySectionProps } from './technology-section'
 import type { ThroughputSectionProps } from './throughput/throughput-section'
+import type { TvsSectionProps } from './tvs-section'
 
 type SectionId =
   | 'tvs'
@@ -52,11 +54,6 @@ export type ProjectSectionProps = Omit<
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 
-interface ProjectDetailsChartSection {
-  type: 'ChartSection'
-  props: ProjectDetailsProps<ChartSectionProps>
-}
-
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
   props: ProjectDetailsProps<CostsSectionProps>
@@ -65,6 +62,21 @@ interface ProjectDetailsCostsSection {
 interface ProjectDetailsThroughputSection {
   type: 'ThroughputSection'
   props: ProjectDetailsProps<ThroughputSectionProps>
+}
+
+interface ProjectDetailsStackedTvsSection {
+  type: 'StackedTvsSection'
+  props: ProjectDetailsProps<StackedTvsSectionProps>
+}
+
+interface ProjectDetailsTvsSection {
+  type: 'TvsSection'
+  props: ProjectDetailsProps<TvsSectionProps>
+}
+
+interface ProjectDetailsActivitySection {
+  type: 'ActivitySection'
+  props: ProjectDetailsProps<ActivitySectionProps>
 }
 
 interface ProjectDetailsDetailedDescriptionSection {
@@ -156,7 +168,6 @@ export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
 } & (
-  | ProjectDetailsChartSection
   | ProjectDetailsCostsSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
@@ -176,4 +187,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
+  | ProjectDetailsStackedTvsSection
+  | ProjectDetailsTvsSection
+  | ProjectDetailsActivitySection
 )

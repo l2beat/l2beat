@@ -1,0 +1,115 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "layer2financezk",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "layer2financezk-cETH",
+      "priceId": "compound-ether",
+      "symbol": "cETH",
+      "name": "Compound Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10643/large/ceth.png?1696510617",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5",
+            "chain": "ethereum",
+            "escrowAddress": "0x8581cd55ff53F1F85A237fa9D60E72a79f0973b6",
+            "decimals": 8,
+            "sinceTimestamp": 1648621885
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5",
+            "chain": "ethereum",
+            "escrowAddress": "0x4455E4435Cf7e6B6A4Df17bEAE1A413ef3663B90",
+            "decimals": 8,
+            "sinceTimestamp": 1647862894
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "layer2financezk-cUSDC",
+      "priceId": "compound-usd-coin",
+      "symbol": "cUSDC",
+      "name": "Compound USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9442/large/Compound_USDC.png?1696509534",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
+        "chain": "ethereum",
+        "escrowAddress": "0x3F3b821243E5664822c0babBA2B4f37bf294e7a0",
+        "decimals": 8,
+        "sinceTimestamp": 1648621976
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "layer2financezk-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+        "decimals": 18,
+        "sinceTimestamp": 1645130774
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "layer2financezk-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+        "decimals": 6,
+        "sinceTimestamp": 1645130774
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "layer2financezk-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+        "decimals": 6,
+        "sinceTimestamp": 1645130774
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

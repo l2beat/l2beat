@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "blockNumber": 131964914,
-  "configHash": "0x45aa05d83fec0d7cd5357943c47b76aac7eaa0d36d93c301db1704ac41e97543",
+  "configHash": "0xd33125ccb657906837c14883df85e8ecbd86047bf7555aa673d8d6b627fef058",
   "entries": [
     {
       "name": "StargatePoolMigratable",
@@ -49,7 +49,8 @@
         "token": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
         "treasuryFee": 17996114180,
         "tvl": 6274019474031
-      }
+      },
+      "derivedName": "StargatePoolMigratable"
     },
     {
       "name": "StargatePoolUSDC",
@@ -96,7 +97,8 @@
         "token": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
         "treasuryFee": 30270705728,
         "tvl": 3750471696230
-      }
+      },
+      "derivedName": "StargatePoolUSDC"
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
@@ -146,7 +148,8 @@
         "token": "0x0000000000000000000000000000000000000000",
         "treasuryFee": 17451442,
         "tvl": "8284379482000000000000"
-      }
+      },
+      "derivedName": "StargatePoolNative"
     },
     {
       "name": "TokenMessaging",
@@ -191,7 +194,8 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      }
+      },
+      "derivedName": "TokenMessaging"
     }
   ],
   "abis": {

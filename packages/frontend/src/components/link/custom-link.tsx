@@ -41,9 +41,9 @@ export function CustomLink({
   className,
   ...rest
 }: CustomLinkProps) {
-  const isCustomLink = rest.href.startsWith('http')
+  const isOutLink = rest.href.startsWith('http')
 
-  if (isCustomLink) {
+  if (isOutLink) {
     return (
       <a
         target="_blank"

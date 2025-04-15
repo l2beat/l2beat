@@ -1,9 +1,14 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 21995407,
-  "configHash": "0x7a4f940f727da810c42296294c6f93bf03fcacb91cfe7f36d6af129228323997",
+  "blockNumber": 22208513,
+  "configHash": "0xe6cf3018ab53841539ed6b869f9b2a6e59b02857e0cc0f2048ce3254b5f69f34",
   "entries": [
+    {
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
       "type": "EOA",
@@ -13,18 +18,27 @@
       "name": "Challenge",
       "address": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
       "type": "Contract",
+      "template": "lightlink/Challenge",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x90fc7abf9460afe3940188c51d98ab5da40ece530f7fc0e6e10c459a1b7f35f5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
           "via": []
         }
       ],
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1717522343,
       "sinceBlock": 20019970,
       "values": {
@@ -61,19 +75,21 @@
         "isL2HeaderChallengeEnabled": false,
         "maxBundleSize": 42000,
         "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-        "proxiableUUID": "EXPECT_REVERT",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "Challenge"
     },
     {
       "name": "ChainOracle",
       "address": "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
       "type": "Contract",
+      "template": "lightlink/ChainOracle",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x219c5860c98ee65c799aa9b6549168915088c6de2369583a157ee3a60cf65b47"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -81,6 +97,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1717522307,
       "sinceBlock": 20019967,
       "values": {
@@ -97,33 +114,29 @@
         "canonicalStateChain": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
         "daOracle": "0x0000000000000000000000000000000000000000",
         "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-        "proxiableUUID": "EXPECT_REVERT",
         "rlpReader": "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ChainOracle"
     },
     {
-      "name": "LightLinkMultisig",
+      "name": "Lightlink Multisig 1",
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
       "type": "Contract",
+      "template": "lightlink/Multisig",
       "sourceHashes": [
         "0x4bbdb661859a4bbfa25496630a4c393bc0999fe0bdf4910997d7c098294d19e6"
       ],
       "proxyType": "immutable",
+      "description": "Custom multisig implementation with a hardcoded n/2+1 threshold.",
       "receivedPermissions": [
         {
-          "permission": "upgrade",
-          "from": "0x3ca373F5ecB92ac762f9876f6e773082A4589995"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x624631881655a310adcF0d1336658Cc977609b72"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+          "permission": "interact",
+          "from": "0x624631881655a310adcF0d1336658Cc977609b72",
+          "description": "can remove and add validators, update their voting power, and change the required threshold."
         }
       ],
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1692154319,
       "sinceBlock": 17924532,
       "values": {
@@ -142,67 +155,41 @@
       "derivedName": "Multisig"
     },
     {
-      "name": "LightLinkBridge",
-      "address": "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
-        "0x71f4b3f45f14bd6064069c36b9bb52b9b3efa4e4b40344614eaad2e50f5b78c6"
-      ],
-      "proxyType": "LightLink proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1692155207,
-      "sinceBlock": 17924604,
-      "values": {
-        "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-        "$implementation": "0x468b89D930ca7974196D7195033600B658011756",
-        "$pastUpgrades": [
-          [
-            "2023-08-16T03:06:47.000Z",
-            "0xa5257a1dff2fd90764950a9d0b5767fcf4d7a9d1fb7d27084ccfc03b78e947d2",
-            ["0x468b89D930ca7974196D7195033600B658011756"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
-        "isPaused": true,
-        "l2Predicate": "0x7F17A74942c5b22b340688f099c99A79426447e1",
-        "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9",
-        "proxiableUUID": "EXPECT_REVERT"
-      },
-      "derivedName": "L1NativeTokenPredicate"
-    },
-    {
       "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled."
+        }
+      ]
     },
     {
       "name": "L1BridgeRegistry",
       "address": "0x624631881655a310adcF0d1336658Cc977609b72",
       "type": "Contract",
+      "template": "lightlink/L1BridgeRegistry",
       "sourceHashes": [
         "0xb5af2f6166dd24adeb4b7faf21f2bbfc8512fe699c249b64b565127766ff6e3d",
         "0xc12eca0e011860efa4f71723a172994a15e062d037a0d89ef36b5aed423fb37a"
       ],
-      "proxyType": "LightLink proxy",
+      "proxyType": "EIP1967 proxy",
+      "description": "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.",
       "issuedPermissions": [
         {
-          "permission": "upgrade",
+          "permission": "interact",
           "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+          "description": "can remove and add validators, update their voting power, and change the required threshold.",
           "via": []
         }
       ],
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1692154667,
       "sinceBlock": 17924561,
       "values": {
-        "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E",
         "$pastUpgrades": [
           [
@@ -223,30 +210,26 @@
           { "addr": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938", "power": 40 }
         ],
         "multisig": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-        "proxiableUUID": "EXPECT_REVERT",
         "systemVerifier": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "L1BridgeRegistry"
     },
     {
-      "name": "LightLinkERC20Bridge",
+      "name": "L1ERC20Predicate",
       "address": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
       "type": "Contract",
+      "template": "lightlink/L1ERC20Predicate",
       "sourceHashes": [
         "0x271f364b7e28b516246603be8769c5002d3e585faea009e131bf170f073129e8",
         "0xc53e364c720158d2d3f89d1c4ffb1a3550689489699dfdaca67ee8a51967c9cc"
       ],
-      "proxyType": "LightLink proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
-          "via": []
-        }
-      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.",
+      "ignoreInWatchMode": [],
       "sinceTimestamp": 1692155531,
       "sinceBlock": 17924631,
       "values": {
-        "$admin": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
+        "$admin": "0x0000000000000000000000000000000000000000",
         "$implementation": "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E",
         "$pastUpgrades": [
           [
@@ -259,8 +242,7 @@
         "bridgeRegistry": "0x624631881655a310adcF0d1336658Cc977609b72",
         "isPaused": false,
         "l2Predicate": "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9",
-        "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9",
-        "proxiableUUID": "EXPECT_REVERT"
+        "l2TokenBytecodeHash": "0xb9ae7ba14d826de669be54f7c79008181b430f21bd3ff90dac8cce1e60ae88a9"
       },
       "derivedName": "L1ERC20Predicate"
     },
@@ -268,12 +250,26 @@
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
       "type": "Contract",
+      "template": "lightlink/CanonicalStateChain",
       "sourceHashes": [
         "0x7e52f67f6162bc66d00626c817dcd5b11c2189fcf7bf5efcd32fd0821c22c0ad",
         "0x7c0a4f7fb2f2948ffde2e5550debf14c02fa682bec9a57aac718daf43c80c2c7"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
+          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
@@ -299,44 +295,82 @@
           ]
         ],
         "$upgradeCount": 2,
-        "chainHead": 1168,
+        "chainHead": 1291,
         "challenge": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
         "getHead": {
-          "epoch": 21993309,
-          "l2Height": 132108607,
-          "prevHash": "0x0357f67f6fa768ac91770152e7bebe923951d349f2648f8886c87c63d737e9dc",
-          "outputRoot": "0x62314ae58400e70955d971703a83315a1cf702aef43d048e47f39cbf9925efb7",
+          "epoch": 22207027,
+          "l2Height": 137220262,
+          "prevHash": "0xfaa57fa01b7f5d1d949caddcf4d90af5f24fad3f226643ae32b9d43c614c56b0",
+          "outputRoot": "0xc952d17cdd11cb351a97ba983f6bbac3baae997196c9e0f1614591f9a0e14e49",
           "celestiaPointers": [
-            { "height": 4336090, "shareStart": 6912, "shareLen": 3658 },
-            { "height": 4336102, "shareStart": 9344, "shareLen": 3663 },
-            { "height": 4336118, "shareStart": 4096, "shareLen": 3662 },
-            { "height": 4336127, "shareStart": 4352, "shareLen": 3663 },
-            { "height": 4336143, "shareStart": 6784, "shareLen": 3664 },
-            { "height": 4336161, "shareStart": 3840, "shareLen": 3665 },
-            { "height": 4336175, "shareStart": 1792, "shareLen": 3664 },
-            { "height": 4336193, "shareStart": 7744, "shareLen": 3635 },
-            { "height": 4336210, "shareStart": 1344, "shareLen": 3664 },
-            { "height": 4336227, "shareStart": 9920, "shareLen": 3664 },
-            { "height": 4336241, "shareStart": 6784, "shareLen": 3546 },
-            { "height": 4336258, "shareStart": 1792, "shareLen": 3652 },
-            { "height": 4336273, "shareStart": 2688, "shareLen": 3465 },
-            { "height": 4336284, "shareStart": 6080, "shareLen": 3655 },
-            { "height": 4336303, "shareStart": 3456, "shareLen": 3657 },
-            { "height": 4336314, "shareStart": 5376, "shareLen": 3664 },
-            { "height": 4336329, "shareStart": 4352, "shareLen": 3665 },
-            { "height": 4336343, "shareStart": 6208, "shareLen": 3664 },
-            { "height": 4336358, "shareStart": 6848, "shareLen": 3529 },
-            { "height": 4336373, "shareStart": 4416, "shareLen": 3664 },
-            { "height": 4336382, "shareStart": 6976, "shareLen": 3415 }
+            { "height": 4779781, "shareStart": 2688, "shareLen": 3663 },
+            { "height": 4779792, "shareStart": 2752, "shareLen": 3571 },
+            { "height": 4779803, "shareStart": 3136, "shareLen": 3441 },
+            { "height": 4779815, "shareStart": 2880, "shareLen": 3565 },
+            { "height": 4779825, "shareStart": 3392, "shareLen": 3349 },
+            { "height": 4779837, "shareStart": 2944, "shareLen": 3516 },
+            { "height": 4779847, "shareStart": 3328, "shareLen": 3518 },
+            { "height": 4779858, "shareStart": 6080, "shareLen": 3365 },
+            { "height": 4779867, "shareStart": 3392, "shareLen": 3505 },
+            { "height": 4779875, "shareStart": 2880, "shareLen": 3449 },
+            { "height": 4779885, "shareStart": 5888, "shareLen": 3404 },
+            { "height": 4779897, "shareStart": 6528, "shareLen": 3549 },
+            { "height": 4779905, "shareStart": 3328, "shareLen": 3516 },
+            { "height": 4779913, "shareStart": 3264, "shareLen": 3474 },
+            { "height": 4779920, "shareStart": 2880, "shareLen": 3396 },
+            { "height": 4779931, "shareStart": 3136, "shareLen": 3354 },
+            { "height": 4779942, "shareStart": 6080, "shareLen": 3461 },
+            { "height": 4779952, "shareStart": 3520, "shareLen": 3466 },
+            { "height": 4779964, "shareStart": 3072, "shareLen": 3570 },
+            { "height": 4779975, "shareStart": 2816, "shareLen": 3368 },
+            { "height": 4779985, "shareStart": 2752, "shareLen": 3559 }
           ]
         },
         "maxPointers": 21,
         "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
-        "proxiableUUID": "EXPECT_REVERT",
         "publisher": "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
         "startingTimestamp": 1717522271,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "CanonicalStateChain"
+    },
+    {
+      "name": "SystemConfig",
+      "address": "0x670E1C42A7A5962348138110E3ede3F422c10e2f",
+      "type": "Contract",
+      "template": "lightlink/SystemConfig",
+      "sourceHashes": [
+        "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
+        "0x91fa96b49f07577afbb47b56e1b36b249127d43e691df431c23bf35d50f03626"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1725540911,
+      "sinceBlock": 20684519,
+      "values": {
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+        "$implementation": "0x9EC8231132d6722D463077a7cCe1432c3766d9A2",
+        "$pastUpgrades": [
+          [
+            "2024-09-05T12:55:23.000Z",
+            "0xba247cf6a6837abe69513ffa16c42dd58ef1bf1f418baa8b94cf5b37132ef3a5",
+            ["0x9EC8231132d6722D463077a7cCe1432c3766d9A2"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "optimismPortal": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+        "startBlock": 20684513,
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
@@ -354,12 +388,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0x7F17A74942c5b22b340688f099c99A79426447e1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "LightLinkMultisig2",
+      "name": "Lightlink Multisig 2",
       "address": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -369,6 +398,21 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+          "description": "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."
+        },
+        {
+          "permission": "interact",
+          "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."
+        },
+        {
+          "permission": "interact",
+          "from": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+          "description": "it can pause the chain and update the gas token."
+        },
         {
           "permission": "upgrade",
           "from": "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
@@ -380,6 +424,23 @@
         {
           "permission": "upgrade",
           "from": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x670E1C42A7A5962348138110E3ede3F422c10e2f"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -404,14 +465,168 @@
       "derivedName": "Safe"
     },
     {
+      "name": "L1CrossDomainMessenger",
+      "address": "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38",
+      "type": "Contract",
+      "template": "opstack/L1CrossDomainMessenger",
+      "sourceHashes": [
+        "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
+        "0xa22fc4a393301224447cd798adfb870c71a158c78028b18ef2d501128ac6bbcb"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": ["messageNonce"],
+      "sinceTimestamp": 1725540863,
+      "sinceBlock": 20684515,
+      "values": {
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+        "$implementation": "0x38104856c02f83f4048c0FBA3D7613042FEAc988",
+        "$pastUpgrades": [
+          [
+            "2024-09-05T12:54:35.000Z",
+            "0xd9c97881c92c991d39a0835c10cf0510bae89ffe30887cbeca37cb0ef3df3542",
+            ["0x38104856c02f83f4048c0FBA3D7613042FEAc988"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619830",
+        "MIN_GAS_CALLDATA_OVERHEAD": 16,
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
+        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
+        "otherMessenger": "0x4200000000000000000000000000000000000007",
+        "paused": false,
+        "portal": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+        "PORTAL": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+        "RELAY_CALL_OVERHEAD": 40000,
+        "RELAY_CONSTANT_OVERHEAD": 200000,
+        "RELAY_GAS_CHECK_BUFFER": 5000,
+        "RELAY_RESERVED_GAS": 40000,
+        "version": "2.4.0"
+      },
+      "derivedName": "L1CrossDomainMessenger",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
       "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "LightLinkPortal",
+      "address": "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE",
+      "type": "Contract",
+      "template": "lightlink/LightLinkPortal",
+      "sourceHashes": [
+        "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
+        "0xc0e63a4f63935a0e855262aed5e9a5b1ae7e6b33e52a78c8ca729cbe4672a8a5"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "description": "it can pause the chain and update the gas token.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": ["params"],
+      "sinceTimestamp": 1725540839,
+      "sinceBlock": 20684513,
+      "values": {
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+        "$implementation": "0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD",
+        "$pastUpgrades": [
+          [
+            "2024-09-05T12:54:11.000Z",
+            "0x9481126f85589426739b38363db3992504500651385a858b4aea108aad3d074b",
+            ["0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "l2Oracle": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
+        "l2Sender": "0x000000000000000000000000000000000000dEaD",
+        "owner": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+        "params": {
+          "prevBaseFee": 1000000000,
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 22207556
+        },
+        "paused": false,
+        "resourceConfig": {
+          "maxResourceLimit": 20000000,
+          "elasticityMultiplier": 10,
+          "baseFeeMaxChangeDenominator": 8,
+          "minimumBaseFee": 1000000000,
+          "systemTxMaxGas": 1000000,
+          "maximumBaseFee": "340282366920938463463374607431768211455"
+        },
+        "version": "2.8.1-beta.1"
+      },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "derivedName": "LightLinkPortal"
+    },
+    {
       "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "L1StandardBridge",
+      "address": "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c",
+      "type": "Contract",
+      "template": "opstack/L1StandardBridge",
+      "sourceHashes": [
+        "0x60ebf53dd49973efa525783a0716f706ac120b1ee0443943732fe5c97dd4959e",
+        "0x1862b438ea6e79c6dda9db9eadf4cfc0582195a923d0ea24cbf669e0c4d2e27e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1725540887,
+      "sinceBlock": 20684517,
+      "values": {
+        "$admin": "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7",
+        "$implementation": "0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48",
+        "$pastUpgrades": [
+          [
+            "2024-09-05T12:54:59.000Z",
+            "0x8139a100e3a2621ada034969254c23a9d541c7b375602cb3121b499cf78e4c08",
+            ["0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
+        "messenger": "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38",
+        "MESSENGER": "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38",
+        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
+        "otherBridge": "0x4200000000000000000000000000000000000010",
+        "paused": false,
+        "version": "2.2.0"
+      },
+      "derivedName": "L1StandardBridge",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
@@ -433,7 +648,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1717522283,
       "sinceBlock": 20019965,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "RLPReader"
     }
   ],
   "abis": {
@@ -476,11 +692,93 @@
       "function submitTransaction(address _target, uint256 _value, bytes _data)",
       "function transactions(uint256) view returns (bool executed, address target, bytes data, uint256 value, uint256 numConfirmations)"
     ],
-    "0x3ca373F5ecB92ac762f9876f6e773082A4589995": [
-      "constructor(address _logic, bytes _data)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
+    "0x38104856c02f83f4048c0FBA3D7613042FEAc988": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event Initialized(uint64 version)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 value)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function PORTAL() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize(address _portal)",
+      "function messageNonce() view returns (uint256)",
+      "function otherMessenger() view returns (address)",
+      "function paused() view returns (bool)",
+      "function portal() view returns (address)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
+    "0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error BadTarget()",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error FailedInnerCall()",
+      "error GasEstimation()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error InvalidInitialization()",
+      "error LargeCalldata()",
+      "error NoValue()",
+      "error NonReentrant()",
+      "error NotInitializing()",
+      "error OnlyCustomGasToken()",
+      "error OutOfGas()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SmallGasLimit()",
+      "error TransferFailed()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Pause()",
+      "event TransactionDeposited(address indexed from, address indexed to, uint256 indexed version, bytes opaqueData)",
+      "event Unpause()",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, address indexed from, address indexed to)",
+      "function balance() view returns (uint256)",
+      "function depositERC20Transaction(address _to, uint256 _mint, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data)",
+      "function depositTransaction(address _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function initialize(address _l2Oracle, address _challenge, address _newOwner)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Oracle() view returns (address)",
+      "function l2Sender() view returns (address)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function owner() view returns (address)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, address sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function renounceOwnership()",
+      "function resourceConfig() view returns (uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee)",
+      "function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function version() pure returns (string)"
     ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -529,35 +827,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0x468b89D930ca7974196D7195033600B658011756": [
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event DepositToken(bytes message)",
-      "event Initialized(uint8 version)",
-      "event TokenMapped(bytes message)",
-      "event Upgraded(address indexed implementation)",
-      "event WithdrawToken(bytes32 messageHash)",
-      "function bridgeRegistry() view returns (address)",
-      "function counter(address) view returns (uint256)",
-      "function deposit(address _l1Token) payable",
-      "function depositTo(address _l1Token, address _to) payable",
-      "function initialize(address _registry, address _l2Predicate)",
-      "function isConfirmed(address, uint256, address) view returns (bool)",
-      "function isPaused() view returns (bool)",
-      "function l1ToL2Gateway(address) view returns (address)",
-      "function l2Predicate() view returns (address)",
-      "function l2TokenBytecodeHash() view returns (bytes32)",
-      "function mapToken(address _l1Token)",
-      "function modifyL2Predicate(address _l2Predicate)",
-      "function modifyL2TokenBytecodeHash(bytes32 _l2TokenBytecodeHash)",
-      "function orderExecuted(address, uint256) view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function recovery(address _to)",
-      "function syncWithdraw(address[] _currentValidators, bytes[] _signatures, bytes _data)",
-      "function toggleIsPaused(bool _status)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B": [
       "error AddressEmptyCode(address target)",
@@ -643,6 +912,16 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x670E1C42A7A5962348138110E3ede3F422c10e2f": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x79B3E839333a74137e78b0DaF84FC12512a8c704": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -688,6 +967,42 @@
     "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": [
       "constructor(address _singleton)"
     ],
+    "0x9EC8231132d6722D463077a7cCe1432c3766d9A2": [
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function initialize(uint256 __startBlock, address __optimismPortal)",
+      "function optimismPortal() view returns (address)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setOptimismPortal(address __optimismPortal)",
+      "function setStartBlock(uint256 __startBlock)",
+      "function startBlock() view returns (uint256 startBlock_)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -717,6 +1032,16 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -744,6 +1069,55 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function validValidator(address _validator) view returns (bool)"
+    ],
+    "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error SafeERC20FailedOperation(address token)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint64 version)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function initialize(address _messenger)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function version() view returns (string)"
     ],
     "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2": [
       "function toBlockHeader(bytes rlpHeader) pure returns (bytes32 parentHash, bytes32 sha3Uncles, address coinbase, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, uint256 nonce)",
@@ -796,6 +1170,16 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "lightlink/CanonicalStateChain": "0x3b6fde3b310dbaa9964ef71d58b9514400670ddd3c9dfe0ba0aa5bb1be76af09",
+    "lightlink/ChainOracle": "0x870f35a4e6e0e77a4cd9ff56eba0915681a357b424cf69c228f813c688c8cae3",
+    "lightlink/Challenge": "0x23f7c0733d2edd0df0ea033af0dc580473b61dfbc1b55578638212e9f4ea8cb6",
+    "lightlink/L1BridgeRegistry": "0x22b6405c6788f017cfdab3e63d88e07ce0a6d7eec6ef511e75af6078c8817490",
+    "lightlink/L1ERC20Predicate": "0x6a57dee3263b656900be8c12a13454969e34d21ffd23e69508d15fb4c40e89bc",
+    "lightlink/LightLinkPortal": "0xf7c4101b38e12213a1d1684cd0de7548309e8a2320bab53e7de198bd44669c03",
+    "lightlink/Multisig": "0x8deaf124d7a4cb0393fa56f749f94abafe7497820679b99110101c8c5d9ea629",
+    "lightlink/SystemConfig": "0x848fd23fbc0ff3a3b507b613b825f3cbfcc97aada56b8d205b1e802eba0f7225",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75"
   }
 }

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CanonicalStateChain",
+  "description": "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.",
+  "ignoreMethods": ["chain", "getHeaderByNum", "getL2Output", "proxiableUUID"],
+  "ignoreInWatchMode": ["chainHead", "getHead"],
+  "fields": {
+    "publisher": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."
+        }
+      ]
+    }
+  }
+}

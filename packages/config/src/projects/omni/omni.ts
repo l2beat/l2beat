@@ -17,7 +17,7 @@ const size = discovery.getContractValue<number>(
 const validatorsString = `${threshold} / ${size}`
 
 const upgrades = {
-  upgradableBy: [{ name: 'OmniBridgeGovernance', delay: 'no' }],
+  upgradableBy: [{ name: 'Gnosis Bridge Multisig', delay: 'no' }],
 }
 
 const paused =
@@ -37,7 +37,7 @@ export const omni: Bridge = {
     name: 'Omnibridge',
     slug: 'omni',
     warning: warningText,
-    category: 'Token Bridge',
+    category: 'Single-chain',
     links: {
       websites: ['https://omni.gnosischain.com/'],
       apps: ['https://omni.gnosischain.com/'],
@@ -157,7 +157,7 @@ export const omni: Bridge = {
           ...upgrades,
           pausable,
         }),
-        discovery.getContractDetails('MultiTokenMediator', {
+        discovery.getContractDetails('ForeignOmnibridge', {
           description: 'Mediator contract and escrow.',
           ...upgrades,
         }),
@@ -178,7 +178,7 @@ export const omni: Bridge = {
     [discovery.chain]: {
       actors: [
         discovery.getMultisigPermission(
-          'OmniBridgeGovernance',
+          'Gnosis Bridge Multisig',
           'Can update the contracts and parameters of the bridge.',
         ),
         discovery.getPermissionDetails(

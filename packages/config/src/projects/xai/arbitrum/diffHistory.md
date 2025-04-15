@@ -1,4 +1,166 @@
-Generated with discovered.json: 0x81b05212ee67ca6fbd95367898effb9a1900b72d
+Generated with discovered.json: 0x8f19702da64c174355ec26be13fff5b7615412ea
+
+# Diff at Wed, 09 Apr 2025 13:48:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 323463446
+- current block number: 324577860
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract XaiFundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.6:
+-        "0xbBE90F6748C82623F130A4486722a436c5a72440"
+      values.$members.5:
+-        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
++        "0xbBE90F6748C82623F130A4486722a436c5a72440"
+      values.$members.4:
+-        "0xd427165292B2E39cdac102eD963B14fFBACc964a"
++        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
+      values.multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xb0fb1d63799d5c0dd6a5264899b8600c4c5723a5
+
+# Diff at Sun, 06 Apr 2025 08:12:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 299816283
+- current block number: 323463446
+
+## Description
+
+SentryReferee reinitialized, staking config changed. No other changes.
+
+## Watched changes
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      sourceHashes.1:
+-        "0x3b80a9109759df060ce4e99dc21f4421975553bf75760dafe4c4106046fba1c1"
++        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1"
+      sourceHashes.0:
+-        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1"
++        "0xdb0dddc62ca62ff610412f44a998e8b66f885df3929e824594d86c4b37e9aedc"
+      values.$implementation:
+-        "0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97"
++        "0x9e3e14576EBd9595eFB0d71aA9Ff51a6DC621bAF"
+      values.$pastUpgrades.19:
++        ["2024-12-10T15:27:05.000Z","0x7de66eae5bdbc8b25d8c61bc496b8022ca928b709de3dd72e7de1951fab33ecd",["0x119B21e962B6C5e57340a3CCeCFC3a90385A70dC"]]
+      values.$pastUpgrades.18.2:
+-        ["0x119B21e962B6C5e57340a3CCeCFC3a90385A70dC"]
++        "0xd22a7b97d2044a20b20a8105857d435ba98254e2a147c0890140ffe3fc55ebdf"
+      values.$pastUpgrades.18.1:
+-        "0x7de66eae5bdbc8b25d8c61bc496b8022ca928b709de3dd72e7de1951fab33ecd"
++        ["0x29A7b907FdF4a9235F46d891b7Aa1e7d3D35A3b6"]
+      values.$pastUpgrades.18.0:
+-        "2024-12-10T15:27:05.000Z"
++        "2023-12-05T18:33:46.000Z"
+      values.$pastUpgrades.17.2:
+-        "0xd22a7b97d2044a20b20a8105857d435ba98254e2a147c0890140ffe3fc55ebdf"
++        "2024-06-07T17:57:03.000Z"
+      values.$pastUpgrades.17.1.0:
+-        "0x29A7b907FdF4a9235F46d891b7Aa1e7d3D35A3b6"
++        "0x609152cb742916E0F7FBC4391Be750C458b049fe"
+      values.$pastUpgrades.17.0:
+-        "2023-12-05T18:33:46.000Z"
++        "0xb9e3b5041f4683bafc0939b4a657467a6f545194ef17d3ba6980093138e3a6e5"
+      values.$pastUpgrades.16.2:
+-        "2024-06-07T17:57:03.000Z"
++        "2024-10-29T18:27:08.000Z"
+      values.$pastUpgrades.16.1.0:
+-        "0x609152cb742916E0F7FBC4391Be750C458b049fe"
++        "0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40"
+      values.$pastUpgrades.16.0:
+-        "0xb9e3b5041f4683bafc0939b4a657467a6f545194ef17d3ba6980093138e3a6e5"
++        "0x526befebd96c284baeeb94980c3561d88cc1ba40fb12c1c8b8db78b29b18ce20"
+      values.$pastUpgrades.15.2:
+-        "2024-10-29T18:27:08.000Z"
++        "0x4d3a599492e7d982a2554108bec654ca4447f767aacb70e58407bf1056b1ed3f"
+      values.$pastUpgrades.15.1:
+-        ["0xfCa2657FC4456Ac256A78A31aAB1128F5e1d2D40"]
++        "2025-01-24T15:31:45.000Z"
+      values.$pastUpgrades.15.0:
+-        "0x526befebd96c284baeeb94980c3561d88cc1ba40fb12c1c8b8db78b29b18ce20"
++        ["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]
+      values.$pastUpgrades.14.2:
+-        "0x4d3a599492e7d982a2554108bec654ca4447f767aacb70e58407bf1056b1ed3f"
++        "2025-01-24T16:10:34.000Z"
+      values.$pastUpgrades.14.1:
+-        "2025-01-24T15:31:45.000Z"
++        "0x0ea3848ffb8f1e5de41e688a5ede3772e8151ecdfd415c7517e69d38f4d27166"
+      values.$pastUpgrades.14.0.0:
+-        "0x4F18941fE5bE7a54318989b2C42648914dCe47C4"
++        "0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97"
+      values.$pastUpgrades.13.2:
+-        "2025-01-24T16:10:34.000Z"
++        "0x58b76b23b8bb0f3ba0bf4d2807f545b1838c527e3a71d18fe2369ee7bf6c12ca"
+      values.$pastUpgrades.13.1:
+-        "0x0ea3848ffb8f1e5de41e688a5ede3772e8151ecdfd415c7517e69d38f4d27166"
++        ["0x1f122B41D6740F5dE2Df93b8b00013e84227955e"]
+      values.$pastUpgrades.13.0:
+-        ["0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97"]
++        "2024-12-13T00:36:38.000Z"
+      values.$pastUpgrades.12.2:
+-        "0x58b76b23b8bb0f3ba0bf4d2807f545b1838c527e3a71d18fe2369ee7bf6c12ca"
++        "0x41eec03f04ad675911734c1573ae8d6766bac712ea20c38d1ea7057d6ee8098b"
+      values.$pastUpgrades.12.1:
+-        ["0x1f122B41D6740F5dE2Df93b8b00013e84227955e"]
++        "2025-01-24T15:07:28.000Z"
+      values.$pastUpgrades.12.0:
+-        "2024-12-13T00:36:38.000Z"
++        ["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]
+      values.$pastUpgrades.11.2:
+-        "0x41eec03f04ad675911734c1573ae8d6766bac712ea20c38d1ea7057d6ee8098b"
++        "0x0f58dca431e80fdf25bbdf67f072395d9ab4901e11b4c9d1334b228d9c92b60c"
+      values.$pastUpgrades.11.1:
+-        "2025-01-24T15:07:28.000Z"
++        "2025-04-03T19:32:59.000Z"
+      values.$pastUpgrades.11.0.0:
+-        "0x4F18941fE5bE7a54318989b2C42648914dCe47C4"
++        "0x9e3e14576EBd9595eFB0d71aA9Ff51a6DC621bAF"
+      values.$upgradeCount:
+-        19
++        20
+      values.maxKeysPerPool:
+-        100000
++        131872
+      values.maxStakeAmountPerLicense:
+-        "200000000000000000000"
++        "227000000000000000000"
+      values.stakeAmountTierThresholds.3:
+-        "30000000000000000000000"
++        "6000000000000000000000000"
+      values.stakeAmountTierThresholds.2:
+-        "8000000000000000000000000"
++        "12000000000000000000000000"
+      values.stakeAmountTierThresholds.1:
+-        "4000000000000000000000000"
++        "3000000000000000000000000"
+      values.stakeAmountTierThresholds.0:
+-        "2000000000000000000000000"
++        "450000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SentryReferee/Referee11.sol                    | 27 +++++++++++++++-------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
+```
+
+Generated with discovered.json: 0x00079c979ecfd58fa1715f61c3796398b68dbf8d
 
 # Diff at Thu, 06 Mar 2025 14:25:40 GMT:
 

@@ -7,7 +7,7 @@ export const hook: ScalingProject = underReviewL3({
   id: 'hook',
   capability: 'universal',
   addedAt: UnixTime(1719928126), // 2024-07-02T13:48:46Z
-  isArchived: true,
+  archivedAt: UnixTime(1733356800), // 2024-12-05T00:00:00.000Z,
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Hook',

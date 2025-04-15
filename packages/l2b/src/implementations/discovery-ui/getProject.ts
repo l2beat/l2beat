@@ -1,12 +1,15 @@
 import {
   type ConfigReader,
-  type DiscoveryConfig,
+  type ConfigRegistry,
   type DiscoveryOutput,
   type EntryParameters,
   type TemplateService,
   getChainShortName,
+  makeEntryColorConfig,
+  makeEntryStructureConfig,
 } from '@l2beat/discovery'
 import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
+import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
@@ -28,7 +31,7 @@ import type {
 
 interface ProjectData {
   chain: string
-  config: DiscoveryConfig
+  config: ConfigRegistry
   discovery: DiscoveryOutput
 }
 
@@ -68,24 +71,35 @@ export function getProject(
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
-        const contarctConfig = config.for(entry.address)
+        const contractConfig = makeEntryStructureConfig(
+          config.structure,
+          entry.address,
+        )
+
         if (entry.template !== undefined) {
           const templateValues = templateService.loadContractTemplate(
             entry.template,
           )
-          contarctConfig.pushValues(templateValues)
+          contractConfig.pushValues(templateValues)
         }
+
+        const contractColorConfig = makeEntryColorConfig(
+          config.color,
+          entry.address,
+          templateService.loadContractTemplateColor(entry.template),
+        )
 
         return contractFromDiscovery(
           chain,
           meta,
           entry,
-          contarctConfig,
+          contractConfig,
+          contractColorConfig,
           discovery.abis,
         )
       })
       .sort(orderAddressEntries)
-    const initialAddresses = config.initialAddresses.map(
+    const initialAddresses = config.structure.initialAddresses.map(
       (address) => `${getChainShortName(chain)}:${address}`,
     )
 
@@ -111,6 +125,7 @@ export function getProject(
           }),
         )
         .sort(orderAddressEntries),
+      blockNumber: discovery.blockNumber,
     } satisfies ApiProjectChain
     response.entries.push(chainInfo)
   }
@@ -136,16 +151,18 @@ function contractFromDiscovery(
   meta: Record<string, { name?: string; type: ApiAddressType }>,
   contract: EntryParameters,
   contractConfig: ContractConfig,
+  contractColorConfig: ColorContract,
   abis: DiscoveryOutput['abis'],
 ): ApiProjectContract {
   const getFieldInfo = (name: string): Omit<Field, 'name' | 'value'> => {
     const field = contractConfig.fields[name]
+    const fieldColor = contractColorConfig.fields[name]
     return {
-      description: field?.description,
+      description: fieldColor?.description,
       handler: field?.handler,
       ignoreInWatchMode: contractConfig.ignoreInWatchMode?.includes(name),
       ignoreRelatives: contractConfig.ignoreRelatives?.includes(name),
-      severity: field?.severity,
+      severity: fieldColor?.severity,
     }
   }
 
@@ -181,6 +198,7 @@ function contractFromDiscovery(
       address: toAddress(chain, address),
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
+    sources: [],
   }
 }
 

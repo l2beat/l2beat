@@ -1,4 +1,93 @@
-Generated with discovered.json: 0xa3fed3c234becdc537538576a7d9dc1888c87465
+Generated with discovered.json: 0xf7d12fae8f1a6f5eca7bda8230644a4d0ec6764c
+
+# Diff at Mon, 31 Mar 2025 11:42:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21086404
+- current block number: 22166672
+
+## Description
+
+Bridge upgraded to an unverified implementation. Funds moved to an EOA and deposited to DeFi from there.
+
+## Watched changes
+
+```diff
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      values.accessControl.PROPOSER_ROLE.members.1:
++        "0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
+      values.accessControl.EXECUTOR_ROLE.members.1:
++        "0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      sourceHashes:
+-        ["0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3","0x63f00c3d965d6858168ed7d73fd0c413524877b196c4c5e3cf8fbc6ba40846e8"]
+      values.$implementation:
+-        "0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"
++        "0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"
+      values.$pastUpgrades.1:
++        ["2023-12-18T06:01:23.000Z","0x22ef364422913d82a57f2fb0b440655ced0178c3549491490edff4663389f511",["0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"]]
+      values.$pastUpgrades.0.2:
+-        "0x22ef364422913d82a57f2fb0b440655ced0178c3549491490edff4663389f511"
++        "0xca7c847dde27f60d98b07ef29ba9e0a677f28dddd980bb20c52f660c0071e768"
+      values.$pastUpgrades.0.1:
+-        "2023-12-18T06:01:23.000Z"
++        ["0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"]
+      values.$pastUpgrades.0.0:
+-        ["0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"]
++        "2025-03-27T05:30:59.000Z"
+      values.$upgradeCount:
+-        1
++        2
+      values.admin:
+-        "0xcd14BE1959928BB8c160D11817E2BE2129e2F25F"
+      values.bridgeFee:
+-        2500000000000000
+      values.feeAddress:
+-        "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D"
+      values.gasTokenAddress:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.gasTokenDecimalDiffFactor:
+-        1000000000000
+      values.gasTokenMetadata:
+-        "0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000005457468657200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000034554480000000000000000000000000000000000000000000000000000000000"
+      values.globalExitRootManager:
+-        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      values.isEmergencyState:
+-        false
+      values.networkID:
+-        0
+      values.polygonZkEVMaddress:
+-        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      derivedName:
+-        "PolygonZkEVMBridge"
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeAdminMultiSig (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Bridge/PolygonZkEVMBridge.sol => /dev/null     | 1477 --------------------
+ .../GnosisSafe.sol => /dev/null                    |  953 -------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ 3 files changed, 2465 deletions(-)
+```
+
+Generated with discovered.json: 0x6a9f7ec0e20103b14128f33bdcc0ee9e5d45422a
 
 # Diff at Tue, 04 Mar 2025 10:40:15 GMT:
 

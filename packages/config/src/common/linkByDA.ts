@@ -15,7 +15,7 @@ export function linkByDA(where: {
   return [...layer2s, ...layer3s]
     .filter((project: ScalingProject) => {
       return (
-        !project.isArchived &&
+        !project.archivedAt &&
         !project.isUpcoming &&
         where.layer === project.dataAvailability?.layer.projectId &&
         where.bridge === project.dataAvailability.bridge.projectId

@@ -1,0 +1,134 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "alephzero",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "alephzero-AZERO",
+      "priceId": "aleph-zero",
+      "symbol": "AZERO",
+      "name": "Aleph Zero",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17212/large/azero-logo_coingecko.png?1698147162",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
+            "chain": "ethereum",
+            "escrowAddress": "0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",
+            "decimals": 18,
+            "sinceTimestamp": 1722259103
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe",
+            "chain": "ethereum",
+            "escrowAddress": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+            "decimals": 18,
+            "sinceTimestamp": 1722261575
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "alephzero-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+        "decimals": 18,
+        "sinceTimestamp": 1722261575
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "alephzero-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+        "decimals": 6,
+        "sinceTimestamp": 1722261575
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "alephzero-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+        "decimals": 6,
+        "sinceTimestamp": 1722261575
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "alephzero-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+        "decimals": 8,
+        "sinceTimestamp": 1722261575
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "alephzero-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xccaF21F002EAF230c9Fa810B34837a3739B70F7B",
+        "decimals": 18,
+        "sinceTimestamp": 1722261575
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -28,7 +28,7 @@ async function getResponse() {
 
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingTechnology'],
-    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'isArchived'],
+    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'archivedAt'],
   })
 
   return {
@@ -48,7 +48,7 @@ async function getResponse() {
           project.discoveryInfo?.permissionsDiscoDriven ?? false,
         areContractsDiscoveryDriven:
           project.discoveryInfo?.contractsDiscoDriven ?? false,
-        isArchived: !!project.isArchived,
+        isArchived: !!project.archivedAt,
         isUpcoming: !!project.isUpcoming,
         isUnderReview: project.statuses.isUnderReview,
 

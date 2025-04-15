@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x96bc5f271caf7751ae607c7acda5cc4b7a506e47
+Generated with discovered.json: 0xcbe40dcf1147be8a3aebdb7b1a434ae5d178905e
+
+# Diff at Thu, 10 Apr 2025 14:43:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208591
+- current block number: 22208591
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208591 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
+Generated with discovered.json: 0xdd1caef02796c9a0262e3047a044d23ca6b9ab50
+
+# Diff at Sun, 06 Apr 2025 08:11:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 21766747
+- current block number: 22208591
+
+## Description
+
+contract verified :)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766747 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+      unverified:
+-        true
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"]
+    }
+```
+
+Generated with discovered.json: 0x4434b95040fb5f31f0f7fb7755f17bed966c9596
 
 # Diff at Wed, 19 Mar 2025 13:05:49 GMT:
 

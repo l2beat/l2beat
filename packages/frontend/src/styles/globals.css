@@ -5,6 +5,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--scrollbar)) transparent;
+}
+
 @layer base {
   :root {
     --primary: 260deg 7.69% 7.65%;
@@ -26,6 +31,7 @@
     --divider: 223deg 15.9% 82.7%;
     --link-stroke: 212deg 100% 86.5%;
     --link: 223deg 69% 50.6%;
+    --scrollbar: 221deg 8.84% 57.8%;
 
     --row-highlight: 284deg 86.6% 67.8% / 0.4;
     --row-highlight-no-opacity: 284deg 80.3% 86.1%;
@@ -86,6 +92,7 @@
     --divider: 226deg 14.3% 28.8%;
     --link-stroke: 217deg 56.3% 18.8%;
     --link: 212deg 100% 66.3%;
+    --scrollbar: 225deg 13.7% 28.6%;
 
     --row-highlight: 284deg 70.5% 43.9% / 0.4;
     --row-highlight-no-opacity: 281deg 51.6% 25.1%;
@@ -220,24 +227,143 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
 
-  .custom-scrollbar ::-webkit-scrollbar {
-    width: 4px;
+@layer components {
+  /* Heading */
+  .heading-64 {
+    @apply text-6xl font-bold leading-[115%];
   }
 
-  .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-gray-200;
+  .heading-48 {
+    @apply text-5xl font-bold leading-[115%];
   }
 
-  .dark .custom-scrollbar ::-webkit-scrollbar-track {
-    @apply rounded-full bg-zinc-800;
+  .heading-44 {
+    @apply text-[44px] font-bold leading-[115%];
   }
 
-  .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-50;
+  .heading-40 {
+    @apply text-4xl font-bold leading-[115%];
   }
 
-  .dark .custom-scrollbar ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-zinc-500;
+  .heading-32 {
+    @apply text-3xl font-bold leading-[115%];
+  }
+
+  .heading-28 {
+    @apply text-[28px] font-bold leading-[115%];
+  }
+
+  .heading-24 {
+    @apply text-2xl font-bold leading-[115%];
+  }
+
+  .heading-20 {
+    @apply text-xl font-bold leading-[115%];
+  }
+
+  .heading-18 {
+    @apply text-lg font-bold leading-[115%];
+  }
+
+  .heading-16 {
+    @apply text-base font-bold leading-[115%];
+  }
+
+  /* Subtitle */
+  .subtitle-14 {
+    @apply text-xs font-semibold leading-[115%] uppercase;
+  }
+
+  .subtitle-12 {
+    @apply text-2xs font-semibold leading-[115%] uppercase;
+  }
+
+  .subtitle-11 {
+    @apply text-[11px] font-semibold leading-[115%] uppercase;
+  }
+
+  .subtitle-10 {
+    @apply text-3xs font-semibold leading-[115%] uppercase;
+  }
+
+  /* Label value medium */
+  .label-value-20-medium {
+    @apply text-xl font-medium leading-[100%];
+  }
+
+  .label-value-18-medium {
+    @apply text-lg font-medium leading-[100%];
+  }
+
+  .label-value-16-medium {
+    @apply text-base font-medium leading-[100%];
+  }
+
+  .label-value-15-medium {
+    @apply text-sm font-medium leading-[100%];
+  }
+
+  .label-value-14-medium {
+    @apply text-xs font-medium leading-[100%];
+  }
+
+  .label-value-13-medium {
+    @apply text-[13px] font-medium leading-[100%];
+  }
+
+  .label-value-12-medium {
+    @apply text-2xs font-medium leading-[100%];
+  }
+
+  /* Label value bold */
+  .label-value-20-bold {
+    @apply text-xl font-bold leading-[100%];
+  }
+
+  .label-value-18-bold {
+    @apply text-lg font-bold leading-[100%];
+  }
+
+  .label-value-16-bold {
+    @apply text-base font-bold leading-[100%];
+  }
+
+  .label-value-15-bold {
+    @apply text-sm font-bold leading-[100%];
+  }
+
+  .label-value-14-bold {
+    @apply text-xs font-bold leading-[100%];
+  }
+
+  .label-value-13-bold {
+    @apply text-[13px] font-bold leading-[100%];
+  }
+
+  .label-value-12-bold {
+    @apply text-2xs font-bold leading-[100%];
+  }
+
+  /* Paragraph */
+  .paragraph-18 {
+    @apply text-base font-normal leading-[150%];
+  }
+
+  .paragraph-16 {
+    @apply text-base font-normal leading-[150%];
+  }
+
+  .paragraph-15 {
+    @apply text-sm font-normal leading-[150%];
+  }
+
+  .paragraph-14 {
+    @apply text-xs font-normal leading-[145%];
+  }
+
+  .paragraph-13 {
+    @apply text-[13px] font-normal leading-[140%];
   }
 }

@@ -1,19 +1,15 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const bridge = discovery.getContract('L1SharedBridge')
+
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
-  discovery_ZKstackGovL2,
   additionalBadges: [BADGES.RaaS.Caldera],
   addedAt: UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
@@ -39,6 +35,9 @@ export const zeronetwork: ScalingProject = zkStackL2({
         'https://youtube.com/@ZERO-Network-L2',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
   chainConfig: {
     name: 'zeronetwork',

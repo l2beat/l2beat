@@ -1,0 +1,35 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "muster",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "muster-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "arbitrum",
+        "escrowAddress": "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1",
+        "decimals": 18,
+        "sinceTimestamp": 1702284862
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1702284862
+        },
+        "priceId": "ethereum"
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

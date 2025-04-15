@@ -1,4 +1,142 @@
-Generated with discovered.json: 0x2644dddf89a0d7d30303c62e3174bd0f52a8792c
+Generated with discovered.json: 0xa065284d2b174433a9c033a69ce0d4c5264e56d0
+
+# Diff at Fri, 11 Apr 2025 06:41:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 28449617
+- current block number: 28782173
+
+## Description
+
+change vkey.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00b6c8c78a73630fae80e45b2888a00d9ab0cc05a77cd7c027446a6ae2289928"
++        "0x00eaf7d396acac046b54bc8d5ba17d3f1c7374d7158ac01c76dfeca6103163eb"
+    }
+```
+
+Generated with discovered.json: 0x223b48d9dda015cbec48f8baff11716ec4147d18
+
+# Diff at Fri, 04 Apr 2025 09:34:38 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a21404a14e50e9f638ddf1e6cb431ede2d3cc07a block: 28449617
+- current block number: 28449617
+
+## Description
+
+Renamed SP1VerifierGatewayMultisig.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 28449617 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      name:
+-        "Succinct Multisig 1"
++        "SP1VerifierGatewayMultisig"
+    }
+```
+
+Generated with discovered.json: 0xe6b6d1fb25319c5ca8c0a9eea5285a2c2395a206
+
+# Diff at Thu, 03 Apr 2025 14:55:24 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@87156896058912c79002d4129b054942ff1352e9 block: 25417811
+- current block number: 28449617
+
+## Description
+
+Updated the blobstream template to ignore outdated gateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25417811 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SuccinctFeeVault (0x296666e937b270193B960a7cEC526B351F353166)
+    +++ description: None
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      name:
+-        "SuccinctGatewaySP1"
++        "SP1VerifierGateway"
+      template:
+-        "succinct/SP1SuccinctGateway"
++        "succinct/SP1VerifierGateway"
+      issuedPermissions.1:
+-        {"permission":"interact","to":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","description":"can verify proofs for the header range [latestBlock, targetBlock] proof.","via":[]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776)
+    +++ description: Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.gateway_deprecated:
+-        "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Succinct Multisig 2 (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3)
+    +++ description: None
+```
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: SP1Verifier is a contract used to verify proofs given public values and verification key.
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x3B6041173B80E77f038f3F2C0f9744f04837185e","description":"can verify proofs for the header range [latestBlock, targetBlock] proof."}]
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "SP1Verifier is a contract used to verify proofs given public values and verification key."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract NextHeaderVerifier (0xe859F565f4AdF7AAc3a94a6C6d89093d754Ec4f6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract HeaderRangeVerifier (0xF2415C44F47983F7dD22003B46A034B1F1d04e44)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3fbb57d2e6463008d2c299a91ae842e4250d001a
 
 # Diff at Tue, 18 Mar 2025 08:15:06 GMT:
 

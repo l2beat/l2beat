@@ -1,0 +1,161 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "lzomnichain",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "lzomnichain-BOBA",
+      "priceId": "boba-network",
+      "symbol": "BOBA",
+      "name": "Boba Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20285/large/Boba-200x200---white.png?1696519690",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
+            "chain": "ethereum",
+            "escrowAddress": "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55",
+            "decimals": 18,
+            "sinceTimestamp": 1663003197
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
+            "chain": "ethereum",
+            "escrowAddress": "0xB0003eB166654f7e57c0463F8D1a438eB238c490",
+            "decimals": 18,
+            "sinceTimestamp": 1661794745
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc",
+            "chain": "ethereum",
+            "escrowAddress": "0x6F537839714761388B6d7ED61Bc09579d5dA2F41",
+            "decimals": 18,
+            "sinceTimestamp": 1660932033
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lzomnichain-EURA",
+      "priceId": "ageur",
+      "symbol": "EURA",
+      "name": "EURA (previously agEUR)",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+        "chain": "ethereum",
+        "escrowAddress": "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
+        "decimals": 18,
+        "sinceTimestamp": 1657699079
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lzomnichain-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xEe381e476b4335B8584A2026f3E845edaC2c69de",
+        "decimals": 18,
+        "sinceTimestamp": 1663802015
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lzomnichain-STG",
+      "priceId": "stargate-finance",
+      "symbol": "STG",
+      "name": "StargateToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+        "chain": "ethereum",
+        "escrowAddress": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+        "decimals": 18,
+        "sinceTimestamp": 1647561600
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lzomnichain-STONE",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+        "chain": "ethereum",
+        "escrowAddress": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+        "decimals": 18,
+        "sinceTimestamp": 1700658000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lzomnichain-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E",
+        "decimals": 6,
+        "sinceTimestamp": 1665428735
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "lzomnichain-WAGMI",
+      "priceId": "wagmi-2",
+      "symbol": "WAGMI",
+      "name": "Wagmi",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31887/large/wagmi_token_logo.png?1696530698",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+        "chain": "ethereum",
+        "escrowAddress": "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+        "decimals": 18,
+        "sinceTimestamp": 1695376800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "L1Block_v1_2_0": {
+    "hash": "0xbdd7533735ef92fffadfbee431b476e72f2f048487c921c5570443e3cba5cb30",
+    "address": "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
+    "chain": "optimism",
+    "blockNumber": 134041720
+  },
+  "L1Block_v1_5_1beta_1": {
+    "hash": "0x936b7b7eb2a88a64e3eceaf897abfa2dc6e48b4c75eba2da34ff927b98413b6b",
+    "address": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
+    "chain": "ink",
+    "blockNumber": 10183769
+  }
+}

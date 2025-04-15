@@ -1,14 +1,15 @@
 import type {
-  Badge,
   Project,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -21,6 +22,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -48,7 +50,7 @@ export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
-  isArchived: boolean
+  archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
   underReviewStatus: UnderReviewStatus
@@ -56,7 +58,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: Badge[]
+    badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory
@@ -104,16 +106,16 @@ export async function getScalingProjectEntry(
     | 'scalingRisks'
     | 'scalingStage'
     | 'scalingTechnology'
-    | 'contracts'
     | 'tvlInfo'
     | 'tvlConfig',
     // optional
+    | 'contracts'
     | 'permissions'
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
     | 'isUpcoming'
-    | 'isArchived'
+    | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
   >,
@@ -169,7 +171,9 @@ export async function getScalingProjectEntry(
             },
           }
         : undefined,
-    badges: project.display.badges,
+    badges: project.display.badges
+      .map((badge) => getBadgeWithParams(badge, project))
+      .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
   }
 
@@ -182,7 +186,7 @@ export async function getScalingProjectEntry(
       isUnderReview: !!project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
+    archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
     header,
@@ -267,23 +271,29 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (
+    !project.isUpcoming &&
+    !isTvsChartDataEmpty(tvsChartData) &&
+    tvsProjectStats
+  ) {
     sections.push({
-      type: 'ChartSection',
+      type: 'StackedTvsSection',
       props: {
         id: 'tvs',
-        stacked: true,
         title: 'Value Secured',
         projectId: project.id,
+        tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
+        tvsProjectStats,
+        tvlInfo: project.tvlInfo,
       },
     })
   }
 
   if (!isActivityChartDataEmpty(activityChartData)) {
     sections.push({
-      type: 'ChartSection',
+      type: 'ActivitySection',
       props: {
         id: 'activity',
         title: 'Activity',

@@ -1,0 +1,20 @@
+{
+  "L1CustomGateway": {
+    "hash": "0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90",
+    "address": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "L1CustomGateway_parallel": {
+    "hash": "0x8d9e1660cd96605e8727f611f7b96ef82ad6cd8a76db94cd253b74cddd1c6bce",
+    "address": "0xedB05ED1a37750833fBE85b808c872D841d00859",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "L1OrbitCustomGateway": {
+    "hash": "0xee0b7e8945470e5da2cfe232d3703b0ec005472afd2eb66e4b2534c19f0100d0",
+    "address": "0x688c7b64776421668a91Ed4D23554d78626c8E69",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

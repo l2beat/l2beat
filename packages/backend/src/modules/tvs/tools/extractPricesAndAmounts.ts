@@ -1,56 +1,44 @@
 import { createHash } from 'crypto'
-import type { ChainConfig } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import type {
-  AmountConfig,
   AmountFormula,
   BalanceOfEscrowAmountFormula,
   CalculationFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
-  PriceConfig,
-  ProjectTvsConfig,
   TotalSupplyAmountFormula,
+  TvsToken,
   ValueFormula,
-} from '../types'
-import { getTimestampsRange } from './timestamps'
+} from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
+import type { AmountConfig, PriceConfig } from '../types'
 
-export function extractPricesAndAmounts(
-  config: ProjectTvsConfig,
-  chainConfigs?: { id: string; chainConfig: ChainConfig }[],
-) {
+export function extractPricesAndAmounts(tokens: TvsToken[]) {
   const amounts = new Map<string, AmountConfig>()
   const prices = new Map<string, PriceConfig>()
-  const chains = new Set<string>()
 
-  for (const token of config.tokens) {
+  for (const token of tokens) {
     if (token.amount.type === 'calculation') {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.amount,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
 
       assert(
         formulaPrices.length === 0,
         'Amount formula should not have any prices',
       )
 
-      const amountFormulaRange = getTimestampsRange(
-        ...formulaAmounts.map((a) => ({
-          sinceTimestamp: a.sinceTimestamp,
-          untilTimestamp: a.untilTimestamp,
-        })),
-      )
+      const { sinceTimestamp, untilTimestamp } = getPriceRange(formulaAmounts)
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
-        sinceTimestamp: amountFormulaRange.sinceTimestamp,
-        untilTimestamp: amountFormulaRange.untilTimestamp,
+        sinceTimestamp,
+        untilTimestamp,
         priceId: token.priceId,
       })
     } else {
       const amount = createAmountConfig(token.amount)
-      setAmount(amounts, chains, amount)
+      setAmount(amounts, amount)
 
       setPrice(prices, {
         id: createPriceConfigId(token.priceId),
@@ -64,41 +52,22 @@ export function extractPricesAndAmounts(
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
         token.valueForProject,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
     }
 
-    if (token.valueForTotal) {
+    if (token.valueForSummary) {
       const { formulaAmounts, formulaPrices } = processFormulaRecursive(
-        token.valueForTotal,
+        token.valueForSummary,
       )
-      formulaAmounts.forEach((a) => setAmount(amounts, chains, a))
+      formulaAmounts.forEach((a) => setAmount(amounts, a))
       formulaPrices.forEach((p) => setPrice(prices, p))
-    }
-  }
-
-  if (chainConfigs === undefined) {
-    return {
-      amounts: Array.from(amounts.values()),
-      prices: Array.from(prices.values()),
     }
   }
 
   return {
     amounts: Array.from(amounts.values()),
     prices: Array.from(prices.values()),
-    chains: Array.from(chains.values()).map((c) => {
-      const chain = chainConfigs.find((cc) => cc.id === c)
-      assert(chain, `${c}: chainConfig not configured`)
-      assert(chain.chainConfig.sinceTimestamp)
-
-      return {
-        chainName: c,
-        configurationId: generateConfigurationId([`chain_${c}`]),
-        sinceTimestamp: chain.chainConfig.sinceTimestamp,
-        untilTimestamp: chain.chainConfig.untilTimestamp,
-      }
-    }),
   }
 }
 
@@ -133,17 +102,12 @@ function processFormulaRecursive(
       'Amount formula should not have any prices',
     )
 
-    const amountFormulaRange = getTimestampsRange(
-      ...innerFormulaAmounts.map((a) => ({
-        sinceTimestamp: a.sinceTimestamp,
-        untilTimestamp: a.untilTimestamp,
-      })),
-    )
+    const { sinceTimestamp, untilTimestamp } = getPriceRange(formulaAmounts)
 
     formulaPrices.push({
       id: createPriceConfigId(formula.priceId),
-      sinceTimestamp: amountFormulaRange.sinceTimestamp,
-      untilTimestamp: amountFormulaRange.untilTimestamp,
+      sinceTimestamp,
+      untilTimestamp,
       priceId: formula.priceId,
     })
   } else {
@@ -184,18 +148,10 @@ function setPrice(prices: Map<string, PriceConfig>, priceToAdd: PriceConfig) {
 
 function setAmount(
   amounts: Map<string, AmountConfig>,
-  chains: Set<string>,
   amountToAdd: AmountConfig,
 ) {
   if (amountToAdd.type === 'const') {
     return
-  }
-
-  if (
-    amountToAdd.type === 'balanceOfEscrow' ||
-    amountToAdd.type === 'totalSupply'
-  ) {
-    chains.add(amountToAdd.chain)
   }
 
   const existingAmount = amounts.get(amountToAdd.id)
@@ -275,4 +231,17 @@ export function generateConfigurationId(input: string[]): string {
 
 export function createPriceConfigId(priceId: string): string {
   return generateConfigurationId([`price_${priceId}`])
+}
+
+function getPriceRange(formulaAmounts: AmountConfig[]) {
+  const sinceTimestamp = Math.min(
+    ...formulaAmounts.map((a) => a.sinceTimestamp),
+  )
+
+  const untilTimestamps = formulaAmounts.map((a) => a.untilTimestamp ?? -1)
+  const maxUntilTimestamp = Math.max(...untilTimestamps)
+  const untilTimestamp =
+    maxUntilTimestamp === -1 ? undefined : maxUntilTimestamp
+
+  return { sinceTimestamp, untilTimestamp }
 }

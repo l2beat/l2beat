@@ -1,28 +1,17 @@
 import crypto from 'crypto'
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
-import { ProjectService } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { getImageDimensions } from '~/utils/project/get-image-params'
 
-describe('icons', () => {
+describe('tinified logos', () => {
   const icons = readdirSync(path.join(__dirname, `../../public/icons`), {
     withFileTypes: true,
   })
     .filter((x) => x.isFile() && x.name.endsWith('.png'))
     .map((x) => x.name.slice(0, -4))
     .sort()
-
-  it('every project has an icon', async () => {
-    const ps = new ProjectService()
-    const projects = await ps.getProjects({})
-    const uniqueSlugs = projects
-      .map((x) => x.slug)
-      .filter((x, i, a) => a.indexOf(x) === i) // unique
-      .sort()
-    const requiredIcons = icons.filter((x) => uniqueSlugs.includes(x))
-
-    expect(requiredIcons).toEqual(uniqueSlugs)
-  })
 
   describe('every icon has proper dimensions, size and has been tinified ', () => {
     const tinifiedLogos = getTinifiedLogos()
@@ -32,8 +21,9 @@ describe('icons', () => {
         const buffer = readFileSync(
           path.join(__dirname, `../../public/icons/${slug}.png`),
         )
-        const width = buffer.readUInt32BE(16)
-        const height = buffer.readUInt32BE(20)
+        const dimensions = getImageDimensions(buffer)
+        assert(dimensions, `No dimensions for ${slug}`)
+        const { width, height } = dimensions
         const size = buffer.length
         const hash = crypto.createHash('md5').update(buffer).digest('hex')
 

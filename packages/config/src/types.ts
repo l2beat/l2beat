@@ -1,14 +1,17 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import type {
-  ChainId,
+import {
+  type ChainId,
   EthereumAddress,
-  ProjectId,
-  StringWithAutocomplete,
-  Token,
-  TokenBridgedUsing,
-  TrackedTxsConfigSubtype,
-  UnixTime,
+  type ProjectId,
+  type StringWithAutocomplete,
+  type Token,
+  type TokenBridgedUsing,
+  TokenId,
+  type TrackedTxsConfigSubtype,
+  type UnixTime,
+  stringAs,
 } from '@l2beat/shared-pure'
+import { z } from 'zod'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -96,6 +99,7 @@ export interface BaseProject {
   // feature configs
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
+  tvsConfig?: TvsToken[]
   activityConfig?: ProjectActivityConfig
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
@@ -104,6 +108,8 @@ export interface BaseProject {
   finalityInfo?: ProjectFinalityInfo
   finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
+  ecosystemInfo?: ProjectEcosystemInfo
+  ecosystemConfig?: ProjectEcosystemConfig
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -116,7 +122,7 @@ export interface BaseProject {
   isZkCatalog?: true
   isDaLayer?: true
   isUpcoming?: true
-  isArchived?: true
+  archivedAt?: UnixTime
   hasActivity?: true
 }
 
@@ -152,13 +158,51 @@ export interface ProjectLinks {
   socialMedia?: string[]
   rollupCodes?: string
 }
-
 export interface Badge {
   id: string
   type: string
   name: string
   description: string
+  action: BadgeAction | undefined
 }
+
+export type BadgeAction =
+  | BadgeScalingFilterAction
+  | BadgeSelfScalingFilterAction
+  | BadgePublicDaHighlightAction
+  | BadgeselfDaHighlightAction
+
+// Move to scaling/summary with given filterId and value
+export type BadgeScalingFilterAction = {
+  type: 'scalingFilter'
+  id: BadgeFilterId
+  value: string
+}
+
+// Move to scaling/summary with given filterId and name of the project as a value
+export type BadgeSelfScalingFilterAction = {
+  type: 'selfScalingFilter'
+  id: BadgeFilterId
+}
+
+// Move to data-availability/summary and highlight project with given slug
+export type BadgePublicDaHighlightAction = {
+  type: 'publicDaHighlight'
+  slug: string
+}
+
+// Move to data-availability/summary and highlight project with the same slug as the project
+export type BadgeselfDaHighlightAction = {
+  type: 'selfDaHighlight'
+}
+
+export type BadgeFilterId =
+  | 'stack'
+  | 'hostChain'
+  | 'daLayer'
+  | 'raas'
+  | 'infrastructure'
+  | 'vm'
 
 export interface Milestone {
   title: string
@@ -209,6 +253,7 @@ export type ChainApiConfig =
   | ChainExplorerApi<'etherscan'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
+  | ChainExplorerApi<'routescan'>
   | ChainStarkexApi
 
 export interface ChainBasicApi<T extends string> {
@@ -237,7 +282,11 @@ export interface ProjectBridgeInfo {
   validatedBy: string
 }
 
-export type BridgeCategory = 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+export type BridgeCategory =
+  | 'Token Bridge'
+  | 'Liquidity Network'
+  | 'Hybrid'
+  | 'Single-chain'
 
 export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
@@ -272,7 +321,9 @@ export interface ProjectScalingInfo {
   }
   stack: ProjectScalingStack | undefined
   raas: string | undefined
-  daLayer: string
+  infrastructure: string | undefined
+  vm: string[]
+  daLayer: string | undefined
   stage: ProjectStageName
   purposes: ProjectScalingPurpose[]
   scopeOfAssessment: ProjectScalingScopeOfAssessment | undefined
@@ -289,8 +340,8 @@ export type ProjectScalingCategory =
 export type ProjectScalingCapability = 'universal' | 'appchain'
 
 export type ProjectScalingScopeOfAssessment = {
-  checked: string[]
-  notChecked: string[]
+  inScope: string[]
+  notInScope: string[]
 }
 
 export interface ReasonForBeingInOther {
@@ -441,6 +492,7 @@ export interface ProjectScalingTechnology {
   stateDerivation?: ProjectScalingStateDerivation
   stateValidation?: ProjectScalingStateValidation
   stateValidationImage?: string
+  isUnderReview?: boolean
 }
 
 export interface ProjectScalingStateDerivation {
@@ -468,6 +520,7 @@ export interface ProjectScalingStateValidationCategory {
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
+    | 'Pessimistic Proofs'
   description: string
   risks?: ProjectRisk[]
   references?: ReferenceLink[]
@@ -831,6 +884,32 @@ export interface AvailDaTrackingConfig {
   sinceBlock: number
   untilBlock?: number
 }
+
+export interface ProjectEcosystemInfo {
+  id: ProjectId
+  sinceTimestamp?: UnixTime
+  untilTimestamp?: UnixTime
+}
+
+export interface ProjectEcosystemConfig {
+  colors: {
+    primary: `#${string}`
+    secondary: `#${string}`
+  }
+  token: {
+    tokenId: string
+    projectId: ProjectId
+    description: string
+  }
+  links: {
+    buildOn: string
+    learnMore: string
+    governanceTopDelegates: string
+    governanceProposals: string
+    tools?: string[]
+    grants?: string
+  }
+}
 // #endregion
 
 // #region discovery data
@@ -963,3 +1042,125 @@ export interface ProjectDiscoveryInfo {
   contractsDiscoDriven: boolean
 }
 // #endregion
+
+// #region TVS
+export const BaseCalculationFormulaSchema = z.object({
+  type: z.literal('calculation'),
+  operator: z.enum(['sum', 'diff', 'max', 'min']),
+})
+
+// type hint needed due to zod limitations on recursive types
+export type CalculationFormula = z.infer<
+  typeof BaseCalculationFormulaSchema
+> & {
+  arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: zod limitations on recursive types
+export const CalculationFormulaSchema: any =
+  BaseCalculationFormulaSchema.extend({
+    arguments: z.array(
+      z.union([
+        z.lazy(() => CalculationFormulaSchema),
+        z.lazy(() => ValueFormulaSchema),
+        z.lazy(() => AmountFormulaSchema),
+      ]),
+    ),
+  })
+
+export type ValueFormula = z.infer<typeof ValueFormulaSchema>
+export const ValueFormulaSchema = z.object({
+  type: z.literal('value'),
+  amount: z.union([
+    z.lazy(() => AmountFormulaSchema),
+    z.lazy(() => CalculationFormulaSchema),
+  ]),
+  priceId: z.string(),
+})
+
+export type BalanceOfEscrowAmountFormula = z.infer<
+  typeof BalanceOfEscrowAmountFormulaSchema
+>
+export const BalanceOfEscrowAmountFormulaSchema = z.object({
+  type: z.literal('balanceOfEscrow'),
+  chain: z.string(),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  address: z.union([stringAs(EthereumAddress), z.literal('native')]),
+  decimals: z.number(),
+  escrowAddress: stringAs(EthereumAddress),
+})
+
+export type TotalSupplyAmountFormula = z.infer<
+  typeof TotalSupplyAmountFormulaSchema
+>
+export const TotalSupplyAmountFormulaSchema = z.object({
+  type: z.literal('totalSupply'),
+  chain: z.string(),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  address: stringAs(EthereumAddress),
+  decimals: z.number(),
+})
+
+export type CirculatingSupplyAmountFormula = z.infer<
+  typeof CirculatingSupplyAmountFormulaSchema
+>
+export const CirculatingSupplyAmountFormulaSchema = z.object({
+  type: z.literal('circulatingSupply'),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  apiId: z.string(),
+  decimals: z.number(),
+  address: stringAs(EthereumAddress), // for frontend only
+  chain: z.string(), // for frontend only
+})
+
+export type ConstAmountFormula = z.infer<typeof ConstAmountFormulaSchema>
+export const ConstAmountFormulaSchema = z.object({
+  type: z.literal('const'),
+  sinceTimestamp: z.number(),
+  untilTimestamp: z.number().optional(),
+  value: z.string(),
+  decimals: z.number(),
+})
+
+export type AmountFormula = z.infer<typeof AmountFormulaSchema>
+export const AmountFormulaSchema = z.union([
+  BalanceOfEscrowAmountFormulaSchema,
+  TotalSupplyAmountFormulaSchema,
+  CirculatingSupplyAmountFormulaSchema,
+  ConstAmountFormulaSchema,
+])
+
+export type Formula = CalculationFormula | ValueFormula | AmountFormula
+export function isAmountFormula(formula: Formula): boolean {
+  return formula.type !== 'calculation' && formula.type !== 'value'
+}
+
+// token deployed to single chain
+export type TvsToken = z.infer<typeof TvsTokenSchema>
+export const TvsTokenSchema = z.object({
+  mode: z.enum(['auto', 'custom']),
+  id: stringAs(TokenId),
+  priceId: z.string(),
+  symbol: z.string(),
+  displaySymbol: z.string().optional(),
+  name: z.string(),
+  iconUrl: z.string().optional(),
+  amount: z.union([CalculationFormulaSchema, AmountFormulaSchema]),
+  valueForProject: z
+    .union([CalculationFormulaSchema, ValueFormulaSchema])
+    .optional(),
+  valueForSummary: z
+    .union([CalculationFormulaSchema, ValueFormulaSchema])
+    .optional(),
+  category: z.enum(['ether', 'stablecoin', 'other']),
+  source: z.enum(['canonical', 'external', 'native']),
+  isAssociated: z.boolean(),
+})
+
+export const ProjectTvsConfigSchema = z.object({
+  projectId: z.string(),
+  tokens: z.array(TvsTokenSchema),
+})

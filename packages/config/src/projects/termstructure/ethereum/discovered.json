@@ -2,7 +2,7 @@
   "name": "termstructure",
   "chain": "ethereum",
   "blockNumber": 20469346,
-  "configHash": "0xd9d7156b3bafb14c0e59b44f343c31884aab7bff7803a80016bec183432d1e6d",
+  "configHash": "0xf4df2cbe5d0af520d9a39d81cb1d8caee3b86a7e1f8c8745e3bfa317f90860ae",
   "entries": [
     {
       "name": "ZkTrueUp",
@@ -243,14 +243,14 @@
         "isEvacuMode": false,
         "nomineeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
-      }
+      },
+      "derivedName": "ZkTrueUp"
     },
     {
       "name": "Rolluper",
       "address": "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "Verifier",
@@ -262,7 +262,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263747,
       "sinceBlock": 19915733,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Verifier"
     },
     {
       "name": "TermStructure Multisig 2",
@@ -340,7 +341,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263735,
       "sinceBlock": 19915732,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d",
@@ -377,7 +379,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263891,
       "sinceBlock": 19915745,
-      "values": { "$immutable": true, "isEvacuMode": false }
+      "values": { "$immutable": true, "isEvacuMode": false },
+      "derivedName": "EvacuationFacet"
     },
     {
       "name": "AccountFacet",
@@ -389,7 +392,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263771,
       "sinceBlock": 19915735,
-      "values": { "$immutable": true, "getAccountNum": 0 }
+      "values": { "$immutable": true, "getAccountNum": 0 },
+      "derivedName": "AccountFacet"
     },
     {
       "name": "RollupFacet",
@@ -405,7 +409,8 @@
         "$immutable": true,
         "getBlockNum": [0, 0, 0],
         "getL1RequestNum": [0, 0, 0]
-      }
+      },
+      "derivedName": "RollupFacet"
     },
     {
       "name": "EvacuVerifier",
@@ -417,7 +422,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263759,
       "sinceBlock": 19915734,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EvacuVerifier"
     },
     {
       "name": "TermStructure Multisig 1",
@@ -496,8 +502,7 @@
       "name": "Operator",
       "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -944,6 +949,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

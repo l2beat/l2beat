@@ -1,0 +1,44 @@
+{
+  "AllVerifiers.2": {
+    "hash": "0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97",
+    "address": "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ForcedActions.5": {
+    "hash": "0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6",
+    "address": "0x613ee54C54D5548627064B4D648942bF3648f376",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OnchainVaults.6": {
+    "hash": "0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca",
+    "address": "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ProxyUtils.7": {
+    "hash": "0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc",
+    "address": "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarkExState.4": {
+    "hash": "0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be",
+    "address": "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarkExchange.1": {
+    "hash": "0xa6841fa395d89b246e6ab746f0501d13a8c570e1c9fa282241c39b48c738067c",
+    "address": "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "TokensAndRamping.3": {
+    "hash": "0x86d6fa45382a22e80ccfc3c25098fbb8d33ef8ae32da21e4fe8257f0caf8c114",
+    "address": "0x5524cB52490e01CBa4EB64F230CC661780cB6298",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

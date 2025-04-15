@@ -1,0 +1,101 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sollet",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sollet-ALEPH",
+      "priceId": "aleph",
+      "symbol": "ALEPH",
+      "name": "aleph.im v2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11676/large/Aleph-Logo-BW.png?1696511566",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628",
+        "chain": "ethereum",
+        "escrowAddress": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+        "decimals": 18,
+        "sinceTimestamp": 1601134720
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sollet-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+        "decimals": 18,
+        "sinceTimestamp": 1599794859
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sollet-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+        "decimals": 18,
+        "sinceTimestamp": 1599794859
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sollet-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+        "decimals": 18,
+        "sinceTimestamp": 1600300800
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sollet-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+        "decimals": 6,
+        "sinceTimestamp": 1599794859
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

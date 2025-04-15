@@ -1,0 +1,134 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "mint",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "mint-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x59625d1FE0Eeb8114a4d13c863978F39b3471781",
+            "decimals": 18,
+            "sinceTimestamp": 1715609063
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x2b3F201543adF73160bA42E1a5b7750024F30420",
+            "decimals": 18,
+            "sinceTimestamp": 1715609063
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mint-MINT",
+      "priceId": "mint-blockchain",
+      "symbol": "MINT",
+      "name": "Mint",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54653/large/Mint_logo_200*200.png?1740892473",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "mint-blockchain",
+        "decimals": 18,
+        "sinceTimestamp": 1741305600,
+        "address": "0x8511138208529fe1b9a37b863c7EEE3Fe234b7Ab",
+        "chain": "mint"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mint-MST",
+      "priceId": "mintswaptoken",
+      "symbol": "MST",
+      "name": "MintSwap404NFT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39838/large/400.png?1724260451",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "mintswaptoken",
+        "decimals": 18,
+        "sinceTimestamp": 1725321600,
+        "address": "0x9f7bd1Ce3412960524e86183B8F005271C09a5E0",
+        "chain": "mint"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mint-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x2b3F201543adF73160bA42E1a5b7750024F30420",
+        "decimals": 6,
+        "sinceTimestamp": 1715609063
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mint-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x2b3F201543adF73160bA42E1a5b7750024F30420",
+        "decimals": 6,
+        "sinceTimestamp": 1715609063
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mint-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x2b3F201543adF73160bA42E1a5b7750024F30420",
+        "decimals": 8,
+        "sinceTimestamp": 1715609063
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "ERC20Outbox": {
+    "hash": "0x3073f29910dee50069a001fb20e58cca3dcc1b3c8da4b91809af2dd356ef0c8c",
+    "address": "0x19431dc37098877486532250FB3158140717C00C",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ERC20Outbox_apechain": {
+    "hash": "0xfc1c087eedce3e4be0593d2e01fcd357b4980c69e03399574b4606e4f3b9ee04",
+    "address": "0x1f24EDD5161f82588007f33B72b0b28e46cCE878",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Outbox": {
+    "hash": "0x28eec040eca7563195b19e22e11429d0f977820bfb60ac52e567ffde3c92cf77",
+    "address": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Outbox_BoLD": {
+    "hash": "0x9e054d18af00f58f7fa36e7a0fd5b04b9dacfb8c411d84c3591e57aa72faff9d",
+    "address": "0x3FFf9BdC3ce99d3D587b0d06Aa7C4a10075193b4",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Outbox_arbitrum": {
+    "hash": "0xc90d60d6db95e55c93637eee14d0d8f4034a14d5f50fc0e8561e389073c9816a",
+    "address": "0x0eA7372338a589e7f0b00E463a53AA464ef04e17",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Outbox_nova": {
+    "hash": "0x9f764f06f42aed913df011cc8dc09d70319d488074f11885eed5edbb66c6f5b4",
+    "address": "0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

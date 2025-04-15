@@ -1,8 +1,8 @@
 {
   "name": "ternoa",
   "chain": "ethereum",
-  "blockNumber": 21766747,
-  "configHash": "0xcacf96deb566fefd83b36518efec3a711544f83972d77099e4d5be90c4ef2d5e",
+  "blockNumber": 22208591,
+  "configHash": "0xd538453db51cbc8847060ddfa5365add2e2d1605a979ceccc6d78f9dcdbeec9c",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -58,10 +58,12 @@
       "name": "Validium",
       "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
       "type": "Contract",
-      "unverified": true,
       "template": "polygon-cdk/PolygonZkEVM",
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
+      ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -115,7 +117,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x33ada9736b1e8f854a75e4790d98ec4b77b18d5f696917136c88e85b195afa5c",
+        "lastAccInputHash": "0xf26602fe5f0d1170faf995b0e5711551d1177f7addb180fc7b60b954db66cae3",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",
@@ -203,6 +205,7 @@
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC",
         "requiredAmountOfSignatures": 1
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -225,7 +228,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "abis": {
@@ -375,6 +379,16 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
+    "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
@@ -397,9 +411,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "polygon-cdk/PolygonDataCommittee": "0xfdd0edf47a38318651165ce286364aef1d10e081bd028bd87b1d37e369f74913",
-    "polygon-cdk/PolygonZkEVM": "0xa5e14ba8c6f4f08fbf0a0563e2b3a245b53f98592b0f5c183ed637422e7aeed9",
-    "polygon-cdk/Verifier": "0x156dd18408212b6f9819278c83e38b5262986c093c695670634cfe4daeb25053"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
+    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
+    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
   }
 }

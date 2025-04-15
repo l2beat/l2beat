@@ -1,148 +1,273 @@
 
 Starting ScanKintoAm...
 
+Starting ScanKintoAm...
+
 Connecting to RPC endpoint: https://rpc.kinto-rpc.com
+Network: unknown (Chain ID: 7887)
 AccessManager contract: 0xacC000818e5Bbd911D5d449aA81CB5cA24024739
 
-Fetching role events...
+Fetching role events and data...
 - Querying RoleGranted events...
-- Found 11 RoleGranted events
 - Querying RoleRevoked events...
-- Found 2 RoleRevoked events
 - Querying RoleAdminChanged events...
-- Found 0 RoleAdminChanged events
 - Querying RoleGuardianChanged events...
-- Found 0 RoleGuardianChanged events
 - Querying RoleGrantDelayChanged events...
-- Found 1 RoleGrantDelayChanged events
-- Fetching current role data for actors...
-- Fetching current grant delays for all roles...
-- Found 3 actors with active roles
-- Found 4 distinct roles
 
-Fetching target events...
+Fetching target events and data...
 - Querying TargetFunctionRoleUpdated events...
-- Found 10 TargetFunctionRoleUpdated events
 - Querying TargetAdminDelayUpdated events...
+- Querying TargetClosed events...
+- Found 11 RoleGranted events
+- Found 0 RoleAdminChanged events
+- Found 2 RoleRevoked events
+- Found 1 RoleGrantDelayChanged events
+- Found 0 RoleGuardianChanged events
+- Fetching current state for roles and members...
 - Found 6 TargetAdminDelayUpdated events
-- Fetching current admin delays and closures for targets...
-- Found configuration data for 4 targets
+- Found 10 TargetFunctionRoleUpdated events
+- Found 0 TargetClosed events
+- Fetching current state for targets...
+- Processed 4 distinct roles
+- Found 3 actors with active roles
+- Processed configuration data for 4 targets
 
-Fetching queued operations...
+Fetching queued operations and pending changes...
 - Querying OperationScheduled events...
-- Found 1 OperationScheduled events
 - Querying OperationExecuted events...
-- Found 0 OperationExecuted events
 - Querying OperationCanceled events...
-- Found 0 OperationCanceled events
-- Filtering pending operations...
-- Found 1 pending operations
-- Filtering pending role grant delay changes...
+- Querying RoleGrantDelayChanged events...
+
+Fetching non-AM delay values...
+- Found 0 OperationExecuted events
+- KintoID EXIT_WINDOW_PERIOD: 864000 (10d)
+- KintoWallet RECOVERY_TIME (from Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)): 604800 (7d)
+- Found 1 RoleGrantDelayChanged events
+- Found 1 OperationCanceled events
+- Found 13 OperationScheduled events
+- Found 12 pending operations
 - Found 0 pending role grant delay changes
 
 ================ Roles Overview ================
 
 ADMIN_ROLE (ID: 0):
   roleGrantDelay: 0 (0s)
+  adminRole: None/Default (ADMIN_ROLE)
+  guardianRole: None
   members (2):
-    Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a): executionDelay: 950400 (11d)
     SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e): executionDelay: 604800 (7d)
+    Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a): executionDelay: 950400 (11d)
 
 NIO_GOVERNOR_ROLE (ID: 1635978423191113331):
   roleGrantDelay: 0 (0s)
+  adminRole: None/Default (ADMIN_ROLE)
+  guardianRole: None
   members (2):
     NioGovernor (0x010600ff5f36c8ef3b6aaf2a88c2de85c798594a): executionDelay: 259200 (3d)
-    Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a): executionDelay: 0 (0s)
+    Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a): executionDelay: 0 (0s)
 
 UPGRADER_ROLE (ID: 8663528507529876195):
   roleGrantDelay: 604800 (7d)
+  adminRole: None/Default (ADMIN_ROLE)
+  guardianRole: None
   members (1):
     SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e): executionDelay: 950400 (11d)
 
 SECURITY_COUNCIL_ROLE (ID: 14661544942390944024):
   roleGrantDelay: 0 (0s)
+  adminRole: None/Default (ADMIN_ROLE)
+  guardianRole: None
   members (1):
     SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e): executionDelay: 950400 (11d)
 
 ================ Actors ================
 
-Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a):
-  ADMIN_ROLE: executionDelay: 950400 (11d)
-  NIO_GOVERNOR_ROLE: executionDelay: 0 (0s)
-    Callable targets and functions:
-      Target Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
-        Functions: 0x8522d1b2, 0xc664c714, 0x9089e8ae
-
-SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e):
-  ADMIN_ROLE: executionDelay: 604800 (7d)
-  UPGRADER_ROLE: executionDelay: 950400 (11d)
-    Callable targets and functions:
-      Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75):
-        Functions: upgradeAllWalletImplementations(address), upgradeTo(address)
-      Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
-        Functions: upgradeTo(address)
-      Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7):
-        Functions: upgradeTo(address)
-  SECURITY_COUNCIL_ROLE: executionDelay: 950400 (11d)
-    Callable targets and functions:
-      Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
-        Functions: updateSystemApps(address[]), updateSystemContracts(address[]), updateReservedContracts(address[])
-
 NioGovernor (0x010600ff5f36c8ef3b6aaf2a88c2de85c798594a):
   NIO_GOVERNOR_ROLE: executionDelay: 259200 (3d)
     Callable targets and functions:
       Target Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
-        Functions: 0x8522d1b2, 0xc664c714, 0x9089e8ae
+        Functions: 0x8522d1b2, 0x9089e8ae, 0xc664c714
+
+SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e):
+  ADMIN_ROLE: executionDelay: 604800 (7d)
+    Callable targets and functions: None configured
+  SECURITY_COUNCIL_ROLE: executionDelay: 950400 (11d)
+    Callable targets and functions:
+      Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
+        Functions: updateReservedContracts(address[]), updateSystemApps(address[]), updateSystemContracts(address[])
+  UPGRADER_ROLE: executionDelay: 950400 (11d)
+    Callable targets and functions:
+      Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
+        Functions: upgradeTo(address)
+      Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75):
+        Functions: upgradeAllWalletImplementations(address), upgradeTo(address)
+      Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7):
+        Functions: upgradeTo(address)
+
+Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a):
+  ADMIN_ROLE: executionDelay: 950400 (11d)
+    Callable targets and functions: None configured
+  NIO_GOVERNOR_ROLE: executionDelay: 0 (0s)
+    Callable targets and functions:
+      Target Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
+        Functions: 0x8522d1b2, 0x9089e8ae, 0xc664c714
 
 ================ Targets ================
+
+KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
+  targetAdminDelay: 950400 (11d)
+  Closed: false
+  Function Roles:
+    SECURITY_COUNCIL_ROLE: updateReservedContracts(address[]), updateSystemApps(address[]), updateSystemContracts(address[])
+    UPGRADER_ROLE: upgradeTo(address)
 
 Treasury (0x793500709506652fcc61f0d2d0fda605638d4293):
   targetAdminDelay: 0 (0s)
   Closed: false
   Function Roles:
-    NIO_GOVERNOR_ROLE: 0x8522d1b2, 0xc664c714, 0x9089e8ae
+    NIO_GOVERNOR_ROLE: 0x8522d1b2, 0x9089e8ae, 0xc664c714
 
 KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75):
-  targetAdminDelay: 604800 (7d)
+  targetAdminDelay: 950400 (11d)
   Closed: false
   Function Roles:
     UPGRADER_ROLE: upgradeAllWalletImplementations(address), upgradeTo(address)
 
-KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b):
-  targetAdminDelay: 0 (0s)
-  Closed: false
-  Function Roles:
-    UPGRADER_ROLE: upgradeTo(address)
-    SECURITY_COUNCIL_ROLE: updateSystemApps(address[]), updateSystemContracts(address[]), updateReservedContracts(address[])
-
 KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7):
-  targetAdminDelay: 604800 (7d)
+  targetAdminDelay: 950400 (11d)
   Closed: false
   Function Roles:
     UPGRADER_ROLE: upgradeTo(address)
 
-============= Queued Delay/Config Changes and Queued Actions =============
-
-Target KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75) scheduled targetAdminDelay change:
-  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:14.000Z
-
-Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
-  New targetAdminDelay: 604800 (7d) effective at 2025-03-23T23:34:54.000Z
-
-Target KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b) scheduled targetAdminDelay change:
-  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:13.000Z
-
-Target KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7) scheduled targetAdminDelay change:
-  New targetAdminDelay: 950400 (11d) effective at 2025-03-24T23:33:12.000Z
+============= Queued Operations and Pending Role Grant Delays =============
 
 Queued Operations:
 
-Operation 0x0ad95e032eb7beede43f2741b7bcef6566a6163eaa1ac1ef42441f25193096d8:
+Operation 0x7efe7055898bb49bcf4b4bac2964df4814ca5698c700d895f669b8da3b83443a:
     Nonce: 1
-    Scheduled for: 2025-03-31T23:42:21.000Z
-    Caller: Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Scheduled for: 2025-04-06T02:05:35.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
     Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
-    Function: grantRole(UPGRADER_ROLE, Kinto Multisig 2 (0x2e2b1c42e38f5af81771e65d87729e57abd1337a), 950400 (11d))
+    Function: setTargetAdminDelay(KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b), 1036800 (12d))
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x93d412fc49c246a4f4c4d0606446bb17657b2c118827fd52bc8b86da8ef08be9
+
+Operation 0x4a05b6df1acce9e22cf008555fa8d477bd9f116f261f267f95c2b463047e016a:
+    Nonce: 1
+    Scheduled for: 2025-04-06T02:05:36.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: setTargetAdminDelay(KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7), 1036800 (12d))
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0xdf4abe7c08ac70318afdea198383845e830b5fbfb834fb3d7e48dc56039fbc1b
+
+Operation 0x2fad4066aacd2052b8b133e635b4d73fbbe42674134fd28b91b0191d4a2cfb0d:
+    Nonce: 1
+    Scheduled for: 2025-04-06T02:05:37.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: setTargetAdminDelay(KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75), 1036800 (12d))
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x14e7027458919617cc8873418cabdb22a4d2ae3698503ca10d85bebbd4ef2cbb
+
+Operation 0xc961c36ac064bc0a4f2e0be23c833c3e8d938587ce2f328fb818b8045e1137b1:
+    Nonce: 1
+    Scheduled for: 2025-04-06T02:19:46.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: grantRole(ADMIN_ROLE, Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a), 1036800 (12d))
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x896801b01e1304a9b59ad2604769da8108333da583d9a46273d96314113430f5
+
+Operation 0x256b4be01a33f01810d8b7c1bb0e70df24b98d9f174b45ea4ea9f9f13a04990e:
+    Nonce: 1
+    Scheduled for: 2025-04-06T16:03:44.000Z
+    Caller: SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e)
+    Target: KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75)
+    Function: upgradeAllWalletImplementations(address)
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x8565a8fbf739796acd35671550e134aebadb79379ac184e7fd4d0038684deef3
+
+Operation 0x8b8631e0ab585da013ce35fd8f3a27597f77e19c91ba1263b21cd7396f746d91:
+    Nonce: 1
+    Scheduled for: 2025-04-06T16:03:44.000Z
+    Caller: SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e)
+    Target: KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7)
+    Function: upgradeTo(0x1d61772ae2e157f9f6a4127526ed86ab5801a477)
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x532e5c312df66cb3ea33427394b8fa62de902edfd96ee02dfba0302a1c32ade6
+
+Operation 0xdd5ae826ce8969e1e28b47bfb52c2ece6c9b94f3777698c30894e55dbc6fe8a0:
+    Nonce: 1
+    Scheduled for: 2025-04-09T17:33:26.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: labelRole(RECOVERY_APPROVER_ROLE, "RECOVERY_APPROVER_ROLE")
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x1c1f4250ccb541589ed0bf39dc85815075d965c9a1cc060aad102989f914dc90
+
+Operation 0x62d4f9252894204088abbb251d9eb3f66b47459f8151390f3152ce5d0d0b189f:
+    Nonce: 1
+    Scheduled for: 2025-04-09T17:33:27.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: labelRole(SANCTIONER_ROLE, "SANCTIONER_ROLE")
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0xe3243d738c48f7bcd9f2b26160ae55a7ea455ceaf6a1f3e3b294015b99062a45
+
+Operation 0x18198983d32863dcc0dbdc5fbaf362b9e46652dae6c457956e761db4b87b8e4e:
+    Nonce: 1
+    Scheduled for: 2025-04-09T17:33:28.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: setTargetFunctionRole(KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75), [0x456cf492], RECOVERY_APPROVER_ROLE)
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0x79b601a5839717d9824c6bc0c508e187dead29bac38b9bff38036a2845fd5e63
+
+Operation 0x1180e76c68ad305ca046e644a97adb50f9b79684c420e10fbd71a5b941badea5:
+    Nonce: 1
+    Scheduled for: 2025-04-09T17:33:28.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: setTargetFunctionRole(KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7), [0xfb0b2940], SANCTIONER_ROLE)
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0xe704b8b70fd5ad231931e465cc874398e6304faee2e10c8af33ff3ab9c2b8694
+
+Operation 0xdc3e209a2fe4bae73e8fa0e602f61b887a4e123a18319283c3535622c64980f9:
+    Nonce: 1
+    Scheduled for: 2025-04-09T17:33:30.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: grantRole(RECOVERY_APPROVER_ROLE, Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a), 0 (0s))
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0xf73d0cdd7d2fbae35cc93e2edfda27862f20c3a1f3d71168c993914db98fb4e1
+
+Operation 0xa148a26d04bda6140c756b460fb9e37aecd93c69443af9f523d113d8593f8163:
+    Nonce: 1
+    Scheduled for: 2025-04-09T17:33:31.000Z
+    Caller: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a)
+    Target: AccessManager (0xacc000818e5bbd911d5d449aa81cb5ca24024739)
+    Function: grantRole(SANCTIONER_ROLE, SecurityCouncil (0x28fc10e12a78f986c78f973fc70ed88072b34c8e), 0 (0s))
+    Scheduled by Tx: https://explorer.kinto.xyz/tx/0xe806ab5b9d1d0b385e7d6cbcbf1b990871b271bd3bd68c3abf9dc96eea2e5555
 
 Pending Role Grant Delay Changes:
   No pending role grant delay changes found.
+
+================ Compliance Report (Minimum 12d Delay) ================
+
+Found 6 non-compliant value(s):
+
+- Non-AM Delay: KintoID.EXIT_WINDOW_PERIOD
+    Current: 864000 (10d)
+    Required: >= 1036800 (12d)
+
+- Non-AM Delay: KintoWallet.RECOVERY_TIME (from Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a))
+    Current: 604800 (7d)
+    Required: >= 1036800 (12d)
+
+- Target Admin Delay: KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+
+- Target Admin Delay: KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+
+- Target Admin Delay: KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+
+- Actor Execution Delay: Kinto Multisig 2 (Wallet) (0x2e2b1c42e38f5af81771e65d87729e57abd1337a) (ADMIN_ROLE)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+
+Scan finished.

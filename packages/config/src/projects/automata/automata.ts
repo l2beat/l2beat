@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import {
@@ -14,6 +14,16 @@ import type { ScalingProject } from '../../internalTypes'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('automata')
+const genesisTimestamp = UnixTime(1721183063)
+const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+const sequencerAddress = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -70,13 +80,54 @@ export const automata: ScalingProject = opStackL2({
     ],
   },
   discovery,
-  genesisTimestamp: UnixTime(1721183063),
+  genesisTimestamp,
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,
     daResolveWindow,
     'https://github.com/ethereum-optimism/optimism/releases/tag/v1.7.7',
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190'), // old sequencer
+        to: sequencerInbox,
+        sinceTimestamp: genesisTimestamp,
+        untilTimestamp: UnixTime(1743836771),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: sequencerAddress,
+        to: sequencerInbox,
+        sinceTimestamp: UnixTime(1743836771),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: l2OutputOracle.address,
+        selector: '0x9aaab648',
+        functionSignature:
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   customDa: {
     type: 'DA Challenges',
     name: 'Automata DA',

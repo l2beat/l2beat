@@ -1,4 +1,241 @@
-Generated with discovered.json: 0x9d75b2fc2eaeb04fd51e2bb35ac417f2423396a8
+Generated with discovered.json: 0x68147668d7f1b7d06637d80335fd6ea983cfddc3
+
+# Diff at Wed, 09 Apr 2025 13:22:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 21917027
+- current block number: 22231616
+
+## Description
+
+Upgrade to ArbOS v32.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x17e7F68ce50A77e55C7834ddF31AEf86403B8010)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract Caldera Multisig 3 (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+    contract RollupProxy (0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      template:
+-        "orbitstack/RollupProxy"
++        "orbitstack/RollupProxy_fastConfirm"
+      sourceHashes.1:
+-        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
++        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
+      sourceHashes.0:
+-        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e"
++        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
+      issuedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      values.$implementation.1:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "0x4fd44C320f28e9cdB7CF0f5490434494Fbd4c7B4"
+      values.$implementation.0:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "0x107CbCe233467652E8a69E8555E58DA7AeF0bFa5"
+      values.$pastUpgrades.1:
++        ["2024-05-16T04:46:47.000Z","0xfbd9b814ebadbe634d86f5d37bf0a54e6c7fcae5a7e2824e99dcf4d7caea1b10",["0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A","0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"]]
+      values.$pastUpgrades.0.2:
+-        "2024-05-16T04:46:47.000Z"
++        "2025-04-07T19:36:59.000Z"
+      values.$pastUpgrades.0.1:
+-        "0xfbd9b814ebadbe634d86f5d37bf0a54e6c7fcae5a7e2824e99dcf4d7caea1b10"
++        "0xc2be8923b1e282245bf9396df6ce3d92ae3a1ff495d21847090c31165ef57c1c"
+      values.$pastUpgrades.0.0.1:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "0x4fd44C320f28e9cdB7CF0f5490434494Fbd4c7B4"
+      values.$pastUpgrades.0.0.0:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "0x107CbCe233467652E8a69E8555E58DA7AeF0bFa5"
+      values.$upgradeCount:
+-        1
++        2
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v20 wasmModuleRoot"
++        "ArbOS v32 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39"
+      values.anyTrustFastConfirmer:
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x57EA090Ac0554d174AE0e2855B460e84A1A7C221)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract ChallengeManager (0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.0:
+-        "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5"
++        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
+      values.$implementation:
+-        "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
++        "0x745fdabB168b7bdEe3801a37093C3A3c3230c50b"
+      values.$pastUpgrades.1:
++        ["2024-05-16T04:46:47.000Z","0xfbd9b814ebadbe634d86f5d37bf0a54e6c7fcae5a7e2824e99dcf4d7caea1b10",["0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"]]
+      values.$pastUpgrades.0.2:
+-        "2024-05-16T04:46:47.000Z"
++        "2025-04-07T19:36:59.000Z"
+      values.$pastUpgrades.0.1:
+-        "0xfbd9b814ebadbe634d86f5d37bf0a54e6c7fcae5a7e2824e99dcf4d7caea1b10"
++        "0xc2be8923b1e282245bf9396df6ce3d92ae3a1ff495d21847090c31165ef57c1c"
+      values.$pastUpgrades.0.0.0:
+-        "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
++        "0x745fdabB168b7bdEe3801a37093C3A3c3230c50b"
+      values.$upgradeCount:
+-        1
++        2
+      values.osp:
+-        "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221"
++        "0xd8D0422128f4dEf4D057507f30Fc3e7Bd1A6c349"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x72B166070781a552D7b95a907eF59ca05d3D5a62)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract Inbox (0x7EF9d2fe20307165599101e93Ea05b04d46Af159) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+      values.$implementation:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x580b0Bf8bf47C338105166857cd9921EbF928B12"
+      values.$pastUpgrades.1:
++        ["2024-05-16T04:46:47.000Z","0xfbd9b814ebadbe634d86f5d37bf0a54e6c7fcae5a7e2824e99dcf4d7caea1b10",["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]]
+      values.$pastUpgrades.0.2:
+-        "2024-05-16T04:46:47.000Z"
++        "0x5703e61666c0026973520711926fa609a6a3f6223a2f38340ba241cb527649d5"
+      values.$pastUpgrades.0.1:
+-        "0xfbd9b814ebadbe634d86f5d37bf0a54e6c7fcae5a7e2824e99dcf4d7caea1b10"
++        "2025-04-07T20:17:35.000Z"
+      values.$pastUpgrades.0.0.0:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "0x580b0Bf8bf47C338105166857cd9921EbF928B12"
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x8b73Ef238ADaB31EBC7c05423d243c345241a22f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+    contract SequencerInbox (0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
++        "0x6B292d1d4D38653b4F1D6De41c6be198371C5af1"
+      values.$pastUpgrades.1:
++        ["2025-04-07T20:17:35.000Z","0x5703e61666c0026973520711926fa609a6a3f6223a2f38340ba241cb527649d5",["0x6B292d1d4D38653b4F1D6De41c6be198371C5af1"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.reader4844:
+-        "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576"
++        "0x1fc9dBd52D420a5C4c6A2de4B1D1B380D1De4D53"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x171c845f3229D6625bcdBcfB39BF53Fe15D2E4de)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x1E0fAE2d6Ca225903B81b742813E98CDBaD20037)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x8C07c8F36764962C43eb9A6D50426C652185c51D)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0xa27dAF09D3a1d36e40316e38078FAF8bbBf3a12f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xd8D0422128f4dEf4D057507f30Fc3e7Bd1A6c349)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          | 404 ++++++----
+ .../{.flat@21917027 => .flat}/Inbox/Inbox.sol      |  52 +-
+ .../OneStepProofEntry.sol                          | 485 +++++++++--
+ .../{.flat@21917027 => .flat}/OneStepProver0.sol   | 765 +++++++++++++-----
+ .../OneStepProverHostIo.sol                        | 892 +++++++++++++++++----
+ .../OneStepProverMath.sol                          |  65 +-
+ .../OneStepProverMemory.sol                        | 315 ++++++--
+ .../RollupProxy/RollupAdminLogic.1.sol             | 370 ++++++---
+ .../RollupProxy/RollupUserLogic.2.sol              | 415 ++++++----
+ .../SequencerInbox/SequencerInbox.sol              |  24 +-
+ 10 files changed, 2825 insertions(+), 962 deletions(-)
+```
+
+Generated with discovered.json: 0xf24dd5d8251128aad867298ba98a2f704c342a41
 
 # Diff at Thu, 06 Mar 2025 09:39:04 GMT:
 

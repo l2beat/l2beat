@@ -1,0 +1,38 @@
+{
+  "CommitteeUSDC": {
+    "hash": "0x581fe96c5df565dd8524d044e5dcfdad1b613513021dce348f4c85f8c881a7b5",
+    "address": "0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "CommitteeUSDT": {
+    "hash": "0xab5a8f616268fb3ec919ff2c4566b29938a53013be74e966348bf881eecd4c0a",
+    "address": "0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Committee_2019_1": {
+    "hash": "0x83a4f7af4e5a371aadb57903aed1b1f96556a0b3eb4665044a65ad8f70a89edc",
+    "address": "0x28780349A33eEE56bb92241bAAB8095449e24306",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Committee_2019_1_1": {
+    "hash": "0xbd4b616703456361720d7aaaa8a8d995f0efbd262e650ecd109f807107476380",
+    "address": "0x1e601435E181423e7A8430813d7500012a6169cB",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "FinalizableCommittee": {
+    "hash": "0x220ee35d4e83e9cca7e8fa42dcab4d9571ce3078b50bacbdb2fc75afa7f0290e",
+    "address": "0x8B3A6662809195453645e37C2005d655f57ca818",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "FinalizableCommittee_2022_1": {
+    "hash": "0xb7173602faa329abf6af13a2dca4512d58504df7a9a3beace2a8a0470b416b02",
+    "address": "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

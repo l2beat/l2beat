@@ -1,4 +1,63 @@
-Generated with discovered.json: 0x20de28ce977b087fde50602a9009e47711dac9ac
+Generated with discovered.json: 0x5b68627cf0f9f2192e2d9f6c6d591973934a75f2
+
+# Diff at Tue, 01 Apr 2025 15:04:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@f9040ac0c636567fba2ad99e659d24ebe375cafa block: 22094603
+- current block number: 22174829
+
+## Description
+
+Added USDT0 OFT adapter as escrow and USDT0 DVN info.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22094603 (main branch discovery), not current.
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
++++ description: The verification config of the USDT0OFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_USDT0:
++        [15,["0x589dEDbD617e0CBcB916A9223F4d1300c294236b","0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2"],[],0,0,2]
+      fieldMeta.ulnConfig_USDT0:
++        {"description":"The verification config of the USDT0OFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDT0DVN (0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x7087B8011caC9541b388B639a1460D9cbA4eA0A2)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x61d82678bad9c62034ffdba044e3f7c607c8695b
 
 # Diff at Fri, 21 Mar 2025 10:19:57 GMT:
 

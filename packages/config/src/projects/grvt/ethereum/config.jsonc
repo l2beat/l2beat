@@ -12,7 +12,8 @@
     "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D": "GrvtZkEvmAdmin",
     "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5": "GrvtChainAdminMultisig",
     "0x3Cd52B238Ac856600b22756133eEb31ECb25109a": "GRVTTransactionFilterer",
-    "0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "GRVTBridgeProxy"
+    "0xE17aeD2fC55f4A876315376ffA49FE6358113a65": "GRVTBridgeProxy",
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
   },
   "sharedModules": ["shared-zk-stack"],
   "overrides": {
@@ -38,6 +39,7 @@
       }
     },
     "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      "category": "spam",
       // local override over the template to fetch the validators from the shared contract
       "displayName": "ValidatorTimelock2",
       "fields": {

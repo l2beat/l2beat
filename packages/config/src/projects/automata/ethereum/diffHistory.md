@@ -1,4 +1,194 @@
-Generated with discovered.json: 0x9d7e96ee900e24b6c6fbe70500e0b19c83c65029
+Generated with discovered.json: 0x6a34514ec09412b1ef96f105ff6fb0a38e325caf
+
+# Diff at Sun, 06 Apr 2025 08:20:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 21715439
+- current block number: 22208279
+
+## Description
+
+Operators change, no change to implementations.
+
+## Watched changes
+
+```diff
+    contract undefined (0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"0x08c5DCDD5e46d31CC1591ee15b084663507597f3","description":"can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."}
+      receivedPermissions.0.from:
+-        "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00"
++        "0x08c5DCDD5e46d31CC1591ee15b084663507597f3"
+      receivedPermissions.0.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+      receivedPermissions.0.via:
+-        [{"address":"0x5E2FC552288857cfE709C398Ecac448314dE1320"}]
+    }
+```
+
+```diff
+    contract Automata Multisig 2 (0x5E2FC552288857cfE709C398Ecac448314dE1320) {
+    +++ description: None
+      directlyReceivedPermissions:
+-        [{"permission":"interact","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+      values.$members.3:
++        "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2"
+      values.$members.2:
++        "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7"
+      values.$members.1:
++        "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"
+      values.$members.0:
+-        "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"
++        "0xaC79765A73eB9dcBd3c427181E6819902AE25b48"
+      values.$threshold:
+-        1
++        3
+      values.multisigThreshold:
+-        "1 of 1 (100%)"
++        "3 of 4 (75%)"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."}]
+    }
+```
+
+```diff
+    contract SystemConfig (0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.to:
+-        "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"
++        "0x5E2FC552288857cfE709C398Ecac448314dE1320"
+      issuedPermissions.1.via.0:
+-        {"address":"0x5E2FC552288857cfE709C398Ecac448314dE1320"}
+      issuedPermissions.0.to:
+-        "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190"
++        "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3"
+      values.batcherHash:
+-        "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190"
++        "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3"
+      values.unsafeBlockSigner:
+-        "0xA940a669DAe672111FD02Df597Cf7De7Cf758fAD"
++        "0x373771221e39e1Ca16e981179CEcF1bE38ac70d9"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0xdbf381984c4515Fe3285D3C55fDfb3054C52c261) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.1.to:
+-        "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F"
++        "0xC3515A4bb0028E7548819df04160e2248d86eDE8"
+      issuedPermissions.0.to:
+-        "0x8c6F6580C846634C5DA08c40AE308DE23006a679"
++        "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6"
+      values.$pastUpgrades.2:
++        ["2025-04-05T09:19:11.000Z","0xbd8864ebf2f77f87a58470897b837b3003f982efa5d088b49a1373038e3da0df",["0xf31575705C047eC4D3Eb05F0917B9aA404179e3A"]]
+      values.$pastUpgrades.1:
++        ["2025-04-05T09:01:59.000Z","0x92cdc220f2e504336fecf2a06ac21865e046c90315e6902d04597397628505b8",["0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]]
+      values.$upgradeCount:
+-        1
++        3
++++ severity: HIGH
+      values.challenger:
+-        "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F"
++        "0xC3515A4bb0028E7548819df04160e2248d86eDE8"
+      values.CHALLENGER:
+-        "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F"
++        "0xC3515A4bb0028E7548819df04160e2248d86eDE8"
++++ severity: HIGH
+      values.proposer:
+-        "0x8c6F6580C846634C5DA08c40AE308DE23006a679"
++        "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6"
+      values.PROPOSER:
+-        "0x8c6F6580C846634C5DA08c40AE308DE23006a679"
++        "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715439 (main branch discovery), not current.
+
+```diff
+    contract Automata Multisig 1 (0x03eC1C43434E2f910A2fb984906cd2470fdb39c8) {
+    +++ description: None
+      name:
+-        "AutomataUpgradeMultisig"
++        "Automata Multisig 1"
+    }
+```
+
+```diff
+    contract Automata (0x08A650c7ADF9c79a7d4157FCb8E670D9645e3A91) {
+    +++ description: None
+      name:
++        "Automata"
+    }
+```
+
+```diff
+    contract Automata Multisig 2 (0x5E2FC552288857cfE709C398Ecac448314dE1320) {
+    +++ description: None
+      name:
+-        "AutomataOpsMultisig"
++        "Automata Multisig 2"
+    }
+```
+
+```diff
+    contract AltLayer 3 (0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7) {
+    +++ description: None
+      name:
++        "AltLayer 3"
+    }
+```
+
+```diff
+    contract AltLayer 1 (0xaC79765A73eB9dcBd3c427181E6819902AE25b48) {
+    +++ description: None
+      name:
++        "AltLayer 1"
+    }
+```
+
+```diff
+    contract AltLayer 2 (0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2) {
+    +++ description: None
+      name:
++        "AltLayer 2"
+    }
+```
+
+Generated with discovered.json: 0x484a8c3ed3a7166d5176d36fe7018d1a0c0e772a
+
+# Diff at Thu, 27 Mar 2025 11:14:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21715439
+- current block number: 21715439
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715439 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x9338f57f1bd031d698b1d74942afe6033fd571ad
 
 # Diff at Wed, 19 Mar 2025 13:04:25 GMT:
 

@@ -1,0 +1,14 @@
+{
+  "L1USDCBridge": {
+    "hash": "0x00a6e4c29d4f4c792c4f6c43b197f95b24d626a94e6faf8ee81bc9320d579d7e",
+    "address": "0x86dF12f51E3531689e0615bb2F739ddf01337715",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "L1USDCBridge_reinitialize": {
+    "hash": "0xab9a40a5f27251ca4b4884dedef5a2b49a8928796a1fd0c6655f1623be961602",
+    "address": "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

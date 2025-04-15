@@ -54,13 +54,14 @@ export function initActivityModule(
           projectId: project.id,
           assessCount: assesCount(project.activityConfig.adjustCount),
           uopsAnalyzer: analyzer,
+          logger,
         })
 
         const activityIndexer = new BlockActivityIndexer({
           logger,
           projectId: project.id,
           batchSize: project.batchSize,
-          minHeight: 1,
+          minHeight: project.activityConfig.startBlock ?? 1,
           parents: [blockTargetIndexer],
           txsCountService,
           indexerService,

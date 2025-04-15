@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 22022360,
-  "configHash": "0x80468c4496728c4c0766ae8cec74dec6dccca23aeaeaef3a64745cec584ee566",
+  "configHash": "0x27ac193dfc48a058f74a9e633007d0bcde060d408c3934fc23c7b02cdc4b8f54",
   "entries": [
     {
       "name": "Arbitrator",
@@ -46,7 +46,8 @@
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "primaryChainGateway": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
         "primaryChainMessageHashQueue": { "_begin": 80, "_end": 80 }
-      }
+      },
+      "derivedName": "Arbitrator"
     },
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -92,7 +93,8 @@
         "getRemoteGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
         "INBOX": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
-      }
+      },
+      "derivedName": "ArbitrumL1Gateway"
     },
     {
       "name": "EthereumProxyAdmin",
@@ -103,7 +105,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -370,7 +371,8 @@
         "getRemoteGateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "MESSAGE_SERVICE": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
-      }
+      },
+      "derivedName": "OptimismL1Gateway"
     },
     {
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -416,7 +418,8 @@
         "getRemoteGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "MESSAGE_SERVICE": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
-      }
+      },
+      "derivedName": "LineaL1Gateway"
     },
     {
       "name": "EthereumL1Gateway",
@@ -499,7 +502,8 @@
         "getRemoteGateway": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
         "MESSAGE_SERVICE": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
-      }
+      },
+      "derivedName": "ScrollL1Gateway"
     },
     {
       "name": "L1ERC20Bridge",
@@ -538,7 +542,8 @@
         "l2Bridge": "0x36CaABbAbfB9C09B722d9C3697C3Cb4A93650ea7",
         "l2TokenBeacon": "0x3b9dCbfD8Dab466A700B4d247e30D56C37d8D08d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      }
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
@@ -1279,9 +1284,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "zklinknova/secondaryGateway": "0xc4aa2535ced2eb82ab28cbf54745564fcbecaa9ff264c2627092c103d005c78a",
-    "zklinknova/secondaryZkLink": "0xdd6ae208e600e8a58e2bfc5a099e81722045a5388ba31c4c5cf94bea5e027113"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
+    "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   }
 }

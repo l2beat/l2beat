@@ -1,0 +1,209 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "winr",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "winr-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "chain": "arbitrum",
+        "escrowAddress": "0x023d27390aEd70aA39823A1e1e06a0b075400214",
+        "decimals": 18,
+        "sinceTimestamp": 1724262320
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1724262320
+        },
+        "priceId": "arbitrum"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "arbitrum",
+        "escrowAddress": "0x0aE2F220cE9698b1c9853f7288aC882150291dca",
+        "decimals": 18,
+        "sinceTimestamp": 1722608704
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1722608704
+        },
+        "priceId": "ethereum"
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "escrowAddress": "0x6aDFbA9e45b5c1685007Fe48A784e971e412f839",
+        "decimals": 6,
+        "sinceTimestamp": 1722608646
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1722608646
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "USD Coin (Arb1)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+        "chain": "arbitrum",
+        "escrowAddress": "0x8E83aED64a0Ad5d7d3A57B6172F14FcA5bfADE56",
+        "decimals": 6,
+        "sinceTimestamp": 1722608545
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1722608545
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+        "chain": "arbitrum",
+        "escrowAddress": "0x3222f0F281F1630C50f86fFaA29A29A06559eca8",
+        "decimals": 6,
+        "sinceTimestamp": 1722608690
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1722608690
+        },
+        "priceId": "tether"
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+        "chain": "arbitrum",
+        "escrowAddress": "0x8b961A67f49bc6334CBA09dbd70a2F14Fc8226a1",
+        "decimals": 18,
+        "sinceTimestamp": 1722608661
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1722608661
+        },
+        "priceId": "weth"
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "winr-WINR",
+      "priceId": "winr-protocol",
+      "symbol": "WINR",
+      "name": "WINR",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29340/large/WINR.png?1696528290",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
+        "chain": "arbitrum",
+        "escrowAddress": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
+        "decimals": 18,
+        "sinceTimestamp": 1715799374
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1715799374
+        },
+        "priceId": "winr-protocol"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

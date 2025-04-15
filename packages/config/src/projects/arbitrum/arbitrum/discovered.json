@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 316974509,
-  "configHash": "0xfafadec50f5e3549ac20f56dbfa651aab16b81cfb8c91a1654e28d6e15b0a460",
+  "configHash": "0xbdbecc0dd48a94b3a91419f34638a4dc9308beea002b8d29ab119cb15e8f4532",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -18,8 +18,7 @@
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2ERC20Gateway",
@@ -85,6 +84,7 @@
         "exitNum": 31195,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
+      "derivedName": "L2ERC20Gateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -153,8 +153,7 @@
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2Timelock",
@@ -178,6 +177,12 @@
         {
           "permission": "interact",
           "to": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
           "description": "propose transactions.",
           "via": []
         },
@@ -301,7 +306,8 @@
         "name": "",
         "symbol": "",
         "totalSupply": 0
-      }
+      },
+      "derivedName": "StandardArbERC20"
     },
     {
       "name": "BeaconProxyFactory",
@@ -317,7 +323,8 @@
         "$immutable": true,
         "beacon": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d"
-      }
+      },
+      "derivedName": "BeaconProxyFactory"
     },
     {
       "name": "L2SecurityCouncilEmergency",
@@ -496,8 +503,7 @@
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2DAIGateway",
@@ -586,14 +592,14 @@
         "votingDelay": 0,
         "votingPeriod": 151200
       },
+      "derivedName": "SecurityCouncilMemberElectionGovernor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "L2GatewayRouter",
@@ -651,28 +657,26 @@
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "0x0000000000000000000000000000000000000000"
       },
+      "derivedName": "L2GatewayRouter",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676",
@@ -746,6 +750,7 @@
         "l2Weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
+      "derivedName": "L2WethGateway",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -770,6 +775,7 @@
         "l2Router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
         "paused": false
       },
+      "derivedName": "L2LPTGateway",
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -840,6 +846,7 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "derivedName": "SecurityCouncilMemberRemovalGovernor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -861,7 +868,8 @@
         "l1TimelockAddr": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
-      }
+      },
+      "derivedName": "UpgradeExecRouteBuilder"
     },
     {
       "name": "TreasuryGovernor",
@@ -936,15 +944,13 @@
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "SecurityCouncilNomineeElectionGovernor",
@@ -1021,6 +1027,7 @@
         "votingDelay": 50400,
         "votingPeriod": 50400
       },
+      "derivedName": "SecurityCouncilNomineeElectionGovernor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1083,21 +1090,20 @@
           "description": "The percentage of the total supply that can be minted by the owner once per year."
         }
       },
+      "derivedName": "L2ArbitrumToken",
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "GoncaloMagalhaes-Immunefi",
       "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "SecurityCouncilMemberSyncAction",
@@ -1116,7 +1122,8 @@
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
         "store": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
-      }
+      },
+      "derivedName": "SecurityCouncilMemberSyncAction"
     },
     {
       "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
@@ -1361,7 +1368,8 @@
         "multisigThreshold": "3 of 6 (50%)",
         "nonce": 6,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "L2ARBGateway",
@@ -1586,16 +1594,18 @@
           ]
         }
       ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+          "description": "propose transactions."
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "delay": 691200
-        },
-        {
-          "permission": "interact",
-          "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-          "description": "propose transactions."
         }
       ],
       "sinceTimestamp": 1692138965,
@@ -1692,6 +1702,7 @@
           "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
         }
       },
+      "derivedName": "SecurityCouncilManager",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -1703,7 +1714,6 @@
         "0x579c6df39480618101e39d5b997df14c347d7f8a880df6cf0e1ae526771a0444"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1740,7 +1750,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1804,8 +1813,7 @@
       "name": "gzeon-OffchainLabs",
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
@@ -1826,7 +1834,8 @@
         "$immutable": true,
         "implementation": "0x3f770Ac673856F105b586bb393d122721265aD46",
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
-      }
+      },
+      "derivedName": "UpgradeableBeacon"
     },
     {
       "name": "CoreGovernor",
@@ -2053,8 +2062,7 @@
           "permission": "act",
           "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
         }
-      ],
-      "derivedName": ""
+      ]
     }
   ],
   "abis": {
@@ -3079,30 +3087,30 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x2eb29f308508b9cc7f51b5984e0a5636340fc562271d0682bde062bc96f88a27",
-    "GnosisSafe": "0x9d7f7b8b6adea28c4538f12e31b0c59eac5339b4e5c80def637cccc0cfe82106",
-    "orbitstack/layer2/ConstitutionHash": "0x5fe7ebb74f9f7db4fb5266ad278fa00b44f9dad99e2a2bb72bd50ff4992b8f26",
-    "orbitstack/layer2/CoreGovernor": "0x817c84c9c6b797d60c319e2dd32cc0264009c74f1530bdb3da70dc19ed38f7a7",
-    "orbitstack/layer2/L2ARBGateway": "0xf8f6dea3a99543101656e69a2bd8a5fe04eec982f770e7ad571a3995b3b0d0cb",
-    "orbitstack/layer2/L2ArbitrumToken": "0x8de99e29c416748432ba68d30e9010e74b2cf00a9918a5d8bfc577323167afc7",
-    "orbitstack/layer2/L2BaseFee": "0xacc8c3633c2005cda51a4d51aa323d9103cccbf0040cc4be50cb176e1b25849b",
-    "orbitstack/layer2/L2DAIGateway": "0xe1e7c30cd5acae69e36fb6a6826a2db2f42cbda725aba3cb2848dd82a70b2cb0",
-    "orbitstack/layer2/L2ERC20Gateway": "0x1cee9e90c8980af1a7c50bc87b2ba48d645ce595958e4fd5ba406bc66ab8ef55",
-    "orbitstack/layer2/L2GatewayRouter": "0x1d4f249082baa0e166cb5506766722ee490240305c822505eb17ea016d317f96",
-    "orbitstack/layer2/L2LPTGateway": "0xb6a9bc0a01fb74cb4848b613cddd8cf63ffebec6fd8f5e68812838f1ada55103",
-    "orbitstack/layer2/L2SecurityCouncilEmergency": "0x525c2c86f5126236f2eb6eaef248d1569882bf6fdacb69a5ec8fa1c87233c531",
-    "orbitstack/layer2/L2SecurityCouncilPropose": "0x525c2c86f5126236f2eb6eaef248d1569882bf6fdacb69a5ec8fa1c87233c531",
-    "orbitstack/layer2/L2SurplusFee": "0xd62429d6d88fd69a980d6741ad6dbfa1d27404910cbff7e876485a6ff5e7b483",
-    "orbitstack/layer2/L2Timelock": "0x44aa4071a82b3b04166c5cbfa5719b3b7c68a2225fba594d8729213d15c578bd",
-    "orbitstack/layer2/L2UpgradeExecutor": "0x12d109faa537dd99365003f7fbee2d900ca01aa5849a0e2e265d92a9b42673a5",
-    "orbitstack/layer2/L2WethGateway": "0xd122e07fbe8e90b6c800672254eb9291f42c187b77050cd6d607243eac92b608",
-    "orbitstack/layer2/SecurityCouncilManager": "0x2c78a0d894c77d70c37ed5829aa465fcc82a8f0075ca39305cc49279a2be101a",
-    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0x37332273d87de893b9bfba4b0efdaace4419c1f6ce07608d11bd3ee105e60bbe",
-    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x43717c842e774e67357747baa55bef15214ee151a8e734061279a36519374634",
-    "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x22d9a976ff3cdd6781ac5a3820218e362df62f35719f2c84353b42faa068cc64",
-    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0xd41f20a01df614f01a7f857f3d348611cf8aa204a166b0d2c58f25e66d9d6776",
-    "orbitstack/layer2/TreasuryGovernor": "0x137a7e56495c785995a9cdc50a9f7ae855a6807906d6770546b7d09305191647",
-    "orbitstack/layer2/TreasuryTimelock": "0xb190faa4435003fa78a6350f5012b5c83c1dda183040088022a927c17f1a70fc",
-    "orbitstack/layer2/UpgradeExecRouteBuilder": "0xe013054f533ef8531cf5bc62dc1c0c9e39c16625df3c01c8f059fdc52f5804ea"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "orbitstack/layer2/ConstitutionHash": "0x216d9a9425d76f0e11da2bb7d50166d5eb753e422c7c74dcc9d32c2428b6b39a",
+    "orbitstack/layer2/CoreGovernor": "0x2ec1c537988cb820ccceda3e7a515a4f74fdf3d8154f6aa18022c9361e748ddd",
+    "orbitstack/layer2/L2ARBGateway": "0xba6d92c8f0b7bfa361545a44654ada78565c0c6a1ca8df4e710f32df964605fd",
+    "orbitstack/layer2/L2ArbitrumToken": "0x3dc60659f593c4904b7d10f3ec5d5d84321317cf6138098f9e701ebeb3389955",
+    "orbitstack/layer2/L2BaseFee": "0x7a1d2982f860fc6febcfcab4d1776c723e48dc52d7517f31a103395ef3d04058",
+    "orbitstack/layer2/L2DAIGateway": "0xfd39b0e972f6adc6d79e988c6df6e10b7f6a7abc0551a455d2db53ee972d5639",
+    "orbitstack/layer2/L2ERC20Gateway": "0x129644abce2f1b3b9d9940a21c1b9a24480cd6fad7b7e523c6400c67f16fdad1",
+    "orbitstack/layer2/L2GatewayRouter": "0xd84fecc81e93cccb7d46a40be659c647ea46623b470bb2550235f621a90b14f0",
+    "orbitstack/layer2/L2LPTGateway": "0xef320773294e2ea305eb7ef89cf96ef3c010cd90f0c03f95cf6cb63f2095375c",
+    "orbitstack/layer2/L2SecurityCouncilEmergency": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
+    "orbitstack/layer2/L2SecurityCouncilPropose": "0xf509fc34576b73a2b56cea5e9555c23414ac91ec341cc8be8b08f253909a46fb",
+    "orbitstack/layer2/L2SurplusFee": "0x1c53b5bca08d45fff3778cd66cff20fb1583158bc8b2c7b7df2efcaed10751e5",
+    "orbitstack/layer2/L2Timelock": "0x73c6988696ed62ebd35e8b380ca951ece2413c46d2ca2a1ccc6ddf7e0b7f2634",
+    "orbitstack/layer2/L2UpgradeExecutor": "0x46723e22fa2a031a94337b877422123d0b4601b27e1693d7fdc9c5bf9ab5420a",
+    "orbitstack/layer2/L2WethGateway": "0xa5776691f5bead6b28b8e18ebe70995ade4dfc5cf25d7dd7e2b8484f86c9ddb1",
+    "orbitstack/layer2/SecurityCouncilManager": "0x9cad0286b0db2829faf923daae980011fce8a7091f0fe550a8ccb2b98010ef7c",
+    "orbitstack/layer2/SecurityCouncilMemberElectionGovernor": "0x26c3ea80c46518b0d0c1908608521a5636db78a3a032e052ea70d2ca75e689dc",
+    "orbitstack/layer2/SecurityCouncilMemberRemovalGovernor": "0x14a17e91d1be3b088060733309d1abb417edadcd40ccdb1de08d3f889909a0b3",
+    "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x277db18ef1e7d6beca8b266c097536a061bb1ed4939f86496958a8ab6d2c96b4",
+    "orbitstack/layer2/SecurityCouncilNomineeElectionGovernor": "0x2378f27da56189879226a19528e072a2896751bbd4271b1c648ed5f1826d2800",
+    "orbitstack/layer2/TreasuryGovernor": "0xc24cb8b059640257116a997318f7236ac47b4b3bd192ce4714dd134a4bdd5f61",
+    "orbitstack/layer2/TreasuryTimelock": "0x3e0115480caa634049a16ebe5fb1e09a3834d2087140901945bcd301bd46789f",
+    "orbitstack/layer2/UpgradeExecRouteBuilder": "0x25a34648155a91264ae1062dd01dc03ed9db101801c73a3a4f9f66e285cb5380"
   }
 }

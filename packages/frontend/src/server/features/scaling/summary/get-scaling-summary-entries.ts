@@ -31,7 +31,7 @@ export async function getScalingSummaryEntries() {
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
@@ -90,7 +90,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   gasTokens: string[] | undefined
 }
 
-function getScalingSummaryEntry(
+export function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'

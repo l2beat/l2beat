@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 
 export class DBStorage implements DataStorage {
@@ -10,9 +10,14 @@ export class DBStorage implements DataStorage {
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
+    private readonly preloadOnly: boolean = false,
   ) {}
 
   async preloadPrices(configurationIds: string[], timestamps: UnixTime[]) {
+    if (configurationIds.length === 0 || timestamps.length === 0) {
+      return
+    }
+
     this.prices = new Map(timestamps.map((t) => [t, new Map()]))
 
     const from = timestamps[0]
@@ -29,6 +34,10 @@ export class DBStorage implements DataStorage {
   }
 
   async preloadAmounts(configurationIds: string[], timestamps: UnixTime[]) {
+    if (configurationIds.length === 0 || timestamps.length === 0) {
+      return
+    }
+
     this.amounts = new Map(timestamps.map((t) => [t, new Map()]))
 
     const from = timestamps[0]
@@ -50,8 +59,18 @@ export class DBStorage implements DataStorage {
   ): Promise<number | undefined> {
     const price = this.prices.get(timestamp)?.get(configurationId)
 
-    if (price !== undefined) {
+    if (price !== undefined || this.preloadOnly) {
       return Promise.resolve(price)
+    }
+
+    // if not preloaded, we need to fetch from DB
+    const priceRecord = await this.db.tvsPrice.getPrice(
+      configurationId,
+      timestamp,
+    )
+
+    if (priceRecord) {
+      return Promise.resolve(priceRecord.priceUsd)
     }
 
     // Fallback is needed due to the way PriceIndexer works.
@@ -61,30 +80,37 @@ export class DBStorage implements DataStorage {
       configurationId,
       timestamp,
     )
-    assert(
-      fallback,
-      `Price fallback failed for ${configurationId} for ${timestamp}`,
-    )
 
-    this.logger.warn(`Price fallback triggered`, {
-      configurationId,
-      timestamp,
-      fallbackTimestamp: fallback.timestamp,
-      fallbackPrice: fallback.priceUsd,
-    })
-    return fallback.priceUsd
+    if (fallback) {
+      this.logger.warn(`Price fallback triggered`, {
+        configurationId,
+        timestamp,
+        fallbackTimestamp: fallback.timestamp,
+        fallbackPrice: fallback.priceUsd,
+      })
+    }
+
+    return fallback?.priceUsd
   }
 
   async getAmount(
     configurationId: string,
     timestamp: UnixTime,
   ): Promise<bigint | undefined> {
-    const amount = await Promise.resolve(
-      this.amounts.get(timestamp)?.get(configurationId),
+    const amount = this.amounts.get(timestamp)?.get(configurationId)
+
+    if (amount !== undefined || this.preloadOnly) {
+      return Promise.resolve(amount)
+    }
+
+    // if not preloaded, we need to fetch from DB
+    const amountRecord = await this.db.tvsAmount.getAmount(
+      configurationId,
+      timestamp,
     )
 
-    if (amount !== undefined) {
-      return Promise.resolve(amount)
+    if (amountRecord) {
+      return Promise.resolve(amountRecord.amount)
     }
 
     // Fallback is needed for circulating supplies.
@@ -93,17 +119,26 @@ export class DBStorage implements DataStorage {
       configurationId,
       timestamp,
     )
-    assert(
-      fallback,
-      `Amount fallback failed for ${configurationId} for ${timestamp}`,
-    )
 
-    this.logger.warn(`Amount fallback triggered`, {
-      configurationId,
+    if (fallback) {
+      this.logger.warn(`Amount fallback triggered`, {
+        configurationId,
+        timestamp,
+        fallbackTimestamp: fallback.timestamp,
+        fallbackAmount: fallback.amount,
+      })
+    }
+
+    return fallback?.amount
+  }
+
+  async getTimestamp(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
+    return await this.db.tvsBlockTimestamp.findBlockNumberByChainAndTimestamp(
+      chain,
       timestamp,
-      fallbackTimestamp: fallback.timestamp,
-      fallbackAmount: fallback.amount,
-    })
-    return fallback.amount
+    )
   }
 }

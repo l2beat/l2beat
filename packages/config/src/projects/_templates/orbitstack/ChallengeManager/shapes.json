@@ -1,0 +1,20 @@
+{
+  "ChallengeManager": {
+    "hash": "0x58a6261c83c2766f749641902ad6fdb695ea189d2747f073b57a8f35b9a547e5",
+    "address": "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ChallengeManager_v10_2": {
+    "hash": "0x7e1cd1e10119e118ffaa576ddbe1c0f9810a0859a4bf2f65a4ff596c0ed4183d",
+    "address": "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ChallengeManager_v32": {
+    "hash": "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27",
+    "address": "0x02E05A9245C5853f895daDcc3A8216C953C8736B",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

@@ -39,7 +39,7 @@ async function getLivenessData() {
   const livenessProjects = await ps.getProjects({
     select: ['trackedTxsConfig'],
     optional: ['livenessConfig'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const trackedTxsProjects = getTrackedTxsProjects(

@@ -320,6 +320,10 @@ const config: Config = {
         height: 'height',
         'max-height': 'max-height',
       },
+      backgroundImage: {
+        'gradient-radial':
+          'radial-gradient(closest-side, var(--tw-gradient-stops))',
+      },
     },
   },
   plugins: [

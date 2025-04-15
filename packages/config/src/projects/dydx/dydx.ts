@@ -77,11 +77,11 @@ const longTimelockUpgradeability = {
 const finalizationPeriod = 0
 
 export const dydx: ScalingProject = {
-  isArchived: true,
   type: 'layer2',
   id: ProjectId('dydx'),
-  capability: 'universal',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1733356800), // 2024-12-05T00:00:00.000Z,
+  capability: 'universal',
   badges: [
     BADGES.VM.AppChain,
     BADGES.Stack.StarkEx,

@@ -2,7 +2,7 @@
   "name": "degate2",
   "chain": "ethereum",
   "blockNumber": 18554408,
-  "configHash": "0x4a571b6653190597e3398525edc7969201f918af97b5e2aff60cf381f7b6d611",
+  "configHash": "0xe8d8be8792786a53a57138228b1213dd80235575f7704e8d9773250b732a1372",
   "entries": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -21,7 +21,8 @@
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
-      }
+      },
+      "derivedName": "LoopringIOExchangeOwner"
     },
     {
       "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
@@ -54,7 +55,8 @@
         "protocolFeeBips": 18,
         "protocolFeeVault": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
         "totalStake": 0
-      }
+      },
+      "derivedName": "LoopringV3"
     },
     {
       "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
@@ -75,7 +77,8 @@
         "$immutable": true,
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "BlockVerifier"
     },
     {
       "name": "FeeVault",
@@ -193,14 +196,14 @@
           }
         },
         "version": "0.1.0"
-      }
+      },
+      "derivedName": "ExchangeV3"
     },
     {
       "name": "LoopringOwner",
       "address": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xB7093FC2d926ADdE48122B70991fe68374879adf",
@@ -232,7 +235,8 @@
         "exchange": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "DefaultDepositContract"
     },
     {
       "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B",

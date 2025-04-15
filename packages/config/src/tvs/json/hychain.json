@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "hychain",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "hychain-TOPIA",
+      "priceId": "hytopia",
+      "symbol": "TOPIA",
+      "name": "TOPIA",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31283/large/HYCHAIN_Avatar_Circle.png?1710500962",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcccCb68e1A848CBDB5b60a974E07aAE143ed40C3",
+        "chain": "ethereum",
+        "escrowAddress": "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
+        "decimals": 18,
+        "sinceTimestamp": 1709606087
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}
