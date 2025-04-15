@@ -61,7 +61,10 @@ export const getCachedRecategorisedTvsChartData = cache(
       previewRecategorisation,
     )
 
-    const tvsValues = await getTvsValuesForProjects(tvsProjects, range)
+    const tvsValues = await getTvsValuesForProjects(
+      tvsProjects.map((p) => p.projectId),
+      range,
+    )
 
     const groupedByType = groupBy(tvsProjects, 'category')
     const rollups =

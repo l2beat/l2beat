@@ -67,7 +67,7 @@ export const getCachedTvsChartData = cache(
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvsValuesForProjects(
-        tvsProjects,
+        tvsProjects.map((p) => p.projectId),
         range,
         !forSummary
           ? 'PROJECT'

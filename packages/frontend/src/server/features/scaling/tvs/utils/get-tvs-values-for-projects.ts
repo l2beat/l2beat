@@ -1,17 +1,16 @@
 import type { ProjectValueRecord } from '@l2beat/database'
-import type { ProjectValueType } from '@l2beat/shared-pure'
+import type { ProjectId, ProjectValueType } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import type { TvsProject } from './get-tvs-projects'
 import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
 import type { TvsChartRange } from './range'
 import { getRangeConfig } from './range'
 
 export async function getTvsValuesForProjects(
-  projects: TvsProject[],
+  projectIds: ProjectId[],
   range: TvsChartRange,
   type?: ProjectValueType,
 ) {
@@ -34,7 +33,7 @@ export async function getTvsValuesForProjects(
 
   const result: Dictionary<Dictionary<ProjectValueRecord>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const project = projects.find((p) => p.projectId === projectId)
+    const project = projectIds.find((id) => id === projectId)
     if (!project) {
       continue
     }

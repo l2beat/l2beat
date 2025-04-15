@@ -12,11 +12,7 @@ export async function getDaProjectsTvs(projectIds: ProjectId[]) {
 
 type DaProjectsTvs = Awaited<ReturnType<typeof getDaProjectsTvsData>>
 async function getDaProjectsTvsData(projectIds: ProjectId[]) {
-  const tvsValues = await getTvsValuesForProjects(
-    projectIds.map((id) => ({ projectId: id })),
-    '7d',
-    'PROJECT',
-  )
+  const tvsValues = await getTvsValuesForProjects(projectIds, '7d', 'PROJECT')
 
   const aggregated = Object.entries(tvsValues).map(
     ([projectId, projectValues]) => {
