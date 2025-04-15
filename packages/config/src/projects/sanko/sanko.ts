@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1716893370), // 2024-05-28T10:49:30Z
+  addedAt: UnixTime(1716163200), // 2024-05-20T00:00:00Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
@@ -80,4 +80,13 @@ export const sanko: ScalingProject = orbitStackL3({
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/SankoGameCorp/status/1792360032363000310',
+      date: '2024-05-20T00:00:00Z',
+      description: 'Sanko launches its Mainnet.',
+      type: 'general',
+    },
+  ],
 })

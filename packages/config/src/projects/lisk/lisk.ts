@@ -8,7 +8,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('lisk')
 
 export const lisk: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   discovery,
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
@@ -40,6 +40,15 @@ export const lisk: ScalingProject = opStackL2({
       ],
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',
+      date: '2024-11-12T00:00:00Z',
+      description: 'Lisk launches its User Mainnet.',
+      type: 'general',
+    },
+  ],
   l1StandardBridgePremintedTokens: ['LSK'],
   nonTemplateExcludedTokens: ['USDC', 'wstETH'],
   finality: {
