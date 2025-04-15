@@ -1,26 +1,22 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { http, type Log, type PublicClient, createPublicClient } from 'viem'
+import type { Log, PublicClient } from 'viem'
 import type { ChainInfo } from '../config/chains'
 import { TaskQueue } from '../services/TaskQueue'
 import type { MessageService } from './MessageService'
 import { type LogWithTimestamp, analyzeLogs } from './analyze'
 
 export class ChainProcessor {
-  private client: PublicClient
   private nextJobId = 1
   private jobs: Record<number, Log[]> = {}
   private queue: TaskQueue<number>
 
   constructor(
     private chain: ChainInfo,
-    rpcUrl: string,
+    private client: PublicClient,
     private messageService: MessageService,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).configure({ tag: chain.name })
-    this.client = createPublicClient({
-      transport: http(rpcUrl),
-    })
     this.queue = new TaskQueue(this.processLogs, this.logger)
   }
 
@@ -48,6 +44,7 @@ export class ChainProcessor {
       this.messageService.onMessage(message)
     }
     delete this.jobs[jobId]
+    this.logger.info('Job completed', { jobId, messages: messages.length })
   }
 
   private async addTimestamps(logs: Log[]): Promise<LogWithTimestamp[]> {

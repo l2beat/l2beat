@@ -3,6 +3,7 @@ import type { Config } from '../config/config'
 import { ChainProcessor } from '../logic/ChainProcessor'
 import { MessageService } from '../logic/MessageService'
 import { createHttpServer } from './HttpServer'
+import { createPublicClient } from './PublicClient'
 
 export class Application {
   start: () => Promise<void>
@@ -15,13 +16,14 @@ export class Application {
 
     const processors: ChainProcessor[] = []
     for (const chain of config.chains) {
-      if (!chain.rpcUrl) {
+      const client = createPublicClient(chain)
+      if (!client) {
         appLogger.warn(`Skipping processor for ${chain.name}`)
         continue
       }
       const processor = new ChainProcessor(
         chain,
-        chain.rpcUrl,
+        client,
         messageService,
         logger,
       )
