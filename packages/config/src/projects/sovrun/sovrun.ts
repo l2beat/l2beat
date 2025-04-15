@@ -10,7 +10,7 @@ export const sovrun: ScalingProject = upcomingL2({
     name: 'Sovrun',
     slug: 'sovrun',
     description:
-      "Shaping the future of gaming through AI, Blockchain & Autonomous Worlds.",
+      'Shaping the future of gaming through AI, Blockchain & Autonomous Worlds.',
     purposes: ['AI', 'Gaming'],
     category: 'Optimistic Rollup',
     stack: 'Arbitrum',
@@ -21,7 +21,7 @@ export const sovrun: ScalingProject = upcomingL2({
         'https://medium.com/@sovrun',
         'https://discord.com/invite/Sovrun',
         'https://x.com/SovrunOfficial',
-        'https://t.me/SovrunAnn'
+        'https://t.me/SovrunAnn',
       ],
     },
   },
