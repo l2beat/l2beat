@@ -3,6 +3,7 @@
   // Linea-specific template (see criteria.json)
   "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
   "ignoreRelatives": ["multisend"],
+  "canActIndependently": false,
   "fields": {
     "roles": {
       "handler": {

@@ -27,8 +27,11 @@ import { PERFORMED_BY } from '../../common/performedBy'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 import type { ProjectPermissionedAccount } from '../../types'
-import { generateDiscoveryDrivenContracts, generateDiscoveryDrivenPermissions } from '../../templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('linea')
 
