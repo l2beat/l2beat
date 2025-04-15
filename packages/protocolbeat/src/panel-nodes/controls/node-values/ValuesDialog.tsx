@@ -1,5 +1,11 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { type SVGProps, useCallback, useMemo, useState } from 'react'
+import {
+  type ButtonHTMLAttributes,
+  type SVGProps,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { ControlButton } from '../ControlButton'
@@ -54,6 +60,33 @@ function ValuesDialogBody({ node }: { node: Node }) {
           Make changes to what values are visible in the node.
         </Dialog.Description>
 
+        <div className="mb-4 flex gap-2">
+          <DialogButton onClick={() => setHiddenFields([])}>All</DialogButton>
+          <DialogButton
+            onClick={() => {
+              const allFieldNames = Object.values(groupedFields)
+                .flat()
+                .map((f) => f.name)
+              setHiddenFields(allFieldNames)
+            }}
+          >
+            None
+          </DialogButton>
+          <DialogButton
+            className="rounded border border-coffee-400 px-3 py-1 text-sm hover:bg-coffee-500"
+            onClick={() => {
+              const allFieldNames = Object.values(groupedFields)
+                .flat()
+                .map((f) => f.name)
+              setHiddenFields(
+                allFieldNames.filter((f) => !hiddenFields.includes(f)),
+              )
+            }}
+          >
+            Invert
+          </DialogButton>
+        </div>
+
         <div className="flex flex-col">
           {Object.entries(groupedFields).map(([key, value]) => {
             const isHidden = value.every((field) =>
@@ -85,9 +118,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
 
         <div className="flex justify-end">
           <Dialog.Close asChild onClick={modifyNode}>
-            <button className="inline-flex h-[35px] select-none items-center justify-center rounded px-[15px] font-medium leading-none outline-none">
-              Save
-            </button>
+            <DialogButton>Save</DialogButton>
           </Dialog.Close>
         </div>
         <Dialog.Close asChild>
@@ -119,5 +150,19 @@ function XIcon(props?: SVGProps<SVGSVGElement>) {
         strokeLinejoin="round"
       />
     </svg>
+  )
+}
+
+function DialogButton({
+  children,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      {...props}
+      className="rounded border border-coffee-400 px-3 py-1 text-sm hover:bg-coffee-500"
+    >
+      {children}
+    </button>
   )
 }
