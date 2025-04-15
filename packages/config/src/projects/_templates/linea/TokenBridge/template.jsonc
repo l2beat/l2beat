@@ -7,6 +7,18 @@
       "handler": {
         "type": "accessControl"
       }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
+        }
+      ]
     }
   }
 }

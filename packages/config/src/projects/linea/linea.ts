@@ -28,28 +28,15 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import type { ProjectPermissionedAccount } from '../../types'
-import { generateDiscoveryDrivenPermissions } from '../../templates/generateDiscoveryDrivenSections'
+import { generateDiscoveryDrivenContracts, generateDiscoveryDrivenPermissions } from '../../templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('linea')
 
 const timelockDelay = discovery.getContractValue<number>(
-  'Timelock',
+  'L1Timelock',
   'getMinDelay',
 )
 const timelockDelayString = formatSeconds(timelockDelay)
-
-const upgradesTimelock = {
-  upgradableBy: [
-    {
-      name: 'Linea Multisig',
-      delay: timelockDelay === 0 ? 'no' : timelockDelayString,
-    },
-  ],
-}
-
-const upgrades = {
-  upgradableBy: [{ name: 'Linea Multisig', delay: 'no' }],
-}
 
 const zodiacRoles = discovery.getContractValue<{
   roles: Record<string, Record<string, boolean>>
@@ -59,9 +46,16 @@ const zodiacPausers: ProjectPermissionedAccount[] =
   discovery.formatPermissionedAccounts(
     Object.keys(zodiacRoles.roles[zodiacPauserRole].members),
   )
-const zodiacPausersHardcoded = discovery.getPermissionedAccounts('Roles', 'pausers')
+const zodiacPausersHardcoded = discovery.getPermissionedAccounts(
+  'Roles',
+  'pausers',
+)
 
-assert(zodiacPausers.length === zodiacPausersHardcoded.length && zodiacPausers[0].address === zodiacPausersHardcoded[0].address, 'disco config is wrong for the pausers, check hardcoded pausers in the Roles module')
+assert(
+  zodiacPausers.length === zodiacPausersHardcoded.length &&
+    zodiacPausers[0].address === zodiacPausersHardcoded[0].address,
+  'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
+)
 
 const isPaused: boolean =
   discovery.getContractValue<boolean>('LineaRollup', 'isPaused_GENERAL') ||
@@ -509,60 +503,8 @@ export const linea: ScalingProject = {
     ],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
-  contracts: { // generateDiscoveryDrivenContracts([discovery]),
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('LineaRollup', {
-          description:
-            'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
-          ...upgradesTimelock,
-          pausable: (() => {
-            const addresses = discovery.getAccessControlField(
-              'LineaRollup',
-              'PAUSE_MANAGER',
-            ).members
-            assert(addresses.length === 1)
-            assert(
-              addresses[0] === discovery.getContract('Linea Multisig').address,
-            )
-            return { pausableBy: ['Linea Multisig'], paused: isPaused }
-          })(),
-          references: [
-            {
-              title:
-                'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-              url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
-            },
-          ],
-          ...upgradesTimelock,
-        }),
-        discovery.getContractDetails(
-          'Timelock',
-          `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
-        ),
-        discovery.getContractDetails('VerifierProofType3', {
-          description:
-            'Currently used smart contract verifying the proofs for the Linea zkEVM.',
-        }),
-        discovery.getContractDetails('TokenBridge', {
-          description: 'Contract used to bridge ERC20 tokens.',
-          ...upgrades,
-        }),
-        discovery.getContractDetails('USDCBridge', {
-          description:
-            'Contract used to bridge USDC tokens. Migrating to native USDC on L2 between march 16th and 26th 2025.',
-          ...upgrades,
-          pausable: {
-            paused: discovery.getContractValue<boolean>('USDCBridge', 'paused'),
-            pausableBy: ['Pauser'],
-          },
-        }),
-        discovery.getContractDetails('CallForwardingProxy', {
-          description:
-            'A proxy contract forwarding calls to a predefined (immutable) target contract. In this case the it is targeting the LineaRollup where it is registered as a fallback operator, allowing anyone to access operator functions when 6 months have passed since the latest finalized block.',
-        }),
-      ],
-    },
+  contracts: {
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
   stateValidation: {

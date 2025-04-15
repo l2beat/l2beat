@@ -921,11 +921,20 @@
       "name": "BeaconKintoWallet",
       "address": "0x87f0eE85bF3198654900a422832157abBba30828",
       "type": "Contract",
+      "template": "global/UpgradeableBeacon",
       "sourceHashes": [
         "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
       ],
       "proxyType": "immutable",
-      "description": "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.",
+      "description": "A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "description": "change the beacon implementation.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1703803644,
       "sinceBlock": 65,
       "values": {
@@ -959,6 +968,11 @@
         }
       ],
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x87f0eE85bF3198654900a422832157abBba30828",
+          "description": "change the beacon implementation."
+        },
         {
           "permission": "upgrade",
           "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
@@ -4037,5 +4051,7 @@
       "event Upgraded(address indexed implementation)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "global/UpgradeableBeacon": "0x42132f0a7b509b58d0dcdac31c3a6428c043f8e11e0719974d672a3910169bb1"
+  }
 }

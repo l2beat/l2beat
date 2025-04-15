@@ -19,6 +19,14 @@
     "rollingHashes"
   ],
   "fields": {
+    "fallbackOperator": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed."
+        }
+      ]
+    },
     "verifiers": {
       "description": "Mapping of proof type to ZK Plonk Verifier contract",
       "handler": {
@@ -30,7 +38,7 @@
       "handler": {
         "type": "accessControl",
         "roleNames": {
-          "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER",
+          "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26": "PAUSE_MANAGER"
         }
       }
     },

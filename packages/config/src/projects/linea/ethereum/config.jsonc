@@ -4,51 +4,6 @@
   "name": "linea",
   "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
-    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F", // LineaRollup
-    "0x504A330327A089d8364C4ab3811Ee26976d388ce", // USDCBridge
     "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319" // TokenBridge
-  ],
-  "names": {
-    "0x504A330327A089d8364C4ab3811Ee26976d388ce": "USDCBridge",
-    "0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "USDCBridgeProxyAdmin",
-    "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "ERC20UpgradableBeacon",
-    "0xF24f1DC519d88246809B660eb56D94048575d083": "Roles",
-    "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": "VerifierProofType3",
-    "0xd6B95c960779c72B8C6752119849318E5d550574": "Timelock",
-    "0x3697bD0bC6C050135b8321F989a5316eACbF367D": "CallForwardingProxy"
-  },
-  "overrides": {
-    "0x3697bD0bC6C050135b8321F989a5316eACbF367D": {
-      // CallForwardingProxy
-      "description": "A proxy contract forwarding calls to a predefined (immutable) target contract."
-    },
-    "0x504A330327A089d8364C4ab3811Ee26976d388ce": {
-      // USDCBridge
-      "ignoreMethods": ["usdc"],
-      "ignoreInWatchMode": ["balance"]
-    },
-    "0xF24f1DC519d88246809B660eb56D94048575d083": {
-      // Roles module
-      "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
-      "fields": {
-        "roles": {
-          "handler": {
-            "type": "lineaRolesModule"
-          }
-        },
-        "pausers":{
-          "handler": {
-            "type": "hardcoded", // hack, but checked in .ts
-            "value": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
-          },
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."
-            }
-          ]
-        }
-      }
-    }
-  }
+  ]
 }
