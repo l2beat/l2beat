@@ -1,11 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { http, type Log, type PublicClient, createPublicClient } from 'viem'
-import { TaskQueue } from './TaskQueue'
-import type { TxService } from './TxService'
-import { analyzeLogs } from './analyze'
-import type { ChainInfo } from './types'
+import type { ChainInfo } from '../config/chains'
+import { TaskQueue } from '../services/TaskQueue'
+import type { MessageService } from './MessageService'
+import { type LogWithTimestamp, analyzeLogs } from './analyze'
 
-export class ChainListener {
+export class ChainProcessor {
   private client: PublicClient
   private nextJobId = 1
   private jobs: Record<number, Log[]> = {}
@@ -14,7 +14,7 @@ export class ChainListener {
   constructor(
     private chain: ChainInfo,
     rpcUrl: string,
-    private txService: TxService,
+    private messageService: MessageService,
     private logger: Logger,
   ) {
     this.logger = logger.for(this).configure({ tag: chain.name })
@@ -24,9 +24,11 @@ export class ChainListener {
     this.queue = new TaskQueue(this.processLogs, this.logger)
   }
 
-  start() {
+  async start() {
     this.logger.info('Started')
+    const block = await this.client.getBlockNumber()
     this.client.watchEvent({
+      fromBlock: block - 10n,
       onLogs: this.onLogs.bind(this),
     })
   }
@@ -40,43 +42,34 @@ export class ChainListener {
 
   private processLogs = async (jobId: number): Promise<void> => {
     const logs = this.jobs[jobId] ?? []
-    const blockHashes = getBlockHashes(logs)
-    const timestamps = await this.getBlockTimestamps(blockHashes)
-
-    const txs = analyzeLogs(
-      logs.map((log) => ({
-        ...log,
-        timestamp: timestamps[log.blockHash ?? `0x`] ?? 0,
-      })),
-      this.chain,
-    )
+    const logsWithTimestamps = await this.addTimestamps(logs)
+    const txs = analyzeLogs(logsWithTimestamps, this.chain)
     for (const tx of txs) {
-      this.txService.save(tx)
+      this.messageService.save(tx)
     }
-
     delete this.jobs[jobId]
   }
 
-  private async getBlockTimestamps(
-    hashes: `0x${string}`[],
-  ): Promise<Record<`0x${string}`, number>> {
-    const result: Record<`0x${string}`, number> = {}
+  private async addTimestamps(logs: Log[]): Promise<LogWithTimestamp[]> {
+    const hashSet = new Set<`0x${string}`>()
+    for (const log of logs) {
+      if (log.blockHash) {
+        hashSet.add(log.blockHash)
+      }
+    }
+    const hashes = [...hashSet]
+
+    const timestamps: Record<`0x${string}`, number> = {}
     const blocks = await Promise.all(
       hashes.map((blockHash) => this.client.getBlock({ blockHash })),
     )
     for (let i = 0; i < hashes.length; i++) {
-      result[hashes[i]] = Number(blocks[i].timestamp)
+      timestamps[hashes[i]] = Number(blocks[i].timestamp)
     }
-    return result
-  }
-}
 
-function getBlockHashes(logs: Log[]) {
-  const hashes = new Set<`0x${string}`>()
-  for (const log of logs) {
-    if (log.blockHash) {
-      hashes.add(log.blockHash)
-    }
+    return logs.map((log) => ({
+      ...log,
+      timestamp: timestamps[log.blockHash ?? `0x`] ?? 0,
+    }))
   }
-  return [...hashes]
 }

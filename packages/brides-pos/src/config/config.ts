@@ -1,6 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { chains } from './chains'
-import type { ChainInfo } from './types'
+import { type ChainInfo, chains } from './chains'
 
 export interface ChainConfig extends ChainInfo {
   rpcUrl: string | undefined

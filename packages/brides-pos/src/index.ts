@@ -1,5 +1,5 @@
-import { Application } from './Application'
-import { getConfig } from './config'
+import { getConfig } from './config/config'
+import { Application } from './services/Application'
 
 const config = getConfig()
 const app = new Application(config)

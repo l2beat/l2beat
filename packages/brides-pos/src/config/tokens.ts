@@ -1,5 +1,5 @@
+import type { Address } from '../logic/types'
 import tokens from './tokenList.json'
-import type { Address } from './types'
 
 export interface Token {
   address: Address

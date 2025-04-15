@@ -1,4 +1,8 @@
-import type { ChainInfo } from './types'
+export interface ChainInfo {
+  name: string
+  addressPrefix: string
+  chainId: number
+}
 
 export const chains: ChainInfo[] = [
   {
