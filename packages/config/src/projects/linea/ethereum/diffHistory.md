@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x84db0be4e8ec7a8d79d2e7c7226d6ea1cb866d05
+
+# Diff at Tue, 15 Apr 2025 07:06:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 22073290
+- current block number: 22267673
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22073290 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."}]
+    }
+```
+
+```diff
+    contract Linea Multisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready."}
+      receivedPermissions.5.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.5.description:
+-        "execute transactions that are ready."
++        "manage all critical access control roles and permissions (full admin of the rollup system)."
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"manage all critical access control roles and permissions (full admin of the rollup system).","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0xF24f1DC519d88246809B660eb56D94048575d083","via":[{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.3.to:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.3.via.2:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.2.via.1:
+-        {"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"}
+      issuedPermissions.2.via.0:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+      issuedPermissions.2.description:
++        "manage all critical access control roles and permissions (full admin of the rollup system)."
+      values.defaultAdminAC:
++        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+      fieldMeta.isPaused_GENERAL:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_L1_L2:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_L2_L1:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_BLOB_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_CALLDATA_SUBMISSION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_FINALIZATION:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING:
++        {"severity":"HIGH"}
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.6:
++        {"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.5.from:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.5.description:
+-        "execute transactions that are ready."
++        "manage all critical access control roles and permissions (full admin of the rollup system)."
+      values.pausers:
++        "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      issuedPermissions:
++        [{"permission":"interact","to":"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8","description":"pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xd68ff1f87cc1128bfa6bc1657cd80fb02545ec7f
 
 # Diff at Thu, 10 Apr 2025 14:42:40 GMT:

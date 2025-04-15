@@ -28,6 +28,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import type { ProjectPermissionedAccount } from '../../types'
+import { generateDiscoveryDrivenPermissions } from '../../templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('linea')
 
@@ -58,6 +59,9 @@ const zodiacPausers: ProjectPermissionedAccount[] =
   discovery.formatPermissionedAccounts(
     Object.keys(zodiacRoles.roles[zodiacPauserRole].members),
   )
+const zodiacPausersHardcoded = discovery.getPermissionedAccounts('Roles', 'pausers')
+
+assert(zodiacPausers.length === zodiacPausersHardcoded.length && zodiacPausers[0].address === zodiacPausersHardcoded[0].address, 'disco config is wrong for the pausers, check hardcoded pausers in the Roles module')
 
 const isPaused: boolean =
   discovery.getContractValue<boolean>('LineaRollup', 'isPaused_GENERAL') ||
@@ -504,30 +508,8 @@ export const linea: ScalingProject = {
       },
     ],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getMultisigPermission(
-          'Linea Multisig',
-          'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
-        ),
-        discovery.getPermissionDetails(
-          'Pauser',
-          zodiacPausers,
-          'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
-        ),
-        discovery.getPermissionDetails(
-          'Operators',
-          discovery.getAccessControlRolePermission(
-            'LineaRollup',
-            'OPERATOR_ROLE',
-          ),
-          'The operators are allowed to prove blocks and post the corresponding transaction data.',
-        ),
-      ],
-    },
-  },
-  contracts: {
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  contracts: { // generateDiscoveryDrivenContracts([discovery]),
     addresses: {
       [discovery.chain]: [
         discovery.getContractDetails('LineaRollup', {

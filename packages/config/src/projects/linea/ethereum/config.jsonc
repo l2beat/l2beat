@@ -24,26 +24,31 @@
       // CallForwardingProxy
       "description": "A proxy contract forwarding calls to a predefined (immutable) target contract."
     },
-    // BUG: source shapes are not matching
-    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": {
-      "extends": "linea/LineaRollup"
-    },
-    "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": {
-      "extends": "linea/TokenBridge"
-    },
     "0x504A330327A089d8364C4ab3811Ee26976d388ce": {
       // USDCBridge
       "ignoreMethods": ["usdc"],
       "ignoreInWatchMode": ["balance"]
     },
     "0xF24f1DC519d88246809B660eb56D94048575d083": {
-      // Roles
+      // Roles module
       "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
       "fields": {
         "roles": {
           "handler": {
             "type": "lineaRolesModule"
           }
+        },
+        "pausers":{
+          "handler": {
+            "type": "hardcoded", // hack, but checked in .ts
+            "value": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."
+            }
+          ]
         }
       }
     }

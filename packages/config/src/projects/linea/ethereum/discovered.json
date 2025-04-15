@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22073290,
-  "configHash": "0x58f4297c9f9fbbce90753327aca72c32c71df416873ddc775f6e511bbedc1bb7",
+  "blockNumber": 22267673,
+  "configHash": "0x89defeed219eb1da4a2e9ff47b4f797cb8994d9586c624911c20aaa73aa13851",
   "entries": [
     {
       "name": "TokenBridge",
@@ -221,7 +221,14 @@
     {
       "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract)."
+        }
+      ]
     },
     {
       "address": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
@@ -284,7 +291,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "balance": 19213955145825,
+        "balance": 0,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": true,
@@ -320,6 +327,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system)."
+        },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
@@ -465,6 +477,18 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
         {
           "permission": "operateLinea",
           "to": "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
@@ -627,12 +651,13 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xa57cba2886b7107c1d6075ed180623503da0cc78b87c06474214d3ed1685679f",
-        "currentFinalizedState": "0xa254524a3e92fea737096325f7535a9b639fc9718df14128c25211db873c6bc1",
+        "currentFinalizedShnarf": "0x3e1aa5ca62e5bc522ef6e9d42942f4726a1ed9b30e72db639302eeb883b4b644",
+        "currentFinalizedState": "0x9c70ab93261259e84b5e48c8aa073a84c77e38e5cdff64a21a484b9c71c6b030",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "30104240000000000000",
+        "currentPeriodAmountInWei": "38836302369422408",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
         "GENESIS_SHNARF": "0x47452a1b9ebadfe02bdd02f580fa1eba17680d57eec968a591644d05d78ee84f",
         "INBOX_STATUS_RECEIVED": 1,
@@ -697,7 +722,15 @@
       "fieldMeta": {
         "verifiers": {
           "description": "Mapping of proof type to ZK Plonk Verifier contract"
-        }
+        },
+        "isPaused_GENERAL": { "severity": "HIGH" },
+        "isPaused_L1_L2": { "severity": "HIGH" },
+        "isPaused_L2_L1": { "severity": "HIGH" },
+        "isPaused_BLOB_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_FINALIZATION": { "severity": "HIGH" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
       },
       "derivedName": "LineaRollup"
     },
@@ -824,7 +857,21 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
+          "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
+          "via": []
+        }
+      ],
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
         {
           "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
@@ -886,6 +933,7 @@
         "guard": "0x0000000000000000000000000000000000000000",
         "multisend": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+        "pausers": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
         "roles": {
           "defaultRoles": {},
           "roles": {
@@ -1489,7 +1537,7 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "global/Timelock": "0x3ddaaa429e924548e97062a7d01e691c6c45aacb691b7d168f7dc14405c794e2",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "linea/LineaRollup": "0xa5e5600e398ecaae720afd2c7832a6d3c139931b4bc984d0f7a744f01fab66d9",
+    "linea/LineaRollup": "0x5da24fa876a224db1294d73eb22356faebbc5277dda8a87678be3df3cacb5aac",
     "linea/TokenBridge": "0x143ff6245d17bfecca857c5e30ec63e65c322c5928fb473d739c6d64525571e7"
   }
 }
