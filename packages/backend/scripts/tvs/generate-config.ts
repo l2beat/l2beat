@@ -50,7 +50,7 @@ const cmd = command({
     const ps = new ProjectService()
     const localExecutor = new LocalExecutor(ps, env, logger)
     const timestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     let projects: Project<'tvlConfig', 'chainConfig' | 'isBridge'>[] | undefined
 
@@ -87,7 +87,7 @@ const cmd = command({
 
     const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
 
-    logger.info(`Generating new TVS config for projects`)
+    logger.info(`Generating new TVS config for projects (${projects.length})`)
     const regeneratedProjects = await Promise.all(
       projects.map(async (project) => {
         return await generateConfigForProject(project, chains, logger)
