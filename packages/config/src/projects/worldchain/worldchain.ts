@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('worldchain')
 const genesisTimestamp = UnixTime(1719335639)
 
 export const worldchain = opStackL2({
-  addedAt: UnixTime(1729586060), // 2024-10-22T08:34:20Z
+  addedAt: UnixTime(1729123200), // 2024-10-17T00:00:00Z
   genesisTimestamp,
   discovery,
   additionalBadges: [BADGES.RaaS.Alchemy],

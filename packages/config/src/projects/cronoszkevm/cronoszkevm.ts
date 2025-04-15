@@ -16,7 +16,7 @@ const trackedTxsSince = UnixTime(1742983103)
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const cronoszkevm: ScalingProject = zkStackL2({
-  addedAt: UnixTime(1722430938), // 2024-07-31T13:02:18Z
+  addedAt: UnixTime(1723680000), // 2024-08-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
@@ -142,7 +142,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Alpha Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
       date: '2024-08-15T00:00:00Z',
       description: 'Cronos zkEVM Launches Its Alpha Mainnet powered by ZKsync.',

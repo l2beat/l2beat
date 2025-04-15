@@ -70,7 +70,7 @@ export const game7: ScalingProject = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      title: 'G7 Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://x.com/G7_DAO/status/1886897963353694319',
       date: '2025-02-04T00:00:00Z',
       description: 'G7 Network Mainnet is live.',

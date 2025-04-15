@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1710846977), // 2024-03-19T11:16:17Z
+  addedAt: UnixTime(1709942400), // 2024-03-09T00:00:00Z
   additionalBadges: [BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
@@ -52,4 +52,13 @@ export const hychain: ScalingProject = orbitStackL2({
     gasTokens: ['TOPIA'],
   },
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/WINRProtocol/status/1867223130684735514',
+      date: '2024-03-09T00:00:00Z',
+      description: 'HYCHAIN launches its Mainnet.',
+      type: 'general',
+    },
+  ],
 })

@@ -7,7 +7,7 @@ export const cheese: ScalingProject = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('cheese'),
   capability: 'universal',
-  addedAt: UnixTime(1722512887), // 2024-08-01T11:48:07Z
+  addedAt: UnixTime(1718150400), // 2024-06-12 https://x.com/LayerofCheese/status/1800704112214093955
   badges: [
     BADGES.L3ParentChain.Arbitrum,
     BADGES.DA.Celestia,

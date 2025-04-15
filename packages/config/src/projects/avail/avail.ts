@@ -153,7 +153,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
   },
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.availproject.org/avail-da-mainnet-is-live/',
       date: '2024-07-23T00:00:00Z',
       description: 'Avail mainnet and the AVAIL token launch.',
