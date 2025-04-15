@@ -1,8 +1,8 @@
 ---
-  title: "Governance Review #47"
-  description: "A packed week in DAOs, with news, updates, proposals, and more."
-  publishedOn: "2025-04-14"
-  authorId: anastassis-oikonomopoulos
+title: "Governance Review #47"
+description: "A packed week in DAOs, with news, updates, proposals, and more."
+publishedOn: "2025-04-14"
+authorId: anastassis-oikonomopoulos
 ---
 
 ## **Optimism**
@@ -16,16 +16,13 @@ The Optimism’s System account [has created a post](https://gov.optimism.io/t/s
 
 The Optimism Foundation [has created a post](https://gov.optimism.io/t/season-8-and-9-budget-board-member-ratification/9819) that nominates 7 individuals to the newly formed Budget Board, which aims to improve the Collective’s treasury and economic decision-making processes over a 12-month term (May 2025–May 2026). The Board will develop data-driven frameworks for token allocation, treasury management, and eventually reduce its involvement through public tooling and governance-approved algorithms. Each House (Token and Citizens) must ratify its respective 3 representatives, while the Board Lead is ratified by both Houses. Members were selected based on expertise in financial planning, portfolio management, data and automation, and governance experience. In particular, the proposed set includes Katie Garcia and Xochitl Cazador from the Token House side, and Carl Cervone and Divya Siddarth for the Citizens House, along with additional picks like Eva Beylin (Citizens House) and Michael Silberling (Token House). If approved, the Board members will serve until May 2026 and can be removed through the Representative Removal process if necessary.
 
-
 ### **Cycle 35 Grants Council final report**
 
 Gonna.eth [announced the completion of Cycle 35](https://gov.optimism.io/t/cycle-35-grants-council-final-report/9831), the second round under Season 7 of the Governance Fund Missions. Out of the participating projects, six applications were approved for 2,050k OP allocated to TVL growth (e.g., Morpho, Uniswap on Superchain, Euler Finance), while six were pushed to Cycle 36, and nine were declined. The Council will avoid requesting further OP unless an exceptional proposal during Cycle 36 merits surpassing the remaining 386k OP budget. They also recognize the Developer Advisory Board’s support and plan to continue refining the grants process in the upcoming cycle. A detailed list of final outcomes reveals which proposals passed, deferred, or declined, concluding this cycle’s focus on TVL expansion.
 
-
 ### **Governance Update #10**
 
 The Optimism Foundation [has created a post](https://gov.optimism.io/t/governance-update-10/9832) that provides a mid-Season 7 progress report on Optimism’s Decentralization Milestones and an outlook for Season 8. Key achievements so far include: successfully implementing Phase A’s technical milestones (Stage 1 readiness, multiple fault-proof systems on track), further developing data-driven grant processes (via the Milestones & Metrics Council and Futarchy experiments), and continuing to refine the social layer (developing joint house voting research, public R&D forums, and the CFC’s iterative selection). Despite some pending targets, the DAO has gained operational autonomy (e.g., transferring governance fund missions on-chain to the M&M Council), and Season 8 will see the newly established Budget Board manage budget planning – a major step toward fully decentralized financial decisions. Additional focuses for Season 8 include a new approach to selecting the M&M Council, establishing the Budget Board’s frameworks for treasury forecasting, and continuing the shift of responsibilities from the Foundation to community-run structures.
-
 
 ### **Vulnerability disclosure: incorrect blob preimages**
 
@@ -42,7 +39,6 @@ You can find us to discuss everything related to Optimism’s governance, from c
 
 ## **Arbitrum**
 
-
 ## **Active Votes**
 
 [Security Council Elections](https://www.tally.xyz/gov/arbitrum/council/security-council/election/3/round-2) - ends on May 3 at 15:31 UTC.
@@ -51,8 +47,6 @@ You can find us to discuss everything related to Optimism’s governance, from c
 ### **SOS Discussion Calls**
 
 Currently, the Arbitrum DAO is going through a process to choose the Strategic Objective that will become the north star of the DAO for the next two years. Many users have created their own Arbitrum Strategic Objective Setting proposals (SOS) and followed the [guidelines and timeline](https://forum.arbitrum.foundation/t/arbitrum-strategic-objective-setting-sos-defining-the-dao-s-interim-goals/28102) expressed in the original proposal. Right now, we are in the “Feedback Period”, where interested parties can give their opinions on these proposals. In total, there are 9 SOS proposals:
-
-
 
 * [[SOS Submission] Tempe Techie – Strategic Objectives](https://forum.arbitrum.foundation/t/sos-submission-tempe-techie-strategic-objectives/28673) (You can see a previous recording [here](https://forum.arbitrum.foundation/t/l2beat-delegate-communication-thread/15979/10?u=manugotsuka))
 * [[SOS Submission] Max Lomu – Strategic Objectives](https://forum.arbitrum.foundation/t/sos-submission-max-lomu-strategic-objectives/28902)
@@ -66,12 +60,9 @@ Currently, the Arbitrum DAO is going through a process to choose the Strategic O
 
 L2BEAT has [created a series of calls](https://forum.arbitrum.foundation/t/sos-discussion-calls/29019) where the owners of these SOS proposals can explain their ideas and thoughts to the whole Arbitrum ecosystem. The list of calls for this week can be found in the upcoming call section right below.
 
-
 ### **A Vision for the Future of Arbitrum**
 
 The Arbitrum Foundation [has presented an updated framework](https://forum.arbitrum.foundation/t/a-vision-for-the-future-of-arbitrum/28962) for how Arbitrum governance can operate more effectively, drawing on lessons from two years of DAO history. While acknowledging the DAO’s accomplishments – ranging from 57 on-chain proposals to ecosystem programs like the Gaming Catalyst and RWA acquisitions – the Foundation sees significant potential to streamline governance, address gridlock, ensure more cohesive proposal execution, and better align with critical ecosystem stakeholders. The plan calls for two main changes:
-
-
 
 1. Operations: Transition daily strategic and discretionary decisions to “Arbitrum Aligned Entities” (AAEs), full-time teams or organizations whose success depends on Arbitrum thriving. Current AAEs include the Foundation itself, Offchain Labs, OpCo, the Gaming Catalyst Program, and Entropy Advisors. Instead of hiring numerous outside vendors on a per-proposal basis, the DAO would authorize these AAEs to handle negotiations, scope definition, vendor oversight, and budget decisions for each initiative. This structure aims to reduce overlap, quickly pivot or terminate underperforming programs, and maintain a uniform standard of high-caliber, mission-driven execution. \
 
@@ -79,12 +70,9 @@ The Arbitrum Foundation [has presented an updated framework](https://forum.arbit
 
 Coupled with the newly approved OpCo and OAT committee (Oversight and Transparency), the approach would enable professional, centralized management of day-to-day tasks, while letting the DAO preserve ultimate decision-making authority. The Foundation underscores that the underlying governance process remains unchanged, but they anticipate fewer proposals will require direct DAO votes, with most operational tasks handled by specialized entities. This shift seeks to strengthen accountability and agility, helping Arbitrum adapt quickly and strategically in an increasingly competitive blockchain environment.
 
-
 ### **ARDC V2 Communications role replacement**
 
 Tamara has [created a post](https://forum.arbitrum.foundation/t/ardc-v2-communications-role-replacement/28982/1) that outlines a vacancy on the Arbitrum Research & Development Committee (ARDC) due to Frisson’s election to the OAT, leaving the Communications seat unfilled. The ARDC V2 term ends July 12, 2025; each Supervisory Council member earns 5,000 ARB monthly, paid through a Llama Vesting stream. Four solutions are proposed:
-
-
 
 1. New Election: Though comprehensive, an official election could be lengthy, potentially leaving the role vacant for an extended period. \
 
@@ -96,11 +84,9 @@ Tamara has [created a post](https://forum.arbitrum.foundation/t/ardc-v2-communic
 
 A final decision is needed soon, as the ARDC continues to operate without Frisson’s replacement, and a timely resolution would prevent overburdening the remaining members.
 
-
 ### **Arbitrum Token Flow Report - March 2025**
 
 r3gen_Finance [has delivered](https://forum.arbitrum.foundation/t/arbitrum-token-flow-report-march-2025/28985?u=manugotsuka) its monthly analysis of Arbitrum DAO’s finances for March 2025, highlighting net transaction fees of 509 ETH (95% of total fees, up from 93% in February) and total DAO expenditures of 4.5M ARB. Notably, 4M ARB was deployed for the Stylus Sprint Committee, with 3.1M of that spent by the Gaming Catalyst Program and 0.8M ARB for the Delegate Incentive Program. STEP 1.0 generated $113k in interest (~302k ARB), but after converting monthly income and outlays into ARB, the DAO recorded a net deficit of 1.4M ARB. Unused funds from Questbook Round 1 returned to a Questbook multisig in early April, and the MSS signers’ wallet remains underfunded, given the ARB price drop.
-
 
 ### **March 2025 Member Election Phase**
 
@@ -121,7 +107,6 @@ You can find us to discuss everything related to Arbitrum’s governance, from c
 
 ## **Uniswap**
 
-
 ## **Active Votes**
 
 **Temp-check**
@@ -136,9 +121,7 @@ Uniswap’s governance hasn’t seen any new developments over the last week. If
 
 You can find us to discuss everything related to Uniswap’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-
 ## **Hop**
-
 
 ### **Announcing Hop Rails**
 
@@ -152,9 +135,7 @@ You can find us to discuss everything related to Hop’s governance, from curren
 
 [Hop Community Call](https://discord.gg/zb3U6sTCAv) - on 16.4 at 17:00.
 
-
 ## **Polygon**
-
 
 ### **Compound Blue on Polygon POS, $3M in User Incentives**
 
@@ -162,11 +143,9 @@ I0xmark, from Morpho, [has updated](https://forum.polygon.technology/t/compound-
 
 Paperclip Labs has developed a position migration tool that allows users to move lending/borrowing positions from Aave to Compound Blue. Upcoming features include streamlined bulk migration of multiple assets and automated leveraged positions. Built atop Morpho’s permissionless lending infrastructure, Compound Blue aims to deliver quicker asset listings, more efficient governance processes, and improved composability. Compound DAO retains ownership of the vaults, guided by Gauntlet’s parameter curation.
 
-
 ### **PIP-63: Bhilai Hardfork**
 
 H_Rook and Sandeep Sreenath [propose the Bhilai Hardfork](https://forum.polygon.technology/t/pip-63-bhilai-hardfork/20872) for Polygon PoS, incorporating 3 main updates: PIP-60 (raising the gas limit to 45M), PIP-58 (increasing BaseFeeChangeDenominator to 64), and PIP-61 (support for various Pectra EIPs). The specific activation blocks for both Amoy and Mainnet will be determined later. The authors confirm there are no anticipated security concerns arising from these changes, and the work falls under the CC0 1.0 Universal waiver.
-
 
 ### **PIP-62: Heimdall v2 Migration**
 
@@ -176,9 +155,7 @@ Marcello Ardizzone and Harry Rook [created a post](https://forum.polygon.technol
 
 You can find us to discuss everything related to Polygon’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-
 ## **Starknet**
-
 
 ### **Cairo DevEx: Panel Discussion & Open Feedback**
 
@@ -188,9 +165,7 @@ You can find us to discuss everything related to Polygon’s governance, from cu
 
 You can find us to discuss everything related to Starknet’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-
 ## **Everclear**
-
 
 ## **Active Votes**
 
@@ -203,7 +178,6 @@ You can find us to discuss everything related to Starknet’s governance, from c
 
 Rapha-Raffaelo [proposes](https://forum.connext.network/t/rfc-increasing-liquidity-for-clear-via-mainnet-vault/1368) moving 3.84 million CLEAR from the DAO’s Arbitrum Safe to Ethereum mainnet and depositing it into an Arrakis mainnet vault. The goal is to improve the buy-side liquidity for CLEAR, reduce slippage for would-be buyers, and gradually convert CLEAR to wETH over time, thereby strengthening the base asset liquidity. The plan involves bridging the 3.84M CLEAR to the mainnet and depositing the tokens into the Arrakis vault, with no additional costs beyond using the currently idle CLEAR in the DAO safe. This arrangement allows organic trading volume to steadily swap out some of the CLEAR for wETH without creating significant downward price pressure. It aims for a more robust trading environment for CLEAR.
 
-
 ### **Governance Metrics Report**
 
 SEEDGov [has shared](https://forum.connext.network/t/governance-metrics-report/1319/4?u=manugotsuka) its second Governance Metrics report for Everclear, spanning Q4 2024 and Q1 2025. The attached Dune dashboard provides automated historical data going forward. Notably, Q1 2025 saw record activity, with 16 proposals (e.g., EverScale, the grants BORG, vbCLEAR Season 2) passing or failing, the highest in any quarter. Although voter participation rose by 108% from Q4, the average number of voters per proposal continued its downward trend, stabilizing around 25.5, while unique voters plateaued near 55 for three quarters. Q1 also saw an all-time high of 365,998,716 NEXT/CLEAR used in votes, mainly driven by large VP holders (≥200k) who accounted for ~30% of total voting power (up from ~7% in earlier quarters).
@@ -214,7 +188,6 @@ Additionally, oSnap integration—used for on-chain execution of passed proposal
 
 You can find us to discuss everything related to Hop’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-
 ## **Wormhole**
 
 Wormhole’s governance hasn’t seen any new developments over the last week. If you believe we might have missed something, please let us know.
@@ -222,7 +195,6 @@ Wormhole’s governance hasn’t seen any new developments over the last week. I
 **Discuss with L2BEAT**
 
 You can find us to discuss everything related to Wormhole’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
-
 
 ## **Lisk**
 
@@ -232,9 +204,7 @@ Lisk’s governance hasn’t seen any new developments over the last week. If yo
 
 You can find us to discuss everything related to Lisk’s governance, from current initiatives to high-level conversations, during our [L2BEAT Governance Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-
 ## **ZkSync**
-
 
 ## **Active Votes**
 
@@ -242,11 +212,9 @@ You can find us to discuss everything related to Lisk’s governance, from curre
 
 [[ZIP-9] V27 EVM Emulation Upgrade](https://www.tally.xyz/gov/zksync/proposal/112142012854508751423955156601121618924383324119199970784935099214632480260394?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) - ends on April 17 at 14:57 UTC.
 
-
 ### **[TPP-3] ZIP Audit Reimbursement Program (ZARP)**
 
 Bendob, from the ZKsync Foundation, [has created a proposal](https://forum.zknation.io/t/tpp-3-zip-audit-reimbursement-program-zarp/636/1) that outlines a $5M (100M ZK) ZIP Audit Reimbursement Program to fund third-party security audits for successful protocol upgrades in 2025. The program features two capped minters, ZarpMain (for future audits from May–December 2025) and ZarpRetro (retroactive audits from January–April 2025). Prospective ZIP authors seeking reimbursement must deploy a “child” capped minter and include the audit report in their onchain proposal. If the proposal passes governance, developers can mint ZK tokens (after a 30-day buffer to allow Security Council verification) for direct audit cost reimbursement. The Security Council oversees eligibility, can pause suspicious distributions, and will publicly document reimbursements. This program aligns with GAP 001’s “Secure the Protocol” priority by removing the financial burden of security audits and incentivizing thorough code reviews for ZKsync improvements.
-
 
 ### **[ZIP-10] Activate ZK Gateway as a Settlement Layer**
 
@@ -260,9 +228,7 @@ You can find us to discuss everything related to ZkSync’s governance, from cur
 
 [Standing ZKsync Proposal Review Call](https://meet.google.com/txe-trwh-zha) - on 15.4 at 16:00.
 
-
 ## **Scroll**
-
 
 ### **Q2 2025 Goals & Strategy**
 
