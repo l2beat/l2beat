@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   ChainConfig,
   ElasticChainEscrow,
@@ -11,6 +12,7 @@ import { utils } from 'ethers'
 import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../../peripherals/multicall/types'
+import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import { createEscrowToken } from '../mapConfig'
 
@@ -23,6 +25,8 @@ export async function getElasticChainTokens(
   escrow: ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
   chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
+  localStorage: LocalStorage,
+  logger: Logger,
 ): Promise<TvsToken[]> {
   const chain = project.chainConfig
   assert(chain, `${project.id}: chain should be defined`)
@@ -37,22 +41,51 @@ export async function getElasticChainTokens(
       !escrow.sharedEscrow.tokensToAssignFromL1?.includes(t.symbol),
   )
 
-  const encoded: MulticallRequest[] = l2Tokens.map((token) => ({
-    address: escrow.sharedEscrow.l2BridgeAddress,
-    data: Bytes.fromHex(
-      bridgeInterface.encodeFunctionData('l2TokenAddress', [token.address]),
-    ),
-  }))
+  const resolved: { id: string; address: string }[] = []
+  const toResolve: { id: string; request: MulticallRequest }[] = []
+
+  for (const token of l2Tokens) {
+    const cachedValue = await localStorage.getAddress(token.id)
+    if (cachedValue !== undefined) {
+      logger.debug(`Cached value found for ${token.id}`)
+      resolved.push({ id: token.id, address: cachedValue })
+      continue
+    }
+
+    toResolve.push({
+      id: token.id,
+      request: {
+        address: escrow.sharedEscrow.l2BridgeAddress,
+        data: Bytes.fromHex(
+          bridgeInterface.encodeFunctionData('l2TokenAddress', [token.address]),
+        ),
+      },
+    })
+  }
 
   const block = await rpcClient.getLatestBlockNumber()
-  const responses = await multicallClient.multicall(encoded, block)
+  if (toResolve.length > 0) {
+    logger.info(
+      `Querying for ElasticChain L2 tokens addresses for project ${project.id}...`,
+    )
+    const responses = await multicallClient.multicall(
+      toResolve.map((e) => ({ ...e.request })),
+      block,
+    )
+
+    for (const index in toResolve) {
+      const id = toResolve[index].id
+      const address = responses[index].data.toString()
+      await localStorage.writeAddress(id, address)
+      resolved.push({ id, address })
+    }
+  }
 
   const l2TokensTvsConfigs = await Promise.all(
-    responses.map(async (response, index) => {
-      const token = l2Tokens[index]
+    resolved.map(async (item) => {
       if (
-        response.data.toString() === '0x' ||
-        response.data.toString() ===
+        item.address === '0x' ||
+        item.address ===
           '0x0000000000000000000000000000000000000000000000000000000000000000'
       ) {
         return
@@ -60,7 +93,7 @@ export async function getElasticChainTokens(
 
       const [address] = bridgeInterface.decodeFunctionResult(
         'l2TokenAddress',
-        response.data.toString(),
+        item.address,
       )
 
       try {
@@ -69,6 +102,9 @@ export async function getElasticChainTokens(
         if (res.length === 0) {
           throw new Error('Token does not exist')
         }
+
+        const token = l2Tokens.find((t) => t.id === item.id)
+        assert(token, `${item.id} not found`)
 
         const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
           escrow,

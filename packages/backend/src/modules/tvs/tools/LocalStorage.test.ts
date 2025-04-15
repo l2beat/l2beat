@@ -53,6 +53,24 @@ describe(LocalStorage.name, () => {
     })
   })
 
+  describe('addresses', () => {
+    it('can write and read addresses', async () => {
+      const storage = new LocalStorage(TEST_FILE_PATH)
+      await storage.writeAddress('address1', '0x1234')
+      const address = await storage.getAddress('address1')
+      expect(address).toEqual('0x1234')
+    })
+
+    it('persists addresses between instances', async () => {
+      let storage = new LocalStorage(TEST_FILE_PATH)
+      await storage.writeAddress('address1', '0x1234')
+
+      storage = new LocalStorage(TEST_FILE_PATH)
+      const address = await storage.getAddress('address1')
+      expect(address).toEqual('0x1234')
+    })
+  })
+
   describe('multiple operations', () => {
     it('can store multiple items for different timestamps', async () => {
       const storage = new LocalStorage(TEST_FILE_PATH)

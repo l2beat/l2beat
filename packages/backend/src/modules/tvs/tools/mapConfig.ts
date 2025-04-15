@@ -15,6 +15,7 @@ import { assert, TokenId } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import type { ProjectTvsConfig } from '../types'
+import type { LocalStorage } from './LocalStorage'
 import { getTimeRangeIntersection } from './getTimeRangeIntersection'
 import { getAggLayerTokens } from './sharedEscrows/getAggLayerTokens'
 import { getElasticChainTokens } from './sharedEscrows/getElasticChainTokens'
@@ -23,6 +24,7 @@ export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
   chains: Map<string, ChainConfig>,
   logger: Logger,
+  localStorage: LocalStorage,
   rpcClient?: RpcClient,
 ): Promise<ProjectTvsConfig> {
   const tokens: TvsToken[] = []
@@ -32,12 +34,6 @@ export async function mapConfig(
   }
 
   const sharedEscrows = project.tvlConfig.escrows.filter((e) => e.sharedEscrow)
-
-  if (sharedEscrows.length > 0) {
-    logger.info(
-      `Querying for shared escrow L2 tokens addresses for project ${project.id}...`,
-    )
-  }
 
   for (const escrow of sharedEscrows) {
     assert(escrow.sharedEscrow)
@@ -51,24 +47,25 @@ export async function mapConfig(
     const chainOfL1Escrow = getChain(escrow.chain, chains)
 
     if (escrow.sharedEscrow.type === 'AggLayer') {
-      logger.debug(`Querying for AggLayer L2 tokens addresses`)
       const aggLayerL2Tokens = await getAggLayerTokens(
         project,
         escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
         chainOfL1Escrow,
         rpcClient,
+        localStorage,
+        logger,
       )
       tokens.push(...aggLayerL2Tokens)
     }
 
     if (escrow.sharedEscrow.type === 'ElasticChain') {
-      logger.debug(`Querying for ElasticChain L2 tokens addresses`)
-
       const elasticChainTokens = await getElasticChainTokens(
         project,
         escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
         chainOfL1Escrow,
         rpcClient,
+        localStorage,
+        logger,
       )
       tokens.push(...elasticChainTokens)
     }
