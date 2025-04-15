@@ -19,6 +19,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
+import { generateAccessibleColors } from '~/utils/generate-colors'
 import { getDaDataParams } from './get-da-data-params'
 
 export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
@@ -26,6 +27,9 @@ export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
     range: '7d',
     daLayer,
   })
+
+  const maxProjects = 8
+  const colors = useMemo(() => generateAccessibleColors(maxProjects), [])
 
   const max = useMemo(() => {
     return data
@@ -39,7 +43,7 @@ export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
       data?.chart.flatMap(([_, values]) => {
         return Object.keys(values)
       }),
-    ).slice(0, 8)
+    ).slice(0, maxProjects)
   }, [data])
 
   const chartMeta = useMemo(() => {
@@ -47,14 +51,14 @@ export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
       if (!acc[slug]) {
         acc[slug] = {
           label: slug,
-          color: ['red', 'green', 'blue'][Math.floor(Math.random() * 3)]!,
+          color: colors[Object.keys(acc).length]!,
           indicatorType: { shape: 'square' },
         }
       }
 
       return acc
     }, {} as ChartMeta)
-  }, [allProjectSlugs])
+  }, [allProjectSlugs, colors])
 
   const chartData = useMemo(() => {
     return data?.chart.map(([timestamp, values]) => {
