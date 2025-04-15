@@ -38,6 +38,22 @@ describe(fillTvsValuesForTimestamps.name, () => {
       '300': mockProjectValue(150),
     })
   })
+
+  it('starts from first record', () => {
+    const result = fillTvsValuesForTimestamps(
+      {
+        '200': mockProjectValue(100),
+        '250': mockProjectValue(150),
+      },
+      [100, 200, 300],
+      mockProjectValue(150),
+    )
+    console.log(result)
+    expect(result).toEqual({
+      '200': mockProjectValue(100),
+      '300': mockProjectValue(150),
+    })
+  })
 })
 
 function mockProjectValue(timestamp: UnixTime) {
