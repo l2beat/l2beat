@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x112817bd8ba83a2e8604d469284bad49c1a94417
+
+# Diff at Tue, 18 Mar 2025 08:14:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 287771961
+- current block number: 287771961
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287771961 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      name:
+-        "Caldera Multisig"
++        "Caldera Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0xc745d167d1a04494ea52598a4c31153785275d40
 
 # Diff at Thu, 06 Mar 2025 14:23:28 GMT:

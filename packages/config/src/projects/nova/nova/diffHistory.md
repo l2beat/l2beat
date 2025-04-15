@@ -1,4 +1,96 @@
-Generated with discovered.json: 0x9348363aa652ed40f9b18607200d69a6e3deece1
+Generated with discovered.json: 0x2435d8cbe95e6458d3d8f1ade7cebb41970400e2
+
+# Diff at Thu, 10 Apr 2025 14:44:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 82818646
+- current block number: 82818646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 82818646 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      displayName:
+-        "UpgradeExecutor"
+    }
+```
+
+```diff
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      displayName:
+-        "L2SurplusFee"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x07071e95d5df2256c43520887662c4fd056c5d81
+
+# Diff at Tue, 18 Mar 2025 12:20:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8a389387016e20fe96cd5cb775e4b943b3aaa832 block: 81620827
+- current block number: 82818646
+
+## Description
+
+Config: assigned categories to some templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+Generated with discovered.json: 0x93160670bb1a101f5775caa349fbaff07e83b9fd
 
 # Diff at Tue, 04 Mar 2025 10:42:16 GMT:
 

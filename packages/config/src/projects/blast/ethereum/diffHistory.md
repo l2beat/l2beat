@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x299d39c612db06bc7ac3af63cb7fd26d17ec112c
+
+# Diff at Thu, 27 Mar 2025 11:14:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x751bd15b01cb148e0e5cfefd2655f7946de82ee2
+
+# Diff at Wed, 19 Mar 2025 13:04:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x082b616Ec99167B2FEdee053F07db6795D4dA821) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x37d91059705772d4f5a34498f54b9e0749bfa46a
+
+# Diff at Tue, 18 Mar 2025 08:12:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      name:
+-        "BlastMultisig"
++        "BlastMultisig 1"
+    }
+```
+
+```diff
+    contract BlastMultisig 2 (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) {
+    +++ description: None
+      name:
+-        "BridgeOwner"
++        "BlastMultisig 2"
+    }
+```
+
 Generated with discovered.json: 0xb7f233cae118451506efc6bc50c5b9828843d6d6
 
 # Diff at Tue, 04 Mar 2025 11:25:29 GMT:

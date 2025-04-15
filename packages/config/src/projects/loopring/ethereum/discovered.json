@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 21973864,
-  "configHash": "0x39814d075b15ba34146a2e668f90c10b6ae3c5cec70a49368e7b3ca34598b831",
+  "configHash": "0x3b3a1907c1d9af184bbad6ea03d07f1cb53daf37b6426bd9a8d91d209f750710",
   "entries": [
     {
       "name": "ExchangeV3",
@@ -109,7 +109,8 @@
         "proxyOwner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "shutdownTriggered": [],
         "version": "3.6.0"
-      }
+      },
+      "derivedName": "ExchangeV3"
     },
     {
       "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
@@ -147,7 +148,8 @@
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "target": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
-      }
+      },
+      "derivedName": "LoopringIOExchangeOwner"
     },
     {
       "address": "0x1F28F10176F89F4E9985873B84d14e75751BB3D1",
@@ -333,7 +335,8 @@
         ],
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "AgentRegistry"
     },
     {
       "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
@@ -385,7 +388,8 @@
         "REWARD_PERCENTAGE": 70,
         "tokenSellerAddress": "0x0000000000000000000000000000000000000000",
         "userStakingPoolAddress": "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b"
-      }
+      },
+      "derivedName": "ProtocolFeeVault"
     },
     {
       "name": "ForcedWithdrawalAgent",
@@ -410,7 +414,8 @@
         "numManagers": 5,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "ForcedWithdrawalAgent"
     },
     {
       "address": "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
@@ -441,7 +446,8 @@
         "$immutable": true,
         "owner": "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "BlockVerifier"
     },
     {
       "name": "DefaultDepositContract",
@@ -458,7 +464,8 @@
         "exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4",
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "DefaultDepositContract"
     },
     {
       "address": "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
@@ -502,7 +509,8 @@
         "symbol": "LRC",
         "totalBurned": "21202657081400454651658000",
         "totalSupply": "1373873397442457437622945100"
-      }
+      },
+      "derivedName": "LRC_v2"
     },
     {
       "address": "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
@@ -578,7 +586,8 @@
         "tokenRegistrationFeeLRCBase": 0,
         "tokenRegistrationFeeLRCDelta": 0,
         "totalStake": 0
-      }
+      },
+      "derivedName": "LoopringV3"
     },
     {
       "address": "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
@@ -605,7 +614,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1603946697,
       "sinceBlock": 11149548,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "FastWithdrawalAgent"
     },
     {
       "address": "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
@@ -638,7 +648,8 @@
           "depositedAt": 0,
           "claimedAt": 1615983279
         }
-      }
+      },
+      "derivedName": "UserStakingPool"
     }
   ],
   "abis": {
@@ -986,6 +997,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

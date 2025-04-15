@@ -1,0 +1,115 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "pNetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "pNetwork-BAT",
+      "priceId": "basic-attention-token",
+      "symbol": "BAT",
+      "name": "Basic Attention Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/677/large/basic-attention-token.png?1696501867",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
+        "chain": "ethereum",
+        "escrowAddress": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+        "decimals": 18,
+        "sinceTimestamp": 1620212602
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pNetwork-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+        "decimals": 18,
+        "sinceTimestamp": 1620212602
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pNetwork-LRC",
+      "priceId": "loopring",
+      "symbol": "LRC",
+      "name": "LoopringCoin V2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/913/large/LRC.png?1696502034",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
+        "chain": "ethereum",
+        "escrowAddress": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+        "decimals": 18,
+        "sinceTimestamp": 1620212602
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pNetwork-PNT",
+      "priceId": "pnetwork",
+      "symbol": "PNT",
+      "name": "pNetwork Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11659/large/pNetwork.png?1696511550",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
+            "chain": "ethereum",
+            "escrowAddress": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
+            "decimals": 18,
+            "sinceTimestamp": 1640867581
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
+            "chain": "ethereum",
+            "escrowAddress": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+            "decimals": 18,
+            "sinceTimestamp": 1620212602
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "pNetwork-ZRX",
+      "priceId": "0x",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/863/large/0x.png?1696501996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498",
+        "chain": "ethereum",
+        "escrowAddress": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
+        "decimals": 18,
+        "sinceTimestamp": 1620212602
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

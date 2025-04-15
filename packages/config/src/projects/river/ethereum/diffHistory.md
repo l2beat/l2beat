@@ -1,4 +1,64 @@
-Generated with discovered.json: 0xb17c3a38b4f871b62ee92df8f1c4ab5cd37e5c31
+Generated with discovered.json: 0x3d38b7fe0a0e40b2973da2f1d2901791b656291a
+
+# Diff at Thu, 27 Mar 2025 11:14:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21872580
+- current block number: 21872580
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872580 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xA80349b0D79bf3154ae54066410d20eb7B8697Ac) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x7c1783c2bd6415d99cba5629bc4efc96548f7465
+
+# Diff at Wed, 19 Mar 2025 13:05:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21872580
+- current block number: 21872580
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872580 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0x318Cf0B120595B1bE66a823a83362dbae7434D3d) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xac3f01099e7d3873dff12940a41a441d8cd65809
 
 # Diff at Tue, 04 Mar 2025 11:26:14 GMT:
 

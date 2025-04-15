@@ -17,7 +17,7 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'custom-scrollbar flex size-full flex-col overflow-hidden rounded-md bg-surface-primary primary-card:bg-surface-secondary',
+      'flex size-full flex-col overflow-hidden rounded-md border border-divider bg-surface-primary focus-visible:border-brand focus-visible:outline-none primary-card:bg-surface-secondary',
       className,
     )}
     {...props}
@@ -30,10 +30,12 @@ const CommandDialog = ({
   title,
   description,
   onEscapeKeyDown,
+  fullScreenMobile,
   ...props
 }: DialogProps & {
   title: string
   description: string
+  fullScreenMobile?: boolean
   onEscapeKeyDown?: (event: KeyboardEvent) => void
 }) => {
   return (
@@ -41,11 +43,11 @@ const CommandDialog = ({
       <DialogTitle className="sr-only">{title}</DialogTitle>
       <DialogDescription className="sr-only">{description}</DialogDescription>
       <DialogContent
-        className="top-1/2 overflow-hidden p-0 shadow-popover max-md:h-screen max-md:border-none md:top-1/4 max-md:[@supports(height:100dvh)]:h-dvh"
-        overlayClassName="max-md:hidden"
+        className="overflow-hidden p-0 max-md:border-none"
         onEscapeKeyDown={onEscapeKeyDown}
+        fullScreenMobile={fullScreenMobile}
       >
-        <Slot className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        <Slot className="!border-none [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
         </Slot>
       </DialogContent>
@@ -61,7 +63,7 @@ const CommandInput = ({
 }: React.ComponentProps<typeof CommandPrimitive.Input>) => {
   return (
     <div
-      className="flex items-center border-b border-surface-tertiary px-3"
+      className="flex items-center border-b border-divider px-3"
       cmdk-input-wrapper=""
     >
       <SearchIcon className="mr-2 size-4 shrink-0 fill-secondary" />
@@ -133,7 +135,7 @@ const CommandGroup = ({
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
+      'overflow-hidden border-b border-divider px-1.5 py-1 last:border-none only:border-none [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
       className,
     )}
     {...props}

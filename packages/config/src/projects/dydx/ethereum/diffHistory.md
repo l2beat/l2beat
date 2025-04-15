@@ -1,4 +1,61 @@
-Generated with discovered.json: 0xfaccf595c1e911dc50b643845d1abbeb71daf504
+Generated with discovered.json: 0x1e843d367117998108de40765242f6623097807d
+
+# Diff at Thu, 10 Apr 2025 14:42:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+      displayName:
+-        "GpsFactRegistryAdapter"
+    }
+```
+
+Generated with discovered.json: 0x1d546c3c6adb8ae734657ea3946cf20a33ec3e69
+
+# Diff at Thu, 27 Mar 2025 11:14:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
+Generated with discovered.json: 0xf0cc1da9168a9045a4d813fd51f28856baf096cc
 
 # Diff at Thu, 06 Mar 2025 15:18:16 GMT:
 

@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
-import { useRouterWithProgressBar } from '~/components/progress-bar'
+import { useRouterWithProgressBar } from '~/components/navigation-progress-bar'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'

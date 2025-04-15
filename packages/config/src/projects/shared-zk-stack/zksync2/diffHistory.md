@@ -1,4 +1,113 @@
-Generated with discovered.json: 0x7db3df1d947838875d70e1cbb4232412d3fae7bf
+Generated with discovered.json: 0xda1215aaae5b259d0bbe7241c15b75452d7c9979
+
+# Diff at Thu, 10 Apr 2025 14:43:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 57909592
+- current block number: 57909592
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57909592 (main branch discovery), not current.
+
+```diff
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      description:
+-        "This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet."
++        "Timelock contract allowing the queueing of transactions with a minimum delay of 0s."
+    }
+```
+
+```diff
+    contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      category.name:
+-        "Spam"
++        "Governance"
+      category.priority:
+-        -1
++        3
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor_deprecated (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      category.name:
+-        "Spam"
++        "Governance"
+      category.priority:
+-        -1
++        3
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      description:
+-        "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed."
++        "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E."
+    }
+```
+
+Generated with discovered.json: 0x29c9f4544dd05bf880daeb972811c734859fde06
+
+# Diff at Wed, 19 Mar 2025 15:49:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4609d8355d7594946b66bef47876090fce6b0842 block: 57469400
+- current block number: 57909592
+
+## Description
+
+[ZIP-8](https://www.tally.xyz/gov/zksync/proposal/98806622840077485421207653857298019081476009136539565020582912190689619102417?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) is sent to L1 and queued in the ProtocolUpgradeHandler.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        7
++        8
+    }
+```
+
+Generated with discovered.json: 0x4d241b93e2064870d390237196943a1a0cbe198c
 
 # Diff at Tue, 11 Mar 2025 07:58:48 GMT:
 

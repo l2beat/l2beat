@@ -1,0 +1,14 @@
+{
+  "RollupAdminLogic.1": {
+    "hash": "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
+    "address": "0x9B56A789fEDD5df27dBaB53b085F7157397cA17D",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupUserLogic.2": {
+    "hash": "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5",
+    "address": "0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

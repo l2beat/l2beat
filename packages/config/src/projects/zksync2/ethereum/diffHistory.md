@@ -1,4 +1,180 @@
-Generated with discovered.json: 0x1ab6b16635c8a0dbfe074e1f7bf50c94683ce630
+Generated with discovered.json: 0x60e0435f0f3c4ae272da6f155e342e1d09eb01be
+
+# Diff at Thu, 10 Apr 2025 14:43:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22217035
+- current block number: 22217035
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22217035 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
+Generated with discovered.json: 0xf5bcc3d05d835edb7babecab1d7e92990b2479e3
+
+# Diff at Wed, 02 Apr 2025 15:08:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6d66206526294fb00e0c08e8ff3bf70febdc1aaa block: 22123358
+- current block number: 22181512
+
+## Description
+
+shared zk stack contracts upgraded to v26: config related changes for all children chains.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      sourceHashes.0:
+-        "0x179b79e02a71cc452486d433271b925a402363053a3dd4e9d83837877c677dfd"
++        "0xa470a4cd272abd74efdef01a347542477159dba5fc965b47dca90736ae6f42db"
+      values.$implementation:
+-        "0x8D231E4097C3cb200Ed62134B466AA615cE60336"
++        "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
+      values.$pastUpgrades.9:
++        ["2024-06-06T13:20:35.000Z","0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a",["0x8191975d8B0851C7f0740918896Cf298c09aA05E"]]
+      values.$pastUpgrades.8.2:
+-        ["0x8191975d8B0851C7f0740918896Cf298c09aA05E"]
++        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
+      values.$pastUpgrades.8.1:
+-        "2024-06-06T13:20:35.000Z"
++        ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
+      values.$pastUpgrades.8.0:
+-        "0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a"
++        "2025-01-08T16:00:35.000Z"
+      values.$pastUpgrades.7.2:
+-        "0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5"
++        "2023-12-04T20:29:11.000Z"
+      values.$pastUpgrades.7.1:
+-        ["0x8D231E4097C3cb200Ed62134B466AA615cE60336"]
++        "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd"
+      values.$pastUpgrades.7.0:
+-        "2025-01-08T16:00:35.000Z"
++        ["0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"]
+      values.$pastUpgrades.6.2:
+-        "2023-12-04T20:29:11.000Z"
++        "0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80"
+      values.$pastUpgrades.6.1:
+-        "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd"
++        "2023-04-25T12:37:35.000Z"
+      values.$pastUpgrades.6.0.0:
+-        "0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"
++        "0x38ABF296EE79621A225AA85086853b0dA3225D2F"
+      values.$pastUpgrades.5.2:
+-        "0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80"
++        "2025-03-31T08:00:47.000Z"
+      values.$pastUpgrades.5.1:
+-        "2023-04-25T12:37:35.000Z"
++        ["0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"]
+      values.$pastUpgrades.5.0:
+-        ["0x38ABF296EE79621A225AA85086853b0dA3225D2F"]
++        "0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3"
+      values.$upgradeCount:
+-        9
++        10
+      values.SHARED_BRIDGE:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.ERA_CHAIN_ID:
++        324
+      values.L1_ASSET_ROUTER:
++        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.L1_NATIVE_TOKEN_VAULT:
++        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      values.L1_NULLIFIER:
++        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1ERC20Bridge/L1ERC20Bridge.sol                | 244 +++++++++++++++------
+ 1 file changed, 180 insertions(+), 64 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123358 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      template:
+-        "shared-zk-stack/Diamond_v26"
++        "shared-zk-stack/v26/Diamond"
+      description:
+-        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions."
++        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
++++ description: true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.
++++ severity: HIGH
+      values.isPermanentRollup:
++        1
+      values.isPermanentRollupString:
++        ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+      fieldMeta.IsPorterAvailableStatus:
++        {"severity":"HIGH","description":"zkPorter is a volition-like contruction and changes the zk proof input requirements."}
+      fieldMeta.isPermanentRollup:
++        {"severity":"HIGH","description":"true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract."}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":".","1":". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."}}]
+    }
+```
+
+Generated with discovered.json: 0xb2bd8a922a6a577d0a5d27afc5fb4804d1191ea4
+
+# Diff at Tue, 25 Mar 2025 10:35:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 22044942
+- current block number: 22123358
+
+## Description
+
+Config related: ignore prepareChainCommitment.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22044942 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.prepareChainCommitment:
+-        {"totalBatchesExecuted":497870,"totalBatchesVerified":497872,"totalBatchesCommitted":497874,"l2SystemContractsUpgradeTxHash":"0x0000000000000000000000000000000000000000000000000000000000000000","l2SystemContractsUpgradeBatchNumber":0,"batchHashes":["0x7c68f5c5ae85dac45341cfdc87aeb5e492641fcf7bc4aee3a61c94f8154291c2","0x749e1edf9074f1bf9767c9cac19f20a457c73207fd88cf4ebe0f6a7a68cf2fcc","0xa4daba9a6e4af05110f8f6560424208bc2d87aa56e013c68a3237827dfc0112d","0x4682fa1ce3ac5765db668c5a3cd7775a0f119351b7ca6938a4b1cfecfc7d36f8","0x170603927e9309ec4e6e17cd2c850161ed0ec167bc3ca5d56971a68b0e7a963e"],"priorityTree":{"nextLeafIndex":80,"startIndex":3270719,"unprocessedIndex":73,"sides":["0x07a258c2a4dc53e855a5b8b67bf4087da9e7bcf89f85c1781cb6ed5bf9d5e220","0xc067215f20d4f2d1646e700bb1dbcc479efcf4f03b90e82b7201ac49051abd55","0x07b9611ca8b372fd1473ca5487fe0d7368c12deb26362afdb119874a1e3f908d","0x9f0b35143e17929f615affdf1899907c80b9a458d0fb1ce6070a767256f975fd","0xa7f7767838fe0fb08c390783d69add3b0c73e9a01f914761d4e035b23edd7417","0xc5b1e324c83773f5769fba7edbf5512ab2daace12d7ae13a3bfb7a35816ae586","0x183451e7453218c629d33a77620ca05816e307c0e77a3960efcd37d636aa08c2","0x095621117fb1332a0c4d362c69fe286c0781e27f5418d079e77a294c3c8da311"]},"isPermanentRollup":true}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
+Generated with discovered.json: 0xeb0d8fa1f52c2749f923d33c1c6186d457bfad72
 
 # Diff at Fri, 14 Mar 2025 12:01:34 GMT:
 

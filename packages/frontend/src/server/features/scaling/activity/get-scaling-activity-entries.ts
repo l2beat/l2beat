@@ -16,7 +16,7 @@ export async function getScalingActivityEntries() {
   const unfilteredProjects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'hasActivity', 'display'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
   const projects = unfilteredProjects.filter(
     (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),
@@ -38,9 +38,9 @@ export async function getScalingActivityEntries() {
       ),
     )
     .concat([
-      getEthereumEntry(ethereumData, 'Rollups'),
-      getEthereumEntry(ethereumData, 'ValidiumsAndOptimiums'),
-      getEthereumEntry(ethereumData, 'Others'),
+      getEthereumEntry(ethereumData, 'rollups'),
+      getEthereumEntry(ethereumData, 'validiumsAndOptimiums'),
+      getEthereumEntry(ethereumData, 'others'),
     ])
     .sort(compareActivityEntry)
 
@@ -78,7 +78,6 @@ function getScalingProjectActivityEntry(
     : undefined
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
-    href: `/scaling/projects/${project.slug}#activity`,
     data: data
       ? {
           tps: data.tps,
@@ -102,7 +101,6 @@ function getEthereumEntry(
     name: 'Ethereum',
     shortName: undefined,
     slug: 'ethereum',
-    href: undefined,
     tab,
     // Ethereum is always at the top so it is always stageOrder 3
     stageOrder: 3,

@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 22046068,
-  "configHash": "0x2b0c0e98b51ebf20eadc3658694a19b1593358a55511dbe18db35e7eefbb25d5",
+  "configHash": "0x84eb16c47edf5d23b6abe34b26eeb7310dfb391ee94ad8206ae3525226f0735d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -41,6 +41,7 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -65,7 +66,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ConduitMultisig",
+      "name": "Conduit Multisig 1",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -214,6 +215,7 @@
         "SYSTEM_CONFIG": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
         "version": "1.7.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -316,6 +318,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -358,7 +361,8 @@
         "addressManager": "0xEa4165C5CDCA155779803A113d8391b741bA5228",
         "isUpgrading": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "SystemConfig",
@@ -434,6 +438,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -459,7 +464,9 @@
       "values": {
         "$immutable": true,
         "owner": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
@@ -521,6 +528,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     }
   ],
@@ -783,13 +791,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
-    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
-    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
-    "opstack/L2OutputOracle": "0xc8c03bf9d2b8af9c211229cb24bbc7abcf2899e0bc8f2e6bd7c846b50051c60c",
-    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
-    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
 }

@@ -1,0 +1,385 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "soneium",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "soneium-ASTR",
+      "priceId": "astar",
+      "symbol": "ASTR",
+      "name": "Astar Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22617/large/astr.png?1696521933",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1734968141
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x88e529A6ccd302c948689Cd5156C83D4614FAE92",
+            "decimals": 18,
+            "sinceTimestamp": 1733134751
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+            "decimals": 18,
+            "sinceTimestamp": 1733134751
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-nsASTR",
+      "priceId": "neemo-staked-astar",
+      "symbol": "nsASTR",
+      "name": "Neemo Staked Astar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53907/large/nsASTR_2x.png?1737707599",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc67476893C166c537afd9bc6bc87b3f228b44337",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1737676800
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-PIPO",
+      "priceId": "pipo-2",
+      "symbol": "PIPO",
+      "name": "Pipo",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54474/large/Pipo.jpg?1739951527",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x8CD846c404C7267350a2920576816603Cd5C6539",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1739923200
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-pufETH-1",
+      "priceId": "pufeth",
+      "symbol": "pufETH",
+      "name": "pufETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6c460b2c6D6719562D5dA43E5152B375e79B9A8B",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1739368935
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-SolvBTC-1",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1738747771
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-SolvBTC.BBN-1",
+      "priceId": "solv-protocol-solvbtc-bbn",
+      "symbol": "SolvBTC.BBN",
+      "name": "SolvBTC Babylon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1738747957
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-SolvBTC.JUP",
+      "priceId": "solv-protocol-solvbtc-jupiter",
+      "symbol": "SolvBTC.JUP",
+      "name": "SolvBTC Jupiter",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54834/large/solvBTC_Jupiter.png?1741969449",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xAffEb8576b927050f5a3B6fbA43F360D2883A118",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1743033600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-STONE-1",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1738846985
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-uBTC",
+      "priceId": "wrapped-bitcoin-universal",
+      "symbol": "uBTC",
+      "name": "uBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50252/large/UA-BTC_1.png?1726721793",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x61F2993a644762A345b483ADF0d6351C5EdFB3b5",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1742262373
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-USD₮0",
+      "priceId": "usdt0",
+      "symbol": "USD₮0",
+      "name": "Stargate USD₮0 (Bridged)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53705/large/usdt0.jpg?1737086183",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x102d758f688a4C1C5a80b116bD945d4455460282",
+        "chain": "soneium",
+        "decimals": 6,
+        "sinceTimestamp": 1743178455
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-USDC-2",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb",
+        "decimals": 6,
+        "sinceTimestamp": 1735038311
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "decimals": 6,
+        "sinceTimestamp": 1733134751
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-vASTR",
+      "priceId": "bifrost-voucher-astr",
+      "symbol": "vASTR",
+      "name": "Bifrost Voucher ASTR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34706/large/vASTR.png?1705893008",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x60336f9296C79dA4294A19153eC87F8E52158e5F",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1736815677
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-WBTC-1",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+        "chain": "soneium",
+        "decimals": 8,
+        "sinceTimestamp": 1737044211
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "decimals": 18,
+        "sinceTimestamp": 1733134751
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-wstASTR",
+      "priceId": "wrapped-stastr",
+      "symbol": "wstASTR",
+      "name": "Warpped stASTR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54782/large/wstASTR.png?1741570094",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3b0DC2daC9498A024003609031D973B1171dE09E",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1741564800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-wstETH-2",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a",
+        "decimals": 18,
+        "sinceTimestamp": 1737366215
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-YAYAGETH",
+      "priceId": "yay-kelp-dao-s-airdrop-gain-eth",
+      "symbol": "YAYAGETH",
+      "name": "Yay Kelp DAO’s Airdrop Gain ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54281/large/yayagETH200w.png?1739438881",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xda14b3B7aEF494b8c37ed9710d14e44D490316fa",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1739836800
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-YAYSTONE",
+      "priceId": "yay-stakestone-ether",
+      "symbol": "YAYSTONE",
+      "name": "Yay StakeStone Ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54279/large/Yay!_Stone200w.png?1739438931",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x54e86315C03217b76A7466C302245fD10ebEf25A",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1739836800
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}

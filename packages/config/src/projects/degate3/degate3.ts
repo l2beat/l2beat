@@ -197,8 +197,8 @@ export const degate3: ScalingProject = {
     },
   },
   scopeOfAssessment: {
-    checked: [SOA.l1Contracts, SOA.gasToken, SOA.derivationSpec],
-    notChecked: [
+    inScope: [SOA.l1Contracts, SOA.gasToken, SOA.derivationSpec],
+    notInScope: [
       SOA.specToSourceCode,
       SOA.sourceCodeToVerificationKeys,
       SOA.trustedSetup,
@@ -206,7 +206,6 @@ export const degate3: ScalingProject = {
       SOA.nonGasTokens,
     ],
   },
-
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
@@ -255,6 +254,11 @@ export const degate3: ScalingProject = {
     },
     {
       rollupNodeLink: 'https://github.com/degatedev/degate-state-recover',
+      additionalConsiderations: {
+        short:
+          'Degate provides an orderbook decentralized exchange for spot trading. Arbitrary contracts are not supported.',
+        long: 'Degate provides an orderbook decentralized exchange for spot trading. Arbitrary contracts are not supported.',
+      },
     },
   ),
   technology: {

@@ -1,4 +1,90 @@
-Generated with discovered.json: 0x24b357bd09369e1d31f430866468719b6a741601
+Generated with discovered.json: 0x424267fc944f76f429d57e8c72bc284a361bacad
+
+# Diff at Thu, 10 Apr 2025 14:43:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208559
+- current block number: 22208559
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208559 (main branch discovery), not current.
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x6f045accbeda91e5e00575229b980c74c9bedb90
+
+# Diff at Sun, 06 Apr 2025 08:04:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 21786536
+- current block number: 22208559
+
+## Description
+
+Eigenlayer MS signer changes.
+
+## Watched changes
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      values.$members.7:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.6:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.5:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.4:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.3:
+-        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
++        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+      values.$members.2:
+-        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.multisigThreshold:
+-        "1 of 8 (13%)"
++        "1 of 6 (17%)"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.$members.4:
+-        "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02"
++        "0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
+      values.$members.3:
+-        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
++        "0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
+      values.$members.2:
+-        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
+      values.$members.1:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
+      values.$members.0:
+-        "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1"
++        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+    }
+```
+
+Generated with discovered.json: 0xab5fe3c30522e7d2fd6df6921d5b72edb5aa21e2
 
 # Diff at Tue, 04 Mar 2025 10:39:47 GMT:
 

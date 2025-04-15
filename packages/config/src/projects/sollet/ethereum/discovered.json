@@ -2,7 +2,7 @@
   "name": "sollet",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0xa6ace430b436b8b48a28ce7d5c95c2579be7173b73cb06db6e5184db999df263",
+  "configHash": "0x8a5cc7f8da16083929cbe84e4c6c2ccec6b04e01e1fdb59f569c6cf65dac2b7b",
   "entries": [
     {
       "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
@@ -23,7 +23,8 @@
         "$immutable": true,
         "owner": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
         "paused": false
-      }
+      },
+      "derivedName": "SplTokenSwap"
     }
   ],
   "abis": {

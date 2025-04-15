@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x48bb6bd892af6cac6614ffa9223694098bcf28fc
+
+# Diff at Fri, 11 Apr 2025 06:47:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22046072
+- current block number: 22244001
+
+## Description
+
+storageSetter upgrade for changing the challenge period (1d).
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0xb9c4EA7171b588e8D4c3F63e955Cd61e5172bb92) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      values.$pastUpgrades.2:
++        ["2025-04-09T18:39:47.000Z","0x6a3c741de4a66f9e4f6ab204507d0d1e6c6c0e8ec2ca63bb03ad6c57e8e5d373",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.1:
++        ["2025-04-09T18:39:47.000Z","0x6a3c741de4a66f9e4f6ab204507d0d1e6c6c0e8ec2ca63bb03ad6c57e8e5d373",["0x1Fd1be2e1c65F136020d2CcC073ED8A7269aE53f"]]
+      values.$upgradeCount:
+-        1
++        3
++++ description: Challenge period (Number of seconds until a state root is finalized).
+      values.FINALIZATION_PERIOD_SECONDS:
+-        604800
++        86400
+      values.finalizationPeriodSeconds:
+-        604800
++        86400
+    }
+```
+
+Generated with discovered.json: 0x3cc31776ff2f7ea42a8f5bdbac490b0ad6b0c065
+
+# Diff at Thu, 27 Mar 2025 11:14:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22046072
+- current block number: 22046072
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046072 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xC3BcdF5cb9AEA2cc4938C9D1AA866CF0BA6B19b5) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0xd930fc9221f4bd1e8e89d1082adf8c2ed4931013
+
+# Diff at Wed, 19 Mar 2025 13:05:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 22046072
+- current block number: 22046072
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046072 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0x919B2511b2DB24Cc0C0EebE28b62a4E591579C1B) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x6ebedc309d2143462ff2c40d745e6c9e8b3fd68f
+
+# Diff at Tue, 18 Mar 2025 08:13:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 22046072
+- current block number: 22046072
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046072 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      name:
+-        "ConduitMultisig"
++        "Conduit Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0x8285fe5f90a90d7d2236e5cb364a2e88043d6955
 
 # Diff at Fri, 14 Mar 2025 15:41:19 GMT:

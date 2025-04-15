@@ -3,7 +3,12 @@
   "displayName": "SequencerInbox",
   "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
   "ignoreMethods": ["inboxAccs"],
-  "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+  "ignoreInWatchMode": [
+    "batchCount",
+    "totalDelayedMessagesRead",
+    "buffer",
+    "postsBlobs"
+  ],
   "ignoreRelatives": ["reader4844"],
   "category": "core",
   "fields": {

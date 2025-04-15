@@ -1,20 +1,21 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('grvt')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
+const chainId = 325
+const trackedTxsSince = UnixTime(1742808587)
 
 export const grvt: ScalingProject = zkStackL2({
   discovery,
-  discovery_ZKstackGovL2,
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
@@ -40,6 +41,9 @@ export const grvt: ScalingProject = zkStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   diamondContract: discovery.getContract('GrvtZkEvm'),
   daProvider: {
     layer: DA_LAYERS.NONE,
@@ -59,7 +63,7 @@ export const grvt: ScalingProject = zkStackL2({
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
+          url: 'https://etherscan.io/address//0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800#code#F1#L46',
         },
       ],
     },
@@ -95,7 +99,7 @@ export const grvt: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
+          url: 'https://etherscan.io/address//0x36b026c39125964D99596CE302866B5A59E4dE27#code#F1#L441',
         },
         {
           title: 'TransactionFilterer',
@@ -104,6 +108,50 @@ export const grvt: ScalingProject = zkStackL2({
       ],
     },
   },
+  nonTemplateTrackedTxs: [
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: discovery.getContract('ValidatorTimelock').address,
+        selector: '0x6edd4f12',
+        functionSignature:
+          'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
+        sinceTimestamp: trackedTxsSince,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: discovery.getContract('ValidatorTimelock').address,
+        selector: '0xc37533bb',
+        functionSignature:
+          'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
+        sinceTimestamp: trackedTxsSince,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId,
+        address: discovery.getContract('ValidatorTimelock').address,
+        selector: '0x6f497ac6',
+        functionSignature:
+          'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
+        sinceTimestamp: trackedTxsSince,
+      },
+    },
+  ],
   milestones: [
     {
       title: 'Mainnet alpha launch',

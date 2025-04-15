@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type TvsAmountRecord, toRow } from './entity'
+import { type TvsAmountRecord, toRecord, toRow } from './entity'
 
 export class TvsAmountRepository extends BaseRepository {
   async insertMany(records: TvsAmountRecord[]): Promise<number> {
@@ -11,6 +11,52 @@ export class TvsAmountRepository extends BaseRepository {
       await this.db.insertInto('TvsAmount').values(batch).execute()
     })
     return rows.length
+  }
+
+  async getAmount(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsAmountRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '=', UnixTime.toDate(timestamp))
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
+  async getAmountsInRange(
+    configurationIds: string[],
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<TvsAmountRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount'])
+      .where('configurationId', 'in', configurationIds)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getLatestAmountBefore(
+    configurationId: string,
+    timestamp: UnixTime,
+  ): Promise<TvsAmountRecord | undefined> {
+    const row = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount'])
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '<', UnixTime.toDate(timestamp))
+      .orderBy('timestamp', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
   }
 
   async deleteByConfigInTimeRange(
@@ -24,6 +70,19 @@ export class TvsAmountRepository extends BaseRepository {
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async getAll(): Promise<TvsAmountRecord[]> {
+    const rows = await this.db
+      .selectFrom('TvsAmount')
+      .select(['timestamp', 'configurationId', 'amount'])
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('TvsAmount').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

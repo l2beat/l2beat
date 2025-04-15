@@ -1,0 +1,228 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "superposition",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "superposition-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        "chain": "arbitrum",
+        "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+        "decimals": 18,
+        "sinceTimestamp": 1725644465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1725644465
+        },
+        "priceId": "arbitrum"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0xEca0fEB4aA6112a3923823559e7197294Bc49CC7",
+            "decimals": 18,
+            "sinceTimestamp": 1725644220
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+            "decimals": 18,
+            "sinceTimestamp": 1725644465
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1725644220
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1725644465
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-FLY",
+      "priceId": "fluidity",
+      "symbol": "FLY",
+      "name": "Fluidity",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36086/large/FLY_2D_Old_Map_Double_Border.png?1710434215",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x000F1720A263f96532D1ac2bb9CDC12b72C6f386",
+        "chain": "arbitrum",
+        "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+        "decimals": 6,
+        "sinceTimestamp": 1725644465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1725644465
+        },
+        "priceId": "fluidity"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "chain": "arbitrum",
+        "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+        "decimals": 6,
+        "sinceTimestamp": 1725644465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1725644465
+        },
+        "priceId": "usd-coin"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-USDC.e-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6c030c5CC283F791B26816f325b9C632d964F8A1",
+        "chain": "superposition",
+        "decimals": 6,
+        "sinceTimestamp": 1733444058
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+        "chain": "arbitrum",
+        "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+        "decimals": 6,
+        "sinceTimestamp": 1725644465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1725644465
+        },
+        "priceId": "tether"
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "superposition-wBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "wBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+        "chain": "arbitrum",
+        "escrowAddress": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+        "decimals": 8,
+        "sinceTimestamp": 1725644465
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1725644465
+        },
+        "priceId": "wrapped-bitcoin"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -157,8 +157,8 @@ export const aztec: ScalingProject = {
       'The data format used can be found [here](https://github.com/AztecProtocol/aztec-2.0/blob/master/blockchain/contracts/Decoder.sol).',
   },
   scopeOfAssessment: {
-    checked: [SOA.l1Contracts, SOA.gasToken],
-    notChecked: [
+    inScope: [SOA.l1Contracts, SOA.gasToken],
+    notInScope: [
       SOA.specToSourceCode,
       SOA.nonGasTokens,
       SOA.derivationSpec,
@@ -196,6 +196,11 @@ export const aztec: ScalingProject = {
     {
       rollupNodeLink:
         'https://developers.aztec.network/#/A%20Private%20Layer%202/zkAssets/emergencyWithdraw',
+      additionalConsiderations: {
+        short:
+          'Aztec v2 is a private rollup that allows users to transfer assets privately. Arbitrary smart contracts are not supported.',
+        long: 'Aztec v2 is a private rollup that allows users to transfer assets privately. Arbitrary smart contracts are not supported.',
+      },
     },
   ),
   technology: {

@@ -1,0 +1,348 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "kontos",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "kontos-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-ARB",
+      "priceId": "arbitrum",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-ENA",
+      "priceId": "ethena",
+      "symbol": "ENA",
+      "name": "ENA",
+      "iconUrl": "https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57e114B691Db790C35207b2e685D4A43181e6061",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1712016000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-ENS",
+      "priceId": "ethereum-name-service",
+      "symbol": "ENS",
+      "name": "Ethereum Name Service",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19785/large/acatxTm8_400x400.jpg?1696519207",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-JASMY",
+      "priceId": "jasmycoin",
+      "symbol": "JASMY",
+      "name": "JasmyCoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13876/large/JASMY200x200.jpg?1696513620",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-PENDLE",
+      "priceId": "pendle",
+      "symbol": "PENDLE",
+      "name": "Pendle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x808507121B80c02388fAd14726482e061B8da827",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-PEOPLE",
+      "priceId": "constitutiondao",
+      "symbol": "PEOPLE",
+      "name": "ConstitutionDAO",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20612/large/GN_UVm3d_400x400.jpg?1696520017",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-RAI",
+      "priceId": "rai",
+      "symbol": "RAI",
+      "name": "Rai Reflex Index",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14004/large/RAI-logo-coin.png?1696513733",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-RNDR",
+      "priceId": "render-token",
+      "symbol": "RNDR",
+      "name": "Render Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11636/large/rndr.png?1696511529",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-SHIB",
+      "priceId": "shiba-inu",
+      "symbol": "SHIB",
+      "name": "SHIBA INU",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-stETH",
+      "priceId": "staked-ether",
+      "symbol": "stETH",
+      "name": "Liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13442/large/steth_logo.png?1696513206",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-STORJ",
+      "priceId": "storj",
+      "symbol": "STORJ",
+      "name": "StorjToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/949/large/storj.png?1696502065",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 8,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-TONCOIN",
+      "priceId": "the-open-network",
+      "symbol": "TONCOIN",
+      "name": "Wrapped TON Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17980/large/ton_symbol.png?1696517498",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 9,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 8,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "kontos-WLD",
+      "priceId": "worldcoin-wld",
+      "symbol": "WLD",
+      "name": "Worldcoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
+        "chain": "ethereum",
+        "escrowAddress": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
+        "decimals": 18,
+        "sinceTimestamp": 1699939643
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

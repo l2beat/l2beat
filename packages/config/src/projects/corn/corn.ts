@@ -73,7 +73,7 @@ export const corn: ScalingProject = orbitStackL2({
     }),
   ],
   untrackedGasTokens: ['BTCN'],
-  // associatedTokens: ['BTCN'],
+  associatedTokens: ['CORN'],
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

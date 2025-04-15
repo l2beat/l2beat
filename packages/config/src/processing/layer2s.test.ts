@@ -303,7 +303,8 @@ describe('layer2s', () => {
       for (const layer2 of layer2s) {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
-          if (layer2.technology.isUnderReview === true) continue
+          if (!layer2.technology || layer2.technology?.isUnderReview === true)
+            continue
 
           for (const [key, choicesAny] of Object.entries(layer2.technology)) {
             if (choicesAny === undefined) {
@@ -354,7 +355,7 @@ describe('layer2s', () => {
           >
 
           function check(key: Key) {
-            const item = layer2.technology[key]
+            const item = layer2.technology?.[key]
             if (Array.isArray(item)) {
               for (const [i, x] of item.entries()) {
                 checkChoice(x, `${key}[${i}]`)

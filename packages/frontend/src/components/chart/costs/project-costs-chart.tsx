@@ -38,6 +38,9 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       return undefined
     }
 
+    const lastDataPosted = data.chart.findLast((d) => d[13])
+    const allDataPostedSynced = data.chart.at(-1)?.[0] === lastDataPosted?.[0]
+
     return data.chart.map(
       ([
         timestamp,
@@ -78,6 +81,12 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
                 ? overheadEth
                 : overheadGas,
           posted: posted ?? null,
+          notSyncedPosted:
+            !allDataPostedSynced &&
+            lastDataPosted &&
+            timestamp >= lastDataPosted[0]
+              ? lastDataPosted[13]
+              : null,
         }
       },
     )
@@ -122,6 +131,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               ? `Total ${unitToLabel(unit)}`
               : `${rangeToLabel(range)} total ${unitToLabel(unit)}`
           }
+          className="max-md:h-7"
           tooltip="The total cost for the selected time period that the project paid to Ethereum. This includes the costs for calldata, computation, blobs, and overhead."
           isLoading={isLoading}
         >
@@ -133,6 +143,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           label={`Avg ${unitToLabel(unit)} per L2 UOP`}
           tooltip="The average cost per L2 user operation for the selected time period."
           isLoading={isLoading}
+          className="max-md:h-7"
         >
           {data?.stats.perL2Uop?.[unit]?.total
             ? formatCostValue(
@@ -151,6 +162,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           }
           tooltip="The total amount of data posted to Ethereum for the selected time period."
           isLoading={isLoading}
+          className="max-md:h-7"
         >
           {data?.stats.total.posted
             ? formatBytes(data.stats.total.posted)
@@ -160,6 +172,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           label="Avg size per L2 UOP"
           tooltip="The average posted data size of a L2 user operation for the selected time period."
           isLoading={isLoading}
+          className="max-md:h-7"
         >
           {data?.stats.perL2Uop?.posted
             ? formatBytes(data.stats.perL2Uop.posted)

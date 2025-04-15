@@ -1,0 +1,86 @@
+{
+  "AllVerifiers_2020_v1": {
+    "hash": "0x497eebe95d8d7611823ffcb6cc098a9c3c71e91941026f2b4c4989d6f9fa944d",
+    "address": "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "AllVerifiers_2022_v2": {
+    "hash": "0x70e4767336d4a44ecedb78b7cef6dc2810f5d8bc87a46c360083e65af451cb97",
+    "address": "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ForcedActions_2020_v1": {
+    "hash": "0x7e358cdedbf8af25ae12a5fe965db091c7751aafa68c2460ab43e81a8eb364b9",
+    "address": "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ForcedActions_2022_v3": {
+    "hash": "0x7d557870276c694154e12790f8c0c09930c8c75320f470c47b67968bffd536a6",
+    "address": "0x613ee54C54D5548627064B4D648942bF3648f376",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OnchainVaults_2021_v1": {
+    "hash": "0x105353ea24f9e10459c2487f227bc285c4ca2317fac8e12a8b936bc92329aea5",
+    "address": "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OnchainVaults_2022_v2": {
+    "hash": "0x2a703c051ff2524868f044282fc50b01913736a92f794b64b31bd31363cd3fca",
+    "address": "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ProxyUtils_2021_v1": {
+    "hash": "0x93b21bfbef09c4e60d6a17309877245220508c54478159a8f2b9dbfb60576c4b",
+    "address": "0xB3788a88F063B217227E27ae16Ba550db3132bE6",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ProxyUtils_2022_v2": {
+    "hash": "0xd5b06286e3bf5dccd0bb360c8cc876aec0a2ce288120d9f83dec45fa47c1aabc",
+    "address": "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarkExState_2021_v1": {
+    "hash": "0xf615d0291aa23f36d8cb749e3950b549d57d38bfef0c342331d0cedd7d769026",
+    "address": "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarkExState_2022_v5": {
+    "hash": "0x0e101cfdb791ca1a86402273377c7da5e67225cf5799ac2f51d9a940227ee6be",
+    "address": "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarkExchange.1_2021": {
+    "hash": "0x54407214d4211e41ecb742c3df7564e352844c1f5da38ef2e206b0465bd5345b",
+    "address": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "StarkExchange.1_2022": {
+    "hash": "0xadae235d029868dddc287e823167705942660a99a9154a4e487f5dfb4ddd01c9",
+    "address": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "TokensAndRamping_2020_v1": {
+    "hash": "0x452c4b92e2f090f2979fe1dec4ee28bf8b9c431b96b67966a3c2279f9e332684",
+    "address": "0x8536850750956c2FEebeCAB786d82271a5467687",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "TokensAndRamping_2022_v2": {
+    "hash": "0x75d386d73767f57d5f11c11f7bf837a48cd417754eea559931fc98a96ef34152",
+    "address": "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

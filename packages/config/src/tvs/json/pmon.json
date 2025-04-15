@@ -1,0 +1,35 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "pmon",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "pmon-PMON",
+      "priceId": "polychain-monsters",
+      "symbol": "PMON",
+      "name": "Polkamon",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+        "chain": "arbitrum",
+        "escrowAddress": "0x10B25719f4c0fA1BFF22431438E6b6315059548A",
+        "decimals": 18,
+        "sinceTimestamp": 1707462976
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1707462976
+        },
+        "priceId": "polychain-monsters"
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

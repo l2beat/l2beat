@@ -1,0 +1,92 @@
+name: Diff
+
+on:
+  pull_request:
+
+permissions:
+  pull-requests: write # For commenting on PRs
+
+jobs:
+  config-diff:
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Fetch branches
+        run: git fetch origin main:main
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Compute diff
+        id: diff
+        run: |
+          bash ./packages/config/scripts/diff/diff.sh
+          echo "has_changes=$(cat /tmp/compare/out/index.html | grep -c "No changes detected" || true)" >> $GITHUB_OUTPUT
+
+      - name: Publish diff
+        id: publish
+        if: steps.diff.outputs.has_changes != '1'
+        run: |
+          DOMAIN="https://pr-${{ github.event.pull_request.number }}-l2beat.surge.sh"
+          pnpx surge --project /tmp/compare/out --domain "$DOMAIN"
+          echo "domain=$DOMAIN" >> $GITHUB_OUTPUT
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Config Changes Report'
+
+      - name: Get current timestamp
+        id: timestamp
+        run: echo "value=$(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
+
+      - name: Create or Update Comment (Changes Detected)
+        if: steps.diff.outputs.has_changes != '1'
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## Config Changes Report
+            
+            Config changes have been detected between main and this PR.
+            
+            [View Full Report](${{ steps.publish.outputs.domain }})
+            
+            *Last updated: ${{ steps.timestamp.outputs.value }}*
+          edit-mode: replace
+          
+      - name: Create or Update Comment (No Changes)
+        if: steps.diff.outputs.has_changes == '1'
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## Config Changes Report
+            
+            No schema changes detected between main and this PR.
+            
+            *Last updated: ${{ steps.timestamp.outputs.value }}*
+          edit-mode: replace

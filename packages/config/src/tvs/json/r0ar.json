@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "r0ar",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "r0ar-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+            "decimals": 18,
+            "sinceTimestamp": 1728285287
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+            "decimals": 18,
+            "sinceTimestamp": 1728285311
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

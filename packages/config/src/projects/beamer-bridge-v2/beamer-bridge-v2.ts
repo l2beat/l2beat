@@ -17,6 +17,7 @@ export const beamerbridgev2: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
   addedAt: UnixTime(1688643599), // 2023-07-06T11:39:59Z
+  archivedAt: UnixTime(1742774400), // 2025-03-24T00:00:00.000Z,
   display: {
     name: 'Beamer Bridge V2',
     slug: 'beamerbridgev2',

@@ -11,7 +11,7 @@ import {
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Markdown } from '~/components/markdown/markdown'
-import { PrimaryCard } from '~/components/primary-card'
+import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
@@ -36,7 +36,7 @@ export async function generateStaticParams(): Promise<Params[]> {
   if (env.VERCEL_ENV !== 'production') return []
   const projects = await ps.getProjects({
     where: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   return projects.map((p) => ({ slug: p.slug }))
 }
@@ -46,7 +46,7 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const project = await ps.getProject({
     slug: params.slug,
     where: ['proofVerification'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   if (!project) {
     return null
@@ -62,7 +62,7 @@ export default async function Page(props: Props) {
     slug: params.slug,
     select: ['proofVerification'],
     optional: ['isScaling'],
-    whereNot: ['isArchived'],
+    whereNot: ['archivedAt'],
   })
   if (!project) {
     return notFound()

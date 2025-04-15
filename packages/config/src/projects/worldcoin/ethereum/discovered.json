@@ -1,9 +1,68 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 21845003,
-  "configHash": "0x9fd92f7421c241c880dbb8c3fa0bfb3b78afb2ac7a2fa18efd8e08f893717471",
+  "blockNumber": 22208595,
+  "configHash": "0x2cff7ff8076371ddcb2a2ea6c5158faafc94f2cd45dcb1f9229c13e0ce81067c",
   "entries": [
+    {
+      "name": "GnosisSafe",
+      "address": "0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689539603,
+      "sinceBlock": 17708254,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"],
+        "$threshold": 1,
+        "domainSeparator": "0xb675ba56ce231517629fa99360575086e844ce66d988f01b114862feaeb64742",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 80,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687284827,
+      "sinceBlock": 17522617,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"],
+        "$threshold": 1,
+        "domainSeparator": "0x1a63f0a7842b687ebe0112a3094586113497ecb5356496d07a378cfa9728c3c4",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 51,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "address": "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
       "address": "0x39CcB3b670651a14da8b3835f42924f49C2C5986",
@@ -23,10 +82,15 @@
           "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1",
           "0x43B68ccBa7FC726540768fD1537c3179283140ed"
         ],
-        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "VerifierLookupTable"
+    },
+    {
+      "address": "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "RegisterIdentitiesVerifierLookupTable",
@@ -50,7 +114,7 @@
           null,
           "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258"
         ],
-        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "derivedName": "VerifierLookupTable"
@@ -69,15 +133,59 @@
       "derivedName": "Verifier"
     },
     {
-      "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+      "address": "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
-        }
-      ]
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687278863,
+      "sinceBlock": 17522125,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+          "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x720111f1979d5254ad3ed9703990202cb97e5facfd38275c9fa390c248e5d90b",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 109,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "RegisterVerifierSize100",
@@ -91,6 +199,81 @@
       "sinceBlock": 18967237,
       "values": { "$immutable": true },
       "derivedName": "Verifier"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689524711,
+      "sinceBlock": 17707022,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x79b998ded1f4503CE3A0A76993c72a65449f4590",
+          "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0xa9298aed07def04ae5ed595b19679f58c1916e712de20b4b7cc2582574af8e29",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 45,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687279487,
+      "sinceBlock": 17522177,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+          "0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+          "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+          "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+          "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
+          "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0xce9ce7c9364f5e5f2250654b75d97f836c46669ced1751a36a6a977404411f50",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 74,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "DeleteVerifierSize10",
@@ -115,7 +298,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1688036723,
       "sinceBlock": 17584544,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "SemaphoreVerifier"
     },
     {
       "address": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
@@ -136,6 +320,60 @@
       "derivedName": "Verifier"
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687284071,
+      "sinceBlock": 17522557,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"],
+        "$threshold": 1,
+        "domainSeparator": "0x98e256868d7234686fe51735688f4df9962565d7112cbb7788564a5125133a2c",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 6,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1687282115,
+      "sinceBlock": 17522395,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"],
+        "$threshold": 1,
+        "domainSeparator": "0x180452edbeec3663940e6932f25fdc940988599b6fdc9937d77da5ec37217250",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 69,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "WorldIdIdentityManager2",
       "address": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
       "type": "Contract",
@@ -148,7 +386,7 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+          "to": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
           "via": []
         }
       ],
@@ -156,7 +394,7 @@
       "sinceTimestamp": 1688671151,
       "sinceBlock": 17636832,
       "values": {
-        "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "$admin": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "$implementation": "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
         "$pastUpgrades": [
           [
@@ -182,13 +420,13 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
-        "latestRoot": "18576567285759346071475722844302870938476489940686080730592521711179091842425",
+        "latestRoot": "20535234106167532500999484013852939974794758791305569179198459264789841243239",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
           "isValid": false
         },
-        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -213,6 +451,12 @@
     }
   ],
   "abis": {
+    "0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [
+      "constructor(address _singleton)"
+    ],
+    "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
+      "constructor(address _singleton)"
+    ],
     "0x39CcB3b670651a14da8b3835f42924f49C2C5986": [
       "constructor()",
       "error CannotRenounceOwnership()",
@@ -322,12 +566,21 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
     ],
+    "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
+      "constructor(address _singleton)"
+    ],
     "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258": [
       "error ProofInvalid()",
       "error PublicInputNotInField()",
       "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "0xb67ac19693fB89880Ca5873f6a890E865b259c26": [
+      "constructor(address _singleton)"
+    ],
+    "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": [
+      "constructor(address _singleton)"
     ],
     "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1": [
       "error ProofInvalid()",
@@ -339,12 +592,67 @@
     "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5": [
       "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
     ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "0xE44c83b9e1971A24EC698829297A0C4026B0CeF9": [
       "error ProofInvalid()",
       "error PublicInputNotInField()",
       "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
+    ],
+    "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": [
+      "constructor(address _singleton)"
+    ],
+    "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": [
+      "constructor(address _singleton)"
     ],
     "0xf7134CE138832c1456F2a91D64621eE90c2bddEa": [
       "constructor(address _logic, bytes _data) payable",
@@ -360,5 +668,7 @@
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+  }
 }

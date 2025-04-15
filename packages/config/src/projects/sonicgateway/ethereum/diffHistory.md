@@ -1,4 +1,71 @@
-Generated with discovered.json: 0xa94deeaefe8e0304f2ad2977a5dfa455e40d7658
+Generated with discovered.json: 0x9423de32266d187af505222684dae5f935f665bc
+
+# Diff at Thu, 03 Apr 2025 09:13:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad19dfb413ff34348157f743c194a146b6447e05 block: 21766633
+- current block number: 22187418
+
+## Description
+
+Upgrade TokenPairs contract: add generalized terminate() function, rm old token-specific terminateXX() functions. terminating a token is part of the flow that transitions it from lock-mint to native burn/mint as is done for USDC and USDT for example.
+
+## Watched changes
+
+```diff
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4) {
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+      sourceHashes.1:
+-        "0x2527d117bfcdd69b3e49a08514f4e5090307308646ebf2f019e382e7c4968fb3"
++        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09"
+      sourceHashes.0:
+-        "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09"
++        "0x7acdcc46a2f205d33ffeddfba5678af59f36b41d63a986907a50713f1aba8311"
+      values.$implementation:
+-        "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943"
++        "0x68A4DdEDc285241440733719e43B1BCB795dD8c7"
+      values.$pastUpgrades.1:
++        ["2025-03-31T13:26:35.000Z","0xa0ea3636586490b57142400ba479e1309d04e948db316b43e85733d4a63dbbf6",["0x68A4DdEDc285241440733719e43B1BCB795dD8c7"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../TokenPairs/TokenPairs.sol                      | 41 ++++------------------
+ 1 file changed, 6 insertions(+), 35 deletions(-)
+```
+
+Generated with discovered.json: 0x06586804aec43aff7b01ecdbbd5a6b0b048ea62f
+
+# Diff at Wed, 19 Mar 2025 13:05:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21766633
+- current block number: 21766633
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766633 (main branch discovery), not current.
+
+```diff
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xecb61ef9df254128148f13a88d5981d22276f22e
 
 # Diff at Tue, 04 Mar 2025 10:39:58 GMT:
 

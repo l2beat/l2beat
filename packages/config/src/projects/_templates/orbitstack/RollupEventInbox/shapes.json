@@ -1,0 +1,32 @@
+{
+  "ERC20RollupEventInbox": {
+    "hash": "0x88c3a2fa81cad2f98a156402c78de0fc804b2a1866ea4f449aa90ae92ceabc6c",
+    "address": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ERC20RollupEventInbox_apechain": {
+    "hash": "0x35bd9f6436158f2147578ce95b85de68f435e81f1f3ed3858f7523a8c4825a1a",
+    "address": "0xb0f031Cd10598c6b4C33FcE1675F26CF937091da",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupEventInbox": {
+    "hash": "0xcb5aa9193bb40ce04bdf027377926cf735cd52ee9823923cb55fce302ad76513",
+    "address": "0x806421D09cDb253aa9d128a658e60c0B95eFFA01",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupEventInbox_BoLD": {
+    "hash": "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8",
+    "address": "0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "RollupEventInbox_parallel": {
+    "hash": "0xcd37abd5bdcc8c37cbf37dcfa4889d5b238388344d913b3a48914f659e0d627b",
+    "address": "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

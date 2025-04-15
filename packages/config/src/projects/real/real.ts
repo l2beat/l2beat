@@ -54,7 +54,11 @@ export const real: ScalingProject = orbitStackL2({
     sinceTimestamp: UnixTime(1710580715),
     coingeckoPlatform: 're-al',
     apis: [
-      { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },
+      {
+        type: 'rpc',
+        url: 'https://tangible-real.gateway.tenderly.co/',
+        callsPerMinute: 3000,
+      },
       { type: 'blockscout', url: 'https://explorer.re.al/api' },
     ],
   },

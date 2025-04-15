@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 22029918,
-  "configHash": "0xbd6383aace16d75b6027f9ca88c675eb706f11f797b7826241d9428d828b09fc",
+  "configHash": "0x122b354d68e8cebc2c543e399795d4c49d33df5d27161ab43d847065fded98e4",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -80,6 +80,7 @@
         "systemConfig": "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
         "version": "2.0.2"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -131,10 +132,11 @@
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "version": "2.3.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ZircuitMultiSig2",
+      "name": "Zircuit Multisig 2",
       "address": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -279,6 +281,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -342,6 +345,7 @@
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "version": "2.1.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -406,7 +410,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4",
@@ -470,6 +475,7 @@
         "$upgradeCount": 4,
         "version": "c3131379c4bf618f2135c29547049b46923f7dca"
       },
+      "derivedName": "Verifier",
       "category": { "name": "Spam", "priority": -1 }
     },
     {
@@ -589,7 +595,8 @@
         "proxy__getIsOssified": false,
         "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
         "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d"
-      }
+      },
+      "derivedName": "L1ERC20TokenBridge"
     },
     {
       "name": "L2OutputOracle",
@@ -682,6 +689,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -723,6 +731,7 @@
         "superchainConfig": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "version": "2.1.0"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -779,6 +788,7 @@
         "$upgradeCount": 1,
         "digest": "0x1d544a5de23a23d1e94ae793352208593bfa28c3d76d455f09ea3f9c25c402b8"
       },
+      "derivedName": "VerifierV2",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -787,7 +797,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ZircuitMultiSig1",
+      "name": "Zircuit Multisig 1",
       "address": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -796,7 +806,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "challenge",
@@ -925,7 +934,8 @@
         "bridge": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "BRIDGE": "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
       "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
@@ -936,7 +946,6 @@
       "address": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "propose",
@@ -1475,17 +1484,17 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "lido/L1ERC20TokenBridge": "0x951b81a0c3795b9b9e802e931b6afc70562d022821a34113344586a670c0f4a6",
-    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
-    "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
-    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
-    "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
-    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
-    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44",
-    "opstack/zircuit/L2OutputOracle": "0xd965b04444d19429a91906b3d19306ae41106bca95c101f6ad39b283bbcc190b",
-    "opstack/zircuit/SuperchainConfig": "0x32fd25c725e76ad10adba9e088c0ab891b438e31c9dd63c5a4f32b0956e8ecfd",
-    "opstack/zircuit/Verifier": "0x90a386859ac0109db48c1ba29ea172db9b3cf54dcd8e88251c86e3f99945b90f"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "lido/L1ERC20TokenBridge": "0xbd7adee14900b864c43324092aea4dd72d87b31e6dcbfdd26a68d2e2b427ca8e",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
+    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44",
+    "opstack/zircuit/L2OutputOracle": "0x6be1011b447de6a10d71a7f48d25dd4d66fd0c1bab1a9418c03085a5fcdc3001",
+    "opstack/zircuit/SuperchainConfig": "0x97ac106120e0eb829ef2873ae828694300be0883750ddfd7cb965eed5cc501f4",
+    "opstack/zircuit/Verifier": "0x6c97de6021617dbfcf86fee986182cb7d22d10440735734124a69a3734b9058f"
   }
 }

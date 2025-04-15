@@ -1,4 +1,56 @@
-Generated with discovered.json: 0xde477d26248d65f36907c3be024a2e45c9132635
+Generated with discovered.json: 0x099945eb4b96e7020c00c860c0956e9d16872ad6
+
+# Diff at Thu, 10 Apr 2025 14:43:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
+Generated with discovered.json: 0x8d99b7e69070fcf57144e5a43e2fde91d82d4c5f
+
+# Diff at Wed, 19 Mar 2025 13:05:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract undefined (0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x1eb54eccfd1d71148feda313767e4f53cee8801d
 
 # Diff at Tue, 04 Mar 2025 10:40:12 GMT:
 

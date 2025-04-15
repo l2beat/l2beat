@@ -19,7 +19,7 @@ export async function getScalingCostsEntries() {
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
       where: ['isScaling'],
-      whereNot: ['isUpcoming', 'isArchived'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
     api.costs.table({ range: '30d' }),
   ])
@@ -53,7 +53,6 @@ function getScalingCostEntry(
 
   return {
     ...getCommonScalingEntry({ project, changes }),
-    href: `/scaling/projects/${project.slug}#onchain-costs`,
     costsWarning: project.costsInfo.warning,
     costOrder: costPerUop,
   }

@@ -52,6 +52,6 @@ describe('resolveImports', () => {
     })
 
     const result = resolveImports('/base', ['parent.jsonc'], new Set())
-    expect(result.maxDepth).toEqual(123)
+    expect((result as any).maxDepth).toEqual(123)
   })
 })

@@ -1,0 +1,91 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "wirex",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "wirex-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4",
+        "chain": "wirex",
+        "decimals": 18,
+        "sinceTimestamp": 1720093223
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "wirex-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": "340282366920938463463374607431768211455",
+            "decimals": 18,
+            "sinceTimestamp": 1720093223
+          },
+          {
+            "type": "balanceOfEscrow",
+            "chain": "wirex",
+            "decimals": 18,
+            "address": "native",
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+            "sinceTimestamp": 1720093223
+          }
+        ]
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "wirex-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035",
+        "chain": "wirex",
+        "decimals": 6,
+        "sinceTimestamp": 1720093223
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "wirex-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1E4a5963aBFD975d8c9021ce480b42188849D41d",
+        "chain": "wirex",
+        "decimals": 6,
+        "sinceTimestamp": 1720093223
+      }
+    }
+  ]
+}

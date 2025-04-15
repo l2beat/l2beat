@@ -1,8 +1,8 @@
 {
   "name": "automata",
   "chain": "ethereum",
-  "blockNumber": 21715439,
-  "configHash": "0xe1ba19be335811986fef21a688ba49798d317cc54243e40671a12e021f09f1ae",
+  "blockNumber": 22208279,
+  "configHash": "0x7e49269ac52eeb9e225f182c3507873e18126d0c4c5957e2e9caa6191d98304a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -48,10 +48,11 @@
         "superchainConfig": "0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
         "version": "2.1.1+beta.1"
       },
+      "derivedName": "L1ERC721Bridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "AutomataUpgradeMultisig",
+      "name": "Automata Multisig 1",
       "address": "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -132,12 +133,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 19,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "Automata",
       "address": "0x08A650c7ADF9c79a7d4157FCb8E670D9645e3A91",
       "type": "EOA",
       "proxyType": "EOA"
@@ -189,40 +191,11 @@
         "variableResolutionCostPrecision": 1000,
         "version": "1.0.0"
       },
+      "derivedName": "DataAvailabilityChallenge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"
-        }
-      ]
-    },
-    {
-      "address": "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x08c5DCDD5e46d31CC1591ee15b084663507597f3",
-          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
-        },
-        {
-          "permission": "interact",
-          "from": "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": [{ "address": "0x5E2FC552288857cfE709C398Ecac448314dE1320" }]
-        }
-      ]
-    },
-    {
-      "address": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
+      "address": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -233,7 +206,35 @@
       ]
     },
     {
-      "name": "AutomataOpsMultisig",
+      "address": "0x373771221e39e1Ca16e981179CEcF1bE38ac70d9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x08c5DCDD5e46d31CC1591ee15b084663507597f3",
+          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
+        }
+      ]
+    },
+    {
+      "address": "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"
+        }
+      ]
+    },
+    {
+      "name": "Automata Multisig 2",
       "address": "0x5E2FC552288857cfE709C398Ecac448314dE1320",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -242,7 +243,7 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "interact",
           "from": "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
@@ -255,13 +256,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": ["0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"],
-        "$threshold": 1,
+        "$members": [
+          "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
+          "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
+          "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
+          "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"
+        ],
+        "$threshold": 3,
         "domainSeparator": "0x1978407b2bfcb61fd0bc2d6295bb57169df87b3c86da52e3e58ff08747bf1dc7",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 0,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -280,13 +286,13 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2",
+          "to": "0x5E2FC552288857cfE709C398Ecac448314dE1320",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "via": [{ "address": "0x5E2FC552288857cfE709C398Ecac448314dE1320" }]
+          "via": []
         },
         {
           "permission": "sequence",
-          "to": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
+          "to": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
           "via": []
         },
         {
@@ -311,7 +317,7 @@
         "$upgradeCount": 1,
         "basefeeScalar": 56000000,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "0x5BEF09f138921eF7985d83AAB97da1dB6E4dd190",
+        "batcherHash": "0x12a593227Efb69EA634e2169E2c0A8246BB0B1B3",
         "batchInbox": "0xff00000000000000000000000000000001111111",
         "blobbasefeeScalar": 0,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
@@ -356,7 +362,7 @@
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20323430,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "0xA940a669DAe672111FD02Df597Cf7De7Cf758fAD",
+        "unsafeBlockSigner": "0x373771221e39e1Ca16e981179CEcF1bE38ac70d9",
         "version": "2.3.0-beta.2",
         "VERSION": 0
       },
@@ -366,6 +372,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -424,7 +431,8 @@
         "addressManager": "0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6",
         "isUpgrading": false,
         "owner": "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1CrossDomainMessenger",
@@ -471,19 +479,8 @@
         "systemConfig": "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "0x8c6F6580C846634C5DA08c40AE308DE23006a679",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "severity": "HIGH",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"
-        }
-      ]
     },
     {
       "address": "0xa5822fb7E3Fb516E518e2629E6786e93858e41F4",
@@ -534,27 +531,37 @@
         "bridge": "0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5",
         "BRIDGE": "0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5",
         "version": "1.9.0"
-      }
+      },
+      "derivedName": "OptimismMintableERC20Factory"
     },
     {
+      "name": "AltLayer 3",
       "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xA940a669DAe672111FD02Df597Cf7De7Cf758fAD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
+      "name": "AltLayer 1",
       "address": "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "AltLayer 2",
       "address": "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xC3515A4bb0028E7548819df04160e2248d86eDE8",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261"
+        }
+      ]
     },
     {
       "name": "OptimismPortal",
@@ -598,14 +605,15 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 60000,
-          "prevBlockNum": 21709413
+          "prevBoughtGas": 200000,
+          "prevBlockNum": 22086408
         },
         "paused": false,
         "superchainConfig": "0xDf87154Ed6cF332931b70014bA3d9dF423074FfF",
         "systemConfig": "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.8.1-beta.1"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -622,12 +630,12 @@
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "to": "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F",
+          "to": "0xC3515A4bb0028E7548819df04160e2248d86eDE8",
           "via": []
         },
         {
           "permission": "propose",
-          "to": "0x8c6F6580C846634C5DA08c40AE308DE23006a679",
+          "to": "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
           "via": []
         },
         {
@@ -652,22 +660,32 @@
             "2024-07-17T03:04:35.000Z",
             "0x048137ed10a49a456e4a1b036f6fb7884ff69cb93ad20fce3fd2deebef4399e0",
             ["0xf31575705C047eC4D3Eb05F0917B9aA404179e3A"]
+          ],
+          [
+            "2025-04-05T09:01:59.000Z",
+            "0x92cdc220f2e504336fecf2a06ac21865e046c90315e6902d04597397628505b8",
+            ["0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]
+          ],
+          [
+            "2025-04-05T09:19:11.000Z",
+            "0xbd8864ebf2f77f87a58470897b837b3003f982efa5d088b49a1373038e3da0df",
+            ["0xf31575705C047eC4D3Eb05F0917B9aA404179e3A"]
           ]
         ],
-        "$upgradeCount": 1,
-        "challenger": "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F",
-        "CHALLENGER": "0x34Faa77b4D1686E399c96deF0de31D30572eaa9F",
+        "$upgradeCount": 3,
+        "challenger": "0xC3515A4bb0028E7548819df04160e2248d86eDE8",
+        "CHALLENGER": "0xC3515A4bb0028E7548819df04160e2248d86eDE8",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 8373600,
-        "latestOutputIndex": 2325,
-        "nextBlockNumber": 8377200,
-        "nextOutputIndex": 2326,
-        "proposer": "0x8c6F6580C846634C5DA08c40AE308DE23006a679",
-        "PROPOSER": "0x8c6F6580C846634C5DA08c40AE308DE23006a679",
+        "latestBlockNumber": 11347200,
+        "latestOutputIndex": 3151,
+        "nextBlockNumber": 11350800,
+        "nextOutputIndex": 3152,
+        "proposer": "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
+        "PROPOSER": "0x5B08eCA5C0cc5Ea1EBF03881c30EbF800f76F5a6",
         "startingBlockNumber": 0,
         "startingTimestamp": 1721183063,
         "SUBMISSION_INTERVAL": 3600,
@@ -682,6 +700,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -726,6 +745,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -764,6 +784,7 @@
         "systemConfig": "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.2.0"
       },
+      "derivedName": "L1StandardBridge",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -789,7 +810,9 @@
       "values": {
         "$immutable": true,
         "owner": "0x7617f4a55d62b9EE49578D9C90593e58E607415F"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xff00000000000000000000000000000001111111",
@@ -1291,17 +1314,17 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
-    "opstack/DataAvailabilityChallenge": "0x8f5b5fb537a6dbfc6a8903a91dbf7a992ee7cf7bbd2f84e01912d5863c7fb2f3",
-    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
-    "opstack/L1ERC721Bridge": "0xe3c34e1b8067f7703e457443bcf1a581ac71068b492ba5c6d684e6422f73f0b4",
-    "opstack/L1StandardBridge": "0x0647807f8b88d9ae56989c89e1abb80cc764b8a01a06828cd3fcf936ba7abdd1",
-    "opstack/L2OutputOracle": "0xc8c03bf9d2b8af9c211229cb24bbc7abcf2899e0bc8f2e6bd7c846b50051c60c",
-    "opstack/OptimismMintableERC20Factory": "0xcc604bfb63f0b4677910c2393200c75ce36dba8f2b40a09173d6a96a987e4944",
-    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
-    "opstack/SuperchainConfigFake": "0x1f1fe2ca60b39e18cfa4f6308beec85f223e5fb7cbcd1a8532a0997bb346617b",
-    "opstack/SystemConfig": "0x70f7ca008f77bf5663ce57f25fbe03428a46938fce66f6fa5721efa602e88f44"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/DataAvailabilityChallenge": "0xf5a4dd22a640f2f5494cbbd58e26eec573a6659231b91a4d07abfdcd084ccb92",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1ERC721Bridge": "0x5c7592f4200701add020a11deb058f0857a4c1ad93555f37f44d66fe677c290a",
+    "opstack/L1StandardBridge": "0x8204dc4238df9269fc3e852b4b13a42fb643d92c86aaac0193caccc700468f75",
+    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/OptimismMintableERC20Factory": "0x3cbc637c27d436b44ff634f50397fc2a33c5e6e3e1a876f3b9fc5219a557829a",
+    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
+    "opstack/SystemConfig": "0x667b85ff78b5968f4c25d7b4a87ef4cd710212742098ff452e8f502dd7e70b44"
   }
 }

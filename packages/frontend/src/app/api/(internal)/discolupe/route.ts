@@ -21,14 +21,14 @@ export async function GET() {
 }
 
 async function getResponse() {
-  const tvs = await get7dTvsBreakdown()
+  const tvs = await get7dTvsBreakdown({ type: 'layer2' })
   const costs = (await getCostsProjects()).map((p) => p.id.toString())
   const liveness = Object.keys(await getLiveness())
   const finality = (await getFinalityProjects()).map((f) => f.id.toString())
 
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingTechnology'],
-    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'isArchived'],
+    optional: ['discoveryInfo', 'milestones', 'isUpcoming', 'archivedAt'],
   })
 
   return {
@@ -48,7 +48,7 @@ async function getResponse() {
           project.discoveryInfo?.permissionsDiscoDriven ?? false,
         areContractsDiscoveryDriven:
           project.discoveryInfo?.contractsDiscoDriven ?? false,
-        isArchived: !!project.isArchived,
+        isArchived: !!project.archivedAt,
         isUpcoming: !!project.isUpcoming,
         isUnderReview: project.statuses.isUnderReview,
 

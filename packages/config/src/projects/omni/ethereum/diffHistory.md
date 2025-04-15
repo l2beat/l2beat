@@ -1,4 +1,121 @@
-Generated with discovered.json: 0xa2d8f4adbf6c067c70069c0f51eb1575c906736b
+Generated with discovered.json: 0x96c87f71fee62bb15b90ba7ebcf0a0658f005e7b
+
+# Diff at Mon, 14 Apr 2025 09:53:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@747d4f37c2414630ca17975636bd17d093de850f block: 22123489
+- current block number: 22266420
+
+## Description
+
+Add Hashi related contracts to discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22123489 (main branch discovery), not current.
+
+```diff
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      name:
+-        "OmniBridgeGovernance"
++        "Gnosis Bridge Multisig"
+    }
+```
+
+```diff
+    contract Hashi Multisig (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      name:
+-        "Safe"
++        "Hashi Multisig"
+    }
+```
+
+```diff
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: None
+      name:
+-        "MultiTokenMediator"
++        "ForeignOmnibridge"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++        "gnosis:0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A"
++++ description: Array of the reports on GnosisChain
++++ severity: HIGH
+      values.reporters.0:
+-        "0x0000000000000000000000000000000000000000"
++        "gnosis:0x0000000000000000000000000000000000000000"
++++ description: Address of the target contract on GnosisChain
++++ severity: HIGH
+      values.targetAddress:
+-        "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
++        "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+      fieldMeta:
++        {"targetAddress":{"severity":"HIGH","description":"Address of the target contract on GnosisChain"},"adapters":{"severity":"HIGH","description":"Array of the adapters on GnosisChain"},"reporters":{"severity":"HIGH","description":"Array of the reports on GnosisChain"},"threshold":{"severity":"HIGH","description":"Threshold of the adapters on GnosisChain"}}
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"gnosis"}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroAdapter (0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x70f663752590412d95d8eefff7d709a38845bb06
+
+# Diff at Tue, 25 Mar 2025 11:02:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b4a04714c0219993c2a83e7714e82e32f8a106ba block: 21981875
+- current block number: 22123489
+
+## Description
+
+AdaptersHash changed, no changes to validation.
+
+## Watched changes
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      values.expectedAdaptersHash:
+-        "0x0a74748a93656acd952c12f9e5b2b6a3eead25ba1c94ffa6ddb26f454a179cae"
++        "0x6b603f4a7f51661e39122b2cc2745ffbc56eca92e59f655d365cd5170d930c0a"
+    }
+```
+
+Generated with discovered.json: 0x02172968a7b271aacd9de101940d09531818a6ee
 
 # Diff at Thu, 06 Mar 2025 15:19:18 GMT:
 

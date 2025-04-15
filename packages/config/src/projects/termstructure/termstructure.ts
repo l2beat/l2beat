@@ -20,7 +20,7 @@ const expirationPeriod = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: [{ name: 'TermStructureMultisig', delay: 'no' }],
+  upgradableBy: [{ name: 'TermStructure Multisig 1', delay: 'no' }],
 }
 
 const treasuryWeight =
@@ -148,27 +148,36 @@ export const termstructure: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(expirationPeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: 'UnderReview',
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      additionalConsiderations: {
+        short:
+          'Term Structure provides the infrastructure for fixed-rate leverage, lending and borrowing. Arbitrary contracts are not supported.',
+        long: 'Term Structure provides the infrastructure for fixed-rate leverage, lending and borrowing. Arbitrary contracts are not supported.',
+      },
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -298,7 +307,7 @@ export const termstructure: ScalingProject = {
           'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
         ),
         discovery.getMultisigPermission(
-          'TermStructureMultisig',
+          'TermStructure Multisig 1',
           'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
         ),
         discovery.getPermissionDetails(
@@ -325,15 +334,15 @@ export const termstructure: ScalingProject = {
           'Can execute blocks on L1.',
         ),
         discovery.getMultisigPermission(
-          'VaultMultisig',
+          'TermStructure Multisig 2',
           `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
         ),
         discovery.getMultisigPermission(
-          'InsuranceMultisig',
+          'TermStructure Multisig 3',
           `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
         ),
         discovery.getMultisigPermission(
-          'TreasuryMultisig',
+          'TermStructure Multisig 4',
           `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
         ),
       ],

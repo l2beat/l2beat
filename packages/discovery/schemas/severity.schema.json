@@ -1,6 +1,0 @@
-{
-  "$id": "https://l2beat.com/contract.schema.json",
-  "title": "Discovery severity enum",
-  "type": ["string"],
-  "enum": ["LOW", "MEDIUM", "HIGH"]
-}

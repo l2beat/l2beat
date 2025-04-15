@@ -129,7 +129,7 @@ describe('getProjects', () => {
         (project) =>
           !project.isUpcoming &&
           !project.isUnderReview &&
-          !project.isArchived &&
+          !project.archivedAt &&
           // TODO: Ideally the category check should be removed, but
           // hyperliquid and polygon-pos are exceptions that would fail the test
           (project.display.category === 'Optimium' ||
@@ -340,7 +340,7 @@ describe('getProjects', () => {
           for (const config of functionCallConfigs ?? []) {
             const key = `${config.params.address.toString()}-${
               config.params.selector
-            }-${config.untilTimestamp?.toString()}-${config.type}`
+            }-${config.untilTimestamp?.toString()}-${config.type}-${config.subtype}`
             assert(
               !functionCalls.has(key),
               `Duplicate function call config in ${project.id}`,
@@ -490,7 +490,9 @@ describe('getProjects', () => {
   describe('all new projects are discovery driven', () => {
     const isNormalProject = (p: BaseProject) => {
       return (
-        p.isScaling === true && p.isArchived !== true && p.isUpcoming !== true
+        p.isScaling === true &&
+        p.archivedAt === undefined &&
+        p.isUpcoming !== true
       )
     }
 
@@ -507,6 +509,30 @@ describe('getProjects', () => {
             areContractsDiscoveryDriven(p.contracts),
           'New projects are expected to be discovery driven. Read the comment in constants.ts',
         )
+      })
+    }
+  })
+
+  describe('badges', () => {
+    const signularBadges = [
+      'Infra',
+      'RaaS',
+      'DA',
+      'Stack',
+      'Fork',
+      'L3ParentChain',
+    ]
+
+    for (const badge of signularBadges) {
+      it(`has maximum one ${badge} badge`, () => {
+        for (const project of projects) {
+          const badges = project.display?.badges?.filter(
+            (b) => b.type === badge,
+          )
+          if (badges) {
+            expect(badges.length).toBeLessThanOrEqual(1)
+          }
+        }
       })
     }
   })

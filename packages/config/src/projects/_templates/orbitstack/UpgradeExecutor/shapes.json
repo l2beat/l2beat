@@ -1,0 +1,14 @@
+{
+  "UpgradeExecutor": {
+    "hash": "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd",
+    "address": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "UpgradeExecutor_arbitrum_notargetCall": {
+    "hash": "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401",
+    "address": "0x86f0cf42Ad673B3D666d103E009EC142D1298a17",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

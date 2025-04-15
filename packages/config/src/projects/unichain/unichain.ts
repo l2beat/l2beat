@@ -1,5 +1,5 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION, SOA } from '../../common'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DERIVATION, ESCROW, SOA } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -33,15 +33,18 @@ export const unichain: ScalingProject = opStackL2({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   scopeOfAssessment: {
-    checked: [
+    inScope: [
       SOA.l1Contracts,
       SOA.l2Contracts,
       SOA.gasToken,
       SOA.derivationSpec,
       SOA.sourceCodeToProgramHash,
     ],
-    notChecked: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
+    notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
   stage: getStage(
     {
@@ -83,6 +86,15 @@ export const unichain: ScalingProject = opStackL2({
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),
   isNodeAvailable: true,
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+    }),
+  ],
   chainConfig: {
     name: 'unichain',
     chainId: 130,

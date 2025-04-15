@@ -16,11 +16,15 @@ import { makeTechnologyChoice } from './make-technology-section'
 type DataAvailabilitySection =
   | {
       type: 'Group'
-      props: Omit<GroupSectionProps, 'id' | 'title' | 'sectionOrder'>
+      props:
+        | Omit<GroupSectionProps, 'id' | 'title' | 'sectionOrder'>
+        | undefined
     }
   | {
       type: 'TechnologySection'
-      props: Omit<TechnologySectionProps, 'id' | 'title' | 'sectionOrder'>
+      props:
+        | Omit<TechnologySectionProps, 'id' | 'title' | 'sectionOrder'>
+        | undefined
     }
 
 export function getDataAvailabilitySection(
@@ -31,7 +35,7 @@ export function getDataAvailabilitySection(
     return getCustomDaSection(project)
   }
   if (project.scalingTechnology?.dataAvailability) {
-    return getTechnologySection(
+    return getPublicDaSection(
       {
         ...project,
         scalingTechnology: project.scalingTechnology,
@@ -39,6 +43,14 @@ export function getDataAvailabilitySection(
       daSolution,
     )
   }
+  if (project.scalingTechnology?.isUnderReview)
+    return {
+      type: 'TechnologySection',
+      props: {
+        items: [],
+        isUnderReview: true,
+      },
+    }
 }
 
 function getCustomDaSection(
@@ -93,10 +105,10 @@ function getCustomDaSection(
   }
 }
 
-function getTechnologySection(
+function getPublicDaSection(
   project: Project<'statuses' | 'scalingTechnology', 'scalingDa'>,
   daSolution?: DaSolution,
-): Extract<DataAvailabilitySection, { type: 'TechnologySection' }> | undefined {
+): Extract<DataAvailabilitySection, { type: 'TechnologySection' }> {
   assert(
     project.scalingTechnology?.dataAvailability,
     'dataAvailability is required',
@@ -112,7 +124,7 @@ function getTechnologySection(
               text: 'Learn more about the DA layer here:',
               project: {
                 name: daSolution.layerName,
-                slug: `${daSolution.layerName}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
+                slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
                 type: 'data-availability',
               },
             }
@@ -120,11 +132,8 @@ function getTechnologySection(
       },
     ),
   ])
-  if (!props) {
-    return undefined
-  }
   return {
     type: 'TechnologySection',
     props,
-  }
+  } as const
 }

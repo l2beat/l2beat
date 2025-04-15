@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "ebichain",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "ebichain-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x73CF739b0233027cd516998e177d473D0a45E037",
+        "decimals": 18,
+        "sinceTimestamp": 1713462371
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

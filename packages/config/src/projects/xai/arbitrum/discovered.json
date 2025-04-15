@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 299816283,
-  "configHash": "0x842c78302959f0d900ca23d0ed84e39936da6f69af2b558d8322e5995548bcbf",
+  "blockNumber": 324577860,
+  "configHash": "0xba2e9ba30d0231859f21b854c6f6457a55bc719e509595bfe4deb02a240331aa",
   "entries": [
     {
       "name": "XaiMultisig2",
@@ -37,7 +37,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -94,7 +94,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x08a361fE449b1371cC21b286d88F69eF6d205809",
@@ -186,6 +187,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -322,7 +324,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148192,
       "sinceBlock": 244802957,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "name": "RollupEventInbox",
@@ -413,6 +416,7 @@
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -551,7 +555,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148167,
       "sinceBlock": 244802857,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "PoolProxyDeployer",
@@ -587,7 +592,8 @@
         "esXaiBeacon": "0x6Bc4e6B2c13Ba42e933b23AFAb8a58bbbBa5D02B",
         "keyBucketBeacon": "0xfB93c2e5E41BD0ffd2E99A88e6d2A8D4F542d39a",
         "poolBeacon": "0x5f9D168d3435747335b1B3dC7e4d42e3510087C7"
-      }
+      },
+      "derivedName": "PoolProxyDeployer"
     },
     {
       "name": "ValidatorUtils",
@@ -601,7 +607,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
@@ -691,7 +698,7 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 91692,
+        "delayedMessageCount": 91844,
         "inboxHistory": [
           "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
@@ -700,8 +707,8 @@
         "outboxHistory": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 140575,
-        "sequencerReportedSubMessageCount": 76724940
+        "sequencerMessageCount": 147623,
+        "sequencerReportedSubMessageCount": 90985507
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -790,7 +797,8 @@
         "$upgradeCount": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
-      }
+      },
+      "derivedName": "GasSubsidy"
     },
     {
       "name": "SequencerInbox",
@@ -837,7 +845,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1704309371,
       "sinceBlock": 166757506,
       "values": {
@@ -856,7 +869,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 140575,
+        "batchCount": 147623,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
@@ -891,7 +904,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 91692,
+        "totalDelayedMessagesRead": 91844,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -900,6 +913,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -1126,7 +1140,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 3582610,
+        "totalSupply": 3583103,
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "usdcAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1213,13 +1227,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 8940,
+        "firstUnresolvedNode": 10658,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 8939,
-        "latestNodeCreated": 9091,
+        "latestConfirmed": 10657,
+        "latestNodeCreated": 10810,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1265,6 +1279,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -1349,15 +1364,11 @@
         ],
         "$upgradeCount": 2,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "RefereeCalculations"
     },
     {
       "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1411,7 +1422,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "OneStepProofEntry",
@@ -1431,7 +1443,8 @@
         "proverHostIo": "0x33c1514Bf90e202d242C299b37C60f908aa206D4",
         "proverMath": "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4",
         "proverMem": "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "address": "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
@@ -1450,7 +1463,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148184,
       "sinceBlock": 244802923,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "name": "OneStepProverMemory",
@@ -1464,7 +1478,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1724148175,
       "sinceBlock": 244802890,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "PoolFactory",
@@ -1521,7 +1536,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 293,
+        "getPoolsCount": 300,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "STAKE_KEYS_ADMIN_ROLE": "0x4744ee11e24f5fc5de82fa6dba03b134899d8fd3405c7e9a26e120c89c8d9c28",
@@ -1558,7 +1573,6 @@
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
           "0x90D77E3a3B660E54E04cD622937765d2375FB2e3",
-          "0xd427165292B2E39cdac102eD963B14fFBACc964a",
           "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
           "0xbBE90F6748C82623F130A4486722a436c5a72440",
           "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
@@ -1569,8 +1583,8 @@
         "domainSeparator": "0x0f84f5102dd9fea36a3e0099c9a4da5d3e2def631c0fe4cd8fd30ae7c261b379",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 59,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1581,7 +1595,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x3b80a9109759df060ce4e99dc21f4421975553bf75760dafe4c4106046fba1c1"
+        "0xdb0dddc62ca62ff610412f44a998e8b66f885df3929e824594d86c4b37e9aedc"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.",
@@ -1601,7 +1615,7 @@
       "sinceBlock": 157193676,
       "values": {
         "$admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723",
-        "$implementation": "0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97",
+        "$implementation": "0x9e3e14576EBd9595eFB0d71aA9Ff51a6DC621bAF",
         "$pastUpgrades": [
           [
             "2023-12-05T18:33:46.000Z",
@@ -1697,34 +1711,39 @@
             "2025-01-24T16:10:34.000Z",
             "0x0ea3848ffb8f1e5de41e688a5ede3772e8151ecdfd415c7517e69d38f4d27166",
             ["0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97"]
+          ],
+          [
+            "2025-04-03T19:32:59.000Z",
+            "0x0f58dca431e80fdf25bbdf67f072395d9ab4901e11b4c9d1334b228d9c92b60c",
+            ["0x9e3e14576EBd9595eFB0d71aA9Ff51a6DC621bAF"]
           ]
         ],
-        "$upgradeCount": 19,
+        "$upgradeCount": 20,
         "calculateChallengeEmissionAndTier": [
-          "35673515981735159817351",
-          "625000000000000000000000000"
+          "17836757990867579908675",
+          "312500000000000000000000000"
         ],
-        "challengeCounter": 9831,
+        "challengeCounter": 11549,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6864,
+        "getKycWalletCount": 6877,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
-        "maxKeysPerPool": 100000,
-        "maxStakeAmountPerLicense": "200000000000000000000",
+        "maxKeysPerPool": 131872,
+        "maxStakeAmountPerLicense": "227000000000000000000",
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "poolFactoryAddress": "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5",
         "refereeCalculationsAddress": "0xCd62360854aecf6285Fa310D69C5EBaf4Cd5e95F",
         "rollupAddress": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "stakeAmountBoostFactors": [150, 200, 300, 700],
         "stakeAmountTierThresholds": [
-          "30000000000000000000000",
-          "2000000000000000000000000",
-          "4000000000000000000000000",
-          "8000000000000000000000000"
+          "450000000000000000000000",
+          "3000000000000000000000000",
+          "6000000000000000000000000",
+          "12000000000000000000000000"
         ],
         "stakingEnabled": true,
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1886,102 +1905,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97": [
-      "error CallerNotAuthorized()",
-      "event Approval(address indexed owner, address indexed operator, bool approved)",
-      "event AssertionCheckingToggled(bool newState)",
-      "event AssertionSubmitted(uint256 indexed challengeId, uint256 indexed nodeLicenseId)",
-      "event BatchChallenge(uint256 indexed challengeId, uint64[] assertionIds)",
-      "event BatchRewardsClaimed(uint256 indexed challengeId, uint256 totalReward, uint256 keysLength)",
-      "event BulkRewardsClaimed(uint256 indexed challengeId, address indexed bulkAddress, uint256 totalReward, uint256 winningKeys)",
-      "event ChallengeClosed(uint256 indexed challengeNumber)",
-      "event ChallengeExpired(uint256 indexed challengeId)",
-      "event ChallengeSubmitted(uint256 indexed challengeNumber)",
-      "event ChallengerPublicKeyChanged(bytes newChallengerPublicKey)",
-      "event Initialized(uint8 version)",
-      "event InvalidBatchSubmission(uint256 indexed challengeId, address submissionAddress, address operator, uint256 keysLength)",
-      "event InvalidSubmission(uint256 indexed challengeId, uint256 nodeLicenseId)",
-      "event KycStatusChanged(address indexed wallet, bool isKycApproved)",
-      "event NewBulkSubmission(uint256 indexed challengeId, address indexed bulkAddress, uint256 stakedKeys, uint256 winningKeys)",
-      "event NodeLicenseAddressChanged(address newNodeLicenseAddress)",
-      "event RewardsClaimed(uint256 indexed challengeId, uint256 amount)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RollupAddressChanged(address newRollupAddress)",
-      "event StakedV1(address indexed user, uint256 amount, uint256 totalStaked)",
-      "event StakingEnabled(bool enabled)",
-      "event UnstakeV1(address indexed user, uint256 amount, uint256 totalStaked)",
-      "event UpdateBulkSubmission(uint256 indexed challengeId, address indexed bulkAddress, uint256 stakedKeys, uint256 winningKeys, uint256 increase, uint256 decrease)",
-      "event UpdateMaxKeysPerPool(uint256 prevAmount, uint256 newAmount)",
-      "event UpdateMaxStakeAmount(uint256 prevAmount, uint256 newAmount)",
-      "function CHALLENGER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function KYC_ADMIN_ROLE() view returns (bytes32)",
-      "function _lifetimeClaims(address) view returns (uint256)",
-      "function addKycWallet(address wallet)",
-      "function assignedKeyToPool(uint256) view returns (address)",
-      "function assignedKeysOfUserCount(address) view returns (uint256)",
-      "function assignedKeysToPoolCount(address) view returns (uint256)",
-      "function bulkSubmissions(uint256, address) view returns (bool submitted, bool claimed, uint256 keyCount, uint256 winningKeyCount, bytes assertionStateRootOrConfirmData)",
-      "function calculateChallengeEmissionAndTier() view returns (uint256, uint256)",
-      "function challengeCounter() view returns (uint256)",
-      "function challengerPublicKey() view returns (bytes)",
-      "function challenges(uint256) view returns (bool openForSubmissions, bool expiredForRewarding, uint64 assertionId, bytes32 assertionStateRootOrConfirmData, uint64 assertionTimestamp, bytes challengerSignedHash, bytes activeChallengerPublicKey, address rollupUsed, uint256 createdTimestamp, uint256 totalSupplyOfNodesAtChallengeStart, uint256 rewardAmountForClaimers, uint256 amountForGasSubsidy, uint256 numberOfEligibleClaimers, uint256 amountClaimedByClaimers)",
-      "function claimBulkRewards(address _bulkAddress, uint256 _challengeId)",
-      "function claimMultipleRewards(uint256[] _nodeLicenseIds, uint256 _challengeId, address claimForAddressInBatch)",
-      "function claimReward(uint256 _nodeLicenseId, uint256 _challengeId)",
-      "function esXaiAddress() view returns (address)",
-      "function expireChallengeRewards(uint256 _challengeId)",
-      "function gasSubsidyRecipient() view returns (address)",
-      "function getBoostFactorForStaker(address staker) view returns (uint256)",
-      "function getChallenge(uint256 _challengeId) view returns (tuple(bool openForSubmissions, bool expiredForRewarding, uint64 assertionId, bytes32 assertionStateRootOrConfirmData, uint64 assertionTimestamp, bytes challengerSignedHash, bytes activeChallengerPublicKey, address rollupUsed, uint256 createdTimestamp, uint256 totalSupplyOfNodesAtChallengeStart, uint256 rewardAmountForClaimers, uint256 amountForGasSubsidy, uint256 numberOfEligibleClaimers, uint256 amountClaimedByClaimers))",
-      "function getCombinedTotalSupply() view returns (uint256)",
-      "function getKycWalletAtIndex(uint256 index) view returns (address)",
-      "function getKycWalletCount() view returns (uint256)",
-      "function getOperatorAtIndex(address owner, uint256 index) view returns (address)",
-      "function getOperatorCount(address owner) view returns (uint256)",
-      "function getOwnerCountForOperator(address operator) view returns (uint256)",
-      "function getOwnerForOperatorAtIndex(address operator, uint256 index) view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function getSubmissionsForChallenges(uint256[] _challengeIds, uint256 _nodeLicenseId) view returns (tuple(bool submitted, bool claimed, bool eligibleForPayout, uint256 nodeLicenseId, bytes assertionStateRootOrConfirmData)[])",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize()",
-      "function isApprovedForOperator(address owner, address operator) view returns (bool)",
-      "function isCheckingAssertions() view returns (bool)",
-      "function isKycApproved(address wallet) view returns (bool)",
-      "function maxKeysPerPool() view returns (uint256)",
-      "function maxStakeAmountPerLicense() view returns (uint256)",
-      "function nodeLicenseAddress() view returns (address)",
-      "function poolFactoryAddress() view returns (address)",
-      "function refereeCalculationsAddress() view returns (address)",
-      "function removeKycWallet(address wallet)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function rollupAddress() view returns (address)",
-      "function rollupAssertionTracker(bytes32) view returns (bool)",
-      "function setApprovalForOperator(address operator, bool approved)",
-      "function setStakingEnabled(bool enabled)",
-      "function stakeAmountBoostFactors(uint256) view returns (uint256)",
-      "function stakeAmountTierThresholds(uint256) view returns (uint256)",
-      "function stakeEsXai(address pool, uint256 amount)",
-      "function stakeKeys(address pool, address staker, uint256 keyAmount, bool isAdminStake)",
-      "function stakedAmounts(address) view returns (uint256)",
-      "function stakingEnabled() view returns (bool)",
-      "function submissions(uint256, uint256) view returns (bool submitted, bool claimed, bool eligibleForPayout, uint256 nodeLicenseId, bytes assertionStateRootOrConfirmData)",
-      "function submitBulkAssertion(address _bulkAddress, uint256 _challengeId, bytes _confirmData)",
-      "function submitChallenge(uint64 _assertionId, uint64 _predecessorAssertionId, bytes32 _confirmData, uint64 _assertionTimestamp, bytes _challengerSignedHash)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function unstake(uint256 amount)",
-      "function unstakeEsXai(address pool, uint256 amount)",
-      "function unstakeKeys(address pool, address staker, uint256 keyAmount)",
-      "function updateAssignedKeysOfUserCount(address from, address to, uint256 keyAmount)",
-      "function updateBulkSubmissionOnTransfer(address from, address to)",
-      "function xaiAddress() view returns (address)"
     ],
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2474,6 +2397,102 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x9e3e14576EBd9595eFB0d71aA9Ff51a6DC621bAF": [
+      "error CallerNotAuthorized()",
+      "event Approval(address indexed owner, address indexed operator, bool approved)",
+      "event AssertionCheckingToggled(bool newState)",
+      "event AssertionSubmitted(uint256 indexed challengeId, uint256 indexed nodeLicenseId)",
+      "event BatchChallenge(uint256 indexed challengeId, uint64[] assertionIds)",
+      "event BatchRewardsClaimed(uint256 indexed challengeId, uint256 totalReward, uint256 keysLength)",
+      "event BulkRewardsClaimed(uint256 indexed challengeId, address indexed bulkAddress, uint256 totalReward, uint256 winningKeys)",
+      "event ChallengeClosed(uint256 indexed challengeNumber)",
+      "event ChallengeExpired(uint256 indexed challengeId)",
+      "event ChallengeSubmitted(uint256 indexed challengeNumber)",
+      "event ChallengerPublicKeyChanged(bytes newChallengerPublicKey)",
+      "event Initialized(uint8 version)",
+      "event InvalidBatchSubmission(uint256 indexed challengeId, address submissionAddress, address operator, uint256 keysLength)",
+      "event InvalidSubmission(uint256 indexed challengeId, uint256 nodeLicenseId)",
+      "event KycStatusChanged(address indexed wallet, bool isKycApproved)",
+      "event NewBulkSubmission(uint256 indexed challengeId, address indexed bulkAddress, uint256 stakedKeys, uint256 winningKeys)",
+      "event NodeLicenseAddressChanged(address newNodeLicenseAddress)",
+      "event RewardsClaimed(uint256 indexed challengeId, uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollupAddressChanged(address newRollupAddress)",
+      "event StakedV1(address indexed user, uint256 amount, uint256 totalStaked)",
+      "event StakingEnabled(bool enabled)",
+      "event UnstakeV1(address indexed user, uint256 amount, uint256 totalStaked)",
+      "event UpdateBulkSubmission(uint256 indexed challengeId, address indexed bulkAddress, uint256 stakedKeys, uint256 winningKeys, uint256 increase, uint256 decrease)",
+      "event UpdateMaxKeysPerPool(uint256 prevAmount, uint256 newAmount)",
+      "event UpdateMaxStakeAmount(uint256 prevAmount, uint256 newAmount)",
+      "function CHALLENGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function KYC_ADMIN_ROLE() view returns (bytes32)",
+      "function _lifetimeClaims(address) view returns (uint256)",
+      "function addKycWallet(address wallet)",
+      "function assignedKeyToPool(uint256) view returns (address)",
+      "function assignedKeysOfUserCount(address) view returns (uint256)",
+      "function assignedKeysToPoolCount(address) view returns (uint256)",
+      "function bulkSubmissions(uint256, address) view returns (bool submitted, bool claimed, uint256 keyCount, uint256 winningKeyCount, bytes assertionStateRootOrConfirmData)",
+      "function calculateChallengeEmissionAndTier() view returns (uint256, uint256)",
+      "function challengeCounter() view returns (uint256)",
+      "function challengerPublicKey() view returns (bytes)",
+      "function challenges(uint256) view returns (bool openForSubmissions, bool expiredForRewarding, uint64 assertionId, bytes32 assertionStateRootOrConfirmData, uint64 assertionTimestamp, bytes challengerSignedHash, bytes activeChallengerPublicKey, address rollupUsed, uint256 createdTimestamp, uint256 totalSupplyOfNodesAtChallengeStart, uint256 rewardAmountForClaimers, uint256 amountForGasSubsidy, uint256 numberOfEligibleClaimers, uint256 amountClaimedByClaimers)",
+      "function claimBulkRewards(address _bulkAddress, uint256 _challengeId)",
+      "function claimMultipleRewards(uint256[] _nodeLicenseIds, uint256 _challengeId, address claimForAddressInBatch)",
+      "function claimReward(uint256 _nodeLicenseId, uint256 _challengeId)",
+      "function esXaiAddress() view returns (address)",
+      "function expireChallengeRewards(uint256 _challengeId)",
+      "function gasSubsidyRecipient() view returns (address)",
+      "function getBoostFactorForStaker(address staker) view returns (uint256)",
+      "function getChallenge(uint256 _challengeId) view returns (tuple(bool openForSubmissions, bool expiredForRewarding, uint64 assertionId, bytes32 assertionStateRootOrConfirmData, uint64 assertionTimestamp, bytes challengerSignedHash, bytes activeChallengerPublicKey, address rollupUsed, uint256 createdTimestamp, uint256 totalSupplyOfNodesAtChallengeStart, uint256 rewardAmountForClaimers, uint256 amountForGasSubsidy, uint256 numberOfEligibleClaimers, uint256 amountClaimedByClaimers))",
+      "function getCombinedTotalSupply() view returns (uint256)",
+      "function getKycWalletAtIndex(uint256 index) view returns (address)",
+      "function getKycWalletCount() view returns (uint256)",
+      "function getOperatorAtIndex(address owner, uint256 index) view returns (address)",
+      "function getOperatorCount(address owner) view returns (uint256)",
+      "function getOwnerCountForOperator(address operator) view returns (uint256)",
+      "function getOwnerForOperatorAtIndex(address operator, uint256 index) view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getSubmissionsForChallenges(uint256[] _challengeIds, uint256 _nodeLicenseId) view returns (tuple(bool submitted, bool claimed, bool eligibleForPayout, uint256 nodeLicenseId, bytes assertionStateRootOrConfirmData)[])",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize()",
+      "function isApprovedForOperator(address owner, address operator) view returns (bool)",
+      "function isCheckingAssertions() view returns (bool)",
+      "function isKycApproved(address wallet) view returns (bool)",
+      "function maxKeysPerPool() view returns (uint256)",
+      "function maxStakeAmountPerLicense() view returns (uint256)",
+      "function nodeLicenseAddress() view returns (address)",
+      "function poolFactoryAddress() view returns (address)",
+      "function refereeCalculationsAddress() view returns (address)",
+      "function removeKycWallet(address wallet)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollupAddress() view returns (address)",
+      "function rollupAssertionTracker(bytes32) view returns (bool)",
+      "function setApprovalForOperator(address operator, bool approved)",
+      "function setStakingEnabled(bool enabled)",
+      "function stakeAmountBoostFactors(uint256) view returns (uint256)",
+      "function stakeAmountTierThresholds(uint256) view returns (uint256)",
+      "function stakeEsXai(address pool, uint256 amount)",
+      "function stakeKeys(address pool, address staker, uint256 keyAmount, bool isAdminStake)",
+      "function stakedAmounts(address) view returns (uint256)",
+      "function stakingEnabled() view returns (bool)",
+      "function submissions(uint256, uint256) view returns (bool submitted, bool claimed, bool eligibleForPayout, uint256 nodeLicenseId, bytes assertionStateRootOrConfirmData)",
+      "function submitBulkAssertion(address _bulkAddress, uint256 _challengeId, bytes _confirmData)",
+      "function submitChallenge(uint64 _assertionId, uint64 _predecessorAssertionId, bytes32 _confirmData, uint64 _assertionTimestamp, bytes _challengerSignedHash)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unstake(uint256 amount)",
+      "function unstakeEsXai(address pool, uint256 amount)",
+      "function unstakeKeys(address pool, address staker, uint256 keyAmount)",
+      "function updateAssignedKeysOfUserCount(address from, address to, uint256 keyAmount)",
+      "function updateBulkSubmissionOnTransfer(address from, address to)",
+      "function xaiAddress() view returns (address)"
+    ],
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2797,23 +2816,23 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "orbitstack/Bridge": "0xb6de3aace8e96d1c35f5d771acfb448858e9d9d487e11cccdc25abeaf18e6515",
-    "orbitstack/ChallengeManager": "0xb1c9d340512fa1eaea79b3c47d8e5a2008266b78c1ccb64c36eb9f3b5cc7df24",
-    "orbitstack/ERC20Gateway": "0x76cecfc80c9723f4b387e4a35b686925321492e057f34090e4f39d1509c1280e",
-    "orbitstack/GatewayRouter": "0x440c8eb716ccc968e9fcdd86268f9ba430dc15f171efd6e33e449c6a19696baa",
-    "orbitstack/Inbox": "0x66868b7e34292ed83b16b6175f5c8510c0f1a715b5b3d2f7656916e583076e5f",
-    "orbitstack/OneStepProofEntry": "0xf8ebd4d19d87374ce2a6fe109880b1ce7c70b34da3dae92daf6eb74aa569ba5b",
-    "orbitstack/OneStepProver0": "0xbfd9c37860b90ef123f1e1d8c1284d326876f1ae15967fb68bf6b1310f91fc97",
-    "orbitstack/OneStepProverHostIo": "0x89c4a4838f36b8bd9d0c403568fb1715cd775d20d38a87761baf6f3336e03d32",
-    "orbitstack/OneStepProverMath": "0x7fb24b2d51176c431d0d17781a0adfa99724f41f64aa965e55910ce52e1e3c05",
-    "orbitstack/OneStepProverMemory": "0x63d1aaa9a4215b12a93a37b5d383142fd73c6d8ecaae85e2a8254d85e96006d9",
-    "orbitstack/Outbox": "0xd373d8cd979164d1b6db4271e41638272216305e24f2609767ed253b9a3c594e",
-    "orbitstack/RollupEventInbox": "0x3a5690d1a8060c59c6dbae9d71027b09f2a694bb8534f4f62feb30efa12c2278",
-    "orbitstack/RollupProxy_fastConfirm": "0xa98ce9521103f854d86e758f43770f88c8c7a393f8137e887c0e1888cf6ea44d",
-    "orbitstack/SequencerInbox": "0x83141082064c8df924d8ba369b73756b92089971b56e904973687d0fdbff3dee",
-    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6",
-    "orbitstack/ValidatorUtils": "0x4cda90e9e8df55c2a790c46e2515efa956af71e323ed688286d6bb8152aed0a9"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "orbitstack/Bridge": "0x90031b4e4f9fcb7d87cf53eb46e1eac9602ede912abdfa54f17d7d3aa96e3ea0",
+    "orbitstack/ChallengeManager": "0x317ce1255cf624f543073de5b2441b19aae9d5c87a1d18faa829c4abbebe8c18",
+    "orbitstack/ERC20Gateway": "0x5f18d477345e847765db562dda3557d072b959c47cc6f0403f1a6d317d1f4624",
+    "orbitstack/GatewayRouter": "0xe69c43c0e257aac7722518bb22b4ac48768f06e16a25c0be3b4a03d8ffc6d264",
+    "orbitstack/Inbox": "0x45f9b69916c043d8a695844685a99374143c20e6d5a13ceb145fdf6a1121825b",
+    "orbitstack/OneStepProofEntry": "0x9eb54e580161778d86b080078e2ee2b9780cc0cdc39d271fe6202028901f2589",
+    "orbitstack/OneStepProver0": "0xd52943a596387edc0931848e22e526893c934fa609baf10454c9f11b46bce1b1",
+    "orbitstack/OneStepProverHostIo": "0x8cef93d8938073b743f7a540589ae5a108425a5a9c6f16ba080df9c88fd0ad62",
+    "orbitstack/OneStepProverMath": "0x46314b895c9439d9614366eaf21a39c387137bbd00b4af934add687a1ad0131e",
+    "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
+    "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
+    "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
+    "orbitstack/RollupProxy_fastConfirm": "0xc7fb90b328704727b36009a58af78ba33b8c575391e9f530cf458bf214f77b00",
+    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

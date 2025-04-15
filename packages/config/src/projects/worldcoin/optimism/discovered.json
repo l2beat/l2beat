@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 127729542,
-  "configHash": "0x6eb908316e3fe4f28d3946727ba4cecec35581f83745f8730887e04a21cc6d81",
+  "blockNumber": 133912814,
+  "configHash": "0x703f1d93bc40fc72013e69fe78b3a350b94e568ca0594ba83c008246800fa0eb",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -26,9 +26,10 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 11,
+        "nonce": 16,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "GnosisSafe",
@@ -54,7 +55,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x163f8C2467924be0ae7B5347228CABF260318753",
@@ -76,7 +78,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1721036137,
       "sinceBlock": 122718680,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "SemaphoreVerifier"
     },
     {
       "address": "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
@@ -93,7 +96,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1695411619,
       "sinceBlock": 109906421,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "SemaphoreVerifier"
     },
     {
       "name": "OpWorldID_Zero",
@@ -138,14 +142,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+          "to": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
           "via": []
         }
       ],
       "sinceTimestamp": 1689068111,
       "sinceBlock": 106734667,
       "values": {
-        "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "$admin": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "$implementation": "0x11cA3127182f7583EfC416a8771BD4d11Fae4334",
         "$pastUpgrades": [
           [
@@ -156,7 +160,7 @@
         ],
         "$upgradeCount": 1,
         "groupCount": 2,
-        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "owner": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "routeFor": [
           "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
@@ -189,7 +193,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 14,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "SemaphoreVerifier",
@@ -201,7 +206,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1689065805,
       "sinceBlock": 106733514,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "SemaphoreVerifier"
     },
     {
       "address": "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
@@ -233,9 +239,10 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 27,
+        "nonce": 32,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "WLDGrant",
@@ -248,7 +255,8 @@
       "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1722153659,
       "sinceBlock": 123277441,
-      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 46 }
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 56 },
+      "derivedName": "WLDGrant"
     },
     {
       "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
@@ -284,7 +292,8 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "token": "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
         "worldIdRouter": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
-      }
+      },
+      "derivedName": "RecurringGrantDrop"
     },
     {
       "name": "GnosisSafeL2",
@@ -312,9 +321,10 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 19,
+        "nonce": 21,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "WorldIDIdentityManagerV2",
@@ -375,10 +385,6 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
         }
       ]
@@ -398,7 +404,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1730982513,
       "sinceBlock": 127691868,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Verifier"
     },
     {
       "name": "VerifierLookupTable",
@@ -415,7 +422,8 @@
         "getVerifierFor": [],
         "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "VerifierLookupTable"
     },
     {
       "name": "OpWorldID_One",
@@ -465,7 +473,8 @@
         "multisigThreshold": "2 of 2 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
@@ -482,6 +491,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1689791675,
       "sinceBlock": 107096449,
@@ -501,9 +516,10 @@
         "getChainId": 10,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 22,
+        "nonce": 27,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "WLD token",
@@ -527,7 +543,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "328472627106591140054273696",
+        "totalSupply": "309007030843029270142829085",
         "version": "1.0.0"
       },
       "derivedName": "OptimismMintableERC20"
@@ -556,7 +572,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "GnosisSafe",
@@ -582,7 +599,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09",
@@ -604,7 +622,8 @@
         "getVerifierFor": [],
         "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "VerifierLookupTable"
     }
   ],
   "abis": {
@@ -1041,6 +1060,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

@@ -1,19 +1,16 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 
-import { groupBy, uniqBy } from 'lodash'
-import type { ContractConfig } from '../config/ContractConfig'
+import { groupBy } from 'lodash'
 import type {
-  ContractFieldSeverity,
-  ContractValueType,
-  DiscoveryContractField,
-  ExternalReference,
   PermissionConfiguration,
   RawPermissionConfiguration,
-} from '../config/RawDiscoveryConfig'
+  StructureContractField,
+} from '../config/StructureConfig'
+import type { StructureContractConfig } from '../config/structureUtils'
 import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
 import type { ContractValue } from '../output/types'
-import { get$Admins, get$Implementations } from '../utils/extractors'
+import { get$Admins, toAddressArray } from '../utils/extractors'
 import type { Analysis } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
@@ -22,12 +19,7 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 // making sure ever field of meta is always processed.
 export interface ContractMeta {
   canActIndependently?: boolean
-  displayName?: string
-  description?: string
   permissions?: PermissionConfiguration[]
-  types?: Set<ContractValueType>
-  severity?: ContractFieldSeverity
-  references?: ExternalReference[]
 }
 
 export function mergeContractMeta(
@@ -35,16 +27,11 @@ export function mergeContractMeta(
   b?: ContractMeta,
 ): ContractMeta | undefined {
   const result: ContractMeta = {
-    displayName: a?.displayName ?? b?.displayName,
-    description: a?.description ?? b?.description,
     permissions: mergePermissions(a?.permissions, b?.permissions),
-    types: mergeSets(a?.types, b?.types),
-    severity: findHighestSeverity(a?.severity, b?.severity),
     canActIndependently: mergeCanActIndependently(
       a?.canActIndependently,
       b?.canActIndependently,
     ),
-    references: mergeReferences(a?.references, b?.references),
   }
   return isEmptyObject(result) ? undefined : result
 }
@@ -111,38 +98,11 @@ export function interpolateString(
 }
 
 export function getSelfMeta(
-  config: ContractConfig,
-  analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
+  config: StructureContractConfig,
 ): ContractMeta | undefined {
-  let description: string | undefined = undefined
-  if (config.description !== undefined) {
-    description = interpolateString(config.description, analysis)
-  }
-
-  let references: ExternalReference[] | undefined
-  const addresses = [analysis.address, ...get$Implementations(analysis.values)]
-
-  for (const address of addresses) {
-    const manualSourcePath = config.manualSourcePaths[address.toString()]
-    if (manualSourcePath === undefined) {
-      continue
-    }
-
-    references ??= []
-    references.push({
-      text: 'Source Code',
-      href: manualSourcePath,
-    })
-  }
-
   const result = {
     canActIndependently: config.canActIndependently,
-    displayName: config.displayName,
-    description,
-    references,
     permissions: undefined,
-    severity: undefined,
-    types: undefined,
   }
 
   return isEmptyObject(result) ? undefined : result
@@ -151,7 +111,7 @@ export function getSelfMeta(
 export function getTargetsMeta(
   self: EthereumAddress,
   values: Record<string, ContractValue | undefined> = {},
-  fields: { [address: string]: DiscoveryContractField } = {},
+  fields: { [address: string]: StructureContractField } = {},
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): AddressToMetaMap | undefined {
   const result: AddressToMetaMap = {}
@@ -160,7 +120,7 @@ export function getTargetsMeta(
     const field = fields[fieldName]
     const target = field?.permissions
     if (target) {
-      for (const address of getAddresses(value)) {
+      for (const address of toAddressArray(value)) {
         const meta = mergeContractMeta(
           result[address.toString()],
           targetConfigToMeta(self, field, analysis),
@@ -183,10 +143,6 @@ export function getTargetsMeta(
 
     if (!permissions.some((p) => p.type === 'upgrade')) {
       const meta = mergeContractMeta(result[upgradeabilityAdmin.toString()], {
-        displayName: undefined,
-        description: undefined,
-        severity: undefined,
-        types: undefined,
         permissions: [{ type: 'upgrade', target: self, delay: 0 }],
       })
 
@@ -201,7 +157,7 @@ export function getTargetsMeta(
 
 function targetConfigToMeta(
   self: EthereumAddress,
-  field: DiscoveryContractField,
+  field: StructureContractField,
   analysis: Omit<Analysis, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (field.permissions === undefined) {
@@ -209,13 +165,9 @@ function targetConfigToMeta(
   }
 
   const result: ContractMeta = {
-    displayName: undefined,
-    description: undefined,
     permissions: field.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
-    types: toSet(field.type),
-    severity: Array.from(toSet(field.severity) ?? [])[0],
   }
   return isEmptyObject(result) ? undefined : result
 }
@@ -262,50 +214,6 @@ export function invertMeta(
   return result
 }
 
-function toSet<T>(value: T | T[] | undefined): Set<T> | undefined {
-  if (value === undefined) {
-    return undefined
-  }
-  if (Array.isArray(value)) {
-    return new Set([...value])
-  }
-  return new Set([value])
-}
-
-function mergeSets<T>(
-  a: Set<T> | undefined,
-  b: Set<T> | undefined,
-): Set<T> | undefined {
-  if (a === undefined && b === undefined) {
-    return undefined
-  }
-  return new Set([...(a ?? []), ...(b ?? [])])
-}
-
-export function mergeReferences(
-  a: ExternalReference[] | undefined,
-  b: ExternalReference[] | undefined,
-): ExternalReference[] | undefined {
-  const result = uniqBy([...(a ?? []), ...(b ?? [])], (v) => JSON.stringify(v))
-  return result.length > 0 ? result : undefined
-}
-
-export function findHighestSeverity(
-  a: ContractFieldSeverity | undefined,
-  b: ContractFieldSeverity | undefined,
-): ContractFieldSeverity | undefined {
-  if (a === undefined && b === undefined) {
-    return undefined
-  }
-  if (a === 'HIGH' || b === 'HIGH') {
-    return 'HIGH'
-  }
-  if (a === 'MEDIUM' || b === 'MEDIUM') {
-    return 'MEDIUM'
-  }
-  return 'LOW'
-}
-
 function isEmptyObject(obj: object): boolean {
   return (
     Object.keys(obj).length === 0 ||
@@ -315,21 +223,4 @@ function isEmptyObject(obj: object): boolean {
 
 function isDefined<T>(value: T | undefined): value is T {
   return value !== undefined
-}
-
-export function getAddresses(
-  value: ContractValue | undefined,
-): EthereumAddress[] {
-  if (Array.isArray(value)) {
-    return value.flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'object') {
-    return Object.values(value).flatMap((v) => getAddresses(v))
-  } else if (typeof value === 'string') {
-    try {
-      return [EthereumAddress(value)]
-    } catch {
-      return []
-    }
-  }
-  return []
 }

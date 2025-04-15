@@ -21,8 +21,8 @@ import { getActivityLatestUops } from '../activity/get-activity-latest-tps'
 import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import type { LatestTvs } from '../tvs/utils/get-7d-token-breakdown'
-import { get7dTokenBreakdown } from '../tvs/utils/get-7d-token-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
@@ -31,12 +31,12 @@ export async function getScalingSummaryEntries() {
     select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage', 'chainConfig'],
     where: ['isScaling'],
-    whereNot: ['isUpcoming', 'isArchived'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTokenBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown({ type: 'layer2' }),
     getActivityLatestUops(projects),
   ])
 
@@ -90,20 +90,20 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   gasTokens: string[] | undefined
 }
 
-function getScalingSummaryEntry(
+export function getScalingSummaryEntry(
   project: Project<
     'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvlInfo' | 'scalingDa' | 'scalingStage' | 'chainConfig'
   >,
   changes: ProjectChanges,
-  latestTvs: LatestTvs['projects'][string] | undefined,
+  latestTvs: ProjectSevenDayTvsBreakdown | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
 ): ScalingSummaryEntry {
   const associatedTokenWarning =
     latestTvs && latestTvs.breakdown.total > 0
       ? getAssociatedTokenWarning({
           associatedRatio:
-            latestTvs.breakdown.associated / latestTvs.breakdown.total,
+            latestTvs.associated.total / latestTvs.breakdown.total,
           name: project.name,
           associatedTokens: project.tvlInfo?.associatedTokens ?? [],
         })
@@ -130,9 +130,13 @@ function getScalingSummaryEntry(
     purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {
-      breakdown: latestTvs?.breakdown,
-      change: latestTvs?.change,
-      associatedTokensExcludedChange: latestTvs?.associatedTokensExcludedChange,
+      breakdown: latestTvs?.breakdown && {
+        ...latestTvs.breakdown,
+        associated: latestTvs.associated.total,
+      },
+      change: latestTvs?.change.total,
+      associatedTokensExcludedChange:
+        latestTvs?.changeExcludingAssociated.total,
       associatedTokens: project.tvlInfo?.associatedTokens ?? [],
       warnings: compact([
         ...associatedTokensExcludedWarnings,

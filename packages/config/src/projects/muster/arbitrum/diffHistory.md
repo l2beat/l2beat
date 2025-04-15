@@ -1,4 +1,101 @@
-Generated with discovered.json: 0xc230f98931f841f69d5060aa830acaeea0c5fbe5
+Generated with discovered.json: 0xdfdf3def18c9714f27f8252bc8af5b0181cb9d61
+
+# Diff at Wed, 09 Apr 2025 13:42:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@45b707d5b88f76d72dd5f8252dbef76321c2f829 block: 323453444
+- current block number: 324576418
+
+## Description
+
+Add and remove a staker to call forceRefundStaker in the meantime:
+1) https://app.blocksec.com/explorer/tx/arbitrum/0x97c9635d50f195c8436470235f2cd2cff763957e7dead93a7b37102611dd9881
+2) https://app.blocksec.com/explorer/tx/arbitrum/0x40f73d3fed810719174d95929bc997e0d4ab616a3b8a6d997fa19ef15d1cf503
+3) https://app.blocksec.com/explorer/tx/arbitrum/0xe7519bdb47cdd3c541a8ad00f66eaa0f594dba07e4a9dac2a4b9a368bc1205de
+4) https://app.blocksec.com/explorer/tx/arbitrum/0x6dd01c6e9dba54dc9d6588afedca7ecb782beb0a5f130553ecd5aa036c225bab
+5) https://app.blocksec.com/explorer/tx/arbitrum/0xb8f3289bf52ec4879e501862935da01642b1b02b62ec697e414c0c3052d9bb08
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        5
+      values.stakerCount:
+-        2
++        1
+    }
+```
+
+Generated with discovered.json: 0xc858637d978412f3489052ed888978a1c8dbf748
+
+# Diff at Sun, 06 Apr 2025 07:31:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 311763335
+- current block number: 323453444
+
+## Description
+
+Operators change, no change to implementations.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.0.to:
+-        "0xa213e1A202C49C4AC17C43Fc57aA469ebd897F40"
++        "0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        3
+      values.stakerCount:
+-        1
++        2
+      values.validators.0:
+-        "0xa213e1A202C49C4AC17C43Fc57aA469ebd897F40"
++        "0x26C9cC5681Dc8CfA7d0CD2F52769479b54612298"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xfb27e42E964F3364630F76D62EB295ae792BD4FA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9","via":[{"address":"0x10083F68A4aEC72c567661616bd6036D3a6d1B36"},{"address":"0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.1.to:
+-        "0xCa9c24bf165D375A62E62b9fb8F138E19A957Aa9"
++        "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"
+      issuedPermissions.1.via.1:
+-        {"address":"0x37119EAcFBc1c83DDAf80F6705b6B19630C101C4"}
+      issuedPermissions.1.via.0:
+-        {"address":"0x10083F68A4aEC72c567661616bd6036D3a6d1B36"}
+      issuedPermissions.1.description:
++        "Add/remove batchPosters (Sequencers)."
+      issuedPermissions.0.to:
+-        "0xa91279538ADfcD8E47ec74e50Cd02d9498cD039a"
++        "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"
+      values.batchPosters.0:
+-        "0xa91279538ADfcD8E47ec74e50Cd02d9498cD039a"
++        "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+Generated with discovered.json: 0x812be40299b3f77da694a3f4e7362f9e110cb4da
 
 # Diff at Thu, 06 Mar 2025 14:23:44 GMT:
 

@@ -1,140 +1,743 @@
 {
-  "$id": "https://l2beat.com/configV2.schema.json",
-  "title": "Discovery config",
-  "description": "A configuration file for smart contract discovery",
   "type": "object",
-  "required": ["name", "initialAddresses"],
-  "unevaluatedProperties": false,
   "properties": {
-    "$schema": {
-      "type": "string"
-    },
-    "name": {
-      "description": "An identifier for this project",
-      "type": "string"
-    },
-    "chain": {
-      "description": "Chain on which to run the discovery on",
-      "type": "string",
-      "enum": [
-        "ethereum",
-        "arbitrum",
-        "optimism",
-        "polygonpos",
-        "bsc",
-        "avalanche",
-        "celo",
-        "linea",
-        "base",
-        "polygonzkevm",
-        "gnosis",
-        "sepolia",
-        "scroll",
-        "mantapacific",
-        "mantle",
-        "blast",
-        "zksync2",
-        "kinto",
-        "everclear"
-      ]
-    },
-    "initialAddresses": {
-      "description": "A list of addresses that discovery starts from",
+    "$schema": { "type": "string" },
+    "name": { "type": "string", "minLength": 1 },
+    "chain": { "type": "string", "minLength": 1 },
+    "initialAddresses": { "type": "array", "items": { "type": "string" } },
+    "import": { "type": "array", "items": { "type": "string" } },
+    "maxAddresses": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
+    "maxDepth": { "type": "number", "default": 6 },
+    "sharedModules": {
       "type": "array",
-      "items": { "$ref": "#/$defs/address" }
-    },
-    "import": {
-      "description": "A list of discovery configs to import",
-      "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "default": []
     },
     "types": {
-      "description": "A list of types used for type casting",
       "type": "object",
-      "patternProperties": {
-        "^.+$": {
-          "type": "object",
-          "properties": {
-            "typeCaster": {
-              "type": "string",
-              "pattern": "^[A-Z].*$"
-            },
-            "arg": { "type": "object" },
-            "description": { "type": ["string", "null"] },
-            "severity": { "$ref": "severity.schema.json" }
-          },
-          "dependencies": {
-            "arg": {
-              "required": ["typeCaster"]
-            }
-          }
-        }
-      }
+      "additionalProperties": { "$ref": "#/definitions/DiscoveryCustomType" }
     },
-    "maxDepth": {
-      "description": "Maximum depth of discovery",
-      "type": "integer",
-      "minimum": 0
+    "categories": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
     },
-    "maxAddresses": {
-      "description": "Maximum number of addresses that a discovery script can put on its stack",
-      "type": "integer",
-      "minimum": 0
-    },
-    "sharedModules": {
-      "description": "An object which keys are contract identifiers and values are names of shared modules",
-      "type": "array",
-      "unevaluatedProperties": false,
-      "items": { "type": "string" }
-    },
+    "names": { "type": "object", "additionalProperties": { "type": "string" } },
     "overrides": {
       "type": "object",
-      "description": "Specific configuration for discovered contracts",
-      "unevaluatedProperties": false,
-      "patternProperties": {
-        "^.+$": { "$ref": "contract.v2.schema.json" }
-      }
-    },
-    "names": {
-      "type": "object",
-      "description": "Human-readable names for discovered contracts",
-      "unevaluatedProperties": false,
-      "patternProperties": {
-        "^0x[a-fA-F\\d]{40}$": {
-          "type": "string"
-        }
-      }
-    },
-    "descriptions": {
-      "type": "object",
-      "description": "Description for contracts and their methods",
-      "unevaluatedProperties": false,
-      "patternProperties": {
-        "^.+$": {
-          "type": "object",
-          "unevaluatedProperties": false,
-          "patternProperties": {
-            "description": {
-              "type": "string"
-            },
-            "methods": {
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "extends": {
+            "$ref": "#/definitions/DiscoveryContract/properties/extends"
+          },
+          "canActIndependently": {
+            "$ref": "#/definitions/DiscoveryContract/properties/canActIndependently"
+          },
+          "ignoreDiscovery": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
+          },
+          "proxyType": {
+            "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
+          },
+          "displayName": {
+            "$ref": "#/definitions/ColorContract/properties/displayName"
+          },
+          "ignoreInWatchMode": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
+          },
+          "ignoreMethods": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreMethods"
+          },
+          "ignoreRelatives": {
+            "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
+          },
+          "methods": {
+            "$ref": "#/definitions/DiscoveryContract/properties/methods"
+          },
+          "manualSourcePaths": {
+            "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
+          },
+          "types": {
+            "$ref": "#/definitions/DiscoveryContract/properties/types"
+          },
+          "categories": {
+            "$ref": "#/definitions/ColorContract/properties/categories"
+          },
+          "category": {
+            "$ref": "#/definitions/ColorContract/properties/category"
+          },
+          "description": {
+            "$ref": "#/definitions/ColorContract/properties/description"
+          },
+          "references": {
+            "$ref": "#/definitions/ColorContract/properties/references"
+          },
+          "fields": {
+            "type": "object",
+            "additionalProperties": {
               "type": "object",
-              "unevaluatedProperties": false,
-              "patternProperties": {
-                "^.+$": {
-                  "type": "string"
+              "properties": {
+                "description": {
+                  "$ref": "#/definitions/ColorContractField/properties/description"
+                },
+                "severity": {
+                  "$ref": "#/definitions/ColorContractField/properties/severity"
+                },
+                "type": {
+                  "$ref": "#/definitions/ColorContractField/properties/type"
+                },
+                "handler": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/handler"
+                },
+                "template": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/template"
+                },
+                "returnType": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/returnType"
+                },
+                "permissions": {
+                  "$ref": "#/definitions/DiscoveryContractField/properties/permissions"
                 }
-              }
+              },
+              "additionalProperties": false
             }
           }
-        }
+        },
+        "additionalProperties": false
       }
     }
   },
-  "$defs": {
-    "address": {
+  "required": ["name", "chain", "initialAddresses"],
+  "additionalProperties": false,
+  "definitions": {
+    "UserHandlerDefinition": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "storage" },
+            "slot": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    { "type": "integer", "minimum": 0 },
+                    { "type": "string", "pattern": "^(0x)?[a-f\\d]*$" },
+                    { "type": "string", "pattern": "^([1-9]\\d*|0)$" },
+                    {
+                      "type": "string",
+                      "pattern": "^\\{\\{\\s*[$a-z_][$.a-z\\d_]*\\s*\\}\\}$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0"
+                  },
+                  "minItems": 1
+                }
+              ]
+            },
+            "offset": {
+              "anyOf": [
+                { "type": "integer", "minimum": 0 },
+                {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/2"
+                },
+                {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/3"
+                }
+              ]
+            },
+            "returnType": {
+              "type": "string",
+              "enum": ["address", "bytes", "number", "uint8"]
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type", "slot"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "dynamicArray" },
+            "slot": {
+              "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0"
+            },
+            "returnType": { "type": "string", "enum": ["address"] },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type", "slot"],
+          "additionalProperties": false
+        },
+        { "$ref": "#/definitions/UserHandlerDefinition/anyOf/1" },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "array" },
+            "indices": {
+              "anyOf": [
+                { "type": "array", "items": { "type": "number" } },
+                { "type": "string" }
+              ]
+            },
+            "method": { "type": "string" },
+            "length": {
+              "anyOf": [
+                { "type": "integer", "minimum": 0 },
+                {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/3"
+                }
+              ]
+            },
+            "maxLength": { "type": "integer", "minimum": 0 },
+            "startIndex": { "type": "integer", "minimum": 0 },
+            "pickFields": { "type": "array", "items": { "type": "string" } },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "call" },
+            "method": { "type": "string" },
+            "args": {
+              "type": "array",
+              "items": { "type": ["string", "number"] }
+            },
+            "ignoreRelative": { "type": "boolean" },
+            "pickFields": { "type": "array", "items": { "type": "string" } },
+            "expectRevert": { "type": "boolean" },
+            "address": { "type": "string" }
+          },
+          "required": ["type", "args"],
+          "additionalProperties": false
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "const": "event" },
+                "select": {
+                  "anyOf": [
+                    { "type": "string" },
+                    { "type": "array", "items": { "type": "string" } }
+                  ]
+                },
+                "groupBy": { "type": "string" },
+                "ignoreRelative": { "type": "boolean" },
+                "set": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "event": {
+                          "anyOf": [
+                            { "type": "string" },
+                            {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0/properties/event/anyOf/0"
+                              }
+                            }
+                          ]
+                        },
+                        "where": {}
+                      },
+                      "required": ["event"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      }
+                    }
+                  ]
+                },
+                "add": { "not": {} },
+                "remove": { "not": {} }
+              },
+              "required": ["type", "set"],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/type"
+                },
+                "select": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/select"
+                },
+                "groupBy": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/groupBy"
+                },
+                "ignoreRelative": {
+                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/ignoreRelative"
+                },
+                "set": { "not": {} },
+                "add": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      }
+                    }
+                  ]
+                },
+                "remove": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      }
+                    }
+                  ]
+                }
+              },
+              "required": ["type", "add"],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "starkWareNamedStorage" },
+            "tag": { "type": "string" },
+            "returnType": {
+              "type": "string",
+              "enum": ["address", "bytes", "number"]
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type", "tag"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "accessControl" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
+            },
+            "pickRoleMembers": { "type": "string" },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "scrollAccessControl" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "kintoAccessControl" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]*$" }
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "lineaRolesModule" },
+            "roleNames": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
+            },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "constructorArgs" },
+            "nameArgs": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "eventCount" },
+            "topics": {
+              "type": "array",
+              "items": { "type": ["string", "null"] }
+            }
+          },
+          "required": ["type", "topics"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "hardcoded" },
+            "value": {}
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "starkWareGovernance" },
+            "filterBy": { "type": "string" }
+          },
+          "required": ["type", "filterBy"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "layerZeroMultisig" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "arbitrumActors" },
+            "actorType": {
+              "type": "string",
+              "enum": ["validator", "batchPoster"]
+            }
+          },
+          "required": ["type", "actorType"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "arbitrumScheduledTransactions"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "opStackDA" },
+            "sequencerAddress": { "type": "string" }
+          },
+          "required": ["type", "sequencerAddress"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "opStackSequencerInbox" },
+            "sequencerAddress": { "type": "string" }
+          },
+          "required": ["type", "sequencerAddress"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "arbitrumSequencerVersion" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "arbitrumDACKeyset" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "eip2535Facets" },
+            "ignoreRelative": { "type": "boolean" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "zksynceraScheduledTransactions"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "zksynceraValidators" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "const": "orbitPostsBlobs" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "polygoncdkScheduledTransactions"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Permission": {
       "type": "string",
-      "pattern": "^0x[a-fA-F\\d]{40}$"
+      "enum": [
+        "challenge",
+        "guard",
+        "propose",
+        "sequence",
+        "validate",
+        "operateLinea",
+        "fastconfirm",
+        "validateZkStack",
+        "validateBridge",
+        "validateBridge2",
+        "relay",
+        "aggregatePolygon",
+        "operateStarknet",
+        "operateStarkEx",
+        "governStarknet",
+        "member",
+        "act",
+        "interact",
+        "upgrade"
+      ]
+    },
+    "RawPermissionConfiguration": {
+      "type": "object",
+      "properties": {
+        "type": { "$ref": "#/definitions/Permission" },
+        "delay": { "type": ["number", "string"], "default": 0 },
+        "description": { "type": "string" },
+        "condition": { "type": "string" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "ContractValueType": {
+      "type": "string",
+      "enum": ["CODE_CHANGE", "L2", "EXTERNAL", "RISK_PARAMETER", "PERMISSION"]
+    },
+    "ContractFieldSeverity": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"]
+    },
+    "DiscoveryContractField": {
+      "type": "object",
+      "properties": {
+        "handler": { "$ref": "#/definitions/UserHandlerDefinition" },
+        "template": { "type": "string" },
+        "returnType": { "type": "string" },
+        "permissions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "ColorContractField": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+        "type": {
+          "anyOf": [
+            { "$ref": "#/definitions/ContractValueType" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ContractValueType" }
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "DiscoveryCustomType": {
+      "type": "object",
+      "properties": {
+        "typeCaster": { "type": "string" },
+        "arg": {
+          "type": "object",
+          "additionalProperties": { "type": ["string", "number"] }
+        },
+        "description": { "type": "string" },
+        "severity": { "$ref": "#/definitions/ContractFieldSeverity" }
+      },
+      "additionalProperties": false
+    },
+    "ExternalReference": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "href": { "type": "string" }
+      },
+      "required": ["text", "href"],
+      "additionalProperties": false
+    },
+    "DiscoveryCategory": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "priority": { "type": "number" }
+      },
+      "required": ["name", "priority"],
+      "additionalProperties": false
+    },
+    "ManualProxyType": {
+      "type": "string",
+      "enum": [
+        "new Arbitrum proxy",
+        "call implementation proxy",
+        "zkSync Lite proxy",
+        "zkSpace proxy",
+        "Eternal Storage proxy",
+        "Polygon Extension proxy",
+        "Optics Beacon proxy",
+        "Axelar proxy",
+        "LightLink proxy",
+        "Everclear proxy",
+        "immutable"
+      ]
+    },
+    "DiscoveryContract": {
+      "type": "object",
+      "properties": {
+        "extends": { "type": "string" },
+        "canActIndependently": { "type": "boolean" },
+        "ignoreDiscovery": { "type": "boolean", "default": false },
+        "proxyType": { "$ref": "#/definitions/ManualProxyType" },
+        "displayName": { "type": "string" },
+        "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
+        "ignoreMethods": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "ignoreRelatives": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": []
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DiscoveryContractField"
+          },
+          "default": {}
+        },
+        "methods": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "default": {}
+        },
+        "manualSourcePaths": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "default": {}
+        },
+        "types": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DiscoveryCustomType"
+          },
+          "default": {}
+        }
+      },
+      "additionalProperties": false
+    },
+    "ColorContract": {
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "categories": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
+        },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "references": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ExternalReference" }
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ColorContractField"
+          },
+          "default": {}
+        },
+        "manualSourcePaths": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "default": {}
+        }
+      },
+      "additionalProperties": false
+    },
+    "MergedContract": {
+      "anyOf": [
+        { "$ref": "#/definitions/DiscoveryContract" },
+        { "$ref": "#/definitions/ColorContract" }
+      ]
     }
-  }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

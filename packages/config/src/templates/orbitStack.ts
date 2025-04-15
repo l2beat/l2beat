@@ -153,7 +153,7 @@ interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ProjectRisk[]
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
-  isArchived?: boolean
+  archivedAt?: UnixTime
   /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of CG support) */
   untrackedGasTokens?: string[]
   customDa?: ProjectCustomDa
@@ -467,10 +467,10 @@ function orbitStackCommon(
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
-    isArchived: templateVars.isArchived ?? undefined,
+    archivedAt: templateVars.archivedAt ?? undefined,
     display: {
       architectureImage,
-      stateValidationImage: 'orbit',
+      stateValidationImage: isPostBoLD ? 'bold' : 'orbit',
       purposes: templateVars.overridingPurposes ?? [
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
@@ -483,7 +483,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
-    riskView: getRiskView(templateVars, daProvider),
+    riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -633,6 +633,52 @@ function orbitStackCommon(
     stateValidation:
       templateVars.stateValidation ??
       (() => {
+        if (isPostBoLD) {
+          const validatorWhitelistDisabled =
+            templateVars.discovery.getContractValue<boolean>(
+              'RollupProxy',
+              'validatorWhitelistDisabled',
+            )
+
+          const baseStake = templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'baseStake',
+          )
+
+          const blockTime = templateVars.blockNumberOpcodeTimeSeconds ?? 12
+
+          const assertionsChallengePeriod =
+            templateVars.discovery.getContractValue<number>(
+              'RollupProxy',
+              'confirmPeriodBlocks',
+            )
+
+          const edgesChallengePeriod =
+            templateVars.discovery.getContractValue<number>(
+              'EdgeChallengeManager',
+              'challengePeriodBlocks',
+            )
+
+          const numBigStepLevels =
+            templateVars.discovery.getContractValue<number>(
+              'EdgeChallengeManager',
+              'NUM_BIGSTEP_LEVEL',
+            )
+
+          const stakeAmounts = templateVars.discovery.getContractValue<
+            number[]
+          >('EdgeChallengeManager', 'stakeAmounts')
+
+          return BoLDStateValidation(
+            validatorWhitelistDisabled,
+            baseStake,
+            minimumAssertionPeriod,
+            assertionsChallengePeriod * blockTime,
+            edgesChallengePeriod * blockTime,
+            numBigStepLevels,
+            stakeAmounts,
+          )
+        }
         const currentRequiredStake =
           templateVars.discovery.getContractValue<number>(
             'RollupProxy',
@@ -708,6 +754,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   return {
     type: 'layer3',
     ...common,
+    ecosystemInfo: {
+      id: ProjectId('arbitrum-orbit'),
+    },
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: getStackedRisks(),
@@ -763,6 +812,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
       trackedTxs: getTrackedTxs(templateVars),
       finality: templateVars.finality,
     },
+    ecosystemInfo: {
+      id: ProjectId('arbitrum-orbit'),
+    },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
@@ -774,13 +826,7 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
+  const usesBlobs = templateVars.usesBlobs ?? false
 
   const batchPosters = templateVars.discovery.getContractValue<string[]>(
     'SequencerInbox',
@@ -847,6 +893,7 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
   daProvider: DAProvider,
+  isPostBoLD: boolean = false,
 ): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -878,9 +925,15 @@ function getRiskView(
           return RISK_VIEW.STATE_FP_INT
         }
 
-        const nOfChallengers = templateVars.discovery.getContractValue<
-          string[]
-        >('RollupProxy', 'validators').length
+        const nOfChallengers = isPostBoLD
+          ? templateVars.discovery.getContractValue<string[]>(
+              'RollupProxy',
+              'getValidators',
+            ).length
+          : templateVars.discovery.getContractValue<string[]>(
+              'RollupProxy',
+              'validators',
+            ).length
 
         return {
           ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
@@ -911,18 +964,18 @@ function getRiskView(
         const validatorAfkBlocks =
           templateVars.discovery.getContractValue<number>(
             'RollupProxy',
-            'VALIDATOR_AFK_BLOCKS',
+            isPostBoLD ? 'validatorAfkBlocks' : 'VALIDATOR_AFK_BLOCKS',
           )
         const validatorAfkTimeSeconds =
           validatorAfkBlocks * blockNumberOpcodeTimeSeconds
 
+        const totalDelay = isPostBoLD
+          ? validatorAfkTimeSeconds
+          : challengePeriodSeconds + validatorAfkTimeSeconds // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+
         return {
-          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-            challengePeriodSeconds + validatorAfkTimeSeconds,
-          ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-          secondLine: formatDelay(
-            challengePeriodSeconds + validatorAfkTimeSeconds,
-          ),
+          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(totalDelay),
+          secondLine: formatDelay(totalDelay),
         }
       })(),
   }
@@ -1198,7 +1251,7 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
   const DABadge = hostChain.badges?.find((b) => b.type === 'DA')
   assert(DABadge !== undefined, 'Host chain must have data availability badge')
   assert(
-    hostChain.technology.dataAvailability !== undefined,
+    hostChain.technology?.dataAvailability !== undefined,
     'Host chain must have technology data availability',
   )
   assert(
@@ -1214,5 +1267,64 @@ function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
     riskViewExitWindow: hostChain.riskView.exitWindow,
     technology: hostChain.technology.dataAvailability,
     badge: DABadge,
+  }
+}
+function BoLDStateValidation(
+  isWhitelistDisabled: boolean,
+  baseStake: number,
+  minimumAssertionPeriod: number,
+  assertionsChallengePeriod: number,
+  edgesChallengePeriod: number,
+  numBigStepLevels: number,
+  stakeAmounts: number[],
+): ProjectScalingStateValidation {
+  let stakeDescription = ''
+  for (let i = 0; i < numBigStepLevels + 2; i++) {
+    if (i === 0) {
+      stakeDescription += `Level ${i} (block level) requires a stake of ${utils.formatEther(stakeAmounts[i])} ETH`
+    } else {
+      stakeDescription += `, level ${i} requires a stake of ${utils.formatEther(stakeAmounts[i])} ETH`
+    }
+  }
+
+  return {
+    description: isWhitelistDisabled
+      ? 'Updates to the system state can be proposed and challenged by anyone who has sufficient funds. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.'
+      : 'Updates to the system state can be proposed and challenged by a set of whitelisted validators. If a state root passes the challenge period, it is optimistically considered correct and made actionable for withdrawals.',
+    categories: [
+      {
+        title: 'State root proposals',
+        description: `Validators propose state roots as children of a previous state root. A state root can have multiple conflicting children. State roots are referred to as "assertions" within the contracts. Each chain of assertions only requires one stake, and validators staked on assertions with a child are considered inactive and can either move their stake to a new node or withdraw it. The function used to propose a new assertion is the \`stakeOnNewAssertion\` function. The stake is currently set to ${utils.formatEther(baseStake)} ETH, and it can be slashed if the proposal is proven incorrect via a fraud proof. The protocol allows such funds to be trustlessly pooled together if necessary. New nodes cannot be created faster than the minimum assertion period, currently set to ${formatSeconds(
+          minimumAssertionPeriod,
+        )}. An assertion without "rivals" can be confirmed after the challenge period has passed, currently set to ${formatSeconds(
+          assertionsChallengePeriod,
+        )}. If a rival is present, then it is checked that the assertion is the winner in the challenge protocol.`,
+        risks: [],
+        references: [
+          {
+            title: 'BoLD paper',
+            url: 'https://arxiv.org/pdf/2404.10491',
+          },
+        ],
+      },
+      {
+        title: 'Challenges',
+        description: `A challenge can be started between two siblings, i.e. two different state roots that share the same parent, by calling the \`createLayerZeroEdge\` function in the \`ChallengeManager\` contract. Edges represent assertions, or bisected assertions, within the challenge protocol. Challenges are played via a bisection game, where asserters and challengers play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner. An edge can only be bisected when rivaled. The bisection process requires no new stake as their validity is checked against a parent "history root" that contains all intermediate states. An edge can also be confirmed if itself or its descendants spend enough time being unrivaled. Such time is set to ${formatSeconds(edgesChallengePeriod)}. If both actors play as slow as possible, the maximum time to confirm an edge is double such value, i.e. ${formatSeconds(
+          edgesChallengePeriod * 2,
+        )}. Due to the complexities of maintaining the history root, the challenge protocol is divided into ${numBigStepLevels + 2} levels, where the lowest level represents assertions over blocks, the highest level represents assertions over single WASM instructions, and intermediate levels represent assertions over chunks of WASM instructions. When moving between levels, a new stake is required. ${stakeDescription}. The ratio between such stakes can be exploited to perform resource exhaustion attacks.`,
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an attacker successfully performs a resource exhaustion attack.',
+          },
+        ],
+        references: [
+          {
+            title: 'Fraud Proof Wars: Arbitrum BoLD',
+            url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+          },
+        ],
+      },
+    ],
   }
 }

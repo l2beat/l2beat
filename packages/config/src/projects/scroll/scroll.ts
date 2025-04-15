@@ -47,7 +47,7 @@ const timelockEmergencyDelay = discovery.getContractValue<number>(
 )
 
 const upgradesSC = {
-  upgradableBy: [{ name: 'SecurityCouncil', delay: 'no' }],
+  upgradableBy: [{ name: 'Scroll Security Council', delay: 'no' }],
 }
 
 const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
@@ -695,7 +695,7 @@ export const scroll: ScalingProject = {
             'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
           ...upgradesSC,
         }),
-        discovery.getContractDetails('ScrollFeeVaultMultisig', {
+        discovery.getContractDetails('Scroll Multisig 4', {
           description:
             'Multisig used to store fees collected from gateways to pay for L1 -> L2 message execution.',
         }),
@@ -721,19 +721,19 @@ export const scroll: ScalingProject = {
     [discovery.chain]: {
       actors: [
         discovery.getMultisigPermission(
-          'ScrollOpsMultisig',
-          'Can propose transactions via the TimelockFast, which currently can manage all roles in the ScrollOwner and thus get access to full upgrade and system functions. The ScrollExecutorMultisig needs to execute these proposals once ready.',
+          'Scroll Multisig 3',
+          'Can propose transactions via the TimelockFast, which can configure operational parameters like adding provers, configuring the gas limit and token L1 -> L2 address mappings. The ScrollExecutorMultisig needs to execute these proposals once ready.',
         ),
         discovery.getMultisigPermission(
-          'SecurityCouncil',
+          'Scroll Security Council',
           'Can upgrade all system contracts via the TimelockSC and the ProxyAdmin and manage all critical roles in the ScrollOwner via the TimelockSlow. The ScrollExecutorMultisig can execute these proposals, but the SC is also permissioned to execute them.',
         ),
         discovery.getMultisigPermission(
-          'ScrollExecutorMultisig',
+          'Scroll Multisig 1',
           'Can execute timelock transactions in all four timelocks.',
         ),
         discovery.getMultisigPermission(
-          'ScrollEmergencyMultisig',
+          'Scroll Multisig 2',
           'Can revert batches, remove sequencers and provers, and pause contracts via the TimelockEmergency. The ScrollExecutorMultisig needs to execute these proposals.',
         ),
         discovery.getPermissionDetails(
@@ -750,6 +750,13 @@ export const scroll: ScalingProject = {
     },
   },
   milestones: [
+    {
+      title: 'SCR token launch',
+      url: 'https://scroll.io/blog/scr-token',
+      date: '2024-10-19T00:00:00.00Z',
+      description: 'Scroll launches its SCR token.',
+      type: 'general',
+    },
     {
       title: 'Batches reverted',
       url: 'https://status.scroll.io/incidents/44k6s4qg6kcs',

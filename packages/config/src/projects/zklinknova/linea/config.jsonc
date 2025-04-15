@@ -23,7 +23,8 @@
         "l2LogsRootHash",
         "storedBlockHash",
         "storedBatchHash",
-        "getName"
+        "getName",
+        "priorityQueueFrontOperation"
       ],
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -34,7 +35,6 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
       "fields": {

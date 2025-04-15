@@ -261,6 +261,28 @@ const config: Config = {
           },
           to: { height: '0', opacity: '0%' },
         },
+        'row-highlight': {
+          '0%': { backgroundColor: 'transparent' },
+          '12%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '32%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '44%': { backgroundColor: 'transparent' },
+          '52%': { backgroundColor: 'transparent' },
+          '64%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '84%': { backgroundColor: 'hsl(var(--row-highlight))' },
+          '96%': { backgroundColor: 'transparent' },
+          '100%': { backgroundColor: 'transparent' },
+        },
+        'row-highlight-no-opacity': {
+          '0%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '12%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '32%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '44%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '52%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '64%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '84%': { backgroundColor: 'hsl(var(--row-highlight-no-opacity))' },
+          '96%': { backgroundColor: 'hsl(var(--surface-primary))' },
+          '100%': { backgroundColor: 'hsl(var(--surface-primary))' },
+        },
       },
       animation: {
         beat: 'beat 5s ease-in-out infinite forwards',
@@ -268,6 +290,8 @@ const config: Config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'collapsible-down': 'collapsible-down 0.3s ease-out',
         'collapsible-up': 'collapsible-up 0.3s ease-out',
+        'row-highlight': 'row-highlight 2.5s ease-in-out',
+        'row-highlight-no-opacity': 'row-highlight-no-opacity 2.5s ease-in-out',
       },
       fontFamily: {
         sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
@@ -295,6 +319,10 @@ const config: Config = {
       transitionProperty: {
         height: 'height',
         'max-height': 'max-height',
+      },
+      backgroundImage: {
+        'gradient-radial':
+          'radial-gradient(closest-side, var(--tw-gradient-stops))',
       },
     },
   },

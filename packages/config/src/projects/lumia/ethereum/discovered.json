@@ -2,7 +2,7 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21981677,
-  "configHash": "0x70e931a1812b1bc50acf1a7b0b25366a3d90645a9d3b96327e0715ab9fdd39de",
+  "configHash": "0x03c5c68c07ed5f0e2e5d215fa49da6f6c92503b36bc8138aa289f191488f55e2",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -25,7 +25,6 @@
       "address": "0x258862dec9a77db57b398c441390783293E2a7A1",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -97,6 +96,7 @@
         "owner": "0x258862dec9a77db57b398c441390783293E2a7A1",
         "requiredAmountOfSignatures": 1
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -120,7 +120,6 @@
         "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -222,7 +221,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
@@ -432,9 +432,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "polygon-cdk/PolygonDataCommittee": "0xeeacc882ef2dd83644ded6e961863fe6da4cb8a36a978c7de9ef5d3d209f6248",
-    "polygon-cdk/PolygonZkEVM": "0x56cf02df517a3e3f6c85d0da12f7f4740428295dd7bdd6a18fd1a12fd48aa527",
-    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
+    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
+    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
   }
 }

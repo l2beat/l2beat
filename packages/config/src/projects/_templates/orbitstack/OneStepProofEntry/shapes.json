@@ -1,0 +1,20 @@
+{
+  "OneStepProofEntry": {
+    "hash": "0xf3479c667d20b1c17ea2573dc7fe09e4315a3e20bc09d31bc92603520cc962cc",
+    "address": "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OneStepProofEntry_BoLD": {
+    "hash": "0xfdda77bfcb4ee6e1d88939c755d6eda90f3250c8053b15b511ad9148cce8a787",
+    "address": "0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "OneStepProofEntry_v32": {
+    "hash": "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678",
+    "address": "0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

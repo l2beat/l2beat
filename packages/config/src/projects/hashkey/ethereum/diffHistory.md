@@ -1,3 +1,265 @@
+Generated with discovered.json: 0xaad0fd9223951f36994b8e09b45464cca15e9027
+
+# Diff at Fri, 11 Apr 2025 13:15:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b607477490db79d49274f7585039ac7263456118 block: 22243976
+- current block number: 22243976
+
+## Description
+
+Config: global mapping updated for op stack prestates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22243976 (main branch discovery), not current.
+
+```diff
+    contract PermissionedDisputeGame (0x78075eA46A562c3201E61664645c0f0537a8DDd5) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      usedTypes.0.arg.0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405:
++        "v1.5.1-rc.1 (cannon64)"
+      usedTypes.0.arg.0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01:
++        "v1.5.1-rc.1"
+      usedTypes.0.arg.0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef:
++        "v1.5.0 (cannon64)"
+      usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
++        "v1.5.0"
+      usedTypes.0.arg.0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37:
++        "v1.4.0-unichain"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA) {
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      usedTypes.0.arg.0x03ee2917da962ec266b091f4b62121dc9682bb0db534633707325339f99ee405:
++        "v1.5.1-rc.1 (cannon64)"
+      usedTypes.0.arg.0x0354eee87a1775d96afee8977ef6d5d6bd3612b256170952a01bf1051610ee01:
++        "v1.5.1-rc.1"
+      usedTypes.0.arg.0x039970872142f48b189d18dcbc03a3737338d098b0101713dc2d6710f9deb5ef:
++        "v1.5.0 (cannon64)"
+      usedTypes.0.arg.0x039facea52b20c605c05efb0a33560a92de7074218998f75bcdf61e8989cb5d9:
++        "v1.5.0"
+      usedTypes.0.arg.0x0336751a224445089ba5456c8028376a0faf2bafa81d35f43fab8730258cdf37:
++        "v1.4.0-unichain"
+    }
+```
+
+Generated with discovered.json: 0xf2343d384ae34d4a9cbc8b06f91a393e234e552b
+
+# Diff at Fri, 11 Apr 2025 06:42:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a946e9842245b891a11dfd66e5a103281bde27da block: 22081892
+- current block number: 22243976
+
+## Description
+
+batcherHash changed, added nonTemplateTrackedTransactions.
+Config: anchorGame ignored.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.4:
+-        "0x3fEF4F3e99936E89A8bBdD9E08D83c471D5E152D"
++        "0x78075eA46A562c3201E61664645c0f0537a8DDd5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x3fEF4F3e99936E89A8bBdD9E08D83c471D5E152D)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+    contract SystemConfig (0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0x9391791f7CB74F8BFDA65edc0749efd964311b55"
++        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
+      issuedPermissions.1.via.0:
++        {"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.0.to:
+-        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
++        "0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f"
+      issuedPermissions.0.via.0:
+-        {"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}
+      values.batcherHash:
+-        "0x9391791f7CB74F8BFDA65edc0749efd964311b55"
++        "0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f"
+      values.unsafeBlockSigner:
+-        "0xBc80De532cf87543aaD3267Cc8A4cAA2813130E7"
++        "0xCc467FdB41B5b5A4E23021CAd69ED27550a41694"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x78075eA46A562c3201E61664645c0f0537a8DDd5)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+Generated with discovered.json: 0x651dc10812ef91726304aa73dbe185bef077f2b4
+
+# Diff at Fri, 04 Apr 2025 09:24:34 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 22081892
+- current block number: 22081892
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081892 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"interact","from":"0xBb70D595147A141e268532BFEF61A8c25054d26D","description":"can pull funds from the contract in case of emergency."}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04","via":[{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]}
+      receivedPermissions.10.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.10.from:
+-        "0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04"
++        "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
+      receivedPermissions.10.via:
+-        [{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]
+      receivedPermissions.10.description:
++        "can pull funds from the contract in case of emergency."
+    }
+```
+
+```diff
+    contract DelayedWETH (0xBb70D595147A141e268532BFEF61A8c25054d26D) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+```diff
+    contract DelayedWETH (0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x441F31C4cdf772558D4EA31f3114de59aE145E7c","description":"can pull funds from the contract in case of emergency.","via":[]}
+    }
+```
+
+Generated with discovered.json: 0x2fe2a9a67c32b28da60823e8ff511363f2150789
+
+# Diff at Thu, 27 Mar 2025 11:14:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 22081892
+- current block number: 22081892
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22081892 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x679A65aD62972Ea3561F40A12e93CcA6f79F35E6) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x0e3c8f012c252da8bdcfd0b243c6ad87c7919070
+
+# Diff at Wed, 19 Mar 2025 15:45:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4609d8355d7594946b66bef47876090fce6b0842 block: 21680579
+- current block number: 22081892
+
+## Description
+
+Ignore.
+
+## Watched changes
+
+```diff
+    contract DelayedWETH (0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.owner:
+-        "0xa31d8CDDf0D931Dfda2C9D03E35bd8b5d3A6aEC9"
++        "0x441F31C4cdf772558D4EA31f3114de59aE145E7c"
+    }
+```
+
+Generated with discovered.json: 0xd6c97df3b74fc191d918c81da667c8887e79245a
+
+# Diff at Tue, 18 Mar 2025 08:12:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21680579
+- current block number: 21680579
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680579 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 3 (0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3) {
+    +++ description: None
+      name:
+-        "HashkeyOpsMultisig"
++        "Hashkey Multisig 3"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      name:
+-        "HashkeyUpgradeMultisig"
++        "Hashkey Multisig 1"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 2 (0xC7fCbE26c1Db751d63869F72F782a56710f6be5A) {
+    +++ description: None
+      name:
+-        "HashkeyGuardianMultisig"
++        "Hashkey Multisig 2"
+    }
+```
+
 Generated with discovered.json: 0x7ac57517f8403e7b8c906f7b419ec3e32048218f
 
 # Diff at Tue, 04 Mar 2025 11:25:46 GMT:

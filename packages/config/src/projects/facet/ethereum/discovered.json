@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21678827,
-  "configHash": "0xa3afc2987b7d7caa5f150ed881cb867a202220ccaaef48271c5299e75c7d77c3",
+  "configHash": "0xf9c0cc5086f9240b3c420ea08fc993994bef326197d1e70c0f82e6b678754a3a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -24,7 +24,6 @@
         "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "FacetEtherBridge",
       "description": "Official Facet implementation of the Ether Bridge.",
       "issuedPermissions": [
         {
@@ -35,9 +34,21 @@
         },
         {
           "permission": "interact",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "description": "can withdraw all funds from the bridge.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "interact",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "description": "can withdraw all funds from the bridge.",
           "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "description": "can withdraw all funds from the bridge.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
         }
       ],
       "sinceTimestamp": 1734701579,
@@ -60,6 +71,7 @@
         "getDumbContract": "0x1673540243E793B0e77C038D4a88448efF524DcE",
         "getSigner": "0x314d660b083675f415cCAA9c545FeedF377d1006"
       },
+      "derivedName": "FacetEtherBridgeV6",
       "references": [
         {
           "text": "Source Code",
@@ -71,7 +83,6 @@
       "address": "0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "challenge",
@@ -101,9 +112,27 @@
       "issuedPermissions": [
         {
           "permission": "interact",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "description": "set and change address mappings.",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        },
+        {
+          "permission": "interact",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "description": "set and change address mappings.",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         }
       ],
       "sinceTimestamp": 1733855411,
@@ -111,7 +140,9 @@
       "values": {
         "$immutable": true,
         "owner": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
-      }
+      },
+      "derivedName": "AddressManager",
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x314d660b083675f415cCAA9c545FeedF377d1006",
@@ -135,6 +166,80 @@
       ],
       "proxyType": "immutable",
       "description": "Module that allows the Safe to send Facet transactions.",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "guard",
+          "from": "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+          "description": "can withdraw all funds from the bridge.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+          "description": "set and change address mappings.",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -146,7 +251,8 @@
       "values": {
         "$immutable": true,
         "facetProxyAddress": "0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25"
-      }
+      },
+      "derivedName": "FacetSafeModule"
     },
     {
       "address": "0x75deB70b12689e9CaeF4b316eDD04F213Af06127",
@@ -172,13 +278,39 @@
       "issuedPermissions": [
         {
           "permission": "guard",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "guard",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "via": []
+        },
+        {
+          "permission": "guard",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         },
         {
           "permission": "upgrade",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "via": [{ "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["params"],
@@ -208,6 +340,7 @@
         "systemConfig": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
         "version": "2.8.1-beta.1"
       },
+      "derivedName": "OptimismPortal",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -224,9 +357,27 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "via": [{ "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         }
       ],
       "sinceTimestamp": 1733855519,
@@ -296,10 +447,11 @@
         "systemConfig": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
         "version": "2.4.0"
       },
+      "derivedName": "L1CrossDomainMessenger",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "FacetMultisig",
+      "name": "Facet Multisig",
       "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -400,8 +552,13 @@
         "0x77a8405865bba6fd2e1d9522ac1279c1c7c1a325530ad51f3d2ba686e8a6b057"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "SystemConfig_facet",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
         {
           "permission": "interact",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
@@ -409,9 +566,31 @@
           "via": []
         },
         {
+          "permission": "interact",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        },
+        {
           "permission": "upgrade",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "via": [{ "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
@@ -481,6 +660,7 @@
           "description": "Gas limit for blocks on L2."
         }
       },
+      "derivedName": "SystemConfig",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -495,7 +675,8 @@
       "description": "Helper of the Safe Module that allows to send Facet transactions.",
       "sinceTimestamp": 1733593775,
       "sinceBlock": 21352209,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "FacetSafeProxy"
     },
     {
       "name": "L2OutputOracle",
@@ -521,8 +702,24 @@
         },
         {
           "permission": "upgrade",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "via": [{ "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -571,6 +768,7 @@
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
       },
+      "derivedName": "L2OutputOracle",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -588,6 +786,80 @@
       ],
       "proxyType": "immutable",
       "description": "Module that allows the Safe to interact with Ethscriptions.",
+      "receivedPermissions": [
+        {
+          "permission": "guard",
+          "from": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "guard",
+          "from": "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+          "description": "can withdraw all funds from the bridge.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+          "description": "set and change address mappings.",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59",
+          "via": [
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" },
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -599,7 +871,8 @@
       "values": {
         "$immutable": true,
         "ethscriptionsProxyAddress": "0xeEd444Fc821b866b002f30f502C53e88E15d5095"
-      }
+      },
+      "derivedName": "EthscriptionsSafeModule"
     },
     {
       "name": "ProxyAdmin",
@@ -645,7 +918,8 @@
         "addressManager": "0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
         "isUpgrading": false,
         "owner": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "SuperchainConfig",
@@ -661,13 +935,39 @@
       "issuedPermissions": [
         {
           "permission": "guard",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "guard",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "via": []
+        },
+        {
+          "permission": "guard",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "via": [{ "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x3235AdE33cF7013f5b5A51089390396e931e6BCF",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         },
         {
           "permission": "upgrade",
           "to": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
           "via": [{ "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
+          "via": [
+            { "address": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525" },
+            { "address": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
         }
       ],
       "sinceTimestamp": 1733855459,
@@ -689,6 +989,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "derivedName": "SuperchainConfig",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -703,7 +1004,8 @@
       "description": "Helper of the Safe Module that allows to send Ethscriptions transactions.",
       "sinceTimestamp": 1697832623,
       "sinceBlock": 18393830,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EthscriptionsSafeProxy"
     }
   ],
   "abis": {
@@ -1100,19 +1402,19 @@
     ]
   },
   "usedTemplates": {
-    "facet/EthscriptionsSafeModule": "0x7c3e0c6b0285ad47284d0a689f0776ec044df5a4c876df530acd20aa84e3dc2d",
-    "facet/EthscriptionsSafeProxy": "0xc05db8d65dbdc6684f94539c1a8f0dfbc699cbe27219ee17355931f604161125",
-    "facet/FacetEtherBridge": "0x19bec9af1301a19eb70f29b17149686eea4e3061f69be30d5fef9fdac2c80963",
-    "facet/FacetSafeModule": "0xe0d5a5180f548d6796a04543bb5d7df703e43d5661a087675619b63c84757b3c",
-    "facet/FacetSafeProxy": "0x0ef7111305a3ed5f882791888dab94287e8df1a944a96af1b05cbf3c49a79faa",
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "opstack/AddressManager": "0xbc1c0f15d0662b0d3c903e31e3904223772c9b0e403831090021c606eebe4512",
-    "opstack/L1CrossDomainMessenger": "0x286dc50704903f31f6febeac5a6dde77fec3cd0c4dd9e2d234a849308f902ec4",
-    "opstack/L1StandardBridge_facet": "0x1b0cffb1dcec41815ff689ce311602e3479fba1cae1b6696efe0090abab90604",
-    "opstack/L2OutputOracle": "0xc8c03bf9d2b8af9c211229cb24bbc7abcf2899e0bc8f2e6bd7c846b50051c60c",
-    "opstack/OptimismPortal": "0xb3cbbeb41f46df19e4a45e5cd74a078e9786b913f6c3b6babcb5481806945e9f",
-    "opstack/SuperchainConfigFake": "0x1f1fe2ca60b39e18cfa4f6308beec85f223e5fb7cbcd1a8532a0997bb346617b",
-    "opstack/SystemConfig_facet": "0xacee96dd81d0e20d887a64e8b2327cdf84cd34502e18df171f9b3a5e82dc1f88"
+    "facet/EthscriptionsSafeModule": "0x0eb3b260690dfb9c6a97d747ef1c6f1f0f2254df869c8b7fae401c0585c9f1c4",
+    "facet/EthscriptionsSafeProxy": "0x6ac0b30b012520ffda74076819604bf0526d06341500b79585e468ef40ac2a52",
+    "facet/FacetEtherBridge": "0xe316de6e3576bdca94bf459ff202fd70dd01351095a1fbb66646d156b0220678",
+    "facet/FacetSafeModule": "0xcb6569b2c471848cf388b1cbb8d095b3c3306cddd5a9c6490a9ede91e1082027",
+    "facet/FacetSafeProxy": "0x3612b42b23e4ec89fe28591377b47541c03b3471077da541b6b67d18b092c8ad",
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",
+    "opstack/L1CrossDomainMessenger": "0x8062fbc19eefa6454f217550f8b6b9035684168b550eccafeca7ce0a68bd8c96",
+    "opstack/L1StandardBridge_facet": "0x2403705a27b6bee93340628002435f297c8b311481edae40e209abb4603dfb53",
+    "opstack/L2OutputOracle": "0x4b8285ca9eb9863e46dd75643a9c66ce058f18b8124e16e7020eae9dfc03a224",
+    "opstack/OptimismPortal": "0xd55edc1f8b27f060500bf7c742c6ffd52bb5028dd38b3628fdad34be80cb2bb4",
+    "opstack/SuperchainConfigFake": "0x825f6f3f2295df29c64f75428ff044a762818e61c555b65adb12f340866c4e84",
+    "opstack/SystemConfig_facet": "0x2af6ec8e946ed7442ff2ac252f1f05f7e9348f8b9af1169cba14a9d28aa8cf3e"
   }
 }

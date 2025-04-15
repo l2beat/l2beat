@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xd265ab4cb9afce27c22ae1e00fe1834ee2d9bd3c
+
+# Diff at Wed, 19 Mar 2025 13:05:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21973570
+- current block number: 21973570
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973570 (main branch discovery), not current.
+
+```diff
+    contract SHARP Multisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x0bfeacb83003472906c8c517a766edb2dc1054f8
+
+# Diff at Tue, 18 Mar 2025 08:13:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21973570
+- current block number: 21973570
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973570 (main branch discovery), not current.
+
+```diff
+    contract SHARP Multisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      name:
+-        "SHARPVerifierAdminMultisig"
++        "SHARP Multisig"
+    }
+```
+
 Generated with discovered.json: 0xe0f61553c95874ea37f793ac24b9ba41c79eb7d4
 
 # Diff at Tue, 04 Mar 2025 12:37:33 GMT:

@@ -2,7 +2,7 @@
   "name": "termstructure",
   "chain": "ethereum",
   "blockNumber": 20469346,
-  "configHash": "0xdb9945f5ebb1a47abbef0a3a3046daedbce7c7d2d1bd12c30dc0826b4a81d1b6",
+  "configHash": "0xf4df2cbe5d0af520d9a39d81cb1d8caee3b86a7e1f8c8745e3bfa317f90860ae",
   "entries": [
     {
       "name": "ZkTrueUp",
@@ -243,14 +243,14 @@
         "isEvacuMode": false,
         "nomineeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
-      }
+      },
+      "derivedName": "ZkTrueUp"
     },
     {
       "name": "Rolluper",
       "address": "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "name": "Verifier",
@@ -262,10 +262,11 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263747,
       "sinceBlock": 19915733,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "Verifier"
     },
     {
-      "name": "VaultMultisig",
+      "name": "TermStructure Multisig 2",
       "address": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -299,7 +300,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "InsuranceMultisig",
+      "name": "TermStructure Multisig 3",
       "address": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -340,7 +341,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263735,
       "sinceBlock": 19915732,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d",
@@ -377,7 +379,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263891,
       "sinceBlock": 19915745,
-      "values": { "$immutable": true, "isEvacuMode": false }
+      "values": { "$immutable": true, "isEvacuMode": false },
+      "derivedName": "EvacuationFacet"
     },
     {
       "name": "AccountFacet",
@@ -389,7 +392,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263771,
       "sinceBlock": 19915735,
-      "values": { "$immutable": true, "getAccountNum": 0 }
+      "values": { "$immutable": true, "getAccountNum": 0 },
+      "derivedName": "AccountFacet"
     },
     {
       "name": "RollupFacet",
@@ -405,7 +409,8 @@
         "$immutable": true,
         "getBlockNum": [0, 0, 0],
         "getL1RequestNum": [0, 0, 0]
-      }
+      },
+      "derivedName": "RollupFacet"
     },
     {
       "name": "EvacuVerifier",
@@ -417,10 +422,11 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716263759,
       "sinceBlock": 19915734,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EvacuVerifier"
     },
     {
-      "name": "TermStructureMultisig",
+      "name": "TermStructure Multisig 1",
       "address": "0xa00d50A40B1635D293c87BA36503bD2504b5D818",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -459,7 +465,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TreasuryMultisig",
+      "name": "TermStructure Multisig 4",
       "address": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -496,8 +502,7 @@
       "name": "Operator",
       "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -944,6 +949,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

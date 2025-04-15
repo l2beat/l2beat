@@ -6,10 +6,8 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
-import { featureFlags } from '~/consts/feature-flags'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
-import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
 import {
   CustomSystemInfo,
@@ -32,18 +30,11 @@ export default async function Page() {
   return (
     <div>
       <MainPageHeader>Summary</MainPageHeader>
-      {featureFlags.daThroughput && (
-        <DaSummaryBoxes
-          entries={publicSystems}
-          throughputSummaryData={throughputSummaryData}
-        />
-      )}
-      <div
-        className={cn(
-          'flex flex-col gap-6',
-          featureFlags.daThroughput ? 'md:mt-2' : 'lg:-mt-4',
-        )}
-      >
+      <DaSummaryBoxes
+        entries={publicSystems}
+        throughputSummaryData={throughputSummaryData}
+      />
+      <div className="flex flex-col gap-6 md:mt-2">
         <DirectoryTabs defaultValue="public">
           <DirectoryTabsList>
             <DirectoryTabsTrigger value="public">

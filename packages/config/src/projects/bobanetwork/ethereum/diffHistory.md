@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x0af6cb74fc969bbea94fac826cb2ab01c06f8547
+
+# Diff at Mon, 14 Apr 2025 12:39:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22d5bd9958c2ffcb130d83154e0650da7c63f262 block: 21428646
+- current block number: 22267281
+
+## Description
+
+signer changes.
+
+## Watched changes
+
+```diff
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      values.$members.3:
+-        "0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+      values.$members.2:
+-        "0x6976498e37E4941E167161fC3BC5191EEDc302ab"
++        "0xCCDEbe62f7378D5A931970A847cdf1EcFfc71C63"
+      values.$members.1:
+-        "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd"
++        "0x6976498e37E4941E167161fC3BC5191EEDc302ab"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "2 of 3 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x3447edefb63d95aaa0d0e1606dd0288fecd55e4b
+
+# Diff at Thu, 27 Mar 2025 11:14:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21428646
+- current block number: 21428646
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428646 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x5e3729fdb988aa954b886e3d14b52bfdc20b209f
+
+# Diff at Wed, 19 Mar 2025 13:04:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21428646
+- current block number: 21428646
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428646 (main branch discovery), not current.
+
+```diff
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xbfBAB4363034A930687B9320599a69DfBf1D21d0) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x26bed358958e506908e9d80f3d572f794776d5ee
+
+# Diff at Tue, 18 Mar 2025 08:12:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21428646
+- current block number: 21428646
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21428646 (main branch discovery), not current.
+
+```diff
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      name:
+-        "BobaMultisig"
++        "Boba Multisig"
+    }
+```
+
 Generated with discovered.json: 0x6ee80cb5a16d6b102426e74391567885532d7c47
 
 # Diff at Tue, 04 Mar 2025 11:25:30 GMT:

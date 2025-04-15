@@ -1,6 +1,7 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { ValueSecuredBreakdown as ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
+import { ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
 import {
   Tooltip,
   TooltipContent,
@@ -28,7 +29,7 @@ interface ValueSecuredBreakdown {
 export interface ValueSecuredSummaryProps {
   tvs: NonNullable<ProjectScalingEntry['header']['tvs']> | undefined
   detailedBreakdownHref: string
-  isArchived?: boolean
+  archivedAt?: UnixTime | undefined
 }
 
 export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
@@ -74,7 +75,7 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
         </span>
 
         <div className="flex items-center gap-1">
-          {params.breakdown.total > 0 || props.isArchived ? (
+          {params.breakdown.total > 0 || !!props.archivedAt ? (
             <ValueWithPercentageChange
               className="text-lg font-bold md:text-2xl md:leading-none"
               changeClassName="text-xs font-bold md:text-base md:w-[58px]"
@@ -110,7 +111,7 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
         native={params.usage.native}
         className="my-3 h-1 w-full md:my-0 md:hidden [@media(min-width:1000px)]:flex"
       />
-      <VerticalSeparator className="row-span-2 hidden w-px md:block [@media(min-width:1000px)]:hidden" />
+      <VerticalSeparator className="row-span-2 hidden w-px max-md:border-none md:block [@media(min-width:1000px)]:hidden" />
       <div className="row-span-2 flex h-1/2 flex-wrap gap-3 @container md:h-full md:gap-0 [@media(min-width:1000px)]:h-1/2">
         {tvsStats.map((s, i) => (
           <div

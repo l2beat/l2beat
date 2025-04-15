@@ -1,13 +1,13 @@
 import { utils } from 'ethers'
 
-import type { ContractConfig } from '../config/ContractConfig'
+import type { StructureContractConfig } from '../config/structureUtils'
 import type { Handler } from './Handler'
 import { LimitedArrayHandler } from './system/LimitedArrayHandler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 
 export function getSystemHandlers(
   abiEntries: string[],
-  config: ContractConfig,
+  config: StructureContractConfig,
 ): Handler[] {
   const abi = new utils.Interface(abiEntries)
 

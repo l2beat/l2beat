@@ -1,3 +1,157 @@
+Generated with discovered.json: 0x8aa2e2166e56de2aa6233100fb74ae28978d713f
+
+# Diff at Mon, 31 Mar 2025 12:44:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 308389533
+- current block number: 321461043
+
+## Description
+
+back from the dead. the operator had stopped posting batches but is now active again (headerwarn removed, incident added).
+
+## Watched changes
+
+```diff
+    contract Blessnet Multisig 2 (0x089E12e795b3292BcC16f29817bE124C720615b0) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"validate","from":"0xF9327276c0E0d255543C095AC6D243B555e645D9","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
+      receivedPermissions.0.permission:
+-        "validate"
++        "fastconfirm"
+      receivedPermissions.0.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+    }
+```
+
+```diff
+    contract Blessnet Multisig 1 (0x571D6CA61B979A967E055696c822CF8C928d3556) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"validate","from":"0xF9327276c0E0d255543C095AC6D243B555e645D9","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain."}
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      receivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+    }
+```
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4.permission:
+-        "validate"
++        "fastconfirm"
+      issuedPermissions.4.to:
+-        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
++        "0x089E12e795b3292BcC16f29817bE124C720615b0"
+      issuedPermissions.4.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.3.to:
+-        "0x571D6CA61B979A967E055696c822CF8C928d3556"
++        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
+      issuedPermissions.2.to:
+-        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
++        "0x571D6CA61B979A967E055696c822CF8C928d3556"
+      issuedPermissions.1.permission:
+-        "interact"
++        "validate"
+      issuedPermissions.1.to:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
+      issuedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.1.via.0:
+-        {"address":"0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3"}
+      issuedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x571D6CA61B979A967E055696c822CF8C928d3556"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.0.via.0:
++        {"address":"0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3"}
+      values.anyTrustFastConfirmer:
+-        "0x571D6CA61B979A967E055696c822CF8C928d3556"
++        "0x089E12e795b3292BcC16f29817bE124C720615b0"
+      values.latestConfirmed:
+-        43200
++        46896
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        2
++        75
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308389533 (main branch discovery), not current.
+
+```diff
+    contract Blessnet Multisig 2 (0x089E12e795b3292BcC16f29817bE124C720615b0) {
+    +++ description: None
+      name:
+-        "GnosisSafeL2"
++        "Blessnet Multisig 2"
+    }
+```
+
+```diff
+    contract Blessnet Multisig 1 (0x571D6CA61B979A967E055696c822CF8C928d3556) {
+    +++ description: None
+      name:
+-        "BlessnetFastconfirmerMultisig"
++        "Blessnet Multisig 1"
+    }
+```
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.latestConfirmed:
+-        {"severity":"HIGH","description":"Was dead, now alive? Remove headerWarn if yes."}
+    }
+```
+
+Generated with discovered.json: 0x2019da9e85fd856dde049330e7848c9983811df2
+
+# Diff at Tue, 18 Mar 2025 08:14:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 308389533
+- current block number: 308389533
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 308389533 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      name:
+-        "Caldera Multisig"
++        "Caldera Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0x828617f1690d350173f7280fa1b1b4a9433d854b
 
 # Diff at Thu, 06 Mar 2025 14:21:28 GMT:

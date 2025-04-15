@@ -1,4 +1,56 @@
-Generated with discovered.json: 0x5ca928e2d5259454aa04e5690ab4489000dd5a8d
+Generated with discovered.json: 0x9c7444d0ab6b04595d4a006c73efcc8c0609b084
+
+# Diff at Thu, 10 Apr 2025 14:42:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 21981677
+- current block number: 21981677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981677 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B) {
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
+Generated with discovered.json: 0x191025c95e4a39d36993863ed810d49fb6130559
+
+# Diff at Wed, 19 Mar 2025 13:04:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21981677
+- current block number: 21981677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981677 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x258862dec9a77db57b398c441390783293E2a7A1) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x23c88fa4ca2634d75f5cd153d42ffa8f96e5388b
 
 # Diff at Thu, 06 Mar 2025 15:18:49 GMT:
 

@@ -1,0 +1,153 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "polynetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "polynetwork-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+            "decimals": 18,
+            "sinceTimestamp": 1599099893
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
+            "decimals": 18,
+            "sinceTimestamp": 1666256303
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-RACA",
+      "priceId": "radio-caca",
+      "symbol": "RACA",
+      "name": "Radio Caca V2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17841/large/ez44_BSs_400x400.jpg?1696517365",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x12BB890508c125661E03b09EC06E404bc9289040",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 18,
+        "sinceTimestamp": 1633573008
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-renBTC",
+      "priceId": "renbtc",
+      "symbol": "renBTC",
+      "name": "renBTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1696511287",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 8,
+        "sinceTimestamp": 1599099893
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-TRIBE",
+      "priceId": "tribe-2",
+      "symbol": "TRIBE",
+      "name": "Tribe",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14575/large/tribe.PNG?1696514256",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 18,
+        "sinceTimestamp": 1617408000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 6,
+        "sinceTimestamp": 1599099893
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-USDP",
+      "priceId": "paxos-standard",
+      "symbol": "USDP",
+      "name": "Pax Dollar",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6013/large/Pax_Dollar.png?1696506427",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 18,
+        "sinceTimestamp": 1599099893
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polynetwork-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+        "decimals": 6,
+        "sinceTimestamp": 1599099893
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

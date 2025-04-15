@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "myria",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "myria-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7",
+        "decimals": 18,
+        "sinceTimestamp": 1659542607
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

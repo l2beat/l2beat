@@ -3,9 +3,9 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   NEW_CRYPTOGRAPHY,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -31,6 +31,7 @@ const isForcedBatchDisallowed =
 
 export const astarzkevm: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1690815262), // 2023-07-31T14:54:22Z
+  archivedAt: UnixTime(1743465600), // 2025-04-01T00:00:00.000Z,
   additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -97,11 +98,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       },
     ],
     apis: [
-      {
-        type: 'rpc',
-        url: 'https://rpc.startale.com/astar-zkevm',
-        callsPerMinute: 1500,
-      },
+      /* No RPC, project archived */
     ],
   },
   discovery,
@@ -132,6 +129,13 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },
   milestones: [
+    {
+      title: 'Astar zkEVM sunsets',
+      url: 'https://x.com/AstarNetwork/status/1906658995538194650',
+      date: '2025-03-31',
+      description: 'Astar Network has officially sunset.',
+      type: 'general',
+    },
     {
       title: 'Astar zkEVM Launch',
       url: 'https://astar.network/blog/astars-zkevm-mainnet-is-live-86096',

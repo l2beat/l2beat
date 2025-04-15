@@ -23,7 +23,7 @@ export function BridgesProjectSummary({ project }: Props) {
         <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader title={project.name} slug={project.slug} />
           <div className="space-y-2">
-            {project.isArchived && <ArchivedBar />}
+            {project.archivedAt && <ArchivedBar />}
             {project.isUpcoming && <UpcomingBar />}
             {project.underReviewStatus && (
               <UnderReviewBar
@@ -46,7 +46,10 @@ export function BridgesProjectSummary({ project }: Props) {
           <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
 
           <div className="max-md:hidden">
-            <DesktopProjectLinks projectLinks={project.header.links} />
+            <DesktopProjectLinks
+              projectLinks={project.header.links}
+              variant="header"
+            />
           </div>
           <BridgesProjectStats project={project} />
         </div>

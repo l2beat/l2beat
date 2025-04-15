@@ -2,7 +2,7 @@
   "name": "l3x",
   "chain": "arbitrum",
   "blockNumber": 287771362,
-  "configHash": "0xff38d14bc7aedb0cdfbea204a76d12586c61c823af6735ff6a7633c69e7312c0",
+  "configHash": "0x4fa1357b85530ab6e29f8e863a6c45078d07a54456f25b64bc123925f2e96667",
   "entries": [
     {
       "name": "Outbox",
@@ -48,6 +48,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"
       },
+      "derivedName": "Outbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -90,6 +91,7 @@
         "sequencerInbox": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
         "totalChallengesCreated": 0
       },
+      "derivedName": "ChallengeManager",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -144,7 +146,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "address": "0x460E0a28a1DcE5a15811C3F5775D1e8fd0a08278",
@@ -219,6 +222,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x5e31608B400F45846043E93747D72A1a02c5a2f5"]
       },
+      "derivedName": "UpgradeExecutor",
       "category": { "name": "Governance", "priority": 3 }
     },
     {
@@ -277,7 +281,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710434327,
       "sinceBlock": 190342586,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMemory"
     },
     {
       "name": "Bridge",
@@ -353,6 +358,7 @@
           "description": "All Inboxes that were ever set as allowed in the bridge."
         }
       },
+      "derivedName": "Bridge",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -463,7 +469,8 @@
       "description": "This contract implements view only utilities for validators.",
       "sinceTimestamp": 1700037477,
       "sinceBlock": 150599283,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "ValidatorUtils"
     },
     {
       "address": "0x76df9F5004F38aC74D0cE664027a1E718AA45E97",
@@ -482,7 +489,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710434319,
       "sinceBlock": 190342557,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProver0"
     },
     {
       "name": "Inbox",
@@ -525,6 +533,7 @@
         "paused": false,
         "sequencerInbox": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653"
       },
+      "derivedName": "Inbox",
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
@@ -589,7 +598,8 @@
         "proverHostIo": "0xc555b2F1D559Fbb854569b33640990D178F94747",
         "proverMath": "0xe8709022B9C9D7347856c75910fe07e10C904446",
         "proverMem": "0x526a6E634aD36bB0007c4422586c135F1F9B525a"
-      }
+      },
+      "derivedName": "OneStepProofEntry"
     },
     {
       "name": "RollupProxy",
@@ -705,6 +715,7 @@
           "description": "Emitted on createChallenge() in RollupUserLogic."
         }
       },
+      "derivedName": "RollupProxy",
       "usedTypes": [
         {
           "typeCaster": "Mapping",
@@ -763,7 +774,12 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "buffer",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1714618907,
       "sinceBlock": 206923576,
       "values": {
@@ -816,6 +832,7 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
+      "derivedName": "SequencerInbox",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -854,7 +871,8 @@
         "$upgradeCount": 1,
         "bridge": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
         "rollup": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"
-      }
+      },
+      "derivedName": "RollupEventInbox"
     },
     {
       "name": "OneStepProverHostIo",
@@ -868,7 +886,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710434342,
       "sinceBlock": 190342647,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverHostIo"
     },
     {
       "address": "0xcEF5F518d69F0DAf71b8Daa27B570FC48eE51bC8",
@@ -899,7 +918,8 @@
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1710434334,
       "sinceBlock": 190342616,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "OneStepProverMath"
     },
     {
       "address": "0xfc48f0786b3fA7353F63Acc40973857554A51cA2",
@@ -1536,22 +1556,22 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "orbitstack/Bridge": "0xb6de3aace8e96d1c35f5d771acfb448858e9d9d487e11cccdc25abeaf18e6515",
-    "orbitstack/ChallengeManager": "0xb1c9d340512fa1eaea79b3c47d8e5a2008266b78c1ccb64c36eb9f3b5cc7df24",
-    "orbitstack/ERC20Gateway": "0x76cecfc80c9723f4b387e4a35b686925321492e057f34090e4f39d1509c1280e",
-    "orbitstack/GatewayRouter": "0x440c8eb716ccc968e9fcdd86268f9ba430dc15f171efd6e33e449c6a19696baa",
-    "orbitstack/Inbox": "0x66868b7e34292ed83b16b6175f5c8510c0f1a715b5b3d2f7656916e583076e5f",
-    "orbitstack/OneStepProofEntry": "0xf8ebd4d19d87374ce2a6fe109880b1ce7c70b34da3dae92daf6eb74aa569ba5b",
-    "orbitstack/OneStepProver0": "0xbfd9c37860b90ef123f1e1d8c1284d326876f1ae15967fb68bf6b1310f91fc97",
-    "orbitstack/OneStepProverHostIo": "0x89c4a4838f36b8bd9d0c403568fb1715cd775d20d38a87761baf6f3336e03d32",
-    "orbitstack/OneStepProverMath": "0x7fb24b2d51176c431d0d17781a0adfa99724f41f64aa965e55910ce52e1e3c05",
-    "orbitstack/OneStepProverMemory": "0x63d1aaa9a4215b12a93a37b5d383142fd73c6d8ecaae85e2a8254d85e96006d9",
-    "orbitstack/Outbox": "0xd373d8cd979164d1b6db4271e41638272216305e24f2609767ed253b9a3c594e",
-    "orbitstack/RollupEventInbox": "0x3a5690d1a8060c59c6dbae9d71027b09f2a694bb8534f4f62feb30efa12c2278",
-    "orbitstack/RollupProxy": "0x36eb63acd4719dadf51cdc1b54082d9b58494c1b6f6828b1ea964d19c6de3452",
-    "orbitstack/SequencerInbox": "0x83141082064c8df924d8ba369b73756b92089971b56e904973687d0fdbff3dee",
-    "orbitstack/UpgradeExecutor": "0xd75bd812717c6a9923d0bc66cfdf7bb6b43d3fed79676cc11542539bc377c2d6",
-    "orbitstack/ValidatorUtils": "0x4cda90e9e8df55c2a790c46e2515efa956af71e323ed688286d6bb8152aed0a9"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "orbitstack/Bridge": "0x90031b4e4f9fcb7d87cf53eb46e1eac9602ede912abdfa54f17d7d3aa96e3ea0",
+    "orbitstack/ChallengeManager": "0x317ce1255cf624f543073de5b2441b19aae9d5c87a1d18faa829c4abbebe8c18",
+    "orbitstack/ERC20Gateway": "0x5f18d477345e847765db562dda3557d072b959c47cc6f0403f1a6d317d1f4624",
+    "orbitstack/GatewayRouter": "0xe69c43c0e257aac7722518bb22b4ac48768f06e16a25c0be3b4a03d8ffc6d264",
+    "orbitstack/Inbox": "0x45f9b69916c043d8a695844685a99374143c20e6d5a13ceb145fdf6a1121825b",
+    "orbitstack/OneStepProofEntry": "0x9eb54e580161778d86b080078e2ee2b9780cc0cdc39d271fe6202028901f2589",
+    "orbitstack/OneStepProver0": "0xd52943a596387edc0931848e22e526893c934fa609baf10454c9f11b46bce1b1",
+    "orbitstack/OneStepProverHostIo": "0x8cef93d8938073b743f7a540589ae5a108425a5a9c6f16ba080df9c88fd0ad62",
+    "orbitstack/OneStepProverMath": "0x46314b895c9439d9614366eaf21a39c387137bbd00b4af934add687a1ad0131e",
+    "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
+    "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
+    "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
+    "orbitstack/RollupProxy": "0x49a49134edbbaed0577e21ffe0d5334c4580b526a0ed23fd1ce5f5d42b6477be",
+    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
+    "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }
 }

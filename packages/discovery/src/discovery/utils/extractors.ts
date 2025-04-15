@@ -1,4 +1,4 @@
-import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'
 
 export function get$Implementations(
@@ -39,12 +39,19 @@ export function toAddressRecord(value: ContractValue | undefined) {
   return []
 }
 
-export function toAddressArray(value: ContractValue | undefined) {
-  if (typeof value === 'string') {
-    return [value as unknown as EthereumAddress]
-  }
-  if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
-    return value.map((v) => v as unknown as EthereumAddress)
+export function toAddressArray(
+  value: ContractValue | undefined,
+): EthereumAddress[] {
+  if (Array.isArray(value)) {
+    return value.flatMap((v) => toAddressArray(v))
+  } else if (typeof value === 'object') {
+    return Object.values(value).flatMap((v) => toAddressArray(v))
+  } else if (typeof value === 'string') {
+    try {
+      return [EthereumAddress(value)]
+    } catch {
+      return []
+    }
   }
   return []
 }

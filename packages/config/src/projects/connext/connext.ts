@@ -9,7 +9,7 @@ export const connext: Bridge = {
   type: 'bridge',
   id: ProjectId('connext'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
-  isArchived: true,
+  archivedAt: UnixTime(1682553600), // 2023-04-27T00:00:00.000Z,
   display: {
     name: 'Connext (Legacy)',
     slug: 'connext-legacy',

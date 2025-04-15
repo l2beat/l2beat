@@ -2,7 +2,7 @@
   "name": "xdai",
   "chain": "ethereum",
   "blockNumber": 21778563,
-  "configHash": "0x6ba66aa15db52b804396ecade7db810b5f9cf465d05c393b5318f3acfc3726c6",
+  "configHash": "0x0827ec3c20a3bc5e70deb5a45c4b86748c57009771c309c5b9149266585ce212",
   "entries": [
     {
       "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
@@ -199,7 +199,8 @@
         "multisigThreshold": "2 of 3 (67%)",
         "nonce": 18,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "address": "0x4D1c96B9A49C4469A0b720a22b74b034EDdFe051",
@@ -354,7 +355,8 @@
           "0xc073C8E5ED9Aa11CF6776C69b3e13b259Ba9F506"
         ],
         "version": 2
-      }
+      },
+      "derivedName": "BridgeValidators"
     },
     {
       "name": "DaiForeignBridge",
@@ -653,6 +655,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

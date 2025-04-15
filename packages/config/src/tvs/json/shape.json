@@ -1,0 +1,39 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "shape",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "shape-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xEB06fFa16011B5628BaB98E29776361c83741dd3",
+            "decimals": 18,
+            "sinceTimestamp": 1721746151
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B",
+            "decimals": 18,
+            "sinceTimestamp": 1721746175
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

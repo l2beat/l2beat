@@ -1,0 +1,14 @@
+{
+  "ProtocolUpgradeHandler": {
+    "hash": "0xe59fe71de493915d874d4d22b4637434d86b42759b4d5fd2dddf4f25cfdd1544",
+    "address": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ProtocolUpgradeHandler_proxied": {
+    "hash": "0x07105095c7b0ff20b0cdd1e3754255aa6189aa79719f6d09fdd8e20df48bed44",
+    "address": "0xD5e9D3d483a93d03D8d604CC79dC9f2F4B78C604",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

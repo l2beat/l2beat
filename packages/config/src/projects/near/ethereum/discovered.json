@@ -1,8 +1,8 @@
 {
   "name": "near",
   "chain": "ethereum",
-  "blockNumber": 19531990,
-  "configHash": "0x70cc828b2e3c6f94b7e2d27c1b835da184ffe638189a77014909efc0378bc658",
+  "blockNumber": 22230519,
+  "configHash": "0x7cd5a45d024a7428d23cb8ec9e87ed224e680e3c61239ba7cbd30be9928c3e7e",
   "entries": [
     {
       "name": "NearProver",
@@ -19,7 +19,8 @@
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "bridge": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
         "paused": 0
-      }
+      },
+      "derivedName": "NearProver"
     },
     {
       "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
@@ -41,9 +42,10 @@
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "minBlockAcceptanceHeight_": 0,
         "nearTokenFactory_": "0x666163746f72792e6272696467652e6e656172",
-        "paused": 0,
+        "paused": 1,
         "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
-      }
+      },
+      "derivedName": "ERC20Locker"
     },
     {
       "name": "BridgeAdminMultisig",
@@ -73,7 +75,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 44,
+        "nonce": 57,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -93,18 +95,19 @@
         "$immutable": true,
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "bridgeState": {
-          "currentHeight": 115627101,
-          "nextTimestamp": "1711614850017316941",
-          "nextValidAt": 1711629647,
+          "currentHeight": 143793084,
+          "nextTimestamp": "1744190502865473728",
+          "nextValidAt": 1744205039,
           "numBlockProducers": 100
         },
         "initialized": true,
-        "lastValidAt": 1711629647,
+        "lastValidAt": 1744205039,
         "lockDuration": 14400,
         "lockEthAmount": "5000000000000000000",
         "paused": 0,
         "replaceDuration": 18000000000000
-      }
+      },
+      "derivedName": "NearBridge"
     },
     {
       "name": "EthCustodian",
@@ -121,9 +124,10 @@
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "minBlockAcceptanceHeight_": 0,
         "nearProofProducerAccount_": "0x6175726f7261",
-        "paused": 0,
+        "paused": 3,
         "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
-      }
+      },
+      "derivedName": "EthCustodian"
     },
     {
       "address": "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6",
@@ -283,6 +287,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

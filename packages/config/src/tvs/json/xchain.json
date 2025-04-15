@@ -1,0 +1,43 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "xchain",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "xchain-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x2Be65c5b58F78B02AB5c0e798A9ffC181703D3C1",
+        "decimals": 18,
+        "sinceTimestamp": 1716494507
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "xchain-USDC.e",
+      "priceId": "usd-coin",
+      "symbol": "USDC.e",
+      "name": "Bridged USDC (Stargate)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+        "chain": "xchain",
+        "decimals": 6,
+        "sinceTimestamp": 1724198400
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,3 +1,108 @@
+Generated with discovered.json: 0x4c762393bbf511dd02c2896855f3cd48cf5453cd
+
+# Diff at Thu, 27 Mar 2025 11:14:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21242938
+- current block number: 21242938
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242938 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x9d8fee935c85dbb1c90d7d0f5e26bdbb119553a5
+
+# Diff at Wed, 19 Mar 2025 13:05:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21242938
+- current block number: 21242938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242938 (main branch discovery), not current.
+
+```diff
+    contract Race Multisig 2 (0x2E7B9465B25C081c07274A31DbD05C6146f67961) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0x88D58BFbCD70c25409b67117fC1CDfeFDA113a78) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x3900d8f1e6671fdbdb837e89737abaef0d91f68d
+
+# Diff at Tue, 18 Mar 2025 08:13:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4ef7a8dbcec1cd9fec77aae2b73d81347a4ffb13 block: 21242938
+- current block number: 21242938
+
+## Description
+
+Config: change Multisig names.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242938 (main branch discovery), not current.
+
+```diff
+    contract Race Multisig 2 (0x2E7B9465B25C081c07274A31DbD05C6146f67961) {
+    +++ description: None
+      name:
+-        "RaceMultisig2"
++        "Race Multisig 2"
+    }
+```
+
+```diff
+    contract Race Multisig 1 (0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea) {
+    +++ description: None
+      name:
+-        "RaceMultisig1"
++        "Race Multisig 1"
+    }
+```
+
+```diff
+    contract Race Multisig 3 (0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9) {
+    +++ description: None
+      name:
+-        "RaceMultisig3"
++        "Race Multisig 3"
+    }
+```
+
 Generated with discovered.json: 0x04b0486994e64807830cd99cf5859f42004e003d
 
 # Diff at Tue, 04 Mar 2025 11:26:12 GMT:

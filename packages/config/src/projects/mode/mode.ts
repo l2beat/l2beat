@@ -1,7 +1,6 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { DERIVATION } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -32,6 +31,9 @@ export const mode: ScalingProject = opStackL2({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),
@@ -100,7 +102,7 @@ export const mode: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
       },
     ],

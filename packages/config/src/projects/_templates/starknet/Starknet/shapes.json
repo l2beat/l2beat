@@ -1,0 +1,14 @@
+{
+  "Starknet": {
+    "hash": "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6",
+    "address": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Starknet_v2025-10": {
+    "hash": "0x8074e96abc7cacf654908c0111c69027cf599f3b67332f3680c5de768a2d6dfe",
+    "address": "0x2793010E6711Acd5C46ed17f2183a9d58db71e04",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

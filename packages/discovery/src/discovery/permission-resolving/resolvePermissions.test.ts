@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import type { Permission } from '../config/RawDiscoveryConfig'
+import type { Permission } from '../config/StructureConfig'
 import {
   type Edge,
   type Node,

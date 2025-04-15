@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "arbitrum",
   "blockNumber": 305943129,
-  "configHash": "0x760869fc32803b38e179e607f872a06553330721330424b56404a7f32231b047",
+  "configHash": "0x3e347cd83c1e101138e4f24ea1fda95f366640de898c69ecbc60ca000e18a6ce",
   "entries": [
     {
       "name": "TokenMessaging",
@@ -47,7 +47,8 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      }
+      },
+      "derivedName": "TokenMessaging"
     },
     {
       "name": "StargatePoolNative",
@@ -92,7 +93,8 @@
         "token": "0x0000000000000000000000000000000000000000",
         "treasuryFee": 49219188,
         "tvl": "11863409461000000000000"
-      }
+      },
+      "derivedName": "StargatePoolNative"
     },
     {
       "name": "StargatePoolMigratable",
@@ -139,7 +141,8 @@
         "token": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
         "treasuryFee": 54541131032,
         "tvl": 6433592050190
-      }
+      },
+      "derivedName": "StargatePoolMigratable"
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
@@ -191,7 +194,8 @@
         "token": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "treasuryFee": 148884809544,
         "tvl": 9646232582278
-      }
+      },
+      "derivedName": "StargatePoolUSDC"
     }
   ],
   "abis": {

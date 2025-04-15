@@ -1,0 +1,14 @@
+{
+  "CairoBootloaderProgram": {
+    "hash": "0xf4a899549b88ecceef625c257853e823973744ca16b4e995c327f29be092cc3c",
+    "address": "0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Level2CairoBootloaderProgram": {
+    "hash": "0xbeae5546b3ade5af5df9bfc3c26b178639a7c992a8d59b98a3fbb46dfe0c3a2c",
+    "address": "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

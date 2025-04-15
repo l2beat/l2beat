@@ -32,6 +32,7 @@ export interface PremintedEntry extends AmountConfigBase {
 export interface TotalSupplyEntry extends AmountConfigBase {
   type: 'totalSupply'
   address: EthereumAddress
+  premint?: string
 }
 
 export interface CirculatingSupplyEntry extends AmountConfigBase {

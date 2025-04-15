@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "linea",
-  "blockNumber": 16804518,
-  "configHash": "0xe585d62d95512ad6ee9046bf6d3159777f6d04a1bb6a801928ae52383bf35e73",
+  "blockNumber": 17565279,
+  "configHash": "0xfc9b702eee3cb85db8c2a105e877e07bea88864331ba63ffca13b72f37381382",
   "entries": [
     {
       "name": "LineaOwner",
@@ -91,7 +91,8 @@
         "revertedBlocks": [],
         "validator": "0x4732015b3B1712A4FC5C059195300D12d529bb77",
         "zkSyncContract": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
-      }
+      },
+      "derivedName": "ValidatorTimelock"
     },
     {
       "address": "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
@@ -119,7 +120,6 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
       "sinceTimestamp": 1709218085,
@@ -292,7 +292,7 @@
           }
         ],
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "getFirstUnprocessedPriorityTx": 268868,
+        "getFirstUnprocessedPriorityTx": 268910,
         "getGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "getL2BootloaderBytecodeHash": "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d",
@@ -301,16 +301,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 21,
+        "getPriorityQueueSize": 1,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
-        "getTotalBatchesCommitted": 51868,
-        "getTotalBatchesExecuted": 51023,
-        "getTotalBatchesVerified": 51764,
-        "getTotalBlocksCommitted": 51868,
-        "getTotalBlocksExecuted": 51023,
-        "getTotalBlocksVerified": 51764,
-        "getTotalPriorityTxs": 268889,
+        "getTotalBatchesCommitted": 54723,
+        "getTotalBatchesExecuted": 54631,
+        "getTotalBatchesVerified": 54631,
+        "getTotalBlocksCommitted": 54723,
+        "getTotalBlocksExecuted": 54631,
+        "getTotalBlocksVerified": 54631,
+        "getTotalPriorityTxs": 268911,
         "getVerifier": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -318,11 +318,6 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xae9dbf8d6dc4a22e706e655fc53f9cb7c1324b7f124908bf95dcf09537f21203",
-          "expirationTimestamp": 1741169427,
-          "layer2Tip": 0
-        },
         "validators": [
           "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
           "0x509ff56c152315EdeE91A2e0f059195519507e01"
@@ -367,7 +362,8 @@
         "l2Bridge": "0x01c3f51294494e350AD69B999Db6B382b3B510b9",
         "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      }
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
@@ -413,7 +409,8 @@
         "MESSAGE_SERVICE": "0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
         "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "ZKLINK": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
-      }
+      },
+      "derivedName": "LineaL2Gateway"
     },
     {
       "name": "Verifier",
@@ -428,7 +425,8 @@
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f"
-      }
+      },
+      "derivedName": "Verifier"
     },
     {
       "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
@@ -472,7 +470,8 @@
         "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Governance"
     },
     {
       "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -762,7 +761,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "zklinknova/secondaryGateway": "0xae4633b0c19837b8498530c044983ef690045619ab067153aba46ce5a6df3754"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
   }
 }

@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x0802b24d4f6ec06cd6b5e8697f78aeac13f839cd
+Generated with discovered.json: 0x00e823ffc47275fa14f2149756c19efe83f3ff0e
+
+# Diff at Thu, 10 Apr 2025 14:43:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 57470008
+- current block number: 57470008
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57470008 (main branch discovery), not current.
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0xf8676833751d31bf3888daccb4e90f50e1ce0ba5
 
 # Diff at Tue, 04 Mar 2025 10:40:21 GMT:
 

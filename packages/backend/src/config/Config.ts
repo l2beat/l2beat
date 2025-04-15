@@ -106,10 +106,11 @@ export interface TvlConfig {
 }
 
 export interface TvsConfig {
-  readonly projects: ProjectTvsConfig[]
-  readonly amounts: (AmountConfig & { project: string; chain?: string })[]
+  readonly projects: (ProjectTvsConfig & { amountSources: string[] })[]
+  readonly amounts: AmountConfig[]
   readonly prices: PriceConfig[]
-  readonly chains: BlockTimestampConfig[]
+  readonly chains: string[]
+  readonly blockTimestamps: BlockTimestampConfig[]
 }
 
 export interface TrackedTxProject {
@@ -157,6 +158,11 @@ export interface EtherscanChainConfig {
   readonly url: string
 }
 
+export interface RoutescanChainConfig {
+  readonly type: 'routescan'
+  readonly url: string
+}
+
 export interface ChainTvlConfig {
   readonly name: string
   readonly providerUrl: string
@@ -165,6 +171,7 @@ export interface ChainTvlConfig {
   readonly blockExplorerConfig:
     | EtherscanChainConfig
     | BlockscoutChainConfig
+    | RoutescanChainConfig
     | undefined
   readonly multicallConfig: MulticallConfigEntry[]
 }

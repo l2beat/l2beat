@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22045960,
-  "configHash": "0x74f9345db7d9646da76d5e9c19dfac1a09557f1da3f9c06c42a3c3d9335ea5a8",
+  "blockNumber": 22244012,
+  "configHash": "0x690996684fa4788caa9da109da10466adbe71ac4a392dbfd5a7e913d67326aeb",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -23,7 +23,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -177,7 +176,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 69,
+        "nonce": 70,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -230,7 +229,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x7dbf3ee167136fc9e3b186a429f6baec1e3585ee89a29a2f4d62cfbcc9f3d6d6",
+        "getRoot": "0x4b1e7ffeace96b3add49ec064f82a9b6677f9e441a923e5d687930ff58aaff48",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -500,7 +499,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x522646771547089698b2b701abc42146a6cb2f22e79284650e0cd61784d5ab96",
+        "getRollupExitRoot": "0x85c5cacd28ad0986361c0654ccb1e7ba3caaeeea7c4e27a1fe4879ee33381ca7",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -519,14 +518,15 @@
           [true],
           [false],
           [false],
+          [true],
           [false]
         ],
-        "lastAggregationTimestamp": 1741965479,
+        "lastAggregationTimestamp": 1744353575,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [14],
+        "pessimisticProofSenders": [14, 17],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
-        "rollupCount": 16,
+        "rollupCount": 17,
         "rollupsDataV2": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -650,9 +650,9 @@
             9369,
             "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
             12,
-            9,
+            10,
             1,
-            "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
+            "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           ],
           [
             "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
@@ -671,9 +671,18 @@
             7,
             0,
             "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ],
+          [
+            "0x7449449460b5B732A9754CA3d9A7916122A9190d",
+            801,
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            12,
+            10,
+            1,
+            "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           ]
         ],
-        "rollupTypeCount": 9,
+        "rollupTypeCount": 10,
         "rollupTypes": [
           [
             "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
@@ -746,10 +755,18 @@
             1,
             false,
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
+          ],
+          [
+            "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            12,
+            1,
+            false,
+            "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           ]
         ],
-        "totalSequencedBatches": 668820,
-        "totalVerifiedBatches": 668288,
+        "totalSequencedBatches": 702532,
+        "totalVerifiedBatches": 702034,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -775,6 +792,7 @@
           "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
+      "derivedName": "PolygonRollupManager",
       "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }],
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -828,8 +846,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 55814,
-        "getRoot": "0x6110af0332288104ad3dbe70dbcc2610f6820edaeacaf5e0720c75f8803007c5",
+        "depositCount": 57136,
+        "getRoot": "0x4a050c3aa8a87268d8ea922c00aa4695e815852fe57ad98f75da4ede48e2f1ca",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2",
@@ -914,7 +932,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1716,11 +1734,11 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "polygon-cdk/PolygonGlobalExitRootV2": "0x9dd4f0ffa0615681231fbc5b4b5e0471c8d15bac135c4ad721ff1e8337ece5c0",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0xdea386fe8e5f956c40dc51891aa72a017b50216707846adf9ebaf3e20546bb2d",
-    "polygon-cdk/PolygonSharedBridge": "0x950f06686d6884db323c2938b56fe17064a71807dcaa988a900924b3fbc430f4",
-    "polygon-cdk/Timelock": "0xd95728e87b1017148b0f0cbd1b56970e5f71b51d5bd5621bb57b48de03220983"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "polygon-cdk/PolygonGlobalExitRootV2": "0x92aeca1bb56e793c55e70cc6e4aae76578f5e47d5112483916c542be5eee9ddf",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x4be7947ee5f0407be5c3881d8da19fc790036e07baedd5ba5c618ce25e6d63e8",
+    "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
+    "polygon-cdk/Timelock": "0xe0aeb97ea2d17d5fca19d26982c3a5c34745dd2f238167e3d76fedb715ce3a76"
   }
 }

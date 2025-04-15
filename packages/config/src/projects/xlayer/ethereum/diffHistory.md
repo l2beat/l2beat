@@ -1,4 +1,82 @@
-Generated with discovered.json: 0x402bc045630a1c9459052ebad4f009a2410d2afb
+Generated with discovered.json: 0x9e217045a4c2541708337b4b56888618965af343
+
+# Diff at Thu, 10 Apr 2025 14:43:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22166659
+- current block number: 22166659
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166659 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
+Generated with discovered.json: 0xbc6c1020997177fcae7c886338b240cae2090507
+
+# Diff at Mon, 31 Mar 2025 11:40:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@71ffebe835be10b6d5d09ef65aa19b910de8a2ec block: 21764788
+- current block number: 22166659
+
+## Description
+
+Sequencer changed.
+
+## Watched changes
+
+```diff
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions.2.to:
+-        "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1"
++        "0x610DE9141a2c51A9A9624278AA97fbE54b27c102"
+      values.trustedSequencer:
+-        "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1"
++        "0x610DE9141a2c51A9A9624278AA97fbE54b27c102"
+    }
+```
+
+Generated with discovered.json: 0x695d1a4218eaba227385e79e6fc9fa9704e95fb7
+
+# Diff at Wed, 19 Mar 2025 13:05:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21764788
+- current block number: 21764788
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21764788 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x491619874b866c3cDB7C8553877da223525ead01) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x6b8e89aa99a8f9fc2540f2d0cde7514e81607b75
 
 # Diff at Tue, 04 Mar 2025 10:40:14 GMT:
 

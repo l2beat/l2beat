@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "blast",
   "blockNumber": 16435499,
-  "configHash": "0x6374d23a55ee29f9203a5f8689101af47ae8807b7780a04f5c55894d5f48d6ae",
+  "configHash": "0xbc66af8e35ac2ec2e9e0e6ed09f1ab958f77ecce244c48b9da8c38828a1973a9",
   "entries": [
     {
       "address": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
@@ -231,7 +231,8 @@
         "l2Bridge": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
         "l2TokenBeacon": "0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      }
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "name": "BlastProxyAdmin",
@@ -242,7 +243,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -495,9 +495,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "zklinknova/secondaryGateway": "0xae4633b0c19837b8498530c044983ef690045619ab067153aba46ce5a6df3754",
-    "zklinknova/secondaryZkLink": "0x12a9cdcec147f5d122326b6aeed5399a2f45432083570dac54f7c95a38557887"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
+    "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   }
 }

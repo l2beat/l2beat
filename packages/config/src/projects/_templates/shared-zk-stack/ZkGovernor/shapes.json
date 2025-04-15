@@ -1,0 +1,20 @@
+{
+  "ZkGovOpsGovernor": {
+    "hash": "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399",
+    "address": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+    "chain": "zksync2",
+    "blockNumber": 58599111
+  },
+  "ZkProtocolGovernor": {
+    "hash": "0x82c5a05996248ee29f451f121ff0f973a3b17f7c7a8ed31878d30c5eaa51b245",
+    "address": "0x76705327e682F2d96943280D99464Ab61219e34f",
+    "chain": "zksync2",
+    "blockNumber": 58599111
+  },
+  "ZkTokenGovernor": {
+    "hash": "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8",
+    "address": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+    "chain": "zksync2",
+    "blockNumber": 58599111
+  }
+}

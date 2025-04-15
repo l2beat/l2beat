@@ -9,7 +9,10 @@ import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/ge
 const columnHelper = createColumnHelper<ScalingUpcomingEntry>()
 
 export const scalingUpcomingColumns = [
-  ...getScalingCommonProjectColumns(columnHelper),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+  ),
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (

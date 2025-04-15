@@ -14,6 +14,16 @@ import type { ScalingProject } from '../../internalTypes'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('cyber')
+const genesisTimestamp = UnixTime(1713428569)
+const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'sequencerInbox',
+)
+const sequencerAddress = discovery.getContractValue<EthereumAddress>(
+  'SystemConfig',
+  'batcherHash',
+)
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -89,13 +99,54 @@ export const cyber: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'etherscan',
+        type: 'routescan',
         url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
       },
     ],
   },
-  genesisTimestamp: UnixTime(1713428569),
+  genesisTimestamp,
   isNodeAvailable: 'UnderReview',
+  nonTemplateTrackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0xf0748C52EDC23135d9845CDFB91279Cf61ee14b4'), // old sequencer
+        to: sequencerInbox,
+        sinceTimestamp: genesisTimestamp,
+        untilTimestamp: UnixTime(1743843035),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: sequencerAddress,
+        to: sequencerInbox,
+        sinceTimestamp: UnixTime(1743843035),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: l2OutputOracle.address,
+        selector: '0x9aaab648',
+        functionSignature:
+          'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+        sinceTimestamp: genesisTimestamp,
+      },
+    },
+  ],
   customDa: {
     type: 'DA Challenges',
     name: 'CyberDA',

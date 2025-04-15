@@ -1,0 +1,65 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "henez",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "henez-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x66CDC656D5ACf342B2E4dC5a399Ba258Cd3f74c9",
+            "decimals": 18,
+            "sinceTimestamp": 1733345653
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0xB6028cb0Ee0021b1879eF6e7D3B2eF2C0ca22719",
+            "decimals": 18,
+            "sinceTimestamp": 1733345657
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733345653
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733345657
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

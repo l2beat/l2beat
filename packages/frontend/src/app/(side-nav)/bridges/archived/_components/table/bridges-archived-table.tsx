@@ -5,26 +5,26 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { useBridgesFilter } from '../../../_components/bridges-filter-context'
-import { BridgesFilters } from '../../../_components/bridges-filters'
-import { bridgesArchivedColumns } from './columns'
+import { getBridgesArchivedColumns } from './columns'
 
 export interface Props {
   entries: BridgesArchivedEntry[]
+  isOthers?: boolean
 }
 
-export function BridgesArchivedTable({ entries }: Props) {
-  const includeFilters = useBridgesFilter()
+export function BridgesArchivedTable({ entries, isOthers }: Props) {
+  const filterEntries = useFilterEntries()
 
   const filteredEntries = useMemo(
-    () => entries.filter(includeFilters),
-    [entries, includeFilters],
+    () => entries.filter(filterEntries),
+    [entries, filterEntries],
   )
 
   const activeTable = useTable({
     data: filteredEntries,
-    columns: bridgesArchivedColumns,
+    columns: getBridgesArchivedColumns(isOthers),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -41,10 +41,5 @@ export function BridgesArchivedTable({ entries }: Props) {
     },
   })
 
-  return (
-    <div className="space-y-3 md:space-y-6">
-      <BridgesFilters entries={filteredEntries} />
-      <BasicTable table={activeTable} />
-    </div>
-  )
+  return <BasicTable table={activeTable} />
 }

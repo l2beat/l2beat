@@ -1,0 +1,507 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "mantapacific",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "mantapacific-BEL",
+      "priceId": "bella-protocol",
+      "symbol": "BEL",
+      "name": "Bella",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12478/large/Bella.png?1696512296",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622",
+            "decimals": 18,
+            "sinceTimestamp": 1694224871
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+            "decimals": 18,
+            "sinceTimestamp": 1694224907
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-iUSD",
+      "priceId": "izumi-bond-usd",
+      "symbol": "iUSD",
+      "name": "iZUMi Bond USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25388/large/iusd-logo-symbol-10k%E5%A4%A7%E5%B0%8F.png?1696524521",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-MANTA",
+      "priceId": "manta-network",
+      "symbol": "MANTA",
+      "name": "Manta",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34289/large/manta.jpg?1704468717",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "manta-network",
+        "decimals": 18,
+        "sinceTimestamp": 1705536000,
+        "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+        "chain": "mantapacific"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-MATIC",
+      "priceId": "matic-network",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/4713/large/polygon.png?1698233745",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-mBTC-1",
+      "priceId": "manta-mbtc",
+      "symbol": "mBTC",
+      "name": "mBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1468177DbCb2a772F3d182d2F1358d442B553089",
+        "chain": "mantapacific",
+        "decimals": 18,
+        "sinceTimestamp": 1717113600
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-mETH-1",
+      "priceId": "manta-meth",
+      "symbol": "mETH",
+      "name": "mETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38337/large/token_m_eth.png?1717126380",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xACCBC418a994a27a75644d8d591afC22FaBA594e",
+        "chain": "mantapacific",
+        "decimals": 18,
+        "sinceTimestamp": 1717113600
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-mUSD-1",
+      "priceId": "manta-musd",
+      "symbol": "mUSD",
+      "name": "mUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38336/large/token_m_usd.png?1717126272",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x649d4524897cE85A864DC2a2D5A11Adb3044f44a",
+        "chain": "mantapacific",
+        "decimals": 18,
+        "sinceTimestamp": 1717113600
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-pufETH",
+      "priceId": "pufeth",
+      "symbol": "pufETH",
+      "name": "pufETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1707696000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-SolvBTC",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1719475619
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-STONE-1",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
+        "chain": "mantapacific",
+        "decimals": 18,
+        "sinceTimestamp": 1700611200
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-STONE-2",
+      "priceId": "stakestone-ether",
+      "symbol": "STONE",
+      "name": "StakeStone Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1700611200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-sUSDe-1",
+      "priceId": "ethena-staked-usde",
+      "symbol": "sUSDe",
+      "name": "Staked USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "chain": "mantapacific",
+        "decimals": 18,
+        "sinceTimestamp": 1710892800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-TIA",
+      "priceId": "celestia",
+      "symbol": "TIA",
+      "name": "TIA",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31967/large/tia.jpg?1696530772",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6Fae4D9935E2fcb11fC79a64e917fb2BF14DaFaa",
+        "chain": "mantapacific",
+        "decimals": 6,
+        "sinceTimestamp": 1698782429
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-TRB",
+      "priceId": "tellor",
+      "symbol": "TRB",
+      "name": "Tellor Tributes",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9644/large/Blk_icon_current.png?1696509713",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x88dF592F8eb5D7Bd38bFeF7dEb0fBc02cf3778a0",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-uniETH",
+      "priceId": "universal-eth",
+      "symbol": "uniETH",
+      "name": "Universal ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28477/large/uniETH_200.png?1696527471",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1700092800
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 6,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-USDe-1",
+      "priceId": "ethena-usde",
+      "symbol": "USDe",
+      "name": "USDe",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "chain": "mantapacific",
+        "decimals": 18,
+        "sinceTimestamp": 1709926649
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 6,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 8,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1701648000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1694224907
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "mantapacific-wUSDM",
+      "priceId": "mountain-protocol-usdm",
+      "symbol": "wUSDM",
+      "name": "Wrapped Mountain Protocol USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+        "chain": "ethereum",
+        "escrowAddress": "0x3B95bC951EE0f553ba487327278cAc44f29715E5",
+        "decimals": 18,
+        "sinceTimestamp": 1703721600
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
+  type Env,
   LogFormatterEcs,
   LogFormatterJson,
   LogFormatterPretty,
@@ -10,6 +11,7 @@ import {
   getEnv,
 } from '@l2beat/backend-tools'
 
+import apm from 'elastic-apm-node'
 import { Application } from './Application'
 import { getConfig } from './config'
 
@@ -18,9 +20,17 @@ main().catch(() => {
 })
 
 async function main() {
-  const environment = getEnv().optionalString('DEPLOYMENT_ENV') ?? 'local'
+  const env = getEnv()
 
-  const logger = createLogger(environment)
+  const logger = createLogger(env)
+
+  apm.start({
+    active: process.env.ES_APM_ENABLED === 'true',
+    environment: env.optionalString('DEPLOYMENT_ENV') ?? 'local',
+    secretToken: process.env.ES_APM_SECRET_TOKEN ?? '',
+    serverUrl: process.env.ES_APM_SERVER_URL ?? 'http://localhost:8200',
+    serviceName: process.env.ES_APM_SERVICE_NAME ?? 'l2beat-local',
+  })
 
   try {
     const config = await getConfig()
@@ -37,8 +47,8 @@ async function main() {
   }
 }
 
-function createLogger(environment: string): Logger {
-  const isLocal = environment === 'local'
+function createLogger(env: Env): Logger {
+  const isLocal = env.optionalString('DEPLOYMENT_ENV') === undefined
 
   const loggerTransports: LoggerTransportOptions[] = [
     {
@@ -48,15 +58,15 @@ function createLogger(environment: string): Logger {
   ]
 
   // Elastic Search logging
-  const esEnabled = getEnv().optionalBoolean('ES_ENABLED') ?? false
+  const esEnabled = env.optionalBoolean('ES_ENABLED') ?? false
 
   if (esEnabled) {
     console.log('Elastic Search logging enabled')
     const options: ElasticSearchTransportOptions = {
-      node: getEnv().string('ES_NODE'),
-      apiKey: getEnv().string('ES_API_KEY'),
-      indexPrefix: getEnv().string('ES_INDEX_PREFIX'),
-      flushInterval: getEnv().optionalInteger('ES_FLUSH_INTERVAL'),
+      node: env.string('ES_NODE'),
+      apiKey: env.string('ES_API_KEY'),
+      indexPrefix: env.string('ES_INDEX_PREFIX'),
+      flushInterval: env.optionalInteger('ES_FLUSH_INTERVAL'),
     }
 
     loggerTransports.push({
@@ -66,9 +76,10 @@ function createLogger(environment: string): Logger {
   }
 
   const options: Partial<LoggerOptions> = {
-    logLevel: getEnv().string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
+    logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
     utc: isLocal ? false : true,
     transports: loggerTransports,
+    metricsEnabled: env.boolean('CLIENT_METRICS_ENABLED', esEnabled),
   }
 
   return new Logger(options)

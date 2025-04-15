@@ -1,164 +1,110 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  type AggLayerEscrow,
-  type ChainConfig,
-  type ElasticChainEscrow,
-  type Project,
-  ProjectService,
-  type ProjectTvlEscrow,
+import type {
+  AggLayerEscrow,
+  AmountFormula,
+  CalculationFormula,
+  ChainConfig,
+  ElasticChainEscrow,
+  Project,
+  ProjectTvlEscrow,
+  TvsToken,
+  ValueFormula,
 } from '@l2beat/config'
 import type { RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, TokenId } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
-import { getAggLayerTokens } from '../providers/aggLayer'
-import { getElasticChainTokens } from '../providers/elasticChain'
-import {
-  type AmountFormula,
-  type CalculationFormula,
-  type ProjectTvsConfig,
-  type Token,
-  TokenId,
-  type ValueFormula,
-} from '../types'
-import { getTimestampsRange } from './timestamps'
+import { groupBy } from 'lodash'
+import type { ProjectTvsConfig } from '../types'
+import { getTimeRangeIntersection } from './getTimeRangeIntersection'
+import { getAggLayerTokens } from './sharedEscrows/getAggLayerTokens'
+import { getElasticChainTokens } from './sharedEscrows/getElasticChainTokens'
 
 export async function mapConfig(
   project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
   logger: Logger,
   rpcClient?: RpcClient,
 ): Promise<ProjectTvsConfig> {
-  const CHAINS = await getChains()
-  const getChain = (name: string) => {
-    const chain = CHAINS.get(name)
-    assert(chain)
-    return chain
-  }
-
-  const tokens: Token[] = []
-  const escrowTokens: Map<
-    string,
-    {
-      token: Token
-      chain: string
-    }
-  > = new Map()
-
-  for (const escrow of project.tvlConfig.escrows) {
-    if (escrow.sharedEscrow) {
-      if (rpcClient === undefined) {
-        logger.warn(`No Multicall passed, sharedEscrow support is not enabled`)
-        continue
-      }
-
-      const chainOfL1Escrow = getChain(escrow.chain)
-
-      if (escrow.sharedEscrow.type === 'AggLayer') {
-        logger.info(`Querying for AggLayer L2 tokens addresses`)
-        const aggLayerL2Tokens = await getAggLayerTokens(
-          project,
-          escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
-          chainOfL1Escrow,
-          rpcClient,
-        )
-        aggLayerL2Tokens.forEach((token) =>
-          escrowTokens.set(token.id, { token, chain: escrow.chain }),
-        )
-      }
-
-      if (escrow.sharedEscrow.type === 'ElasticChain') {
-        logger.info(`Querying for ElasticChain L2 tokens addresses`)
-
-        const elasticChainTokens = await getElasticChainTokens(
-          project,
-          escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
-          chainOfL1Escrow,
-          rpcClient,
-        )
-        elasticChainTokens.forEach((token) =>
-          escrowTokens.set(token.id, { token, chain: escrow.chain }),
-        )
-      }
-    } else {
-      for (const legacyToken of escrow.tokens) {
-        if (!legacyToken.id.endsWith('native')) {
-          assert(
-            legacyToken.address,
-            `Token address is required ${legacyToken.id}`,
-          )
-        }
-        const chain = getChain(escrow.chain)
-        const token = createEscrowToken(project, escrow, chain, legacyToken)
-        const previousToken = escrowTokens.get(token.id)
-
-        if (previousToken === undefined) {
-          escrowTokens.set(token.id, { token, chain: escrow.chain })
-          continue
-        }
-
-        if (previousToken?.token.amount.type === 'balanceOfEscrow') {
-          assert(previousToken.token.source === token.source, `Source mismatch`)
-          escrowTokens.set(token.id, {
-            token: {
-              ...previousToken.token,
-              amount: {
-                type: 'calculation',
-                operator: 'sum',
-                arguments: [previousToken.token.amount, token.amount],
-              },
-            },
-            chain: escrow.chain,
-          })
-          continue
-        }
-
-        if (previousToken.token.amount.type === 'calculation') {
-          escrowTokens.set(token.id, {
-            token: {
-              ...previousToken.token,
-              amount: {
-                ...(previousToken.token.amount as CalculationFormula),
-                arguments: [
-                  ...(previousToken.token.amount as CalculationFormula)
-                    .arguments,
-                  token.amount,
-                ],
-              },
-            },
-            chain: escrow.chain,
-          })
-          continue
-        }
-      }
-    }
-  }
+  const tokens: TvsToken[] = []
 
   for (const legacyToken of project.tvlConfig.tokens) {
     tokens.push(createToken(project, legacyToken))
   }
 
-  const uniqueTokens: Map<string, Token> = new Map()
+  const sharedEscrows = project.tvlConfig.escrows.filter((e) => e.sharedEscrow)
 
-  for (const token of tokens) {
-    uniqueTokens.set(token.id, token)
+  if (sharedEscrows.length > 0) {
+    logger.info(
+      `Querying for shared escrow L2 tokens addresses for project ${project.id}...`,
+    )
   }
 
-  for (const { token, chain } of Array.from(escrowTokens.values())) {
-    if (!uniqueTokens.has(token.id)) {
-      uniqueTokens.set(token.id, token)
-    } else {
-      const suffix = `.${chain}`
-      uniqueTokens.set(TokenId(token.id + suffix), {
-        ...token,
-        id: TokenId(token.id + suffix),
-        symbol: token.symbol + suffix,
-        displaySymbol: token.symbol,
-      })
+  for (const escrow of sharedEscrows) {
+    assert(escrow.sharedEscrow)
+    if (rpcClient === undefined) {
+      logger.warn(
+        `${project.id}: No rpc client configured, sharedEscrow support is not enabled`,
+      )
+      continue
+    }
+
+    const chainOfL1Escrow = getChain(escrow.chain, chains)
+
+    if (escrow.sharedEscrow.type === 'AggLayer') {
+      logger.debug(`Querying for AggLayer L2 tokens addresses`)
+      const aggLayerL2Tokens = await getAggLayerTokens(
+        project,
+        escrow as ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
+        chainOfL1Escrow,
+        rpcClient,
+      )
+      tokens.push(...aggLayerL2Tokens)
+    }
+
+    if (escrow.sharedEscrow.type === 'ElasticChain') {
+      logger.debug(`Querying for ElasticChain L2 tokens addresses`)
+
+      const elasticChainTokens = await getElasticChainTokens(
+        project,
+        escrow as ProjectTvlEscrow & { sharedEscrow: ElasticChainEscrow },
+        chainOfL1Escrow,
+        rpcClient,
+      )
+      tokens.push(...elasticChainTokens)
+    }
+  }
+
+  const nonSharedEscrows = project.tvlConfig.escrows.filter(
+    (e) => !e.sharedEscrow,
+  )
+  const bySource = groupBy(
+    nonSharedEscrows.map((e) => ({
+      ...e,
+      source: e.source ?? 'canonical',
+    })),
+    'source',
+  )
+
+  for (const escrowGroup of Object.values(bySource)) {
+    const tokensWithEscrow = escrowGroup.flatMap((escrow) =>
+      escrow.tokens.map((token) => ({ ...token, escrow })),
+    )
+
+    const tokensBySymbol = groupBy(tokensWithEscrow, 'symbol')
+
+    for (const symbolTokens of Object.values(tokensBySymbol)) {
+      const tokensByCoingeckoId = groupBy(symbolTokens, 'coingeckoId')
+
+      for (const sameIdTokens of Object.values(tokensByCoingeckoId)) {
+        const token = mergeTokensWithSameId(project, chains, sameIdTokens)
+        tokens.push(token)
+      }
     }
   }
 
   return {
     projectId: project.id,
-    tokens: Array.from(uniqueTokens.values()),
+    tokens: deduplicateTokens(tokens),
   }
 }
 
@@ -167,7 +113,7 @@ export function createEscrowToken(
   escrow: ProjectTvlEscrow,
   chainOfEscrow: ChainConfig,
   legacyToken: LegacyToken & { isPreminted?: boolean },
-): Token {
+): TvsToken {
   assert(
     chainOfEscrow.name === legacyToken.chainName,
     `${legacyToken.symbol}: chain mismatch`,
@@ -179,13 +125,14 @@ export function createEscrowToken(
 
   let amountFormula: CalculationFormula | AmountFormula
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     legacyToken,
     escrow,
     chainOfEscrow,
   )
 
   if (legacyToken.isPreminted) {
+    assert(legacyToken.address, `Native asset not supported`)
     amountFormula = {
       type: 'calculation',
       operator: 'min',
@@ -196,6 +143,8 @@ export function createEscrowToken(
           decimals: legacyToken.decimals ?? 0,
           sinceTimestamp,
           ...(untilTimestamp ? { untilTimestamp } : {}),
+          address: legacyToken.address,
+          chain: legacyToken.chainName,
         },
         {
           type: 'balanceOfEscrow',
@@ -220,16 +169,11 @@ export function createEscrowToken(
     }
   }
 
-  const source = escrow.source ?? 'canonical'
-  const symbol =
-    source === 'external' ? legacyToken.symbol + '.ext' : legacyToken.symbol
-  const displaySymbol = source === 'external' ? legacyToken.symbol : undefined
+  const id = TokenId.create(project.id, legacyToken.symbol)
 
-  const id = TokenId.create(project.id, symbol)
-
-  let valueForTotal: CalculationFormula | ValueFormula | undefined = undefined
+  let valueForSummary: CalculationFormula | ValueFormula | undefined = undefined
   if (escrow.chain !== 'ethereum') {
-    valueForTotal = {
+    valueForSummary = {
       type: 'value',
       amount: {
         type: 'const',
@@ -246,14 +190,13 @@ export function createEscrowToken(
     mode: 'auto',
     id,
     priceId: legacyToken.coingeckoId,
-    symbol,
-    ...(displaySymbol ? { displaySymbol } : {}),
+    symbol: legacyToken.symbol,
     name: legacyToken.name,
+    iconUrl: legacyToken.iconUrl,
     amount: amountFormula,
-    ...(valueForTotal ? { valueForTotal } : {}),
-
+    ...(valueForSummary ? { valueForSummary } : {}),
     category: legacyToken.category,
-    source: source,
+    source: escrow.source ?? 'canonical',
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
       legacyToken.symbol,
     ),
@@ -263,14 +206,14 @@ export function createEscrowToken(
 export function createToken(
   project: Project<'tvlConfig', 'chainConfig'>,
   legacyToken: LegacyToken,
-): Token {
+): TvsToken {
   assert(
     project.chainConfig && project.chainConfig.name === legacyToken.chainName,
   )
   const id = TokenId.create(project.id, legacyToken.symbol)
-  let amountFormula: AmountFormula
+  let amountFormula: AmountFormula | CalculationFormula
 
-  const { sinceTimestamp, untilTimestamp } = getTimestampsRange(
+  const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     legacyToken,
     project.chainConfig,
   )
@@ -278,24 +221,51 @@ export function createToken(
   switch (legacyToken.supply) {
     case 'totalSupply':
       assert(legacyToken.address, 'Only tokens have total supply')
-      amountFormula = {
-        type: 'totalSupply',
-        address: legacyToken.address,
-        chain: project.id,
-        decimals: legacyToken.decimals,
-        sinceTimestamp,
-        ...(untilTimestamp ? { untilTimestamp } : {}),
+      if (legacyToken.premint) {
+        amountFormula = {
+          type: 'calculation',
+          operator: 'diff',
+          arguments: [
+            {
+              type: 'totalSupply',
+              address: legacyToken.address,
+              chain: project.id,
+              decimals: legacyToken.decimals,
+              sinceTimestamp,
+              ...(untilTimestamp ? { untilTimestamp } : {}),
+            },
+            {
+              type: 'const',
+              value: legacyToken.premint,
+              decimals: legacyToken.decimals,
+              sinceTimestamp,
+              ...(untilTimestamp ? { untilTimestamp } : {}),
+            },
+          ],
+        }
+      } else {
+        amountFormula = {
+          type: 'totalSupply',
+          address: legacyToken.address,
+          chain: project.id,
+          decimals: legacyToken.decimals,
+          sinceTimestamp,
+          ...(untilTimestamp ? { untilTimestamp } : {}),
+        }
       }
 
       break
 
     case 'circulatingSupply':
+      assert(legacyToken.address, 'Native asset not supported')
       amountFormula = {
         type: 'circulatingSupply',
         apiId: legacyToken.coingeckoId,
         decimals: legacyToken.decimals ?? 0,
         sinceTimestamp,
         ...(untilTimestamp ? { untilTimestamp } : {}),
+        address: legacyToken.address,
+        chain: legacyToken.chainName,
       }
       break
 
@@ -309,8 +279,8 @@ export function createToken(
     priceId: legacyToken.coingeckoId,
     symbol: legacyToken.symbol,
     name: legacyToken.name,
+    iconUrl: legacyToken.iconUrl,
     amount: amountFormula,
-
     category: legacyToken.category,
     source: legacyToken.source,
     isAssociated: !!project.tvlConfig.associatedTokens?.includes(
@@ -319,10 +289,88 @@ export function createToken(
   }
 }
 
-async function getChains() {
-  const ps = new ProjectService()
-  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-    (p) => p.chainConfig,
+function getChain(name: string, chains: Map<string, ChainConfig>): ChainConfig {
+  const chain = chains.get(name)
+  assert(chain)
+  return chain
+}
+
+function deduplicateTokens(tokens: TvsToken[]) {
+  const byId = groupBy(tokens, 'id')
+
+  const deduplicatedTokens: TvsToken[] = []
+
+  for (const [id, tokensWithSameId] of Object.entries(byId)) {
+    if (tokensWithSameId.length > 1) {
+      tokensWithSameId.forEach((token, index) => {
+        const newToken = { ...token }
+        newToken.id = TokenId(`${id}-${index + 1}`)
+        deduplicatedTokens.push(newToken)
+      })
+    } else {
+      deduplicatedTokens.push(tokensWithSameId[0])
+    }
+  }
+  return deduplicatedTokens
+}
+
+function mergeTokensWithSameId(
+  project: Project<'tvlConfig', 'chainConfig'>,
+  chains: Map<string, ChainConfig>,
+  sameIdTokens: (LegacyToken & { escrow: ProjectTvlEscrow })[],
+): TvsToken {
+  if (sameIdTokens.length === 1) {
+    const tokenData = sameIdTokens[0]
+    const chain = getChain(tokenData.chainName, chains)
+    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+
+    return token
+  }
+  const amounts = []
+  const valueForSummary: (CalculationFormula | ValueFormula)[] = []
+  let customValueForSummaryExists = false
+
+  for (const tokenData of sameIdTokens) {
+    const chain = getChain(tokenData.chainName, chains)
+    const token = createEscrowToken(project, tokenData.escrow, chain, tokenData)
+    amounts.push(token.amount)
+
+    if (token.valueForSummary) {
+      customValueForSummaryExists = true
+      valueForSummary.push(token.valueForSummary)
+    } else {
+      valueForSummary.push({
+        type: 'value',
+        priceId: token.priceId,
+        amount: token.amount,
+      })
+    }
+  }
+
+  const firstTokenData = sameIdTokens[0]
+  const chain = getChain(firstTokenData.chainName, chains)
+  const baseToken = createEscrowToken(
+    project,
+    firstTokenData.escrow,
+    chain,
+    firstTokenData,
   )
-  return new Map(chains.map((c) => [c.name, c]))
+
+  return {
+    ...baseToken,
+    amount: {
+      type: 'calculation',
+      operator: 'sum',
+      arguments: amounts,
+    },
+    ...(customValueForSummaryExists
+      ? {
+          valueForSummary: {
+            type: 'calculation',
+            operator: 'sum',
+            arguments: valueForSummary,
+          },
+        }
+      : {}),
+  }
 }

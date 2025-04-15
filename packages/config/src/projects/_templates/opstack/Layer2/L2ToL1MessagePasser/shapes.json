@@ -1,0 +1,14 @@
+{
+  "L2ToL1MessagePasser_v1_0_0": {
+    "hash": "0x362ef15b4c72a78e42b10222a63ec31da455fc051e5fc3e6bade09de4d19bdd9",
+    "address": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+    "chain": "optimism",
+    "blockNumber": 134041720
+  },
+  "L2ToL1MessagePasser_v1_1_1beta_1": {
+    "hash": "0x1904a0b899857bcfd0f09e8b106c904d2d1a1fc1bcc0d3f7f0a77e6ab9daacb4",
+    "address": "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+    "chain": "ink",
+    "blockNumber": 10183769
+  }
+}

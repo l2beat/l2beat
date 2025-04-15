@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,12 +11,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
-const discovery_ZKstackGovL2 = new ProjectDiscovery(
-  'shared-zk-stack',
-  'zksync2',
-)
-const shared = new ProjectDiscovery('shared-zk-stack')
-const bridge = shared.getContract('L1SharedBridge')
+const bridge = discovery.getContract('L1NativeTokenVault')
 
 const validatorsVTLold = () => {
   // get validators added in the constructor args
@@ -48,7 +48,6 @@ assert(
 export const zksync2: ScalingProject = zkStackL2({
   addedAt: UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
-  discovery_ZKstackGovL2,
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -101,8 +100,11 @@ export const zksync2: ScalingProject = zkStackL2({
     ],
   },
   associatedTokens: ['ZK'],
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
+  },
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       description:
@@ -198,9 +200,9 @@ export const zksync2: ScalingProject = zkStackL2({
         formula: 'sharedBridge',
         chainId: 324,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
-        selector: '0x6edd4f12',
+        selector: '0x98f81962',
         functionSignature:
-          'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _lastCommittedBatchData, (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
+          'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1741792103),
       },
     },
@@ -289,9 +291,9 @@ export const zksync2: ScalingProject = zkStackL2({
         formula: 'sharedBridge',
         chainId: 324,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
-        selector: '0xc37533bb',
+        selector: '0xe12a6137',
         functionSignature:
-          'function proveBatchesSharedBridge(uint256 _chainId,(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment) _prevBatch, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _committedBatches, (uint256[] recursiveAggregationInput, uint256[] serializedProof) _proof)',
+          'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: UnixTime(1741792103),
       },
     },
@@ -380,9 +382,9 @@ export const zksync2: ScalingProject = zkStackL2({
         formula: 'sharedBridge',
         chainId: 324,
         address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
-        selector: '0x6f497ac6',
+        selector: '0xcf02827d',
         functionSignature:
-          'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _batchesData)',
+          'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1741792103),
       },
     },

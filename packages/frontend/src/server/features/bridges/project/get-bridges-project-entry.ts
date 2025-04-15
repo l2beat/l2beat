@@ -4,6 +4,7 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -19,13 +20,13 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/get-techn
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getTvsProjectStats } from '../../scaling/tvs/get-tvs-project-stats'
+import { get7dTvsBreakdown } from '../../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
 
 export interface BridgesProjectEntry {
   name: string
   slug: string
-  isArchived: boolean
+  archivedAt: UnixTime | undefined
   isUpcoming: boolean
   underReviewStatus: UnderReviewStatus
   header: {
@@ -67,17 +68,19 @@ export async function getBridgesProjectEntry(
     | 'display',
     // optional
     | 'chainConfig'
-    | 'isArchived'
+    | 'archivedAt'
     | 'isUpcoming'
     | 'milestones'
     | 'contracts'
     | 'permissions'
   >,
 ): Promise<BridgesProjectEntry> {
-  const [projectsChangeReport, tvsProjectStats] = await Promise.all([
+  const [projectsChangeReport, tvsStats] = await Promise.all([
     getProjectsChangeReport(),
-    getTvsProjectStats(project),
+    get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
   ])
+
+  const tvsProjectStats = tvsStats.projects[project.id]
 
   const changes = projectsChangeReport.getChanges(project.id)
 
@@ -88,7 +91,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
+    archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     header: {
       description: project.display.description,
@@ -97,20 +100,24 @@ export async function getBridgesProjectEntry(
       tvs: tvsProjectStats
         ? {
             tokenBreakdown: {
-              ...tvsProjectStats.tokenBreakdown,
+              ...tvsProjectStats.breakdown,
+              associated: tvsProjectStats.associated.total,
               warnings: compact([
-                tvsProjectStats.tokenBreakdown.total > 0 &&
+                tvsProjectStats.breakdown.total > 0 &&
                   getAssociatedTokenWarning({
                     associatedRatio:
-                      tvsProjectStats.tokenBreakdown.associated /
-                      tvsProjectStats.tokenBreakdown.total,
+                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.total,
                     name: project.name,
                     associatedTokens: project.tvlInfo.associatedTokens,
                   }),
               ]),
               associatedTokens: project.tvlInfo.associatedTokens,
             },
-            tvsBreakdown: tvsProjectStats.tvsBreakdown,
+            tvsBreakdown: {
+              ...tvsProjectStats.breakdown,
+              totalChange: tvsProjectStats.change.total,
+            },
           }
         : undefined,
       destination: getDestination(project.bridgeInfo.destination),
@@ -137,13 +144,12 @@ export async function getBridgesProjectEntry(
 
   if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     sections.push({
-      type: 'ChartSection',
+      type: 'TvsSection',
       props: {
         id: 'tvs',
         title: 'Value Secured',
         projectId: project.id,
         tokens: tokens,
-        isBridge: true,
         milestones: project.milestones ?? [],
       },
     })

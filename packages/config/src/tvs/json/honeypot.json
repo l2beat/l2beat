@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "honeypot",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "honeypot-CTSI",
+      "priceId": "cartesi",
+      "symbol": "CTSI",
+      "name": "Cartesi Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11038/large/Cartesi_Logo.png?1696510982",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
+        "chain": "ethereum",
+        "escrowAddress": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
+        "decimals": 18,
+        "sinceTimestamp": 1694553335
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

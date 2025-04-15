@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0x05f77e24b630ac12b347df85908006254d8f8461653f24df83e4184b6154d9e8",
+  "configHash": "0x8c36c95ccfd0fd79ae1048f5958372ae8601da7080aaaaea5745e946f2e75c03",
   "entries": [
     {
       "name": "History",
@@ -17,7 +17,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
-      }
+      },
+      "derivedName": "History"
     },
     {
       "name": "BugBuster",
@@ -51,7 +52,8 @@
         "$immutable": true,
         "getHistory": "0x04395d494624D2B6e30C0dfDB74498a2839f805d",
         "owner": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
-      }
+      },
+      "derivedName": "Authority"
     },
     {
       "name": "InputBox",
@@ -63,7 +65,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1690464759,
       "sinceBlock": 107432991,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "InputBox"
     },
     {
       "address": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3",
@@ -83,7 +86,8 @@
       "values": {
         "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
-      }
+      },
+      "derivedName": "ERC20Portal"
     },
     {
       "address": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5",

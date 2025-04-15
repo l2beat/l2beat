@@ -1,8 +1,8 @@
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { createContractConfig } from '../config/ContractConfig'
-import { DiscoveryContract } from '../config/RawDiscoveryConfig'
+import { StructureContract } from '../config/StructureConfig'
+import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
@@ -13,11 +13,11 @@ import { AddressAnalyzer } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
-  const overrides = DiscoveryContract.parse({})
-  const config = createContractConfig(
-    { address: EthereumAddress.random(), ...overrides },
-    {},
-    {},
+  const overrides = StructureContract.parse({})
+  const address = EthereumAddress.random()
+  const config = makeEntryStructureConfig(
+    { overrides: { [address]: overrides } },
+    address,
   )
 
   describe(AddressAnalyzer.prototype.analyze.name, () => {
@@ -70,10 +70,8 @@ describe(AddressAnalyzer.name, () => {
         ...EMPTY_ANALYZED_EOA,
         type: 'EOA',
         name: undefined,
-        category: undefined,
         deploymentTimestamp: undefined,
         deploymentBlockNumber: undefined,
-        references: undefined,
         targetsMeta: undefined,
         address,
       })
@@ -172,13 +170,12 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
-        category: undefined,
         name: 'Test',
+        derivedName: 'Test',
         isVerified: true,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
-        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -190,12 +187,7 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             canActIndependently: undefined,
-            displayName: undefined,
-            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            references: undefined,
-            severity: undefined,
-            types: undefined,
           },
         },
         relatives: {
@@ -297,13 +289,12 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         name: 'Test',
+        derivedName: 'Test',
         address,
-        category: undefined,
         isVerified: false,
         deploymentTimestamp: UnixTime(1234),
         deploymentBlockNumber: 9876,
         proxyType: 'EIP1967 proxy',
-        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -315,12 +306,7 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             canActIndependently: undefined,
-            displayName: undefined,
-            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            references: undefined,
-            severity: undefined,
-            types: undefined,
           },
         },
         relatives: {
@@ -419,13 +405,12 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
-        category: undefined,
         name: 'Test',
+        derivedName: 'Test',
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
         isVerified: true,
         proxyType: 'EIP1967 proxy',
-        references: undefined,
         implementations: [implementation],
         values: {
           $implementation: implementation.toString(),
@@ -437,12 +422,7 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             canActIndependently: undefined,
-            displayName: undefined,
-            description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
-            references: undefined,
-            severity: undefined,
-            types: undefined,
           },
         },
         relatives: {

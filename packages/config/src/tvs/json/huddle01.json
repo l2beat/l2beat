@@ -1,0 +1,65 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "huddle01",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "huddle01-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0x4A346da02EA2Fa6E49834C409165c6D6527ae522",
+            "decimals": 18,
+            "sinceTimestamp": 1733189165
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "arbitrum",
+            "escrowAddress": "0xD027882355d26e1891bD9D0B0953536b59e3B263",
+            "decimals": 18,
+            "sinceTimestamp": 1733189169
+          }
+        ]
+      },
+      "valueForSummary": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733189165
+            },
+            "priceId": "ethereum"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1733189169
+            },
+            "priceId": "ethereum"
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

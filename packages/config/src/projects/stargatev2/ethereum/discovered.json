@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 21944318,
-  "configHash": "0x23fa90e091266239e84ef3aaf7894583b1395f369d025642050d0b92c5eedc7a",
+  "configHash": "0x6f92300d7167ca62d62a00a095f9bfc55585f95e0a5c66c7529f65e257ea1311",
   "entries": [
     {
       "name": "Treasurer",
@@ -19,7 +19,8 @@
         "admin": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "getTransferGasLimit": 2300,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705"
-      }
+      },
+      "derivedName": "Treasurer"
     },
     {
       "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
@@ -106,7 +107,8 @@
           "severity": "HIGH",
           "description": "MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack."
         }
-      }
+      },
+      "derivedName": "EndpointV2"
     },
     {
       "name": "BlockedMessageLib",
@@ -126,7 +128,8 @@
           "minor": 255,
           "endpointVersion": 2
         }
-      }
+      },
+      "derivedName": "BlockedMessageLib"
     },
     {
       "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
@@ -176,7 +179,8 @@
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
         "treasuryFee": 567967,
         "tvl": "1972061093000000000000"
-      }
+      },
+      "derivedName": "StargatePool"
     },
     {
       "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
@@ -203,7 +207,8 @@
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "rewardTokens": ["0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"],
         "staking": "0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD"
-      }
+      },
+      "derivedName": "StargateMultiRewarder"
     },
     {
       "name": "Treasury",
@@ -221,7 +226,8 @@
         "lzTokenFee": 0,
         "nativeBP": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
-      }
+      },
+      "derivedName": "Treasury"
     },
     {
       "name": "Stargate Multisig",
@@ -305,7 +311,8 @@
         "maxAssetId": {
           "description": "The highest currently registered assetID"
         }
-      }
+      },
+      "derivedName": "CreditMessaging"
     },
     {
       "name": "TokenMessaging",
@@ -331,7 +338,8 @@
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
-      }
+      },
+      "derivedName": "TokenMessaging"
     },
     {
       "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
@@ -357,7 +365,8 @@
         "messageLibType": 2,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 10, "minor": 0, "endpointVersion": 2 }
-      }
+      },
+      "derivedName": "ReadLib1002"
     },
     {
       "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
@@ -412,7 +421,8 @@
         "token": "0x0000000000000000000000000000000000000000",
         "treasuryFee": 8042886,
         "tvl": "12146873278000000000000"
-      }
+      },
+      "derivedName": "StargatePoolNative"
     },
     {
       "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
@@ -493,7 +503,8 @@
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "treasuryFee": 136202431133,
         "tvl": 7438226970021
-      }
+      },
+      "derivedName": "StargatePoolMigratable"
     },
     {
       "name": "",
@@ -509,7 +520,8 @@
       ],
       "sinceTimestamp": 1687808651,
       "sinceBlock": 17565746,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
@@ -535,7 +547,8 @@
       "values": {
         "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Nethermind Verifier",
@@ -592,7 +605,8 @@
         "getExecutorConfig": {
           "description": "The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])"
         }
-      }
+      },
+      "derivedName": "SendUln302"
     },
     {
       "name": "StargatePoolUSDC",
@@ -639,7 +653,8 @@
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "treasuryFee": 85741580648,
         "tvl": 13925128414944
-      }
+      },
+      "derivedName": "StargatePoolUSDC"
     },
     {
       "name": "ReceiveUln302",
@@ -673,7 +688,8 @@
         "getUlnConfig": {
           "description": "The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
         }
-      }
+      },
+      "derivedName": "ReceiveUln302"
     },
     {
       "name": "",
@@ -711,7 +727,8 @@
           ]
         ],
         "$upgradeCount": 3
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "LayerZero Multisig",
@@ -789,7 +806,8 @@
         "token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "treasuryFee": 5557,
         "tvl": 0
-      }
+      },
+      "derivedName": "StargatePool"
     },
     {
       "name": "",
@@ -799,7 +817,8 @@
       "proxyType": "immutable",
       "sinceTimestamp": 1716344279,
       "sinceBlock": 19922400,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
@@ -1984,6 +2003,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

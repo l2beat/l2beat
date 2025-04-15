@@ -1,21 +1,30 @@
-import type { Hash256 } from '@l2beat/shared-pure'
-import type { DiscoveryOutput, EntryParameters } from './types'
+import type {
+  ColorOutput,
+  DiscoveryOutput,
+  EntryParameters,
+  StructureOutput,
+} from './types'
 
+import { merge } from 'lodash'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
-import {
-  transformToIssued,
-  transformToReceived,
-} from '../permission-resolving/transform'
+import type { TemplateService } from '../analysis/TemplateService'
+import { colorize } from '../colorize/colorize'
+import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { neuterErrors } from './errors'
+import { getStructureOutput } from './structureOutput'
 
 export function toDiscoveryOutput(
-  config: DiscoveryConfig,
+  templateService: TemplateService,
+  config: ConfigRegistry,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
-  const discovery = toRawDiscoveryOutput(config, blockNumber, results)
+  const discovery = toRawDiscoveryOutput(
+    templateService,
+    config,
+    blockNumber,
+    results,
+  )
 
   discovery.entries.forEach((e) => {
     if (e.errors !== undefined) {
@@ -27,122 +36,24 @@ export function toDiscoveryOutput(
 }
 
 export function toRawDiscoveryOutput(
-  config: DiscoveryConfig,
+  templateService: TemplateService,
+  config: ConfigRegistry,
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
-  return withoutUndefinedKeys({
-    name: config.name,
-    chain: config.chain,
-    blockNumber,
-    configHash: config.hash,
-    sharedModules: undefinedIfEmpty(config.sharedModules),
-    ...processAnalysis(results),
-    usedTemplates: collectUsedTemplatesWithHashes(results),
-  })
+  const structure = getStructureOutput(config.structure, blockNumber, results)
+  const colorized = colorize(config.color, structure, templateService)
+
+  return combineStructureAndColor(structure, colorized)
 }
 
-function collectUsedTemplatesWithHashes(
-  results: Analysis[],
-): Record<string, Hash256> {
-  const entries: [string, Hash256][] = results
-    .map((contract) => contract.extendedTemplate)
-    .filter((t) => t !== undefined)
-    .map((t) => [t.template, t.templateHash])
-  entries.sort((a, b) => a[0].localeCompare(b[0]))
-  return Object.fromEntries(entries)
-}
-
-export function processAnalysis(
-  results: Analysis[],
-): Pick<DiscoveryOutput, 'entries' | 'abis'> {
-  const resolvedPermissions = resolveAnalysis(results)
-
-  const { contracts, abis } = getEntries(results)
-  return {
-    entries: contracts
-      .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x): EntryParameters => {
-        const displayName = x.combinedMeta?.displayName
-        const { directlyReceivedPermissions, receivedPermissions } =
-          transformToReceived(
-            x.address,
-            resolvedPermissions,
-            x.combinedMeta?.permissions,
-          )
-
-        const references = undefinedIfEmpty([
-          ...(x.selfMeta?.references ?? []),
-          ...(x.references ?? []),
-        ])
-
-        return withoutUndefinedKeys({
-          name: x.name,
-          address: x.address,
-          type: x.type,
-          unverified: x.isVerified ? undefined : true,
-          template: x.extendedTemplate?.template,
-          sourceHashes: x.isVerified
-            ? undefinedIfEmpty(x.sourceBundles.map((b) => b.hash as string))
-            : undefined,
-          proxyType: x.proxyType,
-          displayName:
-            displayName && displayName !== x.name ? displayName : undefined,
-          description: x.combinedMeta?.description,
-          types: setToSortedArray(x.combinedMeta?.types),
-          severity: x.combinedMeta?.severity,
-          issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-          receivedPermissions,
-          directlyReceivedPermissions,
-          ignoreInWatchMode: x.ignoreInWatchMode,
-          sinceTimestamp: x.deploymentTimestamp,
-          sinceBlock: x.deploymentBlockNumber,
-          values:
-            Object.keys(x.values).length === 0
-              ? undefined
-              : sortByKeys(x.values),
-          errors:
-            Object.keys(x.errors).length === 0
-              ? undefined
-              : sortByKeys(x.errors),
-          fieldMeta:
-            Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
-          derivedName: x.derivedName,
-          usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
-          references,
-          category: x.category,
-        } satisfies EntryParameters)
-      }),
-    abis,
-  }
-}
-
-function getEntries(results: Analysis[]): {
-  contracts: Analysis[]
-  abis: Record<string, string[]>
-} {
-  let abis: Record<string, string[]> = {}
-  const contracts: Analysis[] = []
-  for (const result of results) {
-    contracts.push(result)
-    abis = { ...abis, ...result.abis }
-  }
-  abis = Object.fromEntries(
-    Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),
-  )
-  return { contracts, abis }
-}
-
-function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj)) as T
-}
-
-function undefinedIfEmpty<T>(array: T[]): T[] | undefined {
-  if (array.length === 0) {
-    return undefined
-  }
-
-  return array
+export function combineStructureAndColor(
+  structure: StructureOutput,
+  color: ColorOutput,
+): DiscoveryOutput {
+  const result = merge({}, structure, color)
+  result.entries = result.entries.map((e) => sortEntry(e))
+  return result
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
@@ -151,6 +62,29 @@ export function sortByKeys<T extends object>(obj: T): T {
   ) as T
 }
 
-function setToSortedArray<T>(value: Set<T> | undefined): T[] | undefined {
-  return value && Array.from(value).sort()
+export function sortEntry(e: EntryParameters): EntryParameters {
+  return {
+    name: e.name,
+    address: e.address,
+    type: e.type,
+    unverified: e.unverified,
+    template: e.template,
+    sourceHashes: e.sourceHashes,
+    proxyType: e.proxyType,
+    displayName: e.displayName,
+    description: e.description,
+    issuedPermissions: e.issuedPermissions,
+    receivedPermissions: e.receivedPermissions,
+    directlyReceivedPermissions: e.directlyReceivedPermissions,
+    ignoreInWatchMode: e.ignoreInWatchMode,
+    sinceTimestamp: e.sinceTimestamp,
+    sinceBlock: e.sinceBlock,
+    values: e.values,
+    errors: e.errors,
+    fieldMeta: e.fieldMeta,
+    derivedName: e.derivedName,
+    usedTypes: e.usedTypes,
+    references: e.references,
+    category: e.category,
+  }
 }

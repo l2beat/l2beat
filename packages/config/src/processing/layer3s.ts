@@ -28,11 +28,9 @@ import { henez } from '../projects/henez/henez'
 import { hook } from '../projects/hook/hook'
 import { huddle01 } from '../projects/huddle01/huddle01'
 import { hyperagi } from '../projects/hyperagi/hyperagi'
-import { hyperliquid } from '../projects/hyperliquid/hyperliquid'
 import { inevm } from '../projects/inevm/inevm'
 import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
-import { meliora } from '../projects/meliora/meliora'
 import { mindchain } from '../projects/mindchain/mindchain'
 import { molten } from '../projects/molten/molten'
 import { muster } from '../projects/muster/muster'
@@ -40,7 +38,6 @@ import { mvchain } from '../projects/mvchain/mvchain'
 import { mxc } from '../projects/mxc/mxc'
 import { nums } from '../projects/nums/nums'
 import { onchain } from '../projects/onchain/onchain'
-import { orb3 } from '../projects/orb3/orb3'
 import { oursong } from '../projects/oursong/oursong'
 import { playblock } from '../projects/playblock/playblock'
 import { pmon } from '../projects/pmon/pmon'
@@ -95,7 +92,6 @@ export const layer3s: ScalingProject[] = [
   henez,
   huddle01,
   hyperagi,
-  hyperliquid,
   hook,
   rari,
   rivalz,
@@ -103,7 +99,6 @@ export const layer3s: ScalingProject[] = [
   ungaii,
   xai,
   onchain,
-  orb3,
   popapex,
   popboss,
   pmon,
@@ -112,7 +107,6 @@ export const layer3s: ScalingProject[] = [
   skynet,
   slingshot,
   syndicateframe,
-  meliora,
   mindchain,
   molten,
   muster,

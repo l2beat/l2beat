@@ -10,10 +10,13 @@ interface BalanceQuery {
 }
 
 export class BalanceProvider {
+  private logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getBalances(
     queries: BalanceQuery[],
@@ -30,32 +33,54 @@ export class BalanceProvider {
             return encodeBalanceForMulticall(q, client.multicallClient)
           })
           const res = await client.multicall(calls, blockNumber)
-          return res.map((r) => {
+          return res.map((r, i) => {
             if (r.success === false) {
+              this.logger.tag({ chain }).warn(`Issue with balance fetching`, {
+                token: queries[i].token,
+                blockNumber,
+              })
               return 0n
             }
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: queries.length })
-
           return Promise.all(
-            queries.map(async ({ token, holder }) => {
-              if (token === 'native') {
-                return client.getBalance(holder, blockNumber)
+            queries.map(async (q) => {
+              if (q.token === 'native') {
+                try {
+                  const res = await client.getBalance(q.holder, blockNumber)
+                  return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                } catch {
+                  this.logger
+                    .tag({ chain })
+                    .warn(`Issue with balance fetching`, {
+                      token: q.token,
+                      blockNumber,
+                    })
+                  return 0n
+                }
               } else {
-                const res = await client.call(
-                  encodeErc20Balance(token, holder),
-                  blockNumber,
-                )
-
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                try {
+                  const res = await client.call(
+                    encodeErc20Balance(q.token, q.holder),
+                    blockNumber,
+                  )
+                  return res.toString() === '0x' ? 0n : BigInt(res.toString())
+                } catch {
+                  this.logger
+                    .tag({ chain })
+                    .warn(`Issue with balance fetching`, {
+                      token: q.token,
+                      blockNumber,
+                    })
+                  return 0n
+                }
               }
             }),
           )
         }
       } catch (error) {
-        if (index === this.rpcs.length - 1) throw error
+        if (index === clients.length - 1) throw error
       }
     }
 
@@ -78,7 +103,7 @@ const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
 ])
 
-function encodeErc20Balance(
+export function encodeErc20Balance(
   token: EthereumAddress,
   holder: EthereumAddress,
 ): CallParameters {

@@ -1,0 +1,14 @@
+{
+  "Verifier": {
+    "hash": "0xb36dfb10be7530bb56af796b85f6c84bf90513603fe59c2f7f0d78fc2a9a9235",
+    "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "Verifier_v26": {
+    "hash": "0xac062c888d75a5e5685f3daea3d381ad10133a719da8fe05d01ec88eca972104",
+    "address": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

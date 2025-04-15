@@ -1,0 +1,77 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "karak",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "karak-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+            "decimals": 18,
+            "sinceTimestamp": 1703048687
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+            "decimals": 18,
+            "sinceTimestamp": 1703048687
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "karak-rswETH",
+      "priceId": "restaked-swell-eth",
+      "symbol": "rswETH",
+      "name": "rswETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
+        "chain": "ethereum",
+        "escrowAddress": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+        "decimals": 18,
+        "sinceTimestamp": 1706572800
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "karak-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+        "decimals": 6,
+        "sinceTimestamp": 1703048687
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LightlinkMultisig",
+  "description": "Custom multisig implementation with a hardcoded n/2+1 threshold.",
+  "fields": {},
+  "ignoreMethods": ["getTransaction", "transactions"],
+  "ignoreInWatchMode": []
+}

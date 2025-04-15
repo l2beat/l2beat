@@ -16,6 +16,7 @@ import {
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
+import { RealPizzaRosetteIcon } from './real-pizza-rosette-icon'
 
 export interface BigPizzaRosetteProps {
   values: RosetteValue[]
@@ -23,9 +24,14 @@ export interface BigPizzaRosetteProps {
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface'
+  realPizza?: boolean
 }
 
 export function BigPizzaRosette(props: BigPizzaRosetteProps) {
+  const PizzaComponent = props.realPizza
+    ? RealPizzaRosetteIcon
+    : PizzaRosetteIcon
+
   const isUnderReview =
     !!props.isUnderReview ||
     Object.values(props.values).some(
@@ -40,7 +46,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           props.className,
         )}
       >
-        <PizzaRosetteIcon
+        <PizzaComponent
           values={props.values}
           isUnderReview={isUnderReview}
           className={cn(props.isUpcoming && 'opacity-30')}
@@ -66,7 +72,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
         >
           <TooltipTrigger>
-            <PizzaRosetteIcon
+            <PizzaComponent
               values={props.values}
               isUnderReview={isUnderReview}
               background={props.background}

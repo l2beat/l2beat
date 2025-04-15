@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 21387141,
-  "configHash": "0x5dd9f9717b7ac4d269a4a7d5941a6b84d47fac182ff0d70a3ae65444c616ebf0",
+  "configHash": "0x55ee409717be01f4afb33c790ec1562c807b559cc4dbd681c7e4b55809686f7e",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -38,7 +38,8 @@
           "severity": "LOW",
           "description": "Tip that gets added to a gas reimbursement for processing the rollup."
         }
-      }
+      },
+      "derivedName": "AztecFeeDistributor"
     },
     {
       "name": "TurboVerifier",
@@ -52,7 +53,8 @@
       "description": "Turbo Plonk ZK verifier.",
       "sinceTimestamp": 1707995675,
       "sinceBlock": 19232962,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "TurboVerifier"
     },
     {
       "name": "RollupProcessor",
@@ -156,7 +158,8 @@
           "description": "Address of the ZK verifier.",
           "type": "PERMISSION"
         }
-      }
+      },
+      "derivedName": "RollupProcessor"
     },
     {
       "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
@@ -197,8 +200,7 @@
       "name": "FirstAnvilAddress",
       "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
-      "proxyType": "EOA",
-      "derivedName": ""
+      "proxyType": "EOA"
     },
     {
       "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
@@ -344,9 +346,9 @@
     ]
   },
   "usedTemplates": {
-    "aztecv1/AztecFeeDistributor": "0x59eeb9e0d54581b5da599e675ff4e083637629698fe93e5364467eace9e21f46",
-    "aztecv1/RollupProcessor": "0x415bec659b9411064a9aafbc98dbec5e38c43f5dc953e44e565bc10f5daae684",
-    "aztecv1/TurboVerifier": "0x9a1c90664eb8ef35e46f8bdb52d0a4e71c7caed3e725693e83ba928ef990ac0b",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b"
+    "aztecv1/AztecFeeDistributor": "0x1bef7dba6769827a90943c431f6521f59d6d44379a236b5d5773affa9cfc60de",
+    "aztecv1/RollupProcessor": "0xd0b3daed9d3babccd7f4f9ba892bd118459b79f14a85391292d4c54c64f1400c",
+    "aztecv1/TurboVerifier": "0x0c711bbe5023db74519baeae6b62652ab1d26c7e9855d720ff62842af1dc04a7",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 21764788,
-  "configHash": "0x3f1cb4b7677637facc3a464d450e7b28c99980dbc50deba29e9811e38750407b",
+  "blockNumber": 22166659,
+  "configHash": "0xc91714415424ebc1ba7bea2df219a343fa88066473e0fd251a3c3c3616d9fc35",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -58,6 +58,7 @@
         "owner": "0x491619874b866c3cDB7C8553877da223525ead01",
         "requiredAmountOfSignatures": 2
       },
+      "derivedName": "PolygonDataCommittee",
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
@@ -85,7 +86,8 @@
       "values": {
         "$immutable": true,
         "owner": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "Validium",
@@ -97,7 +99,6 @@
         "0x78d1eb2b96633fb1f594ef672a3791fa85a077fe0cf415ef79d93bc9a2aebd9c"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
@@ -114,7 +115,7 @@
         },
         {
           "permission": "sequence",
-          "to": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+          "to": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
           "via": []
         }
       ],
@@ -156,7 +157,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x16211b79e99d4cbe010b3ab8d5277d4a3e04a88dd3bc67b12a6fa8a95e3d997a",
+        "lastAccInputHash": "0x2416a6e3abbf594e31e55c4f9802426d51e18e8e4305d2bde47c11874df3cbcf",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -167,7 +168,7 @@
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
+        "trustedSequencer": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
         "trustedSequencerURL": "https://rpc.xlayer.tech"
       },
       "fieldMeta": {
@@ -199,7 +200,6 @@
       "address": "0x491619874b866c3cDB7C8553877da223525ead01",
       "type": "EOA",
       "proxyType": "EOA",
-      "severity": "HIGH",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -214,6 +214,17 @@
       ]
     },
     {
+      "address": "0x610DE9141a2c51A9A9624278AA97fbE54b27c102",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
+        }
+      ]
+    },
+    {
       "address": "0xa90B4C8B8807569980F6cC958c8905383136B5eA",
       "type": "EOA",
       "proxyType": "EOA",
@@ -222,17 +233,6 @@
           "permission": "interact",
           "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
-        }
-      ]
-    },
-    {
-      "address": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
         }
       ]
     },
@@ -439,9 +439,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "polygon-cdk/PolygonDataCommittee": "0xeeacc882ef2dd83644ded6e961863fe6da4cb8a36a978c7de9ef5d3d209f6248",
-    "polygon-cdk/PolygonZkEVM": "0x56cf02df517a3e3f6c85d0da12f7f4740428295dd7bdd6a18fd1a12fd48aa527",
-    "polygon-cdk/Verifier": "0x11b13785ae25c539a7ab2b90ca9b765d1683568e7b60f3703e8535af940e6ff8"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "polygon-cdk/PolygonDataCommittee": "0xdabddf5b3e069a2dc387eb10ead72beb44c172c592bc0441ecb72f46c90f4b1b",
+    "polygon-cdk/PolygonZkEVM": "0xf4c2c43a3945351c7429fcf82ea63191b8491fd0e8856ddbbd562cfca58ac6c9",
+    "polygon-cdk/Verifier": "0xeabe8634d91fef9fc2d45aeabfdba98f240346b00cda9bd45a0c4db2245a415d"
   }
 }

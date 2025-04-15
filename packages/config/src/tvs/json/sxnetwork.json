@@ -1,0 +1,77 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "sxnetwork",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "sxnetwork-SX",
+      "priceId": "sx-network-2",
+      "symbol": "SX",
+      "name": "SX Network",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34934/large/sx-ntework.jpeg?1706699134",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
+            "chain": "ethereum",
+            "escrowAddress": "0xa104C0426e95a5538e89131DbB4163d230C35f86",
+            "decimals": 18,
+            "sinceTimestamp": 1720173479
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
+            "chain": "ethereum",
+            "escrowAddress": "0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
+            "decimals": 18,
+            "sinceTimestamp": 1720195403
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "sxnetwork-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "chain": "ethereum",
+        "escrowAddress": "0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
+        "decimals": 6,
+        "sinceTimestamp": 1720195403
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "sxnetwork-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
+        "decimals": 18,
+        "sinceTimestamp": 1720195403
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

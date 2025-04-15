@@ -1,4 +1,459 @@
-Generated with discovered.json: 0x79fd052afd44488d81e4ad96705af84bd4dae388
+Generated with discovered.json: 0x43d6910221c6080dc3aafdf124477274e99d18ca
+
+# Diff at Thu, 10 Apr 2025 14:42:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 22208513
+- current block number: 22208513
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208513 (main branch discovery), not current.
+
+```diff
+    contract Lightlink Multisig 1 (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+      displayName:
+-        "LightlinkMultisig"
+    }
+```
+
+Generated with discovered.json: 0xd9d8dc4516ad1fddec5c41e42331929386f5a710
+
+# Diff at Thu, 03 Apr 2025 16:12:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@b3154c4385e52c9ffc0dab984c207390e5ccc13d block: 21995407
+- current block number: 22189498
+
+## Description
+
+Lightlink moves to opstack (partly).
+
+## Watched changes
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
+      values.chainHead:
+-        1168
++        1280
+      values.getHead.epoch:
+-        21993309
++        22187754
+      values.getHead.l2Height:
+-        132108607
++        136759159
+      values.getHead.prevHash:
+-        "0x0357f67f6fa768ac91770152e7bebe923951d349f2648f8886c87c63d737e9dc"
++        "0x13498280d1840253acf9037a65d1f32ae475fec6783fc96558d0b7061d414767"
+      values.getHead.outputRoot:
+-        "0x62314ae58400e70955d971703a83315a1cf702aef43d048e47f39cbf9925efb7"
++        "0x56d4485d2c8ec043386f5d8a5834075e352263448f68dc6f0b0749d38654ad64"
+      values.getHead.celestiaPointers.20.height:
+-        4336314
++        4740181
+      values.getHead.celestiaPointers.20.shareStart:
+-        5376
++        8832
+      values.getHead.celestiaPointers.20.shareLen:
+-        3664
++        3537
+      values.getHead.celestiaPointers.19.height:
+-        4336284
++        4740151
+      values.getHead.celestiaPointers.19.shareStart:
+-        6080
++        8960
+      values.getHead.celestiaPointers.19.shareLen:
+-        3655
++        3664
+      values.getHead.celestiaPointers.18.height:
+-        4336102
++        4740135
+      values.getHead.celestiaPointers.18.shareStart:
+-        9344
++        5696
+      values.getHead.celestiaPointers.18.shareLen:
+-        3663
++        3656
+      values.getHead.celestiaPointers.17.height:
+-        4336343
++        4740165
+      values.getHead.celestiaPointers.17.shareStart:
+-        6208
++        5952
+      values.getHead.celestiaPointers.17.shareLen:
+-        3664
++        3542
+      values.getHead.celestiaPointers.16.height:
+-        4336227
++        4739924
+      values.getHead.celestiaPointers.16.shareStart:
+-        9920
++        5376
+      values.getHead.celestiaPointers.16.shareLen:
+-        3664
++        3631
+      values.getHead.celestiaPointers.15.height:
+-        4336358
++        4739864
+      values.getHead.celestiaPointers.15.shareStart:
+-        6848
++        8832
+      values.getHead.celestiaPointers.15.shareLen:
+-        3529
++        3665
+      values.getHead.celestiaPointers.14.height:
+-        4336241
++        4740099
+      values.getHead.celestiaPointers.14.shareStart:
+-        6784
++        7424
+      values.getHead.celestiaPointers.14.shareLen:
+-        3546
++        3662
+      values.getHead.celestiaPointers.13.height:
+-        4336143
++        4739895
+      values.getHead.celestiaPointers.13.shareStart:
+-        6784
++        5760
+      values.getHead.celestiaPointers.13.shareLen:
+-        3664
++        3545
+      values.getHead.celestiaPointers.12.height:
+-        4336210
++        4739958
+      values.getHead.celestiaPointers.12.shareStart:
+-        1344
++        5952
+      values.getHead.celestiaPointers.12.shareLen:
+-        3664
++        3646
+      values.getHead.celestiaPointers.11.height:
+-        4336303
++        4740044
+      values.getHead.celestiaPointers.11.shareStart:
+-        3456
++        8192
+      values.getHead.celestiaPointers.11.shareLen:
+-        3657
++        3664
+      values.getHead.celestiaPointers.10.height:
+-        4336118
++        4740195
+      values.getHead.celestiaPointers.10.shareStart:
+-        4096
++        9408
+      values.getHead.celestiaPointers.10.shareLen:
+-        3662
++        3167
+      values.getHead.celestiaPointers.9.height:
+-        4336329
++        4740010
+      values.getHead.celestiaPointers.9.shareStart:
+-        4352
++        7936
+      values.getHead.celestiaPointers.9.shareLen:
+-        3665
++        3579
+      values.getHead.celestiaPointers.8.height:
+-        4336193
++        4740025
+      values.getHead.celestiaPointers.8.shareStart:
+-        7744
++        5248
+      values.getHead.celestiaPointers.8.shareLen:
+-        3635
++        3582
+      values.getHead.celestiaPointers.7.height:
+-        4336127
++        4740080
+      values.getHead.celestiaPointers.7.shareStart:
+-        4352
++        9280
+      values.getHead.celestiaPointers.7.shareLen:
+-        3663
++        3605
+      values.getHead.celestiaPointers.6.height:
+-        4336258
++        4740119
+      values.getHead.celestiaPointers.6.shareStart:
+-        1792
++        5184
+      values.getHead.celestiaPointers.6.shareLen:
+-        3652
++        3665
+      values.getHead.celestiaPointers.5.height:
+-        4336175
++        4739940
+      values.getHead.celestiaPointers.5.shareStart:
+-        1792
++        8576
+      values.getHead.celestiaPointers.5.shareLen:
+-        3664
++        3576
+      values.getHead.celestiaPointers.4.height:
+-        4336373
++        4739880
+      values.getHead.celestiaPointers.4.shareStart:
+-        4416
++        6208
+      values.getHead.celestiaPointers.4.shareLen:
+-        3664
++        3259
+      values.getHead.celestiaPointers.3.height:
+-        4336090
++        4739978
+      values.getHead.celestiaPointers.3.shareStart:
+-        6912
++        9408
+      values.getHead.celestiaPointers.3.shareLen:
+-        3658
++        3437
+      values.getHead.celestiaPointers.2.height:
+-        4336161
++        4739997
+      values.getHead.celestiaPointers.2.shareStart:
+-        3840
++        5504
+      values.getHead.celestiaPointers.2.shareLen:
+-        3665
++        3432
+      values.getHead.celestiaPointers.1.height:
+-        4336273
++        4739912
+      values.getHead.celestiaPointers.1.shareStart:
+-        2688
++        6464
+      values.getHead.celestiaPointers.1.shareLen:
+-        3465
++        3447
+      values.getHead.celestiaPointers.0.height:
+-        4336382
++        4740063
+      values.getHead.celestiaPointers.0.shareStart:
+-        6976
++        7872
+      values.getHead.celestiaPointers.0.shareLen:
+-        3415
++        3224
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995407 (main branch discovery), not current.
+
+```diff
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd) {
+    +++ description: Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      template:
++        "lightlink/Challenge"
+      description:
++        "Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false."
+    }
+```
+
+```diff
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04) {
+    +++ description: Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      template:
++        "lightlink/ChainOracle"
+      description:
++        "Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used."
+    }
+```
+
+```diff
+    contract Lightlink Multisig 1 (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+      name:
+-        "LightLinkMultisig"
++        "Lightlink Multisig 1"
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"}
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0x3ca373F5ecB92ac762f9876f6e773082A4589995"}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.description:
++        "can remove and add validators, update their voting power, and change the required threshold."
+      template:
++        "lightlink/Multisig"
+      displayName:
++        "LightlinkMultisig"
+      description:
++        "Custom multisig implementation with a hardcoded n/2+1 threshold."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LightLinkBridge (0x3ca373F5ecB92ac762f9876f6e773082A4589995)
+    +++ description: None
+```
+
+```diff
+    contract undefined (0x514F8211B64f0620349659DeaDB5911a9896E7EC) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x65E325A22c0F519041db69F5693EbAc3b4AE71bE","description":"it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled."}]
+    }
+```
+
+```diff
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72) {
+    +++ description: The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.
+      proxyType:
+-        "LightLink proxy"
++        "EIP1967 proxy"
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "can remove and add validators, update their voting power, and change the required threshold."
+      values.$admin:
+-        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
++        "0x0000000000000000000000000000000000000000"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      template:
++        "lightlink/L1BridgeRegistry"
+      description:
++        "The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge."
+    }
+```
+
+```diff
+    contract L1ERC20Predicate (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9) {
+    +++ description: ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.
+      name:
+-        "LightLinkERC20Bridge"
++        "L1ERC20Predicate"
+      proxyType:
+-        "LightLink proxy"
++        "EIP1967 proxy"
+      issuedPermissions:
+-        [{"permission":"upgrade","to":"0x3345702FeA1669Efa1e085610A62F89d159Bc0c8","via":[]}]
+      values.$admin:
+-        "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8"
++        "0x0000000000000000000000000000000000000000"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      template:
++        "lightlink/L1ERC20Predicate"
+      description:
++        "ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values."
+    }
+```
+
+```diff
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE) {
+    +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x514F8211B64f0620349659DeaDB5911a9896E7EC","description":"it can publish new block headers, which both includes pointers to Celestia DA and the state root for withdrawals, meaning that sequencing and state updates are not decoupled.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      template:
++        "lightlink/CanonicalStateChain"
+      description:
++        "Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back."
+    }
+```
+
+```diff
+    contract Lightlink Multisig 2 (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7) {
+    +++ description: None
+      name:
+-        "LightLinkMultisig2"
++        "Lightlink Multisig 2"
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04"}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x670E1C42A7A5962348138110E3ede3F422c10e2f"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"0x65E325A22c0F519041db69F5693EbAc3b4AE71bE","description":"it can update the maximum number of Celestia pointers a block can have, change the challenge contract used for rollbacks and update the publisher address."}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd","description":"it can disable L2 header challenges and DA challenges, it can update the challenge period (3h and 3 weeks), update the challenger fee (between 0.01 and 10 ether), update the challenge reward (between 0.01 and 10 ether), update the defender address, update the DA namespace, update the DA oracle, disable header challenges and set the maximum bundle size."}
+      receivedPermissions.2.from:
+-        "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
++        "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE"
+      receivedPermissions.1.from:
+-        "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd"
++        "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c"
+      receivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04"
++        "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE"
+      receivedPermissions.0.description:
++        "it can pause the chain and update the gas token."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x670E1C42A7A5962348138110E3ede3F422c10e2f)
+    +++ description: Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract LightLinkPortal (0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE)
+    +++ description: Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+Generated with discovered.json: 0xb8dd9229039c5a02baf2195aaa8f441676c84444
 
 # Diff at Fri, 07 Mar 2025 13:54:57 GMT:
 

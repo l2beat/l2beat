@@ -12,16 +12,16 @@ import { getProjectsChangeReport } from '../../projects-change-report/get-projec
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { compareTvs } from '../tvs/utils/compare-tvs'
-import type { LatestTvs } from '../tvs/utils/get-7d-token-breakdown'
-import { get7dTokenBreakdown } from '../tvs/utils/get-7d-token-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 
 export async function getScalingArchivedEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTokenBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown({ type: 'layer2' }),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-      where: ['isScaling', 'isArchived'],
+      where: ['isScaling', 'archivedAt'],
     }),
   ])
 
@@ -48,7 +48,7 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
 function getScalingArchivedEntry(
   project: Project<'scalingInfo' | 'statuses' | 'scalingRisks' | 'display'>,
   changes: ProjectChanges,
-  latestTvs: LatestTvs['projects'][string] | undefined,
+  latestTvs: ProjectSevenDayTvsBreakdown | undefined,
 ): ScalingArchivedEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),

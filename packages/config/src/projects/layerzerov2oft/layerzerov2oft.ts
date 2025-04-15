@@ -197,6 +197,11 @@ To receive the original locked token back, a user would have to return to the ma
   config: {
     escrows: [
       discovery.getEscrowDetails({
+        address: EthereumAddress('0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee'),
+        tokens: ['USDT'],
+        description: 'OFT adapter escrow for USDT0 on Ethereum.',
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x58538e6A46E07434d7E7375Bc268D3cb839C0133'),
         tokens: ['ENA'],
         description: 'OFT adapter escrow for ENA on Ethereum.',
@@ -321,6 +326,10 @@ To receive the original locked token back, a user would have to return to the ma
         discovery.getContractDetails(
           'PolyhedraDVN',
           'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'USDT0DVN',
+          'The USDT0 Verifier delivers their verified messages through this contract. USDT0 operations must be verified by this DVN.',
         ),
         discovery.getContractDetails(
           'Treasury',

@@ -1,26 +1,31 @@
-import type { Env, Logger } from '@l2beat/backend-tools'
-import { type ChainConfig, ProjectService } from '@l2beat/config'
+import { Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { ChainConfig, ProjectService } from '@l2beat/config'
+import { createDatabase } from '@l2beat/database'
 import {
+  BalanceProvider,
+  BlockIndexerClient,
   BlockProvider,
+  BlockTimestampProvider,
+  CirculatingSupplyProvider,
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
+  MulticallV3Client,
+  PriceProvider,
   RpcClient,
+  TotalSupplyProvider,
 } from '@l2beat/shared'
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
-import { BalanceProvider } from '../providers/BalanceProvider'
-import { CirculatingSupplyProvider } from '../providers/CirculatingSupplyProvider'
-import { PriceProvider } from '../providers/PriceProvider'
-import { RpcClientPOC } from '../providers/RpcClientPOC'
-import { TotalSupplyProvider } from '../providers/TotalSupplyProvider'
 import { ValueService } from '../services/ValueService'
 import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
+import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
 import { LocalStorage } from './LocalStorage'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 export class LocalExecutor {
-  private readonly storage: LocalStorage
+  private readonly localStorage: LocalStorage
+  private readonly dbStorage: DBStorage | undefined
   private readonly valueService: ValueService
 
   constructor(
@@ -28,45 +33,61 @@ export class LocalExecutor {
     private readonly env: Env,
     private readonly logger: Logger,
   ) {
-    this.storage = new LocalStorage('./scripts/tvs/local-data.json')
-    this.valueService = new ValueService(this.storage)
+    this.localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    this.valueService = new ValueService(this.localStorage, logger)
+    this.dbStorage = this.createDbStorage(env, logger)
   }
 
-  async run(
-    config: ProjectTvsConfig,
-    timestamps: UnixTime[],
+  async getTvs(
+    projects: ProjectTvsConfig[],
+    timestamp: UnixTime,
     latestMode: boolean,
-  ): Promise<Map<number, TokenValue[]>> {
-    const chainConfigs = await new ProjectService().getProjects({
-      select: ['chainConfig'],
-    })
-    const { prices, amounts } = extractPricesAndAmounts(config, chainConfigs)
+  ): Promise<Map<string, TokenValue[]>> {
+    const { prices, amounts } = extractPricesAndAmounts(
+      projects.flatMap((c) => c.tokens),
+    )
 
-    const dataFormulaExecutor = await this.initDataFormulaExecutor(amounts)
+    const dataFormulaExecutor = await this.initDataFormulaExecutor(
+      amounts,
+      this.logger,
+    )
 
-    await dataFormulaExecutor.execute(prices, amounts, timestamps, latestMode)
+    await dataFormulaExecutor.execute(prices, amounts, timestamp, latestMode)
 
-    return await this.valueService.calculate(config, timestamps)
+    const result = new Map<string, TokenValue[]>()
+
+    for (const project of projects) {
+      const tvs = await this.valueService.calculate(project, [timestamp])
+      result.set(project.projectId, tvs)
+    }
+
+    return result
   }
 
-  private async initDataFormulaExecutor(amounts: AmountConfig[]) {
+  private async initDataFormulaExecutor(
+    amounts: AmountConfig[],
+    logger: Logger,
+  ) {
     const http = new HttpClient()
     const coingeckoQueryService = this.initCoingecko(http)
-    const { rpcs, blockProviders } = await this.initChains(http, amounts)
+    const { rpcs, blockProviders, blockTimestampProvider } =
+      await this.initChains(http, amounts)
 
     const priceProvider = new PriceProvider(coingeckoQueryService)
     const circulatingSupplyProvider = new CirculatingSupplyProvider(
       coingeckoQueryService,
     )
 
-    const totalSupplyProvider = new TotalSupplyProvider(rpcs)
-    const balanceProvider = new BalanceProvider(rpcs)
+    const totalSupplyProvider = new TotalSupplyProvider(rpcs, logger)
+    const balanceProvider = new BalanceProvider(rpcs, logger)
 
     return new DataFormulaExecutor(
-      this.storage,
+      this.localStorage,
+      this.dbStorage,
       priceProvider,
       circulatingSupplyProvider,
       blockProviders,
+      blockTimestampProvider,
       totalSupplyProvider,
       balanceProvider,
       this.logger,
@@ -109,8 +130,9 @@ export class LocalExecutor {
       }
     }
 
-    const rpcs = new Map<string, RpcClientPOC>()
+    const rpcs: RpcClient[] = []
     const blockProviders = new Map<string, BlockProvider>()
+    const indexerClients: BlockIndexerClient[] = []
 
     for (const chainConfig of chainConfigs) {
       const rpcApi = chainConfig.apis.find((api) => api.type === 'rpc')
@@ -136,23 +158,91 @@ export class LocalExecutor {
         (contract) => contract.version === '3',
       )
 
-      rpcs.set(
-        chainConfig.name,
-        new RpcClientPOC(rpc, chainConfig.name, this.logger, {
-          ...(multicallV3?.address ? { multicallV3: multicallV3.address } : {}),
-          batchingEnabled:
-            multicallV3 ||
-            chainConfig.name === 'swell' ||
-            chainConfig.name === 'silicon'
-              ? false
-              : true,
+      const multicallClient = multicallV3
+        ? new MulticallV3Client(
+            multicallV3.address,
+            multicallV3.sinceBlock,
+            150,
+          )
+        : undefined
+
+      rpcs.push(
+        new RpcClient({
+          url,
+          http,
+          logger: this.logger,
+          retryStrategy: 'RELIABLE',
+          sourceName: chainConfig.name,
+          callsPerMinute: callsPerMinute,
+          multicallClient,
         }),
       )
       blockProviders.set(
         chainConfig.name,
         new BlockProvider(chainConfig.name, [rpc]),
       )
+      const etherscanApi = chainConfig.apis.find(
+        (api) => api.type === 'etherscan',
+      )
+      if (etherscanApi) {
+        indexerClients.push(
+          new BlockIndexerClient(
+            http,
+            new RateLimiter({ callsPerMinute: 120 }),
+            {
+              type: etherscanApi.type,
+              url: etherscanApi.url,
+              apiKey: this.env.string(
+                Env.key(chainConfig.name, 'ETHERSCAN_API_KEY'),
+              ),
+              chain: chainConfig.name,
+            },
+          ),
+        )
+      }
+
+      const blockscoutApi = chainConfig.apis.find(
+        (api) => api.type === 'blockscout',
+      )
+      if (blockscoutApi) {
+        indexerClients.push(
+          new BlockIndexerClient(
+            http,
+            new RateLimiter({ callsPerMinute: 120 }),
+            {
+              type: blockscoutApi.type,
+              url: blockscoutApi.url,
+              chain: chainConfig.name,
+            },
+          ),
+        )
+      }
     }
-    return { rpcs, blockProviders }
+
+    const blockTimestampProvider = new BlockTimestampProvider({
+      indexerClients,
+      blockProviders: Array.from(blockProviders.values()),
+    })
+    return { rpcs, blockProviders, blockTimestampProvider }
+  }
+
+  private createDbStorage(env: Env, logger: Logger): DBStorage | undefined {
+    const tvsDbUrl = env.optionalString('TVS_DB_URL')
+
+    if (!tvsDbUrl) {
+      logger.warn('TVS_DB_URL is not set. All data will be fetched from APIs')
+      return undefined
+    }
+
+    const db = createDatabase({
+      connectionString: tvsDbUrl,
+      application_name: 'TVS-LOCAL-EXECUTOR',
+      ssl: { rejectUnauthorized: false },
+      min: 2,
+      max: 10,
+      keepAlive: false,
+    })
+
+    return new DBStorage(db, logger, true)
   }
 }

@@ -2,6 +2,7 @@ import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
 import type { RequestInit } from 'node-fetch'
 import { RetryHandler, type RetryHandlerVariant } from '../tools'
+import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 import type { HttpClient } from './http/HttpClient'
 
 export interface ClientCoreDependencies {
@@ -15,10 +16,19 @@ export interface ClientCoreDependencies {
 export abstract class ClientCore {
   rateLimiter: RateLimiter
   retryHandler: RetryHandler
+  metricsAggregator: ClientMetricsAggregator
 
   constructor(private readonly deps: ClientCoreDependencies) {
-    const logger = deps.logger.tag({ source: deps.sourceName })
-    this.retryHandler = RetryHandler.create(deps.retryStrategy, logger)
+    const logger = deps.logger.for(this).tag({ source: deps.sourceName })
+    this.metricsAggregator = new ClientMetricsAggregator({
+      logger,
+      flushInterval: 30_000,
+    })
+
+    this.retryHandler = RetryHandler.create(
+      deps.retryStrategy,
+      logger.tag({ tag: deps.sourceName, source: deps.sourceName }),
+    )
     this.rateLimiter = new RateLimiter({ callsPerMinute: deps.callsPerMinute })
   }
 
@@ -41,7 +51,14 @@ export abstract class ClientCore {
   }
 
   private async _fetch(url: string, init: RequestInit): Promise<json> {
+    const start = Date.now()
+
     const response = await this.deps.http.fetch(url, init)
+
+    const duration = Date.now() - start
+    const size = Buffer.byteLength(JSON.stringify(response), 'utf8')
+
+    this.metricsAggregator.push({ duration, size: size })
 
     const validationInfo = this.validateResponse(response)
 

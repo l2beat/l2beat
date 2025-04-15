@@ -1,14 +1,15 @@
 import type {
-  Badge,
   Project,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
   WarningWithSentiment,
 } from '@l2beat/config'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -21,6 +22,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
+import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
@@ -34,8 +36,8 @@ import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
 import { getTokensForProject } from '../tvs/tokens/get-tokens-for-project'
+import { get7dTvsBreakdown } from '../tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import type { ProjectCountdownsWithContext } from '../utils/get-countdowns'
 import { getCountdowns } from '../utils/get-countdowns'
@@ -48,7 +50,7 @@ export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
   slug: string
-  isArchived: boolean
+  archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
   underReviewStatus: UnderReviewStatus
@@ -56,7 +58,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     description?: string
-    badges?: Badge[]
+    badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
     category: ProjectScalingCategory
@@ -104,26 +106,28 @@ export async function getScalingProjectEntry(
     | 'scalingRisks'
     | 'scalingStage'
     | 'scalingTechnology'
-    | 'contracts'
     | 'tvlInfo'
     | 'tvlConfig',
     // optional
+    | 'contracts'
     | 'permissions'
     | 'scalingDa'
     | 'customDa'
     | 'chainConfig'
     | 'isUpcoming'
-    | 'isArchived'
+    | 'archivedAt'
     | 'milestones'
     | 'trackedTxsConfig'
   >,
 ): Promise<ProjectScalingEntry> {
-  const [projectsChangeReport, activityProjectStats, tvsProjectStats] =
+  const [projectsChangeReport, activityProjectStats, tvsStats] =
     await Promise.all([
       getProjectsChangeReport(),
       getActivityProjectStats(project.id),
-      getTvsProjectStats(project),
+      get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     ])
+
+  const tvsProjectStats = tvsStats.projects[project.id]
 
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
@@ -139,28 +143,37 @@ export async function getScalingProjectEntry(
       project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
         ? project.scalingInfo.hostChain.name
         : undefined,
-    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id)
-      ? {
-          breakdown: tvsProjectStats?.tvsBreakdown,
-          warning: project.tvlInfo.warnings[0],
-          tokens: {
-            breakdown: tvsProjectStats?.tokenBreakdown,
-            warnings: compact([
-              tvsProjectStats &&
-                tvsProjectStats.tokenBreakdown.total > 0 &&
-                getAssociatedTokenWarning({
-                  associatedRatio:
-                    tvsProjectStats.tokenBreakdown.associated /
-                    tvsProjectStats.tokenBreakdown.total,
-                  name: project.name,
-                  associatedTokens: project.tvlInfo.associatedTokens,
-                }),
-            ]),
-            associatedTokens: project.tvlInfo.associatedTokens,
-          },
-        }
-      : undefined,
-    badges: project.display.badges,
+    tvs:
+      !env.EXCLUDED_TVS_PROJECTS?.includes(project.id) && tvsProjectStats
+        ? {
+            breakdown: {
+              ...tvsProjectStats.breakdown,
+              totalChange: tvsProjectStats.change.total,
+            },
+            warning: project.tvlInfo.warnings[0],
+            tokens: {
+              breakdown: {
+                ...tvsProjectStats.breakdown,
+                associated: tvsProjectStats.associated.total,
+              },
+              warnings: compact([
+                tvsProjectStats &&
+                  tvsProjectStats.breakdown.total > 0 &&
+                  getAssociatedTokenWarning({
+                    associatedRatio:
+                      tvsProjectStats.associated.total /
+                      tvsProjectStats.breakdown.total,
+                    name: project.name,
+                    associatedTokens: project.tvlInfo.associatedTokens,
+                  }),
+              ]),
+              associatedTokens: project.tvlInfo.associatedTokens,
+            },
+          }
+        : undefined,
+    badges: project.display.badges
+      .map((badge) => getBadgeWithParams(badge, project))
+      .filter((b) => !!b),
     gasTokens: project.chainConfig?.gasTokens,
   }
 
@@ -173,7 +186,7 @@ export async function getScalingProjectEntry(
       isUnderReview: !!project.statuses.isUnderReview,
       ...changes,
     }),
-    isArchived: !!project.isArchived,
+    archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
     header,
@@ -258,23 +271,29 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (
+    !project.isUpcoming &&
+    !isTvsChartDataEmpty(tvsChartData) &&
+    tvsProjectStats
+  ) {
     sections.push({
-      type: 'ChartSection',
+      type: 'StackedTvsSection',
       props: {
         id: 'tvs',
-        stacked: true,
         title: 'Value Secured',
         projectId: project.id,
+        tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
         milestones: sortedMilestones,
         tokens,
+        tvsProjectStats,
+        tvlInfo: project.tvlInfo,
       },
     })
   }
 
   if (!isActivityChartDataEmpty(activityChartData)) {
     sections.push({
-      type: 'ChartSection',
+      type: 'ActivitySection',
       props: {
         id: 'activity',
         title: 'Activity',

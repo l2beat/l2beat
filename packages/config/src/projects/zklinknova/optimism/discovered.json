@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 133041012,
-  "configHash": "0x7a7b5ad15ec71f7d446d85f304414f04418e4acacf31bc11329bf5e2bd1461bd",
+  "configHash": "0x7afdc6575a89f04951737e1f39267fe2808e9b993ce5f3f00d377a6276cb0a63",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -186,7 +186,8 @@
         "l2Bridge": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
         "l2TokenBeacon": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
-      }
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
@@ -212,7 +213,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -262,7 +262,8 @@
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "ZKLINK": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
-      }
+      },
+      "derivedName": "OptimismL2Gateway"
     },
     {
       "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
@@ -501,9 +502,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x14668544ff370bd769558d6a9170bd7f486f887fd9dbfa664531a49bf2c0f4a3",
-    "GnosisSafe": "0xfb4566a0ca21d11e353b80e51d6cef5b58511545c90ae731afcbad17b5781c1b",
-    "zklinknova/secondaryGateway": "0xae4633b0c19837b8498530c044983ef690045619ab067153aba46ce5a6df3754",
-    "zklinknova/secondaryZkLink": "0x12a9cdcec147f5d122326b6aeed5399a2f45432083570dac54f7c95a38557887"
+    "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
+    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
+    "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   }
 }

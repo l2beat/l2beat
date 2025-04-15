@@ -126,29 +126,38 @@ export const zkspace: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(forcedWithdrawalDelay),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: false,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: false,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      additionalConsiderations: {
+        short:
+          'ZKBase provides the infrastructure for token transfer, swaps and NFT minting. Arbitrary contracts are not supported.',
+        long: 'ZKBase provides the infrastructure for token transfer, swaps and NFT minting. Arbitrary contracts are not supported.',
+      },
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
-    stateCorrectness: zkswap.technology.stateCorrectness,
+    stateCorrectness: zkswap.technology?.stateCorrectness,
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
@@ -158,10 +167,10 @@ export const zkspace: ScalingProject = {
         },
       ],
     },
-    dataAvailability: zkswap.technology.dataAvailability,
-    operator: zkswap.technology.operator,
-    forceTransactions: zkswap.technology.forceTransactions,
-    exitMechanisms: zkswap.technology.exitMechanisms,
+    dataAvailability: zkswap.technology?.dataAvailability,
+    operator: zkswap.technology?.operator,
+    forceTransactions: zkswap.technology?.forceTransactions,
+    exitMechanisms: zkswap.technology?.exitMechanisms,
   },
   contracts: {
     addresses: {

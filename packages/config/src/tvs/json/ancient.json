@@ -1,0 +1,58 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "ancient",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "ancient-A8",
+      "priceId": "ancient8",
+      "symbol": "A8",
+      "name": "Ancient8",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39170/large/A8_Token-04_200x200.png?1720798300",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3E5A19c91266aD8cE2477B91585d1856B84062dF",
+        "chain": "ethereum",
+        "escrowAddress": "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80",
+        "decimals": 18,
+        "sinceTimestamp": 1721174400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "ancient-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
+            "decimals": 18,
+            "sinceTimestamp": 1706027447
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80",
+            "decimals": 18,
+            "sinceTimestamp": 1706027447
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

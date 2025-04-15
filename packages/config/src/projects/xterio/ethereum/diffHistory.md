@@ -1,4 +1,179 @@
-Generated with discovered.json: 0x9c38b02d272a434993904e636fe3ea8a46875e94
+Generated with discovered.json: 0x62b9ac5f263a51313722499882de9b8fe37c5308
+
+# Diff at Sun, 06 Apr 2025 08:20:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@02dea11f7707601873600e275c4e2b7792c1a190 block: 21235438
+- current block number: 22208349
+
+## Description
+
+Operators change, no change to implementations.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0x5A0492D20D984eE904E46E6Ff24572bc755abb28) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.1.permission:
+-        "propose"
++        "challenge"
+      issuedPermissions.1.to:
+-        "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4"
++        "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88"
+      issuedPermissions.0.permission:
+-        "challenge"
++        "propose"
+      issuedPermissions.0.to:
+-        "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5"
++        "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D"
+      values.$pastUpgrades.2:
++        ["2025-04-05T14:16:59.000Z","0x3c36d0fd57e70dee54e8ecc5c70de812a57dd8bc3db576cf12ce164acbeb8cce",["0xA9D78F579f1B30194F3c2Ca1987A9B91A33BDF08"]]
+      values.$pastUpgrades.1:
++        ["2025-04-05T14:25:47.000Z","0x4dbaa9a0411962209ad663ec973dca85671030aef9bbf598b9727a292a83525d",["0x48Ef83Cf812f291EDB00C2D48440Ee90cD12be1a"]]
+      values.$upgradeCount:
+-        1
++        3
++++ severity: HIGH
+      values.challenger:
+-        "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5"
++        "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88"
+      values.CHALLENGER:
+-        "0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5"
++        "0x8b3B4F6C348f6baC39190B89c801E61E41F05b88"
++++ severity: HIGH
+      values.proposer:
+-        "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4"
++        "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D"
+      values.PROPOSER:
+-        "0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4"
++        "0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D"
+    }
+```
+
+```diff
+    contract SystemConfig (0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.to:
+-        "0x7d6251D49A102a330CfB46d132982781620700Cb"
++        "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3"
+      values.batcherHash:
+-        "0x7d6251D49A102a330CfB46d132982781620700Cb"
++        "0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3"
+      values.unsafeBlockSigner:
+-        "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E"
++        "0x7a4e92aD7E40C8df264eD18010847e6C27AB3d82"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235438 (main branch discovery), not current.
+
+```diff
+    contract Xterio (0x8B6341E18B2DC644cA94eD85173691873626fc7F) {
+    +++ description: None
+      name:
++        "Xterio"
+    }
+```
+
+```diff
+    contract AltLayer 3 (0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7) {
+    +++ description: None
+      name:
++        "AltLayer 3"
+    }
+```
+
+```diff
+    contract AltLayer 1 (0xaC79765A73eB9dcBd3c427181E6819902AE25b48) {
+    +++ description: None
+      name:
++        "AltLayer 1"
+    }
+```
+
+```diff
+    contract AltLayer 2 (0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2) {
+    +++ description: None
+      name:
++        "AltLayer 2"
+    }
+```
+
+```diff
+    contract Xterio Multisig (0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574) {
+    +++ description: None
+      name:
+-        "XterioMultisig"
++        "Xterio Multisig"
+    }
+```
+
+Generated with discovered.json: 0x430f06fd51d6858860ea7c502872a8febea9c3f7
+
+# Diff at Thu, 27 Mar 2025 11:15:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21235438
+- current block number: 21235438
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235438 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+Generated with discovered.json: 0x12c26ba7ed08b5897fde661a881cdd3743520dfe
+
+# Diff at Wed, 19 Mar 2025 13:05:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21235438
+- current block number: 21235438
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235438 (main branch discovery), not current.
+
+```diff
+    contract undefined (0x7d2f9b38866141Bf090DD670A826F27eA2408Ad4) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract undefined (0xfA8d42bDE52C2B8B05fE5EeCbAdEa6CB698A0Bc5) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x1c5bcea752dad3df411c19132206a77bdeb627b6
 
 # Diff at Tue, 04 Mar 2025 11:26:51 GMT:
 

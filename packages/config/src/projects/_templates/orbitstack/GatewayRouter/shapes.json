@@ -1,0 +1,20 @@
+{
+  "L1GatewayRouter": {
+    "hash": "0x265fc73d2eec7f0b459f92a25a37b145c8db22527232f08f3022d5cc18d6af9d",
+    "address": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "L1GatewayRouter_parallel": {
+    "hash": "0x61cc407871b0c56af41887c99354633d150e4586f0a6d237c6efd10966b17bd7",
+    "address": "0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "L1OrbitGatewayRouter": {
+    "hash": "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0",
+    "address": "0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

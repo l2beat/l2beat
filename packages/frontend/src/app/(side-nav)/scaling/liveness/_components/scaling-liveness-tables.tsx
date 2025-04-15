@@ -16,11 +16,11 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { useLivenessTimeRangeContext } from './liveness-time-range-context'
 import { LivenessTimeRangeControls } from './liveness-time-range-controls'
@@ -29,14 +29,14 @@ import { ScalingLivenessTable } from './table/scaling-liveness-table'
 type Props = TabbedScalingEntries<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
-  const includeFilters = useScalingFilter()
+  const filterEntries = useFilterEntries()
   const [tab, setTab] = useState('rollups')
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
 
   const entries = checked
@@ -77,9 +77,9 @@ export function ScalingLivenessTables(props: Props) {
     <>
       <Controls
         entries={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
+          ...props.rollups,
+          ...props.validiumsAndOptimiums,
+          ...props.others,
         ]}
       />
       <DirectoryTabs value={tab} onValueChange={setTab}>
@@ -130,8 +130,8 @@ function Controls({ entries }: { entries: ScalingLivenessEntry[] }) {
   const { timeRange, setTimeRange } = useLivenessTimeRangeContext()
 
   return (
-    <div className="flex flex-col justify-between gap-2 md:flex-row">
-      <ScalingFilters items={entries} />
+    <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+      <TableFilters entries={entries} />
       <LivenessTimeRangeControls
         timeRange={timeRange}
         setTimeRange={setTimeRange}

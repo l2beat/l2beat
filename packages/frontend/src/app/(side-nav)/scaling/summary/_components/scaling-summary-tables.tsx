@@ -16,11 +16,12 @@ import {
   RollupsInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
+import { TableFilters } from '~/components/table/filters/table-filters'
+import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import { useScalingFilter } from '../../_components/scaling-filter-context'
-import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
+import { ExcludeAssociatedTokensCheckbox } from '../../_components/exclude-associated-tokens-checkbox'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
@@ -28,13 +29,13 @@ import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summar
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
-  const includeFilters = useScalingFilter()
+  const filterEntries = useFilterEntries()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: props.rollups.filter(includeFilters),
-    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
-    others: props.others.filter(includeFilters),
+    rollups: props.rollups.filter(filterEntries),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
+    others: props.others.filter(filterEntries),
   }
 
   const entries = checked
@@ -65,15 +66,17 @@ export function ScalingSummaryTables(props: Props) {
 
   return (
     <>
-      <HorizontalSeparator className="my-4 !border-divider max-md:hidden" />
-      <ScalingSummaryFilters
-        items={[
-          ...entries.rollups,
-          ...entries.validiumsAndOptimiums,
-          ...entries.others,
-        ]}
-        className="mt-4"
-      />
+      <HorizontalSeparator className="my-4 max-md:hidden" />
+      <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+        <TableFilters
+          entries={[
+            ...props.rollups,
+            ...props.validiumsAndOptimiums,
+            ...props.others,
+          ]}
+        />
+        <ExcludeAssociatedTokensCheckbox />
+      </div>
       <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">

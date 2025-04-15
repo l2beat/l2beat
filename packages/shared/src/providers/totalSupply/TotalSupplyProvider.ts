@@ -4,10 +4,13 @@ import { utils } from 'ethers'
 import type { CallParameters, RpcClient } from '../../clients'
 
 export class TotalSupplyProvider {
+  private logger: Logger
   constructor(
     private readonly rpcs: RpcClient[],
-    private logger: Logger,
-  ) {}
+    logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getTotalSupplies(
     tokens: EthereumAddress[],
@@ -22,22 +25,38 @@ export class TotalSupplyProvider {
 
         if (client.isMulticallDeployed(blockNumber)) {
           const res = await client.multicall(calls, blockNumber)
-          return res.map((r) => {
+          return res.map((r, i) => {
             if (r.success === false) {
+              this.logger
+                .tag({ chain })
+                .warn(`Issue with totalSupply fetching`, {
+                  token: tokens[i],
+                  blockNumber,
+                })
               return 0n
             }
             return BigInt(r.data.toString())
           })
         } else {
-          this.logger.warn(`Multicall not deployed`, { calls: calls.length })
           return Promise.all(
-            calls.map(async (c) =>
-              BigInt((await client.call(c, blockNumber)).toString()),
-            ),
+            calls.map(async (c, i) => {
+              try {
+                const res = await client.call(c, blockNumber)
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+              } catch {
+                this.logger
+                  .tag({ chain })
+                  .warn(`Issue with totalSupply fetching`, {
+                    token: tokens[i],
+                    blockNumber,
+                  })
+                return 0n
+              }
+            }),
           )
         }
       } catch (error) {
-        if (i === this.rpcs.length - 1) throw error
+        if (i === clients.length - 1) throw error
       }
     }
 
@@ -49,7 +68,7 @@ const erc20Interface = new utils.Interface([
   'function totalSupply() view returns (uint256)',
 ])
 
-function encodeTotalSupply(token: EthereumAddress): CallParameters {
+export function encodeTotalSupply(token: EthereumAddress): CallParameters {
   return {
     to: token,
     data: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),

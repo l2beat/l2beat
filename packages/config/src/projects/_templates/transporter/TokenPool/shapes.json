@@ -1,0 +1,68 @@
+{
+  "BurnMintTokenPoolAndProxy": {
+    "hash": "0xef6480951f06efac6ba95f0530ca0340d138c7208111550c58acbd6481520d79",
+    "address": "0x485858BA818aab8744f2932A4982bfB0E7Db0005",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "BurnMintTokenPoolV1": {
+    "hash": "0x6a270bc5c82591f8a8adb6765201cc65b04ed37a9509b2703970f74d1ee9534f",
+    "address": "0x1175E4CFd6a73A4c1F1f2c1400a08D88554FA62e",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "BurnMintTokenPoolV2": {
+    "hash": "0x4c921a754523a7496c7a7b47d0a0b6bd773d71028cf77f6301757bdcaf3c469e",
+    "address": "0x06f9817a91595E1B595F789Fb91529e8651da9B8",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "BurnMintTokenPoolV3": {
+    "hash": "0x6b4c769c7b59108373c42add32bce68be08c2c8095dcb0919d25cd9b4542102c",
+    "address": "0x057152DB365B47851B0A0bd431644b8eE21fE1b4",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "BurnWithFromMintTokenPool": {
+    "hash": "0x0a632a2beeac9d8c3a57905d419850c6bb531ccc97efca28cfe666847026992a",
+    "address": "0x45A103142585bdFc49cdb137f2a45D1AE7F84b6b",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "LockReleaseTokenPoolAndProxy": {
+    "hash": "0xdec3a533c2d2004adafb78bf9d2e3f16e42a1c061ac62c31795c3e0bd006426b",
+    "address": "0x0D736853812A12F085DE867aDF4eA4ABA9521Fc0",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "LockReleaseTokenPoolV1": {
+    "hash": "0x8f8568ffa012634ccf826a95dde2d995cc8c0fb07ea6662639e4e41983a00643",
+    "address": "0x50f6631B377be52E132DF35a2F05eA54fda882ac",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "LockReleaseTokenPoolV2": {
+    "hash": "0xa9fa40d9d26de86fa9869be555593dd3b95cc40442206b8c0725a24d1809cc7f",
+    "address": "0x21377fe476Fb8587CbAFd47155093597Fa4df45E",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "LockReleaseTokenPoolV3": {
+    "hash": "0x4f46bb4ccf89fb70d097b085ff91815ba6ed930b5ce6b451f0dbf068006eeab2",
+    "address": "0x0238d2C272f17CF11AEDB08CDE515d56ED25E2E4",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "USDCTokenPool": {
+    "hash": "0x847be59cd2db802e5662b649bac8ff82c5d602b59f0d57a38d33d066aac1ba5f",
+    "address": "0xA81f4AB595dE5C14759245DE5ce9899D380FeFda",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "UpgradeableLockReleaseTokenPool": {
+    "hash": "0xb4f2982da610e459869524c6366a4b364337b95f231f4109941deb2cc5afa258",
+    "address": "0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

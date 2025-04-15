@@ -3,8 +3,8 @@ import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/custom-link'
-import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
+import { useIsMobile } from '~/hooks/use-is-mobile'
 import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
@@ -143,12 +143,12 @@ function ChartMilestone({
   )
 }
 
-function MilestoneDrawerContent({
+export function MilestoneDrawerContent({
   milestoneIndex,
   allMilestones,
 }: {
   milestoneIndex: number
-  allMilestones: Milestone[]
+  allMilestones: (Milestone & { projectName?: string })[]
 }) {
   const [selectedMilestoneIndex, setSelectedMilestoneIndex] =
     useState<number>(milestoneIndex)
@@ -167,6 +167,9 @@ function MilestoneDrawerContent({
         </DialogTitle>
         <p className="mb-4 ml-6 text-xs text-secondary">
           {formatDate(tooltipMilestone.date.slice(0, 10))}
+          {tooltipMilestone.projectName
+            ? ` • ${tooltipMilestone.projectName}`
+            : ''}
         </p>
         <p className="mb-2 text-sm leading-[140%]">
           {tooltipMilestone.description}

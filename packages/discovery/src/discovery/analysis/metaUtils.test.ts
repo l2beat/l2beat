@@ -1,15 +1,14 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type {
-  DiscoveryContractField,
   PermissionConfiguration,
-} from '../config/RawDiscoveryConfig'
+  StructureContractField,
+} from '../config/StructureConfig'
 import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import type { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   type ContractMeta,
-  findHighestSeverity,
   getTargetsMeta,
   interpolateString,
   invertMeta,
@@ -21,8 +20,6 @@ describe('metaUtils', () => {
   describe('mergeContractMeta', () => {
     it('should merge two ContractMeta objects correctly', () => {
       const a: ContractMeta = {
-        displayName: 'ContractA',
-        description: 'description 1',
         permissions: [
           {
             type: 'interact',
@@ -35,16 +32,8 @@ describe('metaUtils', () => {
             target: EthereumAddress.from('0x5678'),
           },
         ],
-        types: new Set(['CODE_CHANGE', 'EXTERNAL']),
-        severity: 'LOW',
-        references: [
-          { text: 'Source Code', href: 'link1' },
-          { text: 'Source Code', href: 'link2' },
-        ],
       }
       const b: ContractMeta = {
-        displayName: undefined,
-        description: 'description 2',
         permissions: [
           {
             type: 'interact',
@@ -58,19 +47,11 @@ describe('metaUtils', () => {
           },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
-        types: new Set(['PERMISSION', 'L2', 'EXTERNAL']),
-        severity: 'MEDIUM',
-        references: [
-          { text: 'Some docs', href: 'link1' },
-          { text: 'Source Code', href: 'link2' },
-        ],
       }
 
       const result = mergeContractMeta(a, b)
 
       expect(result).toEqual({
-        displayName: 'ContractA',
-        description: 'description 1',
         canActIndependently: undefined,
         permissions: [
           {
@@ -89,13 +70,6 @@ describe('metaUtils', () => {
             target: EthereumAddress.from('0xabcd'),
           },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
-        ],
-        types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2', 'PERMISSION']),
-        severity: 'MEDIUM',
-        references: [
-          { text: 'Source Code', href: 'link1' },
-          { text: 'Source Code', href: 'link2' },
-          { text: 'Some docs', href: 'link1' },
         ],
       })
     })
@@ -309,12 +283,8 @@ describe('metaUtils', () => {
       ]
 
       const selfAddress = EthereumAddress.from('0x1234')
-      const fields: { [address: string]: DiscoveryContractField } = {
-        overhead: {
-          permissions: [{ type: 'interact', delay: 0 }],
-          severity: 'LOW',
-          type: 'CODE_CHANGE',
-        },
+      const fields: { [address: string]: StructureContractField } = {
+        overhead: { permissions: [{ type: 'interact', delay: 0 }] },
         owner: {
           permissions: [
             {
@@ -324,8 +294,6 @@ describe('metaUtils', () => {
                 'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
             },
           ],
-          severity: 'LOW',
-          type: 'CODE_CHANGE',
         },
         resourceConfig: {
           permissions: [
@@ -343,14 +311,8 @@ describe('metaUtils', () => {
                 'configuring the {{ $.address }} contract allows freeze funds',
             },
           ],
-          severity: 'HIGH',
-          type: ['L2', 'EXTERNAL'],
         },
-        scalar: {
-          permissions: [{ type: 'interact', delay: 0 }],
-          severity: 'LOW',
-          type: 'CODE_CHANGE',
-        },
+        scalar: { permissions: [{ type: 'interact', delay: 0 }] },
       }
 
       const mergedValues = {
@@ -370,8 +332,6 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
           canActIndependently: undefined,
-          displayName: undefined,
-          description: undefined,
           permissions: [
             {
               type: 'interact',
@@ -383,14 +343,9 @@ describe('metaUtils', () => {
             },
             { type: 'upgrade', delay: 0, target: selfAddress },
           ],
-          severity: 'LOW',
-          types: new Set(['CODE_CHANGE']),
-          references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: undefined,
-          displayName: undefined,
-          description: undefined,
           permissions: [
             {
               type: 'upgrade',
@@ -409,14 +364,9 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
             },
           ],
-          severity: 'HIGH',
-          types: new Set(['EXTERNAL', 'L2']),
-          references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: undefined,
-          displayName: undefined,
-          description: undefined,
           permissions: [
             {
               type: 'upgrade',
@@ -435,9 +385,6 @@ describe('metaUtils', () => {
                 'configuring the 0x0000000000000000000000000000000000001234 contract allows freeze funds',
             },
           ],
-          severity: 'HIGH',
-          types: new Set(['EXTERNAL', 'L2']),
-          references: undefined,
         },
       })
     })
@@ -457,7 +404,7 @@ describe('metaUtils', () => {
         },
       ]
 
-      const fields: { [field: string]: DiscoveryContractField } = {
+      const fields: { [field: string]: StructureContractField } = {
         configuredUpgrade: {
           permissions: [
             {
@@ -466,8 +413,6 @@ describe('metaUtils', () => {
               description: 'Existing configured upgrade permission',
             },
           ],
-          severity: 'HIGH',
-          type: 'CODE_CHANGE',
         },
       }
 
@@ -486,8 +431,6 @@ describe('metaUtils', () => {
 
       expect(result?.[existingUpgradeAddress.toString()]).toEqual({
         canActIndependently: undefined,
-        description: undefined,
-        displayName: undefined,
         permissions: [
           {
             condition: undefined,
@@ -497,22 +440,7 @@ describe('metaUtils', () => {
             description: 'Existing configured upgrade permission',
           },
         ],
-        references: undefined,
-        severity: 'HIGH',
-        types: new Set(['CODE_CHANGE']),
       })
-    })
-  })
-
-  describe('findHighestSeverity', () => {
-    it('should properly find highest severity', () => {
-      expect(findHighestSeverity('HIGH', 'LOW')).toEqual('HIGH')
-      expect(findHighestSeverity('LOW', 'MEDIUM')).toEqual('MEDIUM')
-      expect(findHighestSeverity('LOW', 'LOW')).toEqual('LOW')
-      expect(findHighestSeverity(undefined, undefined)).toEqual(undefined)
-      expect(findHighestSeverity('HIGH', undefined)).toEqual('HIGH')
-      expect(findHighestSeverity(undefined, 'MEDIUM')).toEqual('MEDIUM')
-      expect(findHighestSeverity('LOW', undefined)).toEqual('LOW')
     })
   })
 
@@ -522,8 +450,6 @@ describe('metaUtils', () => {
         {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-            displayName: undefined,
-            description: 'Important contract',
             permissions: [
               {
                 type: 'interact',
@@ -531,12 +457,8 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0x1234'),
               },
             ],
-            severity: 'LOW',
-            types: new Set(['CODE_CHANGE']),
           },
           '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
-            displayName: undefined,
-            description: 'The resource config of the contract',
             permissions: [
               {
                 type: 'interact',
@@ -549,15 +471,11 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0x1234'),
               },
             ],
-            severity: 'HIGH',
-            types: new Set(['EXTERNAL', 'L2']),
           },
         },
         {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-            displayName: undefined,
-            description: 'Very important contract',
             permissions: [
               {
                 type: 'interact',
@@ -565,12 +483,8 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0xbeef'),
               },
             ],
-            severity: 'MEDIUM',
-            types: new Set(['EXTERNAL', 'L2']),
           },
           '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
-            displayName: undefined,
-            description: 'The resource config of the contract',
             permissions: [
               {
                 type: 'interact',
@@ -583,8 +497,6 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0xbeef'),
               },
             ],
-            severity: 'HIGH',
-            types: new Set(['EXTERNAL', 'L2']),
           },
         },
       ]
@@ -595,8 +507,6 @@ describe('metaUtils', () => {
         // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
           canActIndependently: undefined,
-          displayName: undefined,
-          description: 'Important contract',
           permissions: [
             {
               type: 'interact',
@@ -609,14 +519,9 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0xbeef'),
             },
           ],
-          types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
-          severity: 'MEDIUM',
-          references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: undefined,
-          displayName: undefined,
-          description: 'The resource config of the contract',
           permissions: [
             {
               type: 'interact',
@@ -629,14 +534,9 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0x1234'),
             },
           ],
-          types: new Set(['EXTERNAL', 'L2']),
-          severity: 'HIGH',
-          references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: undefined,
-          displayName: undefined,
-          description: 'The resource config of the contract',
           permissions: [
             {
               type: 'interact',
@@ -649,9 +549,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0xbeef'),
             },
           ],
-          types: new Set(['EXTERNAL', 'L2']),
-          severity: 'HIGH',
-          references: undefined,
         },
       })
     })

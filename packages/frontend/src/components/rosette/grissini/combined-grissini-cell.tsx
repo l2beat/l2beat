@@ -25,7 +25,7 @@ export function CombinedGrissiniCell({ daLayerRisks, daBridgeRisks }: Props) {
         <p className="font-bold">DA Risks</p>
         <div>
           <p className="mb-1 font-medium text-secondary">DA LAYER RISKS</p>
-          <GrissiniDetails values={daLayerRisks} size="small" />
+          <GrissiniDetails values={daLayerRisks} size="small" info="compact" />
         </div>
         <div>
           <p className="mb-1 font-medium text-secondary">DA BRIDGE RISKS</p>
@@ -35,7 +35,11 @@ export function CombinedGrissiniCell({ daLayerRisks, daBridgeRisks }: Props) {
               size="small"
             />
           ) : (
-            <GrissiniDetails values={daBridgeRisks} size="small" />
+            <GrissiniDetails
+              values={daBridgeRisks}
+              size="small"
+              info="compact"
+            />
           )}
         </div>
       </TooltipContent>

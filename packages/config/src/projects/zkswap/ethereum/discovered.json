@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 20311131,
-  "configHash": "0xf18cffed3f256a9fa091061c63851f44e0141f91fe8eb7a0ea87282492d1dda7",
+  "configHash": "0xa1eb0e099fe7c01e9d14aba0e683a94049820965d5164573a696c8e8ef9095a3",
   "entries": [
     {
       "name": "Governance",
@@ -32,7 +32,8 @@
         "networkGovernor": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
         "totalTokens": 39,
         "validators": ["0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
-      }
+      },
+      "derivedName": "Governance"
     },
     {
       "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
@@ -90,7 +91,8 @@
         "upgradePreparationActive": false,
         "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
         "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "ZkSyncCommitBlock"
     },
     {
       "name": "PairManager",
@@ -163,7 +165,8 @@
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 0
-      }
+      },
+      "derivedName": "UpgradeGatekeeper"
     },
     {
       "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
@@ -231,7 +234,8 @@
         "verifierExit": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
         "zkSyncCommitBlockAddress": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
         "zkSyncExitAddress": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5"
-      }
+      },
+      "derivedName": "ZkSync"
     },
     {
       "name": "VerifierExit",

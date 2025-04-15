@@ -1,4 +1,56 @@
-Generated with discovered.json: 0xf2150b8aa1dc40fd58abf2b013c62e47da288dd3
+Generated with discovered.json: 0x39e0e216af6bbd4fc53737f056ebb75650d03f7a
+
+# Diff at Thu, 10 Apr 2025 14:42:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f38a3c9bf359344e4c4cd3006f58271cb8f78d15 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract Validium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.
+      displayName:
+-        "PolygonZkEVM"
+    }
+```
+
+Generated with discovered.json: 0xde876a2b626a380e8eb77e3962c6cd32ca311aac
+
+# Diff at Wed, 19 Mar 2025 13:04:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x392fa278680196b9d905ef7476892676cfd8e2f6
 
 # Diff at Tue, 04 Mar 2025 10:38:57 GMT:
 

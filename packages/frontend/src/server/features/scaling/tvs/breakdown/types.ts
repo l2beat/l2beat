@@ -23,6 +23,7 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
     amount: number
     usdValue: number
     escrowAddress: EthereumAddress
+    name?: string
     isPreminted?: boolean
     isSharedEscrow?: boolean
     url?: string
@@ -31,6 +32,7 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
 
 export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
   bridgedUsing: TokenBridgedUsing
+  isLockedInEscrow?: boolean
 }
 
 export type NativeAssetBreakdownData = BaseAssetBreakdownData

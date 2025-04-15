@@ -46,7 +46,10 @@ export function RegularDaProjectSummary({ project }: Props) {
               <div className="flex-1">
                 <div className="flex flex-col gap-4">
                   <div className="max-md:hidden">
-                    <DesktopProjectLinks projectLinks={project.header.links} />
+                    <DesktopProjectLinks
+                      projectLinks={project.header.links}
+                      variant="header"
+                    />
                   </div>
                   <DaProjectStats
                     stats={stats}
@@ -64,7 +67,8 @@ export function RegularDaProjectSummary({ project }: Props) {
                   </div>
                   <GrissiniDetails
                     values={project.header.daLayerGrissiniValues}
-                    showTooltip
+                    descriptionAsTooltip
+                    info="compact"
                   />
                 </div>
               </div>

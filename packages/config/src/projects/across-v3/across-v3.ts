@@ -252,6 +252,7 @@ export const acrossV3: Bridge = {
         discovery.getContractDetails('Optimism_Adapter'),
         discovery.getContractDetails('Polygon_Adapter'),
         discovery.getContractDetails('ZkStack_Adapter'),
+        discovery.getContractDetails('ZkStack_CustomGasToken_Adapter'),
         discovery.getContractDetails('Lisk_Adapter'),
         discovery.getContractDetails('Scroll_Adapter'),
         discovery.getContractDetails('Redstone_Adapter'),

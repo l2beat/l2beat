@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract that allows the consensus supermajority to slash validators.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update how much of the slashed funds go to the proposer and reporter."
+        }
+      ]
+    }
+  }
+}

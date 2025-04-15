@@ -1,4 +1,61 @@
-Generated with discovered.json: 0x69c47fdddfd1feb27b3dbffac24898f3060172f1
+Generated with discovered.json: 0xb53d6414611db1c9177d96ec20fdb74eb36d4bd5
+
+# Diff at Thu, 27 Mar 2025 11:14:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8cc2e36080df3a74dfd8475d41c64f46203f5218 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Config related: add guardian description details, hide some noisy values, hide AddressManager as spam cat, add proposer / challenger to permissioned opfp chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    contract GpsFactRegistryAdapter (0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73) {
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).
+      usedTypes.0.arg.2397984267054479079853548842566103781972463965746662494980785692480538410509:
+-        "StarkNet OS (Starknet)"
++        "StarkNet OS (since v0.13.3)"
+      usedTypes.0.arg.273279642033703284306509103355536170486431195329675679055627933497997642494:
++        "Starknet Aggregator (since v0.13.4)"
+      usedTypes.0.arg.2231644845387633655859130162745748394456578773184260372693322394988769337368:
++        "StarkNet OS (since v0.13.4)"
+    }
+```
+
+Generated with discovered.json: 0xa9567a62f9d3f579094d333f9f9068c8327941a3
+
+# Diff at Wed, 19 Mar 2025 13:04:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e950b6e93c84855ee2ec1740913b7b4c994b9ae2 block: 21981331
+- current block number: 21981331
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981331 (main branch discovery), not current.
+
+```diff
+    contract RhinofiAdminMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: None
+      severity:
+-        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0xbe7aa9d6888202e6db6653cea361e9478929504c
 
 # Diff at Thu, 06 Mar 2025 15:18:15 GMT:
 
