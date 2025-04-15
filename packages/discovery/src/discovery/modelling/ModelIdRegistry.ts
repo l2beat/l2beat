@@ -79,7 +79,9 @@ export class ModelIdRegistry {
 
   idToChainPrefixedAddress(modelId: string): string {
     const data = this.getAddressData(modelId)
-    return `${data.chain}:${EthereumAddress(data.address)} (${modelId})`
+    // return `${data.chain}:${EthereumAddress(data.address)}`
+    // temporary removal of chain prefix for debugging (TODO)
+    return `${EthereumAddress(data.address)}`
   }
 
   replaceIdsWithNames(s: string): string {

@@ -1,5 +1,6 @@
 import {
   ConfigReader,
+  type ReceivedPermission,
   TemplateService,
   getDiscoveryPaths,
   modelPermissions,
@@ -42,10 +43,19 @@ export const ModelPermissions = command({
         const discovery = configReader.readDiscovery(config.name, config.chain)
         for (const entry of discovery.entries) {
           const ultimatePermissionsForEntry = ultimatePermissions.filter((p) =>
-            p.receiver.startsWith(`${config.chain}:${entry.address}`),
+            // TODO: uncomment this
+            // p.receiver.startsWith(`${config.chain}:${entry.address}`),
+            p.receiver.startsWith(`${entry.address}`),
           )
           if (ultimatePermissionsForEntry.length > 0) {
-            entry.permissions = ultimatePermissionsForEntry
+            entry.receivedPermissions = reverseVia(
+              sortReceivedPermissionsByPermissionThenFromThenDescription(
+                ultimatePermissionsForEntry.map((p) => {
+                  const { receiver, ...rest } = p
+                  return rest
+                }),
+              ),
+            )
           }
         }
         const projectDiscoveryFolder = configReader.getProjectChainPath(
@@ -59,3 +69,29 @@ export const ModelPermissions = command({
     }
   },
 })
+
+function reverseVia(p: ReceivedPermission[]) {
+  return p.map((p) => {
+    const { via, ...rest } = p
+    if (!via) {
+      return p
+    }
+    return {
+      ...rest,
+      via: via.reverse(),
+    }
+  })
+}
+function sortReceivedPermissionsByPermissionThenFromThenDescription(
+  p: ReceivedPermission[],
+) {
+  return p.sort((a, b) => {
+    if (a.permission === b.permission) {
+      if (a.from === b.from) {
+        return (a.description ?? '').localeCompare(b.description ?? '')
+      }
+      return a.from.localeCompare(b.from)
+    }
+    return a.permission.localeCompare(b.permission)
+  })
+}

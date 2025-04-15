@@ -1,9 +1,11 @@
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionConfig } from '../config/PermissionConfig'
+import type { Permission } from '../config/StructureConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
@@ -38,27 +40,32 @@ export async function modelPermissions(
   const ultimatePermissions = transitivePermissionFacts.map((fact) =>
     parseTransitivePermissionFact(fact, modelIdRegistry),
   )
-  return ultimatePermissions.filter((p) => p.isFinal)
+  return ultimatePermissions
+  // return ultimatePermissions.filter((p) => p.isFinal)
 }
 
 export function parseTransitivePermissionFact(
   fact: ClingoFact,
   modelIdRegistry: ModelIdRegistry,
 ) {
+  const delay = Number(fact.params[3])
+  const totalDelay = Number(fact.params[5])
   return {
     receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
-    permission: String(fact.params[1]),
-    giver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
-    delay: Number(fact.params[3]),
+    permission: String(fact.params[1]) as Permission,
+    from: EthereumAddress(
+      modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
+    ),
+    delay: delay === 0 ? undefined : delay,
     description: orUndefined(String, fact.params[4]),
-    totalDelay: Number(fact.params[5]),
-    viaList:
+    totalDelay: totalDelay === 0 ? undefined : totalDelay,
+    via:
       fact.params[6] === undefined
         ? undefined
         : ((fact.params[6] as ClingoFact[]).map((x) =>
             parseTransitivePermissionVia(x, modelIdRegistry),
           ) ?? undefined),
-    isFinal: fact.params[7] === 'isFinal',
+    // isFinal: fact.params[7] === 'isFinal',
   }
 }
 
@@ -79,10 +86,13 @@ export function parseTransitivePermissionVia(
   via: ClingoFact,
   modelIdRegistry: ModelIdRegistry,
 ) {
+  const delay = Number(via.params[2])
   return {
-    contract: modelIdRegistry.idToChainPrefixedAddress(String(via.params[0])),
-    permission: String(via.params[1]),
-    delay: Number(via.params[2]),
+    address: EthereumAddress(
+      modelIdRegistry.idToChainPrefixedAddress(String(via.params[0])),
+    ),
+    // permission: String(via.params[1]),
+    delay: delay === 0 ? undefined : delay,
   }
 }
 
