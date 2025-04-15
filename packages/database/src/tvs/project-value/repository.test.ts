@@ -97,6 +97,87 @@ describeDatabase(ProjectValueRepository.name, (db) => {
     })
   })
 
+  describe(ProjectValueRepository.prototype.getProjectValuesAtTimestamps
+    .name, () => {
+    it('returns records at the specified timestamps for given types', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+        projectValue('ethereum', 'PROJECT', UnixTime(150), 1500),
+        projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
+        projectValue('ethereum', 'PROJECT', UnixTime(250), 2500),
+        projectValue('ethereum', 'SUMMARY', UnixTime(50), 550),
+        projectValue('ethereum', 'SUMMARY', UnixTime(100), 1050),
+        projectValue('ethereum', 'SUMMARY', UnixTime(200), 2050),
+        projectValue('ethereum', 'SUMMARY_WA', UnixTime(50), 1100),
+        projectValue('ethereum', 'SUMMARY_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'PROJECT', UnixTime(100), 500),
+        projectValue('arbitrum', 'PROJECT', UnixTime(200), 1000),
+        projectValue('arbitrum', 'SUMMARY', UnixTime(50), 250),
+        projectValue('arbitrum', 'SUMMARY', UnixTime(150), 750),
+      ])
+
+      const result = await repository.getProjectValuesAtTimestamps(100, 200, [
+        'SUMMARY',
+        'SUMMARY_WA',
+      ])
+
+      expect(result).toEqualUnsorted([
+        // Latest records at timestamp 200
+        projectValue('ethereum', 'SUMMARY', UnixTime(200), 2050),
+        projectValue('ethereum', 'SUMMARY_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'SUMMARY', UnixTime(150), 750),
+
+        // Oldest records at timestamp 100
+        projectValue('ethereum', 'SUMMARY', UnixTime(100), 1050),
+        projectValue('ethereum', 'SUMMARY_WA', UnixTime(50), 1100),
+        projectValue('arbitrum', 'SUMMARY', UnixTime(50), 250),
+      ])
+    })
+
+    it('returns records sorted by timestamp in ascending order', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'SUMMARY', UnixTime(50), 550),
+        projectValue('ethereum', 'SUMMARY', UnixTime(200), 2050),
+        projectValue('ethereum', 'SUMMARY_WA', UnixTime(50), 1100),
+        projectValue('ethereum', 'SUMMARY_WA', UnixTime(200), 2100),
+        projectValue('arbitrum', 'SUMMARY', UnixTime(50), 250),
+        projectValue('arbitrum', 'SUMMARY', UnixTime(150), 750),
+      ])
+
+      const result = await repository.getProjectValuesAtTimestamps(50, 200, [
+        'SUMMARY',
+        'SUMMARY_WA',
+      ])
+
+      expect(result.map((r) => r.timestamp)).toEqual([
+        50, 50, 50, 150, 200, 200,
+      ])
+    })
+
+    it('returns empty array when no matching records exist', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+      ])
+
+      const result = await repository.getProjectValuesAtTimestamps(100, 200, [
+        'SUMMARY',
+      ])
+      expect(result).toEqual([])
+    })
+
+    it('returns empty array when types array is empty', async () => {
+      await repository.upsertMany([
+        projectValue('ethereum', 'PROJECT', UnixTime(50), 500),
+        projectValue('ethereum', 'PROJECT', UnixTime(100), 1000),
+      ])
+
+      const result = await repository.getProjectValuesAtTimestamps(100, 200, [])
+      expect(result).toEqual([])
+    })
+  })
+
   describe(ProjectValueRepository.prototype.trimProject.name, () => {
     it('deletes records outside the specified time range for a project', async () => {
       await repository.upsertMany([

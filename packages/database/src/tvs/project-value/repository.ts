@@ -102,6 +102,68 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getProjectValuesAtTimestamps(
+    oldestTimestamp: number,
+    latestTimestamp: number,
+    types: ProjectValueType[],
+  ): Promise<ProjectValueRecord[]> {
+    if (types.length === 0) {
+      return []
+    }
+
+    // Find latest records for each project/type combo before or at latestTimestamp
+    const latestSubQuery = this.db
+      .selectFrom('ProjectValue')
+      .select([
+        'project',
+        'type',
+        this.db.fn.max('timestamp').as('maxTimestamp'),
+      ])
+      .where('timestamp', '<=', UnixTime.toDate(latestTimestamp))
+      .where('type', 'in', types)
+      .groupBy(['project', 'type'])
+      .as('latest')
+
+    const latestRecords = await this.db
+      .selectFrom('ProjectValue as pv')
+      .innerJoin(latestSubQuery, (join) =>
+        join
+          .onRef('pv.project', '=', 'latest.project')
+          .onRef('pv.type', '=', 'latest.type')
+          .onRef('pv.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('pv')
+      .execute()
+
+    // Find oldest records for each project/type combo before or at oldestTimestamp
+    const oldestSubQuery = this.db
+      .selectFrom('ProjectValue')
+      .select([
+        'project',
+        'type',
+        this.db.fn.max('timestamp').as('maxTimestamp'),
+      ])
+      .where('timestamp', '<=', UnixTime.toDate(oldestTimestamp))
+      .where('type', 'in', types)
+      .groupBy(['project', 'type'])
+      .as('oldest')
+
+    const oldestRecords = await this.db
+      .selectFrom('ProjectValue as pv')
+      .innerJoin(oldestSubQuery, (join) =>
+        join
+          .onRef('pv.project', '=', 'oldest.project')
+          .onRef('pv.type', '=', 'oldest.type')
+          .onRef('pv.timestamp', '=', 'oldest.maxTimestamp'),
+      )
+      .selectAll('pv')
+      .execute()
+
+    return [...latestRecords, ...oldestRecords]
+      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+      .map(toRecord)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('ProjectValue').executeTakeFirst()
     return Number(result.numDeletedRows)

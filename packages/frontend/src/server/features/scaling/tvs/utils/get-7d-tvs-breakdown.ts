@@ -6,7 +6,9 @@ import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTvsProjects } from './get-tvs-projects'
-import { getTvsValuesForProjects } from './get-tvs-values-for-projects'
+import { getDb } from '~/server/database'
+import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
+import { groupBy, pick } from 'lodash'
 
 export function get7dTvsBreakdown(
   ...parameters: Parameters<typeof getCached7dTokenBreakdown>
@@ -50,33 +52,40 @@ type TvsBreakdownProjectFilter = z.infer<typeof TvsBreakdownProjectFilter>
 
 const getCached7dTokenBreakdown = cache(
   async (props: TvsBreakdownProjectFilter): Promise<SevenDayTvsBreakdown> => {
-    const tvsValues = await getTvsValuesForProjects(
-      await getTvsProjects(createTvsBreakdownProjectFilter(props)),
-      '7d',
-      'PROJECT',
+    const tvsProjects = await getTvsProjects(
+      createTvsBreakdownProjectFilter(props),
     )
-    const tvsValuesWithoutAssociated = await getTvsValuesForProjects(
-      await getTvsProjects(createTvsBreakdownProjectFilter(props)),
-      '7d',
-      'PROJECT_WA',
+    const db = getDb()
+    const target = getTvsTargetTimestamp()
+    const values = await db.tvsProjectValue.getProjectValuesAtTimestamps(
+      target - 7 * UnixTime.DAY,
+      target,
+      ['PROJECT', 'PROJECT_WA'],
+    )
+
+    const valuesByProject = pick(
+      groupBy(values, 'project'),
+      tvsProjects.map((p) => p.projectId),
     )
 
     const projects = Object.fromEntries(
-      Object.entries(tvsValues).map(
-        ([projectId, values]): [string, ProjectSevenDayTvsBreakdown] => {
-          const projectValuesWithoutAssociated = Object.values(
-            tvsValuesWithoutAssociated[projectId] ?? {},
+      Object.entries(valuesByProject).map(
+        ([projectId, projectValues]): [string, ProjectSevenDayTvsBreakdown] => {
+          const projectValuesWithoutAssociated = projectValues.filter(
+            (v) => v.type === 'PROJECT_WA',
           )
-          const projectValues = Object.values(values ?? {})
+          const projectValuesAll = projectValues.filter(
+            (v) => v.type === 'PROJECT',
+          )
 
           const latestWithoutAssociated = projectValuesWithoutAssociated.at(-1)
           const oldestWithoutAssociated = projectValuesWithoutAssociated.at(0)
-          const latestValue = projectValues.at(-1)
-          const oldestValues = projectValues.at(0)
+          const latestValue = projectValuesAll.at(-1)
+          const oldestValue = projectValuesAll.at(0)
 
           assert(
             latestValue &&
-              oldestValues &&
+              oldestValue &&
               latestWithoutAssociated &&
               oldestWithoutAssociated,
             `No values for project ${projectId}`,
@@ -104,19 +113,19 @@ const getCached7dTokenBreakdown = cache(
               change: {
                 total: calculatePercentageChange(
                   latestValue.value,
-                  oldestValues.value,
+                  oldestValue.value,
                 ),
                 native: calculatePercentageChange(
                   latestValue.native,
-                  oldestValues.native,
+                  oldestValue.native,
                 ),
                 canonical: calculatePercentageChange(
                   latestValue.canonical,
-                  oldestValues.canonical,
+                  oldestValue.canonical,
                 ),
                 external: calculatePercentageChange(
                   latestValue.external,
-                  oldestValues.external,
+                  oldestValue.external,
                 ),
               },
               changeExcludingAssociated: {
