@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { getRangeWithMax } from '~/utils/range/range'
 import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
@@ -16,7 +17,6 @@ import {
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
 import { TvsChartRange, rangeToResolution } from './utils/range'
-import { getRangeWithMax } from '~/utils/range/range'
 
 export const TvsChartDataParams = z.object({
   range: TvsChartRange,

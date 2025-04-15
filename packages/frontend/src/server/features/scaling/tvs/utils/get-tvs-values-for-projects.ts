@@ -5,11 +5,11 @@ import type { Dictionary } from 'lodash'
 import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { getRangeWithMax } from '~/utils/range/range'
+import { fillTvsValuesForTimestamps } from './fill-tvs-values-for-timestamps'
 import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
 import type { TvsChartRange } from './range'
 import { rangeToResolution } from './range'
-import { getRangeWithMax } from '~/utils/range/range'
-import { fillTvsValuesForTimestamps } from './fill-tvs-values-for-timestamps'
 
 export async function getTvsValuesForProjects(
   projectIds: ProjectId[],

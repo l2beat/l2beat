@@ -1,7 +1,7 @@
-import type { UnixTime } from '@l2beat/shared-pure'
-import { fillTvsValuesForTimestamps } from './fill-tvs-values-for-timestamps'
-import { expect, mockObject } from 'earl'
 import type { ProjectValueRecord } from '@l2beat/database'
+import type { UnixTime } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
+import { fillTvsValuesForTimestamps } from './fill-tvs-values-for-timestamps'
 
 describe(fillTvsValuesForTimestamps.name, () => {
   it('groups values based on provided timestamps', () => {
