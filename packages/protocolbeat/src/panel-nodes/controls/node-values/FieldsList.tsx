@@ -13,35 +13,38 @@ export function FieldsList({
 
   return (
     <div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <input
           type="checkbox"
           id={`${name}-checkbox`}
           onChange={onChange}
           checked={!isHidden}
-          className="h-4 w-4 rounded border-coffee-400 bg-coffee-700"
+          className="size-3 rounded border-coffee-400 bg-coffee-700"
         />
-        <label
-          htmlFor={`${name}-checkbox`}
-          className="font-medium text-coffee-100"
-        >
+        <label htmlFor={`${name}-checkbox`} className="text-sm">
           {name}
         </label>
         {hasManyFields && (
           <>
             <span className="text-sm">({fields.length})</span>
-            <button onClick={() => setIsCollapsed(!isCollapsed)}>
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="text-xs"
+            >
               {isCollapsed ? '⬇️' : '⬆️'}
             </button>
           </>
         )}
       </div>
       {!isCollapsed && (
-        <div className="flex flex-col pl-6 text-coffee-200 text-sm">
+        <div className="flex flex-col pl-4 text-coffee-200 text-sm">
           {fields.map((field) => (
-            <div key={field.name} className="hover:text-coffee-100">
+            <span
+              key={field.name}
+              className="overflow-wrap-break-word overflow-x-auto whitespace-nowrap font-light text-sm"
+            >
               - {field.name}
-            </div>
+            </span>
           ))}
         </div>
       )}

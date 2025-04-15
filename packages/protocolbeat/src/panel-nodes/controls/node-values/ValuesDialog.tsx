@@ -52,7 +52,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 data-[state=open]:bg-coffee-900/60" />
-      <Dialog.Content className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-[25px] shadow-[var(--shadow-6)] focus:outline-none">
+      <Dialog.Content className="-translate-x-1/2 -translate-y-1/2 overflow-x-none fixed top-1/2 left-1/2 max-h-[85vh] w-[90vw] max-w-[500px] overflow-y-auto border border-coffee-400 bg-coffee-600 p-[25px] shadow-[var(--shadow-6)] focus:outline-none">
         <Dialog.Title className="m-0 font-medium text-lg">
           Values visibility
         </Dialog.Title>
@@ -160,7 +160,7 @@ function DialogButton({
   return (
     <button
       {...props}
-      className="rounded border border-coffee-400 px-3 py-1 text-sm hover:bg-coffee-500"
+      className="border border-coffee-400 px-3 py-1 text-sm hover:bg-coffee-500"
     >
       {children}
     </button>
