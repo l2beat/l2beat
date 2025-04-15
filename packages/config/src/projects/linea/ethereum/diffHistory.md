@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x84db0be4e8ec7a8d79d2e7c7226d6ea1cb866d05
+Generated with discovered.json: 0xa8ac6dcbc4b9416523e5423b32083419a43bc283
 
-# Diff at Tue, 15 Apr 2025 07:06:47 GMT:
+# Diff at Tue, 15 Apr 2025 07:39:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 22073290
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x84db0be4e8ec7a8d79d2e7c7226d6ea1cb866d05
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+discodrive.
 
 ## Config/verification related changes
 
@@ -35,6 +35,16 @@ discovery. Values are for block 22073290 (main branch discovery), not current.
       receivedPermissions.5.description:
 -        "execute transactions that are ready."
 +        "manage all critical access control roles and permissions (full admin of the rollup system)."
+    }
+```
+
+```diff
+    contract VerifierProofType3 (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F) {
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+      template:
++        "Linea/PlonkVerifierForMultiTypeDataAggregation"
+      description:
++        "Smart contract used to verify the proofs of Linea zkEVM execution."
     }
 ```
 
