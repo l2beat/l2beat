@@ -15,7 +15,7 @@ export function analyzeLogs(
 ): CrossChainMessage[] {
   const txs: CrossChainMessage[] = []
   for (const log of logs) {
-    if (!log.transactionHash) {
+    if (!log.transactionHash || log.removed) {
       continue
     }
     const message = decodeGnosisBridge(log, chain)
