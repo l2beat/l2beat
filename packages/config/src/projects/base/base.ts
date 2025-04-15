@@ -114,7 +114,7 @@ export const base: ScalingProject = {
   type: 'layer2',
   id: ProjectId('base'),
   capability: 'universal',
-  addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
+  addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   badges: [
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
@@ -516,7 +516,7 @@ export const base: ScalingProject = {
       type: 'general',
     },
     {
-      title: 'Base Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
       date: '2023-07-13T00:00:00.00Z',
       description: 'Base is live on mainnet.',

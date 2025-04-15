@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('fluence')
 
 export const fluence: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
+  addedAt: UnixTime(1726790400), // 2024-09-20T00:00:00+00:00
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
@@ -60,7 +60,7 @@ export const fluence: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://blog.fluence.network/welcome-to-fluence-staking-stake-shape-the-cloudless-future/',
       date: '2024-09-20T00:00:00Z',
       description: 'Fluence launches FLT staking on Layer 2.',

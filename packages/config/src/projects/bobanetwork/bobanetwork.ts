@@ -153,7 +153,7 @@ export const bobanetwork: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       date: '2021-09-20T00:00:00Z',
       url: 'https://www.firstraysvc.com/news/enya-launches-mainnet-beta-boba-network',
       description:
