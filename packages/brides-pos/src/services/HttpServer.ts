@@ -12,6 +12,9 @@ export function createHttpServer(
   const app = express()
 
   app.get('/stream', handleSSE(messageService.listen))
+  app.get('/transfers', (_req, res) => {
+    res.json(messageService.transfers)
+  })
   app.use(express.static('public'))
 
   return {

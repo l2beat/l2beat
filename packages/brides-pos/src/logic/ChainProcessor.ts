@@ -43,9 +43,9 @@ export class ChainProcessor {
   private processLogs = async (jobId: number): Promise<void> => {
     const logs = this.jobs[jobId] ?? []
     const logsWithTimestamps = await this.addTimestamps(logs)
-    const txs = analyzeLogs(logsWithTimestamps, this.chain)
-    for (const tx of txs) {
-      this.messageService.save(tx)
+    const messages = analyzeLogs(logsWithTimestamps, this.chain)
+    for (const message of messages) {
+      this.messageService.onMessage(message)
     }
     delete this.jobs[jobId]
   }

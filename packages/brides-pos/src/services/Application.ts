@@ -11,7 +11,7 @@ export class Application {
     const logger = Logger.INFO
     const appLogger = logger.for(this)
 
-    const messageService = new MessageService()
+    const messageService = new MessageService(logger)
 
     const processors: ChainProcessor[] = []
     for (const chain of config.chains) {

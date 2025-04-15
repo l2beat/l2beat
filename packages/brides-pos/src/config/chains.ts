@@ -30,4 +30,9 @@ export const chains: ChainInfo[] = [
     chainId: 8453,
     addressPrefix: 'base',
   },
+  {
+    name: 'gnosis',
+    chainId: 100,
+    addressPrefix: 'gno',
+  },
 ]

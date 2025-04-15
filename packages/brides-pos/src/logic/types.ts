@@ -3,34 +3,36 @@ import type { UnixTime } from '@l2beat/shared-pure'
 export type Address = `${string}:${string}`
 export type Hash256 = `0x${string}`
 
-export interface CrossChainSend {
-  timestamp: UnixTime
+export interface CrossChainTransfer {
   protocol: string
   source: {
     chain: string
     txHash: string
+    timestamp: UnixTime
+    sender: Address
     token: Address
     amount: bigint
-    sender: Address
   }
   destination: {
     chain: string
+    txHash: string
+    timestamp: UnixTime
+    recipient: Address
     token: Address
     amount: bigint
-    recipient: Address
   }
 }
 
-export interface CrossChainMessage {
+export type CrossChainMessage = GnosisBridgeSend | GnosisBridgeReceive
+
+export interface CommonMessage {
   timestamp: UnixTime
   chain: string
   txHash: string
-  payload: CrossChainPayload
 }
 
-export type CrossChainPayload = GnosisBridgeSend | GnosisBridgeReceive
-
-export interface GnosisBridgeSend {
+export interface GnosisBridgeSend extends CommonMessage {
+  type: 'GnosisBridgeSend'
   messageId: Hash256
   sourceChain: string
   destinationChain: string
@@ -39,7 +41,8 @@ export interface GnosisBridgeSend {
   amount: bigint
 }
 
-export interface GnosisBridgeReceive {
+export interface GnosisBridgeReceive extends CommonMessage {
+  type: 'GnosisBridgeReceive'
   messageId: Hash256
   sourceChain: string
   destinationChain: string
