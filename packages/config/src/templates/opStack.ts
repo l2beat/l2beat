@@ -246,7 +246,7 @@ function opStackCommon(
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
-      (partOfSuperchain
+      (templateVars.hasSuperchainScUpgrades
         ? ({
             category: 'Funds can be stolen if',
             text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
