@@ -10,7 +10,7 @@ export const studiochain: ScalingProject = upcomingL2({
     name: 'Studiochain',
     slug: 'studiochain',
     description:
-      "Studiochain is a Layer 2 blockchain built with Arbitrum’s Ethereum layer-2 tech, which will play host to My Pet Hooligan.",
+      'Studiochain is a Layer 2 blockchain built with Arbitrum’s Ethereum layer-2 tech, which will play host to My Pet Hooligan.',
     purposes: ['Gaming'],
     category: 'Optimistic Rollup',
     stack: 'Arbitrum',
