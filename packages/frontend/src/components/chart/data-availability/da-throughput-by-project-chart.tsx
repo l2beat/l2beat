@@ -1,10 +1,11 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
+import { sum, uniq } from 'lodash'
 import { useMemo } from 'react'
-import type { TooltipProps } from 'recharts'
-import { AreaChart } from 'recharts'
+import { Bar, BarChart, type TooltipProps } from 'recharts'
 
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -14,81 +15,81 @@ import {
   useChart,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/emerald-gradient-def'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/ethereum-gradient-def'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
+import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
-import { getDaChartMeta } from './meta'
 
-interface Props {
-  data: DaThroughputDataPoint[] | undefined
-  isLoading: boolean
-}
+export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
+  const { data, isLoading } = api.da.projectChartByProject.useQuery({
+    range: '7d',
+    daLayer,
+  })
 
-export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
-  const chartMeta = getDaChartMeta({ shape: 'line' })
   const max = useMemo(() => {
     return data
-      ? Math.max(
-          ...data.map(([_, ...rest]) =>
-            Math.max(...rest.filter((x) => x !== null)),
-          ),
-        )
+      ? Math.max(...data.chart.map(([_, values]) => sum(Object.values(values))))
       : undefined
   }, [data])
   const { denominator, unit } = getDaDataParams(max)
+
+  const allProjectSlugs = useMemo(() => {
+    return uniq(
+      data?.chart.flatMap(([_, values]) => {
+        return Object.keys(values)
+      }),
+    ).slice(0, 8)
+  }, [data])
+
+  const chartMeta = useMemo(() => {
+    return allProjectSlugs?.reduce((acc, slug) => {
+      if (!acc[slug]) {
+        acc[slug] = {
+          label: slug,
+          color: ['red', 'green', 'blue'][Math.floor(Math.random() * 3)]!,
+          indicatorType: { shape: 'square' },
+        }
+      }
+
+      return acc
+    }, {} as ChartMeta)
+  }, [allProjectSlugs])
+
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, ethereum, celestia, avail]) => {
+    return data?.chart.map(([timestamp, values]) => {
       return {
-        timestamp,
-        ethereum: ethereum / denominator,
-        celestia: celestia / denominator,
-        avail: avail / denominator,
+        timestamp: timestamp,
+        ...Object.fromEntries(
+          Object.entries(values)
+            .map(([key, value]) => {
+              if (!allProjectSlugs.includes(key)) return
+              return [key, value / denominator] as const
+            })
+            .filter((v) => v !== undefined),
+        ),
       }
     })
-  }, [data, denominator])
+  }, [data?.chart, denominator, allProjectSlugs])
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
-      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-        <defs>
-          <EthereumFillGradientDef id="ethereum-fill" />
-          <EthereumStrokeGradientDef id="ethereum-stroke" />
-          <PinkFillGradientDef id="pink-fill" />
-          <PinkStrokeGradientDef id="pink-stroke" />
-          <EmeraldFillGradientDef id="emerald-fill" />
-        </defs>
+      <BarChart
+        accessibilityLayer
+        data={chartData}
+        margin={{ top: 20 }}
+        barCategoryGap={4}
+      >
         <ChartLegend content={<ChartLegendContent />} />
-        {getStrokeOverFillAreaComponents({
-          data: [
-            {
-              dataKey: 'ethereum',
-              stroke: 'url(#ethereum-stroke)',
-              fill: 'url(#ethereum-fill)',
-            },
-            {
-              dataKey: 'celestia',
-              stroke: 'url(#pink-stroke)',
-              fill: 'url(#pink-fill)',
-            },
-            {
-              dataKey: 'avail',
-              stroke: chartMeta.avail.color,
-              fill: 'url(#emerald-fill)',
-            },
-          ],
-        })}
+        {allProjectSlugs?.map((slug) => (
+          <Bar
+            key={slug}
+            dataKey={slug}
+            stackId="a"
+            fill={chartMeta?.[slug]?.color}
+          />
+        ))}
+
         {getCommonChartComponents({
           data: chartData,
           isLoading,
@@ -101,7 +102,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           },
         })}
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
-      </AreaChart>
+      </BarChart>
     </ChartContainer>
   )
 }

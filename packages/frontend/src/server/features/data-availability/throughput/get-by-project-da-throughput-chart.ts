@@ -10,10 +10,10 @@ import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
 export type DaThroughputChartDataByChart = {
-  chart: DaThroughputDataPointByProject[]
+  chart: DaThroughputByProjectDataPoint[]
   range: [UnixTime | null, UnixTime]
 }
-export type DaThroughputDataPointByProject = [
+export type DaThroughputByProjectDataPoint = [
   timestamp: number,
   values: Record<string, number>,
 ]
@@ -88,7 +88,16 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
   return {
-    grouped: result,
+    grouped: Object.fromEntries(
+      Object.entries(result).map(([timestamp, projects]) => [
+        timestamp,
+        Object.fromEntries(
+          Object.entries(projects).sort(
+            ([, valueA], [, valueB]) => valueB - valueA,
+          ),
+        ),
+      ]),
+    ),
     minTimestamp: UnixTime(minTimestamp),
     maxTimestamp: UnixTime(maxTimestamp),
   }

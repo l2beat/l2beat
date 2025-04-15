@@ -1,12 +1,10 @@
-export function getDaDataParams(data: (number | null)[][] | undefined) {
-  if (!data)
+export function getDaDataParams(max: number | undefined) {
+  if (!max)
     return {
       denominator: 1,
       unit: 'B',
     }
-  const max = Math.max(
-    ...data.map(([_, ...rest]) => Math.max(...rest.filter((x) => x !== null))),
-  )
+
   if (max < 1024)
     return {
       denominator: 1,
