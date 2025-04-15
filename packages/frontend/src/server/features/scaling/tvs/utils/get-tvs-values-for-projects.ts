@@ -9,6 +9,7 @@ import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
 import type { TvsChartRange } from './range'
 import { rangeToResolution } from './range'
 import { getRangeWithMax } from '~/utils/range/range'
+import { fillTvsValuesForTimestamps } from './fill-tvs-values-for-timestamps'
 
 export async function getTvsValuesForProjects(
   projectIds: ProjectId[],
@@ -64,22 +65,11 @@ export async function getTvsValuesForProjects(
 
     const latestKnownProjectValue = projectValues.at(-1)
 
-    const valuesByTimestampForProject: Record<string, ProjectValueRecord> = {}
-    for (const timestamp of timestamps) {
-      const value = valuesByTimestamp[timestamp.toString()]
-
-      if (value) {
-        valuesByTimestampForProject[timestamp.toString()] = value
-      } else if (
-        latestKnownProjectValue &&
-        timestamp > latestKnownProjectValue.timestamp
-      ) {
-        // Interpolate values with latest known value
-        valuesByTimestampForProject[timestamp.toString()] =
-          latestKnownProjectValue
-      }
-    }
-
+    const valuesByTimestampForProject = fillTvsValuesForTimestamps(
+      valuesByTimestamp,
+      timestamps,
+      latestKnownProjectValue,
+    )
     result[projectId] = valuesByTimestampForProject
   }
 
