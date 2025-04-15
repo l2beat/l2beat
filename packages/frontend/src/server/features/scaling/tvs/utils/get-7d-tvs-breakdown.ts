@@ -64,7 +64,7 @@ const getCached7dTokenBreakdown = cache(
     )
 
     const valuesByProject = pick(
-      groupBy(values, 'project'),
+      groupBy(values, (v) => v.project),
       tvsProjects.map((p) => p.projectId),
     )
 

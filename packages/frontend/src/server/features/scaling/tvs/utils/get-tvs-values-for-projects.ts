@@ -29,7 +29,7 @@ export async function getTvsValuesForProjects(
     target,
   ])
 
-  const valuesByProject = groupBy(valueRecords, 'project')
+  const valuesByProject = groupBy(valueRecords, (v) => v.project)
 
   const result: Dictionary<Dictionary<ProjectValueRecord>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {

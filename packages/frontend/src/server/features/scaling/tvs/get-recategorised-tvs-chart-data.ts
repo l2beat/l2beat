@@ -66,7 +66,7 @@ export const getCachedRecategorisedTvsChartData = cache(
       range,
     )
 
-    const groupedByType = groupBy(tvsProjects, 'category')
+    const groupedByType = groupBy(tvsProjects, (p) => p.category)
     const rollups =
       groupedByType.rollups?.map(({ projectId }) => projectId) ?? []
     const validiumsAndOptimiums =
