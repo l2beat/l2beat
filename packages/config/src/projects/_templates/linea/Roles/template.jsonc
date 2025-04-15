@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   // Linea-specific template (see criteria.json)
-  "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
+  "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
   "ignoreRelatives": ["multisend"],
   "canActIndependently": false,
   "fields": {

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2f8b1d75f6362b649dc6460405f23cdbe32106e9
+Generated with discovered.json: 0xd20a0b978ac369a146acfc5593d9f54e11ab2443
 
-# Diff at Tue, 15 Apr 2025 09:02:31 GMT:
+# Diff at Tue, 15 Apr 2025 09:10:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 22073290
-- current block number: 22267673
+- current block number: 22273396
 
 ## Description
 
@@ -244,10 +244,10 @@ discovery. Values are for block 22073290 (main branch discovery), not current.
 
 ```diff
     contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
-    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
       description:
 -        "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
-+        "The Zodiac 'Roles' module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe."
++        "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe."
       receivedPermissions.8:
 +        {"permission":"interact","from":"0xd6B95c960779c72B8C6752119849318E5d550574","description":"execute transactions that are ready.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
       receivedPermissions.7:

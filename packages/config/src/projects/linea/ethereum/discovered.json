@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22267673,
+  "blockNumber": 22273396,
   "configHash": "0x99e1651d027d9900c8817fca814402f77bb20d13301734268c92f401916895a1",
   "entries": [
     {
@@ -637,11 +637,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x3e1aa5ca62e5bc522ef6e9d42942f4726a1ed9b30e72db639302eeb883b4b644",
-        "currentFinalizedState": "0x9c70ab93261259e84b5e48c8aa073a84c77e38e5cdff64a21a484b9c71c6b030",
+        "currentFinalizedShnarf": "0xa8e464db6d14b5b3a7860c18f08136625c48afa0fae2197bf4b91ba0a979b981",
+        "currentFinalizedState": "0x24531380257a8ad8766bccfd989d83181920f27e1e0ed43073dbba1637325ece",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "38836302369422408",
+        "currentPeriodAmountInWei": "1265380000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -843,7 +843,7 @@
         "0x699a67bde09c0d73c29ec9de66133bfee484544494865d954ac01f9736efed30"
       ],
       "proxyType": "gnosis safe zodiac module",
-      "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
+      "description": "The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.",
       "issuedPermissions": [
         {
           "permission": "interact",
