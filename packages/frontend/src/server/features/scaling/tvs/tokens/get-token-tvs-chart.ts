@@ -58,7 +58,11 @@ export const getCachedTokenTvsChartData = cache(
       return acc
     }, {})
 
-    const minTimestamp = tokenValues[0]?.timestamp ?? 0
+    const minTimestamp = tokenValues[0]?.timestamp
+    if (!minTimestamp) {
+      return []
+    }
+
     const timestamps = generateTimestamps([minTimestamp, to], resolution)
 
     const data: [number, number, number][] = []
