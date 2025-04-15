@@ -182,10 +182,14 @@ export function useFilterState() {
     const params = new URLSearchParams(window.location.search)
     if (Object.keys(state).length > 0) {
       params.set('filters', getFilterSearchParams(state))
-      window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
     } else {
       params.delete('filters')
+    }
+
+    if (params.size === 0) {
       window.history.replaceState(null, '', pathname)
+    } else {
+      window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
     }
   }, [pathname, state])
 

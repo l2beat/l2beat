@@ -347,6 +347,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-deUSD-1",
+      "priceId": "elixir-deusd",
+      "symbol": "deUSD",
+      "name": "deUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39494/large/deUSD_Logo_%281%29.png?1723689002",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB21f16d1EA2E8D96CcFafA397cEf855Bf368AA83",
+        "chain": "zksync2",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-DEXTF-1",
       "priceId": "dextf",
       "symbol": "DEXTF",
