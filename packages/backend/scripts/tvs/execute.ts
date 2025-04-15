@@ -63,7 +63,7 @@ const cmd = command({
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
 
     logger.info(
-      `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toLocaleString()})`,
+      `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toUTCString()})`,
     )
 
     if (!args.project) {

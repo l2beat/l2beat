@@ -95,7 +95,7 @@ export class LocalExecutor {
   }
 
   private initCoingecko(http: HttpClient) {
-    const coingeckoApiKey = this.env.optionalString('COINGECKO_API_KEY')
+    const coingeckoApiKey = this.env.string('COINGECKO_API_KEY')
     const coingeckoClient = new CoingeckoClient({
       apiKey: coingeckoApiKey,
       retryStrategy: 'RELIABLE',
@@ -136,13 +136,10 @@ export class LocalExecutor {
 
     for (const chainConfig of chainConfigs) {
       const rpcApi = chainConfig.apis.find((api) => api.type === 'rpc')
-      const url = this.env.string(
-        `${chainConfig.name.toUpperCase()}_RPC_URL`,
-        rpcApi?.url,
-      )
+      const url = this.env.string(`${chainConfig.name.toUpperCase()}_RPC_URL`)
       const callsPerMinute = this.env.integer(
         `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi?.callsPerMinute,
+        rpcApi?.callsPerMinute ?? 120,
       )
 
       const rpc = new RpcClient({
