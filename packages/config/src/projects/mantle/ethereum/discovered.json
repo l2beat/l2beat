@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 22081896,
+  "blockNumber": 22273219,
   "configHash": "0x7efa8f6e5b4d36040cc93be6f55ba8f25868462b46761f875960e3427b990ac3",
   "entries": [
     {
@@ -93,7 +93,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 114,
+        "nonce": 115,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -154,10 +154,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 77132546,
-        "latestOutputIndex": 8866,
-        "nextBlockNumber": 77134346,
-        "nextOutputIndex": 8867,
+        "latestBlockNumber": 78286346,
+        "latestOutputIndex": 9507,
+        "nextBlockNumber": 78288146,
+        "nextOutputIndex": 9508,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -281,7 +281,7 @@
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
           "isUsingCelestia": false,
-          "isUsingEigenDA": false
+          "isUsingEigenDA": true
         },
         "overhead": 188,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -611,7 +611,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638910",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292698539",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -764,8 +764,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 593078,
-          "prevBlockNum": 22081766
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 22273145
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
