@@ -136,7 +136,10 @@ export class LocalExecutor {
 
     for (const chainConfig of chainConfigs) {
       const rpcApi = chainConfig.apis.find((api) => api.type === 'rpc')
-      const url = this.env.string(`${chainConfig.name.toUpperCase()}_RPC_URL`)
+      const url = this.env.string(
+        `${chainConfig.name.toUpperCase()}_RPC_URL`,
+        rpcApi?.url,
+      )
       const callsPerMinute = this.env.integer(
         `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
         rpcApi?.callsPerMinute ?? 120,
