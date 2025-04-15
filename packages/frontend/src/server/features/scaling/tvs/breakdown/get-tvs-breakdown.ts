@@ -2,6 +2,7 @@ import type { ChainConfig, Formula, TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
+import { formatTimestamp } from '~/utils/dates'
 import type { Address } from './extract-addresses'
 import { extractAddresses } from './extract-addresses'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
@@ -10,7 +11,6 @@ import type {
   BreakdownRecord,
   CanonicalAssetBreakdownData,
 } from './types'
-import { formatTimestamp } from '~/utils/dates'
 
 export async function getTvsBreakdown(
   projectTokens: TvsToken[],

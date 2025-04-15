@@ -3,9 +3,9 @@ import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import type { CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { TokenAddressCell } from '../cells/token-address-cell'
+import { TokenAmountCell } from '../cells/token-amount-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
 import { TokenValueCell } from '../cells/token-value-cell'
-import { TokenAmountCell } from '../cells/token-amount-cell'
 
 const columnHelper = createColumnHelper<CanonicallyBridgedTokenEntry>()
 export const canonicallyBridgedColumns = [

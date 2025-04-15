@@ -1,8 +1,8 @@
 import type { Project, TvsToken } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
-import { env } from '~/env'
 
 export type ProjectTokens = Record<TvsToken['source'], ProjectToken[]>
 export type ProjectToken = TvsToken & {
