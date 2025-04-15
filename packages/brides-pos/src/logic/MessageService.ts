@@ -102,7 +102,7 @@ export class MessageService {
     })
   }
 
-  listen(listener: Listener<CrossChainEvent>) {
+  listen = (listener: Listener<CrossChainEvent>) => {
     this.listeners.add(listener)
     return () => this.listeners.remove(listener)
   }

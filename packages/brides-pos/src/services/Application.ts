@@ -16,7 +16,7 @@ export class Application {
     const processors: ChainProcessor[] = []
     for (const chain of config.chains) {
       if (!chain.rpcUrl) {
-        appLogger.warn(`Skipping ChainListener for ${chain.name}`)
+        appLogger.warn(`Skipping processor for ${chain.name}`)
         continue
       }
       const processor = new ChainProcessor(
