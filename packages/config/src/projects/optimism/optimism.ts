@@ -10,7 +10,7 @@ const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 const genesisTimestamp = UnixTime(1636665399)
 
 export const optimism: ScalingProject = opStackL2({
-  addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: UnixTime(1629331200), // 2021-08-19T00:00:00Z
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
