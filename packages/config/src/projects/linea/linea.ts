@@ -60,28 +60,6 @@ assert(
   'disco config is wrong for the pausers, check hardcoded pausers in the Roles module',
 )
 
-const isPaused: boolean =
-  discovery.getContractValue<boolean>('LineaRollup', 'isPaused_GENERAL') ||
-  discovery.getContractValue<boolean>('LineaRollup', 'isPaused_FINALIZATION') ||
-  discovery.getContractValue<boolean>(
-    'LineaRollup',
-    'isPaused_BLOB_SUBMISSION',
-  ) ||
-  discovery.getContractValue<boolean>(
-    'LineaRollup',
-    'isPaused_CALLDATA_SUBMISSION',
-  ) ||
-  discovery.getContractValue<boolean>(
-    'LineaRollup',
-    'isPaused_COMPLETE_TOKEN_BRIDGING',
-  ) ||
-  discovery.getContractValue<boolean>(
-    'LineaRollup',
-    'isPaused_INITIATE_TOKEN_BRIDGING',
-  ) ||
-  discovery.getContractValue<boolean>('LineaRollup', 'isPaused_L1_L2') ||
-  discovery.getContractValue<boolean>('LineaRollup', 'isPaused_L2_L1')
-
 const periodInSeconds = discovery.getContractValue<number>(
   'LineaRollup',
   'periodInSeconds',
