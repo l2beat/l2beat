@@ -122,6 +122,14 @@
         "CONTRACT_VERSION": "1.0",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "isPaused_BLOB_SUBMISSION": false,
+        "isPaused_CALLDATA_SUBMISSION": false,
+        "isPaused_COMPLETE_TOKEN_BRIDGING": false,
+        "isPaused_FINALIZATION": false,
+        "isPaused_GENERAL": false,
+        "isPaused_INITIATE_TOKEN_BRIDGING": false,
+        "isPaused_L1_L2": false,
+        "isPaused_L2_L1": false,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x50962b2d10066f5051f78d5ea04a3ab09b9c87dd1002962f0b1e30e66eeb80a5",
@@ -138,6 +146,16 @@
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE": "0x8a7b208fd13ab36d18025be4f62b53d46aeb2cbe8958d2e13de74c040dddcddd",
         "UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE": "0x46e34517dc946faf87aabe65eb5b4fa06b974e5c8d72c5df73b9fb6ff7b6d802"
+      },
+      "fieldMeta": {
+        "isPaused_GENERAL": { "severity": "HIGH" },
+        "isPaused_L1_L2": { "severity": "HIGH" },
+        "isPaused_L2_L1": { "severity": "HIGH" },
+        "isPaused_BLOB_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_CALLDATA_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_FINALIZATION": { "severity": "HIGH" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" }
       },
       "derivedName": "TokenBridge"
     },
@@ -1455,6 +1473,6 @@
     "linea/LineaRollup": "0xa8e1636adc0e8d43cb35610deb22d12e36cb300a775c6fece3a57296ef551145",
     "linea/PlonkVerifierForMultiTypeDataAggregation": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/Roles": "0xa2464d6b0b8a583e2a25b7127ea401ba7f63faf48f95f5fb9838cebca0c98aba",
-    "linea/TokenBridge": "0xf48a4e53c720e6f6017b44160774137f8352a84887f2f785e3b0cdb7ceeedd2d"
+    "linea/TokenBridge": "0xaa1287667ece38f474859679ed0569d43b19a19bbdb2a21a1a5701c5a15fe1cc"
   }
 }

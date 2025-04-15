@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x66a2ca80f0a7ab6cf0ad9df1de65394b2909b039
+Generated with discovered.json: 0x2f8b1d75f6362b649dc6460405f23cdbe32106e9
 
-# Diff at Tue, 15 Apr 2025 08:56:47 GMT:
+# Diff at Tue, 15 Apr 2025 09:02:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 22073290
@@ -39,6 +39,32 @@ discovery. Values are for block 22073290 (main branch discovery), not current.
 +        "manage all critical access control roles and permissions (full admin of the main bridge escrow)."
       values.defaultAdminAC:
 +        ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
++++ severity: HIGH
+      values.isPaused_BLOB_SUBMISSION:
++        false
++++ severity: HIGH
+      values.isPaused_CALLDATA_SUBMISSION:
++        false
++++ severity: HIGH
+      values.isPaused_COMPLETE_TOKEN_BRIDGING:
++        false
++++ severity: HIGH
+      values.isPaused_FINALIZATION:
++        false
++++ severity: HIGH
+      values.isPaused_GENERAL:
++        false
++++ severity: HIGH
+      values.isPaused_INITIATE_TOKEN_BRIDGING:
++        false
++++ severity: HIGH
+      values.isPaused_L1_L2:
++        false
++++ severity: HIGH
+      values.isPaused_L2_L1:
++        false
+      fieldMeta:
++        {"isPaused_GENERAL":{"severity":"HIGH"},"isPaused_L1_L2":{"severity":"HIGH"},"isPaused_L2_L1":{"severity":"HIGH"},"isPaused_BLOB_SUBMISSION":{"severity":"HIGH"},"isPaused_CALLDATA_SUBMISSION":{"severity":"HIGH"},"isPaused_FINALIZATION":{"severity":"HIGH"},"isPaused_INITIATE_TOKEN_BRIDGING":{"severity":"HIGH"},"isPaused_COMPLETE_TOKEN_BRIDGING":{"severity":"HIGH"}}
     }
 ```
 
