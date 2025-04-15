@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 834543,
-  "configHash": "0xf3dda6fa7122e1f6d89fd5905711f699d027304a0b339052c381a7b94711decb",
+  "blockNumber": 837019,
+  "configHash": "0xe9c235354927057c52aee349ed5bc3cd5cb0a4534b01f7e4e5c37a68481b4eaa",
   "entries": [
     {
       "name": "NioGuardians",
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1744353780,
+        "clock": 1744634952,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -64,7 +64,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1744353780,
+        "clock": 1744634952,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -280,7 +280,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "29760006741745800475",
+        "getDeposit": "29943837108754660475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -321,7 +321,7 @@
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 604800,
-          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
         },
         {
           "permission": "interact",
@@ -334,6 +334,11 @@
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 950400,
           "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+        },
+        {
+          "permission": "interact",
+          "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "confirm sanctions, making them permanent without providing an exit window."
         }
       ]
     },
@@ -343,7 +348,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xff405d9c0bcff574a67674ea1d4810d1e62b5c37cbf8ef803dcfbc5117b8055c",
-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
+        "0xc04b35188931b9e8fc65adf08c2b701d5ec4d4776ecac7b19256f900184e935a"
       ],
       "proxyType": "Beacon proxy",
       "issuedPermissions": [
@@ -363,13 +368,12 @@
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "delay": 1036800,
-          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
         },
         {
           "permission": "interact",
           "from": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 604800,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
+          "description": "approve smart wallet recoveries for any KintoWallet."
         },
         {
           "permission": "interact",
@@ -391,7 +395,7 @@
       "values": {
         "$admin": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "$beacon": "0x87f0eE85bF3198654900a422832157abBba30828",
-        "$implementation": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
+        "$implementation": "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D",
         "$members": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -563,10 +567,15 @@
             "2024-09-20T16:00:22.000Z",
             "0xcebb2902d18cd8a441747fb71e60ffd3d7bee0a66e8f763901cda3f81ab06a4d",
             ["0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"]
+          ],
+          [
+            "2025-04-11T14:53:11.000Z",
+            "0x203e75dac211349a98abe410e4f91bb1f26389cf3af230cc29d4cfb4efe618d3",
+            ["0xbFE260680514e0D669fdC5A5f7334b97a5513d9D"]
           ]
         ],
         "$threshold": 2,
-        "$upgradeCount": 33,
+        "$upgradeCount": 34,
         "ALL_SIGNERS": 3,
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
@@ -582,7 +591,7 @@
         "MINUS_ONE_SIGNER": 2,
         "recoverer": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
         "RECOVERY_PRICE": "5000000000000000000",
-        "RECOVERY_TIME": 604800,
+        "RECOVERY_TIME": 1036800,
         "signerPolicy": 4,
         "SINGLE_SIGNER": 1,
         "TWO_SIGNERS": 4,
@@ -616,7 +625,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 47054,
+        "globalMessageCount": 47666,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -921,7 +930,7 @@
       "sinceBlock": 65,
       "values": {
         "$immutable": true,
-        "implementation": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
+        "implementation": "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D",
         "owner": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
       "derivedName": "UpgradeableBeacon"
@@ -1086,11 +1095,11 @@
         "$upgradeCount": 24,
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "beacon": "0x87f0eE85bF3198654900a422832157abBba30828",
-        "factoryWalletVersion": 34,
+        "factoryWalletVersion": 35,
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75619
+        "totalWallets": 75628
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory",
@@ -1133,7 +1142,7 @@
           "permission": "interact",
           "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
           "delay": 604800,
-          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
           "via": []
         },
         {
@@ -1152,16 +1161,21 @@
         },
         {
           "permission": "interact",
-          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "delay": 1036800,
-          "description": "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration.",
+          "to": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+          "description": "confirm sanctions, making them permanent without providing an exit window.",
           "via": []
         },
         {
           "permission": "interact",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "delay": 604800,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+          "delay": 1036800,
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "approve smart wallet recoveries for any KintoWallet.",
           "via": []
         }
       ],
@@ -1325,8 +1339,9 @@
         },
         "ADMIN_ROLE": 0,
         "edKintoMultisig2ADMIN": 1036800,
-        "edKintoMultisig2UPGRADER": 604800,
+        "edKintoMultisig2RECOVERY_APPROVER": 0,
         "edScADMIN": 604800,
+        "edScSANCTIONER": 0,
         "edScSECURITY_COUNCIL": 950400,
         "edScUPGRADER": 950400,
         "expiration": 604800,
@@ -1611,12 +1626,11 @@
           "severity": "HIGH",
           "description": "CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d."
         },
-        "edKintoMultisig2UPGRADER": {
+        "edKintoMultisig2ADMIN": {
           "severity": "HIGH",
           "description": "Current execution delay for target calls."
         },
-        "edKintoMultisig2ADMIN": {
-          "severity": "HIGH",
+        "edKintoMultisig2RECOVERY_APPROVER": {
           "description": "Current execution delay for target calls."
         },
         "edScADMIN": {
@@ -1629,6 +1643,9 @@
         },
         "edScSECURITY_COUNCIL": {
           "severity": "HIGH",
+          "description": "Current execution delay for target calls."
+        },
+        "edScSANCTIONER": {
           "description": "Current execution delay for target calls."
         },
         "initialAdminRole": {
@@ -1688,7 +1705,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xc12cd857412232b0fa14c2227d0d0eb78d6be8ec427f4f01c6fa2a78fa3609c6",
-        "0xa0df8ed25313dba8d27c8b016413aa2843d038de01ddb01afe28b1d745427dbb"
+        "0xce66d9a3bd58c2c9f8e48c03ed48f8ad7db1575dfaabe7a982cbd657b9577990"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.",
@@ -1758,7 +1775,7 @@
       "sinceBlock": 59,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x4aC06254558e144C41461a319822993900cE2eE4",
+        "$implementation": "0x1d61772AE2e157f9F6A4127526eD86AB5801a477",
         "$pastUpgrades": [
           [
             "2023-12-28T22:46:32.000Z",
@@ -1809,9 +1826,14 @@
             "2025-02-05T15:37:41.000Z",
             "0xee19b10811d98a79d18ea4dfd1684702c0e30070a2e3cf428de3799c257b83f8",
             ["0x4aC06254558e144C41461a319822993900cE2eE4"]
+          ],
+          [
+            "2025-04-11T14:53:11.000Z",
+            "0xd8aa458f29ed74a06b3f97a9455c2495bd8d32ea19cdc4764936a6b6e1d2404f",
+            ["0x1d61772AE2e157f9F6A4127526eD86AB5801a477"]
           ]
         ],
-        "$upgradeCount": 10,
+        "$upgradeCount": 11,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1849,7 +1871,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEFAULT_ADMINs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "domainSeparator": "0x3fe5ae163d535eda3ea38de1e41134f95111068b903f4589e3ada0b6699b1c85",
-        "EXIT_WINDOW_PERIOD": 864000,
+        "EXIT_WINDOW_PERIOD": 1036800,
         "faucet": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
         "getApproved": [
           "0x0000000000000000000000000000000000000000",
@@ -1868,7 +1890,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1744350675,
+        "lastMonitoredAt": 1744633929,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3182,7 +3204,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75286,
+        "totalSupply": 75297,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
@@ -3426,6 +3448,97 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletTs(address) view returns (uint256)"
     ],
+    "0x1d61772AE2e157f9F6A4127526eD86AB5801a477": [
+      "constructor(address _walletFactory, address _faucet)",
+      "error AccountsAmountExceeded()",
+      "error BalanceNotZero()",
+      "error ExitWindowPeriod(address user, uint256 sanctionedAt)",
+      "error InvalidNonce()",
+      "error InvalidProvider()",
+      "error InvalidSigner()",
+      "error KYCRequired()",
+      "error LengthMismatch()",
+      "error MethodNotAllowed(string message)",
+      "error NoActiveSanction(address account)",
+      "error NothingToBurn()",
+      "error OnlyMintBurnOrTransfer()",
+      "error SignatureExpired()",
+      "error SignerNotEOA()",
+      "event AccountsMonitoredAt(address indexed _signer, uint256 _accountsCount, uint256 _timestamp)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SanctionAdded(address indexed _to, uint16 _sanctionIndex, uint256 _timestamp)",
+      "event SanctionConfirmed(address indexed account, uint256 timestamp)",
+      "event SanctionRemoved(address indexed _to, uint16 _sanctionIndex, uint256 _timestamp)",
+      "event TraitAdded(address indexed _to, uint16 _traitIndex, uint256 _timestamp)",
+      "event TraitRemoved(address indexed _to, uint16 _traitIndex, uint256 _timestamp)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "event Upgraded(address indexed implementation)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXIT_WINDOW_PERIOD() view returns (uint256)",
+      "function GOVERNANCE_ROLE() view returns (bytes32)",
+      "function KYC_PROVIDER_ROLE() view returns (bytes32)",
+      "function SANCTION_EXPIRY_PERIOD() view returns (uint256)",
+      "function UPGRADER_ROLE() view returns (bytes32)",
+      "function addSanction(address _account, uint16 _countryId)",
+      "function addTrait(address _account, uint16 _traitId)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function burn(uint256) pure",
+      "function burnKYC(tuple(address signer, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData)",
+      "function confirmSanction(address _account)",
+      "function domainSeparator() view returns (bytes32)",
+      "function faucet() view returns (address)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hasTrait(address _account, uint16 index) view returns (bool)",
+      "function initialize()",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function isCompany(address _account) view returns (bool)",
+      "function isIndividual(address _account) view returns (bool)",
+      "function isKYC(address _account) view returns (bool)",
+      "function isSanctionsMonitored(uint256 _days) view returns (bool)",
+      "function isSanctionsSafe(address _account) view returns (bool)",
+      "function isSanctionsSafeIn(address _account, uint16 _countryId) view returns (bool)",
+      "function lastMonitoredAt() view returns (uint256)",
+      "function mintCompanyKyc(tuple(address signer, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData, uint16[] _traits)",
+      "function mintIndividualKyc(tuple(address signer, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData, uint16[] _traits)",
+      "function mintedAt(address _account) view returns (uint256)",
+      "function monitor(address[] _accounts, tuple(bool isTrait, bool isSet, uint16 index)[][] _traitsAndSanctions)",
+      "function name() pure returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recoveryTargets(address) view returns (address)",
+      "function removeSanction(address _account, uint16 _countryId)",
+      "function removeTrait(address _account, uint16 _traitId)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+      "function sanctionedAt(address) view returns (uint256)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() pure returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 tokenId) view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function traits(address _account) view returns (bool[])",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function transferOnRecovery(address _from, address _to)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function walletFactory() view returns (address)"
+    ],
     "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": [
       "error DelegateAndRevert(bool success, bytes ret)",
       "error FailedOp(uint256 opIndex, string reason)",
@@ -3612,97 +3725,6 @@
       "function transmitManager__() view returns (address)",
       "function useSiblingSwitchboard(uint32 siblingChainSlug_, address siblingSwitchboard_)",
       "function version() view returns (bytes32)"
-    ],
-    "0x4aC06254558e144C41461a319822993900cE2eE4": [
-      "constructor(address _walletFactory, address _faucet)",
-      "error AccountsAmountExceeded()",
-      "error BalanceNotZero()",
-      "error ExitWindowPeriod(address user, uint256 sanctionedAt)",
-      "error InvalidNonce()",
-      "error InvalidProvider()",
-      "error InvalidSigner()",
-      "error KYCRequired()",
-      "error LengthMismatch()",
-      "error MethodNotAllowed(string message)",
-      "error NoActiveSanction(address account)",
-      "error NothingToBurn()",
-      "error OnlyMintBurnOrTransfer()",
-      "error SignatureExpired()",
-      "error SignerNotEOA()",
-      "event AccountsMonitoredAt(address indexed _signer, uint256 _accountsCount, uint256 _timestamp)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
-      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SanctionAdded(address indexed _to, uint16 _sanctionIndex, uint256 _timestamp)",
-      "event SanctionConfirmed(address indexed account, uint256 timestamp)",
-      "event SanctionRemoved(address indexed _to, uint16 _sanctionIndex, uint256 _timestamp)",
-      "event TraitAdded(address indexed _to, uint16 _traitIndex, uint256 _timestamp)",
-      "event TraitRemoved(address indexed _to, uint16 _traitIndex, uint256 _timestamp)",
-      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
-      "event Upgraded(address indexed implementation)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXIT_WINDOW_PERIOD() view returns (uint256)",
-      "function GOVERNANCE_ROLE() view returns (bytes32)",
-      "function KYC_PROVIDER_ROLE() view returns (bytes32)",
-      "function SANCTION_EXPIRY_PERIOD() view returns (uint256)",
-      "function UPGRADER_ROLE() view returns (bytes32)",
-      "function addSanction(address _account, uint16 _countryId)",
-      "function addTrait(address _account, uint16 _traitId)",
-      "function approve(address to, uint256 tokenId)",
-      "function balanceOf(address owner) view returns (uint256)",
-      "function burn(uint256) pure",
-      "function burnKYC(tuple(address signer, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData)",
-      "function confirmSanction(address _account)",
-      "function domainSeparator() view returns (bytes32)",
-      "function faucet() view returns (address)",
-      "function getApproved(uint256 tokenId) view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hasTrait(address _account, uint16 index) view returns (bool)",
-      "function initialize()",
-      "function isApprovedForAll(address owner, address operator) view returns (bool)",
-      "function isCompany(address _account) view returns (bool)",
-      "function isIndividual(address _account) view returns (bool)",
-      "function isKYC(address _account) view returns (bool)",
-      "function isSanctionsMonitored(uint256 _days) view returns (bool)",
-      "function isSanctionsSafe(address _account) view returns (bool)",
-      "function isSanctionsSafeIn(address _account, uint16 _countryId) view returns (bool)",
-      "function lastMonitoredAt() view returns (uint256)",
-      "function mintCompanyKyc(tuple(address signer, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData, uint16[] _traits)",
-      "function mintIndividualKyc(tuple(address signer, uint256 nonce, uint256 expiresAt, bytes signature) _signatureData, uint16[] _traits)",
-      "function mintedAt(address _account) view returns (uint256)",
-      "function monitor(address[] _accounts, tuple(bool isTrait, bool isSet, uint16 index)[][] _traitsAndSanctions)",
-      "function name() pure returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function ownerOf(uint256 tokenId) view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function recoveryTargets(address) view returns (address)",
-      "function removeSanction(address _account, uint16 _countryId)",
-      "function removeTrait(address _account, uint16 _traitId)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId)",
-      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
-      "function sanctionedAt(address) view returns (uint256)",
-      "function setApprovalForAll(address operator, bool approved)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() pure returns (string)",
-      "function tokenByIndex(uint256 index) view returns (uint256)",
-      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
-      "function tokenURI(uint256 tokenId) view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function traits(address _account) view returns (bool[])",
-      "function transferFrom(address from, address to, uint256 tokenId)",
-      "function transferOnRecovery(address _from, address _to)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function walletFactory() view returns (address)"
     ],
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": [
       "constructor(address _implementation, bytes _data)",
@@ -3930,7 +3952,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletToDeployer(address) view returns (address)"
     ],
-    "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C": [
+    "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D": [
       "constructor(address __entryPoint, address _kintoID, address _kintoApp, address _factory)",
       "error AppNotSponsored(address app, address addr)",
       "error AppNotWhitelisted(address app, address addr)",

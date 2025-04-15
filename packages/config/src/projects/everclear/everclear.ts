@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('everclear')
 
 export const everclear: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1717512064), // 2024-06-04T14:41:04Z
+  addedAt: UnixTime(1726617600), // 2024-09-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Interoperability'],
   reasonsForBeingOther: [

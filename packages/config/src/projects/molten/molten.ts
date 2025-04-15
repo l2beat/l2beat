@@ -9,7 +9,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('molten', 'arbitrum')
 
 export const molten: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1716471996), // 2024-05-23T13:46:36Z
+  addedAt: UnixTime(1711843200), // 2024-03-31
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
@@ -64,4 +64,13 @@ export const molten: ScalingProject = orbitStackL3({
     }),
   ],
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/MoltenL3/status/1774485708742205545',
+      date: '2024-03-31T00:00:00Z',
+      description: 'Molten launches its Mainnet.',
+      type: 'general',
+    },
+  ],
 })
