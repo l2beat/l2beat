@@ -16,6 +16,15 @@ defaultedPermissionDelay(R, P, G, Delay) :-
   permission(R, P, G),
   permissionDelay(R, P, G, Delay).
 
+% condition is nil if not defined
+defaultedPermissionCondition(G, P, R, nil) :-
+  permission(G, P, R),
+  not permissionCondition(G, P, R, _).
+
+defaultedPermissionCondition(G, P, R, Cond) :-
+  permission(G, P, R),
+  permissionCondition(G, P, R, Cond).
+
 % multisig adds "act" permission if threshold is 1
 permission(Receiver, "act", Msig) :-
   member(Msig, Receiver),
@@ -24,22 +33,24 @@ permission(Receiver, "act", Msig) :-
 
 % 1. Building permissions with "Via" cons list and details such as descriptions and delays
 
-transitivePermission(Receiver, Permission, Giver, Delay, Description, Delay, nil) :-
+transitivePermission(Receiver, Permission, Giver, Delay, Description, Condition, Delay, nil) :-
   permission(Receiver, Permission, Giver),
   defaultedPermissionDelay(Receiver, Permission, Giver, Delay),
-  defaultedPermissionDescription(Receiver, Permission, Giver, Description).
+  defaultedPermissionDescription(Receiver, Permission, Giver, Description),
+  defaultedPermissionCondition(Receiver, Permission, Giver, Condition).
 
-transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay), IndirectVia))) :-
+transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, (cons(tuple(Via, ViaPermission, ViaDelay, ViaCondition), IndirectVia))) :-
   Receiver != Via, % deal with self-loops (e.g. timelock can act on timelock)
-  transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, PreviousTotalDelay, IndirectVia),
+  transitivePermission(Via, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, PreviousTotalDelay, IndirectVia),
   permission(Receiver, ViaPermission, Via),
   defaultedPermissionDelay(Receiver, ViaPermission, Via, ViaDelay),
+  defaultedPermissionCondition(Receiver, ViaPermission, Via, ViaCondition),
   ViaPermission == "act",
   TotalDelay = PreviousTotalDelay + ViaDelay.
   % OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
-ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, TotalDelay, Via, isFinal) :-
-  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, TotalDelay, Via),
+ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, isFinal) :-
+  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via),
   OriginalPermission != "act",
   canActIndependently(Receiver).
 
@@ -71,5 +82,5 @@ canActIndependently(Actor) :-
 % #show filteredTransitivePermission/8.
 % #show canActIndependently/1.
 #show hasField/3.
-#show transitivePermission/7.
-#show ultimatePermission/8.
+#show transitivePermission/8.
+#show ultimatePermission/9.

@@ -60,6 +60,15 @@ permissionDelay(
   &permission.delay).`,
   when: (_, p) => p?.delay !== undefined && p.delay !== 0,
 }
+const permissionConditionTemplate: InlineTemplate = {
+  content: `
+permissionCondition(
+  &permission.to,
+  "&permission.type",
+  &permission.from,
+  "&permission.condition").`,
+  when: (_, p) => p?.condition !== undefined,
+}
 
 export function contractValuesForInterpolation(
   chain: string,
@@ -127,6 +136,7 @@ export function buildPermissionsModel(
       permissionTemplate,
       permissionDescriptionTemplate,
       permissionDelayTemplate,
+      permissionConditionTemplate,
     ]) {
       if (template.when(structureEntry, permission)) {
         const interpolated = interpolateModelTemplate(
