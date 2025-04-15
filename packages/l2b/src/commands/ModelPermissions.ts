@@ -42,16 +42,18 @@ export const ModelPermissions = command({
       for (const config of chainConfigs) {
         const discovery = configReader.readDiscovery(config.name, config.chain)
         for (const entry of discovery.entries) {
-          const ultimatePermissionsForEntry = ultimatePermissions.filter((p) =>
-            // TODO: uncomment this
-            // p.receiver.startsWith(`${config.chain}:${entry.address}`),
-            p.receiver.startsWith(`${entry.address}`),
+          const ultimatePermissionsForEntry = ultimatePermissions.filter(
+            (p) =>
+              // TODO: uncomment this
+              // p.receiver.startsWith(`${config.chain}:${entry.address}`),
+              p.receiver.startsWith(`${entry.address}`) &&
+              p.receiverChain === config.chain,
           )
           if (ultimatePermissionsForEntry.length > 0) {
             entry.receivedPermissions = reverseVia(
-              sortReceivedPermissionsByPermissionThenFromThenDescription(
+              sortReceivedPermissions(
                 ultimatePermissionsForEntry.map((p) => {
-                  const { receiver, ...rest } = p
+                  const { receiver, receiverChain, ...rest } = p
                   return rest
                 }),
               ),
@@ -82,9 +84,7 @@ function reverseVia(p: ReceivedPermission[]) {
     }
   })
 }
-function sortReceivedPermissionsByPermissionThenFromThenDescription(
-  p: ReceivedPermission[],
-) {
+function sortReceivedPermissions(p: ReceivedPermission[]) {
   return p.sort((a, b) => {
     if (a.permission === b.permission) {
       if (a.from === b.from) {

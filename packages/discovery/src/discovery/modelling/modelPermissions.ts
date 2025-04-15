@@ -50,8 +50,10 @@ export function parseTransitivePermissionFact(
 ) {
   const delay = Number(fact.params[3])
   // const totalDelay = Number(fact.params[6])
+  const receiverData = modelIdRegistry.getAddressData(String(fact.params[0]))
   return {
     receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
+    receiverChain: receiverData.chain,
     permission: String(fact.params[1]) as Permission,
     from: EthereumAddress(
       modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
