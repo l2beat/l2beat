@@ -47,7 +47,7 @@ export const getCachedTokenTvsChartData = cache(
 
     const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
       token.tokenId,
-      from ?? 0,
+      from,
       to,
     )
 

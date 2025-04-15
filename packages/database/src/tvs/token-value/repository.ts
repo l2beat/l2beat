@@ -31,17 +31,23 @@ export class TokenValueRepository extends BaseRepository {
 
   async getByTokenIdInTimeRange(
     tokenId: string,
-    fromInclusive: UnixTime,
-    toInclusive: UnixTime,
+    fromInclusive: UnixTime | null,
+    toInclusive: UnixTime | null,
   ): Promise<TokenValueRecord[]> {
-    const rows = await this.db
+    let query = this.db
       .selectFrom('TokenValue')
       .selectAll()
       .where('tokenId', '=', tokenId)
-      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
-      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
-      .orderBy('timestamp', 'asc')
-      .execute()
+
+    if (fromInclusive) {
+      query = query.where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+    }
+
+    if (toInclusive) {
+      query = query.where('timestamp', '<=', UnixTime.toDate(toInclusive))
+    }
+
+    const rows = await query.orderBy('timestamp', 'asc').execute()
 
     return rows.map(toRecord)
   }

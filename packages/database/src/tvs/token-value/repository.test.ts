@@ -169,6 +169,50 @@ describeDatabase(TokenValueRepository.name, (db) => {
       ])
     })
 
+    it('returns all records for a token when both time ranges are null', async () => {
+      const result = await repository.getByTokenIdInTimeRange(
+        'a' as TokenId,
+        null,
+        null,
+      )
+
+      expect(result).toEqual([
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+      ])
+    })
+
+    it('returns records from specified time when only fromInclusive is provided', async () => {
+      const result = await repository.getByTokenIdInTimeRange(
+        'a' as TokenId,
+        UnixTime(115),
+        null,
+      )
+
+      expect(result).toEqual([
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+        tokenValue('a', 'ethereum', UnixTime(120), 4, 4000, 3200, 2000),
+        tokenValue('a', 'ethereum', UnixTime(125), 5, 5000, 4000, 2500),
+      ])
+    })
+
+    it('returns records up to specified time when only toInclusive is provided', async () => {
+      const result = await repository.getByTokenIdInTimeRange(
+        'a' as TokenId,
+        null,
+        UnixTime(115),
+      )
+
+      expect(result).toEqual([
+        tokenValue('a', 'ethereum', UnixTime(105), 1, 1000, 800, 500),
+        tokenValue('a', 'ethereum', UnixTime(110), 2, 2000, 1600, 1000),
+        tokenValue('a', 'ethereum', UnixTime(115), 3, 3000, 2400, 1500),
+      ])
+    })
+
     it('returns empty array when no records match the time range', async () => {
       const result = await repository.getByTokenIdInTimeRange(
         'a' as TokenId,
