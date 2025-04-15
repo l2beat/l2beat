@@ -88,7 +88,14 @@ function sortReceivedPermissionsByPermissionThenFromThenDescription(
   return p.sort((a, b) => {
     if (a.permission === b.permission) {
       if (a.from === b.from) {
-        return (a.description ?? '').localeCompare(b.description ?? '')
+        const aDescription = a.description ?? ''
+        const bDescription = b.description ?? ''
+        if (aDescription === bDescription) {
+          const aViaLength = a.via?.length ?? 0
+          const bViaLength = b.via?.length ?? 0
+          return bViaLength - aViaLength
+        }
+        return aDescription.localeCompare(bDescription)
       }
       return a.from.localeCompare(b.from)
     }

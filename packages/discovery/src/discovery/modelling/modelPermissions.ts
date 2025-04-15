@@ -49,7 +49,7 @@ export function parseTransitivePermissionFact(
   modelIdRegistry: ModelIdRegistry,
 ) {
   const delay = Number(fact.params[3])
-  const totalDelay = Number(fact.params[6])
+  // const totalDelay = Number(fact.params[6])
   return {
     receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
     permission: String(fact.params[1]) as Permission,
@@ -59,7 +59,7 @@ export function parseTransitivePermissionFact(
     delay: delay === 0 ? undefined : delay,
     description: orUndefined(String, fact.params[4]),
     condition: orUndefined(String, fact.params[5]),
-    totalDelay: totalDelay === 0 ? undefined : totalDelay,
+    // totalDelay: totalDelay === 0 ? undefined : totalDelay,
     via:
       fact.params[7] === undefined
         ? undefined
