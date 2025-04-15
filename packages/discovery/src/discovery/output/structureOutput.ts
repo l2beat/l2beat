@@ -7,11 +7,7 @@ import {
   transformToIssued,
   transformToReceived,
 } from '../permission-resolving/transform'
-import type {
-  EntryParameters,
-  ReceivedPermission,
-  StructureOutput,
-} from './types'
+import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
   config: StructureConfig,
@@ -67,11 +63,7 @@ export function processAnalysis(
             : undefined,
           proxyType: x.proxyType,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-          receivedPermissions: receivedPermissions
-            ? sortReceivedPermissionsByPermissionThenFromThenDescription(
-                receivedPermissions,
-              )
-            : undefined,
+          receivedPermissions,
           directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp,
@@ -116,18 +108,4 @@ export function sortByKeys<T extends object>(obj: T): T {
   return Object.fromEntries(
     Object.entries(obj).sort(([keyA], [keyB]) => keyA.localeCompare(keyB)),
   ) as T
-}
-
-export function sortReceivedPermissionsByPermissionThenFromThenDescription(
-  p: ReceivedPermission[],
-) {
-  return p.sort((a, b) => {
-    if (a.permission === b.permission) {
-      if (a.from === b.from) {
-        return (a.description ?? '').localeCompare(b.description ?? '')
-      }
-      return a.from.localeCompare(b.from)
-    }
-    return a.permission.localeCompare(b.permission)
-  })
 }
