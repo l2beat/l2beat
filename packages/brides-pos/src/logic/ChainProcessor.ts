@@ -5,10 +5,13 @@ import { TaskQueue } from '../services/TaskQueue'
 import type { MessageService } from './MessageService'
 import { type LogWithTimestamp, analyzeLogs } from './analyze'
 
+const MAX_BLOCK_RANGE = 50n
+
 export class ChainProcessor {
   private nextJobId = 1
   private jobs: Record<number, Log[]> = {}
   private queue: TaskQueue<number>
+  private lastBlock: bigint = 0n
 
   constructor(
     private chain: ChainInfo,
@@ -21,12 +24,32 @@ export class ChainProcessor {
   }
 
   async start() {
-    this.logger.info('Started')
-    const block = await this.client.getBlockNumber()
-    this.client.watchEvent({
-      fromBlock: block - 10n,
-      onLogs: this.onLogs.bind(this),
-    })
+    this.lastBlock =
+      this.chain.name === 'ethereum'
+        ? 22274990n
+        : this.chain.name === 'gnosis'
+          ? 39573640n
+          : await this.client.getBlockNumber()
+    this.logger.info('Started', { fromBlock: Number(this.lastBlock) })
+    setTimeout(this.pollLogs)
+  }
+
+  private pollLogs = async () => {
+    try {
+      const currentBlock = await this.client.getBlockNumber()
+      if (currentBlock !== this.lastBlock) {
+        const target = min(this.lastBlock + MAX_BLOCK_RANGE, currentBlock)
+        const logs = await this.client.getLogs({
+          fromBlock: this.lastBlock + 1n,
+          toBlock: target,
+        })
+        this.lastBlock = target
+        this.onLogs(logs)
+      }
+    } catch (e) {
+      console.error(e)
+    }
+    setTimeout(this.pollLogs, 2_000)
   }
 
   private onLogs(logs: Log[]) {
@@ -70,3 +93,5 @@ export class ChainProcessor {
     }))
   }
 }
+
+const min = (a: bigint, b: bigint) => (a > b ? b : a)

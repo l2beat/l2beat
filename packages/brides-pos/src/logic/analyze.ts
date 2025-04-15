@@ -31,8 +31,8 @@ function address(chain: ChainInfo, unprefixed: `0x${string}`): Address {
   return `${chain.addressPrefix}:${unprefixed}`
 }
 
-const BRIDGE_ETHEREUM = '0x88ad09518695c6c3712AC10a214bE5109a655671'
-const BRIDGE_GNOSIS = '0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d'
+const BRIDGE_ETHEREUM = '0x88ad09518695c6c3712ac10a214be5109a655671'
+const BRIDGE_GNOSIS = '0xf6a78083ca3e2a662d6dd1703c939c8ace2e268d'
 
 const gnosisAbi = parseAbi([
   'event TokensBridged(address indexed token, address indexed recipient, uint256 value, bytes32 indexed messageId)',
@@ -46,12 +46,14 @@ function decodeGnosisBridge(
   if (!log.transactionHash) {
     return
   }
-  if (
-    (chain.name !== 'ethereum' || log.address !== BRIDGE_ETHEREUM) &&
-    (chain.name !== 'gnosis' || log.address !== BRIDGE_GNOSIS)
-  ) {
+
+  const isGnosis =
+    (chain.name === 'ethereum' && log.address === BRIDGE_ETHEREUM) ||
+    (chain.name === 'gnosis' && log.address === BRIDGE_GNOSIS)
+  if (!isGnosis) {
     return
   }
+
   const event = safeDecodeLog(gnosisAbi, log)
 
   if (event?.eventName === 'TokensBridgingInitiated') {

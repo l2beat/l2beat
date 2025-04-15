@@ -81,8 +81,10 @@ export class MessageService {
     this.logger.info('Gnosis transfer completed', {
       source: send.sourceChain,
       sourceTx: send.txHash,
+      sender: send.sender,
       destination: receive.destinationChain,
       destinationTx: receive.txHash,
+      recipient: receive.recipient,
     })
   }
 
