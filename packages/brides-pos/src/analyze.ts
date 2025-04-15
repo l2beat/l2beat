@@ -1,20 +1,24 @@
 import {
   type Block,
+  type Log,
   decodeEventLog,
   decodeFunctionData,
-  type Log,
   parseAbi,
 } from 'viem'
 import type { ChainInfo, CrossChainSend } from './types'
 
 export type BlockWithTxs = Block<bigint, true, 'latest'>
+export type LogWithTimestamp = Log & { timestamp: number }
 
 const abi = parseAbi([
   'function transfer(address recipient, uint256 amount)',
   'event Transfer(address indexed sender, address indexed recipient, uint256 amount)',
 ])
 
-export function analyzeLogs(logs: Log[], chain: ChainInfo): CrossChainSend[] {
+export function analyzeLogs(
+  logs: LogWithTimestamp[],
+  chain: ChainInfo,
+): CrossChainSend[] {
   const txs: CrossChainSend[] = []
   for (const log of logs) {
     const decoded = safeDecodeLog(log)
@@ -22,7 +26,7 @@ export function analyzeLogs(logs: Log[], chain: ChainInfo): CrossChainSend[] {
       continue
     }
     txs.push({
-      timestamp: 0,
+      timestamp: log.timestamp,
       protocol: 'ERC20 transfer',
       source: {
         chain: chain.name,
