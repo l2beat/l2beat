@@ -50,13 +50,13 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const centsValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
-    const ethValue = centsValue / latestTvsData[4]
+    const usdValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
+    const ethValue = usdValue / latestTvsData[4]
 
     return {
       success: true,
       data: {
-        usdValue: centsValue,
+        usdValue,
         ethValue,
         chart: {
           types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
