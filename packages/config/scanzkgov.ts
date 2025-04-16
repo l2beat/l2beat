@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
-// Import necessary libraries
 import { ethers } from 'ethers';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 
-// Load environment variables from .env file
+// Load environment variables
 dotenv.config();
 
 // --- Configuration ---
@@ -19,7 +18,7 @@ const ZK_PROTOCOL_GOVERNOR_ADDR = '0x76705327e682F2d96943280D99464Ab61219e34f'; 
 const L1_MESSENGER_ADDR = '0x0000000000000000000000000000000000008008'; // ZKsync Era (System Contract)
 const PROTOCOL_UPGRADE_HANDLER_ADDR = '0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3'; // Ethereum L1
 
-// --- ABIs (Simplified for relevant parts) ---
+// --- ABIs ---
 const ZK_PROTOCOL_GOVERNOR_ABI = [
     "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)",
     "event ProposalExecuted(uint256 proposalId)",
@@ -37,7 +36,22 @@ const PROTOCOL_UPGRADE_HANDLER_ABI = [
     "function upgradeStatus(bytes32 upgradeId) view returns (uint48 creationTimestamp, uint48 securityCouncilApprovalTimestamp, bool guardiansApproval, bool guardiansExtendedLegalVeto, bool executed)"
 ];
 
-// --- Interfaces ---
+// --- Types and Interfaces ---
+// ABI coder type definition for the UpgradeProposal struct
+const UPGRADE_PROPOSAL_TYPE = "tuple(tuple(address target, uint256 value, bytes data)[] calls, address executor, bytes32 salt)";
+
+interface Call {
+    target: string;
+    value: ethers.BigNumber;
+    data: string;
+}
+
+interface UpgradeProposal {
+    calls: Call[];
+    executor: string;
+    salt: string;
+}
+
 interface ProposalCreatedData {
     proposalId: ethers.BigNumber;
     proposer: string;
@@ -61,18 +75,14 @@ interface ProposalExecutedData {
 interface L1MessageSentData {
     sender: string;
     hash: string; // This is the L1 Proposal ID
-    message: string;
+    message: string; // This contains the ABI-encoded UpgradeProposal
     blockNumber: number;
     txHash: string;
 }
 
 interface UpgradeStartedData {
     id: string; // L1 Proposal ID (_hash from L1MessageSent)
-    proposal: {
-        calls: { target: string; value: ethers.BigNumber; data: string }[];
-        executor: string;
-        salt: string;
-    };
+    proposal: UpgradeProposal; // Decoded directly from L1 event
     blockNumber: number;
     txHash: string;
 }
@@ -86,33 +96,29 @@ interface UpgradeStatusData {
 }
 
 interface EventCache {
-    lastBlockFetched: number;
+    lastL2BlockFetched: number; // Renamed for clarity
     proposalCreatedEvents: ProposalCreatedData[];
     proposalExecutedEvents: ProposalExecutedData[];
 }
 
 // --- Constants ---
 const CACHE_FILE = path.join(__dirname, 'governance_event_cache.json');
-const BLOCKS_TO_FETCH_INCREMENT = 50000; // Adjust as needed for performance vs. completeness
+const L1_EVENT_SEARCH_BLOCK_RANGE = 1_000_000; // Look back ~2 weeks on L1, adjust if needed
+const L2_MESSENGER_SEND_SELECTOR = "0x62f84b24"; // Selector for sendMessageToL1(bytes)
 
 // --- Helper Functions ---
 
-/**
- * Loads event cache from file or returns a default structure.
- */
 function loadCache(): EventCache {
     if (fs.existsSync(CACHE_FILE)) {
         try {
             const data = fs.readFileSync(CACHE_FILE, 'utf-8');
             const cache: EventCache = JSON.parse(data, (key, value) => {
-                // Reviver to convert hex strings back to BigNumbers
                 if (typeof value === 'object' && value !== null && value.type === 'BigNumber') {
                     return ethers.BigNumber.from(value.hex);
                 }
                 return value;
             });
-            console.log(chalk.gray(`Loaded cache from ${CACHE_FILE}. Last block fetched: ${cache.lastBlockFetched}`));
-            // Ensure arrays exist
+            console.log(chalk.gray(`Loaded cache from ${CACHE_FILE}. Last L2 block fetched: ${cache.lastL2BlockFetched}`));
             cache.proposalCreatedEvents = cache.proposalCreatedEvents || [];
             cache.proposalExecutedEvents = cache.proposalExecutedEvents || [];
             return cache;
@@ -120,34 +126,26 @@ function loadCache(): EventCache {
             console.warn(chalk.yellow(`Could not read cache file ${CACHE_FILE}: ${error}. Starting fresh.`));
         }
     }
-    return { lastBlockFetched: 0, proposalCreatedEvents: [], proposalExecutedEvents: [] };
+    return { lastL2BlockFetched: 0, proposalCreatedEvents: [], proposalExecutedEvents: [] };
 }
 
-/**
- * Saves the event cache to a file.
- * @param cache The cache object to save.
- */
 function saveCache(cache: EventCache): void {
     try {
-        // Replacer to convert BigNumbers to hex strings for JSON serialization
         const data = JSON.stringify(cache, (key, value) => {
             if (ethers.BigNumber.isBigNumber(value)) {
                 return { type: 'BigNumber', hex: value.toHexString() };
             }
             return value;
-        }, 2); // Pretty print JSON
+        }, 2);
         fs.writeFileSync(CACHE_FILE, data, 'utf-8');
-        console.log(chalk.gray(`Saved cache to ${CACHE_FILE}. Last block fetched: ${cache.lastBlockFetched}`));
+        console.log(chalk.gray(`Saved cache to ${CACHE_FILE}. Last L2 block fetched: ${cache.lastL2BlockFetched}`));
     } catch (error) {
         console.error(chalk.red(`Error saving cache: ${error}`));
     }
 }
 
-/**
- * Formats a timestamp (seconds) into a human-readable string.
- */
 function formatTimestamp(timestamp: number | ethers.BigNumber): string {
-    if (!timestamp || ethers.BigNumber.from(timestamp).isZero()) return "N/A"; // Check if null, undefined or zero
+    if (!timestamp || ethers.BigNumber.from(timestamp).isZero()) return "N/A";
     try {
         const date = new Date(ethers.BigNumber.from(timestamp).toNumber() * 1000);
         return date.toLocaleString();
@@ -157,188 +155,91 @@ function formatTimestamp(timestamp: number | ethers.BigNumber): string {
     }
 }
 
-/**
- * Maps L2 Governor state enum to string.
- */
 function mapL2State(state: number): string {
     const states = ["Pending", "Active", "Canceled", "Defeated", "Succeeded", "Queued", "Expired", "Executed"];
-    return states[state] ?? "Unknown"; // Use nullish coalescing
+    return states[state] ?? `Unknown (${state})`;
 }
 
-/**
- * Maps L1 Handler state enum to string.
- */
 function mapL1State(state: number): string {
     const states = ["None", "LegalVetoPeriod", "Waiting", "ExecutionPending", "Ready", "Expired", "Done"];
-    return states[state] ?? "Unknown"; // Use nullish coalescing
+    return states[state] ?? `Unknown (${state})`;
 }
 
-/**
- * Fetches ProposalCreated events from ZKsync Era, updating the cache.
- */
-async function fetchProposalCreatedEvents(
-    governorContract: ethers.Contract,
-    cache: EventCache,
-    l2Provider: ethers.providers.JsonRpcProvider
-): Promise<void> {
-    const latestBlock = await l2Provider.getBlockNumber();
-    // Fetch new events since the last cached block
-    let fromBlock = cache.lastBlockFetched + 1;
-
-    if (fromBlock > latestBlock) {
-        console.log(chalk.gray("Cache is up to date for ProposalCreated events."));
-        return;
-    }
-
-    console.log(chalk.blue(`Fetching ProposalCreated events from block ${fromBlock} to ${latestBlock}...`));
-
-    try {
-        const eventFilter = governorContract.filters.ProposalCreated();
-        const chunkSize = 1000000000;
-        let currentBlock = fromBlock;
-        const allLogs: ethers.Event[] = [];
-        const existingTxHashes = new Set(cache.proposalCreatedEvents.map(e => e.txHash));
-
-        while (currentBlock <= latestBlock) {
-            const toBlock = Math.min(currentBlock + chunkSize - 1, latestBlock);
-            console.log(chalk.gray(`  Querying ProposalCreated chunk: ${currentBlock} to ${toBlock}`));
-            try {
-                const logsChunk = await governorContract.queryFilter(eventFilter, currentBlock, toBlock);
-                allLogs.push(...logsChunk);
-            } catch (chunkError) {
-                 console.error(chalk.red(`  Error fetching ProposalCreated logs chunk (${currentBlock}-${toBlock}): ${chunkError}. Skipping chunk.`));
-            }
-            currentBlock = toBlock + 1;
-        }
-
-        console.log(chalk.gray(`Found ${allLogs.length} new ProposalCreated events in total.`));
-        let countAdded = 0;
-        for (const log of allLogs) {
-             if (existingTxHashes.has(log.transactionHash)) continue;
-            try {
-                const parsedLog = governorContract.interface.parseLog(log);
-                cache.proposalCreatedEvents.push({
-                    proposalId: parsedLog.args.proposalId,
-                    proposer: parsedLog.args.proposer,
-                    targets: parsedLog.args.targets,
-                    values: parsedLog.args.values,
-                    signatures: parsedLog.args.signatures,
-                    calldatas: parsedLog.args.calldatas,
-                    voteStart: parsedLog.args.voteStart,
-                    voteEnd: parsedLog.args.voteEnd,
-                    description: parsedLog.args.description,
-                    blockNumber: log.blockNumber,
-                    txHash: log.transactionHash
-                });
-                existingTxHashes.add(log.transactionHash);
-                countAdded++;
-            } catch (e) {
-                console.warn(chalk.yellow(`Could not parse ProposalCreated log in tx ${log.transactionHash}: ${e}`));
-            }
-        }
-         console.log(chalk.gray(`Added ${countAdded} new unique ProposalCreated events to cache.`));
-
-    } catch (error) {
-         console.error(chalk.red(`Error fetching ProposalCreated events: ${error}`));
-    }
-    // Update cache marker regardless of errors during parsing/adding
-    cache.lastBlockFetched = latestBlock;
+function formatValue(value: ethers.BigNumber | undefined | null): string {
+     if (value === undefined || value === null) return 'N/A';
+     try {
+         return ethers.BigNumber.from(value).isZero() ? '0' : ethers.utils.formatEther(value);
+     } catch (e) {
+         return `Invalid (${value?.toString() ?? 'undefined'})`;
+     }
 }
 
+// --- Core Fetching Functions ---
 
-/**
- * Fetches ProposalExecuted events from ZKsync Era, ensuring the range covers the specific proposal.
- * Adds unique events found to the cache.
- */
-async function fetchProposalExecutedEvents(
-    governorContract: ethers.Contract,
+async function fetchL2Events<T extends ethers.BaseContract>(
+    contract: T,
+    eventName: string,
+    cacheKey: keyof EventCache,
     cache: EventCache,
     l2Provider: ethers.providers.JsonRpcProvider,
-    startBlock: number // Start searching from the block the proposal was created
-): Promise<void> {
-    // --- MODIFICATION START: Force query range for specific proposal ---
-    const queryFromBlock = Math.max(0, startBlock); // Ensure startBlock is not negative
-    const queryToBlock = await l2Provider.getBlockNumber(); // Get current latest block
+    parser: (log: ethers.Event) => any, // Function to parse log into desired cache structure
+    forceRange: { fromBlock: number, toBlock: number } | null = null // Optional range override
+): Promise<number> {
+    const latestBlock = forceRange ? forceRange.toBlock : await l2Provider.getBlockNumber();
+    // Use forced range if provided, otherwise fetch since last cached block
+    const fromBlock = forceRange ? forceRange.fromBlock : cache.lastL2BlockFetched + 1;
+    const toBlock = latestBlock;
 
-    if (queryFromBlock > queryToBlock) {
-        console.log(chalk.yellow(`Proposal creation block ${queryFromBlock} is ahead of latest block ${queryToBlock}. No range to query for execution.`));
-        return; // Nothing to query
+    if (fromBlock > toBlock) {
+        console.log(chalk.gray(`Block range (${fromBlock}-${toBlock}) invalid or already covered for ${eventName} events.`));
+        return 0; // No blocks to fetch or range invalid
     }
 
-    console.log(chalk.blue(`Fetching ProposalExecuted events relevant to this proposal from block ${queryFromBlock} up to ${queryToBlock}...`));
-    // DEBUG: Log the effective search range
-    console.log(chalk.dim(`  [DEBUG Executed] Effective Search Range: ${queryFromBlock} - ${queryToBlock}`));
-    // --- MODIFICATION END ---
+    console.log(chalk.blue(`Fetching ${eventName} events from block ${fromBlock} to ${toBlock}...`));
 
+    let addedCount = 0;
     try {
-        const eventFilter = governorContract.filters.ProposalExecuted();
-        // Fetch in chunks
-        const chunkSize = 1000000000;
-        let currentBlock = queryFromBlock; // Use the calculated queryFromBlock
-        const allLogs: ethers.Event[] = [];
-        // Use cache to check for duplicates *before* adding
-        const existingTxHashes = new Set(cache.proposalExecutedEvents.map(e => e.txHash));
+        const eventFilter = (contract.filters as any)[eventName](); // Dynamically access filter
+        if (!eventFilter) throw new Error(`Filter for event ${eventName} not found.`);
 
-        while (currentBlock <= queryToBlock) { // Use queryToBlock
-            const toBlock = Math.min(currentBlock + chunkSize - 1, queryToBlock);
-             console.log(chalk.gray(`  Querying ProposalExecuted chunk: ${currentBlock} to ${toBlock}`));
-             try {
-                 const logsChunk = await governorContract.queryFilter(eventFilter, currentBlock, toBlock);
-                 allLogs.push(...logsChunk);
-             } catch (chunkError) {
-                 console.error(chalk.red(`  Error fetching ProposalExecuted logs chunk (${currentBlock}-${toBlock}): ${chunkError}. Skipping chunk.`));
-             }
-            currentBlock = toBlock + 1;
-        }
+        const logs = await contract.queryFilter(eventFilter, fromBlock, toBlock);
+        console.log(chalk.gray(`Found ${logs.length} ${eventName} events in range.`));
 
-        console.log(chalk.gray(`Found ${allLogs.length} ProposalExecuted events in the checked range (${queryFromBlock} - ${queryToBlock}).`));
-        let countAdded = 0;
-        for (const log of allLogs) {
-            // Avoid adding duplicates already present in the cache
-            if (existingTxHashes.has(log.transactionHash)) {
-                 continue;
-            }
+        const existingTxHashes = new Set((cache[cacheKey] as any[]).map(e => e.txHash));
+
+        for (const log of logs) {
+            if (existingTxHashes.has(log.transactionHash)) continue;
             try {
-                const parsedLog = governorContract.interface.parseLog(log);
-                const parsedProposalId = parsedLog.args.proposalId;
-                // --- DEBUG: Log every parsed ProposalExecuted event ---
-                console.log(chalk.dim(`  [DEBUG Executed] Parsed Event -> ID: ${parsedProposalId.toString()}, Block: ${log.blockNumber}, Tx: ${log.transactionHash}`));
-                // --- End DEBUG ---
-
-                // Add to cache and update the set for this run
-                cache.proposalExecutedEvents.push({
-                    proposalId: parsedProposalId,
-                    blockNumber: log.blockNumber,
-                    txHash: log.transactionHash
-                });
-                existingTxHashes.add(log.transactionHash); // Add to set to prevent duplicates *within this run*
-                countAdded++;
+                const parsedData = parser(log); // Use the provided parser function
+                if (parsedData) {
+                     (cache[cacheKey] as any[]).push(parsedData);
+                     existingTxHashes.add(log.transactionHash);
+                     addedCount++;
+                }
             } catch (e) {
-                console.warn(chalk.yellow(`Could not parse ProposalExecuted log in tx ${log.transactionHash}: ${e}`));
+                console.warn(chalk.yellow(`Could not parse ${eventName} log in tx ${log.transactionHash}: ${e}`));
             }
         }
-         console.log(chalk.gray(`Added ${countAdded} new unique ProposalExecuted events to cache.`));
+        console.log(chalk.gray(`Added ${addedCount} new unique ${eventName} events to cache.`));
 
     } catch (error) {
-        console.error(chalk.red(`Error fetching ProposalExecuted events: ${error}`));
+        console.error(chalk.red(`Error fetching ${eventName} events: ${error}`));
     }
 
-    // Update the main cache marker to the latest block scanned overall
-    // This helps subsequent runs for *other* proposals or general cache updates.
-    if (queryToBlock > cache.lastBlockFetched) {
-        cache.lastBlockFetched = queryToBlock;
-    } else {
-         console.log(chalk.gray(`Cache marker ${cache.lastBlockFetched} remains unchanged as it's >= latest block ${queryToBlock}.`));
+    // Update the main cache marker only if we weren't forcing a specific range AND we fetched up to date
+    if (!forceRange && toBlock > cache.lastL2BlockFetched) {
+        cache.lastL2BlockFetched = toBlock;
+    } else if (forceRange && toBlock > cache.lastL2BlockFetched) {
+        // If we forced a range (likely for ProposalExecuted), still update cache marker
+        // to reflect overall progress, preventing redundant full scans later.
+        cache.lastL2BlockFetched = toBlock;
     }
+
+    return addedCount;
 }
 
-
-/**
- * Finds the L1MessageSent event within the same transaction as ProposalExecuted.
- */
-async function findL1MessageSent(
+async function findL1MessageSentInTx(
     l2Provider: ethers.providers.JsonRpcProvider,
-    l1MessengerInterface: ethers.utils.Interface,
     executionTxHash: string
 ): Promise<L1MessageSentData | null> {
     console.log(chalk.blue(`Fetching receipt for L2 execution tx: ${executionTxHash}...`));
@@ -349,21 +250,18 @@ async function findL1MessageSent(
             return null;
         }
 
-        console.log(chalk.gray(`Scanning ${receipt.logs.length} logs in execution tx...`));
+        const l1MessengerInterface = new ethers.utils.Interface(L1_MESSENGER_ABI);
         const l1MessageSentTopic = l1MessengerInterface.getEventTopic('L1MessageSent');
 
         for (const log of receipt.logs) {
-            // Check address and topic0
             if (log.address.toLowerCase() === L1_MESSENGER_ADDR.toLowerCase() && log.topics[0] === l1MessageSentTopic) {
                 try {
                     const parsedLog = l1MessengerInterface.parseLog(log);
                     console.log(chalk.green('Found L1MessageSent event!'));
-                     // DEBUG: Log L1MessageSent details
-                     console.log(chalk.dim(`  [DEBUG L1Sent] Hash: ${parsedLog.args._hash}, Sender: ${parsedLog.args._sender}`));
                     return {
-                        sender: parsedLog.args._sender, // Should be the Timelock/Governor caller
+                        sender: parsedLog.args._sender,
                         hash: parsedLog.args._hash,
-                        message: parsedLog.args._message,
+                        message: parsedLog.args._message, // Keep encoded message
                         blockNumber: log.blockNumber,
                         txHash: log.transactionHash
                     };
@@ -372,7 +270,6 @@ async function findL1MessageSent(
                 }
             }
         }
-
         console.warn(chalk.yellow(`L1MessageSent event not found in transaction ${executionTxHash}`));
         return null;
     } catch (error) {
@@ -381,66 +278,152 @@ async function findL1MessageSent(
     }
 }
 
-/**
- * Fetches the UpgradeStarted event from L1 using the L1 proposal hash.
- */
 async function findL1UpgradeStarted(
     l1Provider: ethers.providers.JsonRpcProvider,
     upgradeHandlerContract: ethers.Contract,
     l1ProposalHash: string
 ): Promise<UpgradeStartedData | null> {
     console.log(chalk.blue(`Searching for L1 UpgradeStarted event with ID: ${l1ProposalHash}...`));
-
     try {
-        // Filter by indexed event topic `_id`
         const eventFilter = upgradeHandlerContract.filters.UpgradeStarted(l1ProposalHash);
-
-        const L1_SEARCH_BLOCK_RANGE = 1000000; // Look back ~2 weeks, adjust if needed
         const latestL1Block = await l1Provider.getBlockNumber();
-        const fromBlockL1 = Math.max(0, latestL1Block - L1_SEARCH_BLOCK_RANGE);
+        const fromBlockL1 = Math.max(0, latestL1Block - L1_EVENT_SEARCH_BLOCK_RANGE);
 
         console.log(chalk.gray(`Querying L1 blocks ${fromBlockL1} to ${latestL1Block}...`));
-
         const logs = await upgradeHandlerContract.queryFilter(eventFilter, fromBlockL1, latestL1Block);
 
         if (logs.length === 0) {
-            console.warn(chalk.yellow(`UpgradeStarted event not found on L1 for ID ${l1ProposalHash} in the last ${L1_SEARCH_BLOCK_RANGE} blocks.`));
+            console.warn(chalk.yellow(`UpgradeStarted event not found on L1 for ID ${l1ProposalHash} in the last ${L1_EVENT_SEARCH_BLOCK_RANGE} blocks.`));
             return null;
         }
-
         if (logs.length > 1) {
-            console.warn(chalk.yellow(`Found multiple (${logs.length}) UpgradeStarted events for ID ${l1ProposalHash}. Using the first one.`));
+            console.warn(chalk.yellow(`Found multiple (${logs.length}) UpgradeStarted events for ID ${l1ProposalHash}. Using first one.`));
         }
 
         const log = logs[0];
-        try {
-            const parsedLog = upgradeHandlerContract.interface.parseLog(log);
-            console.log(chalk.green('Found UpgradeStarted event on L1!'));
-             // DEBUG: Log UpgradeStarted details
-             console.log(chalk.dim(`  [DEBUG L1Started] ID: ${parsedLog.args._id}, Block: ${log.blockNumber}, Tx: ${log.transactionHash}`));
-            const proposalData = parsedLog.args._proposal;
-            return {
-                id: parsedLog.args._id,
-                proposal: {
-                    calls: proposalData.calls.map((call: any) => ({
-                        target: call.target,
-                        value: call.value,
-                        data: call.data
-                    })),
-                    executor: proposalData.executor,
-                    salt: proposalData.salt,
-                },
-                blockNumber: log.blockNumber,
-                txHash: log.transactionHash
-            };
-        } catch (e) {
-            console.error(chalk.red(`Error parsing UpgradeStarted log in L1 tx ${log.transactionHash}: ${e}`));
-            return null;
-        }
+        const parsedLog = upgradeHandlerContract.interface.parseLog(log);
+        console.log(chalk.green('Found UpgradeStarted event on L1!'));
+        const proposalData = parsedLog.args._proposal;
+        // Directly map to our UpgradeProposal interface
+        const mappedProposal: UpgradeProposal = {
+            calls: proposalData.calls.map((call: any) => ({
+                target: call.target,
+                value: call.value,
+                data: call.data
+            })),
+            executor: proposalData.executor,
+            salt: proposalData.salt,
+        };
+        return {
+            id: parsedLog.args._id,
+            proposal: mappedProposal,
+            blockNumber: log.blockNumber,
+            txHash: log.transactionHash
+        };
     } catch (error) {
         console.error(chalk.red(`Error searching for L1 UpgradeStarted event: ${error}`));
         return null;
     }
+}
+
+/**
+ * Decodes the L1 UpgradeProposal struct from the L2 L1Messenger calldata's message.
+ */
+function decodeL1ProposalFromL2Calldata(l2Calldata: string): UpgradeProposal | null {
+    if (!l2Calldata || !l2Calldata.startsWith(L2_MESSENGER_SEND_SELECTOR)) {
+        console.warn(chalk.yellow(`L2 Calldata does not seem to be a call to L1Messenger (${L2_MESSENGER_SEND_SELECTOR})`));
+        return null;
+    }
+
+    // Calldata structure for sendMessageToL1(bytes _message):
+    // selector (4 bytes) + abi.encode(_message)
+    // abi.encode(_message) itself for bytes is: offset (32 bytes) + length (32 bytes) + data (variable)
+    const L2_CALLDATA_PREFIX_LENGTH = 4; // selector
+    const L2_CALLDATA_OFFSET_LENGTH = 32;
+    const L2_CALLDATA_LENGTH_LENGTH = 32;
+    const BYTES_ARG_HEADER_LENGTH = L2_CALLDATA_OFFSET_LENGTH + L2_CALLDATA_LENGTH_LENGTH;
+
+    try {
+        // Remove selector
+        const encodedArgs = '0x' + l2Calldata.substring(2 + L2_CALLDATA_PREFIX_LENGTH * 2);
+
+        // Decode the outer `bytes` argument first to get the inner message bytes
+        const decodedOuter = ethers.utils.defaultAbiCoder.decode(['bytes'], encodedArgs);
+        const messageBytes = decodedOuter[0];
+
+        // Now decode the inner message bytes using the known struct type
+        const decodedInner = ethers.utils.defaultAbiCoder.decode([UPGRADE_PROPOSAL_TYPE], messageBytes);
+
+        // Structure the result according to our interface
+        const proposalData = decodedInner[0]; // The decoded tuple is the first element
+         const mappedProposal: UpgradeProposal = {
+            calls: proposalData.calls.map((call: any) => ({
+                target: call.target,
+                value: call.value,
+                data: call.data
+            })),
+            executor: proposalData.executor,
+            salt: proposalData.salt,
+        };
+
+        return mappedProposal;
+
+    } catch (e) {
+        console.error(chalk.red(`Error decoding L1 proposal from L2 calldata: ${e}`));
+        console.error(chalk.red(`L2 Calldata was: ${l2Calldata}`));
+        return null;
+    }
+}
+
+/**
+ * Compares the L1 payload sourced from L2 and the one from the L1 event.
+ */
+function comparePayloads(l1PayloadFromL2: UpgradeProposal | null, l1PayloadFromEvent: UpgradeProposal | null): boolean {
+    if (!l1PayloadFromL2 || !l1PayloadFromEvent) {
+        console.error(chalk.red("Cannot compare payloads, one or both are missing."));
+        return false;
+    }
+
+    let mismatchFound = false;
+
+    // Compare executor
+    if (l1PayloadFromL2.executor.toLowerCase() !== l1PayloadFromEvent.executor.toLowerCase()) {
+        console.error(chalk.red(`Mismatch: Executor L2(${l1PayloadFromL2.executor}) != L1(${l1PayloadFromEvent.executor})`));
+        mismatchFound = true;
+    }
+
+    // Compare salt
+    if (l1PayloadFromL2.salt !== l1PayloadFromEvent.salt) {
+        console.error(chalk.red(`Mismatch: Salt L2(${l1PayloadFromL2.salt}) != L1(${l1PayloadFromEvent.salt})`));
+        mismatchFound = true;
+    }
+
+    // Compare calls array length
+    if (l1PayloadFromL2.calls.length !== l1PayloadFromEvent.calls.length) {
+        console.error(chalk.red(`Mismatch: Number of calls L2(${l1PayloadFromL2.calls.length}) != L1(${l1PayloadFromEvent.calls.length})`));
+        return false; // Cannot compare individual calls if lengths differ
+    }
+
+    // Compare individual calls
+    for (let i = 0; i < l1PayloadFromL2.calls.length; i++) {
+        const callL2 = l1PayloadFromL2.calls[i];
+        const callL1 = l1PayloadFromEvent.calls[i];
+
+        if (callL2.target.toLowerCase() !== callL1.target.toLowerCase()) {
+            console.error(chalk.red(`Mismatch (Call ${i}): Target L2(${callL2.target}) != L1(${callL1.target})`));
+            mismatchFound = true;
+        }
+        if (!ethers.BigNumber.from(callL2.value).eq(callL1.value)) {
+            console.error(chalk.red(`Mismatch (Call ${i}): Value L2(${callL2.value.toString()}) != L1(${callL1.value.toString()})`));
+            mismatchFound = true;
+        }
+         if (callL2.data.toLowerCase() !== callL1.data.toLowerCase()) {
+            console.error(chalk.red(`Mismatch (Call ${i}): Data L2(${callL2.data}) != L1(${callL1.data})`));
+            mismatchFound = true;
+        }
+    }
+
+    return !mismatchFound;
 }
 
 // --- Main Execution ---
@@ -471,33 +454,36 @@ async function main() {
 
     const l2Provider = new ethers.providers.JsonRpcProvider(ZKSYNC2_RPC_URL);
     const l1Provider = new ethers.providers.JsonRpcProvider(ETHEREUM_RPC_URL);
-
-    try {
-        await l2Provider.getNetwork();
-        console.log(chalk.green(`Connected to ZKsync Era RPC: ${l2Provider.connection.url}`));
-    } catch (e) {
-        console.error(chalk.red(`Failed to connect to ZKsync Era RPC: ${e}`));
-        process.exit(1);
-    }
-    try {
-        await l1Provider.getNetwork();
-        console.log(chalk.green(`Connected to Ethereum L1 RPC: ${l1Provider.connection.url}`));
-    } catch (e) {
-        console.error(chalk.red(`Failed to connect to Ethereum L1 RPC: ${e}`));
-        process.exit(1);
-    }
-
     const zkGovernor = new ethers.Contract(ZK_PROTOCOL_GOVERNOR_ADDR, ZK_PROTOCOL_GOVERNOR_ABI, l2Provider);
-    const l1MessengerInterface = new ethers.utils.Interface(L1_MESSENGER_ABI); // Only need interface for parsing logs
     const protocolUpgradeHandler = new ethers.Contract(PROTOCOL_UPGRADE_HANDLER_ADDR, PROTOCOL_UPGRADE_HANDLER_ABI, l1Provider);
+
+    try { await l2Provider.getNetwork(); console.log(chalk.green(`Connected to ZKsync Era RPC: ${l2Provider.connection.url}`)); }
+    catch (e) { console.error(chalk.red(`Failed to connect to ZKsync Era RPC: ${e}`)); process.exit(1); }
+    try { await l1Provider.getNetwork(); console.log(chalk.green(`Connected to Ethereum L1 RPC: ${l1Provider.connection.url}`)); }
+    catch (e) { console.error(chalk.red(`Failed to connect to Ethereum L1 RPC: ${e}`)); process.exit(1); }
 
     // --- Load Cache ---
     const cache = loadCache();
 
     // --- 1. Fetch L2 ProposalCreated Data ---
     console.log(chalk.bold('\n--- Step 1: Fetching L2 Proposal Creation Data ---'));
-    await fetchProposalCreatedEvents(zkGovernor, cache, l2Provider);
-    cache.proposalCreatedEvents.sort((a, b) => a.blockNumber - b.blockNumber);
+    await fetchL2Events(
+        zkGovernor,
+        "ProposalCreated",
+        "proposalCreatedEvents",
+        cache,
+        l2Provider,
+        (log) => { // Parser function
+            const args = zkGovernor.interface.parseLog(log).args;
+            return {
+                proposalId: args.proposalId, proposer: args.proposer, targets: args.targets,
+                values: args.values, signatures: args.signatures, calldatas: args.calldatas,
+                voteStart: args.voteStart, voteEnd: args.voteEnd, description: args.description,
+                blockNumber: log.blockNumber, txHash: log.transactionHash
+            };
+        }
+    );
+    cache.proposalCreatedEvents.sort((a, b) => a.blockNumber - b.blockNumber); // Sort for consistency
     const proposalCreated = cache.proposalCreatedEvents.find(p => p.proposalId.eq(l2ProposalId));
 
     if (!proposalCreated) {
@@ -514,86 +500,51 @@ async function main() {
     console.log(`  Description:\n${chalk.italic.gray(proposalCreated.description.split('\n').map(l => `    ${l}`).join('\n'))}`);
 
     // Fetch L2 State and Votes
-    let l2StateStr = 'Unknown';
-    let votes = { againstVotes: ethers.BigNumber.from(0), forVotes: ethers.BigNumber.from(0), abstainVotes: ethers.BigNumber.from(0) };
     try {
         const l2State = await zkGovernor.state(l2ProposalId);
-        l2StateStr = mapL2State(l2State);
-        console.log(`  L2 State: ${chalk.yellow(l2StateStr)} (${l2State})`);
-        votes = await zkGovernor.proposalVotes(l2ProposalId);
-        try {
-            console.log(`  Votes For: ${chalk.green(ethers.utils.formatUnits(votes.forVotes, 18))}`);
-            console.log(`  Votes Against: ${chalk.red(ethers.utils.formatUnits(votes.againstVotes, 18))}`);
-            console.log(`  Votes Abstain: ${chalk.gray(ethers.utils.formatUnits(votes.abstainVotes, 18))}`);
-        } catch (formatError) {
-             console.warn(chalk.yellow(`Could not format votes: ${formatError}`));
-             console.log(`  Votes For (raw): ${chalk.green(votes.forVotes.toString())}`);
-             console.log(`  Votes Against (raw): ${chalk.red(votes.againstVotes.toString())}`);
-             console.log(`  Votes Abstain (raw): ${chalk.gray(votes.abstainVotes.toString())}`);
-        }
-    } catch (e) {
-        console.warn(chalk.yellow(`Could not fetch L2 state or votes: ${e}`));
-    }
+        console.log(`  L2 State: ${chalk.yellow(mapL2State(l2State))}`);
+        const votes = await zkGovernor.proposalVotes(l2ProposalId);
+        console.log(`  Votes For: ${chalk.green(ethers.utils.formatUnits(votes.forVotes, 18))}`); // Assuming 18 decimals
+        console.log(`  Votes Against: ${chalk.red(ethers.utils.formatUnits(votes.againstVotes, 18))}`);
+        console.log(`  Votes Abstain: ${chalk.gray(ethers.utils.formatUnits(votes.abstainVotes, 18))}`);
+    } catch (e) { console.warn(chalk.yellow(`Could not fetch L2 state or votes: ${e}`)); }
 
+    // Display L2 Raw Payload Calls (still useful for context)
+    console.log(chalk.bold("\nL2 Raw Proposal Actions:"));
+    (proposalCreated.targets ?? []).forEach((target, i) => {
+        console.log(chalk.gray(`  Action ${i}:`));
+        console.log(`    Target: ${chalk.magenta(target)}`);
+        console.log(`    Value: ${chalk.blue(formatValue(proposalCreated.values?.[i]))} ETH`);
+        console.log(`    Signature: ${chalk.cyan(proposalCreated.signatures?.[i] || 'N/A')}`);
+        console.log(`    Calldata: ${chalk.yellow(proposalCreated.calldatas?.[i] || '0x')}`);
+    });
 
-    console.log(chalk.bold("\nL2 Raw Payload:"));
-    if (proposalCreated.targets && Array.isArray(proposalCreated.targets)) {
-        proposalCreated.targets.forEach((target, i) => {
-            console.log(chalk.gray(`  Call ${i}:`));
-            console.log(`    Target: ${chalk.magenta(target)}`);
-            const l2Value = proposalCreated.values?.[i];
-            let formattedValue = 'N/A';
-            if (l2Value !== undefined && l2Value !== null) {
-                 try {
-                     if (ethers.BigNumber.from(l2Value).isZero()) {
-                         formattedValue = '0';
-                     } else {
-                        formattedValue = ethers.utils.formatEther(l2Value);
-                     }
-                 } catch (e) {
-                     console.warn(chalk.yellow(`    Could not format L2 value at index ${i} (${l2Value?.toString()}): ${e}`));
-                     formattedValue = `Invalid (${l2Value?.toString() ?? 'undefined'})`;
-                 }
-            } else {
-                formattedValue = '0';
-            }
-            console.log(`    Value: ${chalk.blue(formattedValue)} ETH`);
-            console.log(`    Signature: ${chalk.cyan(proposalCreated.signatures?.[i] || 'N/A')}`);
-            console.log(`    Calldata: ${chalk.yellow(proposalCreated.calldatas?.[i] || '0x')}`);
-        });
-    } else {
-        console.log(chalk.gray("  No targets found in L2 payload."));
-    }
-
-
-    // --- 2. Find L2 Execution and L1 Message Hash ---
+    // --- 2. Find L2 Execution and Extract L1 Message ---
     console.log(chalk.bold('\n--- Step 2: Finding L2 Execution & L1 Message ---'));
-    // Fetch/update executed events, ensuring range from creation block is covered
-    await fetchProposalExecutedEvents(zkGovernor, cache, l2Provider, proposalCreated.blockNumber);
-    // Sort the potentially updated cache before searching
+    const latestL2Block = await l2Provider.getBlockNumber();
+    await fetchL2Events(
+        zkGovernor,
+        "ProposalExecuted",
+        "proposalExecutedEvents",
+        cache,
+        l2Provider,
+        (log) => { // Parser function
+            const args = zkGovernor.interface.parseLog(log).args;
+            return { proposalId: args.proposalId, blockNumber: log.blockNumber, txHash: log.transactionHash };
+        },
+        { fromBlock: proposalCreated.blockNumber, toBlock: latestL2Block } // Force range check
+    );
     cache.proposalExecutedEvents.sort((a, b) => a.blockNumber - b.blockNumber);
-
-    // --- DEBUG: Log cache size and target ID before searching ---
-    console.log(chalk.dim(`  [DEBUG Executed] Searching for Proposal ID: ${l2ProposalId.toString()}`));
-    console.log(chalk.dim(`  [DEBUG Executed] Cache now contains ${cache.proposalExecutedEvents.length} ProposalExecuted events.`));
-    // --- End DEBUG ---
-
     const proposalExecuted = cache.proposalExecutedEvents.find(p => p.proposalId.eq(l2ProposalId));
 
     if (!proposalExecuted) {
-        console.warn(chalk.yellow(`ProposalExecuted event not found for ID ${l2ProposalId.toString()} after re-checking full range. Please double-check the proposal ID and its status on a block explorer.`));
-        // --- DEBUG: Add extra context on failure ---
-        console.log(chalk.dim(`  [DEBUG Executed] Failed to find ID ${l2ProposalId.toString()} in the cache after fetching from block ${proposalCreated.blockNumber}.`));
-        console.log(chalk.dim(`  [DEBUG Executed] Last block fetched according to cache: ${cache.lastBlockFetched}`));
-        // --- End DEBUG ---
+        console.warn(chalk.yellow(`ProposalExecuted event not found for ID ${l2ProposalId.toString()} after checking range from creation block.`));
         saveCache(cache);
         process.exit(0);
     }
 
-    // --- If found ---
     console.log(chalk.green(`Found ProposalExecuted event in L2 block ${proposalExecuted.blockNumber} (Tx: ${proposalExecuted.txHash})`));
-
-    const l1MessageSent = await findL1MessageSent(l2Provider, l1MessengerInterface, proposalExecuted.txHash);
+    const l1MessageSent = await findL1MessageSentInTx(l2Provider, proposalExecuted.txHash);
 
     if (!l1MessageSent) {
         console.error(chalk.red(`Failed to find L1MessageSent event associated with execution tx ${proposalExecuted.txHash}.`));
@@ -603,42 +554,63 @@ async function main() {
 
     const l1ProposalHash = l1MessageSent.hash;
     console.log(chalk.bold(`\nL1 Proposal Identifier (Hash): ${chalk.yellow(l1ProposalHash)}`));
-    console.log(`  Derived from L1MessageSent in L2 Tx: ${l1MessageSent.txHash}`);
 
-    // --- 3. Fetch L1 Upgrade Data ---
-    console.log(chalk.bold('\n--- Step 3: Fetching L1 Upgrade Data ---'));
-    const upgradeStarted = await findL1UpgradeStarted(l1Provider, protocolUpgradeHandler, l1ProposalHash);
+    // --- 3. Decode L1 Payload from L2 Data ---
+    console.log(chalk.bold('\n--- Step 3: Decoding L1 Payload from L2 Messenger Call ---'));
+    let l1PayloadFromL2: UpgradeProposal | null = null;
+    const messengerCallIndex = (proposalCreated.targets ?? []).findIndex(t => t.toLowerCase() === L1_MESSENGER_ADDR.toLowerCase());
 
-    // Always Try to Fetch L1 State/Status
-    let l1StateStr = 'Unknown';
-    let l1StatusData: UpgradeStatusData | null = null;
-    let l1StateNum : number | null = null;
-    try {
-        l1StateNum = await protocolUpgradeHandler.upgradeState(l1ProposalHash);
-        l1StateStr = mapL1State(l1StateNum);
-        l1StatusData = await protocolUpgradeHandler.upgradeStatus(l1ProposalHash);
-    } catch (e) {
-         console.warn(chalk.yellow(`Could not query L1 state/status for ${l1ProposalHash}: ${e}`));
+    if (messengerCallIndex !== -1) {
+        const messengerCalldata = proposalCreated.calldatas?.[messengerCallIndex];
+        if (messengerCalldata) {
+            l1PayloadFromL2 = decodeL1ProposalFromL2Calldata(messengerCalldata);
+            if (l1PayloadFromL2) {
+                 console.log(chalk.green("Successfully decoded L1 payload from L2 calldata:"));
+                 console.log(`  Executor: ${chalk.yellow(l1PayloadFromL2.executor)}`);
+                 console.log(`  Salt: ${chalk.yellow(l1PayloadFromL2.salt)}`);
+                 l1PayloadFromL2.calls.forEach((call, i) => {
+                     console.log(chalk.gray(`  Call ${i}:`));
+                     console.log(`    Target: ${chalk.magenta(call.target)}`);
+                     console.log(`    Value: ${chalk.blue(formatValue(call.value))} ETH`);
+                     console.log(`    Data: ${chalk.yellow(call.data)}`);
+                 });
+            }
+        } else {
+             console.warn(chalk.yellow("Found L1Messenger target in L2 actions, but calldata is missing."));
+        }
+    } else {
+         console.warn(chalk.yellow("L2 Proposal actions do not include a call to L1Messenger. Cannot extract L1 payload from L2."));
     }
 
+    // --- 4. Fetch L1 Upgrade Data ---
+    console.log(chalk.bold('\n--- Step 4: Fetching L1 Upgrade Data ---'));
+    const upgradeStarted = await findL1UpgradeStarted(l1Provider, protocolUpgradeHandler, l1ProposalHash);
+
+    // Fetch L1 Status/State (always try)
+    let l1StateStr = 'Unknown';
+    let l1StatusData: UpgradeStatusData | null = null;
+    try {
+        const l1StateNum = await protocolUpgradeHandler.upgradeState(l1ProposalHash);
+        l1StateStr = mapL1State(l1StateNum);
+        l1StatusData = await protocolUpgradeHandler.upgradeStatus(l1ProposalHash);
+    } catch (e) { console.warn(chalk.yellow(`Could not query L1 state/status for ${l1ProposalHash}: ${e}`)); }
+
     if (!upgradeStarted) {
-        console.warn(chalk.yellow(`L1 UpgradeStarted event not found for ID ${l1ProposalHash}, or not found in recent blocks.`));
-         if (l1StateNum !== null) console.log(`  L1 State (queried): ${chalk.yellow(l1StateStr)} (${l1StateNum})`);
-         if (l1StatusData) {
+        console.warn(chalk.yellow(`L1 UpgradeStarted event not found for ID ${l1ProposalHash}.`));
+        if (l1StatusData) { // Still display status if found
+             console.log(`  L1 State (queried): ${chalk.yellow(l1StateStr)}`);
              console.log(`  L1 Status (queried):`);
              console.log(`    Created: ${chalk.yellow(formatTimestamp(l1StatusData.creationTimestamp))}`);
-             console.log(`    SC Approved: ${chalk.yellow(formatTimestamp(l1StatusData.securityCouncilApprovalTimestamp))}`);
-             console.log(`    Guardians Approved: ${chalk.yellow(l1StatusData.guardiansApproval)}`);
-             console.log(`    Guardians Extended Veto: ${chalk.yellow(l1StatusData.guardiansExtendedLegalVeto)}`);
+             // ... other status fields
              console.log(`    Executed: ${chalk.yellow(l1StatusData.executed)}`);
-         }
+        }
         saveCache(cache);
         process.exit(0);
     }
 
-    // If UpgradeStarted event was found
+    // --- Display L1 Event Data ---
     console.log(chalk.green(`Found UpgradeStarted event in L1 block ${upgradeStarted.blockNumber} (Tx: ${upgradeStarted.txHash})`));
-    if (l1StateNum !== null) console.log(`  L1 State: ${chalk.yellow(l1StateStr)} (${l1StateNum})`);
+    console.log(`  L1 State: ${chalk.yellow(l1StateStr)}`);
     if (l1StatusData) {
          console.log(`  L1 Status:`);
          console.log(`    Created: ${chalk.yellow(formatTimestamp(l1StatusData.creationTimestamp))}`);
@@ -647,96 +619,39 @@ async function main() {
          console.log(`    Guardians Extended Veto: ${chalk.yellow(l1StatusData.guardiansExtendedLegalVeto)}`);
          console.log(`    Executed: ${chalk.yellow(l1StatusData.executed)}`);
     }
-
-
-    console.log(chalk.bold("\nL1 Proposal Details (from UpgradeStarted):"));
+    console.log(chalk.bold("\nL1 Proposal Details (from UpgradeStarted Event):"));
     console.log(`  Executor: ${chalk.yellow(upgradeStarted.proposal.executor)}`);
     console.log(`  Salt: ${chalk.yellow(upgradeStarted.proposal.salt)}`);
+    console.log(chalk.bold("\nL1 Payload (from UpgradeStarted Event):"));
+    (upgradeStarted.proposal.calls ?? []).forEach((call, i) => {
+        console.log(chalk.gray(`  Call ${i}:`));
+        console.log(`    Target: ${chalk.magenta(call.target)}`);
+        console.log(`    Value: ${chalk.blue(formatValue(call.value))} ETH`);
+        console.log(`    Data: ${chalk.yellow(call.data)}`);
+    });
 
-    console.log(chalk.bold("\nL1 Sanitized Payload (from UpgradeStarted):"));
-    if (upgradeStarted.proposal.calls && Array.isArray(upgradeStarted.proposal.calls)) {
-        upgradeStarted.proposal.calls.forEach((call, i) => {
-            console.log(chalk.gray(`  Call ${i}:`));
-            console.log(`    Target: ${chalk.magenta(call.target)}`);
-             let formattedL1Value = 'N/A';
-             try {
-                 if (ethers.BigNumber.from(call.value).isZero()) {
-                     formattedL1Value = '0';
-                 } else {
-                     formattedL1Value = ethers.utils.formatEther(call.value);
-                 }
-             } catch (e) {
-                 console.warn(chalk.yellow(`    Could not format L1 value at index ${i} (${call.value?.toString()}): ${e}`));
-                 formattedL1Value = `Invalid (${call.value?.toString() ?? 'undefined'})`;
-             }
-            console.log(`    Value: ${chalk.blue(formattedL1Value)} ETH`);
-            console.log(`    Data: ${chalk.yellow(call.data)}`);
-        });
-    } else {
-         console.log(chalk.gray("  No calls found in L1 payload."));
-    }
-
-
-    // --- 4. Sanity Check Payloads ---
-    console.log(chalk.bold('\n--- Step 4: Sanity Checking Payloads (L1 vs L2) ---'));
-    let mismatchFound = false;
-    const l2Targets = proposalCreated.targets ?? [];
-    const l1Calls = upgradeStarted.proposal.calls ?? [];
-
-    if (l2Targets.length !== l1Calls.length) {
-        console.error(chalk.red(`Mismatch: L2 payload has ${l2Targets.length} calls, L1 payload has ${l1Calls.length} calls.`));
-        mismatchFound = true;
-    } else {
-        for (let i = 0; i < l2Targets.length; i++) {
-            const l2Target = l2Targets[i];
-            const l2Value = proposalCreated.values?.[i] ?? ethers.BigNumber.from(0);
-            const l2Calldata = proposalCreated.calldatas?.[i] ?? '0x';
-            const l1Call = l1Calls[i];
-
-            if (l2Target.toLowerCase() !== l1Call.target.toLowerCase()) {
-                console.error(chalk.red(`Mismatch (Call ${i}): L2 Target ${l2Target} != L1 Target ${l1Call.target}`));
-                mismatchFound = true;
-            }
-            if (!ethers.BigNumber.from(l2Value).eq(l1Call.value)) {
-                console.error(chalk.red(`Mismatch (Call ${i}): L2 Value ${l2Value.toString()} != L1 Value ${l1Call.value.toString()}`));
-                mismatchFound = true;
-            }
-            const l2DataToCheck = l2Calldata.toLowerCase().substring(2);
-            if (l2DataToCheck && l1Call.data.toLowerCase().indexOf(l2DataToCheck) === -1) {
-                console.warn(chalk.yellow(`Potential Mismatch/Check Needed (Call ${i}): L2 Calldata not found within L1 Data.`));
-                console.log(`  L2: ${l2Calldata}`);
-                console.log(`  L1: ${l1Call.data}`);
-            } else if (l2DataToCheck && l1Call.data.toLowerCase() !== l2Calldata.toLowerCase()) {
-                 console.log(chalk.gray(`Info (Call ${i}): L1 data differs from L2 calldata (may be wrapped):`));
-                 console.log(`  L2: ${l2Calldata}`);
-                 console.log(`  L1: ${l1Call.data}`);
-            }
+    // --- 5. Sanity Check Payloads ---
+    console.log(chalk.bold('\n--- Step 5: Comparing L1 Event Payload vs. Decoded L2 Messenger Payload ---'));
+    if (l1PayloadFromL2 && upgradeStarted) {
+        const payloadsMatch = comparePayloads(l1PayloadFromL2, upgradeStarted.proposal);
+        if (payloadsMatch) {
+             console.log(chalk.green('Payload Sanity Check Passed: L1 event payload matches decoded L2 messenger payload.'));
+        } else {
+             console.error(chalk.red('Payload Sanity Check Failed: Differences found between L1 event payload and decoded L2 messenger payload!'));
         }
-    }
-
-    if (!mismatchFound) {
-        console.log(chalk.green('Payload Sanity Check Passed: L1 calls generally match L2 proposal actions (targets, values). Calldata differences may indicate L1 execution wrappers.'));
     } else {
-         console.error(chalk.red('Payload Sanity Check Failed: Significant differences found between L1 and L2 payloads!'));
+         console.warn(chalk.yellow("Could not perform payload comparison: L1 event data or decoded L2 payload is missing."));
     }
 
     console.log(chalk.bold.cyan('\n--- Analysis Complete ---'));
 
     // --- Save Cache ---
     saveCache(cache);
-
 }
 
 // --- Run ---
 main().catch((error) => {
     console.error(chalk.red('\n--- Script Error ---'));
     console.error(error);
-    try {
-        // Attempt to save cache even on unexpected errors
-        // const finalCache = loadCache(); // Or pass cache object if possible
-        // saveCache(finalCache);
-    } catch (saveError) {
-        console.error(chalk.red(`Failed to save cache during error handling: ${saveError}`));
-    }
     process.exit(1);
 });
