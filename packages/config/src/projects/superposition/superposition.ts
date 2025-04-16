@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('superposition', 'arbitrum')
 
 export const superposition: ScalingProject = orbitStackL3({
   capability: 'universal',
-  addedAt: UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  addedAt: UnixTime(1736726400), // 2025-01-13T00:00:00Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming', 'Social'],
   reasonsForBeingOther: [
@@ -68,4 +68,13 @@ export const superposition: ScalingProject = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/Superpositionso/status/1878789316018926027',
+      date: '2025-01-13T00:00:00Z',
+      description: 'Superposition launches its Mainnet.',
+      type: 'general',
+    },
+  ],
 })

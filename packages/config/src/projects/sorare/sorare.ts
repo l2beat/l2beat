@@ -9,11 +9,11 @@ import {
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -143,7 +143,7 @@ export const sorare: ScalingProject = {
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       date: '2021-07-26T00:00:00Z',
       url: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       description:

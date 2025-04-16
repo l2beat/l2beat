@@ -8,7 +8,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: ScalingProject = opStackL2({
-  addedAt: UnixTime(1704267653), // 2024-01-03T07:40:53Z
+  addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
