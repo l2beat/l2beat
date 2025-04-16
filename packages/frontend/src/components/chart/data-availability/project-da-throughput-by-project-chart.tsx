@@ -13,7 +13,7 @@ import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
 export function ProjectDaThroughputByProjectChart({
   daLayer,
 }: { daLayer: string }) {
-  const [range, setRange] = useState<DaThroughputTimeRange>('30d')
+  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
 
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
     range: range,
