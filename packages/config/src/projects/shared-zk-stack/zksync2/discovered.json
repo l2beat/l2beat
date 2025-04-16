@@ -1927,8 +1927,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
-    "shared-zk-stack/TimelockController": "0x9410aa635587a43dde5fba3d5c25e28bf016636ecbc59bf235c35793abcdd03e",
-    "shared-zk-stack/ZkGovernor": "0x61bc5eebee9360f812b96318d286fb7dfcd0ae7a504280b888dadd53a1f21bc7",
+    "shared-zk-stack/TimelockController": "0x9e70dcb39a5b49774d7cfdd3e9edbea022ddd1ed82db3313ebcd83bf0af88e43",
+    "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x10be13c3b1d138ac7962969b31c78e55aa0d45fc3133042d1457f930a120b6b8"
   }
 }

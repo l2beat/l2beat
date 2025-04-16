@@ -2123,6 +2123,6 @@
     "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/SHARPVerifier": "0x1b6d2df648136e7e01e2f7dc4237e03ea8b9060aafee56c40b8cf45179dd5016",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xb721146024db7d5730d3a360269aadd23fe49225d4b1ac559cf263224cea7245"
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0x38e64c0bdc916fd8608162ff858b98f8da01ce76b5b786f5725572f8f2d785e9"
   }
 }
