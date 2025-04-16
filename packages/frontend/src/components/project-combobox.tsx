@@ -53,7 +53,7 @@ export function ProjectCombobox({
         <ChevronIcon className="size-3 shrink-0 transition-transform group-data-[state=open]/popover-trigger:rotate-180" />
       </PopoverTrigger>
       <PopoverContent className="p-0" align="start">
-        <Command shouldFilter={false}>
+        <Command>
           <CommandInput placeholder="Search for project...">
             <CommandInputActionButton
               onClick={projects.length > 0 ? () => setProjects([]) : undefined}
