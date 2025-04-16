@@ -8,6 +8,8 @@ import type {
   GnosisBridgeReceive,
   GnosisBridgeSend,
   Hash256,
+  PolygonPosReceive,
+  PolygonPosSend,
 } from './types'
 
 export interface CrossChainEvent {
@@ -29,6 +31,9 @@ export class MessageService {
   private gnosisSend = new Map<Hash256, GnosisBridgeSend>()
   private gnosisReceive = new Map<Hash256, GnosisBridgeReceive>()
 
+  private polygonSend = new Map<bigint, PolygonPosSend>()
+  private polygonReceive = new Map<bigint, PolygonPosReceive>()
+
   readonly transfers: CrossChainTransfer[] = []
 
   onMessage(message: CrossChainMessage) {
@@ -49,6 +54,24 @@ export class MessageService {
         this.gnosisReceive.set(message.messageId, message)
       } else {
         this.onGnosisCompleted(send, message)
+      }
+    }
+
+    if (message.type === 'PolygonPosSend') {
+      const receive = this.polygonReceive.get(message.stateId)
+      if (!receive) {
+        this.polygonSend.set(message.stateId, message)
+      } else {
+        this.onPolygonCompleted(message, receive)
+      }
+    }
+
+    if (message.type === 'PolygonPosReceive') {
+      const send = this.polygonSend.get(message.stateId)
+      if (!send) {
+        this.polygonReceive.set(message.stateId, message)
+      } else {
+        this.onPolygonCompleted(send, message)
       }
     }
   }
@@ -88,7 +111,43 @@ export class MessageService {
     })
   }
 
+  private onPolygonCompleted(send: PolygonPosSend, receive: PolygonPosReceive) {
+    const transfer: CrossChainTransfer = {
+      protocol: 'gnosis',
+      source: {
+        chain: send.sourceChain,
+        txHash: send.txHash,
+        timestamp: send.timestamp,
+        sender: '?:?',
+        token: send.token,
+        amount: send.amount,
+      },
+      destination: {
+        chain: receive.destinationChain,
+        txHash: receive.txHash,
+        timestamp: receive.timestamp,
+        recipient: send.recipient,
+        token: '?:?',
+        amount: send.amount,
+      },
+    }
+    this.transfers.push(transfer)
+
+    this.logger.info('Gnosis transfer completed', {
+      source: send.sourceChain,
+      sourceTx: send.txHash,
+      sender: '?:?',
+      destination: receive.destinationChain,
+      destinationTx: receive.txHash,
+      recipient: send.recipient,
+    })
+  }
+
   private broadcast(message: CrossChainMessage) {
+    if (message.type === 'PolygonPosReceive') {
+      return
+    }
+
     const token = getToken(message.token)
     let amount = formatUnits(message.amount, token.decimals)
     const [a, b = ''] = amount.split('.')

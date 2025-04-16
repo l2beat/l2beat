@@ -1,51 +1,106 @@
 import { parseAbi } from 'viem'
 import type { ChainInfo } from '../../config/chains'
-import type { PolygonPosSend } from '../types'
+import type { PolygonPosReceive, PolygonPosSend } from '../types'
 import { type LogWithTimestamp, address, safeDecodeLog } from './common'
 
-const polygonPosAbi = parseAbi([
-  //"event ExitedERC20(address indexed exitor, address indexed rootToken, uint256 amount)",
-  'event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)',
-])
+/*
+On the polygon pos side state is received through a system tx from NULL to NULL.
+Internally it (probably) has a loop calling 
+  NULL
+    -> StateReceiver.commitState(uint256, bytes)
+       0x0000000000000000000000000000000000001001
+    -> ChildChainManager.onStateReceive(uint256, bytes)
+       0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa
 
-const POLYGONPOS_ETHEREUM_ESCROW_1 =
-  '0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf'
-//const POLYGOONPOS_POLYGON = '0xf6a78083ca3e2a662d6dd1703c939c8ace2e268d'
+The manager then sends the tokens after mapping the token addresses.
+ */
+
+const STATE_SENDER_ETHEREUM = '0x28e4f3a7f651294b9564800b2d01f35189a5bfbe'
+const STATE_RECEIVER_POLYGONPOS = '0x0000000000000000000000000000000000001001'
+
+const CCM_POLYGONPOS = '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa'
+
+const abi = parseAbi([
+  'event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)',
+  'event StateCommitted(uint256 indexed stateId, bool success)',
+])
 
 export function decodePolygonPosBridge(
   log: LogWithTimestamp,
   chain: ChainInfo,
-): PolygonPosSend | undefined {
+): PolygonPosSend | PolygonPosReceive | undefined {
   if (!log.transactionHash) {
     return
   }
 
   const isPolygonPos =
-    chain.name === 'ethereum' && log.address === POLYGONPOS_ETHEREUM_ESCROW_1
+    (chain.name === 'ethereum' && log.address === STATE_SENDER_ETHEREUM) ||
+    (chain.name === 'polygonpos' && log.address === STATE_RECEIVER_POLYGONPOS)
   if (!isPolygonPos) {
     return
   }
 
-  const event = safeDecodeLog(polygonPosAbi, log)
+  const event = safeDecodeLog(abi, log)
 
-  if (event?.eventName === 'LockedERC20') {
+  if (
+    event?.eventName === 'StateSynced' &&
+    event.args.contractAddress === CCM_POLYGONPOS
+  ) {
+    const send = decodeSend(event.args.data)
+    if (!send) {
+      return
+    }
+
     return {
       timestamp: log.timestamp,
       chain: chain.name,
       txHash: log.transactionHash,
       type: 'PolygonPosSend',
-      escrow: address(chain, log.address),
-      sourceChain: chain.name,
-      destinationChain: chain.name === 'ethereum' ? 'polygon' : 'ethereum',
-      sender: address(chain, event.args.depositor),
-      recipient: address(
-        chain.name === 'ethereum' ? 'matic' : 'eth',
-        event.args.depositReceiver,
-      ),
-      token: address(chain, event.args.rootToken),
-      amount: event.args.amount,
+      sourceChain: 'ethereum',
+      destinationChain: 'polygon',
+      stateId: event.args.id,
+      recipient: address(chain, send.recipient),
+      token: address(chain, send.rootToken),
+      amount: send.amount,
+    }
+  }
+
+  if (event?.eventName === 'StateCommitted' && event.args.success) {
+    return {
+      timestamp: log.timestamp,
+      chain: chain.name,
+      txHash: log.transactionHash,
+      type: 'PolygonPosReceive',
+      sourceChain: 'polygon',
+      destinationChain: 'ethereum',
+      stateId: event.args.stateId,
     }
   }
 
   return undefined
+}
+
+function decodeSend(data: `0x${string}`) {
+  const no0x = data.slice(2)
+  if (no0x.length !== 512) {
+    return
+  }
+  // keccak("DEPOSIT")
+  if (
+    !no0x.startsWith(
+      '87a7811f4bfedea3d341ad165680ae306b01aaeacc205d227629cf157dd9f821',
+    )
+  ) {
+    return
+  }
+
+  const recipient: `0x${string}` = `0x${no0x.slice(3 * 64 + 24, 3 * 64 + 24 + 40)}`
+  const rootToken: `0x${string}` = `0x${no0x.slice(4 * 64 + 24, 4 * 64 + 24 + 40)}`
+  const amount = BigInt('0x' + no0x.slice(-64))
+
+  return {
+    recipient,
+    rootToken,
+    amount,
+  }
 }
