@@ -44,6 +44,11 @@ export async function getElasticChainTokens(
 
   const resolved: { id: string; address: string }[] = []
   const toResolve: { id: string; request: MulticallRequest }[] = []
+  const toCheckTotalSupply: {
+    id: string
+    address: string
+    request: MulticallRequest
+  }[] = []
 
   for (const token of l2Tokens) {
     const cachedValue = await localStorage.getAddress(
@@ -76,26 +81,49 @@ export async function getElasticChainTokens(
       block,
     )
 
-    await Promise.all(
-      toResolve.map(async (item, index) => {
-        const response = responses[index].data.toString()
-        let [address] = bridgeInterface.decodeFunctionResult(
-          'l2TokenAddress',
-          response,
-        )
-        if (!isEmptyAddress(address)) {
-          // try fetching totalSupply, if it does not fail then add token
-          const res = await rpcClient.call(encodeTotalSupply(address), block)
-          logger.info('Checking total supply')
-          if (res.length === 0) {
-            address = '0x'
-          }
-        }
+    for (const index in toResolve) {
+      const id = toResolve[index].id
+      const response = responses[index].data.toString()
+      const [address] = bridgeInterface.decodeFunctionResult(
+        'l2TokenAddress',
+        response,
+      )
 
-        await localStorage.writeAddress(`${project.id}-${item.id}`, address)
-        resolved.push({ id: item.id, address })
-      }),
+      if (!isEmptyAddress(address)) {
+        const encoded = encodeTotalSupply(address)
+        toCheckTotalSupply.push({
+          id,
+          address,
+          request: {
+            address: encoded.to,
+            data: encoded.data,
+          },
+        })
+        continue
+      }
+
+      await localStorage.writeAddress(`${project.id}-${id}`, address)
+      resolved.push({ id, address })
+    }
+  }
+
+  if (toCheckTotalSupply.length > 0) {
+    const block = await rpcClient.getLatestBlockNumber()
+    const responses = await multicallClient.multicall(
+      toCheckTotalSupply.map((e) => ({ ...e.request })),
+      block,
     )
+
+    for (const index in toCheckTotalSupply) {
+      const id = toCheckTotalSupply[index].id
+      const response = responses[index]
+      const address = response.success
+        ? toCheckTotalSupply[index].address
+        : '0x'
+
+      await localStorage.writeAddress(`${project.id}-${id}`, address)
+      resolved.push({ id, address })
+    }
   }
 
   const l2TokensTvsConfigs = resolved.map((item) => {
