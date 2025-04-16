@@ -20,11 +20,10 @@ import { ValueService } from '../services/ValueService'
 import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
 import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
-import { LocalStorage } from './LocalStorage'
+import type { LocalStorage } from './LocalStorage'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 export class LocalExecutor {
-  private readonly localStorage: LocalStorage
   private readonly dbStorage: DBStorage | undefined
   private readonly valueService: ValueService
 
@@ -32,8 +31,8 @@ export class LocalExecutor {
     private readonly ps: ProjectService,
     private readonly env: Env,
     private readonly logger: Logger,
+    private readonly localStorage: LocalStorage,
   ) {
-    this.localStorage = new LocalStorage('./scripts/tvs/local-data.json')
     this.valueService = new ValueService(this.localStorage, logger)
     this.dbStorage = this.createDbStorage(env, logger)
   }

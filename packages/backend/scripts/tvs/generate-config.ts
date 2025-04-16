@@ -24,6 +24,7 @@ import {
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
 import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
 
@@ -48,7 +49,8 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
-    const localExecutor = new LocalExecutor(ps, env, logger)
+    const localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    const localExecutor = new LocalExecutor(ps, env, logger, localStorage)
     const timestamp =
       UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
@@ -90,7 +92,12 @@ const cmd = command({
     logger.info(`Generating new TVS config for projects (${projects.length})`)
     const regeneratedProjects = await Promise.all(
       projects.map(async (project) => {
-        return await generateConfigForProject(project, chains, logger)
+        return await generateConfigForProject(
+          project,
+          chains,
+          logger,
+          localStorage,
+        )
       }),
     )
 
@@ -156,6 +163,7 @@ async function generateConfigForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
   chains: Map<string, ChainConfig>,
   logger: Logger,
+  localStorage: LocalStorage,
 ) {
   const env = getEnv()
 
@@ -174,7 +182,7 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, chains, logger, rpc)
+  return mapConfig(project, chains, logger, localStorage, rpc)
 }
 
 function initLogger(env: Env) {
