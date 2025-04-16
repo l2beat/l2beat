@@ -16,6 +16,7 @@ import type { MulticallRequest } from '../../../../peripherals/multicall/types'
 import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import { createEscrowToken } from '../mapConfig'
+import { isEmptyAddress } from './isEmptyAddress'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -48,9 +49,11 @@ export async function getAggLayerTokens(
   const toResolve: { id: string; request: MulticallRequest }[] = []
 
   for (const token of l2Tokens) {
-    const cachedValue = await localStorage.getAddress(token.id)
+    const cachedValue = await localStorage.getAddress(
+      `${project.id}-${token.id}`,
+    )
     if (cachedValue !== undefined) {
-      logger.debug(`Cached value found for ${token.id}`)
+      logger.debug(`Cached value found for ${project.id}-${token.id}`)
       resolved.push({ id: token.id, address: cachedValue })
       continue
     }
@@ -81,26 +84,19 @@ export async function getAggLayerTokens(
 
     for (const index in toResolve) {
       const id = toResolve[index].id
-      const address = responses[index].data.toString()
-      await localStorage.writeAddress(id, address)
+      const response = responses[index].data.toString()
+      const [address] = bridgeInterface.decodeFunctionResult(
+        'getTokenWrappedAddress',
+        response,
+      )
+      await localStorage.writeAddress(`${project.id}-${id}`, address)
       resolved.push({ id, address })
     }
   }
 
   const l2TokensTvsConfigs = resolved
     .map((item) => {
-      if (
-        item.address === '0x' ||
-        item.address ===
-          '0x0000000000000000000000000000000000000000000000000000000000000000'
-      ) {
-        return
-      }
-
-      const [address] = bridgeInterface.decodeFunctionResult(
-        'getTokenWrappedAddress',
-        item.address,
-      )
+      if (isEmptyAddress(item.address)) return
 
       const token = l2Tokens.find((t) => t.id === item.id)
       assert(token, `${item.id} not found`)
@@ -125,7 +121,7 @@ export async function getAggLayerTokens(
         ),
         amount: {
           type: 'totalSupply' as const,
-          address: address,
+          address: item.address,
           chain: project.id,
           // Assumption: decimals on destination network are the same
           decimals: token.decimals,

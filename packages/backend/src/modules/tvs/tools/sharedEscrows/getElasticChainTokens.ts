@@ -15,6 +15,7 @@ import type { MulticallRequest } from '../../../../peripherals/multicall/types'
 import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import { createEscrowToken } from '../mapConfig'
+import { isEmptyAddress } from './isEmptyAddress'
 
 export const bridgeInterface = new utils.Interface([
   'function l2TokenAddress(address _l1Token) view returns (address)',
@@ -45,9 +46,11 @@ export async function getElasticChainTokens(
   const toResolve: { id: string; request: MulticallRequest }[] = []
 
   for (const token of l2Tokens) {
-    const cachedValue = await localStorage.getAddress(token.id)
+    const cachedValue = await localStorage.getAddress(
+      `${project.id}-${token.id}`,
+    )
     if (cachedValue !== undefined) {
-      logger.debug(`Cached value found for ${token.id}`)
+      logger.debug(`Cached value found for ${project.id}-${token.id}`)
       resolved.push({ id: token.id, address: cachedValue })
       continue
     }
@@ -63,82 +66,73 @@ export async function getElasticChainTokens(
     })
   }
 
-  const block = await rpcClient.getLatestBlockNumber()
   if (toResolve.length > 0) {
     logger.info(
       `Querying for ElasticChain L2 tokens addresses for project ${project.id}...`,
     )
+    const block = await rpcClient.getLatestBlockNumber()
     const responses = await multicallClient.multicall(
       toResolve.map((e) => ({ ...e.request })),
       block,
     )
 
-    for (const index in toResolve) {
-      const id = toResolve[index].id
-      const address = responses[index].data.toString()
-      await localStorage.writeAddress(id, address)
-      resolved.push({ id, address })
-    }
+    await Promise.all(
+      toResolve.map(async (item, index) => {
+        const response = responses[index].data.toString()
+        let [address] = bridgeInterface.decodeFunctionResult(
+          'l2TokenAddress',
+          response,
+        )
+        if (!isEmptyAddress(address)) {
+          // try fetching totalSupply, if it does not fail then add token
+          const res = await rpcClient.call(encodeTotalSupply(address), block)
+          logger.info('Checking total supply')
+          if (res.length === 0) {
+            address = '0x'
+          }
+        }
+
+        await localStorage.writeAddress(`${project.id}-${item.id}`, address)
+        resolved.push({ id: item.id, address })
+      }),
+    )
   }
 
-  const l2TokensTvsConfigs = await Promise.all(
-    resolved.map(async (item) => {
-      if (
-        item.address === '0x' ||
-        item.address ===
-          '0x0000000000000000000000000000000000000000000000000000000000000000'
-      ) {
-        return
-      }
+  const l2TokensTvsConfigs = resolved.map((item) => {
+    if (isEmptyAddress(item.address)) return
 
-      const [address] = bridgeInterface.decodeFunctionResult(
-        'l2TokenAddress',
-        item.address,
-      )
+    const token = l2Tokens.find((t) => t.id === item.id)
+    assert(token, `${item.id} not found`)
 
-      try {
-        // try fetching totalSupply, if it does not fail then add token
-        const res = await rpcClient.call(encodeTotalSupply(address), block)
-        if (res.length === 0) {
-          throw new Error('Token does not exist')
-        }
+    const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
+      escrow,
+      chain,
+      token,
+    )
 
-        const token = l2Tokens.find((t) => t.id === item.id)
-        assert(token, `${item.id} not found`)
-
-        const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
-          escrow,
-          chain,
-          token,
-        )
-
-        return {
-          mode: 'auto' as const,
-          id: TokenId.create(project.id, token.symbol),
-          priceId: token.coingeckoId,
-          symbol: token.symbol,
-          name: token.name,
-          iconUrl: token.iconUrl,
-          category: token.category,
-          source: 'canonical' as const,
-          isAssociated: !!project.tvlConfig.associatedTokens?.includes(
-            token.symbol,
-          ),
-          amount: {
-            type: 'totalSupply' as const,
-            address: address,
-            chain: project.id,
-            // Assumption: decimals on destination network are the same
-            decimals: token.decimals,
-            sinceTimestamp,
-            ...(untilTimestamp ? { untilTimestamp } : {}),
-          },
-        }
-      } catch {
-        return
-      }
-    }),
-  )
+    return {
+      mode: 'auto' as const,
+      id: TokenId.create(project.id, token.symbol),
+      priceId: token.coingeckoId,
+      symbol: token.symbol,
+      name: token.name,
+      iconUrl: token.iconUrl,
+      category: token.category,
+      source: 'canonical' as const,
+      isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+        token.symbol,
+      ),
+      amount: {
+        type: 'totalSupply' as const,
+        address: item.address,
+        chain: project.id,
+        // Assumption: decimals on destination network are the same
+        decimals: token.decimals,
+        sinceTimestamp,
+        ...(untilTimestamp ? { untilTimestamp } : {}),
+      },
+    }
+  })
 
   const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
     escrow,
