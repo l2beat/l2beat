@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import { Skeleton } from '~/components/core/skeleton'
 import { ProjectCombobox } from '~/components/project-combobox'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
@@ -37,11 +38,15 @@ export function ProjectDaThroughputByProjectChart({
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
-          <ProjectCombobox
-            allProjects={allProjects}
-            projects={selectedProjects ?? allProjects.slice(0, 8)}
-            setProjects={setSelectedProjects}
-          />
+          {!data && isLoading ? (
+            <Skeleton className="h-8 w-44" />
+          ) : (
+            <ProjectCombobox
+              allProjects={allProjects}
+              projects={selectedProjects ?? allProjects.slice(0, 8)}
+              setProjects={setSelectedProjects}
+            />
+          )}
           <ChartTimeRangeControls
             name="Range"
             value={range}
