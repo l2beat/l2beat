@@ -122,7 +122,7 @@ export function DaThroughputByProjectChart({
             },
           },
         })}
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
+        <ChartTooltip content={<CustomTooltip denominator={denominator} />} />
       </BarChart>
     </ChartContainer>
   )
@@ -132,11 +132,12 @@ function CustomTooltip({
   active,
   payload,
   label,
-  unit,
-}: TooltipProps<number, string> & { unit: string }) {
+  denominator: mainDenominator,
+}: TooltipProps<number, string> & { denominator: number }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   payload.sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
+
   return (
     <ChartTooltipWrapper>
       <div className="text-secondary">
@@ -148,6 +149,10 @@ function CustomTooltip({
           if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
+          const value = entry.value ?? 0
+          const valueInBytes = value * mainDenominator
+          const { unit, denominator } = getDaDataParams(valueInBytes)
+          const formattedValue = (valueInBytes / denominator).toFixed(2)
           return (
             <div
               key={index}
@@ -161,7 +166,7 @@ function CustomTooltip({
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
-                {entry.value?.toFixed(2)} {unit}
+                {formattedValue} {unit}
               </span>
             </div>
           )
