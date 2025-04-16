@@ -1,12 +1,20 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL3 } from '../../templates/upcoming'
+import { underReviewL3 } from '../../templates/underReview'
 
-export const onyx: ScalingProject = upcomingL3({
+export const onyx: ScalingProject = underReviewL3({
   id: 'onyx',
   capability: 'universal',
   addedAt: UnixTime(1744637831),
-  hostChain: ProjectId('arbitrum'),
+  hostChain: ProjectId('base'),
+  badges: [
+    BADGES.RaaS.Conduit,
+    BADGES.Stack.Orbit,
+    BADGES.DA.DAC,
+    BADGES.VM.EVM,
+  ],
+  associatedTokens: ['XCN'],
   display: {
     name: 'Onyx',
     slug: 'onyx',
@@ -20,7 +28,7 @@ export const onyx: ScalingProject = upcomingL3({
       repositories: ['https://github.com/Onyx-Protocol'],
       documentation: ['https://docs.onyx.org/'],
       explorers: ['https://explorer.onyx.org/'],
-      apps: ['https://app.onyx.org/'],
+      apps: ['https://app.onyx.org/', 'https://bridge.onyx.org/'],
       socialMedia: [
         'https://x.com/OnyxDAO',
         'https://t.me/Onyx',
@@ -28,4 +36,32 @@ export const onyx: ScalingProject = upcomingL3({
       ],
     },
   },
+  chainConfig: {
+    name: 'onyx',
+    gasTokens: ['XCN'],
+    chainId: 80888,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.onyx.org',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
+  },
+  escrows: [
+    {
+      address: EthereumAddress('0xcdf10130c75D42a3880Ae521734EaA8631aC2905'), // bridge
+      sinceTimestamp: UnixTime(1737855297),
+      tokens: ['XCN'],
+      chain: 'base',
+    },
+  ],
 })

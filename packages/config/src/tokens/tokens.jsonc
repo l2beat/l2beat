@@ -3349,6 +3349,12 @@
   ],
   "base": [
     {
+      "symbol": "XCN",
+      "address": "0x9c632e6aaa3ea73f91554f8a3cb2ed2f29605e0c",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "DOGINME",
       "address": "0x6921b130d297cc43754afba22e5eac0fbf8db75b",
       "source": "native",
