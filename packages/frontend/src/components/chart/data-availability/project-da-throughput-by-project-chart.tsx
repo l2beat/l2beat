@@ -12,16 +12,20 @@ import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
 
 export function ProjectDaThroughputByProjectChart({
   daLayer,
-}: { daLayer: string }) {
-  const [range, setRange] = useState<DaThroughputTimeRange>('1y')
-
+  range,
+  setRange,
+}: {
+  daLayer: string
+  range: DaThroughputTimeRange
+  setRange: (range: DaThroughputTimeRange) => void
+}) {
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
-    range: range,
+    range,
     daLayer,
   })
 
   const allProjects = useMemo(() => {
-    // We want to get latest top 8 projects.
+    // We want to get latest top projects.
     return data
       ? uniq([...data].reverse().flatMap(([_, values]) => Object.keys(values)))
       : []
@@ -33,6 +37,8 @@ export function ProjectDaThroughputByProjectChart({
     [data],
   )
 
+  const projectsToShow = selectedProjects ?? allProjects.slice(0, 8)
+
   return (
     <div>
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
@@ -43,7 +49,7 @@ export function ProjectDaThroughputByProjectChart({
           ) : (
             <ProjectCombobox
               allProjects={allProjects}
-              projects={selectedProjects ?? allProjects.slice(0, 8)}
+              projects={projectsToShow}
               setProjects={setSelectedProjects}
             />
           )}
@@ -62,7 +68,7 @@ export function ProjectDaThroughputByProjectChart({
         data={data}
         range={range}
         isLoading={isLoading}
-        selectedProjects={selectedProjects ?? allProjects.slice(0, 8)}
+        projectsToShow={projectsToShow}
       />
     </div>
   )

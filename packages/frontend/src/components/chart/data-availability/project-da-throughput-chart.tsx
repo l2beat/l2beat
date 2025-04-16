@@ -1,111 +1,55 @@
 'use client'
-
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
-import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
-import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
-import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
-import { Checkbox } from '~/components/core/checkbox'
-import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
-import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
-import { api } from '~/trpc/react'
-import type { ProjectChartDataWithConfiguredThroughput } from './project-da-absolute-throughput-chart'
-import { ProjectDaAbsoluteThroughputChart } from './project-da-absolute-throughput-chart'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { useState } from 'react'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import type { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
+import { ProjectDaThroughputAbsoluteChart } from './project-da-throughput-absolute-chart'
+import { ProjectDaThroughputByProjectChart } from './project-da-throughput-by-project-chart'
 
 interface Props {
-  projectId: ProjectId
+  daLayer: ProjectId
   configuredThroughputs: DaLayerThroughput[]
   milestones: Milestone[]
 }
 
 export function ProjectDaThroughputChart({
-  projectId,
+  daLayer,
   configuredThroughputs,
   milestones,
 }: Props) {
+  const [type, setType] = useState<'absolute' | 'by-project'>('absolute')
   const [range, setRange] = useState<DaThroughputTimeRange>('1y')
-  const [showMax, setShowMax] = useState(true)
-
-  const { data, isLoading } = api.da.projectChart.useQuery({
-    range,
-    projectId,
-  })
-
-  const chartRange = useMemo(
-    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
-    [data],
-  )
-
-  const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
-    data?.chart,
-    configuredThroughputs,
-  )
-
   return (
     <div>
-      <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
-        <ProjectChartTimeRange range={chartRange} />
-        <div className="flex justify-between gap-1">
-          <Checkbox
-            name="showMaximumThroughput"
-            checked={showMax}
-            onCheckedChange={(state) => setShowMax(!!state)}
-          >
-            Show maximum
-          </Checkbox>
-          <ChartTimeRangeControls
-            name="Range"
-            value={range}
-            setValue={setRange}
-            options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
-              value: v,
-              label: v.toUpperCase(),
-            }))}
-          />
-        </div>
-      </div>
-      <ProjectDaAbsoluteThroughputChart
-        projectId={projectId}
-        dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
-        isLoading={isLoading}
-        showMax={showMax}
-        milestones={milestones}
-      />
+      <RadioGroup
+        name="type"
+        value={type}
+        onValueChange={(value) => setType(value as 'absolute' | 'by-project')}
+        className="w-full"
+      >
+        <RadioGroupItem value="absolute" className="w-full">
+          Absolute
+        </RadioGroupItem>
+        <RadioGroupItem value="by-project" className="w-full">
+          By Project
+        </RadioGroupItem>
+      </RadioGroup>
+      {type === 'absolute' ? (
+        <ProjectDaThroughputAbsoluteChart
+          daLayer={daLayer}
+          configuredThroughputs={configuredThroughputs}
+          milestones={milestones}
+          range={range}
+          setRange={setRange}
+        />
+      ) : (
+        <ProjectDaThroughputByProjectChart
+          daLayer={daLayer}
+          range={range}
+          setRange={setRange}
+        />
+      )}
     </div>
   )
-}
-
-function getDataWithConfiguredThroughputs(
-  data: ProjectDaThroughputDataPoint[] | undefined,
-  configuredThroughputs: DaLayerThroughput[],
-): ProjectChartDataWithConfiguredThroughput[] | undefined {
-  const processedConfigs = configuredThroughputs
-    .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .map((config, i, arr) => {
-      const batchesPerDay = UnixTime.DAY / config.frequency
-      const nextConfig = arr[i + 1]
-      return {
-        ...config,
-        sinceTimestamp: UnixTime.toStartOf(config.sinceTimestamp, 'day'),
-        untilTimestamp: nextConfig
-          ? UnixTime.toStartOf(nextConfig.sinceTimestamp, 'day')
-          : Infinity,
-        maxDaily: config.size * batchesPerDay,
-        targetDaily: config.target ? config.target * batchesPerDay : null,
-      }
-    })
-
-  return data?.map(([timestamp, value]) => {
-    const config = processedConfigs.find(
-      (c) => timestamp >= c.sinceTimestamp && timestamp < c.untilTimestamp,
-    )
-
-    return [
-      timestamp,
-      value ?? 0,
-      config?.targetDaily ?? null,
-      config?.maxDaily ?? null,
-    ]
-  })
 }

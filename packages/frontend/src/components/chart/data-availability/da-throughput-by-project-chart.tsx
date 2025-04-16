@@ -25,18 +25,18 @@ interface Props {
   data: DaThroughputChartDataByChart | undefined
   isLoading: boolean
   range: DaThroughputTimeRange
-  selectedProjects: string[]
+  projectsToShow: string[]
 }
 
 export function DaThroughputByProjectChart({
   data,
   isLoading,
   range,
-  selectedProjects,
+  projectsToShow,
 }: Props) {
   const colors = useMemo(
-    () => generateAccessibleColors(selectedProjects.length),
-    [selectedProjects],
+    () => generateAccessibleColors(projectsToShow.length),
+    [projectsToShow],
   )
 
   const max = useMemo(() => {
@@ -45,19 +45,19 @@ export function DaThroughputByProjectChart({
           ...data.map(([_, values]) =>
             sum(
               Object.entries(values).map(([slug, value]) => {
-                if (!selectedProjects.includes(slug)) return 0
+                if (!projectsToShow.includes(slug)) return 0
                 return value
               }),
             ),
           ),
         )
       : undefined
-  }, [data, selectedProjects])
+  }, [data, projectsToShow])
 
   const { denominator, unit } = getDaDataParams(max)
 
   const chartMeta = useMemo(() => {
-    return selectedProjects?.reduce((acc, slug) => {
+    return projectsToShow?.reduce((acc, slug) => {
       if (!acc[slug]) {
         acc[slug] = {
           label: slug,
@@ -68,10 +68,10 @@ export function DaThroughputByProjectChart({
 
       return acc
     }, {} as ChartMeta)
-  }, [colors, selectedProjects])
+  }, [colors, projectsToShow])
 
   const chartData = useMemo(() => {
-    if (selectedProjects.length === 0) {
+    if (projectsToShow.length === 0) {
       return []
     }
 
@@ -82,7 +82,7 @@ export function DaThroughputByProjectChart({
           ...Object.fromEntries(
             Object.entries(values)
               .map(([key, value]) => {
-                if (!selectedProjects.includes(key)) return
+                if (!projectsToShow.includes(key)) return
                 return [key, value / denominator] as const
               })
               .filter((v) => v !== undefined),
@@ -90,7 +90,7 @@ export function DaThroughputByProjectChart({
         }
       }) ?? []
     )
-  }, [data, selectedProjects, denominator])
+  }, [data, projectsToShow, denominator])
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -101,7 +101,7 @@ export function DaThroughputByProjectChart({
         barCategoryGap={range === '30d' ? 4 : 0}
       >
         <ChartLegend content={<ChartLegendContent />} />
-        {selectedProjects?.map((slug) => (
+        {projectsToShow?.map((slug) => (
           <Bar
             key={slug}
             dataKey={slug}
