@@ -1,7 +1,7 @@
-import { UnixTime, ProjectId, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
-import { BADGES } from '../../common/badges'
 
 export const appchain: ScalingProject = underReviewL2({
   id: 'appchain',
