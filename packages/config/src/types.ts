@@ -69,11 +69,11 @@ export interface BaseProject {
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
   addedAt: UnixTime
-  colors?: ProjectColors
 
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
+  colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
 
@@ -127,12 +127,11 @@ export interface BaseProject {
   hasActivity?: true
 }
 
+// #region common data
 export interface ProjectColors {
   primary: string
   secondary: string
 }
-
-// #region common data
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined

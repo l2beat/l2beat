@@ -1,11 +1,11 @@
-import { existsSync, readFileSync } from 'fs'
-import { join } from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, type Token, UnixTime } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
 import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
@@ -69,8 +69,8 @@ function layer2Or3ToProject(
     slug: p.display.slug,
     addedAt: p.addedAt,
 
-    colors: p.colors,
     // data
+    colors: p.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,

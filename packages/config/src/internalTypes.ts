@@ -58,6 +58,7 @@ export interface ScalingProject {
   isUpcoming?: boolean
   /** Has this project changed and is under review? */
   isUnderReview?: boolean
+  /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
   colors?: ProjectColors
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
