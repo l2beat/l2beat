@@ -292,6 +292,7 @@ export interface ProjectBridgeRisks {
   validatedBy: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
+  livenessFailure?: TableReadyValue
 }
 
 export interface ProjectBridgeTechnology {
