@@ -1,3 +1,9 @@
+/**
+ * Colorblind friendly color generation strategy:
+ * - 11 colors is predefined in the base palette (Okabe-Ito + CARTO Safe)
+ * - If more than 11 colors are needed, we use the CIELab space to generate new colors, however it does not guarantee that the colors are colorblind friendly
+ */
+
 type Color = { L: number; a: number; b: number } // Lab color object
 
 const MIN_LAB_DISTANCE = 20
