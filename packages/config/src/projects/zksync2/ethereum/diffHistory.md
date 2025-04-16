@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x2bd1f58d02abda39b2ad7b377661eb75ea27d478
+
+# Diff at Wed, 16 Apr 2025 12:33:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22217035
+- current block number: 22281580
+
+## Description
+
+TransactionFilterer added. Risks already reflect this and the filterer contract will show up as unverified/red.
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","via":[]}
+      issuedPermissions.2.to:
+-        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
++        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      issuedPermissions.1.to:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78"
+      issuedPermissions.1.description:
+-        "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
++        "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x60e0435f0f3c4ae272da6f155e342e1d09eb01be
 
 # Diff at Thu, 10 Apr 2025 14:43:42 GMT:
