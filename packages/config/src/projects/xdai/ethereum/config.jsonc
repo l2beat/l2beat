@@ -22,13 +22,13 @@
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "GnosisBridgeGovernanceMultisig"
   },
   "overrides": {
-    "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD":{
+    "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": {
       // HashiManager
       "proxyType": "Eternal Storage proxy",
       "fields": {
-        "HASHI_IS_MANDATORY":{
+        "HASHI_IS_MANDATORY": {
           "description": "If true, Hashi validation is mandatory",
-          "severity": "HIGH",
+          "severity": "HIGH"
         },
         "targetAddress": {
           "description": "Address of the target contract on GnosisChain",
