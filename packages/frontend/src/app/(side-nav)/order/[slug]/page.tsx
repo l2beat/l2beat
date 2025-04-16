@@ -9,6 +9,7 @@ import { FullGreenPizzaSymbol } from '~/components/rosette/pizza/real-elements/f
 import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-red-pizza'
 import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import type { RosetteValue } from '~/components/rosette/types'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
 type Params = {
@@ -19,6 +20,7 @@ type Props = {
   params: Promise<Params>
 }
 export async function generateStaticParams(): Promise<Params[]> {
+  if (env.VERCEL_ENV !== 'production') return []
   const projects = await ps.getProjects({
     where: ['scalingRisks'],
   })

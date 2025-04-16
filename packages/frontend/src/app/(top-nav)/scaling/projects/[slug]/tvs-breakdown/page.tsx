@@ -18,6 +18,8 @@ import { TvsBreakdownPageHeader } from './_components/tvs-breakdown-page-header'
 import { TvsBreakdownSummaryBox } from './_components/tvs-breakdown-summary-box'
 
 export async function generateStaticParams() {
+  if (env.VERCEL_ENV !== 'production') return []
+
   const projects = await ps.getProjects({ where: ['isScaling'] })
   return projects.map((project) => ({ slug: project.slug }))
 }
