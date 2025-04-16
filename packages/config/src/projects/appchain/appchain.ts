@@ -1,18 +1,25 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, ProjectId, EthereumAddress } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
+import { BADGES } from '../../common/badges'
 
-export const appchain: ScalingProject = upcomingL2({
+export const appchain: ScalingProject = underReviewL2({
   id: 'appchain',
   addedAt: UnixTime(1744635768), // 2025-04-14T14:42:48Z
   capability: 'universal',
+  badges: [
+    BADGES.RaaS.Caldera,
+    BADGES.Stack.Orbit,
+    BADGES.DA.DAC,
+    BADGES.VM.EVM,
+  ],
   display: {
     name: 'Appchain',
     slug: 'appchain',
     description:
-      'Appchain exists to fill blockspace with transactions from apps that provide value to real people solving real problems.',
+      'AppChain is an incentivized Layer 2 that allows developers to capture the value their dApps create, enabling sustainable economic models.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     stack: 'Arbitrum',
     links: {
       websites: ['https://appchain.xyz/'],
@@ -26,4 +33,31 @@ export const appchain: ScalingProject = upcomingL2({
       ],
     },
   },
+  chainConfig: {
+    name: 'appchain',
+    chainId: 466,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.appchain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
+  activityConfig: {
+    type: 'block',
+    startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
+  },
+  escrows: [
+    {
+      address: EthereumAddress('0x19df42E085e2c3fC4497172E412057F54D9f013E'), // bridge
+      sinceTimestamp: UnixTime(1731057011),
+      tokens: ['ETH'],
+      chain: 'ethereum',
+    },
+  ],
 })
