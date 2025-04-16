@@ -10,7 +10,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('degen', 'base')
 
 export const degen: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1712135735), // 2024-04-03T09:15:35Z
+  addedAt: UnixTime(1711584000), // 2024-03-28T00:00:00Z
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],
   additionalPurposes: ['Social'],
@@ -79,6 +79,13 @@ export const degen: ScalingProject = orbitStackL3({
       description:
         'Degen Chain halts for two days due to a chain misconfiguration.',
       type: 'incident',
+    },
+    {
+      title: 'Degen Chain launches Mainnet',
+      date: '2024-03-28T00:00:00Z',
+      url: 'https://x.com/syndicateio/status/1773351144858750990',
+      description: 'Degen Chain launches its mainnet.',
+      type: 'general',
     },
   ],
   customDa: AnytrustDAC({ discovery }),

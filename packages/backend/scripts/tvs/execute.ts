@@ -20,6 +20,7 @@ import {
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
 import { getEffectiveConfig } from '../../src/modules/tvs/tools/getEffectiveConfig'
 import type {
   TokenValue,
@@ -54,14 +55,17 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
-    const localExecutor = new LocalExecutor(ps, env, logger)
+    const localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    const localExecutor = new LocalExecutor(ps, env, logger, localStorage)
+
+    const start = Date.now()
 
     const timestampForTvs =
       args.timestamp ??
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     logger.info(
-      `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toLocaleString()})`,
+      `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toUTCString()})`,
     )
 
     if (!args.project) {
@@ -196,6 +200,9 @@ const cmd = command({
         JSON.stringify(tvsBreakdown, null, 2),
       )
     }
+
+    const duration = (Date.now() - start) / 1000
+    logger.info(`TVS execution completed in ${duration.toFixed(2)}s`)
 
     process.exit(0)
   },

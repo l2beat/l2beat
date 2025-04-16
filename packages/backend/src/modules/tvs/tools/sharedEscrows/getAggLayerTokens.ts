@@ -1,4 +1,5 @@
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '@l2beat/backend-shared'
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   AggLayerEscrow,
   ChainConfig,
@@ -12,8 +13,10 @@ import { utils } from 'ethers'
 import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../../peripherals/multicall/types'
+import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
 import { createEscrowToken } from '../mapConfig'
+import { isEmptyAddress } from './isEmptyAddress'
 
 export const bridgeInterface = new utils.Interface([
   'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
@@ -25,6 +28,8 @@ export async function getAggLayerTokens(
   escrow: ProjectTvlEscrow & { sharedEscrow: AggLayerEscrow },
   chainOfL1Escrow: ChainConfig,
   rpcClient: RpcClient,
+  localStorage: LocalStorage,
+  logger: Logger,
 ): Promise<TvsToken[]> {
   const chain = project.chainConfig
   assert(chain, `${project.id}: chain should be defined`)
@@ -40,34 +45,61 @@ export async function getAggLayerTokens(
       !escrow.sharedEscrow.tokensToAssignFromL1?.includes(t.symbol),
   )
 
-  const encoded: MulticallRequest[] = l2Tokens.map((token) => ({
-    address: AGGLAYER_L2BRIDGE_ADDRESS,
-    data: Bytes.fromHex(
-      bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
-        ORIGIN_NETWORK,
-        token.address,
-      ]),
-    ),
-  }))
+  const resolved: { id: string; address: string }[] = []
+  const toResolve: { id: string; request: MulticallRequest }[] = []
 
-  const block = await rpcClient.getLatestBlockNumber()
-  const responses = await multicallClient.multicall(encoded, block)
+  for (const token of l2Tokens) {
+    const cachedValue = await localStorage.getAddress(
+      `${project.id}-${token.id}`,
+    )
+    if (cachedValue !== undefined) {
+      logger.debug(`Cached value found for ${project.id}-${token.id}`)
+      resolved.push({ id: token.id, address: cachedValue })
+      continue
+    }
 
-  const l2TokensTvsConfigs = responses
-    .map((response, index) => {
-      const token = l2Tokens[index]
-      if (
-        response.data.toString() === '0x' ||
-        response.data.toString() ===
-          '0x0000000000000000000000000000000000000000000000000000000000000000'
-      ) {
-        return
-      }
+    toResolve.push({
+      id: token.id,
+      request: {
+        address: AGGLAYER_L2BRIDGE_ADDRESS,
+        data: Bytes.fromHex(
+          bridgeInterface.encodeFunctionData('getTokenWrappedAddress', [
+            ORIGIN_NETWORK,
+            token.address,
+          ]),
+        ),
+      },
+    })
+  }
 
+  if (toResolve.length > 0) {
+    logger.info(
+      `Querying for AggLayer L2 tokens addresses for project ${project.id}...`,
+    )
+    const block = await rpcClient.getLatestBlockNumber()
+    const responses = await multicallClient.multicall(
+      toResolve.map((e) => ({ ...e.request })),
+      block,
+    )
+
+    for (const index in toResolve) {
+      const id = toResolve[index].id
+      const response = responses[index].data.toString()
       const [address] = bridgeInterface.decodeFunctionResult(
         'getTokenWrappedAddress',
-        response.data.toString(),
+        response,
       )
+      await localStorage.writeAddress(`${project.id}-${id}`, address)
+      resolved.push({ id, address })
+    }
+  }
+
+  const l2TokensTvsConfigs = resolved
+    .map((item) => {
+      if (isEmptyAddress(item.address)) return
+
+      const token = l2Tokens.find((t) => t.id === item.id)
+      assert(token, `${item.id} not found`)
 
       const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
         escrow,
@@ -89,7 +121,7 @@ export async function getAggLayerTokens(
         ),
         amount: {
           type: 'totalSupply' as const,
-          address: address,
+          address: item.address,
           chain: project.id,
           // Assumption: decimals on destination network are the same
           decimals: token.decimals,

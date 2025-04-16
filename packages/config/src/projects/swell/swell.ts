@@ -17,7 +17,7 @@ const sequencerAddress = discovery.getContractValue<EthereumAddress>(
 )
 
 export const swell = opStackL2({
-  addedAt: UnixTime(1712341625), // 2024-04-05T18:27:05Z
+  addedAt: UnixTime(1734566400), // 2024-12-19T00:00:00Z
   discovery,
   genesisTimestamp,
   additionalBadges: [BADGES.RaaS.AltLayer],
@@ -67,6 +67,7 @@ export const swell = opStackL2({
       },
     ],
   },
+  hasSuperchainScUpgrades: true,
   nonTemplateTrackedTxs: [
     {
       uses: [

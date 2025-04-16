@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "educhain-BLEND",
+      "priceId": "blend-3",
+      "symbol": "BLEND",
+      "name": "Blend Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54778/large/Blend0.png?1741517155",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "blend-3",
+        "decimals": 18,
+        "sinceTimestamp": 1741478400,
+        "address": "0x526E8a66E357FFeaEeEc6d7Be1E5eA44a788dd1d",
+        "chain": "educhain"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "educhain-DAI-1",
       "priceId": "dai",
       "symbol": "DAI",

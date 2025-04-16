@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x8dabf279c5a15c674cdc1acd4a99878bac6d89c3
+
+# Diff at Mon, 14 Apr 2025 12:48:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22d5bd9958c2ffcb130d83154e0650da7c63f262 block: 1077934
+- current block number: 1107577
+
+## Description
+
+supported domains added.
+
+## Watched changes
+
+```diff
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      values.supportedDomains.21:
++        324
+      values.supportedDomains.20:
++        146
+      values.supportedDomains.19:
++        137
+      values.supportedDomains.18:
++        130
+      values.supportedDomains.17:
+-        324
++        100
+      values.supportedDomains.16:
+-        137
++        1
+      values.supportedDomains.15:
+-        130
++        8453
+      values.supportedDomains.14:
+-        100
++        5000
+      values.supportedDomains.13:
+-        1
++        2020
+      values.supportedDomains.12:
+-        8453
++        167000
+      values.supportedDomains.11:
+-        2020
++        81457
+      values.supportedDomains.10:
+-        167000
++        80094
+      values.supportedDomains.9:
+-        81457
++        59144
+      values.supportedDomains.8:
+-        59144
++        57073
+    }
+```
+
 Generated with discovered.json: 0xec98cd69992257a9ad296440e0d88daeb132bbe1
 
 # Diff at Thu, 10 Apr 2025 14:44:06 GMT:

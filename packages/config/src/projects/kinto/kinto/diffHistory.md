@@ -1,3 +1,457 @@
+Generated with discovered.json: 0xac939f6101127611115f3f1fbbe449a8fda73cfc
+
+# Diff at Tue, 15 Apr 2025 08:48:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 837019
+- current block number: 837019
+
+## Description
+
+config related: beacon template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 837019 (main branch discovery), not current.
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      description:
+-        "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users."
++        "A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation."
+      template:
++        "global/UpgradeableBeacon"
+      issuedPermissions:
++        [{"permission":"interact","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"change the beacon implementation.","via":[]}]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x87f0eE85bF3198654900a422832157abBba30828"
+      receivedPermissions.0.description:
++        "change the beacon implementation."
+    }
+```
+
+Generated with discovered.json: 0x8dbbe54e20d2bea1b92910b5fcceb758cbe3ef7e
+
+# Diff at Mon, 14 Apr 2025 13:35:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@22d5bd9958c2ffcb130d83154e0650da7c63f262 block: 834543
+- current block number: 837019
+
+## Description
+
+All AccessManager queued txs are executed. Except for the target delays that will take 1 more day, the L2 governance setup is complete.
+
+```
+Found 3 non-compliant value(s):
+
+- Target Admin Delay: KintoWalletFactory (0x8a4720488ca32f1223ccfe5a087e250fe3bc5d75)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+    Details: Pending change: 12d effective 2025-04-15T15:52:45.000Z
+
+- Target Admin Delay: KintoAppRegistry (0x5a2b641b84b0230c8e75f55d5afd27f4dbd59d5b)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+    Details: Pending change: 12d effective 2025-04-15T15:52:44.000Z
+
+- Target Admin Delay: KintoID (0xf369f78e3a0492cc4e96a90dae0728a38498e9c7)
+    Current: 950400 (11d)
+    Required: >= 1036800 (12d)
+    Details: Pending change: 12d effective 2025-04-15T15:52:45.000Z
+```
+
+## Watched changes
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc04b35188931b9e8fc65adf08c2b701d5ec4d4776ecac7b19256f900184e935a"
+      values.$implementation:
+-        "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"
++        "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D"
+      values.$pastUpgrades.33:
++        ["2024-05-31T19:14:54.000Z","0x36c58600e88f27fe63c85880d83f4b59d3dcbdb452fc4d8c493f765f49140f7d",["0x3Ff8593329364dCDC7272fAcb853c8FeC2929B03"]]
+      values.$pastUpgrades.32.2:
+-        "0x36c58600e88f27fe63c85880d83f4b59d3dcbdb452fc4d8c493f765f49140f7d"
++        "0x033e14c988ea46e1f6aa56bc4ce6e85c124cedeec4e1260f69add97f97a66286"
+      values.$pastUpgrades.32.1.0:
+-        "0x3Ff8593329364dCDC7272fAcb853c8FeC2929B03"
++        "0xdDB14fAD9060afCA4FC5E1Ec108261B465Df285F"
+      values.$pastUpgrades.32.0:
+-        "2024-05-31T19:14:54.000Z"
++        "2024-07-04T21:11:59.000Z"
+      values.$pastUpgrades.31.2:
+-        "0x033e14c988ea46e1f6aa56bc4ce6e85c124cedeec4e1260f69add97f97a66286"
++        "0x9a0a1e68a7096515886517da175cebb6bca1394817e4b82ef7a51a92854de83c"
+      values.$pastUpgrades.31.1.0:
+-        "0xdDB14fAD9060afCA4FC5E1Ec108261B465Df285F"
++        "0x43Ab055B44327EF3424b51e974960840d721e4D8"
+      values.$pastUpgrades.31.0:
+-        "2024-07-04T21:11:59.000Z"
++        "2024-05-22T23:17:34.000Z"
+      values.$pastUpgrades.30.2:
+-        "0x9a0a1e68a7096515886517da175cebb6bca1394817e4b82ef7a51a92854de83c"
++        ["0xaF80B25F650A66F5F8e8bc67697C2160024b6Dcf"]
+      values.$pastUpgrades.30.1:
+-        ["0x43Ab055B44327EF3424b51e974960840d721e4D8"]
++        "0x4b63dc55ffb56340d415484cb5215c8f35d05db8cab764b350872172ae75500d"
+      values.$pastUpgrades.30.0:
+-        "2024-05-22T23:17:34.000Z"
++        "2024-06-29T15:27:31.000Z"
+      values.$pastUpgrades.29.2.0:
+-        "0xaF80B25F650A66F5F8e8bc67697C2160024b6Dcf"
++        "0xd87FB0bF3c38f216bD1604bFa4d262F95409227d"
+      values.$pastUpgrades.29.1:
+-        "0x4b63dc55ffb56340d415484cb5215c8f35d05db8cab764b350872172ae75500d"
++        "0xb93d5f824b37c9ebd53ba4173510c3ed01c8279fa77897f718287d99f45144d7"
+      values.$pastUpgrades.29.0:
+-        "2024-06-29T15:27:31.000Z"
++        "2023-12-31T22:08:08.000Z"
+      values.$pastUpgrades.28.2:
+-        ["0xd87FB0bF3c38f216bD1604bFa4d262F95409227d"]
++        "2024-01-23T21:33:14.000Z"
+      values.$pastUpgrades.28.1:
+-        "0xb93d5f824b37c9ebd53ba4173510c3ed01c8279fa77897f718287d99f45144d7"
++        ["0xAe84C7E23240Dc11f0B2711C20aEDE81E5a28fF2"]
+      values.$pastUpgrades.28.0:
+-        "2023-12-31T22:08:08.000Z"
++        "0x414470a46d49f3adbea31b026b31ee0310bf5f14b6a047163b3ae2b2d1daee76"
+      values.$pastUpgrades.27.2:
+-        "2024-01-23T21:33:14.000Z"
++        ["0x667a0A293B6a95841dB5f0Bbf0F02e8e5F71C8e5"]
+      values.$pastUpgrades.27.1:
+-        ["0xAe84C7E23240Dc11f0B2711C20aEDE81E5a28fF2"]
++        "2024-08-27T16:05:25.000Z"
+      values.$pastUpgrades.27.0:
+-        "0x414470a46d49f3adbea31b026b31ee0310bf5f14b6a047163b3ae2b2d1daee76"
++        "0x2b935bf76847687fcd243758c04b4ab09489114b398400062a2f45a57ae64037"
+      values.$pastUpgrades.26.2:
+-        ["0x667a0A293B6a95841dB5f0Bbf0F02e8e5F71C8e5"]
++        "2024-02-15T06:48:10.000Z"
+      values.$pastUpgrades.26.1:
+-        "2024-08-27T16:05:25.000Z"
++        ["0x5248F94285c737Cd088c4d25bd68D45AFA258039"]
+      values.$pastUpgrades.26.0:
+-        "0x2b935bf76847687fcd243758c04b4ab09489114b398400062a2f45a57ae64037"
++        "0xe94e71b9178761f4e77efa1f8ac0db731607ee1efd75b8c68b632024edd26347"
+      values.$pastUpgrades.25.2:
+-        "2024-02-15T06:48:10.000Z"
++        "2024-05-24T01:55:24.000Z"
+      values.$pastUpgrades.25.1.0:
+-        "0x5248F94285c737Cd088c4d25bd68D45AFA258039"
++        "0x8E495c2d6Be781Bd668632AA387e3e1027E80240"
+      values.$pastUpgrades.25.0:
+-        "0xe94e71b9178761f4e77efa1f8ac0db731607ee1efd75b8c68b632024edd26347"
++        "0x76df358b38dd221b64d26546736753affa6a5f743664105039dd66e42c91a8f9"
+      values.$pastUpgrades.24.2:
+-        "2024-05-24T01:55:24.000Z"
++        ["0xB6026A3eB7ABee0fee3cAAb7BcfcBd6aDE5f0234"]
+      values.$pastUpgrades.24.1:
+-        ["0x8E495c2d6Be781Bd668632AA387e3e1027E80240"]
++        "0x2fac94819bd2af509b2ee22403fa3dbf56e5e46a95582af8174977988cebf294"
+      values.$pastUpgrades.24.0:
+-        "0x76df358b38dd221b64d26546736753affa6a5f743664105039dd66e42c91a8f9"
++        "2024-07-04T20:28:23.000Z"
+      values.$pastUpgrades.23.2:
+-        ["0xB6026A3eB7ABee0fee3cAAb7BcfcBd6aDE5f0234"]
++        "0x6307556dd70bee894ea0145fdc1e4f0044d7bedbd7ac3b25ae4b3b2d2a912ac5"
+      values.$pastUpgrades.23.1:
+-        "0x2fac94819bd2af509b2ee22403fa3dbf56e5e46a95582af8174977988cebf294"
++        ["0xa54Fe8f99dBB9EB64d7c4E243F3c6aa5De0483Df"]
+      values.$pastUpgrades.23.0:
+-        "2024-07-04T20:28:23.000Z"
++        "2024-06-15T22:07:48.000Z"
+      values.$pastUpgrades.22.2:
+-        "0x6307556dd70bee894ea0145fdc1e4f0044d7bedbd7ac3b25ae4b3b2d2a912ac5"
++        "2024-05-22T19:38:03.000Z"
+      values.$pastUpgrades.22.1.0:
+-        "0xa54Fe8f99dBB9EB64d7c4E243F3c6aa5De0483Df"
++        "0xF75dAc825E27f1A146fbd5e18681892D5cbca9E8"
+      values.$pastUpgrades.22.0:
+-        "2024-06-15T22:07:48.000Z"
++        "0xb8301be60b27d74a3cd93a176597b83d840390c34f35ed466f9c0b171904bf5d"
+      values.$pastUpgrades.21.2:
+-        "2024-05-22T19:38:03.000Z"
++        ["0xFF41064cC2cF1A76F4FD4f2235c766FDDFb7DCE1"]
+      values.$pastUpgrades.21.1:
+-        ["0xF75dAc825E27f1A146fbd5e18681892D5cbca9E8"]
++        "0xf7e3d8d5ddb65c6f03205fdf31223dcf00a488e884edd3f962478b3c56d230bb"
+      values.$pastUpgrades.21.0:
+-        "0xb8301be60b27d74a3cd93a176597b83d840390c34f35ed466f9c0b171904bf5d"
++        "2024-07-10T01:32:19.000Z"
+      values.$pastUpgrades.20.2:
+-        ["0xFF41064cC2cF1A76F4FD4f2235c766FDDFb7DCE1"]
++        "2024-09-20T16:00:22.000Z"
+      values.$pastUpgrades.20.1:
+-        "0xf7e3d8d5ddb65c6f03205fdf31223dcf00a488e884edd3f962478b3c56d230bb"
++        "0xcebb2902d18cd8a441747fb71e60ffd3d7bee0a66e8f763901cda3f81ab06a4d"
+      values.$pastUpgrades.20.0:
+-        "2024-07-10T01:32:19.000Z"
++        ["0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"]
+      values.$pastUpgrades.19.2:
+-        "2024-09-20T16:00:22.000Z"
++        "0x1bb7899ea6179a8bda54a07440e97b26a8b1205ca5dda1d61d186a96cc53d91f"
+      values.$pastUpgrades.19.1:
+-        "0xcebb2902d18cd8a441747fb71e60ffd3d7bee0a66e8f763901cda3f81ab06a4d"
++        ["0xA6ddF426008E8b7f1a70237bdEfafB5D928bA72E"]
+      values.$pastUpgrades.19.0:
+-        ["0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"]
++        "2024-04-29T23:39:05.000Z"
+      values.$pastUpgrades.18.2:
+-        "0x1bb7899ea6179a8bda54a07440e97b26a8b1205ca5dda1d61d186a96cc53d91f"
++        "2024-06-12T16:20:50.000Z"
+      values.$pastUpgrades.18.1:
+-        ["0xA6ddF426008E8b7f1a70237bdEfafB5D928bA72E"]
++        "0xed69774070322c707f1325542e505809f267ff84c27bf1f2b94acd6ef071a9d1"
+      values.$pastUpgrades.18.0:
+-        "2024-04-29T23:39:05.000Z"
++        ["0x5844A1629fC51439187093eDFd8bBD57109D858D"]
+      values.$pastUpgrades.17.2:
+-        "2024-06-12T16:20:50.000Z"
++        ["0x3deAbC32b749b95Df9B125822cCb123757c4d4F1"]
+      values.$pastUpgrades.17.1:
+-        "0xed69774070322c707f1325542e505809f267ff84c27bf1f2b94acd6ef071a9d1"
++        "0x7b8edbfb7a264c7bffbd818550f03bf610667cffb50556cd235733a93c87b5c9"
+      values.$pastUpgrades.17.0:
+-        ["0x5844A1629fC51439187093eDFd8bBD57109D858D"]
++        "2024-05-25T16:58:58.000Z"
+      values.$pastUpgrades.16.2.0:
+-        "0x3deAbC32b749b95Df9B125822cCb123757c4d4F1"
++        "0x1161a537aF45f4ca4AD984ECcf4a8E9692Bf2518"
+      values.$pastUpgrades.16.1:
+-        "0x7b8edbfb7a264c7bffbd818550f03bf610667cffb50556cd235733a93c87b5c9"
++        "2024-09-18T21:46:04.000Z"
+      values.$pastUpgrades.16.0:
+-        "2024-05-25T16:58:58.000Z"
++        "0x608c39049f980bfbbf9c7b906fe169958b276237fb9dad8ed8dedc600a168415"
+      values.$pastUpgrades.15.2:
+-        ["0x1161a537aF45f4ca4AD984ECcf4a8E9692Bf2518"]
++        "2024-05-23T00:36:09.000Z"
+      values.$pastUpgrades.15.1:
+-        "2024-09-18T21:46:04.000Z"
++        ["0x421459c9af07ccCadf6BCA52319835c2Bfb117e2"]
+      values.$pastUpgrades.15.0:
+-        "0x608c39049f980bfbbf9c7b906fe169958b276237fb9dad8ed8dedc600a168415"
++        "0x4534860f727b67344f7f32f4444e584b5bb32d5d34852903430558d31c8c618b"
+      values.$pastUpgrades.14.2:
+-        "2024-05-23T00:36:09.000Z"
++        "0x203e75dac211349a98abe410e4f91bb1f26389cf3af230cc29d4cfb4efe618d3"
+      values.$pastUpgrades.14.1.0:
+-        "0x421459c9af07ccCadf6BCA52319835c2Bfb117e2"
++        "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D"
+      values.$pastUpgrades.14.0:
+-        "0x4534860f727b67344f7f32f4444e584b5bb32d5d34852903430558d31c8c618b"
++        "2025-04-11T14:53:11.000Z"
+      values.$upgradeCount:
+-        33
++        34
+      values.RECOVERY_TIME:
+-        604800
++        1036800
+    }
+```
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      values.implementation:
+-        "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"
++        "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D"
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      values.factoryWalletVersion:
+-        34
++        35
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+      sourceHashes.0:
+-        "0xa0df8ed25313dba8d27c8b016413aa2843d038de01ddb01afe28b1d745427dbb"
++        "0xce66d9a3bd58c2c9f8e48c03ed48f8ad7db1575dfaabe7a982cbd657b9577990"
+      values.$implementation:
+-        "0x4aC06254558e144C41461a319822993900cE2eE4"
++        "0x1d61772AE2e157f9F6A4127526eD86AB5801a477"
+      values.$pastUpgrades.10:
++        ["2024-02-01T19:28:35.000Z","0x84b908e328466db6827fbfde299bd3084b48d27aac618ee825815f6ee590021d",["0xE5eBdFCB597DD84CFeA412278f1c46A0D83aaC39"]]
+      values.$pastUpgrades.9.2:
+-        "0x84b908e328466db6827fbfde299bd3084b48d27aac618ee825815f6ee590021d"
++        "0x452c7d1c49781ba0501dc0baba338ec790d9d73fbb65e8fab67b9313fe0bf633"
+      values.$pastUpgrades.9.1.0:
+-        "0xE5eBdFCB597DD84CFeA412278f1c46A0D83aaC39"
++        "0xa3625A24376C2eac96eDcF353C88F3F3a1De030a"
+      values.$pastUpgrades.9.0:
+-        "2024-02-01T19:28:35.000Z"
++        "2023-12-28T22:46:32.000Z"
+      values.$pastUpgrades.8.2:
+-        "0x452c7d1c49781ba0501dc0baba338ec790d9d73fbb65e8fab67b9313fe0bf633"
++        "2024-12-10T20:00:17.000Z"
+      values.$pastUpgrades.8.1:
+-        ["0xa3625A24376C2eac96eDcF353C88F3F3a1De030a"]
++        "0x9fa20142e6e04305e74314e6670ecbf65477f470a9251ec55dc52ddcd34940b1"
+      values.$pastUpgrades.8.0:
+-        "2023-12-28T22:46:32.000Z"
++        ["0xaa0726829d41E3C70B84Bc5390cce82afC56871A"]
+      values.$pastUpgrades.7.2:
+-        "2024-12-10T20:00:17.000Z"
++        "2024-01-15T16:36:39.000Z"
+      values.$pastUpgrades.7.1:
+-        "0x9fa20142e6e04305e74314e6670ecbf65477f470a9251ec55dc52ddcd34940b1"
++        ["0x2AA456d97fB8f75283327458920D4daA2BFe363e"]
+      values.$pastUpgrades.7.0:
+-        ["0xaa0726829d41E3C70B84Bc5390cce82afC56871A"]
++        "0x6bc0ebf4dca10e8817f37d144980b6908597ed327a05707ceda82f1398692959"
+      values.$pastUpgrades.6.2:
+-        "2024-01-15T16:36:39.000Z"
++        "2025-02-05T15:37:41.000Z"
+      values.$pastUpgrades.6.1:
+-        ["0x2AA456d97fB8f75283327458920D4daA2BFe363e"]
++        "0xee19b10811d98a79d18ea4dfd1684702c0e30070a2e3cf428de3799c257b83f8"
+      values.$pastUpgrades.6.0:
+-        "0x6bc0ebf4dca10e8817f37d144980b6908597ed327a05707ceda82f1398692959"
++        ["0x4aC06254558e144C41461a319822993900cE2eE4"]
+      values.$pastUpgrades.5.2:
+-        "2025-02-05T15:37:41.000Z"
++        ["0x1d61772AE2e157f9F6A4127526eD86AB5801a477"]
+      values.$pastUpgrades.5.1:
+-        "0xee19b10811d98a79d18ea4dfd1684702c0e30070a2e3cf428de3799c257b83f8"
++        "2025-04-11T14:53:11.000Z"
+      values.$pastUpgrades.5.0:
+-        ["0x4aC06254558e144C41461a319822993900cE2eE4"]
++        "0xd8aa458f29ed74a06b3f97a9455c2495bd8d32ea19cdc4764936a6b6e1d2404f"
+      values.$upgradeCount:
+-        10
++        11
+      values.EXIT_WINDOW_PERIOD:
+-        864000
++        1036800
+    }
+```
+
+## Source code changes
+
+```diff
+.../kinto/kinto/{.flat@834543 => .flat}/KintoID/KintoID.sol         | 6 +++---
+ .../kinto/kinto/{.flat@834543 => .flat}/KintoWallet/KintoWallet.sol | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 834543 (main branch discovery), not current.
+
+```diff
+    contract KintoSecurityCouncil_L2Alias (0x28fC10E12A78f986c78F973Fc70ED88072b34c8e) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","delay":950400,"description":"manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."}
+      receivedPermissions.2.description:
+-        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
++        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.1.delay:
+-        950400
+      receivedPermissions.1.description:
+-        "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
++        "confirm sanctions, making them permanent without providing an exit window."
+    }
+```
+
+```diff
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.5.description:
+-        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
++        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      receivedPermissions.1.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      receivedPermissions.1.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "approve smart wallet recoveries for any KintoWallet."
+      receivedPermissions.0.from:
+-        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.0.delay:
+-        604800
+      receivedPermissions.0.description:
+-        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      issuedPermissions.5:
++        {"permission":"interact","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":1036800,"description":"change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).","via":[]}
+      issuedPermissions.4.delay:
+-        1036800
+      issuedPermissions.4.description:
+-        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
++        "approve smart wallet recoveries for any KintoWallet."
+      issuedPermissions.3.delay:
+-        604800
++        950400
+      issuedPermissions.3.description:
+-        "change the configuration of all AccessManager permissions. The total delay can depend on the target of the configuration."
++        "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
+      issuedPermissions.2.delay:
+-        950400
++        604800
+      issuedPermissions.2.description:
+-        "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup."
++        "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations)."
+      issuedPermissions.1.to:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      issuedPermissions.1.delay:
+-        604800
+      issuedPermissions.1.description:
+-        "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory."
++        "confirm sanctions, making them permanent without providing an exit window."
+      values.edKintoMultisig2UPGRADER:
+-        604800
++++ description: Current execution delay for target calls.
+      values.edKintoMultisig2RECOVERY_APPROVER:
++        0
++++ description: Current execution delay for target calls.
+      values.edScSANCTIONER:
++        0
+      fieldMeta.edKintoMultisig2UPGRADER:
+-        {"severity":"HIGH","description":"Current execution delay for target calls."}
+      fieldMeta.edKintoMultisig2RECOVERY_APPROVER:
++        {"description":"Current execution delay for target calls."}
+      fieldMeta.edScSANCTIONER:
++        {"description":"Current execution delay for target calls."}
+    }
+```
+
 Generated with discovered.json: 0x5fe82d16fce68be5ddcf6ae92467e69733f2e713
 
 # Diff at Fri, 11 Apr 2025 06:44:50 GMT:
