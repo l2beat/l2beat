@@ -58,7 +58,7 @@ const getCachedDaThroughputChartByProjectData = cache(
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
   },
-  ['da-throughput-chart-by-project-datazzzz'],
+  ['da-throughput-chart-by-project-data'],
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
