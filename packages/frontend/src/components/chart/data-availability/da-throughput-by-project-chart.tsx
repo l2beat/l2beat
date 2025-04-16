@@ -44,8 +44,8 @@ export function DaThroughputByProjectChart({
       ? Math.max(
           ...data.map(([_, values]) =>
             sum(
-              Object.entries(values).map(([slug, value]) => {
-                if (!projectsToShow.includes(slug)) return 0
+              Object.entries(values).map(([project, value]) => {
+                if (!projectsToShow.includes(project)) return 0
                 return value
               }),
             ),
@@ -57,10 +57,10 @@ export function DaThroughputByProjectChart({
   const { denominator, unit } = getDaDataParams(max)
 
   const chartMeta = useMemo(() => {
-    return projectsToShow?.reduce((acc, slug) => {
-      if (!acc[slug]) {
-        acc[slug] = {
-          label: slug,
+    return projectsToShow?.reduce((acc, project) => {
+      if (!acc[project]) {
+        acc[project] = {
+          label: project,
           color: colors[Object.keys(acc).length]!,
           indicatorType: { shape: 'square' },
         }
@@ -101,12 +101,12 @@ export function DaThroughputByProjectChart({
         barCategoryGap={range === '30d' ? 4 : 0}
       >
         <ChartLegend content={<ChartLegendContent />} />
-        {projectsToShow?.map((slug) => (
+        {projectsToShow?.map((project) => (
           <Bar
-            key={slug}
-            dataKey={slug}
+            key={project}
+            dataKey={project}
             stackId="a"
-            fill={chartMeta?.[slug]?.color}
+            fill={chartMeta?.[project]?.color}
             isAnimationActive={false}
           />
         ))}
