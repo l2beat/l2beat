@@ -1,6 +1,8 @@
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
+import type { BlipSexp } from '../../blip/type'
+import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
 
 export type RawPermissionConfiguration = z.infer<
@@ -57,8 +59,13 @@ export type StructureContractField = z.infer<typeof StructureContractField>
 export const StructureContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
   template: z.string().optional(),
-  returnType: z.string().optional(),
   permissions: z.array(RawPermissionConfiguration).optional(),
+  copy: z.string().optional(),
+  edit: z
+    .unknown()
+    .refine(validateBlip)
+    .transform((v): BlipSexp => v as BlipSexp)
+    .optional(),
 })
 
 export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
