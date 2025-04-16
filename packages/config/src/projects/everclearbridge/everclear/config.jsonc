@@ -12,7 +12,7 @@
       "proxyType": "Everclear proxy",
       "displayName": "EverclearHub",
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig", "paymentNonce"],
+      "ignoreInWatchMode": ["getCurrentEpoch", "gasConfig", "paymentNonce", "supportedDomains"],
       "fields": {
         "managerModule": {
           "handler": {
