@@ -606,6 +606,10 @@ export class ProjectDiscovery {
     return eoas.filter((eoa) => eoa.name === name)
   }
 
+  getEntries(): EntryParameters[] {
+    return this.discoveries.flatMap((discovery) => discovery.entries)
+  }
+
   getContracts(): EntryParameters[] {
     return this.discoveries
       .flatMap((discovery) => discovery.entries)

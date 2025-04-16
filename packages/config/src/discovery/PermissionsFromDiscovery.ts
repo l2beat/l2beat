@@ -174,7 +174,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     contract: EntryParameters,
   ): { name: string; delay: string }[] {
     const issuedPermissions = this.projectDiscovery
-      .getContracts()
+      .getEntries()
       .flatMap((c) =>
         (c.receivedPermissions ?? []).map((p) => ({
           to: c.address,
