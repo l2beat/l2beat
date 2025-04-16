@@ -136,8 +136,7 @@ export class BlipRuntime {
           : this.executeBlip(v, ifFalse)
       }
       case 'delete': {
-        const [_, key] = blip
-        const keys = ensureArray(key)
+        const keys = blip.slice(1)
         let result = structuredClone(v)
 
         if (Array.isArray(result)) {

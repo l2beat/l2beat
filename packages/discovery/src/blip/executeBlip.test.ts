@@ -805,87 +805,84 @@ describe(executeBlip.name, () => {
   describe('delete operations', () => {
     it('deletes multiple keys from an object', () => {
       const obj = { a: 1, b: 2, c: 3, d: 4 }
-      expect(executeBlip(obj, ['delete', ['b', 'd']])).toEqual({ a: 1, c: 3 })
+      expect(executeBlip(obj, ['delete', 'b', 'd'])).toEqual({ a: 1, c: 3 })
       expect(executeBlip(obj, ['delete', 'a'])).toEqual({ b: 2, c: 3, d: 4 }) // Single key as array
     })
 
     it('deletes multiple keys including non-existent ones from an object', () => {
       const obj = { a: 1, b: 2 }
-      expect(executeBlip(obj, ['delete', ['a', 'z', 'b']])).toEqual({}) // All deleted, including non-existent
-      expect(executeBlip(obj, ['delete', ['z', 'x']])).toEqual({ a: 1, b: 2 }) // Non-existent keys do nothing
+      expect(executeBlip(obj, ['delete', 'a', 'z', 'b'])).toEqual({}) // All deleted, including non-existent
+      expect(executeBlip(obj, ['delete', 'z', 'x'])).toEqual({ a: 1, b: 2 }) // Non-existent keys do nothing
     })
 
     it('deletes multiple indices from an array sequentially', () => {
       const arr = [1, 2, 3, 4, 5]
-      expect(executeBlip(arr, ['delete', [0, 2]])).toEqual([2, 4, 5]) // After deleting 0, array is [2,3,4,5], then delete index 2 (which is 4)
+      expect(executeBlip(arr, ['delete', 0, 2])).toEqual([2, 4, 5]) // After deleting 0, array is [2,3,4,5], then delete index 2 (which is 4)
       expect(executeBlip(arr, ['delete', 1])).toEqual([1, 3, 4, 5]) // Single index
     })
 
     it('throws when deleting with out-of-bounds indices in arrays', () => {
       const arr = [1, 2, 3]
-      expect(() => executeBlip(arr, ['delete', [1, 5]])).toThrow(
+      expect(() => executeBlip(arr, ['delete', 1, 5])).toThrow(
         'Array index 5 out of bounds',
       ) // First valid, second invalid
-      expect(() => executeBlip(arr, ['delete', [-1, 0]])).toThrow(
+      expect(() => executeBlip(arr, ['delete', -1, 0])).toThrow(
         'Array index -1 out of bounds',
       )
       expect(() => executeBlip(arr, ['delete', 2])).not.toThrow() // Valid single
     })
 
     it('throws when input is not an array or object', () => {
-      expect(() => executeBlip(123, ['delete', ['key']])).toThrow(
-        'delete requires an array or object input',
-      )
-      expect(() => executeBlip('string', ['delete', [0]])).toThrow(
+      expect(() => executeBlip(123, ['delete', 'key'])).toThrow(
         'delete requires an array or object input',
       )
     })
 
     it('throws when key type is incorrect for arrays or objects', () => {
       const arr = [1, 2, 3]
-      expect(() => executeBlip(arr, ['delete', ['a', 1]])).toThrow(
+      expect(() => executeBlip(arr, ['delete', 'a', 1])).toThrow(
         'Array access requires a number key',
       ) // First key invalid
-      expect(() => executeBlip(arr, ['delete', [1, 'b']])).toThrow(
+      expect(() => executeBlip(arr, ['delete', 1, 'b'])).toThrow(
         'Array access requires a number key',
       ) // Second key invalid
 
       const obj = { a: 1 }
-      expect(() => executeBlip(obj, ['delete', [0, 'a']])).toThrow(
+      expect(() => executeBlip(obj, ['delete', 0, 'a'])).toThrow(
         'Object access requires a string key',
       ) // First key invalid
     })
 
     it('does not modify the original object or array', () => {
       const originalObj = { a: 1, b: 2, c: 3 }
-      const resultObj = executeBlip(originalObj, ['delete', ['b', 'c']])
+      const resultObj = executeBlip(originalObj, ['delete', 'b', 'c'])
       expect(resultObj).toEqual({ a: 1 })
       expect(originalObj).toEqual({ a: 1, b: 2, c: 3 })
 
       const originalArr = [1, 2, 3, 4]
-      const resultArr = executeBlip(originalArr, ['delete', [0, 2]])
+      const resultArr = executeBlip(originalArr, ['delete', 0, 2])
       expect(resultArr).toEqual([2, 4]) // After sequential deletion
       expect(originalArr).toEqual([1, 2, 3, 4])
     })
 
     it('handles edge cases for empty structures and key lists', () => {
       const emptyObj = {}
-      expect(executeBlip(emptyObj, ['delete', []])).toEqual({}) // Empty keys array
-      expect(executeBlip(emptyObj, ['delete', ['key']])).toEqual({}) // Non-existent key
+      expect(executeBlip(emptyObj, ['delete'])).toEqual({}) // Empty keys array
+      expect(executeBlip(emptyObj, ['delete', 'key'])).toEqual({}) // Non-existent key
 
       const emptyArr: any[] = []
-      expect(() => executeBlip(emptyArr, ['delete', [0]])).toThrow(
+      expect(() => executeBlip(emptyArr, ['delete', 0])).toThrow(
         'Array index 0 out of bounds',
       )
-      expect(executeBlip(emptyArr, ['delete', []])).toEqual([]) // Empty keys array on empty array
+      expect(executeBlip(emptyArr, ['delete'])).toEqual([]) // Empty keys array on empty array
     })
 
     it('processes keys sequentially and handles mixed valid/invalid scenarios', () => {
       const obj = { a: 1, b: 2, c: 3 }
-      expect(executeBlip(obj, ['delete', ['a', 'b']])).toEqual({ c: 3 })
+      expect(executeBlip(obj, ['delete', 'a', 'b'])).toEqual({ c: 3 })
 
       const arr = [1, 2, 3, 4]
-      expect(() => executeBlip(arr, ['delete', [0, 5, 1]])).toThrow(
+      expect(() => executeBlip(arr, ['delete', 0, 5, 1])).toThrow(
         'Array index 5 out of bounds',
       )
     })

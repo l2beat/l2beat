@@ -64,8 +64,12 @@ export function validateBlip(input: unknown): boolean {
         validateBlip(input[3])
       )
     case 'delete':
-      if (input.length !== 2) return false
-      return isArrayOrTValid(input[1])
+      return (
+        input
+          .slice(1)
+          .every((e) => typeof e === 'string' || typeof e === 'number') &&
+        notEmpty
+      )
     case 'shape':
       return (
         input.slice(1).every((e) => {

@@ -156,12 +156,12 @@ describe(validateBlip.name, () => {
     })
 
     it('validates "delete" operation', () => {
-      expect(validateBlip(['delete'])).toBeFalsy() // Too few arguments
-      expect(validateBlip(['delete', 'prop'])).toBeTruthy() // Valid with string
-      expect(validateBlip(['delete', 123])).toBeTruthy() // Valid with number
-      expect(validateBlip(['delete', ['prop1', 'prop2']])).toBeTruthy() // Valid with array of strings
-      expect(validateBlip(['delete', {}])).toBeFalsy() // Invalid key
-      expect(validateBlip(['delete', 'prop', 'extra'])).toBeFalsy() // Too many arguments
+      expect(validateBlip(['delete'])).toBeFalsy() // Empty delete is invalid
+      expect(validateBlip(['delete', 'prop'])).toBeTruthy() // String property
+      expect(validateBlip(['delete', 123])).toBeTruthy() // Numeric index
+      expect(validateBlip(['delete', 'prop1', 'prop2'])).toBeTruthy() // Multiple path segments
+      expect(validateBlip(['delete', {}])).toBeFalsy() // Invalid path segment
+      expect(validateBlip(['delete', ['and', true]])).toBeFalsy() // Arrays not allowed as path segments
     })
 
     it('validates "shape" operation', () => {

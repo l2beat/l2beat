@@ -18,5 +18,5 @@ export type BlipSexp =
   | ['find', BlipSexp]
   | ['format', string]
   | ['if', BlipSexp, BlipSexp, BlipSexp]
-  | ['delete', ArrayOrT<string | number>]
+  | ['delete', ...(string | number)[]]
   | ['shape', ...ShapeArg[]]
