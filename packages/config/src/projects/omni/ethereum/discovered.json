@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "blockNumber": 22266420,
+  "blockNumber": 22281679,
   "configHash": "0x22a8a09922a3335f34891694da7d38fc44695a7158c397507aebabc70229b952",
   "entries": [
     {
@@ -104,7 +104,7 @@
           "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893",
           "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
           "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
-          "0xd945325557f1FB4374fBf10Ae86D385632Df870A",
+          "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
           "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
           "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
           "0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8",
@@ -116,7 +116,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 85,
+        "nonce": 86,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -579,6 +579,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xb8173f558f75EE263013fd6294177bf75279a21e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -618,11 +623,6 @@
     },
     {
       "address": "0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A",
       "type": "EOA",
       "proxyType": "EOA"
     },

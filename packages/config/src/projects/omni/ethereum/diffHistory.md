@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9fa41076b83d8157d55b55141f4e13c62e0f65dc
+
+# Diff at Wed, 16 Apr 2025 12:52:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22266420
+- current block number: 22281679
+
+## Description
+
+MS signer change.
+
+## Watched changes
+
+```diff
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.10:
+-        "0xd945325557f1FB4374fBf10Ae86D385632Df870A"
++        "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
+      values.$members.9:
+-        "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
++        "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4"
+    }
+```
+
 Generated with discovered.json: 0x96c87f71fee62bb15b90ba7ebcf0a0658f005e7b
 
 # Diff at Mon, 14 Apr 2025 09:53:17 GMT:
