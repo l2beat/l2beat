@@ -1,11 +1,11 @@
 import {
-  DaThroughputChartByProjectParams,
-  getDaThroughputChartByProject,
-} from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
-import {
   DaThroughputChartParams,
   getDaThroughputChart,
 } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
+import {
+  DaThroughputChartByProjectParams,
+  getDaThroughputChartByProject,
+} from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
 import {
   ProjectDaThroughputChartParams,
   getProjectDaThroughputChart,
