@@ -24,13 +24,9 @@ const ZK_PROTOCOL_GOVERNOR_ABI = [
     "event ProposalExecuted(uint256 proposalId)",
     "function proposalVotes(uint256 proposalId) view returns (uint256 againstVotes, uint256 forVotes, uint256 abstainVotes)",
     "function state(uint256 proposalId) view returns (uint8)", // 0:Pending, 1:Active, 2:Canceled, 3:Defeated, 4:Succeeded, 5:Queued, 6:Expired, 7:Executed
-    "function quorum(uint256 blockNumber) view returns (uint256)" // Added quorum function
+    "function quorum(uint256 blockNumber) view returns (uint256)"
 ];
-
-const L1_MESSENGER_ABI = [
-    "event L1MessageSent(address indexed _sender, bytes32 indexed _hash, bytes _message)"
-];
-
+const L1_MESSENGER_ABI = [ "event L1MessageSent(address indexed _sender, bytes32 indexed _hash, bytes _message)" ];
 const PROTOCOL_UPGRADE_HANDLER_ABI = [
     "event UpgradeStarted(bytes32 indexed _id, tuple(tuple(address target, uint256 value, bytes data)[] calls, address executor, bytes32 salt) _proposal)",
     "function upgradeState(bytes32 _id) view returns (uint8)", // 0:None, 1:LegalVeto, 2:Waiting, 3:ExecutionPending, 4:Ready, 5:Expired, 6:Done
@@ -39,77 +35,29 @@ const PROTOCOL_UPGRADE_HANDLER_ABI = [
 
 // --- Types and Interfaces ---
 const UPGRADE_PROPOSAL_TYPE = "tuple(tuple(address target, uint256 value, bytes data)[] calls, address executor, bytes32 salt)";
-const VOTE_TOKEN_DECIMALS = 18; // Assume 18 decimals for formatting votes/quorum
+const VOTE_TOKEN_DECIMALS = 18;
 
-interface Call {
-    target: string;
-    value: ethers.BigNumber;
-    data: string;
-}
-
-interface UpgradeProposal {
-    calls: Call[];
-    executor: string;
-    salt: string;
-}
-
-interface ProposalCreatedData {
-    proposalId: ethers.BigNumber;
-    proposer: string;
-    targets: string[];
-    values: ethers.BigNumber[];
-    signatures: string[];
-    calldatas: string[];
-    voteStart: ethers.BigNumber; // This is actually a block number (timepoint) on ZKsync Era
-    voteEnd: ethers.BigNumber;   // This is actually a block number (timepoint) on ZKsync Era
-    description: string;
-    blockNumber: number; // Block where ProposalCreated event was emitted
-    txHash: string;
-}
-
-interface ProposalExecutedData {
-    proposalId: ethers.BigNumber;
-    blockNumber: number;
-    txHash: string;
-}
-
-interface L1MessageSentData {
-    sender: string;
-    hash: string;
-    message: string;
-    blockNumber: number;
-    txHash: string;
-}
-
-interface UpgradeStartedData {
-    id: string;
-    proposal: UpgradeProposal;
-    blockNumber: number;
-    txHash: string;
-}
-
-interface UpgradeStatusData {
-    creationTimestamp: number;
-    securityCouncilApprovalTimestamp: number;
-    guardiansApproval: boolean;
-    guardiansExtendedLegalVeto: boolean;
-    executed: boolean;
-}
-
-interface EventCache {
-    lastL2BlockFetched: number;
-    proposalCreatedEvents: ProposalCreatedData[];
-    proposalExecutedEvents: ProposalExecutedData[];
-}
+interface Call { target: string; value: ethers.BigNumber; data: string; }
+interface UpgradeProposal { calls: Call[]; executor: string; salt: string; }
+interface ProposalCreatedData { proposalId: ethers.BigNumber; proposer: string; targets: string[]; values: ethers.BigNumber[]; signatures: string[]; calldatas: string[]; voteStart: ethers.BigNumber; voteEnd: ethers.BigNumber; description: string; blockNumber: number; txHash: string; }
+interface ProposalExecutedData { proposalId: ethers.BigNumber; blockNumber: number; txHash: string; }
+interface L1MessageSentData { sender: string; hash: string; message: string; blockNumber: number; txHash: string; }
+interface UpgradeStartedData { id: string; proposal: UpgradeProposal; blockNumber: number; txHash: string; }
+interface UpgradeStatusData { creationTimestamp: number; securityCouncilApprovalTimestamp: number; guardiansApproval: boolean; guardiansExtendedLegalVeto: boolean; executed: boolean; }
+interface EventCache { lastL2BlockFetched: number; proposalCreatedEvents: ProposalCreatedData[]; proposalExecutedEvents: ProposalExecutedData[]; }
 
 // --- Constants ---
 const CACHE_FILE = path.join(__dirname, 'governance_event_cache.json');
 const L1_EVENT_SEARCH_BLOCK_RANGE = 1_000_000;
 const L2_MESSENGER_SEND_SELECTOR = "0x62f84b24";
+const L1_STANDARD_LEGAL_VETO_SECONDS = 3 * 24 * 60 * 60;
+const L1_EXTENDED_LEGAL_VETO_SECONDS = 7 * 24 * 60 * 60;
+const L1_UPGRADE_DELAY_SECONDS = 1 * 24 * 60 * 60;
+const L1_WAIT_OR_EXPIRE_SECONDS = 30 * 24 * 60 * 60;
 
 // --- Helper Functions ---
 
-function loadCache(): EventCache {
+function loadCache(): EventCache { /* ... (no changes) ... */
     if (fs.existsSync(CACHE_FILE)) {
         try {
             const data = fs.readFileSync(CACHE_FILE, 'utf-8');
@@ -128,9 +76,8 @@ function loadCache(): EventCache {
         }
     }
     return { lastL2BlockFetched: 0, proposalCreatedEvents: [], proposalExecutedEvents: [] };
-}
-
-function saveCache(cache: EventCache): void {
+ }
+function saveCache(cache: EventCache): void { /* ... (no changes) ... */
     try {
         const data = JSON.stringify(cache, (key, value) => {
             if (ethers.BigNumber.isBigNumber(value)) {
@@ -143,15 +90,12 @@ function saveCache(cache: EventCache): void {
     } catch (error) {
         console.error(chalk.red(`Error saving cache: ${error}`));
     }
-}
-
-// Note: ZKsync Era Governor uses block numbers for voteStart/voteEnd, not timestamps
-function formatBlockNumber(block: number | ethers.BigNumber): string {
+ }
+function formatBlockNumber(block: number | ethers.BigNumber): string { /* ... (no changes) ... */
     if (!block || ethers.BigNumber.from(block).isZero()) return "N/A";
     return ethers.BigNumber.from(block).toString();
-}
-
-function formatTimestamp(timestamp: number | ethers.BigNumber): string {
+ }
+function formatTimestamp(timestamp: number | ethers.BigNumber): string { /* ... (no changes) ... */
     if (!timestamp || ethers.BigNumber.from(timestamp).isZero()) return "N/A";
     try {
         const date = new Date(ethers.BigNumber.from(timestamp).toNumber() * 1000);
@@ -160,163 +104,117 @@ function formatTimestamp(timestamp: number | ethers.BigNumber): string {
         console.warn(chalk.yellow(`Could not format timestamp ${timestamp}: ${e}`));
         return "Invalid Date";
     }
-}
-
-function mapL2State(state: number): string {
+ }
+function mapL2State(state: number): string { /* ... (no changes) ... */
     const states = ["Pending", "Active", "Canceled", "Defeated", "Succeeded", "Queued", "Expired", "Executed"];
     return states[state] ?? `Unknown (${state})`;
-}
-
-function mapL1State(state: number): string {
+ }
+function mapL1State(state: number): string { /* ... (no changes) ... */
     const states = ["None", "LegalVetoPeriod", "Waiting", "ExecutionPending", "Ready", "Expired", "Done"];
     return states[state] ?? `Unknown (${state})`;
-}
-
-function formatValue(value: ethers.BigNumber | undefined | null): string {
+ }
+function formatValue(value: ethers.BigNumber | undefined | null): string { /* ... (no changes) ... */
      if (value === undefined || value === null) return 'N/A';
-     try {
-         return ethers.BigNumber.from(value).isZero() ? '0' : ethers.utils.formatUnits(value, 'ether'); // Use formatUnits for ETH
-     } catch (e) {
-         return `Invalid (${value?.toString() ?? 'undefined'})`;
-     }
-}
-
-function formatUnits(value: ethers.BigNumber | undefined | null, decimals: number): string {
+     try { return ethers.BigNumber.from(value).isZero() ? '0' : ethers.utils.formatUnits(value, 'ether'); }
+     catch (e) { return `Invalid (${value?.toString() ?? 'undefined'})`; }
+ }
+function formatUnits(value: ethers.BigNumber | undefined | null, decimals: number): string { /* ... (no changes) ... */
      if (value === undefined || value === null) return 'N/A';
-     try {
-         return ethers.utils.formatUnits(value, decimals);
-     } catch (e) {
-         return `Invalid (${value?.toString() ?? 'undefined'})`;
-     }
-}
-
-// Calculate percentage using FixedNumber for precision
-function calculatePercentage(numerator: ethers.BigNumber, denominator: ethers.BigNumber): string {
-    if (denominator.isZero()) return "0.00"; // Avoid division by zero
+     try { return ethers.utils.formatUnits(value, decimals); }
+     catch (e) { return `Invalid (${value?.toString() ?? 'undefined'})`; }
+ }
+function calculatePercentage(numerator: ethers.BigNumber, denominator: ethers.BigNumber): string { /* ... (no changes) ... */
+    if (denominator.isZero()) return "0.00";
     try {
         const numFixed = ethers.FixedNumber.fromValue(numerator, VOTE_TOKEN_DECIMALS);
         const denFixed = ethers.FixedNumber.fromValue(denominator, VOTE_TOKEN_DECIMALS);
+        if (denFixed.isZero()) return "0.00";
         const percentage = numFixed.mulUnsafe(ethers.FixedNumber.from(100)).divUnsafe(denFixed);
-        return percentage.round(2).toString(); // Format to 2 decimal places
-    } catch (e) {
-        console.warn(chalk.yellow(`Error calculating percentage (${numerator}/${denominator}): ${e}`));
-        return "Error";
-    }
+        return percentage.round(2).toString();
+    } catch (e) { console.warn(chalk.yellow(`Error calculating percentage (${numerator}/${denominator}): ${e}`)); return "Error"; }
+ }
+function formatDuration(totalSeconds: number): string { /* ... (implementation added) ... */
+    if (totalSeconds < 0) totalSeconds = 0; // Don't show negative duration if time already passed
+    if (totalSeconds === 0) return "Ended";
+
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    totalSeconds %= (24 * 60 * 60);
+    const hours = Math.floor(totalSeconds / (60 * 60));
+    totalSeconds %= (60 * 60);
+    const minutes = Math.floor(totalSeconds / 60);
+
+    let parts: string[] = [];
+    if (days > 0) parts.push(`${days}d`);
+    if (hours > 0) parts.push(`${hours}h`);
+    if (minutes > 0) parts.push(`${minutes}m`);
+    // If less than a minute, show "< 1m" or similar if needed
+    if (parts.length === 0 && totalSeconds > 0) return "< 1m";
+    if (parts.length === 0) return "Ended"; // Should ideally not happen if seconds > 0
+
+    return parts.join(' '); // Use space instead of comma
 }
 
 // --- Core Fetching Functions ---
 
 async function fetchL2Events<T extends ethers.BaseContract>(
-    contract: T,
-    eventName: string,
-    cacheKey: keyof EventCache,
-    cache: EventCache,
-    l2Provider: ethers.providers.JsonRpcProvider,
-    parser: (log: ethers.Event) => any,
+    contract: T, eventName: string, cacheKey: keyof EventCache, cache: EventCache,
+    l2Provider: ethers.providers.JsonRpcProvider, parser: (log: ethers.Event) => any,
     forceRange: { fromBlock: number, toBlock: number } | null = null
-): Promise<number> {
+): Promise<number> { /* ... (no changes) ... */
     const latestBlock = forceRange ? forceRange.toBlock : await l2Provider.getBlockNumber();
     const fromBlock = forceRange ? forceRange.fromBlock : cache.lastL2BlockFetched + 1;
     const toBlock = latestBlock;
-
-    if (fromBlock > toBlock) {
-        console.log(chalk.gray(`Block range (${fromBlock}-${toBlock}) invalid or already covered for ${eventName} events.`));
-        return 0;
-    }
-
+    if (fromBlock > toBlock) { console.log(chalk.gray(`Block range (${fromBlock}-${toBlock}) invalid or already covered for ${eventName} events.`)); return 0; }
     console.log(chalk.blue(`Fetching ${eventName} events from block ${fromBlock} to ${toBlock}...`));
-
     let addedCount = 0;
     try {
         const eventFilter = (contract.filters as any)[eventName]();
         if (!eventFilter) throw new Error(`Filter for event ${eventName} not found.`);
-
-        // Fetch logs without chunking as per user request
         const logs = await contract.queryFilter(eventFilter, fromBlock, toBlock);
         console.log(chalk.gray(`Found ${logs.length} ${eventName} events in range.`));
-
         const existingTxHashes = new Set((cache[cacheKey] as any[]).map(e => e.txHash));
-
         for (const log of logs) {
             if (existingTxHashes.has(log.transactionHash)) continue;
             try {
                 const parsedData = parser(log);
-                if (parsedData) {
-                     (cache[cacheKey] as any[]).push(parsedData);
-                     existingTxHashes.add(log.transactionHash);
-                     addedCount++;
-                }
-            } catch (e) {
-                console.warn(chalk.yellow(`Could not parse ${eventName} log in tx ${log.transactionHash}: ${e}`));
-            }
+                if (parsedData) { (cache[cacheKey] as any[]).push(parsedData); existingTxHashes.add(log.transactionHash); addedCount++; }
+            } catch (e) { console.warn(chalk.yellow(`Could not parse ${eventName} log in tx ${log.transactionHash}: ${e}`)); }
         }
         console.log(chalk.gray(`Added ${addedCount} new unique ${eventName} events to cache.`));
-
-    } catch (error) {
-        console.error(chalk.red(`Error fetching ${eventName} events: ${error}`));
-    }
-
-    if (!forceRange && toBlock > cache.lastL2BlockFetched) {
-        cache.lastL2BlockFetched = toBlock;
-    } else if (forceRange && toBlock > cache.lastL2BlockFetched) {
-        cache.lastL2BlockFetched = toBlock;
-    }
-
+    } catch (error) { console.error(chalk.red(`Error fetching ${eventName} events: ${error}`)); }
+    if (!forceRange && toBlock > cache.lastL2BlockFetched) { cache.lastL2BlockFetched = toBlock; }
+    else if (forceRange && toBlock > cache.lastL2BlockFetched) { cache.lastL2BlockFetched = toBlock; }
     return addedCount;
-}
-
-async function findL1MessageSentInTx(
-    l2Provider: ethers.providers.JsonRpcProvider,
-    executionTxHash: string
-): Promise<L1MessageSentData | null> {
+ }
+async function findL1MessageSentInTx(l2Provider: ethers.providers.JsonRpcProvider, executionTxHash: string): Promise<L1MessageSentData | null> { /* ... (no changes) ... */
     console.log(chalk.blue(`Fetching receipt for L2 execution tx: ${executionTxHash}...`));
     try {
         const receipt = await l2Provider.getTransactionReceipt(executionTxHash);
-        if (!receipt) {
-            console.error(chalk.red(`Could not find transaction receipt for ${executionTxHash}`));
-            return null;
-        }
-
+        if (!receipt) { console.error(chalk.red(`Could not find transaction receipt for ${executionTxHash}`)); return null; }
         const l1MessengerInterface = new ethers.utils.Interface(L1_MESSENGER_ABI);
         const l1MessageSentTopic = l1MessengerInterface.getEventTopic('L1MessageSent');
-
         for (const log of receipt.logs) {
             if (log.address.toLowerCase() === L1_MESSENGER_ADDR.toLowerCase() && log.topics[0] === l1MessageSentTopic) {
                 try {
                     const parsedLog = l1MessengerInterface.parseLog(log);
                     console.log(chalk.green('Found L1MessageSent event!'));
-                    return {
-                        sender: parsedLog.args._sender, hash: parsedLog.args._hash, message: parsedLog.args._message,
-                        blockNumber: log.blockNumber, txHash: log.transactionHash
-                    };
+                    return { sender: parsedLog.args._sender, hash: parsedLog.args._hash, message: parsedLog.args._message, blockNumber: log.blockNumber, txHash: log.transactionHash };
                 } catch (e) { console.warn(chalk.yellow(`Error parsing L1MessageSent log: ${e}`)); }
             }
         }
-        console.warn(chalk.yellow(`L1MessageSent event not found in transaction ${executionTxHash}`));
-        return null;
+        console.warn(chalk.yellow(`L1MessageSent event not found in transaction ${executionTxHash}`)); return null;
     } catch (error) { console.error(chalk.red(`Error fetching tx receipt: ${error}`)); return null; }
-}
-
-async function findL1UpgradeStarted(
-    l1Provider: ethers.providers.JsonRpcProvider,
-    upgradeHandlerContract: ethers.Contract,
-    l1ProposalHash: string
-): Promise<UpgradeStartedData | null> {
+ }
+async function findL1UpgradeStarted(l1Provider: ethers.providers.JsonRpcProvider, upgradeHandlerContract: ethers.Contract, l1ProposalHash: string): Promise<UpgradeStartedData | null> { /* ... (no changes) ... */
     console.log(chalk.blue(`Searching for L1 UpgradeStarted event with ID: ${l1ProposalHash}...`));
     try {
         const eventFilter = upgradeHandlerContract.filters.UpgradeStarted(l1ProposalHash);
         const latestL1Block = await l1Provider.getBlockNumber();
         const fromBlockL1 = Math.max(0, latestL1Block - L1_EVENT_SEARCH_BLOCK_RANGE);
-
         console.log(chalk.gray(`Querying L1 blocks ${fromBlockL1} to ${latestL1Block}...`));
         const logs = await upgradeHandlerContract.queryFilter(eventFilter, fromBlockL1, latestL1Block);
-
-        if (logs.length === 0) {
-            console.warn(chalk.yellow(`UpgradeStarted event not found on L1 for ID ${l1ProposalHash} in the last ${L1_EVENT_SEARCH_BLOCK_RANGE} blocks.`));
-            return null;
-        }
+        if (logs.length === 0) { console.warn(chalk.yellow(`UpgradeStarted event not found on L1 for ID ${l1ProposalHash} in the last ${L1_EVENT_SEARCH_BLOCK_RANGE} blocks.`)); return null; }
         if (logs.length > 1) { console.warn(chalk.yellow(`Found multiple (${logs.length}) UpgradeStarted events. Using first one.`)); }
-
         const log = logs[0];
         const parsedLog = upgradeHandlerContract.interface.parseLog(log);
         console.log(chalk.green('Found UpgradeStarted event on L1!'));
@@ -327,13 +225,9 @@ async function findL1UpgradeStarted(
         };
         return { id: parsedLog.args._id, proposal: mappedProposal, blockNumber: log.blockNumber, txHash: log.transactionHash };
     } catch (error) { console.error(chalk.red(`Error searching for L1 UpgradeStarted event: ${error}`)); return null; }
-}
-
-function decodeL1ProposalFromL2Calldata(l2Calldata: string): UpgradeProposal | null {
-    if (!l2Calldata || !l2Calldata.startsWith(L2_MESSENGER_SEND_SELECTOR)) {
-        console.warn(chalk.yellow(`L2 Calldata does not start with L1Messenger selector (${L2_MESSENGER_SEND_SELECTOR})`));
-        return null;
-    }
+ }
+function decodeL1ProposalFromL2Calldata(l2Calldata: string): UpgradeProposal | null { /* ... (no changes) ... */
+    if (!l2Calldata || !l2Calldata.startsWith(L2_MESSENGER_SEND_SELECTOR)) { console.warn(chalk.yellow(`L2 Calldata does not start with L1Messenger selector (${L2_MESSENGER_SEND_SELECTOR})`)); return null; }
     try {
         const encodedArgs = '0x' + l2Calldata.substring(L2_MESSENGER_SEND_SELECTOR.length);
         const decodedOuter = ethers.utils.defaultAbiCoder.decode(['bytes'], encodedArgs);
@@ -345,47 +239,34 @@ function decodeL1ProposalFromL2Calldata(l2Calldata: string): UpgradeProposal | n
             executor: proposalData.executor, salt: proposalData.salt,
         };
         return mappedProposal;
-    } catch (e) {
-        console.error(chalk.red(`Error decoding L1 proposal from L2 calldata: ${e}`));
-        console.error(chalk.red(`L2 Calldata was: ${l2Calldata}`));
-        return null;
-    }
-}
-
-function comparePayloads(l1PayloadFromL2: UpgradeProposal | null, l1PayloadFromEvent: UpgradeProposal | null): boolean {
-    if (!l1PayloadFromL2 || !l1PayloadFromEvent) {
-        console.error(chalk.red("Cannot compare payloads, one or both are missing."));
-        return false;
-    }
+    } catch (e) { console.error(chalk.red(`Error decoding L1 proposal from L2 calldata: ${e}`)); console.error(chalk.red(`L2 Calldata was: ${l2Calldata}`)); return null; }
+ }
+function comparePayloads(l1PayloadFromL2: UpgradeProposal | null, l1PayloadFromEvent: UpgradeProposal | null): boolean { /* ... (no changes) ... */
+    if (!l1PayloadFromL2 || !l1PayloadFromEvent) { console.error(chalk.red("Cannot compare payloads, one or both are missing.")); return false; }
     let mismatchFound = false;
-    if (l1PayloadFromL2.executor.toLowerCase() !== l1PayloadFromEvent.executor.toLowerCase()) {
-        console.error(chalk.red(`Mismatch: Executor L2(${l1PayloadFromL2.executor}) != L1(${l1PayloadFromEvent.executor})`)); mismatchFound = true;
-    }
-    if (l1PayloadFromL2.salt !== l1PayloadFromEvent.salt) {
-        console.error(chalk.red(`Mismatch: Salt L2(${l1PayloadFromL2.salt}) != L1(${l1PayloadFromEvent.salt})`)); mismatchFound = true;
-    }
-    if (l1PayloadFromL2.calls.length !== l1PayloadFromEvent.calls.length) {
-        console.error(chalk.red(`Mismatch: Number of calls L2(${l1PayloadFromL2.calls.length}) != L1(${l1PayloadFromEvent.calls.length})`)); return false;
-    }
+    if (l1PayloadFromL2.executor.toLowerCase() !== l1PayloadFromEvent.executor.toLowerCase()) { console.error(chalk.red(`Mismatch: Executor L2(${l1PayloadFromL2.executor}) != L1(${l1PayloadFromEvent.executor})`)); mismatchFound = true; }
+    if (l1PayloadFromL2.salt !== l1PayloadFromEvent.salt) { console.error(chalk.red(`Mismatch: Salt L2(${l1PayloadFromL2.salt}) != L1(${l1PayloadFromEvent.salt})`)); mismatchFound = true; }
+    if (l1PayloadFromL2.calls.length !== l1PayloadFromEvent.calls.length) { console.error(chalk.red(`Mismatch: Call count L2(${l1PayloadFromL2.calls.length}) != L1(${l1PayloadFromEvent.calls.length})`)); return false; }
     for (let i = 0; i < l1PayloadFromL2.calls.length; i++) {
         const callL2 = l1PayloadFromL2.calls[i]; const callL1 = l1PayloadFromEvent.calls[i];
-        if (callL2.target.toLowerCase() !== callL1.target.toLowerCase()) {
-            console.error(chalk.red(`Mismatch (Call ${i}): Target L2(${callL2.target}) != L1(${callL1.target})`)); mismatchFound = true;
-        }
-        if (!ethers.BigNumber.from(callL2.value).eq(callL1.value)) {
-            console.error(chalk.red(`Mismatch (Call ${i}): Value L2(${callL2.value.toString()}) != L1(${callL1.value.toString()})`)); mismatchFound = true;
-        }
-        if (callL2.data.toLowerCase() !== callL1.data.toLowerCase()) {
-            console.error(chalk.red(`Mismatch (Call ${i}): Data L2(${callL2.data}) != L1(${callL1.data})`)); mismatchFound = true;
-        }
+        if (callL2.target.toLowerCase() !== callL1.target.toLowerCase()) { console.error(chalk.red(`Mismatch (Call ${i}): Target L2(${callL2.target}) != L1(${callL1.target})`)); mismatchFound = true; }
+        if (!ethers.BigNumber.from(callL2.value).eq(callL1.value)) { console.error(chalk.red(`Mismatch (Call ${i}): Value L2(${callL2.value.toString()}) != L1(${callL1.value.toString()})`)); mismatchFound = true; }
+        if (callL2.data.toLowerCase() !== callL1.data.toLowerCase()) { console.error(chalk.red(`Mismatch (Call ${i}): Data L2(${callL2.data}) != L1(${callL1.data})`)); mismatchFound = true; }
     }
     return !mismatchFound;
-}
+ }
 
 /**
- * Displays a text-based timeline of the proposal states.
+ * Displays a text-based timeline of the proposal states with timing info.
  */
-function displayTimeline(l2StateName: string, l1StateName: string | null) {
+function displayTimeline(
+    l2StateName: string,
+    l1StateName: string | null,
+    proposalCreated: ProposalCreatedData | null,
+    l1StatusData: UpgradeStatusData | null,
+    currentL2Block: ethers.BigNumber,
+    currentL1Timestamp: number
+) {
     console.log(chalk.bold('\n--- Proposal Timeline ---'));
 
     // --- L2 Timeline ---
@@ -396,74 +277,109 @@ function displayTimeline(l2StateName: string, l1StateName: string | null) {
 
     let l2Timeline = chalk.bold("L2: ");
     l2States.forEach((state, index) => {
-        let coloredState = state;
-        if (l2IsOffPath) { // If ended on off-path, show path until before failure
-             coloredState = chalk.gray(state); // Mark all main path states gray
-        } else if (index < currentL2Index) {
-            coloredState = chalk.gray(state); // Past states
-        } else if (index === currentL2Index) {
-            coloredState = chalk.green.bold(state); // Current state
-        } else {
-            coloredState = chalk.dim(state); // Future states
+        let timingInfo = '';
+        if (state === "Active" && l2StateName === "Active" && proposalCreated) {
+            const blocksRemaining = proposalCreated.voteEnd.sub(currentL2Block);
+            if (blocksRemaining.gt(0)) {
+                timingInfo = chalk.cyan(` (~${blocksRemaining.toString()} blocks left)`);
+            } else {
+                 timingInfo = chalk.cyan(` (Ended)`);
+            }
         }
-        l2Timeline += coloredState + (index < l2States.length - 1 ? chalk.gray(' -> ') : '');
+
+        let coloredState = state;
+        if (l2IsOffPath) { coloredState = chalk.gray(state); }
+        else if (index < currentL2Index) { coloredState = chalk.gray(state); }
+        else if (index === currentL2Index) { coloredState = chalk.green.bold(state); }
+        else { coloredState = chalk.dim(state); }
+
+        l2Timeline += coloredState + timingInfo + (index < l2States.length - 1 ? chalk.gray(' -> ') : '');
     });
 
-    if (l2IsOffPath) {
-        l2Timeline += chalk.red.bold(` -> ${l2StateName}`); // Show the terminal off-path state
-    }
+    if (l2IsOffPath) { l2Timeline += chalk.red.bold(` -> ${l2StateName}`); }
     console.log(l2Timeline);
 
     // --- Connector ---
-    if (l2StateName === "Executed" && l1StateName) {
-        console.log(chalk.cyan('    | L2 -> L1 Message Sent'));
-    } else if (l2IsOffPath || l2StateName === "Expired") {
-         console.log(chalk.red('    | Proposal Ended on L2'));
-    } else if (!l1StateName) {
-        console.log(chalk.gray('    | ... (Waiting for L2 Execution)'));
-    }
-
+    if (l2StateName === "Executed" && l1StateName) { console.log(chalk.cyan('    | L2 -> L1 Message Sent & Proven')); }
+    else if (l2IsOffPath || l2StateName === "Expired") { console.log(chalk.red('    | Proposal Ended on L2')); }
+    else if (l2StateName === "Queued" || l2StateName === "Succeeded") { console.log(chalk.gray('    | ... (Awaiting L2 Execution)')); }
+    else { console.log(chalk.gray('    | ...')); }
 
     // --- L1 Timeline ---
-    if (l1StateName && !l2IsOffPath) { // Only show L1 timeline if L2 executed and L1 state is known
+    if (l1StateName && !l2IsOffPath) {
         const l1States = ["None", "LegalVetoPeriod", "Waiting", "ExecutionPending", "Ready", "Done"];
         const l1OffPathStates = ["Expired"];
         let currentL1Index = l1States.indexOf(l1StateName);
         let l1IsOffPath = l1OffPathStates.includes(l1StateName);
-
-        // Adjust index for "None" state - it's the initial state before UpgradeStarted
-        if (l1StateName === "None") currentL1Index = 0;
+        if (l1StateName === "None") currentL1Index = 0; // Treat "None" as the starting point
 
         let l1Timeline = chalk.bold("L1: ");
-        l1States.forEach((state, index) => {
-             // Skip "None" visually unless it's the current state
-             if (state === "None" && currentL1Index !== 0) return;
+        let nextArrow = true; // Control arrow printing
 
-             let coloredState = state;
-              if (l1IsOffPath) {
-                 coloredState = chalk.gray(state);
-             } else if (state === "None" && currentL1Index === 0) {
-                  coloredState = chalk.green.bold(state); // Highlight None if current
-             } else if (currentL1Index === -1 || index < currentL1Index) { // Handle case where state isn't in main list (shouldn't happen often)
-                 coloredState = chalk.gray(state); // Past states
-             } else if (index === currentL1Index) {
-                 coloredState = chalk.green.bold(state); // Current state
-             } else {
-                 coloredState = chalk.dim(state); // Future states
-             }
-             // Add arrow if not the last state to be printed
-             const isLastVisible = (index === l1States.length - 1) || (l1IsOffPath && state === "Ready");
-             l1Timeline += coloredState + (!isLastVisible ? chalk.gray(' -> ') : '');
-        });
-         if (l1IsOffPath) {
-            l1Timeline += chalk.red.bold(` -> ${l1StateName}`);
+        // Calculate key L1 timestamps if status data is available
+        let legalVetoEndTime = 0;
+        let waitOrExpiryEndTime = 0;
+        let readyTimestamp = 0; // Can be based on SC or Guardian approval + delay
+
+        if (l1StatusData && l1StatusData.creationTimestamp > 0) {
+            const vetoDuration = l1StatusData.guardiansExtendedLegalVeto ? L1_EXTENDED_LEGAL_VETO_SECONDS : L1_STANDARD_LEGAL_VETO_SECONDS;
+            legalVetoEndTime = l1StatusData.creationTimestamp + vetoDuration;
+            waitOrExpiryEndTime = legalVetoEndTime + L1_WAIT_OR_EXPIRE_SECONDS;
+
+            if (l1StatusData.securityCouncilApprovalTimestamp > 0) {
+                readyTimestamp = l1StatusData.securityCouncilApprovalTimestamp + L1_UPGRADE_DELAY_SECONDS;
+            } else if (l1StatusData.guardiansApproval) {
+                // Ready time depends on when the wait/expire period ends
+                readyTimestamp = waitOrExpiryEndTime + L1_UPGRADE_DELAY_SECONDS;
+            }
         }
-         console.log(l1Timeline);
+
+        l1States.forEach((state, index) => {
+            if (state === "None" && currentL1Index !== 0) return; // Skip "None" visually unless current
+
+            let timingInfo = '';
+            let secondsRemaining = -1;
+
+            if (l1StatusData && currentL1Timestamp > 0) {
+                if (state === "LegalVetoPeriod" && l1StateName === state) {
+                    secondsRemaining = legalVetoEndTime - currentL1Timestamp;
+                    timingInfo = chalk.cyan(` (${formatDuration(secondsRemaining)} left)`);
+                } else if (state === "Waiting" && l1StateName === state) {
+                    secondsRemaining = waitOrExpiryEndTime - currentL1Timestamp;
+                    timingInfo = chalk.cyan(` (~${formatDuration(secondsRemaining)} left until expiry/delay)`);
+                } else if (state === "ExecutionPending" && l1StateName === state && readyTimestamp > 0) {
+                    secondsRemaining = readyTimestamp - currentL1Timestamp;
+                    timingInfo = chalk.cyan(` (~${formatDuration(secondsRemaining)} left until ready)`);
+                } else if (state === "Ready" && l1StateName === state) {
+                    timingInfo = chalk.cyan(` (Ready to Execute)`);
+                } else if (state === "Done" && l1StateName === state) {
+                    timingInfo = chalk.cyan(` (Executed)`);
+                } else if (state === "Expired" && l1StateName === state) {
+                    timingInfo = chalk.red(` (Expired)`);
+                }
+            }
+
+            let coloredState = state;
+            if (l1IsOffPath) { coloredState = chalk.gray(state); }
+            else if (state === "None" && currentL1Index === 0) { coloredState = chalk.green.bold(state); }
+            else if (currentL1Index === -1 || index < currentL1Index) { coloredState = chalk.gray(state); }
+            else if (index === currentL1Index) { coloredState = chalk.green.bold(state); }
+            else { coloredState = chalk.dim(state); }
+
+            // Determine if this is the last state to print in the sequence
+            const isLastVisible = (index === l1States.length - 1) || (l1IsOffPath && state === "Ready"); // Don't draw arrow after Ready if Expired
+            nextArrow = !isLastVisible;
+
+            l1Timeline += coloredState + timingInfo + (nextArrow ? chalk.gray(' -> ') : '');
+        });
+
+        if (l1IsOffPath) { l1Timeline += chalk.red.bold(` -> ${l1StateName}`); }
+        console.log(l1Timeline);
+
     } else if (!l2IsOffPath) {
         console.log(chalk.bold("L1: ") + chalk.dim("None (Awaiting L2->L1 Message Proof)"));
     }
 }
-
 
 // --- Main Execution ---
 async function main() {
@@ -486,6 +402,13 @@ async function main() {
     const protocolUpgradeHandler = new ethers.Contract(PROTOCOL_UPGRADE_HANDLER_ADDR, PROTOCOL_UPGRADE_HANDLER_ABI, l1Provider);
     try { await l2Provider.getNetwork(); console.log(chalk.green(`Connected to ZKsync Era RPC: ${l2Provider.connection.url}`)); } catch (e) { console.error(chalk.red(`Failed L2 RPC connection: ${e}`)); process.exit(1); }
     try { await l1Provider.getNetwork(); console.log(chalk.green(`Connected to Ethereum L1 RPC: ${l1Provider.connection.url}`)); } catch (e) { console.error(chalk.red(`Failed L1 RPC connection: ${e}`)); process.exit(1); }
+
+    // --- Fetch Current Block/Time ---
+    let currentL2Block = ethers.BigNumber.from(0);
+    let currentL1Timestamp = 0;
+    try { currentL2Block = await l2Provider.getBlockNumber(); } catch (e) { console.warn(chalk.yellow("Could not fetch current L2 block number.")); }
+    try { currentL1Timestamp = (await l1Provider.getBlock('latest')).timestamp; } catch (e) { console.warn(chalk.yellow("Could not fetch current L1 timestamp.")); }
+
 
     // --- Load Cache ---
     const cache = loadCache();
@@ -517,7 +440,7 @@ async function main() {
         l2StateName = mapL2State(l2State);
         console.log(`  L2 State: ${chalk.yellow(l2StateName)}`);
         votes = await zkGovernor.proposalVotes(l2ProposalId);
-        quorumValue = await zkGovernor.quorum(proposalCreated.voteStart); // Fetch quorum at vote start block
+        quorumValue = await zkGovernor.quorum(proposalCreated.voteStart);
     } catch (e) { console.warn(chalk.yellow(`Could not fetch L2 state, votes, or quorum: ${e}`)); }
 
     // Display Votes and Quorum
@@ -526,35 +449,20 @@ async function main() {
     const forPercent = calculatePercentage(votes.forVotes, totalVotes);
     const againstPercent = calculatePercentage(votes.againstVotes, totalVotes);
     const abstainPercent = calculatePercentage(votes.abstainVotes, totalVotes);
-
     console.log(`  For:     ${chalk.green(formatUnits(votes.forVotes, VOTE_TOKEN_DECIMALS))} (${forPercent}%)`);
     console.log(`  Against: ${chalk.red(formatUnits(votes.againstVotes, VOTE_TOKEN_DECIMALS))} (${againstPercent}%)`);
     console.log(`  Abstain: ${chalk.gray(formatUnits(votes.abstainVotes, VOTE_TOKEN_DECIMALS))} (${abstainPercent}%)`);
     console.log(`  --------------------`);
     console.log(`  Total Voted: ${chalk.blue(formatUnits(totalVotes, VOTE_TOKEN_DECIMALS))}`);
-
     if (quorumValue) {
         const quorumPercentReached = calculatePercentage(votes.forVotes, quorumValue);
         console.log(`  Quorum:      ${chalk.magenta(formatUnits(quorumValue, VOTE_TOKEN_DECIMALS))} (Required at Vote Start)`);
         console.log(`  Quorum Reached: ${chalk.magenta(quorumPercentReached)}% (by For votes)`);
-    } else {
-        console.log(`  Quorum: ${chalk.yellow('Could not fetch quorum')}`);
-    }
-
-    // Display L2 Raw Actions
-    // uncomment if decoding fails or proposal targets L2
-    // console.log(chalk.bold("\nL2 Raw Proposal Actions:"));
-    // (proposalCreated.targets ?? []).forEach((target, i) => {
-    //     console.log(chalk.gray(`  Action ${i}:`));
-    //     console.log(`    Target: ${chalk.magenta(target)}`);
-    //     console.log(`    Value: ${chalk.blue(formatValue(proposalCreated.values?.[i]))} ETH`);
-    //     console.log(`    Signature: ${chalk.cyan(proposalCreated.signatures?.[i] || 'N/A')}`);
-    //     console.log(`    Calldata: ${chalk.yellow(proposalCreated.calldatas?.[i] || '0x')}`);
-    // });
+    } else { console.log(`  Quorum: ${chalk.yellow('Could not fetch quorum')}`); }
 
     // --- 2. Find L2 Execution and Extract L1 Message ---
     console.log(chalk.bold('\n--- Step 2: L2 Execution & L1 Message ---'));
-    const latestL2Block = await l2Provider.getBlockNumber();
+    const latestL2Block = await l2Provider.getBlockNumber(); // Get fresh latest block
     await fetchL2Events(zkGovernor, "ProposalExecuted", "proposalExecutedEvents", cache, l2Provider, (log) => {
         const args = zkGovernor.interface.parseLog(log).args; return { proposalId: args.proposalId, blockNumber: log.blockNumber, txHash: log.transactionHash };
     }, { fromBlock: proposalCreated.blockNumber, toBlock: latestL2Block });
@@ -566,38 +474,24 @@ async function main() {
     if (proposalExecuted) {
         console.log(chalk.green(`Found ProposalExecuted event in L2 block ${proposalExecuted.blockNumber} (Tx: ${proposalExecuted.txHash})`));
         l1MessageSent = await findL1MessageSentInTx(l2Provider, proposalExecuted.txHash);
-        if (l1MessageSent) {
-            l1ProposalHash = l1MessageSent.hash;
-            console.log(chalk.bold(`L1 Proposal Identifier (Hash): ${chalk.yellow(l1ProposalHash)}`));
-        } else {
-             console.error(chalk.red(`Failed to find L1MessageSent event associated with execution tx ${proposalExecuted.txHash}.`));
-        }
-    } else {
-        console.warn(chalk.yellow(`ProposalExecuted event not found for ID ${l2ProposalId.toString()}.`));
-    }
+        if (l1MessageSent) { l1ProposalHash = l1MessageSent.hash; console.log(chalk.bold(`L1 Proposal Identifier (Hash): ${chalk.yellow(l1ProposalHash)}`)); }
+        else { console.error(chalk.red(`Failed L1MessageSent lookup for tx ${proposalExecuted.txHash}.`)); }
+    } else { console.warn(chalk.yellow(`ProposalExecuted event not found for ID ${l2ProposalId.toString()}.`)); }
 
     // --- 3. Decode L1 Payload from L2 Data ---
-    console.log(chalk.bold('\n--- Step 3: L1 Payload Analysis ---'));
+    // console.log(chalk.bold('\n--- Step 3: L1 Payload Analysis ---')); // Combined with step 5 display
     let l1PayloadFromL2: UpgradeProposal | null = null;
     const messengerCallIndex = (proposalCreated.targets ?? []).findIndex(t => t.toLowerCase() === L1_MESSENGER_ADDR.toLowerCase());
     if (messengerCallIndex !== -1) {
         const messengerCalldata = proposalCreated.calldatas?.[messengerCallIndex];
-        if (messengerCalldata) {
-            console.log(chalk.gray("Decoding L1 payload from L2 messenger calldata..."));
-            l1PayloadFromL2 = decodeL1ProposalFromL2Calldata(messengerCalldata);
-            if (l1PayloadFromL2) {
-                 console.log(chalk.green("Successfully decoded L1 payload from L2 calldata."));
-                 // Optionally print details here if needed for debugging, otherwise wait for comparison
-            }
-        } else { console.warn(chalk.yellow("L1Messenger target found, but calldata is missing.")); }
-    } else { console.warn(chalk.yellow("L2 Proposal actions do not call L1Messenger.")); }
+        if (messengerCalldata) { l1PayloadFromL2 = decodeL1ProposalFromL2Calldata(messengerCalldata); }
+    }
 
     // --- 4. Fetch L1 Upgrade Data ---
     let upgradeStarted: UpgradeStartedData | null = null;
     let l1State = -1;
     let l1StateName: string | null = null;
     let l1StatusData: UpgradeStatusData | null = null;
-
     if (l1ProposalHash) {
         console.log(chalk.bold('\n--- Step 4: L1 Proposal Status ---'));
         upgradeStarted = await findL1UpgradeStarted(l1Provider, protocolUpgradeHandler, l1ProposalHash);
@@ -606,12 +500,8 @@ async function main() {
             l1StateName = mapL1State(l1State);
             l1StatusData = await protocolUpgradeHandler.upgradeStatus(l1ProposalHash);
         } catch (e) { console.warn(chalk.yellow(`Could not query L1 state/status for ${l1ProposalHash}: ${e}`)); }
-
-        if (upgradeStarted) {
-            console.log(chalk.green(`Found UpgradeStarted event in L1 block ${upgradeStarted.blockNumber} (Tx: ${upgradeStarted.txHash})`));
-        } else {
-            console.warn(chalk.yellow(`L1 UpgradeStarted event not found for ID ${l1ProposalHash}.`));
-        }
+        if (upgradeStarted) { console.log(chalk.green(`Found UpgradeStarted event in L1 block ${upgradeStarted.blockNumber} (Tx: ${upgradeStarted.txHash})`)); }
+        else { console.warn(chalk.yellow(`L1 UpgradeStarted event not found for ID ${l1ProposalHash}.`)); }
         console.log(`  L1 State: ${chalk.yellow(l1StateName ?? 'Unknown')}`);
         if (l1StatusData) {
              console.log(`  L1 Status:`);
@@ -621,41 +511,60 @@ async function main() {
              console.log(`    Guardians Extended Veto: ${chalk.yellow(l1StatusData.guardiansExtendedLegalVeto)}`);
              console.log(`    Executed: ${chalk.yellow(l1StatusData.executed)}`);
         }
-    } else {
-         console.log(chalk.bold('\n--- Step 4: L1 Proposal Status ---'));
-         console.log(chalk.gray("L1 Proposal Hash not found (L2 not executed or L1MessageSent missing)."));
-    }
+    } else { console.log(chalk.bold('\n--- Step 4: L1 Proposal Status ---')); console.log(chalk.gray("L1 Proposal Hash not found.")); }
 
     // --- Display Timeline ---
-    displayTimeline(l2StateName, l1StateName); // Pass current states
+    displayTimeline(l2StateName, l1StateName, proposalCreated, l1StatusData, currentL2Block, currentL1Timestamp);
 
-    // --- Display L1 Payloads (if available) ---
-    if (l1PayloadFromL2) {
-        console.log(chalk.bold("\nL1 Payload (Decoded from L2 Messenger Call):"));
-        console.log(`  Executor: ${chalk.yellow(l1PayloadFromL2.executor)}`);
-        console.log(`  Salt: ${chalk.yellow(l1PayloadFromL2.salt)}`);
-        (l1PayloadFromL2.calls ?? []).forEach((call, i) => {
-            console.log(chalk.gray(`  Call ${i}:`)); console.log(`    Target: ${chalk.magenta(call.target)}`);
-            console.log(`    Value: ${chalk.blue(formatValue(call.value))} ETH`); console.log(`    Data: ${chalk.yellow(call.data)}`);
-        });
+    // --- 5. Display Payloads & Compare ---
+    console.log(chalk.bold('\n--- Step 5: L1 Payload Verification ---'));
+    let payloadsMatch = false;
+    if (l1PayloadFromL2 && upgradeStarted) {
+        payloadsMatch = comparePayloads(l1PayloadFromL2, upgradeStarted.proposal);
     }
+
+    // Display L1 Event Payload first (if available)
     if (upgradeStarted) {
-        console.log(chalk.bold("\nL1 Payload (from UpgradeStarted Event):"));
+        console.log(chalk.bold("L1 Payload (from UpgradeStarted Event):"));
         console.log(`  Executor: ${chalk.yellow(upgradeStarted.proposal.executor)}`);
         console.log(`  Salt: ${chalk.yellow(upgradeStarted.proposal.salt)}`);
         (upgradeStarted.proposal.calls ?? []).forEach((call, i) => {
             console.log(chalk.gray(`  Call ${i}:`)); console.log(`    Target: ${chalk.magenta(call.target)}`);
             console.log(`    Value: ${chalk.blue(formatValue(call.value))} ETH`); console.log(`    Data: ${chalk.yellow(call.data)}`);
         });
+    } else if (l1PayloadFromL2) {
+        // If L1 event not found, show the decoded L2 payload as the best available info
+        console.log(chalk.bold("L1 Payload (Decoded from L2 Messenger Call - L1 Event Not Found):"));
+        console.log(`  Executor: ${chalk.yellow(l1PayloadFromL2.executor)}`);
+        console.log(`  Salt: ${chalk.yellow(l1PayloadFromL2.salt)}`);
+        (l1PayloadFromL2.calls ?? []).forEach((call, i) => {
+            console.log(chalk.gray(`  Call ${i}:`)); console.log(`    Target: ${chalk.magenta(call.target)}`);
+            console.log(`    Value: ${chalk.blue(formatValue(call.value))} ETH`); console.log(`    Data: ${chalk.yellow(call.data)}`);
+        });
+    } else {
+        console.log(chalk.yellow("No L1 payload information could be determined."));
     }
 
-    // --- 5. Sanity Check Payloads ---
-    console.log(chalk.bold('\n--- Step 5: Payload Comparison ---'));
+    // Display Decoded L2 Payload ONLY if it exists AND L1 event doesn't exist OR payloads mismatch
+    if (l1PayloadFromL2 && (!upgradeStarted || !payloadsMatch)) {
+         console.log(chalk.bold("\nL1 Payload (Decoded from L2 Messenger Call - Verification):"));
+         if (!upgradeStarted) console.log(chalk.yellow("(Displaying because L1 UpgradeStarted event was not found)"));
+         else if (!payloadsMatch) console.log(chalk.red("(Displaying because it differs from L1 UpgradeStarted event payload)"));
+
+         console.log(`  Executor: ${chalk.yellow(l1PayloadFromL2.executor)}`);
+         console.log(`  Salt: ${chalk.yellow(l1PayloadFromL2.salt)}`);
+         (l1PayloadFromL2.calls ?? []).forEach((call, i) => {
+             console.log(chalk.gray(`  Call ${i}:`)); console.log(`    Target: ${chalk.magenta(call.target)}`);
+             console.log(`    Value: ${chalk.blue(formatValue(call.value))} ETH`); console.log(`    Data: ${chalk.yellow(call.data)}`);
+         });
+    }
+
+    // Final comparison result message
     if (l1PayloadFromL2 && upgradeStarted) {
-        const payloadsMatch = comparePayloads(l1PayloadFromL2, upgradeStarted.proposal);
-        if (payloadsMatch) { console.log(chalk.green('Payload Sanity Check Passed: L1 event payload matches decoded L2 messenger payload.')); }
-        else { console.error(chalk.red('Payload Sanity Check Failed: Differences found!')); }
-    } else { console.warn(chalk.yellow("Could not perform payload comparison: L1 event data or decoded L2 payload is missing.")); }
+        if (payloadsMatch) { console.log(chalk.green('\nPayload Sanity Check Passed: L1 event payload matches decoded L2 messenger payload.')); }
+        else { console.error(chalk.red('\nPayload Sanity Check Failed: Differences found!')); }
+    } else if (l1ProposalHash) { console.warn(chalk.yellow("\nCould not perform payload comparison: L1 event data or decoded L2 payload is missing.")); }
+
 
     console.log(chalk.bold.cyan('\n--- Analysis Complete ---'));
 
