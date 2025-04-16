@@ -37,7 +37,14 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
   ) {
     const adjustedTo = this.$.priceProvider.getAdjustedTo(from, to)
 
-    // TODO: return if range too small
+    if (this.isEmptyRange(from, adjustedTo)) {
+      this.logger.info('No timestamps to sync in range', {
+        from,
+        to,
+        adjustedTo,
+      })
+      return () => Promise.resolve(to)
+    }
 
     this.logger.info('Fetching prices', {
       from,
@@ -105,6 +112,12 @@ export class TvsPriceIndexer extends ManagedMultiIndexer<PriceConfig> {
 
       return adjustedTo
     }
+  }
+
+  private isEmptyRange(from: number, adjustedTo: number) {
+    return (
+      this.$.syncOptimizer.getTimestampsToSync(from, adjustedTo, 1).length === 0
+    )
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

@@ -58,7 +58,7 @@ describe(BlockTimestampIndexer.name, () => {
       })
 
       const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
-      const newSafeHeight = await updateFn()
+      const safeHeight = await updateFn()
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
@@ -75,7 +75,7 @@ describe(BlockTimestampIndexer.name, () => {
         },
       ])
 
-      expect(newSafeHeight).toEqual(timestampToSync)
+      expect(safeHeight).toEqual(timestampToSync)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -97,10 +97,10 @@ describe(BlockTimestampIndexer.name, () => {
       })
 
       const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
-      const newSafeHeight = await updateFn()
+      const safeHeight = await updateFn()
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
-      expect(newSafeHeight).toEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
