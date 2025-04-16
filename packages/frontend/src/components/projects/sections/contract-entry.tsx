@@ -76,10 +76,7 @@ export function ContractEntry({
           <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
             <strong
               id={contract.name}
-              className="scroll-mt-14 md:scroll-mt-10"
-              style={{
-                wordBreak: 'break-word',
-              }}
+              className="word-break-word scroll-mt-14 md:scroll-mt-10"
             >
               {contract.name}
             </strong>{' '}
@@ -111,12 +108,7 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <Markdown
-              className="mt-2 leading-snug text-gray-850 dark:text-gray-400"
-              style={{
-                wordBreak: 'break-word',
-              }}
-            >
+            <Markdown className="word-break-word mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {contract.description}
             </Markdown>
           )}

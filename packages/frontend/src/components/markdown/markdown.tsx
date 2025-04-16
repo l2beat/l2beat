@@ -1,6 +1,5 @@
 'use client'
 import MarkdownIt from 'markdown-it'
-import React from 'react'
 
 import { cn } from '~/utils/cn'
 import {
@@ -15,7 +14,6 @@ export interface MarkdownProps {
   inline?: boolean
   className?: string
   ignoreGlossary?: boolean
-  style?: React.CSSProperties
 }
 
 const markdown = MarkdownIt({
@@ -42,7 +40,6 @@ export function Markdown(props: MarkdownProps) {
       <Comp
         className={cn('mdc', props.className)}
         dangerouslySetInnerHTML={{ __html: rendered }}
-        style={props.style}
       />
     )
   }
@@ -56,7 +53,6 @@ export function Markdown(props: MarkdownProps) {
     <Comp
       className={cn('mdc', props.className)}
       dangerouslySetInnerHTML={{ __html: rendered }}
-      style={props.style}
     />
   )
 }
