@@ -1,9 +1,11 @@
+import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/range-to-days'
 import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
@@ -48,8 +50,9 @@ const getCachedDaThroughputChartByProjectData = cache(
     if (throughput.length === 0) {
       return []
     }
+    const allProjects = await ps.getProjects({})
     const { grouped, minTimestamp, maxTimestamp } =
-      groupByTimestampAndProjectId(throughput)
+      groupByTimestampAndProjectId(throughput, allProjects)
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
@@ -58,23 +61,30 @@ const getCachedDaThroughputChartByProjectData = cache(
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
-function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
+function groupByTimestampAndProjectId(
+  records: DataAvailabilityRecord[],
+  allProjects: Project[],
+) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
+
   for (const record of records) {
     if (record.daLayer === record.projectId) {
       continue
     }
     const timestamp = record.timestamp
     const value = record.totalSize
+    const project = allProjects.find((p) => p.id === record.projectId)
+    assert(project, `Project ${record.projectId} not found`)
     result[timestamp] = {
       ...result[timestamp],
-      [record.projectId]: Number(value),
+      [project.name]: Number(value),
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
+
   return {
     grouped: Object.fromEntries(
       Object.entries(result).map(([timestamp, projects]) => [
