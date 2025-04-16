@@ -18,7 +18,7 @@ The manager then sends the tokens after mapping the token addresses.
 const STATE_SENDER_ETHEREUM = '0x28e4f3a7f651294b9564800b2d01f35189a5bfbe'
 const STATE_RECEIVER_POLYGONPOS = '0x0000000000000000000000000000000000001001'
 
-const CCM_POLYGONPOS = '0xa6fa4fb5f76172d178d61b04b0ecd319c5d1c0aa'
+const CCM_POLYGONPOS = '0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa'
 
 const abi = parseAbi([
   'event StateSynced(uint256 indexed id, address indexed contractAddress, bytes data)',
@@ -48,6 +48,7 @@ export function decodePolygonPosBridge(
   ) {
     const send = decodeSend(event.args.data)
     if (!send) {
+      console.log('Not send')
       return
     }
 

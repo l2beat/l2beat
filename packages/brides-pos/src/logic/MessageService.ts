@@ -133,7 +133,7 @@ export class MessageService {
     }
     this.transfers.push(transfer)
 
-    this.logger.info('Gnosis transfer completed', {
+    this.logger.info('Polygon transfer completed', {
       source: send.sourceChain,
       sourceTx: send.txHash,
       sender: '?:?',
@@ -141,6 +141,8 @@ export class MessageService {
       destinationTx: receive.txHash,
       recipient: send.recipient,
     })
+
+    console.log(transfer)
   }
 
   private broadcast(message: CrossChainMessage) {

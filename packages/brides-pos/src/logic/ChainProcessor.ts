@@ -8,6 +8,11 @@ import type { LogWithTimestamp } from './analyze/common'
 
 const MAX_BLOCK_RANGE = 50n
 
+const START_BLOCK: Record<string, bigint> = {
+  ethereum: 22280379n - 10n,
+  polygonpos: 70365728n - 10n,
+}
+
 export class ChainProcessor {
   private nextJobId = 1
   private jobs: Record<number, Log[]> = {}
@@ -26,11 +31,7 @@ export class ChainProcessor {
 
   async start() {
     this.lastBlock =
-      this.chain.name === 'ethereum'
-        ? 22274990n
-        : this.chain.name === 'gnosis'
-          ? 39573640n
-          : await this.client.getBlockNumber()
+      START_BLOCK[this.chain.name] ?? (await this.client.getBlockNumber()) - 10n
     this.logger.info('Started', { fromBlock: Number(this.lastBlock) })
     setTimeout(this.pollLogs)
   }
