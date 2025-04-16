@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { TvsPriceRecord } from '@l2beat/database/dist/tvs/price/entity'
-import type { PriceProvider } from '@l2beat/shared'
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
+import type { CirculatingSupplyProvider } from '@l2beat/shared'
+import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import type { Database } from '@l2beat/database'
@@ -9,9 +9,9 @@ import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import { TvsPriceIndexer } from './TvsPriceIndexer'
+import { CirculatingSupplyAmountIndexer } from './CirculatingSupplyAmountIndexer'
 
-describe(TvsPriceIndexer.name, () => {
+describe(CirculatingSupplyAmountIndexer.name, () => {
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
@@ -21,14 +21,17 @@ describe(TvsPriceIndexer.name, () => {
     minHeight: 0,
     maxHeight: null,
     properties: {
-      id: 'config-1',
-      priceId: 'ethereum',
-      sinceTimestamp: UnixTime(0),
+      type: 'circulatingSupply' as const,
+      sinceTimestamp: 0,
+      apiId: 'ethereum',
+      decimals: 18,
+      address: EthereumAddress.ZERO,
+      chain: 'ethereum',
     },
   }
 
-  describe(TvsPriceIndexer.prototype.multiUpdate.name, () => {
-    it('fetches prices and saves them to DB', async () => {
+  describe(CirculatingSupplyAmountIndexer.prototype.multiUpdate.name, () => {
+    it('fetches circulating supplies and saves them to DB', async () => {
       const from = 100
       const to = 300
       const adjustedTo = 250
@@ -40,18 +43,21 @@ describe(TvsPriceIndexer.name, () => {
           minHeight: 0,
           maxHeight: null,
           properties: {
-            id: 'config-1',
-            priceId: 'bitcoin',
-            sinceTimestamp: UnixTime(0),
+            type: 'circulatingSupply' as const,
+            sinceTimestamp: 0,
+            apiId: 'bitcoin',
+            decimals: 8,
+            address: EthereumAddress.ZERO,
+            chain: 'bitcoin',
           },
         },
       ]
 
-      const priceProvider = mockObject<PriceProvider>({
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn()
-          .returnsOnce([{ timestamp: UnixTime(150), value: 1500 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 20000 }]),
+        getCirculatingSupplies: mockFn()
+          .returnsOnce([{ timestamp: UnixTime(150), value: 120000000 }])
+          .returnsOnce([{ timestamp: UnixTime(200), value: 19000000 }]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -62,15 +68,15 @@ describe(TvsPriceIndexer.name, () => {
         shouldTimestampBeSynced: mockFn().returns(true),
       })
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         insertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer({
+      const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
         configurations: configs,
-        priceProvider,
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+        circulatingSupplyProvider,
+        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -79,36 +85,34 @@ describe(TvsPriceIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenNthCalledWith(
-        1,
-        CoingeckoId('ethereum'),
-        UnixTime(from),
-        adjustedTo,
-      )
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenNthCalledWith(1, CoingeckoId('ethereum'), {
+        from,
+        to: adjustedTo,
+      })
 
-      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenNthCalledWith(
-        2,
-        CoingeckoId('bitcoin'),
-        UnixTime(from),
-        adjustedTo,
-      )
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenNthCalledWith(2, CoingeckoId('bitcoin'), {
+        from,
+        to: adjustedTo,
+      })
 
-      const expectedRecords: TvsPriceRecord[] = [
+      const expectedRecords: TvsAmountRecord[] = [
         {
           configurationId: 'config-1',
           timestamp: UnixTime(150),
-          priceUsd: 1500,
-          priceId: 'ethereum',
+          amount: BigInt(120000000 * 10 ** 18),
         },
         {
           configurationId: 'config-2',
           timestamp: UnixTime(200),
-          priceUsd: 20000,
-          priceId: 'bitcoin',
+          amount: BigInt(19000000 * 10 ** 8),
         },
       ]
 
-      expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -119,11 +123,11 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().returnsOnce([
-          { timestamp: UnixTime(150), value: 1500 },
-          { timestamp: UnixTime(200), value: 2000 },
+        getCirculatingSupplies: mockFn().returnsOnce([
+          { timestamp: UnixTime(150), value: 120000000 },
+          { timestamp: UnixTime(200), value: 125000000 },
         ]),
       })
 
@@ -134,15 +138,15 @@ describe(TvsPriceIndexer.name, () => {
           .returnsOnce(false), // For timestamp 200
       })
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         insertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer({
+      const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
         configurations: [mockConfig],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+        circulatingSupplyProvider,
+        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -151,16 +155,15 @@ describe(TvsPriceIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
       const safeHeight = await updateFn()
 
-      const expectedRecords: TvsPriceRecord[] = [
+      const expectedRecords: TvsAmountRecord[] = [
         {
           configurationId: 'config-1',
           timestamp: UnixTime(150),
-          priceUsd: 1500,
-          priceId: 'ethereum',
+          amount: BigInt(120000000 * 10 ** 18),
         },
       ]
 
-      expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith(
+      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
         expectedRecords,
       )
       expect(safeHeight).toEqual(adjustedTo)
@@ -171,7 +174,7 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
       })
 
@@ -179,11 +182,11 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([]),
       })
 
-      const indexer = new TvsPriceIndexer({
+      const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
         configurations: [mockConfig],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: mockObject() }),
+        circulatingSupplyProvider,
+        db: mockDatabase({ tvsAmount: mockObject() }),
         syncOptimizer,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -192,7 +195,10 @@ describe(TvsPriceIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
+      expect(circulatingSupplyProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(
+        from,
+        to,
+      )
       expect(syncOptimizer.getTimestampsToSync).toHaveBeenOnlyCalledWith(
         from,
         adjustedTo,
@@ -206,9 +212,9 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().throwsOnce(
+        getCirculatingSupplies: mockFn().throwsOnce(
           new Error('Insufficient data in response for ethereum'),
         ),
       })
@@ -217,15 +223,15 @@ describe(TvsPriceIndexer.name, () => {
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
       })
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         insertMany: mockFn().returnsOnce(undefined),
       })
 
-      const indexer = new TvsPriceIndexer({
+      const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
         configurations: [mockConfig],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+        circulatingSupplyProvider,
+        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -234,13 +240,14 @@ describe(TvsPriceIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
       const safeHeight = await updateFn()
 
-      expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenOnlyCalledWith(
-        CoingeckoId('ethereum'),
-        UnixTime(from),
-        adjustedTo,
-      )
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenOnlyCalledWith(CoingeckoId('ethereum'), {
+        from,
+        to: adjustedTo,
+      })
 
-      expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith([])
+      expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith([])
       expect(safeHeight).toEqual(adjustedTo)
     })
 
@@ -249,22 +256,20 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
-        getUsdPriceHistoryHourly: mockFn().throwsOnce(
-          new Error('Network error'),
-        ),
+        getCirculatingSupplies: mockFn().throwsOnce(new Error('Network error')),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampsToSync: mockFn().returnsOnce([UnixTime(150)]),
       })
 
-      const indexer = new TvsPriceIndexer({
+      const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
         configurations: [mockConfig],
-        priceProvider,
-        db: mockDatabase({ tvsPrice: mockObject() }),
+        circulatingSupplyProvider,
+        db: mockDatabase({ tvsAmount: mockObject() }),
         syncOptimizer,
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -276,17 +281,17 @@ describe(TvsPriceIndexer.name, () => {
     })
   })
 
-  describe(TvsPriceIndexer.prototype.removeData.name, () => {
+  describe(CirculatingSupplyAmountIndexer.prototype.removeData.name, () => {
     it('deletes records for configuration in time range', async () => {
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
       })
 
-      const indexer = new TvsPriceIndexer({
+      const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
         configurations: [mockConfig],
-        priceProvider: mockObject<PriceProvider>({}),
-        db: mockDatabase({ tvsPrice: tvsPriceRepository }),
+        circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
+        db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer: mockObject<SyncOptimizer>({}),
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -308,7 +313,7 @@ describe(TvsPriceIndexer.name, () => {
       await indexer.removeData(removalConfigs)
 
       expect(
-        tvsPriceRepository.deleteByConfigInTimeRange,
+        tvsAmountRepository.deleteByConfigInTimeRange,
       ).toHaveBeenNthCalledWith(
         1,
         removalConfigs[0].id,
@@ -317,12 +322,20 @@ describe(TvsPriceIndexer.name, () => {
       )
 
       expect(
-        tvsPriceRepository.deleteByConfigInTimeRange,
+        tvsAmountRepository.deleteByConfigInTimeRange,
       ).toHaveBeenNthCalledWith(
         2,
         removalConfigs[1].id,
         UnixTime(removalConfigs[1].from),
         UnixTime(removalConfigs[1].to),
+      )
+    })
+  })
+
+  describe('SOURCE', () => {
+    it('returns the correct source identifier', () => {
+      expect(CirculatingSupplyAmountIndexer.SOURCE()).toEqual(
+        'l2b-circulating-supply',
       )
     })
   })
