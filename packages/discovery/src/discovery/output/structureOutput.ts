@@ -43,11 +43,12 @@ export function processAnalysis(
     entries: contracts
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
       .map((x): EntryParameters => {
-        const { receivedPermissions } = transformToReceived(
-          x.address,
-          resolvedPermissions,
-          x.combinedMeta?.permissions,
-        )
+        const { directlyReceivedPermissions, receivedPermissions } =
+          transformToReceived(
+            x.address,
+            resolvedPermissions,
+            x.combinedMeta?.permissions,
+          )
 
         return withoutUndefinedKeys({
           address: x.address,
@@ -59,6 +60,7 @@ export function processAnalysis(
             : undefined,
           proxyType: x.proxyType,
           receivedPermissions,
+          directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp,
           sinceBlock: x.deploymentBlockNumber,

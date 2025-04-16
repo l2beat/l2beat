@@ -74,6 +74,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     displayName: e.displayName,
     description: e.description,
     receivedPermissions: e.receivedPermissions,
+    directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,
     sinceTimestamp: e.sinceTimestamp,
     sinceBlock: e.sinceBlock,

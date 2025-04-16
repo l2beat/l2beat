@@ -97,6 +97,7 @@ export type ColorEntry = {
   fieldMeta?: Record<string, FieldMeta>
   receivedPermissions?: ReceivedPermission[]
   permissions?: ParsedTransitivePermissionFact[]
+  directlyReceivedPermissions?: ReceivedPermission[]
   references?: ExternalReference[]
   category?: ContractCategory
 }

@@ -12,7 +12,10 @@ import {
 import { groupBy, sum } from 'lodash'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import { UltimatePermissionToPrefix } from './descriptions'
+import {
+  DirectPermissionToPrefix,
+  UltimatePermissionToPrefix,
+} from './descriptions'
 import {
   formatPermissionCondition,
   formatPermissionDelay,
@@ -51,11 +54,61 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
   describePermissions(
     contractOrEoa: EntryParameters,
-    _includeDirectPermissions: boolean = true,
+    includeDirectPermissions: boolean = true,
   ) {
     return [
+      ...(includeDirectPermissions
+        ? this.describeDirectlyReceivedPermissions(contractOrEoa)
+        : []),
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
     ].filter(notUndefined)
+  }
+
+  describeDirectlyReceivedPermissions(
+    contractOrEoa: EntryParameters,
+  ): string[] {
+    return Object.entries(
+      groupBy(
+        contractOrEoa.directlyReceivedPermissions ?? [],
+        (value: ReceivedPermission) =>
+          [
+            value.permission,
+            value.description ?? '',
+            value.condition ?? '',
+            value.delay?.toString() ?? '',
+          ].join('►'),
+      ),
+    ).map(([key, entries]) => {
+      const permission = key.split('►')[0] as Permission
+      const description = key.split('►')[1] ?? ''
+      const condition = key.split('►')[2] ?? ''
+      const delay = key.split('►')[3] ?? ''
+      const permissionsRequiringTarget: Permission[] = [
+        'interact',
+        'upgrade',
+        'act',
+      ]
+      const showTargets = permissionsRequiringTarget.includes(permission)
+      const addressesString = showTargets
+        ? entries
+            .map(
+              (entry) =>
+                this.projectDiscovery.getContract(entry.from.toString()).name,
+            )
+            .join(', ')
+        : ''
+
+      return `${[
+        DirectPermissionToPrefix[permission],
+        addressesString,
+        formatPermissionDescription(description),
+        formatPermissionCondition(condition),
+        delay === '' ? '' : formatPermissionDelay(Number(delay)),
+      ]
+        .filter((s) => s !== '')
+        .join(' ')
+        .trim()}.`
+    })
   }
 
   describeUltimatelyReceivedPermissions(

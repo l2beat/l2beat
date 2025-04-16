@@ -60,6 +60,8 @@ export async function runDiscovery(
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
     saveSources: config.saveSources,
+    buildModels: config.buildModels,
+    buildProjectPageFacts: config.buildProjectPageFacts,
     templatesFolder,
   })
 
