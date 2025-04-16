@@ -12,35 +12,12 @@
     "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa" // FeesCollector
   ],
   "names": {
-    "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "AddressManager",
-    "0x5E4e65926BA27467555EB562121fac00D24E9dD2": "CanonicalTransactionChain",
-    "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19": "StateCommitmentChain",
-    "0x77eBfdFcC906DDcDa0C42B866f26A8D5A2bb0572": "SCCStorageContainerBatches_OLD",
-    "0xA0b912b3Ea71A04065Ff82d3936D518ED6E38039": "CTCStorageContainerQueue",
-    "0x3EA1a3839D8ca9a7ff3c567a9F36f4C4DbECc3eE": "CTCStorageContainerBatches_OLD",
-    "0xD16463EF9b0338CE3D73309028ef1714D220c024": "CTCStorageContainerBatches",
-    "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": "SCCStorageContainerBatches",
-    "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": "CanonicalTransactionChain_OLD",
-    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessenger",
-    "0xdfe97868233d1aa22e815a266982f2cf17685a27": "L2OutputOracle",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
     "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L1DAIEscrow",
-    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal",
-    "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": "SystemConfig",
     "0x76943C0D61395d8F2edF9060e1533529cAe05dE6": "wstETHEscrow",
-    "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": "SynthetixBridgeEscrow",
-    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "L1ERC721Bridge",
-    "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": "L1StandardBridge",
-    "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig",
     "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "FeesCollector",
-    "0xe5965Ab5962eDc7477C8520243A95517CD252fA9": "DisputeGameFactory",
-    "0xA6f3DFdbf4855a43c529bc42EDE96797252879af": "FaultDisputeGame",
-    "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": "PreimageOracle",
-    "0x050ed6F6273c7D836a111E42153BC00D0380b87d": "PermissionedDisputeGame",
-    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
     "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": "DelayedWETH_PermissionlessGames",
-    "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames",
-    "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
+    "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames"
   },
   "overrides": {
     "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {

@@ -7,7 +7,8 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
+import type { LocalStorage } from './LocalStorage'
 import { mapConfig } from './mapConfig'
 
 describe(mapConfig.name, () => {
@@ -25,7 +26,16 @@ describe(mapConfig.name, () => {
 
     const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
 
-    const result = await mapConfig(arbitrum, chains, Logger.SILENT)
+    const mockLocalStorage = mockObject<LocalStorage>({
+      getAddress: mockFn().resolvesTo(undefined),
+    })
+
+    const result = await mapConfig(
+      arbitrum,
+      chains,
+      Logger.SILENT,
+      mockLocalStorage,
+    )
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)

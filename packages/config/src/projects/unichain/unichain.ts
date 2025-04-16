@@ -36,6 +36,7 @@ export const unichain: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },
+  hasSuperchainScUpgrades: true,
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,

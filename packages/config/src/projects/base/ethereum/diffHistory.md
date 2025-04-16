@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xeb05fdd4f3bc84a688c74060e0e105e9dc72e2a8
+
+# Diff at Wed, 16 Apr 2025 07:23:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8675a8596c71e57499f097800e9642657bde9c53 block: 22245750
+- current block number: 22280036
+
+## Description
+
+config related: use opstack.ts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22245750 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      name:
+-        "OptimismPortal"
++        "OptimismPortal2"
+    }
+```
+
 Generated with discovered.json: 0x6a32f810c1d3e3e65262a7c2e7f94188c3ebb8c3
 
 # Diff at Fri, 11 Apr 2025 13:15:32 GMT:

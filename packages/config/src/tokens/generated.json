@@ -7149,6 +7149,28 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1739290250,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",
@@ -9770,6 +9792,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Onyxcoin",
+      "coingeckoId": "chain-2",
+      "address": "0x9c632E6Aaa3eA73f91554f8A3cB2ED2F29605e0C",
+      "symbol": "XCN",
+      "decimals": 18,
+      "deploymentTimestamp": 1719103377,
+      "coingeckoListingTimestamp": 1647302400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24210/large/onyxlogo.jpg?1696523397",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "Prefrontal Cortex Convo Agent by Virtuals",
