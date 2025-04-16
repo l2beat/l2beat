@@ -57,11 +57,12 @@ export function DaThroughputByProjectChart({
   const { denominator, unit } = getDaDataParams(max)
 
   const chartMeta = useMemo(() => {
-    return projectsToShow?.reduce((acc, project) => {
+    return projectsToShow?.reduce((acc, project, index) => {
       if (!acc[project]) {
         acc[project] = {
           label: project,
-          color: colors[Object.keys(acc).length]!,
+          color:
+            project === 'Others' ? 'hsl(var(--secondary))' : colors[index]!,
           indicatorType: { shape: 'square' },
         }
       }
@@ -136,7 +137,11 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { denominator: number }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
-  payload.sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
+  payload.sort((a, b) => {
+    if (a.name === 'Others') return 1
+    if (b.name === 'Others') return -1
+    return (b.value ?? 0) - (a.value ?? 0)
+  })
 
   return (
     <ChartTooltipWrapper>

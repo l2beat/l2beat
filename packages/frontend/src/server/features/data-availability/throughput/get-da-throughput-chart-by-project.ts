@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -57,7 +58,7 @@ const getCachedDaThroughputChartByProjectData = cache(
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
   },
-  ['da-throughput-chart-by-project-data'],
+  ['da-throughput-chart-by-project-data3'],
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
@@ -68,11 +69,12 @@ function groupByTimestampAndProjectId(
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
+  const [daLayerRecords, projectRecords] = partition(
+    records,
+    (r) => r.daLayer === r.projectId,
+  )
 
-  for (const record of records) {
-    if (record.daLayer === record.projectId) {
-      continue
-    }
+  for (const record of projectRecords) {
     const timestamp = record.timestamp
     const value = record.totalSize
     const project = allProjects.find((p) => p.id === record.projectId)
@@ -80,6 +82,22 @@ function groupByTimestampAndProjectId(
     result[timestamp] = {
       ...result[timestamp],
       [project.name]: Number(value),
+    }
+    minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
+  }
+
+  // Add the difference between the total size and the sum of the other projects as 'Others'
+  for (const record of daLayerRecords) {
+    const timestamp = record.timestamp
+    const value = record.totalSize
+    const restSummed = Object.values(result[timestamp] ?? {}).reduce(
+      (acc, curr) => acc + curr,
+      0,
+    )
+    result[timestamp] = {
+      ...result[timestamp],
+      ['Others']: Number(value) - restSummed,
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)

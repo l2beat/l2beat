@@ -35,7 +35,16 @@ export function ProjectDaThroughputByProjectChart({
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
     return data
-      ? uniq([...data].reverse().flatMap(([_, values]) => Object.keys(values)))
+      ? uniq(
+          [...data]
+            .reverse()
+            .flatMap(([_, values]) => Object.keys(values))
+            .sort((a, b) => {
+              if (a === 'Others') return 1
+              if (b === 'Others') return -1
+              return 0
+            }),
+        )
       : []
   }, [data])
 
@@ -45,7 +54,8 @@ export function ProjectDaThroughputByProjectChart({
   )
 
   const projectsToShow =
-    selectedProjects ?? allProjects.slice(0, DEFAULT_PROJECTS_TO_SHOW)
+    selectedProjects ??
+    allProjects.filter((p) => p !== 'Others').slice(0, DEFAULT_PROJECTS_TO_SHOW)
 
   return (
     <div>
