@@ -898,10 +898,6 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
-  colors: {
-    primary: `#${string}`
-    secondary: `#${string}`
-  }
   token: {
     tokenId: string
     projectId: ProjectId

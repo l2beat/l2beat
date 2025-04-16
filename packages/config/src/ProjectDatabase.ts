@@ -25,6 +25,7 @@ const schema = {
   name: 'TEXT NOT NULL',
   shortName: 'TEXT',
   addedAt: 'INTEGER NOT NULL',
+  colors: 'TEXT',
 
   statuses: 'TEXT',
   display: 'TEXT',
