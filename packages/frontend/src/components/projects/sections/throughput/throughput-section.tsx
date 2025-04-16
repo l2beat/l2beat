@@ -1,6 +1,7 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import Link from 'next/link'
+import { ProjectDaThroughputByProjectChart } from '~/components/chart/data-availability/project-da-throughput-by-project-chart'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -11,7 +12,6 @@ import {
 } from '~/utils/number-format/format-bytes'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
-import { DaThroughputByProjectChart } from '~/components/chart/data-availability/da-throughput-by-project-chart'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
   projectId: ProjectId
@@ -66,7 +66,7 @@ export function ThroughputSection({
         configuredThroughputs={throughput}
         milestones={milestones}
       />
-      <DaThroughputByProjectChart daLayer={projectId} />
+      <ProjectDaThroughputByProjectChart daLayer={projectId} />
       <HorizontalSeparator className="my-4" />
       <ChartStats>
         <ChartStatsItem

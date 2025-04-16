@@ -1,10 +1,8 @@
 'use client'
-
-import { assert } from '@l2beat/shared-pure'
-import { sum, uniq } from 'lodash'
+import { sum } from 'lodash'
 import { useMemo } from 'react'
-import { Bar, BarChart, type TooltipProps } from 'recharts'
-
+import type { TooltipProps } from 'recharts'
+import { Bar, BarChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -17,37 +15,49 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { api } from '~/trpc/react'
+import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
+import type { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generate-colors'
 import { getDaDataParams } from './get-da-data-params'
 
-export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
-  const { data, isLoading } = api.da.projectChartByProject.useQuery({
-    range: '7d',
-    daLayer,
-  })
+interface Props {
+  data: DaThroughputChartDataByChart | undefined
+  isLoading: boolean
+  range: DaThroughputTimeRange
+  selectedProjects: string[]
+}
 
-  const maxProjects = 8
-  const colors = useMemo(() => generateAccessibleColors(maxProjects), [])
+export function DaThroughputByProjectChart({
+  data,
+  isLoading,
+  range,
+  selectedProjects,
+}: Props) {
+  const colors = useMemo(
+    () => generateAccessibleColors(selectedProjects.length),
+    [selectedProjects],
+  )
 
   const max = useMemo(() => {
     return data
-      ? Math.max(...data.chart.map(([_, values]) => sum(Object.values(values))))
+      ? Math.max(
+          ...data.map(([_, values]) =>
+            sum(
+              Object.entries(values).map(([slug, value]) => {
+                if (!selectedProjects.includes(slug)) return 0
+                return value
+              }),
+            ),
+          ),
+        )
       : undefined
-  }, [data])
+  }, [data, selectedProjects])
+
   const { denominator, unit } = getDaDataParams(max)
 
-  const allProjectSlugs = useMemo(() => {
-    return uniq(
-      data?.chart.flatMap(([_, values]) => {
-        return Object.keys(values)
-      }),
-    ).slice(0, maxProjects)
-  }, [data])
-
   const chartMeta = useMemo(() => {
-    return allProjectSlugs?.reduce((acc, slug) => {
+    return selectedProjects?.reduce((acc, slug) => {
       if (!acc[slug]) {
         acc[slug] = {
           label: slug,
@@ -58,23 +68,29 @@ export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
 
       return acc
     }, {} as ChartMeta)
-  }, [allProjectSlugs, colors])
+  }, [colors, selectedProjects])
 
   const chartData = useMemo(() => {
-    return data?.chart.map(([timestamp, values]) => {
-      return {
-        timestamp: timestamp,
-        ...Object.fromEntries(
-          Object.entries(values)
-            .map(([key, value]) => {
-              if (!allProjectSlugs.includes(key)) return
-              return [key, value / denominator] as const
-            })
-            .filter((v) => v !== undefined),
-        ),
-      }
-    })
-  }, [data?.chart, denominator, allProjectSlugs])
+    if (selectedProjects.length === 0) {
+      return []
+    }
+
+    return (
+      data?.map(([timestamp, values]) => {
+        return {
+          timestamp: timestamp,
+          ...Object.fromEntries(
+            Object.entries(values)
+              .map(([key, value]) => {
+                if (!selectedProjects.includes(key)) return
+                return [key, value / denominator] as const
+              })
+              .filter((v) => v !== undefined),
+          ),
+        }
+      }) ?? []
+    )
+  }, [data, selectedProjects, denominator])
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -82,15 +98,16 @@ export function DaThroughputByProjectChart({ daLayer }: { daLayer: string }) {
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
-        barCategoryGap={4}
+        barCategoryGap={range === '30d' ? 4 : 0}
       >
         <ChartLegend content={<ChartLegendContent />} />
-        {allProjectSlugs?.map((slug) => (
+        {selectedProjects?.map((slug) => (
           <Bar
             key={slug}
             dataKey={slug}
             stackId="a"
             fill={chartMeta?.[slug]?.color}
+            isAnimationActive={false}
           />
         ))}
 
@@ -119,7 +136,7 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { unit: string }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
-
+  payload.sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
   return (
     <ChartTooltipWrapper>
       <div className="text-secondary">
@@ -130,7 +147,7 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
           return (
             <div
               key={index}

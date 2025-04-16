@@ -9,14 +9,10 @@ import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
-export type DaThroughputChartDataByChart = {
-  chart: DaThroughputByProjectDataPoint[]
-  range: [UnixTime | null, UnixTime]
-}
-export type DaThroughputByProjectDataPoint = [
+export type DaThroughputChartDataByChart = [
   timestamp: number,
   values: Record<string, number>,
-]
+][]
 
 export const DaThroughputChartByProjectParams = z.object({
   range: DaThroughputTimeRange.or(CostsTimeRange),
@@ -50,21 +46,13 @@ const getCachedDaThroughputChartByProjectData = cache(
       [from, to],
     )
     if (throughput.length === 0) {
-      return {
-        chart: [],
-        range: [from, to],
-      }
+      return []
     }
     const { grouped, minTimestamp, maxTimestamp } =
       groupByTimestampAndProjectId(throughput)
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-    return {
-      chart: timestamps.map((timestamp) => {
-        return [timestamp, grouped[timestamp] ?? {}]
-      }),
-      range: [minTimestamp, maxTimestamp],
-    }
+    return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
   },
   ['da-throughput-chart-by-project-data'],
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
@@ -111,21 +99,18 @@ function getMockDaThroughputChartByProjectData({
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return {
-    chart: timestamps.map((timestamp) => {
-      const values = {
-        base: Math.random() * 900_000_000 + 90_000_000,
-        optimism: Math.random() * 900_000_000 + 90_000_000,
-        arbitrum: Math.random() * 900_000_000 + 90_000_000,
-        polygon: Math.random() * 900_000_000 + 90_000_000,
-        zkSync: Math.random() * 900_000_000 + 90_000_000,
-        zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
-        gnosis: Math.random() * 900_000_000 + 90_000_000,
-        linea: Math.random() * 900_000_000 + 90_000_000,
-      }
+  return timestamps.map((timestamp) => {
+    const values = {
+      base: Math.random() * 900_000_000 + 90_000_000,
+      optimism: Math.random() * 900_000_000 + 90_000_000,
+      arbitrum: Math.random() * 900_000_000 + 90_000_000,
+      polygon: Math.random() * 900_000_000 + 90_000_000,
+      zkSync: Math.random() * 900_000_000 + 90_000_000,
+      zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
+      gnosis: Math.random() * 900_000_000 + 90_000_000,
+      linea: Math.random() * 900_000_000 + 90_000_000,
+    }
 
-      return [timestamp, values]
-    }),
-    range: [from, to],
-  }
+    return [timestamp, values]
+  })
 }

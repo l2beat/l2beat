@@ -1,6 +1,5 @@
 'use client'
 
-import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -125,7 +124,7 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
-          assert(configEntry, 'Config entry not found')
+          if (!configEntry) return null
           return (
             <div
               key={index}
