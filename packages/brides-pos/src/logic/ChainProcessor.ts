@@ -3,7 +3,8 @@ import type { Log, PublicClient } from 'viem'
 import type { ChainInfo } from '../config/chains'
 import { TaskQueue } from '../services/TaskQueue'
 import type { MessageService } from './MessageService'
-import { type LogWithTimestamp, analyzeLogs } from './analyze'
+import { analyzeLogs } from './analyze/analyze'
+import type { LogWithTimestamp } from './analyze/common'
 
 const MAX_BLOCK_RANGE = 50n
 
