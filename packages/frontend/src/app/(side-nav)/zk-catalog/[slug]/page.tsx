@@ -12,7 +12,6 @@ import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Markdown } from '~/components/markdown/markdown'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
@@ -33,7 +32,6 @@ interface Props {
 }
 
 export async function generateStaticParams(): Promise<Params[]> {
-  if (env.VERCEL_ENV !== 'production') return []
   const projects = await ps.getProjects({
     where: ['proofVerification'],
     whereNot: ['archivedAt'],

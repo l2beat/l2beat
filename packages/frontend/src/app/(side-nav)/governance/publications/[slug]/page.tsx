@@ -6,7 +6,6 @@ import { MainPageHeader } from '~/components/main-page-header'
 import { Article } from '~/components/markdown/article'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
 import { getCollection, getCollectionEntry } from '~/content/get-collection'
-import { env } from '~/env'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
@@ -20,8 +19,6 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV !== 'production') return []
-
   const publications = getCollection('publications')
   return publications.map((publication) => ({
     slug: publication.id,

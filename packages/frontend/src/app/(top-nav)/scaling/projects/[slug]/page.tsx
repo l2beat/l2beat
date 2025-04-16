@@ -9,7 +9,6 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { featureFlags } from '~/consts/feature-flags'
-import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ps } from '~/server/projects'
 import { HydrateClient } from '~/trpc/server'
@@ -17,8 +16,6 @@ import { getProjectMetadata } from '~/utils/metadata'
 import { ProjectScalingSummary } from './_components/scaling-project-summary'
 
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV !== 'production') return []
-
   const projects = await ps.getProjects({ where: ['scalingInfo'] })
   return projects.map((p) => ({
     slug: p.slug,

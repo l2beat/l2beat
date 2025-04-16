@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import { CssVariables } from '~/components/css-variables'
-import { env } from '~/env'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
@@ -28,8 +27,6 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  if (env.VERCEL_ENV !== 'production') return []
-
   const ecosystems = await ps.getProjects({ select: ['ecosystemConfig'] })
   return ecosystems.map((ecosystem) => ({
     slug: ecosystem.slug,
