@@ -9794,6 +9794,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Onyxcoin",
+      "coingeckoId": "chain-2",
+      "address": "0x9c632E6Aaa3eA73f91554f8A3cB2ED2F29605e0C",
+      "symbol": "XCN",
+      "decimals": 18,
+      "deploymentTimestamp": 1719103377,
+      "coingeckoListingTimestamp": 1647302400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24210/large/onyxlogo.jpg?1696523397",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Prefrontal Cortex Convo Agent by Virtuals",
       "coingeckoId": "prefrontal-cortex-convo-agent-by-virtuals",
       "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
