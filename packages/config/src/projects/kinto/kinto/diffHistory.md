@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xac939f6101127611115f3f1fbbe449a8fda73cfc
+
+# Diff at Tue, 15 Apr 2025 08:48:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 837019
+- current block number: 837019
+
+## Description
+
+config related: beacon template match.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 837019 (main branch discovery), not current.
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      description:
+-        "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users."
++        "A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation."
+      template:
++        "global/UpgradeableBeacon"
+      issuedPermissions:
++        [{"permission":"interact","to":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75","description":"change the beacon implementation.","via":[]}]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x87f0eE85bF3198654900a422832157abBba30828"
+      receivedPermissions.0.description:
++        "change the beacon implementation."
+    }
+```
+
 Generated with discovered.json: 0x8dbbe54e20d2bea1b92910b5fcceb758cbe3ef7e
 
 # Diff at Mon, 14 Apr 2025 13:35:24 GMT:
