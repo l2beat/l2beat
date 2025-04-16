@@ -1,8 +1,7 @@
-import type { Formula } from '@l2beat/config'
-
 import type {
   AmountFormula,
   CalculationFormula,
+  Formula,
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
@@ -12,6 +11,20 @@ import { uniqBy } from 'lodash'
 export type Address = {
   address: EthereumAddress
   chain: string
+}
+
+export function extractAddressesFromTokenConfig(token: TvsToken): {
+  addresses: Address[]
+  escrows: Address[]
+} {
+  if (!token.amount) return { addresses: [], escrows: [] }
+
+  const result = collectAddressesFromFormula(token.amount as Formula)
+
+  return {
+    addresses: uniqBy(result.addresses, 'address'),
+    escrows: uniqBy(result.escrows, 'address'),
+  }
 }
 
 function collectAddressesFromFormula(
@@ -58,18 +71,4 @@ function collectAddressesFromFormula(
   }
 
   return { addresses, escrows }
-}
-
-export function extractAddressesFromTokenConfig(token: TvsToken): {
-  addresses: Address[]
-  escrows: Address[]
-} {
-  if (!token.amount) return { addresses: [], escrows: [] }
-
-  const result = collectAddressesFromFormula(token.amount as Formula)
-
-  return {
-    addresses: uniqBy(result.addresses, 'address'),
-    escrows: uniqBy(result.escrows, 'address'),
-  }
 }
