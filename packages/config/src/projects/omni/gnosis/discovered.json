@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 39553862,
+  "blockNumber": 39589758,
   "configHash": "0x7ae40da8cdca8c0a3a020884f5a47e167fe95591e9d602f08b5a9acbdd1e202a",
   "entries": [
     {
@@ -33,6 +33,7 @@
       "name": "Yaru",
       "address": "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5",
       "type": "Contract",
+      "template": "gnosisbridge/Yaru",
       "sourceHashes": [
         "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
       ],
@@ -145,7 +146,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 587,
+        "nonce": 590,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -446,7 +447,7 @@
           "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA",
           "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",
           "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8",
-          "0xd945325557f1FB4374fBf10Ae86D385632Df870A",
+          "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
           "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B",
           "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
           "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97",
@@ -457,7 +458,7 @@
         "getChainId": 100,
         "GnosisSafe_modules": [],
         "multisigThreshold": "8 of 16 (50%)",
-        "nonce": 91,
+        "nonce": 92,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -641,6 +642,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xb8173f558f75EE263013fd6294177bf75279a21e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -649,11 +655,12 @@
       "name": "Yaho",
       "address": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
       "type": "Contract",
+      "template": "gnosisbridge/Yaho",
       "sourceHashes": [
         "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
       ],
       "proxyType": "immutable",
-      "values": { "$immutable": true, "currentNonce": 11744 },
+      "values": { "$immutable": true },
       "derivedName": "Yaho"
     },
     {
@@ -715,11 +722,6 @@
     },
     {
       "address": "0xD68f1A882f3F9ffddaBd4D30c4F8Dfca1f9e51Ba",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -876,7 +878,7 @@
         "gasLimitManager": "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20192,
+        "getCurrentDay": 20194,
         "implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -1506,6 +1508,8 @@
     ]
   },
   "usedTemplates": {
+    "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
+    "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }
