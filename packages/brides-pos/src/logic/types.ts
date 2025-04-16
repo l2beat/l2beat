@@ -23,7 +23,7 @@ export interface CrossChainTransfer {
   }
 }
 
-export type CrossChainMessage = GnosisBridgeSend | GnosisBridgeReceive
+export type CrossChainMessage = GnosisBridgeSend | GnosisBridgeReceive | PolygonPosSend
 
 export interface CommonMessage {
   timestamp: UnixTime
@@ -46,6 +46,17 @@ export interface GnosisBridgeReceive extends CommonMessage {
   messageId: Hash256
   sourceChain: string
   destinationChain: string
+  recipient: Address
+  token: Address
+  amount: bigint
+}
+
+export interface PolygonPosSend extends CommonMessage {
+  type: 'PolygonPosSend'
+  escrow: Address
+  sourceChain: string
+  destinationChain: string
+  sender: Address
   recipient: Address
   token: Address
   amount: bigint
