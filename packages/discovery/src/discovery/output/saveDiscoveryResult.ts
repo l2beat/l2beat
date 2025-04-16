@@ -8,8 +8,6 @@ import type { Analysis } from '../analysis/AddressAnalyzer'
 import { TemplateService } from '../analysis/TemplateService'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
-import { buildAndSaveModels } from '../modelling/build'
-import { buildProjectPageFacts } from '../modelling/projectPageFacts'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
@@ -23,8 +21,6 @@ export interface SaveDiscoveryResultOptions {
   discoveryFilename?: string
   metaFilename?: string
   saveSources?: boolean
-  buildModels?: boolean
-  buildProjectPageFacts?: boolean
   templatesFolder: string
 }
 
@@ -57,16 +53,6 @@ export async function saveDiscoveryResult(
   await saveFlatSources(projectDiscoveryFolder, results, logger, options)
   if (options.saveSources) {
     await saveSources(projectDiscoveryFolder, results, options)
-  }
-  if (options.buildModels) {
-    buildAndSaveModels(
-      discoveryOutput,
-      options.templatesFolder,
-      projectDiscoveryFolder,
-    )
-  }
-  if (options.buildProjectPageFacts) {
-    await buildProjectPageFacts(config.structure.name, options.paths)
   }
 }
 

@@ -10,7 +10,6 @@ import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
-import { buildAddressToNameMap } from './build'
 import { parseClingoFact } from './clingoparser'
 import { type ClingoFact, ClingoFactFile } from './factTypes'
 import { interpolateModelTemplate } from './interpolate'
@@ -247,6 +246,19 @@ export function generateClingoFromModelLp(
     return interpolated
   }
   return ''
+}
+
+export function buildAddressToNameMap(
+  chain: string,
+  entries: EntryParameters[],
+): Record<string, string> {
+  const result: Record<string, string> = {}
+  for (const entity of entries) {
+    const address = entity.address.toLowerCase()
+    const suffix = `_${chain}_${address}`
+    result[address] = (entity.name ?? 'eoa') + suffix
+  }
+  return result
 }
 
 function orUndefined<V, C>(
