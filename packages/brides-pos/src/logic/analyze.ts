@@ -5,7 +5,7 @@ import type {
   CrossChainMessage,
   GnosisBridgeReceive,
   GnosisBridgeSend,
-  PolygonPosSend
+  PolygonPosSend,
 } from './types'
 
 export type LogWithTimestamp = Log & { timestamp: number }
@@ -19,7 +19,8 @@ export function analyzeLogs(
     if (!log.transactionHash || log.removed) {
       continue
     }
-    const message = decodeGnosisBridge(log, chain) ?? decodePolygonPosBridge(log, chain)
+    const message =
+      decodeGnosisBridge(log, chain) ?? decodePolygonPosBridge(log, chain)
     if (!message) {
       continue
     }
@@ -28,8 +29,11 @@ export function analyzeLogs(
   return txs
 }
 
-function address(chain: ChainInfo | string, unprefixed: `0x${string}`): Address {
-  if (typeof chain === "string") {
+function address(
+  chain: ChainInfo | string,
+  unprefixed: `0x${string}`,
+): Address {
+  if (typeof chain === 'string') {
     return `${chain}:${unprefixed}`
   }
   return `${chain.addressPrefix}:${unprefixed}`
@@ -93,28 +97,25 @@ function decodeGnosisBridge(
   return undefined
 }
 
-
-
 const polygonPosAbi = parseAbi([
   //"event ExitedERC20(address indexed exitor, address indexed rootToken, uint256 amount)",
-  "event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
+  'event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)',
 ])
 
-const POLYGONPOS_ETHEREUM_ESCROW_1 = '0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf'
+const POLYGONPOS_ETHEREUM_ESCROW_1 =
+  '0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf'
 //const POLYGOONPOS_POLYGON = '0xf6a78083ca3e2a662d6dd1703c939c8ace2e268d'
 
 function decodePolygonPosBridge(
   log: LogWithTimestamp,
   chain: ChainInfo,
 ): PolygonPosSend | undefined {
-
   if (!log.transactionHash) {
     return
   }
 
-
   const isPolygonPos =
-    (chain.name === 'ethereum' && log.address === POLYGONPOS_ETHEREUM_ESCROW_1)
+    chain.name === 'ethereum' && log.address === POLYGONPOS_ETHEREUM_ESCROW_1
   if (!isPolygonPos) {
     return
   }
@@ -131,7 +132,10 @@ function decodePolygonPosBridge(
       sourceChain: chain.name,
       destinationChain: chain.name === 'ethereum' ? 'polygon' : 'ethereum',
       sender: address(chain, event.args.depositor),
-      recipient: address(chain.name === 'ethereum' ? 'matic' : 'eth', event.args.depositReceiver),
+      recipient: address(
+        chain.name === 'ethereum' ? 'matic' : 'eth',
+        event.args.depositReceiver,
+      ),
       token: address(chain, event.args.rootToken),
       amount: event.args.amount,
     }
@@ -139,8 +143,6 @@ function decodePolygonPosBridge(
 
   return undefined
 }
-
-
 
 function safeDecodeLog<A extends Abi>(abi: A, log: Log) {
   try {

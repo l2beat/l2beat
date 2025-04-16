@@ -23,7 +23,10 @@ export interface CrossChainTransfer {
   }
 }
 
-export type CrossChainMessage = GnosisBridgeSend | GnosisBridgeReceive | PolygonPosSend
+export type CrossChainMessage =
+  | GnosisBridgeSend
+  | GnosisBridgeReceive
+  | PolygonPosSend
 
 export interface CommonMessage {
   timestamp: UnixTime
