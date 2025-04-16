@@ -39,7 +39,7 @@
         "method": "function withdrawalKeepalivePeriodSeconds() view returns (uint256)",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": ["format", "FormatSeconds"]
     }
   }
 }

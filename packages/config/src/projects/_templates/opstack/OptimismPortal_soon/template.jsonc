@@ -6,7 +6,7 @@
   "ignoreInWatchMode": ["params"],
   "fields": {
     "MIN_BRIDGE_VALUE": {
-      "returnType": "(Undecimal18)",
+      "edit": ["format", "Undecimal18"],
       "description": "Minimum deposit value."
     },
     "guardian": {

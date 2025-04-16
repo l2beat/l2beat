@@ -10,7 +10,7 @@
         "method": "MINT_CAP_NUMERATOR",
         "args": []
       },
-      "returnType": "(Undecimal2)",
+      "edit": ["format", "Undecimal2"],
       "description": "The percentage of the total supply that can be minted by the owner once per year."
     }
   }

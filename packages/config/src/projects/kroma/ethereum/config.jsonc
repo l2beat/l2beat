@@ -95,7 +95,7 @@
             "method": "ROUND_DURATION_SECONDS",
             "args": []
           },
-          "returnType": "(FormatSeconds)"
+          "edit": ["format", "FormatSeconds"]
         }
       }
     },
@@ -192,7 +192,7 @@
             "method": "ROUND_DURATION",
             "args": []
           },
-          "returnType": "(FormatSeconds)"
+          "edit": ["format", "FormatSeconds"]
         }
       }
       // discovers all 300+ validator addresses:

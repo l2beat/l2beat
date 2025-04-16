@@ -62,7 +62,7 @@
         "method": "wasmModuleRoot",
         "args": []
       },
-      "returnType": "(ArbOsWasmModuleRoot)"
+      "edit": ["format", "ArbOsWasmModuleRoot"]
     },
     "setValidatorCount": {
       "description": "Increments on each Validator change.",

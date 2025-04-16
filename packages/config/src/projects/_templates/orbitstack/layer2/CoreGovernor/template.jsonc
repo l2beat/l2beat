@@ -18,7 +18,7 @@
         "method": "quorumNumerator",
         "args": []
       },
-      "returnType": "(Undecimal2)",
+      "edit": ["format", "Undecimal2"],
       "description": "The percentage of the total supply that is required to pass a proposal."
     }
   }
