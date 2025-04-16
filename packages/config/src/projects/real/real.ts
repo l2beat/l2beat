@@ -11,7 +11,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('real')
 
 export const real: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1717598702), // 2024-06-05T14:45:02Z
+  addedAt: UnixTime(1715731200), // 2024-05-15T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],

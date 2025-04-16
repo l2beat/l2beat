@@ -24,9 +24,9 @@ import {
   string,
 } from 'cmd-ts'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
 import { isInTokenSyncRange } from '../../src/modules/tvs/tools/getTokenSyncRange'
 import { mapConfig } from '../../src/modules/tvs/tools/mapConfig'
-import type { TvsProjectBreakdown } from '../../src/modules/tvs/types'
 
 const args = {
   project: positional({
@@ -49,11 +49,14 @@ const cmd = command({
     const env = getEnv()
     const logger = initLogger(env)
     const ps = new ProjectService()
-    const localExecutor = new LocalExecutor(ps, env, logger)
+    const localStorage = new LocalStorage('./scripts/tvs/local-data.json')
+    const localExecutor = new LocalExecutor(ps, env, logger, localStorage)
     const timestamp =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 3 * UnixTime.HOUR
+      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     let projects: Project<'tvlConfig', 'chainConfig' | 'isBridge'>[] | undefined
+
+    const start = Date.now()
 
     if (!args.project) {
       projects = await ps.getProjects({
@@ -86,10 +89,15 @@ const cmd = command({
 
     const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
 
-    logger.info(`Generating new TVS config for projects`)
+    logger.info(`Generating new TVS config for projects (${projects.length})`)
     const regeneratedProjects = await Promise.all(
       projects.map(async (project) => {
-        return await generateConfigForProject(project, chains, logger)
+        return await generateConfigForProject(
+          project,
+          chains,
+          logger,
+          localStorage,
+        )
       }),
     )
 
@@ -105,13 +113,6 @@ const cmd = command({
       false,
     )
 
-    const projectBreakdown: TvsProjectBreakdown = {
-      scalingTvs: 0,
-      scalingProjects: [],
-      bridgesTvs: 0,
-      bridgesProjects: [],
-    }
-
     for (const project of regeneratedProjects) {
       let newConfig: TvsToken[] = []
       const filePath = `./../config/src/tvs/json/${project.projectId.replace('=', '').replace(';', '')}.json`
@@ -120,30 +121,8 @@ const cmd = command({
         const tvsForProject = tvs.get(project.projectId)
         assert(tvsForProject)
 
-        const valueForProject = tvsForProject.reduce((acc, token) => {
-          return acc + token.valueForProject
-        }, 0)
-
-        const valueForSummary = tvsForProject.reduce((acc, token) => {
-          return acc + token.valueForSummary
-        }, 0)
-
         const projectConfig = projects.find((p) => p.id === project.projectId)
         assert(projectConfig, `${project.projectId} config not found`)
-
-        if (projectConfig.isBridge) {
-          projectBreakdown.bridgesTvs += valueForSummary
-          projectBreakdown.bridgesProjects.push({
-            projectId: project.projectId,
-            value: valueForProject,
-          })
-        } else {
-          projectBreakdown.scalingTvs += valueForSummary
-          projectBreakdown.scalingProjects.push({
-            projectId: project.projectId,
-            value: valueForProject,
-          })
-        }
 
         newConfig = tvsForProject
           .filter((token) => token.value !== 0 || args.includeZeroAmounts)
@@ -172,34 +151,8 @@ const cmd = command({
       }
     }
 
-    logger.info(
-      `TVS for scaling projects ${toDollarString(projectBreakdown.scalingTvs)}`,
-    )
-    logger.info(
-      `TVS for bridges ${toDollarString(projectBreakdown.bridgesTvs)}`,
-    )
-    logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
-
-    fs.writeFileSync(
-      './scripts/tvs/breakdown.json',
-      JSON.stringify(
-        {
-          scalingTvs: toDollarString(projectBreakdown.scalingTvs),
-          scalingProjects: projectBreakdown.scalingProjects.map((p) => ({
-            projectId: p.projectId,
-            value: toDollarString(p.value),
-          })),
-          bridgesTvs: toDollarString(projectBreakdown.bridgesTvs),
-          bridgesProjects: projectBreakdown.bridgesProjects.map((p) => ({
-            projectId: p.projectId,
-            value: toDollarString(p.value),
-          })),
-        },
-        null,
-        2,
-      ),
-    )
-
+    const duration = (Date.now() - start) / 1000
+    logger.info(`TVS config generation completed in ${duration.toFixed(2)}s`)
     process.exit(0)
   },
 })
@@ -210,6 +163,7 @@ async function generateConfigForProject(
   project: Project<'tvlConfig', 'chainConfig'>,
   chains: Map<string, ChainConfig>,
   logger: Logger,
+  localStorage: LocalStorage,
 ) {
   const env = getEnv()
 
@@ -228,7 +182,7 @@ async function generateConfigForProject(
       })
     : undefined
 
-  return mapConfig(project, chains, logger, rpc)
+  return mapConfig(project, chains, logger, localStorage, rpc)
 }
 
 function initLogger(env: Env) {
@@ -296,14 +250,4 @@ function mergeWithExistingConfig(
   })
 
   return Array.from(resultMap.values()).sort((a, b) => a.id.localeCompare(b.id))
-}
-
-function toDollarString(value: number) {
-  if (value > 1e9) {
-    return `$${(value / 1e9).toFixed(2)}B`
-  } else if (value > 1e6) {
-    return `$${(value / 1e6).toFixed(2)}M`
-  } else {
-    return `$${value.toFixed(2)}`
-  }
 }

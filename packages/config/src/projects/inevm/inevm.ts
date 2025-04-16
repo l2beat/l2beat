@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -10,7 +9,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('inevm', 'arbitrum')
 
 export const inevm: ScalingProject = orbitStackL3({
-  addedAt: UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
+  addedAt: UnixTime(1709769600), // 2024-03-07
   additionalPurposes: ['Interoperability'],
   additionalBadges: [BADGES.RaaS.Caldera],
   reasonsForBeingOther: [
@@ -66,4 +65,13 @@ export const inevm: ScalingProject = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   customDa: AnytrustDAC({ discovery }),
+  milestones: [
+    {
+      title: 'Mainnet Launch',
+      url: 'https://x.com/injective/status/1765755882216841264',
+      date: '2024-03-07T00:00:00Z',
+      description: 'inEVM launches its Mainnet.',
+      type: 'general',
+    },
+  ],
 })

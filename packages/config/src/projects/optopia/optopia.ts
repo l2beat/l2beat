@@ -54,7 +54,7 @@ export const optopia: ScalingProject = opStackL2({
   }, // chainId: 62050
   milestones: [
     {
-      title: 'Optopia Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33/t66jmeXb8sKTFoxFViXUeCQdhSZ_8CN12i13-ySNAUs',
       date: '2024-05-21T00:00:00.00Z',
       description: 'Optopia is live on mainnet.',

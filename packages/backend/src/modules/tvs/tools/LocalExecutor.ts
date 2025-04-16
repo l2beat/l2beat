@@ -20,11 +20,10 @@ import { ValueService } from '../services/ValueService'
 import type { AmountConfig, ProjectTvsConfig, TokenValue } from '../types'
 import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
-import { LocalStorage } from './LocalStorage'
+import type { LocalStorage } from './LocalStorage'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 export class LocalExecutor {
-  private readonly localStorage: LocalStorage
   private readonly dbStorage: DBStorage | undefined
   private readonly valueService: ValueService
 
@@ -32,8 +31,8 @@ export class LocalExecutor {
     private readonly ps: ProjectService,
     private readonly env: Env,
     private readonly logger: Logger,
+    private readonly localStorage: LocalStorage,
   ) {
-    this.localStorage = new LocalStorage('./scripts/tvs/local-data.json')
     this.valueService = new ValueService(this.localStorage, logger)
     this.dbStorage = this.createDbStorage(env, logger)
   }
@@ -95,7 +94,7 @@ export class LocalExecutor {
   }
 
   private initCoingecko(http: HttpClient) {
-    const coingeckoApiKey = this.env.optionalString('COINGECKO_API_KEY')
+    const coingeckoApiKey = this.env.string('COINGECKO_API_KEY')
     const coingeckoClient = new CoingeckoClient({
       apiKey: coingeckoApiKey,
       retryStrategy: 'RELIABLE',
@@ -142,7 +141,7 @@ export class LocalExecutor {
       )
       const callsPerMinute = this.env.integer(
         `${chainConfig.name.toUpperCase()}_RPC_CALLS_PER_MINUTE`,
-        rpcApi?.callsPerMinute,
+        rpcApi?.callsPerMinute ?? 120,
       )
 
       const rpc = new RpcClient({

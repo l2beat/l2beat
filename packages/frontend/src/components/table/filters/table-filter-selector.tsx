@@ -157,7 +157,7 @@ function Content({
             filterId={selectedId}
             values={uniq(
               entries.map(
-                (e) => e.filterable?.find((f) => f.id === selectedId)!.value,
+                (e) => e.filterable?.find((f) => f.id === selectedId)?.value,
               ),
             ).filter(notUndefined)}
           />

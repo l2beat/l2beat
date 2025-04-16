@@ -1072,6 +1072,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-deUSD-1",
+      "priceId": "elixir-deusd",
+      "symbol": "deUSD",
+      "name": "deUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39494/large/deUSD_Logo_%281%29.png?1723689002",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x15700B564Ca08D9439C58cA5053166E8317aa138",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1722470400
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-DEXTF-1",
       "priceId": "dextf",
       "symbol": "DEXTF",

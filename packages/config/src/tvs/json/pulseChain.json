@@ -669,6 +669,25 @@
     },
     {
       "mode": "auto",
+      "id": "pulseChain-deUSD",
+      "priceId": "elixir-deusd",
+      "symbol": "deUSD",
+      "name": "deUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39494/large/deUSD_Logo_%281%29.png?1723689002",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x15700B564Ca08D9439C58cA5053166E8317aa138",
+        "chain": "ethereum",
+        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "decimals": 18,
+        "sinceTimestamp": 1722470400
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "pulseChain-DOLA",
       "priceId": "dola-usd",
       "symbol": "DOLA",

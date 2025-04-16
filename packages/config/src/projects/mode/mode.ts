@@ -9,7 +9,7 @@ import { opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('mode')
 
 export const mode: ScalingProject = opStackL2({
-  addedAt: UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -35,6 +35,7 @@ export const mode: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },
+  hasSuperchainScUpgrades: true,
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
