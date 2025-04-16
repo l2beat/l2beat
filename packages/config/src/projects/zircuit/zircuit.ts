@@ -173,7 +173,7 @@ export const zircuit: ScalingProject = opStackL2({
   ],
   milestones: [
     {
-      title: 'Zircuit Mainnet Launch',
+      title: 'Mainnet Launch',
       url: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live',
       date: '2024-08-05T00:00:00.00Z',
       description: 'Zircuit is live on mainnet.',

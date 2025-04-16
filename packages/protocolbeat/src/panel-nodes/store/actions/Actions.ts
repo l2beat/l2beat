@@ -14,6 +14,7 @@ export interface Actions {
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
   loadNodes: (projectId: string, nodes: Node[]) => void
+  setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
   layout: (locations: NodeLocations) => void
   hideSelected: () => void

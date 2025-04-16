@@ -240,6 +240,25 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-wstETH-2",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877",
+        "decimals": 18,
+        "sinceTimestamp": 1739519603
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
     }
   ]
 }

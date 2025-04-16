@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 1077934,
+  "blockNumber": 1107577,
   "configHash": "0x5e8afca5ded48bb75cdd0606b3c4db835005a7abfa3c8c090b88f6933e0b92d5",
   "entries": [
     {
@@ -93,7 +93,7 @@
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 200507,
+        "getCurrentEpoch": 201397,
         "hubGateway": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -107,7 +107,7 @@
         "proposedOwnershipTimestamp": 1731649154,
         "supportedDomains": [
           1, 56, 10, 42161, 8453, 48900, 81457, 59144, 137, 43114, 534352,
-          167000, 33139, 34443, 130, 324, 2020, 100
+          167000, 33139, 34443, 130, 324, 2020, 100, 80094, 5000, 146, 57073
         ],
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "watchtower": "0x6281ea3060B26352b558C4F45767C90db482c4fd"
