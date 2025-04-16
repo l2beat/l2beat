@@ -22,6 +22,7 @@ import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { get7dTvsBreakdown } from '../../scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
+import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 
 export interface BridgesProjectEntry {
   name: string
@@ -205,6 +206,19 @@ export async function getBridgesProjectEntry(
         ...technologySection,
         id: 'technology',
         title: 'Technology',
+      },
+    })
+  }
+
+  const otherConsiderationsSection =
+    getBridgeOtherConsiderationsSection(project)
+  if (otherConsiderationsSection) {
+    sections.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
       },
     })
   }

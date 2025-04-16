@@ -304,6 +304,7 @@ export interface ProjectBridgeTechnology {
   detailedDescription?: string
   upgradesAndGovernance?: string
   upgradesAndGovernanceImage?: string
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 // #endregion
 
