@@ -41,11 +41,12 @@ const getCachedDaThroughputChartByProjectData = cache(
     daLayer,
   }: DaThroughputChartByProjectParams): Promise<DaThroughputChartDataByChart> => {
     const db = getDb()
-    const [from, to] = getRangeWithMax(range, 'daily')
-    const adjustedTo = to - 1 * UnixTime.DAY
+    const [from, to] = getRangeWithMax(range, 'daily', {
+      offset: -1 * UnixTime.DAY,
+    })
     const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
       [daLayer],
-      [from, adjustedTo],
+      [from, to],
     )
     if (throughput.length === 0) {
       return []
@@ -57,7 +58,7 @@ const getCachedDaThroughputChartByProjectData = cache(
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
   },
-  ['da-throughput-chart-by-project-dataxyx'],
+  ['da-throughput-chart-by-project-datazzzz'],
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
