@@ -10,6 +10,8 @@ import { DaThroughputTimeRange } from '~/server/features/data-availability/throu
 import { api } from '~/trpc/react'
 import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
 
+const DEFAULT_PROJECTS_TO_SHOW = 5
+
 export function ProjectDaThroughputByProjectChart({
   daLayer,
   range,
@@ -37,7 +39,8 @@ export function ProjectDaThroughputByProjectChart({
     [data],
   )
 
-  const projectsToShow = selectedProjects ?? allProjects.slice(0, 8)
+  const projectsToShow =
+    selectedProjects ?? allProjects.slice(0, DEFAULT_PROJECTS_TO_SHOW)
 
   return (
     <div>
