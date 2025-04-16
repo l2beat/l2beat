@@ -13,6 +13,7 @@ import type {
   ProjectActivityConfig,
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
+  ProjectColors,
   ProjectContracts,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
@@ -57,6 +58,7 @@ export interface ScalingProject {
   isUpcoming?: boolean
   /** Has this project changed and is under review? */
   isUnderReview?: boolean
+  colors?: ProjectColors
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */

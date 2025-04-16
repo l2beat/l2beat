@@ -69,6 +69,7 @@ export interface BaseProject {
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
   addedAt: UnixTime
+  colors?: ProjectColors
 
   // common data
   statuses?: ProjectStatuses
@@ -124,6 +125,11 @@ export interface BaseProject {
   isUpcoming?: true
   archivedAt?: UnixTime
   hasActivity?: true
+}
+
+export interface ProjectColors {
+  primary: string
+  secondary: string
 }
 
 // #region common data
