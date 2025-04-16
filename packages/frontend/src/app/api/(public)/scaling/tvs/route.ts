@@ -37,17 +37,17 @@ const getCachedResponse = cache(
     return {
       success: true,
       data: {
-        usdValue: centsValue / 100,
+        usdValue: centsValue,
         ethValue,
         chart: {
           types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
           data: data.map(
             ([timestamp, native, canonical, external, ethPrice]) => [
               timestamp,
-              native / 100,
-              canonical / 100,
-              external / 100,
-              ethPrice / 100,
+              native,
+              canonical,
+              external,
+              ethPrice,
             ],
           ),
         },

@@ -52,9 +52,10 @@ export function EcosystemsTvsChart({
   const chartData: TvsChartDataPoint[] | undefined = data?.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
       const total = native + canonical + external
+      const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: unit === 'usd' ? total / 100 : total / ethPrice,
+        value: total / divider,
       }
     },
   )
