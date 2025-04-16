@@ -23,7 +23,7 @@ interface Props {
   setShowMax: (showMax: boolean) => void
 }
 
-export function ProjectDaThroughputAbsoluteChart({
+export function ThroughputSectionAbsoluteChart({
   daLayer,
   configuredThroughputs,
   milestones,

@@ -20,7 +20,7 @@ interface Props {
   setSelectedProjects: (projects: string[] | undefined) => void
 }
 
-export function ProjectDaThroughputByProjectChart({
+export function ThroughputSectionByProjectChart({
   daLayer,
   range,
   setRange,

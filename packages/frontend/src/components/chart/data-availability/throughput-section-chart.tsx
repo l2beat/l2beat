@@ -4,8 +4,8 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import type { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
-import { ProjectDaThroughputAbsoluteChart } from './project-da-throughput-absolute-chart'
-import { ProjectDaThroughputByProjectChart } from './project-da-throughput-by-project-chart'
+import { ThroughputSectionAbsoluteChart } from './throughput-section-absolute-chart'
+import { ThroughputSectionByProjectChart } from './throughput-section-by-project-chart'
 
 interface Props {
   daLayer: ProjectId
@@ -13,7 +13,7 @@ interface Props {
   milestones: Milestone[]
 }
 
-export function ProjectDaThroughputChart({
+export function ThroughputSectionChart({
   daLayer,
   configuredThroughputs,
   milestones,
@@ -39,7 +39,7 @@ export function ProjectDaThroughputChart({
         </RadioGroupItem>
       </RadioGroup>
       {type === 'combined' ? (
-        <ProjectDaThroughputAbsoluteChart
+        <ThroughputSectionAbsoluteChart
           daLayer={daLayer}
           configuredThroughputs={configuredThroughputs}
           milestones={milestones}
@@ -49,7 +49,7 @@ export function ProjectDaThroughputChart({
           setShowMax={setShowMax}
         />
       ) : (
-        <ProjectDaThroughputByProjectChart
+        <ThroughputSectionByProjectChart
           daLayer={daLayer}
           range={range}
           setRange={setRange}

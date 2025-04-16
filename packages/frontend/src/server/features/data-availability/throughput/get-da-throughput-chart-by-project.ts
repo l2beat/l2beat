@@ -7,8 +7,8 @@ import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
-import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
@@ -18,7 +18,7 @@ export type DaThroughputChartDataByChart = [
 ][]
 
 export const DaThroughputChartByProjectParams = z.object({
-  range: DaThroughputTimeRange.or(CostsTimeRange),
+  range: DaThroughputTimeRange,
   daLayer: z.string(),
 })
 export type DaThroughputChartByProjectParams = z.infer<
@@ -41,12 +41,11 @@ const getCachedDaThroughputChartByProjectData = cache(
     daLayer,
   }: DaThroughputChartByProjectParams): Promise<DaThroughputChartDataByChart> => {
     const db = getDb()
-    const days = rangeToDays(range)
-    const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
-    const from = days ? to - days * UnixTime.DAY : null
+    const [from, to] = getRangeWithMax(range, 'daily')
+    const adjustedTo = to - 1 * UnixTime.DAY
     const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
       [daLayer],
-      [from, to],
+      [from, adjustedTo],
     )
     if (throughput.length === 0) {
       return []
@@ -58,7 +57,7 @@ const getCachedDaThroughputChartByProjectData = cache(
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
   },
-  ['da-throughput-chart-by-project-data3'],
+  ['da-throughput-chart-by-project-dataxyx'],
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
