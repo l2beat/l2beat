@@ -9,7 +9,7 @@
         "method": "getMinDelay",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
       "handler": {

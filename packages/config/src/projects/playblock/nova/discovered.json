@@ -1316,8 +1316,8 @@
     "orbitstack/OneStepProverMemory": "0x2b575a1de57aa64d600c683b7837e7dadf805ae368a193fb3d1f1d37d7812e11",
     "orbitstack/Outbox": "0x0d6ad7258ad2942904145339f996170d5dbf97fd6459b52567d6f2e572c91754",
     "orbitstack/RollupEventInbox": "0xe5d45e95f47a5284e9c4b2c3ce1dc594505d2353ef4ad02e98868c22f533cb82",
-    "orbitstack/RollupProxy": "0x49a49134edbbaed0577e21ffe0d5334c4580b526a0ed23fd1ce5f5d42b6477be",
-    "orbitstack/SequencerInbox": "0xc51c063feb1013afc59e7af40ef60d5fbad972ab8c02bce96db098f4d8327c26",
+    "orbitstack/RollupProxy": "0x58c946320b1bd0df2b0db775aaef8e7853ad7d3e5adf28daa0b06108e9341d82",
+    "orbitstack/SequencerInbox": "0x7361247c7dec9ef3dcca5dc95c8169edae4c6b57e116c2ed4cf950bf0f1df847",
     "orbitstack/UpgradeExecutor": "0xa5e6ea7a95e0afa847d6853e19898f67e4913dfbcf2c6886ba6246b5835b7a04",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   }

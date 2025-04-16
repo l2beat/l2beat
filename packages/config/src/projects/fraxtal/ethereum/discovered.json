@@ -1799,7 +1799,7 @@
     "fraxtal/FraxEtherMinter": "0xf0613acc9cc6152ba1e739f49480f2343ff1cd0559d158669ad5c04ba088046d",
     "fraxtal/frxETH": "0xd0b37c15c111eef32b02139bf4be8d60c2c864ca2bc292ce40efad364876b556",
     "fraxtal/FrxEthMinter": "0x1c1e0859bdf378f91cefaae8a3c6214f3cfc8bffed72c2280139e4586a4d2a11",
-    "fraxtal/Timelock": "0x37842a075ae97f45dfbdb24296a57dd1d36570cd3c2ec2362c87c9f5c842f522",
+    "fraxtal/Timelock": "0xddc387cb7e3e5d997b993c8702f986c6be80b6b460277bb796c259ddc0bb52ec",
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "opstack/AddressManager": "0xd575bb7f723626c249dd2ccfdc435a0fb241c1bf2aa93664b0d534eb5284e1f2",

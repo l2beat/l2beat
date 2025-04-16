@@ -53,7 +53,7 @@
             "method": "lastLive",
             "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"] // our address in the Security Council
           },
-          "returnType": "(TimeSince)"
+          "edit": ["format", "TimeSince"]
         }
       }
     },
@@ -74,13 +74,13 @@
       // L1StandardBridge
       "fields": {
         "l2TokenBridge": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         },
         "OTHER_BRIDGE": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         },
         "otherBridge": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         }
       }
     },
@@ -88,10 +88,10 @@
       // L1ERC721Bridge
       "fields": {
         "OTHER_BRIDGE": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         },
         "otherBridge": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         }
       }
     },
@@ -170,10 +170,10 @@
       "ignoreInWatchMode": ["messageNonce"],
       "fields": {
         "OTHER_MESSENGER": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         },
         "otherMessenger": {
-          "returnType": "(OptimismAddress)"
+          "edit": ["format", "OptimismAddress"]
         }
       }
     },

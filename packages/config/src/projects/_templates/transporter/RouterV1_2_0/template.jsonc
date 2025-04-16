@@ -15,7 +15,10 @@
         "args": [],
         "method": "getOffRamps"
       },
-      "returnType": "(tuple(ChainIdMap sourceChainSelector, address offRamp)[])"
+      "edit": [
+        "map",
+        ["shape", ["sourceChainSelector", ["format", "ChainIdMap"]], "offRamp"]
+      ]
     }
   },
   "ignoreMethods": ["getOffRamps"],

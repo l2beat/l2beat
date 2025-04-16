@@ -20,7 +20,7 @@
         "method": "respectedGameType",
         "args": []
       },
-      "returnType": "(DisputeGameMap)"
+      "edit": ["format", "DisputeGameMap"]
     },
     "paused": {
       "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",

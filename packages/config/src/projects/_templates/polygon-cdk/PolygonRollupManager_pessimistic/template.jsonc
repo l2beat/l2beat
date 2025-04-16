@@ -192,7 +192,7 @@
         "length": "{{ rollupCount }}",
         "pickFields": ["lastVerifiedBatch"]
       },
-      "returnType": "(IsGreaterThanOne[][])"
+      "edit": ["map", ["map", ["format", "IsGreaterThanOne"]]]
     },
     "pessimisticProofSenders": {
       "description": "Lists any rollupID that sends a pessimistic proof.",

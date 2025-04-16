@@ -9,7 +9,7 @@
         "method": "programHash",
         "args": []
       },
-      "returnType": "(StarknetProgramHash)"
+      "edit": ["format", "StarknetProgramHash"]
     }
   }
 }

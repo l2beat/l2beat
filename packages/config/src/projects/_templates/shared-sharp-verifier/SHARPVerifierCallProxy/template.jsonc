@@ -19,7 +19,7 @@
         "method": "getUpgradeActivationDelay",
         "args": []
       },
-      "returnType": "(FormatSeconds)"
+      "edit": ["format", "FormatSeconds"]
     }
   }
 }

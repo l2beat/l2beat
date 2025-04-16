@@ -15,7 +15,7 @@
         "method": "absolutePrestate",
         "args": []
       },
-      "returnType": "(OpStackAbsolutePrestate)"
+      "edit": ["format", "OpStackAbsolutePrestate"]
     }
   }
 }

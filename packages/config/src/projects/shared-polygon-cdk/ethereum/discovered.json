@@ -1737,8 +1737,8 @@
     "global/ProxyAdmin": "0xf7fb7c4e1e830e78c917fa640160f4d7d11b7cd8189984ab546b9094e72401cb",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x92aeca1bb56e793c55e70cc6e4aae76578f5e47d5112483916c542be5eee9ddf",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x4be7947ee5f0407be5c3881d8da19fc790036e07baedd5ba5c618ce25e6d63e8",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x1744d45ce0bb57009460cb93251a6ea125d4fe9af504600fdbce0e4006a5e67b",
     "polygon-cdk/PolygonSharedBridge": "0x3711402403bd6643cf592dacad0c719320b928d762f1f83be4340d8335fb34c7",
-    "polygon-cdk/Timelock": "0xe0aeb97ea2d17d5fca19d26982c3a5c34745dd2f238167e3d76fedb715ce3a76"
+    "polygon-cdk/Timelock": "0x78901e9bf86645856ac7e8fb50da9c1b6d749c8a1e7ee7f2d432ab6ab0d71c34"
   }
 }

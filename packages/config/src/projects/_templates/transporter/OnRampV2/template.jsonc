@@ -51,7 +51,7 @@
         "method": "getStaticConfig",
         "pickFields": ["chainSelector", "destChainSelector"]
       },
-      "returnType": "(ChainIdMap[])"
+      "edit": ["map", ["format", "ChainIdMap"]]
     },
     "tokenAddresses": {
       "handler": {
