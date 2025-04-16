@@ -3,10 +3,7 @@ import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
-import {
-  transformToIssued,
-  transformToReceived,
-} from '../permission-resolving/transform'
+import { transformToReceived } from '../permission-resolving/transform'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
@@ -62,7 +59,6 @@ export function processAnalysis(
             ? undefinedIfEmpty(x.sourceBundles.map((b) => b.hash as string))
             : undefined,
           proxyType: x.proxyType,
-          issuedPermissions: transformToIssued(x.address, resolvedPermissions),
           receivedPermissions,
           directlyReceivedPermissions,
           ignoreInWatchMode: x.ignoreInWatchMode,

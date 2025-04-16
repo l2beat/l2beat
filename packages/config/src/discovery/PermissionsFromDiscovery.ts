@@ -173,8 +173,20 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   getUpgradableBy(
     contract: EntryParameters,
   ): { name: string; delay: string }[] {
+    const issuedPermissions = this.projectDiscovery
+      .getContracts()
+      .flatMap((c) =>
+        (c.receivedPermissions ?? []).map((p) => ({
+          to: c.address,
+          ...p,
+        })),
+      )
+      .filter(
+        (receivedPermission) => receivedPermission.from === contract.address,
+      )
+
     const upgradersWithDelay: Record<string, number> = Object.fromEntries(
-      contract.issuedPermissions
+      issuedPermissions
         ?.filter((p) => p.permission === 'upgrade')
         .map((p) => {
           const entry = this.projectDiscovery.getEntryByAddress(p.to)

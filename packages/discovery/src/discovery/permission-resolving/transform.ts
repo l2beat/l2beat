@@ -5,47 +5,10 @@ import type {
   PermissionConfiguration,
 } from '../config/StructureConfig'
 import type {
-  IssuedPermission,
   ReceivedPermission,
   ResolvedPermissionPath,
 } from '../output/types'
 import type { ResolvedPermission } from './resolvePermissions'
-
-export function transformToIssued(
-  forAddress: EthereumAddress,
-  resolved: ResolvedPermission[],
-): IssuedPermission[] | undefined {
-  const matching = resolved.filter((r) => r.path[0]?.address === forAddress)
-  if (matching.length === 0) {
-    return undefined
-  }
-
-  return sort(
-    matching.map((r) => {
-      const last = r.path[r.path.length - 1]
-      assert(r.path[0])
-      assert(r.path[0]?.gives)
-      assert(last)
-      return {
-        permission: internalPermissionToExternal(r.path[0].gives),
-        to: last.address,
-        delay: zeroToUndefined(r.path[0].delay),
-        description: r.path[0]?.description,
-        condition: r.path[0]?.condition,
-        via: r.path
-          .slice(1, -1)
-          .reverse()
-          .map(
-            (x): ResolvedPermissionPath => ({
-              address: x.address,
-              delay: zeroToUndefined(x.delay),
-              condition: x.condition,
-            }),
-          ),
-      }
-    }),
-  )
-}
 
 export function transformToReceived(
   toAddress: EthereumAddress,
@@ -61,7 +24,7 @@ export function transformToReceived(
     (r) => r.path[r.path.length - 1]?.address === toAddress,
   )
 
-  const ultimate = sort(
+  const ultimate = sortReceivedPermission(
     assignedToThisAddress.map((r) => {
       assert(r.path[0])
       assert(r.path[0]?.gives)
@@ -84,7 +47,7 @@ export function transformToReceived(
     }),
   )
 
-  const direct: ReceivedPermission[] = sort(
+  const direct: ReceivedPermission[] = sortReceivedPermission(
     metaPermissions
       .map((p) => ({
         permission: internalPermissionToExternal(p.type),
@@ -111,9 +74,7 @@ function internalPermissionToExternal(permission: Permission): Permission {
   return permission
 }
 
-function sort<T extends ReceivedPermission | IssuedPermission>(
-  input: T[],
-): T[] {
+function sortReceivedPermission<T extends ReceivedPermission>(input: T[]): T[] {
   return input.sort((a, b) => {
     return JSON.stringify(a).localeCompare(JSON.stringify(b))
   })
