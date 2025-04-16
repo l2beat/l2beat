@@ -1,4 +1,8 @@
-import { type ProjectValueType, UnixTime } from '@l2beat/shared-pure'
+import {
+  type ProjectId,
+  type ProjectValueType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type ProjectValueRecord, toRecord, toRow } from './entity'
 
@@ -58,7 +62,8 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getForType(
+  async getByProjectsForType(
+    projects: ProjectId[],
     type: ProjectValueType,
     range: [number | null, number],
   ): Promise<ProjectValueRecord[]> {
@@ -67,6 +72,7 @@ export class ProjectValueRepository extends BaseRepository {
       .selectFrom('ProjectValue')
       .selectAll()
       .where('type', '=', type)
+      .where('project', 'in', projects)
       .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 

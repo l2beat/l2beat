@@ -23,20 +23,16 @@ export async function getTvsValuesForProjects(
     now: target,
   })
 
-  const valueRecords = await db.tvsProjectValue.getForType(type ?? 'SUMMARY', [
-    from,
-    to,
-  ])
+  const valueRecords = await db.tvsProjectValue.getByProjectsForType(
+    projectIds,
+    type ?? 'SUMMARY',
+    [from, to],
+  )
 
   const valuesByProject = groupBy(valueRecords, (v) => v.project)
 
   const result: Dictionary<Dictionary<ProjectValueRecord>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const project = projectIds.find((id) => id === projectId)
-    if (!project) {
-      continue
-    }
-
     const valuesByTimestamp: Record<string, ProjectValueRecord> = {}
     for (const value of projectValues) {
       valuesByTimestamp[value.timestamp.toString()] = value
