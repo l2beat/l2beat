@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22281679,
-  "configHash": "0x22a8a09922a3335f34891694da7d38fc44695a7158c397507aebabc70229b952",
+  "configHash": "0xd2c03390bfa6fcada3f9e369133ce97da0dfbad7e525c699d9af1c93fc017fea",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -28,6 +28,7 @@
       "name": "Yaru",
       "address": "0x30f64a297cc66a873FB603d1e89D5891962C25ba",
       "type": "Contract",
+      "template": "gnosisbridge/Yaru",
       "sourceHashes": [
         "0x08b3a970ed97adf129059abd1030e73ebd6904533643bd35cfce0459bf3a0641"
       ],
@@ -523,6 +524,10 @@
         "yaru": "0x30f64a297cc66a873FB603d1e89D5891962C25ba"
       },
       "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
+        },
         "targetAddress": {
           "severity": "HIGH",
           "description": "Address of the target contract on GnosisChain"
@@ -592,6 +597,7 @@
       "name": "Yaho",
       "address": "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8",
       "type": "Contract",
+      "template": "gnosisbridge/Yaho",
       "sourceHashes": [
         "0x0a159de58bdd599af48d18d484a70a71f1038064d066e7e489b877721b866bcb"
       ],
@@ -1201,6 +1207,8 @@
     ]
   },
   "usedTemplates": {
+    "gnosisbridge/Yaho": "0x76b2288ec00b5d9e742b851e9d05ebce417b241ace06d8810e3cf8fc347c40b4",
+    "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
   }
 }

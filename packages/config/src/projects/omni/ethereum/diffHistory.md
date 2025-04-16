@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9fa41076b83d8157d55b55141f4e13c62e0f65dc
+Generated with discovered.json: 0x2da36a98d4c4ec8cf75426cba9dbe2c080c79038
 
-# Diff at Wed, 16 Apr 2025 12:52:56 GMT:
+# Diff at Wed, 16 Apr 2025 13:11:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22266420
@@ -21,6 +21,36 @@ MS signer change.
       values.$members.9:
 -        "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
 +        "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22266420 (main branch discovery), not current.
+
+```diff
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba) {
+    +++ description: None
+      template:
++        "gnosisbridge/Yaru"
+    }
+```
+
+```diff
+    contract HashiManager (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: None
+      fieldMeta.HASHI_IS_MANDATORY:
++        {"severity":"HIGH","description":"If true, Hashi validation is mandatory"}
+    }
+```
+
+```diff
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: None
+      template:
++        "gnosisbridge/Yaho"
     }
 ```
 
