@@ -1,5 +1,5 @@
 {
-  "lastL2BlockFetched": 59233959,
+  "lastL2BlockFetched": 59234510,
   "proposalCreatedEvents": [
     {
       "proposalId": {
@@ -327,6 +327,20 @@
       },
       "blockNumber": 57819893,
       "txHash": "0x36335e34cd8dc0de86dd74de3802a951e9c6064e4c50bf3d5d20e6881a08197a"
+    }
+  ],
+  "proposalExtendedEvents": [
+    {
+      "proposalId": {
+        "type": "BigNumber",
+        "hex": "0xda729113abb17659d84756f9aa8ebc03f2601be703ff4f9669e3dd3a25024ad1"
+      },
+      "extendedDeadline": {
+        "type": "BigNumber",
+        "hex": "0x67d87602"
+      },
+      "blockNumber": 57667473,
+      "txHash": "0xfcc92c4db0849c24bff283a2e43e08d2d566407532e57ea887c90ed4a77c6980"
     }
   ]
 }

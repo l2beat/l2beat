@@ -22,9 +22,10 @@ const PROTOCOL_UPGRADE_HANDLER_ADDR = '0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab
 const ZK_PROTOCOL_GOVERNOR_ABI = [
     "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)",
     "event ProposalExecuted(uint256 proposalId)",
+    "event ProposalExtended(uint256 indexed proposalId, uint64 extendedDeadline)", // Added event
     "function proposalVotes(uint256 proposalId) view returns (uint256 againstVotes, uint256 forVotes, uint256 abstainVotes)",
     "function state(uint256 proposalId) view returns (uint8)", // 0:Pending, 1:Active, 2:Canceled, 3:Defeated, 4:Succeeded, 5:Queued, 6:Expired, 7:Executed
-    "function quorum(uint256 blockNumber) view returns (uint256)"
+    "function quorum(uint256 blockNumber) view returns (uint256)" // blockNumber is timepoint here
 ];
 const L1_MESSENGER_ABI = [ "event L1MessageSent(address indexed _sender, bytes32 indexed _hash, bytes _message)" ];
 const PROTOCOL_UPGRADE_HANDLER_ABI = [
@@ -39,12 +40,13 @@ const VOTE_TOKEN_DECIMALS = 18;
 
 interface Call { target: string; value: ethers.BigNumber; data: string; }
 interface UpgradeProposal { calls: Call[]; executor: string; salt: string; }
-interface ProposalCreatedData { proposalId: ethers.BigNumber; proposer: string; targets: string[]; values: ethers.BigNumber[]; signatures: string[]; calldatas: string[]; voteStart: ethers.BigNumber; voteEnd: ethers.BigNumber; description: string; blockNumber: number; txHash: string; }
+interface ProposalCreatedData { proposalId: ethers.BigNumber; proposer: string; targets: string[]; values: ethers.BigNumber[]; signatures: string[]; calldatas: string[]; voteStart: ethers.BigNumber; /* Timestamp */ voteEnd: ethers.BigNumber; /* Timestamp */ description: string; blockNumber: number; txHash: string; }
 interface ProposalExecutedData { proposalId: ethers.BigNumber; blockNumber: number; txHash: string; }
+interface ProposalExtendedData { proposalId: ethers.BigNumber; extendedDeadline: ethers.BigNumber; /* Timestamp */ blockNumber: number; txHash: string; } // Added interface
 interface L1MessageSentData { sender: string; hash: string; message: string; blockNumber: number; txHash: string; }
 interface UpgradeStartedData { id: string; proposal: UpgradeProposal; blockNumber: number; txHash: string; }
 interface UpgradeStatusData { creationTimestamp: number; securityCouncilApprovalTimestamp: number; guardiansApproval: boolean; guardiansExtendedLegalVeto: boolean; executed: boolean; }
-interface EventCache { lastL2BlockFetched: number; proposalCreatedEvents: ProposalCreatedData[]; proposalExecutedEvents: ProposalExecutedData[]; }
+interface EventCache { lastL2BlockFetched: number; proposalCreatedEvents: ProposalCreatedData[]; proposalExecutedEvents: ProposalExecutedData[]; proposalExtendedEvents: ProposalExtendedData[]; /* Added */ }
 
 // --- Constants ---
 const CACHE_FILE = path.join(__dirname, 'governance_event_cache.json');
@@ -57,7 +59,7 @@ const L1_WAIT_OR_EXPIRE_SECONDS = 30 * 24 * 60 * 60;
 
 // --- Helper Functions ---
 
-function loadCache(): EventCache { /* ... (no changes) ... */
+function loadCache(): EventCache {
     if (fs.existsSync(CACHE_FILE)) {
         try {
             const data = fs.readFileSync(CACHE_FILE, 'utf-8');
@@ -70,13 +72,15 @@ function loadCache(): EventCache { /* ... (no changes) ... */
             console.log(chalk.gray(`Loaded cache from ${CACHE_FILE}. Last L2 block fetched: ${cache.lastL2BlockFetched}`));
             cache.proposalCreatedEvents = cache.proposalCreatedEvents || [];
             cache.proposalExecutedEvents = cache.proposalExecutedEvents || [];
+            cache.proposalExtendedEvents = cache.proposalExtendedEvents || []; // Initialize new cache array
             return cache;
         } catch (error) {
             console.warn(chalk.yellow(`Could not read cache file ${CACHE_FILE}: ${error}. Starting fresh.`));
         }
     }
-    return { lastL2BlockFetched: 0, proposalCreatedEvents: [], proposalExecutedEvents: [] };
- }
+    // Initialize with all arrays
+    return { lastL2BlockFetched: 0, proposalCreatedEvents: [], proposalExecutedEvents: [], proposalExtendedEvents: [] };
+}
 function saveCache(cache: EventCache): void { /* ... (no changes) ... */
     try {
         const data = JSON.stringify(cache, (key, value) => {
@@ -91,11 +95,7 @@ function saveCache(cache: EventCache): void { /* ... (no changes) ... */
         console.error(chalk.red(`Error saving cache: ${error}`));
     }
  }
-function formatBlockNumber(block: number | ethers.BigNumber): string { /* ... (no changes) ... */
-    if (!block || ethers.BigNumber.from(block).isZero()) return "N/A";
-    return ethers.BigNumber.from(block).toString();
- }
-function formatTimestamp(timestamp: number | ethers.BigNumber): string { /* ... (no changes) ... */
+function formatTimestamp(timestamp: number | ethers.BigNumber | undefined): string {
     if (!timestamp || ethers.BigNumber.from(timestamp).isZero()) return "N/A";
     try {
         const date = new Date(ethers.BigNumber.from(timestamp).toNumber() * 1000);
@@ -104,7 +104,7 @@ function formatTimestamp(timestamp: number | ethers.BigNumber): string { /* ... 
         console.warn(chalk.yellow(`Could not format timestamp ${timestamp}: ${e}`));
         return "Invalid Date";
     }
- }
+}
 function mapL2State(state: number): string { /* ... (no changes) ... */
     const states = ["Pending", "Active", "Canceled", "Defeated", "Succeeded", "Queued", "Expired", "Executed"];
     return states[state] ?? `Unknown (${state})`;
@@ -133,25 +133,19 @@ function calculatePercentage(numerator: ethers.BigNumber, denominator: ethers.Bi
         return percentage.round(2).toString();
     } catch (e) { console.warn(chalk.yellow(`Error calculating percentage (${numerator}/${denominator}): ${e}`)); return "Error"; }
  }
-function formatDuration(totalSeconds: number): string { /* ... (implementation added) ... */
-    if (totalSeconds < 0) totalSeconds = 0; // Don't show negative duration if time already passed
+function formatDuration(totalSeconds: number): string { /* ... (no changes) ... */
+    if (totalSeconds < 0) totalSeconds = 0;
     if (totalSeconds === 0) return "Ended";
-
-    const days = Math.floor(totalSeconds / (24 * 60 * 60));
-    totalSeconds %= (24 * 60 * 60);
-    const hours = Math.floor(totalSeconds / (60 * 60));
-    totalSeconds %= (60 * 60);
+    const days = Math.floor(totalSeconds / (24 * 60 * 60)); totalSeconds %= (24 * 60 * 60);
+    const hours = Math.floor(totalSeconds / (60 * 60)); totalSeconds %= (60 * 60);
     const minutes = Math.floor(totalSeconds / 60);
-
     let parts: string[] = [];
     if (days > 0) parts.push(`${days}d`);
     if (hours > 0) parts.push(`${hours}h`);
     if (minutes > 0) parts.push(`${minutes}m`);
-    // If less than a minute, show "< 1m" or similar if needed
     if (parts.length === 0 && totalSeconds > 0) return "< 1m";
-    if (parts.length === 0) return "Ended"; // Should ideally not happen if seconds > 0
-
-    return parts.join(' '); // Use space instead of comma
+    if (parts.length === 0) return "Ended";
+    return parts.join(' ');
 }
 
 // --- Core Fetching Functions ---
@@ -257,15 +251,72 @@ function comparePayloads(l1PayloadFromL2: UpgradeProposal | null, l1PayloadFromE
  }
 
 /**
+ * Fetches the ProposalExtended event for a specific proposal ID.
+ */
+async function findProposalExtendedEvent(
+    governorContract: ethers.Contract,
+    proposalId: ethers.BigNumber,
+    startBlock: number,
+    cache: EventCache, // Pass cache to check first
+    l2Provider: ethers.providers.JsonRpcProvider
+): Promise<ProposalExtendedData | null> {
+    // Check cache first
+    const cachedEvent = cache.proposalExtendedEvents.find(e => e.proposalId.eq(proposalId));
+    if (cachedEvent) {
+        console.log(chalk.gray(`Found cached ProposalExtended event for ID ${proposalId.toString()}`));
+        return cachedEvent;
+    }
+
+    console.log(chalk.blue(`Searching for ProposalExtended event for ID ${proposalId.toString()} from block ${startBlock}...`));
+    try {
+        const eventFilter = governorContract.filters.ProposalExtended(proposalId);
+        const latestBlock = await l2Provider.getBlockNumber();
+        // Query from startBlock (proposal creation) up to latest known block
+        const logs = await governorContract.queryFilter(eventFilter, startBlock, latestBlock);
+
+        if (logs.length === 0) {
+            console.log(chalk.gray(`No ProposalExtended event found for ID ${proposalId.toString()}.`));
+            return null;
+        }
+
+        if (logs.length > 1) {
+            console.warn(chalk.yellow(`Found multiple (${logs.length}) ProposalExtended events for ID ${proposalId.toString()}. Using the first one.`));
+        }
+
+        const log = logs[0];
+        const parsedLog = governorContract.interface.parseLog(log);
+        const extendedData: ProposalExtendedData = {
+            proposalId: parsedLog.args.proposalId,
+            extendedDeadline: parsedLog.args.extendedDeadline,
+            blockNumber: log.blockNumber,
+            txHash: log.transactionHash
+        };
+        console.log(chalk.green(`Found ProposalExtended event at block ${log.blockNumber}. New deadline: ${formatTimestamp(extendedData.extendedDeadline)}`));
+
+        // Add to cache if not already there (shouldn't be due to check above, but good practice)
+        if (!cache.proposalExtendedEvents.some(e => e.txHash === extendedData.txHash)) {
+             cache.proposalExtendedEvents.push(extendedData);
+        }
+        return extendedData;
+
+    } catch (error) {
+        console.error(chalk.red(`Error searching for ProposalExtended event: ${error}`));
+        return null;
+    }
+}
+
+
+/**
  * Displays a text-based timeline of the proposal states with timing info.
  */
 function displayTimeline(
     l2StateName: string,
     l1StateName: string | null,
-    proposalCreated: ProposalCreatedData | null,
+    proposalCreated: ProposalCreatedData | null, // Needed for L2 voteEnd
+    proposalExtended: ProposalExtendedData | null, // For extended deadline
     l1StatusData: UpgradeStatusData | null,
-    currentL2Block: ethers.BigNumber,
-    currentL1Timestamp: number
+    // currentL2Block: ethers.BigNumber, // L2 block time is unreliable for time calc
+    currentL1Timestamp: number // Use L1 timestamp as proxy for current time
 ) {
     console.log(chalk.bold('\n--- Proposal Timeline ---'));
 
@@ -275,16 +326,17 @@ function displayTimeline(
     let currentL2Index = l2States.indexOf(l2StateName);
     let l2IsOffPath = l2OffPathStates.includes(l2StateName);
 
+    // Determine effective L2 deadline
+    const effectiveVoteEndTs = proposalExtended ? proposalExtended.extendedDeadline : proposalCreated?.voteEnd;
+
     let l2Timeline = chalk.bold("L2: ");
     l2States.forEach((state, index) => {
         let timingInfo = '';
-        if (state === "Active" && l2StateName === "Active" && proposalCreated) {
-            const blocksRemaining = proposalCreated.voteEnd.sub(currentL2Block);
-            if (blocksRemaining.gt(0)) {
-                timingInfo = chalk.cyan(` (~${blocksRemaining.toString()} blocks left)`);
-            } else {
-                 timingInfo = chalk.cyan(` (Ended)`);
-            }
+        // Calculate time remaining for Active state based on effective end timestamp
+        if (state === "Active" && l2StateName === "Active" && effectiveVoteEndTs && currentL1Timestamp > 0) {
+            const secondsRemaining = effectiveVoteEndTs.toNumber() - currentL1Timestamp;
+             timingInfo = chalk.cyan(` (${formatDuration(secondsRemaining)} left)`);
+             if (secondsRemaining <= 0) timingInfo = chalk.cyan(` (Ended)`);
         }
 
         let coloredState = state;
@@ -297,6 +349,7 @@ function displayTimeline(
     });
 
     if (l2IsOffPath) { l2Timeline += chalk.red.bold(` -> ${l2StateName}`); }
+    if (proposalExtended) { l2Timeline += chalk.blue(` [Extended]`); } // Indicate if extended
     console.log(l2Timeline);
 
     // --- Connector ---
@@ -311,40 +364,37 @@ function displayTimeline(
         const l1OffPathStates = ["Expired"];
         let currentL1Index = l1States.indexOf(l1StateName);
         let l1IsOffPath = l1OffPathStates.includes(l1StateName);
-        if (l1StateName === "None") currentL1Index = 0; // Treat "None" as the starting point
+        if (l1StateName === "None") currentL1Index = 0;
 
         let l1Timeline = chalk.bold("L1: ");
-        let nextArrow = true; // Control arrow printing
+        let nextArrow = true;
 
-        // Calculate key L1 timestamps if status data is available
         let legalVetoEndTime = 0;
         let waitOrExpiryEndTime = 0;
-        let readyTimestamp = 0; // Can be based on SC or Guardian approval + delay
+        let readyTimestamp = 0;
 
         if (l1StatusData && l1StatusData.creationTimestamp > 0) {
             const vetoDuration = l1StatusData.guardiansExtendedLegalVeto ? L1_EXTENDED_LEGAL_VETO_SECONDS : L1_STANDARD_LEGAL_VETO_SECONDS;
             legalVetoEndTime = l1StatusData.creationTimestamp + vetoDuration;
             waitOrExpiryEndTime = legalVetoEndTime + L1_WAIT_OR_EXPIRE_SECONDS;
-
             if (l1StatusData.securityCouncilApprovalTimestamp > 0) {
                 readyTimestamp = l1StatusData.securityCouncilApprovalTimestamp + L1_UPGRADE_DELAY_SECONDS;
             } else if (l1StatusData.guardiansApproval) {
-                // Ready time depends on when the wait/expire period ends
                 readyTimestamp = waitOrExpiryEndTime + L1_UPGRADE_DELAY_SECONDS;
             }
         }
 
         l1States.forEach((state, index) => {
-            if (state === "None" && currentL1Index !== 0) return; // Skip "None" visually unless current
+            if (state === "None" && currentL1Index !== 0) return;
 
             let timingInfo = '';
             let secondsRemaining = -1;
 
             if (l1StatusData && currentL1Timestamp > 0) {
-                if (state === "LegalVetoPeriod" && l1StateName === state) {
+                if (state === "LegalVetoPeriod" && l1StateName === state && legalVetoEndTime > 0) {
                     secondsRemaining = legalVetoEndTime - currentL1Timestamp;
                     timingInfo = chalk.cyan(` (${formatDuration(secondsRemaining)} left)`);
-                } else if (state === "Waiting" && l1StateName === state) {
+                } else if (state === "Waiting" && l1StateName === state && waitOrExpiryEndTime > 0) {
                     secondsRemaining = waitOrExpiryEndTime - currentL1Timestamp;
                     timingInfo = chalk.cyan(` (~${formatDuration(secondsRemaining)} left until expiry/delay)`);
                 } else if (state === "ExecutionPending" && l1StateName === state && readyTimestamp > 0) {
@@ -366,20 +416,20 @@ function displayTimeline(
             else if (index === currentL1Index) { coloredState = chalk.green.bold(state); }
             else { coloredState = chalk.dim(state); }
 
-            // Determine if this is the last state to print in the sequence
-            const isLastVisible = (index === l1States.length - 1) || (l1IsOffPath && state === "Ready"); // Don't draw arrow after Ready if Expired
+            const isLastVisible = (index === l1States.length - 1) || (l1IsOffPath && state === "Ready");
             nextArrow = !isLastVisible;
-
             l1Timeline += coloredState + timingInfo + (nextArrow ? chalk.gray(' -> ') : '');
         });
 
         if (l1IsOffPath) { l1Timeline += chalk.red.bold(` -> ${l1StateName}`); }
+        if (l1StatusData?.guardiansExtendedLegalVeto) { l1Timeline += chalk.blue(` [Veto Extended]`); } // Indicate if veto extended
         console.log(l1Timeline);
 
     } else if (!l2IsOffPath) {
         console.log(chalk.bold("L1: ") + chalk.dim("None (Awaiting L2->L1 Message Proof)"));
     }
 }
+
 
 // --- Main Execution ---
 async function main() {
@@ -404,9 +454,9 @@ async function main() {
     try { await l1Provider.getNetwork(); console.log(chalk.green(`Connected to Ethereum L1 RPC: ${l1Provider.connection.url}`)); } catch (e) { console.error(chalk.red(`Failed L1 RPC connection: ${e}`)); process.exit(1); }
 
     // --- Fetch Current Block/Time ---
-    let currentL2Block = ethers.BigNumber.from(0);
+    // let currentL2Block = ethers.BigNumber.from(0); // Not reliable for time calculations
     let currentL1Timestamp = 0;
-    try { currentL2Block = await l2Provider.getBlockNumber(); } catch (e) { console.warn(chalk.yellow("Could not fetch current L2 block number.")); }
+    // try { currentL2Block = await l2Provider.getBlockNumber(); } catch (e) { console.warn(chalk.yellow("Could not fetch current L2 block number.")); }
     try { currentL1Timestamp = (await l1Provider.getBlock('latest')).timestamp; } catch (e) { console.warn(chalk.yellow("Could not fetch current L1 timestamp.")); }
 
 
@@ -426,8 +476,13 @@ async function main() {
     console.log(chalk.green(`Found ProposalCreated event in L2 block ${proposalCreated.blockNumber} (Tx: ${proposalCreated.txHash})`));
     console.log(chalk.bold("L2 Proposal Details:"));
     console.log(`  Proposer: ${chalk.yellow(proposalCreated.proposer)}`);
-    console.log(`  Vote Start Block: ${chalk.yellow(formatBlockNumber(proposalCreated.voteStart))}`);
-    console.log(`  Vote End Block: ${chalk.yellow(formatBlockNumber(proposalCreated.voteEnd))}`);
+    console.log(`  Vote Start Time: ${chalk.yellow(formatTimestamp(proposalCreated.voteStart))}`); // Changed label
+
+    // --- Check for Vote Extension ---
+    const proposalExtended = await findProposalExtendedEvent(zkGovernor, l2ProposalId, proposalCreated.blockNumber, cache, l2Provider);
+    const effectiveVoteEndTs = proposalExtended ? proposalExtended.extendedDeadline : proposalCreated.voteEnd;
+    console.log(`  Vote End Time:   ${chalk.yellow(formatTimestamp(effectiveVoteEndTs))}${proposalExtended ? chalk.blue(' (Extended)') : ''}`); // Changed label and added indicator
+
     console.log(`  Description:\n${chalk.italic.gray(proposalCreated.description.split('\n').map(l => `    ${l}`).join('\n'))}`);
 
     // --- Fetch L2 State, Votes, and Quorum ---
@@ -440,6 +495,7 @@ async function main() {
         l2StateName = mapL2State(l2State);
         console.log(`  L2 State: ${chalk.yellow(l2StateName)}`);
         votes = await zkGovernor.proposalVotes(l2ProposalId);
+        // Quorum is based on voteStart *timestamp* (which acts as timepoint)
         quorumValue = await zkGovernor.quorum(proposalCreated.voteStart);
     } catch (e) { console.warn(chalk.yellow(`Could not fetch L2 state, votes, or quorum: ${e}`)); }
 
@@ -462,7 +518,7 @@ async function main() {
 
     // --- 2. Find L2 Execution and Extract L1 Message ---
     console.log(chalk.bold('\n--- Step 2: L2 Execution & L1 Message ---'));
-    const latestL2Block = await l2Provider.getBlockNumber(); // Get fresh latest block
+    const latestL2Block = await l2Provider.getBlockNumber();
     await fetchL2Events(zkGovernor, "ProposalExecuted", "proposalExecutedEvents", cache, l2Provider, (log) => {
         const args = zkGovernor.interface.parseLog(log).args; return { proposalId: args.proposalId, blockNumber: log.blockNumber, txHash: log.transactionHash };
     }, { fromBlock: proposalCreated.blockNumber, toBlock: latestL2Block });
@@ -479,7 +535,6 @@ async function main() {
     } else { console.warn(chalk.yellow(`ProposalExecuted event not found for ID ${l2ProposalId.toString()}.`)); }
 
     // --- 3. Decode L1 Payload from L2 Data ---
-    // console.log(chalk.bold('\n--- Step 3: L1 Payload Analysis ---')); // Combined with step 5 display
     let l1PayloadFromL2: UpgradeProposal | null = null;
     const messengerCallIndex = (proposalCreated.targets ?? []).findIndex(t => t.toLowerCase() === L1_MESSENGER_ADDR.toLowerCase());
     if (messengerCallIndex !== -1) {
@@ -514,7 +569,8 @@ async function main() {
     } else { console.log(chalk.bold('\n--- Step 4: L1 Proposal Status ---')); console.log(chalk.gray("L1 Proposal Hash not found.")); }
 
     // --- Display Timeline ---
-    displayTimeline(l2StateName, l1StateName, proposalCreated, l1StatusData, currentL2Block, currentL1Timestamp);
+    // Pass effectiveVoteEndTs instead of proposalCreated directly for L2 timing
+    displayTimeline(l2StateName, l1StateName, proposalCreated, proposalExtended, l1StatusData, currentL1Timestamp);
 
     // --- 5. Display Payloads & Compare ---
     console.log(chalk.bold('\n--- Step 5: L1 Payload Verification ---'));
