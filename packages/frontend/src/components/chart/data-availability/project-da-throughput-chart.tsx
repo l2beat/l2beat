@@ -18,24 +18,24 @@ export function ProjectDaThroughputChart({
   configuredThroughputs,
   milestones,
 }: Props) {
-  const [type, setType] = useState<'absolute' | 'by-project'>('absolute')
+  const [type, setType] = useState<'combined' | 'by-project'>('combined')
   const [range, setRange] = useState<DaThroughputTimeRange>('1y')
   return (
     <div>
       <RadioGroup
         name="type"
         value={type}
-        onValueChange={(value) => setType(value as 'absolute' | 'by-project')}
+        onValueChange={(value) => setType(value as 'combined' | 'by-project')}
         className="w-full"
       >
-        <RadioGroupItem value="absolute" className="w-full">
-          Absolute
+        <RadioGroupItem value="combined" className="w-full">
+          Combined
         </RadioGroupItem>
         <RadioGroupItem value="by-project" className="w-full">
           By Project
         </RadioGroupItem>
       </RadioGroup>
-      {type === 'absolute' ? (
+      {type === 'combined' ? (
         <ProjectDaThroughputAbsoluteChart
           daLayer={daLayer}
           configuredThroughputs={configuredThroughputs}
