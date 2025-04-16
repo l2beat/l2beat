@@ -1,6 +1,6 @@
 'use client'
 import { uniq } from 'lodash'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
@@ -12,15 +12,21 @@ import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
 
 const DEFAULT_PROJECTS_TO_SHOW = 5
 
+interface Props {
+  daLayer: string
+  range: DaThroughputTimeRange
+  setRange: (range: DaThroughputTimeRange) => void
+  selectedProjects: string[] | undefined
+  setSelectedProjects: (projects: string[] | undefined) => void
+}
+
 export function ProjectDaThroughputByProjectChart({
   daLayer,
   range,
   setRange,
-}: {
-  daLayer: string
-  range: DaThroughputTimeRange
-  setRange: (range: DaThroughputTimeRange) => void
-}) {
+  selectedProjects,
+  setSelectedProjects,
+}: Props) {
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
     range,
     daLayer,
@@ -33,7 +39,6 @@ export function ProjectDaThroughputByProjectChart({
       : []
   }, [data])
 
-  const [selectedProjects, setSelectedProjects] = useState<string[]>()
   const chartRange = useMemo(
     () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
     [data],

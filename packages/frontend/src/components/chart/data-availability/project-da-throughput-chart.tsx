@@ -20,6 +20,9 @@ export function ProjectDaThroughputChart({
 }: Props) {
   const [type, setType] = useState<'combined' | 'by-project'>('combined')
   const [range, setRange] = useState<DaThroughputTimeRange>('1y')
+  const [selectedProjects, setSelectedProjects] = useState<string[]>()
+  const [showMax, setShowMax] = useState(true)
+
   return (
     <div>
       <RadioGroup
@@ -42,12 +45,16 @@ export function ProjectDaThroughputChart({
           milestones={milestones}
           range={range}
           setRange={setRange}
+          showMax={showMax}
+          setShowMax={setShowMax}
         />
       ) : (
         <ProjectDaThroughputByProjectChart
           daLayer={daLayer}
           range={range}
           setRange={setRange}
+          selectedProjects={selectedProjects}
+          setSelectedProjects={setSelectedProjects}
         />
       )}
     </div>

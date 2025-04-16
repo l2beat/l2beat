@@ -2,7 +2,7 @@
 
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
@@ -19,6 +19,8 @@ interface Props {
   milestones: Milestone[]
   range: DaThroughputTimeRange
   setRange: (range: DaThroughputTimeRange) => void
+  showMax: boolean
+  setShowMax: (showMax: boolean) => void
 }
 
 export function ProjectDaThroughputAbsoluteChart({
@@ -27,9 +29,9 @@ export function ProjectDaThroughputAbsoluteChart({
   milestones,
   range,
   setRange,
+  showMax,
+  setShowMax,
 }: Props) {
-  const [showMax, setShowMax] = useState(true)
-
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,
     projectId: daLayer,
