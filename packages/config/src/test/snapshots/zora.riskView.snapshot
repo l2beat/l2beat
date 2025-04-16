@@ -8,9 +8,8 @@
     value: "Onchain"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    description: "There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice."
     orderHint: -604800
-    secondLine: undefined
     sentiment: "bad"
     value: "None"
   }

@@ -9,7 +9,7 @@ import { orbitStackL2 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('alephzero')
 
 export const alephzero: ScalingProject = orbitStackL2({
-  addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: UnixTime(1723420800), // 2024-08-12T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Privacy'],
@@ -58,7 +58,7 @@ export const alephzero: ScalingProject = orbitStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://alephzero.org/blog/aleph-zero-evm-mainnet/',
       date: '2024-08-12T00:00:00Z',
       description: 'Aleph Zero EVM L2 is open for all users.',

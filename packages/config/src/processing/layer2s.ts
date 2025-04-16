@@ -10,6 +10,7 @@ import { align } from '../projects/align/align'
 import { allo } from '../projects/allo/allo'
 import { ancient } from '../projects/ancient/ancient'
 import { apex } from '../projects/apex/apex'
+import { appchain } from '../projects/appchain/appchain'
 import { arbitrum } from '../projects/arbitrum/arbitrum'
 import { arcology } from '../projects/arcology/arcology'
 import { arenaz } from '../projects/arenaz/arenaz'
@@ -106,6 +107,7 @@ import { lumia } from '../projects/lumia/lumia'
 import { lyra } from '../projects/lyra/lyra'
 import { mantapacific } from '../projects/mantapacific/mantapacific'
 import { mantle } from '../projects/mantle/mantle'
+import { mawari } from '../projects/mawari/mawari'
 import { memento } from '../projects/memento/memento'
 import { metal } from '../projects/metal/metal'
 import { metis } from '../projects/metis/metis'
@@ -176,9 +178,11 @@ import { soneium } from '../projects/soneium/soneium'
 import { soon } from '../projects/soon/soon'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
+import { sovrun } from '../projects/sovrun/sovrun'
 import { specular } from '../projects/specular/specular'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
+import { studiochain } from '../projects/studiochain/studiochain'
 import { superlumio } from '../projects/superlumio/superlumio'
 import { superseed } from '../projects/superseed/superseed'
 import { swan } from '../projects/swan/swan'
@@ -232,6 +236,7 @@ export const layer2s: ScalingProject[] = [
   allo,
   ancient,
   apex,
+  appchain,
   arbitrum,
   arcology,
   arenaz,
@@ -326,6 +331,7 @@ export const layer2s: ScalingProject[] = [
   lyra,
   mantapacific,
   mantle,
+  mawari,
   memento,
   metal,
   metis,
@@ -397,9 +403,11 @@ export const layer2s: ScalingProject[] = [
   soon,
   sophon,
   sorare,
+  sovrun,
   specular,
   starknet,
   status,
+  studiochain,
   superlumio,
   superseed,
   swan,

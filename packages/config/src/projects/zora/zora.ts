@@ -37,6 +37,7 @@ export const zora: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },
+  hasSuperchainScUpgrades: true,
   finality: {
     type: 'OPStack',
     genesisTimestamp: UnixTime(1686693839),

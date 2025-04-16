@@ -179,7 +179,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       type: 'general',
     },
     {
-      title: 'Near mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://near.org/blog/near-mainnet-genesis',
       date: '2020-04-22T00:00:00Z',
       description: 'Near mainnet launches.',

@@ -137,7 +137,7 @@ export const zkcandy: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
-      title: 'Mainnet launch',
+      title: 'Mainnet Launch',
       url: 'https://zkcandy.medium.com/connecting-to-the-zkcandy-mainnet-62be6de3153d',
       date: '2025-04-07T00:00:00Z',
       description: 'zkCandy mainnet launches for all users.',
