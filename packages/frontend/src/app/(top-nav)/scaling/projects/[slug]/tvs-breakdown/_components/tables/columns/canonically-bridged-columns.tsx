@@ -39,7 +39,13 @@ export const canonicallyBridgedColumns = [
       if (escrow === 'multiple')
         return <div className="text-xs font-medium">Multiple</div>
 
-      return <TokenAddressCell address={escrow.address} url={escrow.url} />
+      return (
+        <TokenAddressCell
+          address={escrow.address}
+          url={escrow.url}
+          name={escrow.name}
+        />
+      )
     },
   }),
   columnHelper.display({

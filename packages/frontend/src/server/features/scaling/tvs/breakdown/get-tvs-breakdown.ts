@@ -1,4 +1,9 @@
-import type { ChainConfig, Formula, TvsToken } from '@l2beat/config'
+import type {
+  ChainConfig,
+  Formula,
+  Project,
+  ProjectContract,
+} from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
@@ -13,17 +18,20 @@ import type {
 } from './types'
 
 export async function getTvsBreakdown(
-  projectTokens: TvsToken[],
+  project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],
   targetTimestamp: UnixTime,
-  gasTokens?: string[],
 ) {
   const breakdown: BreakdownRecord = {
     canonical: [],
     external: [],
     native: [],
   }
+
+  const projectTokens = project.tvsConfig
+  const gasTokens = project.chainConfig?.gasTokens
+  const projectContracts = project.contracts?.addresses
 
   for (const token of projectTokens) {
     const tokenValue = tokenValuesMap.get(token.id)
@@ -45,7 +53,7 @@ export async function getTvsBreakdown(
 
     switch (token.source) {
       case 'canonical': {
-        const escrow = processAddresses(escrows, chains)
+        const escrow = processAddresses(escrows, chains, projectContracts)
         const canonicalTokenWithValues: CanonicalAssetBreakdownData = {
           ...tokenWithValues,
           escrow,
@@ -70,17 +78,22 @@ export async function getTvsBreakdown(
 function processAddresses(
   addresses: Address[],
   chains: ChainConfig[],
+  projectContracts?: Record<string, ProjectContract[]>,
 ): BaseAssetBreakdownData['address'] {
   if (addresses.length > 1) {
     return 'multiple'
   }
   if (addresses.length === 1 && addresses[0]) {
-    const explorer = chains.find(
-      (c) => c.name === addresses[0]?.chain,
-    )?.explorerUrl
+    const address = addresses[0]
+    const contractName = projectContracts?.[address.chain]?.find(
+      (c) => c.address.toLowerCase() === address.address.toLowerCase(),
+    )?.name
+    const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
+
     return {
-      address: addresses[0].address,
-      url: explorer ? `${explorer}/address/${addresses[0].address}` : undefined,
+      address: address.address,
+      url: explorer ? `${explorer}/address/${address.address}` : undefined,
+      name: contractName,
     }
   }
   return undefined

@@ -41,11 +41,10 @@ export const getCachedTvsBreakdownForProjectData = cache(
     )
 
     const breakdown = await getTvsBreakdown(
-      project.tvsConfig,
+      project,
       tokenValuesMap,
       chains,
       targetTimestamp,
-      project.chainConfig?.gasTokens,
     )
 
     return {

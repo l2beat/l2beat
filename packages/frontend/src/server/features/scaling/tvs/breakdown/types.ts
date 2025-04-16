@@ -5,6 +5,7 @@ type AddressData =
   | {
       address: EthereumAddress
       url?: string
+      name?: string
     }
   | 'multiple'
 
