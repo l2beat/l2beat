@@ -35,6 +35,7 @@ export const celo: ScalingProject = opStackL2({
       ],
     },
   },
+  hasSuperchainScUpgrades: true,
   associatedTokens: ['CELO'],
   chainConfig: {
     gasTokens: ['CELO'],

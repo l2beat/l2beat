@@ -35,6 +35,7 @@ export const soneium = opStackL2({
       ],
     },
   },
+  hasSuperchainScUpgrades: true,
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },

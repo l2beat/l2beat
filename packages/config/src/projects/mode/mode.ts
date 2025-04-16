@@ -35,6 +35,7 @@ export const mode: ScalingProject = opStackL2({
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },
+  hasSuperchainScUpgrades: true,
   associatedTokens: ['MODE'],
   genesisTimestamp: UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
