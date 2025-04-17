@@ -1,9 +1,9 @@
 import { dirname, posix } from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
-import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { TemplateService } from '../analysis/TemplateService'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
@@ -32,7 +32,7 @@ export async function saveDiscoveryResult(
   results: Analysis[],
   config: ConfigRegistry,
   blockNumber: number,
-  logger: DiscoveryLogger,
+  logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const projectDiscoveryFolder = posix.join(
@@ -132,7 +132,7 @@ async function saveSources(
 async function saveFlatSources(
   rootPath: string,
   results: Analysis[],
-  logger: DiscoveryLogger,
+  logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const flatSourcesFolder = options.flatSourcesFolder ?? '.flat'
