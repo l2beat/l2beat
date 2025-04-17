@@ -67,6 +67,7 @@ export function withoutUndefinedKeys<T extends object>(obj: T): T {
 }
 
 export function sortEntry(e: EntryParameters): EntryParameters {
+  // TODO: remove this termporary passthrough of issuedPermissions
   const issuedPermissions =
     'issuedPermissions' in e ? e.issuedPermissions : undefined
   return {
