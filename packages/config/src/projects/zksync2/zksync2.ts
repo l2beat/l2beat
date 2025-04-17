@@ -397,6 +397,14 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   milestones: [
     {
+      title: 'ZK token minter key compromised',
+      url: 'https://x.com/zksync/status/1912165357642473488',
+      date: '2025-04-13T00:00:00Z',
+      description:
+        '1/1 signer key of a ZK airdrop admin multisig is compromised. ZKsync deploys TransactionFilterer.',
+      type: 'incident',
+    },
+    {
       title: 'Onchain Governance Launch',
       url: 'https://blog.zknation.io/zksync-governance-system/',
       date: '2024-09-12T00:00:00Z',

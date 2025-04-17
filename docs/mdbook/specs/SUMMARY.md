@@ -13,3 +13,4 @@
 # L2BEAT specs
 
 - [Permissions section](./l2b_specs/permissions.md)
+- [Contracts section](./l2b_specs/contracts.md)

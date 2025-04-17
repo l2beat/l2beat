@@ -90,7 +90,6 @@ export const sophon: ScalingProject = zkStackL2({
         'stAZUR',
         'stAVAIL',
         'OPN',
-        'USDC',
       ], // 'SOPH' not on CG yet
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',

@@ -4,6 +4,7 @@ import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
 import { transformToReceived } from '../permission-resolving/transform'
+import { withoutUndefinedKeys } from './toDiscoveryOutput'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
@@ -94,10 +95,6 @@ function getEntries(results: Analysis[]): {
     Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),
   )
   return { contracts, abis }
-}
-
-function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj)) as T
 }
 
 export function sortByKeys<T extends object>(obj: T): T {

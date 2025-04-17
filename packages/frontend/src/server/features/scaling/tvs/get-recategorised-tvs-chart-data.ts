@@ -1,27 +1,26 @@
-import type { ValueRecord } from '@l2beat/database'
+import type { ProjectValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
-import { uniq } from 'lodash'
+import { groupBy, pick, uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
-import { ps } from '~/server/projects'
+import { getRangeWithMax } from '~/utils/range/range'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
+import { groupValuesByTimestamp } from './utils/group-values-by-timestamp'
 import {
   TvsProjectFilter,
   createTvsProjectsFilter,
 } from './utils/project-filter-utils'
-import { TvsChartRange, getRangeConfig } from './utils/range'
-import { sumValuesPerSource } from './utils/sum-values-per-source'
+import { TvsChartRange, rangeToResolution } from './utils/range'
 
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  excludeAssociatedTokens: z.boolean(),
   previewRecategorisation: z.boolean().default(false),
 })
 
@@ -50,7 +49,6 @@ export type RecategorisedTvsChartData = Awaited<
 export const getCachedRecategorisedTvsChartData = cache(
   async ({
     range,
-    excludeAssociatedTokens,
     filter,
     previewRecategorisation,
   }: RecategorisedTvsChartDataParams) => {
@@ -59,45 +57,31 @@ export const getCachedRecategorisedTvsChartData = cache(
       previewRecategorisation,
     )
 
-    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-      (p) => p.chainConfig,
-    )
-    const tokenList = await ps.getTokens()
     const tvsProjects = await getTvsProjects(
       projectsFilter,
-      chains,
-      tokenList,
       previewRecategorisation,
     )
 
-    const rollups = tvsProjects.filter(({ category }) => category === 'rollups')
-    const validiumsAndOptimiums = tvsProjects.filter(
-      ({ category }) => category === 'validiumsAndOptimiums',
+    const tvsValues = await getTvsValuesForProjects(
+      tvsProjects.map((p) => p.projectId),
+      range,
     )
-    const others = tvsProjects.filter(({ category }) => category === 'others')
 
-    const [rollupValues, validiumAndOptimiumsValues, othersValues] =
-      await Promise.all([
-        getTvsValuesForProjects(rollups, range),
-        getTvsValuesForProjects(validiumsAndOptimiums, range),
-        getTvsValuesForProjects(others, range),
-      ])
+    const groupedByType = groupBy(tvsProjects, (p) => p.category)
+    const rollups =
+      groupedByType.rollups?.map(({ projectId }) => projectId) ?? []
+    const validiumsAndOptimiums =
+      groupedByType.validiumsAndOptimiums?.map(({ projectId }) => projectId) ??
+      []
+    const others = groupedByType.others?.map(({ projectId }) => projectId) ?? []
 
-    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
-    const forTotal =
-      filter.type !== 'projects' || filter.projectIds.length !== 1
+    const rollupValues = pick(tvsValues, rollups)
+    const validiumAndOptimiumsValues = pick(tvsValues, validiumsAndOptimiums)
+    const othersValues = pick(tvsValues, others)
 
-    return getChartData(
-      rollupValues,
-      validiumAndOptimiumsValues,
-      othersValues,
-      {
-        excludeAssociatedTokens,
-        forTotal,
-      },
-    )
+    return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
   },
-  ['recategorised-tvs-chart-data-v2'],
+  ['recategorised-tvs-chart-data'],
   {
     tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
@@ -105,19 +89,15 @@ export const getCachedRecategorisedTvsChartData = cache(
 )
 
 function getChartData(
-  rollupsValues: Dictionary<Dictionary<ValueRecord[]>>,
-  validiumAndOptimiumsValues: Dictionary<Dictionary<ValueRecord[]>>,
-  othersValues: Dictionary<Dictionary<ValueRecord[]>>,
-  options: {
-    excludeAssociatedTokens: boolean
-    forTotal: boolean
-  },
+  rollupsValues: Dictionary<Dictionary<ProjectValueRecord>>,
+  validiumAndOptimiumsValues: Dictionary<Dictionary<ProjectValueRecord>>,
+  othersValues: Dictionary<Dictionary<ProjectValueRecord>>,
 ) {
-  const rollupTimestampValues = valuesToTimestampValues(rollupsValues)
-  const validiumAndOptimiumsTimestampValues = valuesToTimestampValues(
+  const rollupTimestampValues = groupValuesByTimestamp(rollupsValues)
+  const validiumAndOptimiumsTimestampValues = groupValuesByTimestamp(
     validiumAndOptimiumsValues,
   )
-  const othersTimestampValues = valuesToTimestampValues(othersValues)
+  const othersTimestampValues = groupValuesByTimestamp(othersValues)
 
   const timestamps = uniq([
     ...Object.keys(rollupTimestampValues),
@@ -130,19 +110,21 @@ function getChartData(
     const vVals = validiumAndOptimiumsTimestampValues[timestamp]
     const oVals = othersTimestampValues[timestamp]
 
-    const rSummed = rVals ? sumValuesPerSource(rVals, options) : undefined
-    const vSummed = vVals ? sumValuesPerSource(vVals, options) : undefined
-    const oSummed = oVals ? sumValuesPerSource(oVals, options) : undefined
-
-    const rTotal = rSummed
-      ? Number(rSummed.native + rSummed.canonical + rSummed.external)
-      : 0
-    const vTotal = vSummed
-      ? Number(vSummed.native + vSummed.canonical + vSummed.external)
-      : 0
-    const oTotal = oSummed
-      ? Number(oSummed.native + oSummed.canonical + oSummed.external)
-      : 0
+    const rTotal =
+      rVals?.reduce((acc, curr) => {
+        acc += Number(curr.value)
+        return acc
+      }, 0) ?? 0
+    const vTotal =
+      vVals?.reduce((acc, curr) => {
+        acc += Number(curr.value)
+        return acc
+      }, 0) ?? 0
+    const oTotal =
+      oVals?.reduce((acc, curr) => {
+        acc += Number(curr.value)
+        return acc
+      }, 0) ?? 0
 
     return [+timestamp, rTotal, vTotal, oTotal] as const
   })
@@ -151,28 +133,17 @@ function getChartData(
 function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
-  const { days, resolution } = getRangeConfig(range)
-  const target = UnixTime.toStartOf(
-    getTvsTargetTimestamp(),
-    resolution === 'hourly' ? 'hour' : 'day',
+  const resolution = rangeToResolution(range)
+  const target = getTvsTargetTimestamp()
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: target,
+  })
+  const timestamps = generateTimestamps(
+    [from ?? MIN_TIMESTAMPS.tvs, to],
+    resolution,
   )
-  const from = days !== null ? target - days * UnixTime.DAY : MIN_TIMESTAMPS.tvs
-  const timestamps = generateTimestamps([from, target], resolution)
 
   return timestamps.map((timestamp) => {
     return [timestamp, 3000, 2000, 1000]
   })
-}
-
-function valuesToTimestampValues(
-  values: Dictionary<Dictionary<ValueRecord[]>>,
-) {
-  const timestampValues: Record<string, ValueRecord[]> = {}
-  for (const projectValues of Object.values(values)) {
-    for (const [timestamp, values] of Object.entries(projectValues)) {
-      const map = timestampValues[timestamp] ?? []
-      timestampValues[timestamp] = map.concat(values)
-    }
-  }
-  return timestampValues
 }

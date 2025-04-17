@@ -7,6 +7,7 @@
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { join, relative } from 'path'
+import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -17,6 +18,7 @@ import {
   getChainConfig,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
+import { getChainConfigs } from '@l2beat/discovery/dist/config/config.discovery'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
@@ -180,16 +182,22 @@ async function performDiscoveryOnPreviousBlock(
 
   const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
 
-  await discover({
-    project: projectName,
-    chain: getChainConfig(chain),
-    blockNumber: blockNumberFromMainBranch,
-    sourcesFolder: `.code@${blockNumberFromMainBranch}`,
-    flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
-    discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
-    saveSources,
-    overwriteCache,
-  })
+  console.log('Discovering on previous block...')
+  await discover(
+    {
+      project: projectName,
+      chain: getChainConfig(chain),
+      blockNumber: blockNumberFromMainBranch,
+      sourcesFolder: `.code@${blockNumberFromMainBranch}`,
+      flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
+      discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+      saveSources,
+      overwriteCache,
+    },
+    getChainConfigs(),
+    Logger.SILENT,
+  )
+  console.log('Discovery completed')
 
   const prevDiscoveryFile = readFileSync(
     `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,

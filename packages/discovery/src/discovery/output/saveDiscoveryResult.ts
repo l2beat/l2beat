@@ -1,9 +1,9 @@
 import { dirname, posix } from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
-import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { TemplateService } from '../analysis/TemplateService'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
@@ -32,7 +32,7 @@ export async function saveDiscoveryResult(
   results: Analysis[],
   config: ConfigRegistry,
   blockNumber: number,
-  logger: DiscoveryLogger,
+  logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const projectDiscoveryFolder = posix.join(
@@ -49,14 +49,25 @@ export async function saveDiscoveryResult(
     blockNumber,
     results,
   )
+
+  // TODO: Should not be here - drop it and use implementation name once it's ready
+  // if somebody changes the name and decides to re-colorize
+  // then .flat folder will be incorrect
+  const remappedResults = remapNames(results, discoveryOutput)
+
   await saveDiscoveredJson(
     discoveryOutput,
     projectDiscoveryFolder,
     options.discoveryFilename,
   )
-  await saveFlatSources(projectDiscoveryFolder, results, logger, options)
+  await saveFlatSources(
+    projectDiscoveryFolder,
+    remappedResults,
+    logger,
+    options,
+  )
   if (options.saveSources) {
-    await saveSources(projectDiscoveryFolder, results, options)
+    await saveSources(projectDiscoveryFolder, remappedResults, options)
   }
   if (options.buildModels) {
     buildAndSaveModels(
@@ -121,7 +132,7 @@ async function saveSources(
 async function saveFlatSources(
   rootPath: string,
   results: Analysis[],
-  logger: DiscoveryLogger,
+  logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const flatSourcesFolder = options.flatSourcesFolder ?? '.flat'
@@ -191,4 +202,31 @@ function getImplementationFolder(i: number, sourcesCount: number): string {
     name = `/${name}`
   }
   return name
+}
+
+function remapNames(
+  results: Analysis[],
+  discoveryOutput: DiscoveryOutput,
+): Analysis[] {
+  return results.map((entry) => {
+    if (entry.type === 'EOA') {
+      return entry
+    }
+
+    const matchingEntry = discoveryOutput.entries.find(
+      (e) => e.address === entry.address,
+    )
+
+    if (!matchingEntry) {
+      return entry
+    }
+
+    const newName =
+      matchingEntry.name ?? matchingEntry.derivedName ?? entry.name
+
+    return {
+      ...entry,
+      name: newName,
+    }
+  })
 }

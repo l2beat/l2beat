@@ -1,9 +1,8 @@
-import type { Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
   type ConfigRegistry,
   type DiscoveryEngine,
-  DiscoveryLogger,
   type DiscoveryOutput,
   type TemplateService,
   flattenDiscoveredSources,
@@ -63,7 +62,7 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
-    const flatSources = flattenDiscoveredSources(result, DiscoveryLogger.SILENT)
+    const flatSources = flattenDiscoveredSources(result, Logger.SILENT)
 
     return { discovery, flatSources }
   }
