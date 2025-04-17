@@ -13,6 +13,14 @@ Internally it (probably) has a loop calling
        0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa
 
 The manager then sends the tokens after mapping the token addresses.
+
+When sending tokens back to Ethereum we'd have to:
+- look for burn event on Polygon and remember the block number & timestamp
+- check address aliasing
+- for VOLUME: look for ERC20 Bridge .ExitedERC20 event on Ethereum
+- for DURATION: listen for NewHeaderBlock events and check when the polygon block
+  was committed to Ethereum
+
  */
 
 const STATE_SENDER_ETHEREUM = '0x28e4f3a7f651294b9564800b2d01f35189a5bfbe'
