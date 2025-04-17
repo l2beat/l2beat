@@ -6,9 +6,9 @@ import {
   modelPermissions,
   saveDiscoveredJson,
 } from '@l2beat/discovery'
+import { sortEntry } from '@l2beat/discovery/dist/discovery/output/toDiscoveryOutput'
 import { boolean, command, flag, positional, string } from 'cmd-ts'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
-import { sortEntry } from '@l2beat/discovery/dist/discovery/output/toDiscoveryOutput'
 
 export const ModelPermissions = command({
   name: 'model-permissions',

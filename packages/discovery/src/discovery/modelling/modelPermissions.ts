@@ -10,7 +10,6 @@ import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
-import { buildAddressToNameMap } from './build'
 import { parseClingoFact } from './clingoparser'
 import { type ClingoFact, ClingoFactFile } from './factTypes'
 import { interpolateModelTemplate } from './interpolate'
@@ -18,7 +17,7 @@ import { runClingo } from './projectPageFacts'
 import {
   buildPermissionsModel,
   contractValuesForInterpolation,
-} from './relations2'
+} from './relations'
 
 export async function modelPermissions(
   project: string,
@@ -77,15 +76,6 @@ export function parseTransitivePermissionFact(
 export type ParsedTransitivePermissionFact = ReturnType<
   typeof parseTransitivePermissionFact
 >
-
-// interface TransitivePermissionVia {
-//   atom: 'tuple'
-//   params: [string, string, number]
-// }
-
-// type ParsedTransitivePermissionVia = ReturnType<
-//   typeof parseTransitivePermissionVia
-// >
 
 export function parseTransitivePermissionVia(
   via: ClingoFact,
@@ -259,4 +249,17 @@ function orUndefined<V, C>(
   value: V | undefined,
 ): C | undefined {
   return value === undefined ? undefined : caster(value)
+}
+
+export function buildAddressToNameMap(
+  chain: string,
+  entries: EntryParameters[],
+): Record<string, string> {
+  const result: Record<string, string> = {}
+  for (const entity of entries) {
+    const address = entity.address.toLowerCase()
+    const suffix = `_${chain}_${address}`
+    result[address] = (entity.name ?? 'eoa') + suffix
+  }
+  return result
 }
