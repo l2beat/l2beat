@@ -1,37 +1,49 @@
-import { command, positional, option } from 'cmd-ts'
-import { decodeZkGovProposal } from '../implementations/zkgovproposal'
-import { HttpUrl } from './types' // same helper used by the other commands
+import { command, option, positional, string } from 'cmd-ts'
+import { ZkGovProposalAnalyzer } from '../implementations/zkgovproposal/zkgovproposal'
+import { HttpUrl } from './types'
 
 export const ZkGovProposal = command({
   name: 'zkgovproposal',
-  description:
-    'Analyse a ZKsync Era governance proposal and (optionally) its L1 upgrade.',
+  description: 'Analyze a ZKsync Era governance proposal by ID.',
   args: {
-    /** mandatory */
-    proposalId: positional({ type: String, displayName: 'PROPOSAL_ID' }),
-
-    /** optional overrides so you don’t have to touch .env every time */
-    l2RpcUrl: option({
-      type: HttpUrl,
-      long: 'l2-rpc-url',
-      short: 'l2',
-      env: 'ZKSYNC2_RPC_URL',
-      description: 'ZKsync Era RPC endpoint',
-      defaultValue: () => undefined,
-      defaultValueIsSerializable: true,
+    proposalId: positional({
+      type: string,
+      displayName: 'GOV_PROPOSAL_ID',
+      description: 'The ID of the governance proposal to analyze',
     }),
-    l1RpcUrl: option({
+    zksyncRpcUrl: option({
       type: HttpUrl,
-      long: 'l1-rpc-url',
-      short: 'l1',
+      env: 'ZKSYNC2_RPC_URL',
+      long: 'zksync-rpc',
+      short: 'z',
+      defaultValue: () => 'https://mainnet.era.zksync.io',
+      defaultValueIsSerializable: true,
+      description: 'ZKsync Era RPC URL',
+    }),
+    ethereumRpcUrl: option({
+      type: HttpUrl,
       env: 'ETHEREUM_RPC_URL',
-      description: 'Ethereum (L1) RPC endpoint',
-      defaultValue: () => undefined,
+      long: 'ethereum-rpc',
+      short: 'e',
+      defaultValue: () => 'https://eth.drpc.org',
+      defaultValueIsSerializable: true,
+      description: 'Ethereum RPC URL',
+    }),
+    cacheDir: option({
+      type: string,
+      long: 'cache-dir',
+      short: 'c',
+      description: 'Directory to store cache files',
+      defaultValue: () => require('path').resolve(__dirname, '../../src/implementations/zkgovproposal/'),
       defaultValueIsSerializable: true,
     }),
   },
-
-  handler: async ({ proposalId, l2RpcUrl, l1RpcUrl }) => {
-    await decodeZkGovProposal(proposalId, { l2RpcUrl, l1RpcUrl })
+  handler: async (args) => {
+    const analyzer = new ZkGovProposalAnalyzer(
+      args.zksyncRpcUrl,
+      args.ethereumRpcUrl,
+      args.cacheDir,
+    )
+    await analyzer.analyze(args.proposalId)
   },
 })

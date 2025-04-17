@@ -70,6 +70,6 @@ export function getSubcommands() {
     TVL,
     TokenScreening,
     UI,
-    ZkGovProposal
+    ZkGovProposal,
   ]
 }
