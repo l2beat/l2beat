@@ -9,7 +9,8 @@ export const ZkGovProposal = command({
     proposalId: positional({
       type: string,
       displayName: 'proposalId',
-      description: 'The ID of the governance proposal to analyze (e.g. from tally)',
+      description:
+        'The ID of the governance proposal to analyze (e.g. from tally)',
     }),
     zksyncRpcUrl: option({
       type: HttpUrl,
@@ -34,7 +35,11 @@ export const ZkGovProposal = command({
       long: 'cache-dir',
       short: 'c',
       description: 'Directory to store cache files',
-      defaultValue: () => require('path').resolve(__dirname, '../../src/implementations/zkgovproposal/'),
+      defaultValue: () =>
+        require('path').resolve(
+          __dirname,
+          '../../src/implementations/zkgovproposal/',
+        ),
       defaultValueIsSerializable: true,
     }),
   },
