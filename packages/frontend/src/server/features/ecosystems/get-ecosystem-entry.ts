@@ -3,7 +3,7 @@ import path from 'path'
 import type {
   Milestone,
   Project,
-  ProjectEcosystemConfig,
+  ProjectColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
@@ -47,7 +47,7 @@ export interface EcosystemEntry {
     height: number
   }
   badges: BadgeWithParams[]
-  colors: ProjectEcosystemConfig['colors']
+  colors: ProjectColors
   projects: EcosystemProjectEntry[]
   projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
@@ -78,7 +78,7 @@ export async function getEcosystemEntry(
 ): Promise<EcosystemEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
-    select: ['ecosystemConfig', 'display'],
+    select: ['ecosystemConfig', 'display', 'colors'],
     optional: ['milestones'],
   })
 
@@ -128,7 +128,7 @@ export async function getEcosystemEntry(
 
   return {
     ...ecosystem,
-    colors: ecosystem.ecosystemConfig.colors,
+    colors: ecosystem.colors,
     logo: getEcosystemLogo(slug),
     badges: ecosystem.display.badges
       .map((badge) => getBadgeWithParams(badge, ecosystem))

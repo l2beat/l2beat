@@ -959,25 +959,6 @@
     },
     {
       "mode": "auto",
-      "id": "zklinknova-mswETH",
-      "priceId": "eigenpie-sweth",
-      "symbol": "mswETH",
-      "name": "mswETH",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/37167/large/mswETH.png?1713507053",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678",
-        "chain": "ethereum",
-        "escrowAddress": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
-        "decimals": 18,
-        "sinceTimestamp": 1713484800
-      },
-      "category": "ether",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "zklinknova-OP",
       "priceId": "optimism",
       "symbol": "OP",

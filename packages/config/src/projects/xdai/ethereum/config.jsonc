@@ -22,6 +22,42 @@
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "GnosisBridgeGovernanceMultisig"
   },
   "overrides": {
+    "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": {
+      // HashiManager
+      "proxyType": "Eternal Storage proxy",
+      "fields": {
+        "HASHI_IS_MANDATORY": {
+          "description": "If true, Hashi validation is mandatory",
+          "severity": "HIGH"
+        },
+        "targetAddress": {
+          "description": "Address of the target contract on GnosisChain",
+          "severity": "HIGH",
+          "returnType": "(GnosisAddress)"
+        },
+        "adapters": {
+          "description": "Array of the adapters on GnosisChain",
+          "severity": "HIGH",
+          "returnType": "(GnosisAddress[])"
+        },
+        "reporters": {
+          "description": "Array of the reports on GnosisChain",
+          "severity": "HIGH",
+          "returnType": "(GnosisAddress[])"
+        },
+        "threshold": {
+          "description": "Threshold of the adapters on GnosisChain",
+          "severity": "HIGH"
+        },
+        "AdaptersFromStorage": {
+          "handler": {
+            "type": "storage",
+            "slot": "0x21aa67cae9293b939ada82eb9133293e592da66aa847a5596523bd6d2bf2529b",
+            "returnType": "address"
+          }
+        }
+      }
+    },
     "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473": {
       // DaiForeignBridge
       "ignoreRelatives": [

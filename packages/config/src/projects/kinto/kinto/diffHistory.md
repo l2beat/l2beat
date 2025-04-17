@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x829ba9aab4cf209bfdb454b9f70af271365c954b
+
+# Diff at Wed, 16 Apr 2025 13:12:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 837019
+- current block number: 838575
+
+## Description
+
+`l2b scankintoam`:
+
+================ Compliance Report (Minimum 12d Delay) ================
+
+All checked values meet the minimum 12-day delay requirement.
+
+amazing
+
+waiting for the pick values tool to add asserts and disco alerts for kinto.
+
+## Watched changes
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoAppRegistry:
+-        950400
++        1036800
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoID:
+-        950400
++        1036800
++++ description: CURRENT target admin delay, the access control handler shows the pending delay. Delays all config changes/additions in the AccessManager that affect this target. Must be >= 11d.
++++ severity: HIGH
+      values.tadKintoWalletFactory:
+-        950400
++        1036800
+    }
+```
+
 Generated with discovered.json: 0xac939f6101127611115f3f1fbbe449a8fda73cfc
 
 # Diff at Tue, 15 Apr 2025 08:48:10 GMT:

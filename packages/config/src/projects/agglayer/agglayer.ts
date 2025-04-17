@@ -16,6 +16,10 @@ export const agglayer: BaseProject = {
     },
     badges: [BADGES.Stack.PolygonCDK, BADGES.Infra.AggLayer],
   },
+  colors: {
+    primary: '#6C00F6',
+    secondary: '#6C51F4',
+  },
   ecosystemConfig: {
     links: {
       buildOn: 'https://docs.agglayer.dev/',
@@ -23,10 +27,6 @@ export const agglayer: BaseProject = {
       governanceTopDelegates:
         'https://governance.polygon.technology/community-members/',
       governanceProposals: 'https://governance.polygon.technology/proposals/',
-    },
-    colors: {
-      primary: '#6C00F6',
-      secondary: '#6C51F4',
     },
     token: {
       tokenId: 'polygonzkevm-POL',
