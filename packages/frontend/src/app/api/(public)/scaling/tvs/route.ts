@@ -2,25 +2,37 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
-import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import {
+  TvsChartDataParams,
+  getTvsChart,
+} from '~/server/features/scaling/tvs/get-tvs-chart-data'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  const range = TvsChartRange.catch('30d').parse(searchParams.get('range'))
-  const response = await getCachedResponse(range)
+
+  const params = {
+    range: searchParams.get('range') ?? '30d',
+    filter: { type: searchParams.get('type') ?? 'layer2' },
+    excludeAssociatedTokens:
+      searchParams.get('excludeAssociatedTokens') === 'true',
+  }
+
+  const parsedParams = TvsChartDataParams.safeParse(params)
+  if (parsedParams.error) {
+    return NextResponse.json({
+      success: false,
+      error: parsedParams.error.errors,
+    })
+  }
+
+  const response = await getCachedResponse(parsedParams.data)
 
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (range: TvsChartRange) => {
-    const data = await getTvsChart({
-      range,
-      excludeAssociatedTokens: false,
-      filter: { type: 'layer2' },
-      previewRecategorisation: false,
-    })
+  async (params: TvsChartDataParams) => {
+    const data = await getTvsChart(params)
 
     const latestTvsData = data.at(-1)
 

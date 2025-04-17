@@ -2,25 +2,41 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
-import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import {
+  TvsChartDataParams,
+  getTvsChart,
+} from '~/server/features/scaling/tvs/get-tvs-chart-data'
 import { ps } from '~/server/projects'
 
 export async function GET(
   request: NextRequest,
   props: { params: Promise<{ slug: string }> },
 ) {
-  const params = await props.params
+  const { slug } = await props.params
   const searchParams = request.nextUrl.searchParams
-  const range = TvsChartRange.catch('30d').parse(searchParams.get('range'))
 
-  const response = await getCachedResponse(params.slug, range)
+  const params = {
+    range: searchParams.get('range') ?? '30d',
+    filter: { type: 'projects', projectIds: [slug] },
+    excludeAssociatedTokens:
+      searchParams.get('excludeAssociatedTokens') === 'true',
+  }
+  const parsedParams = TvsChartDataParams.safeParse(params)
+
+  if (parsedParams.error) {
+    return NextResponse.json({
+      success: false,
+      error: parsedParams.error.errors,
+    })
+  }
+
+  const response = await getCachedResponse(slug, parsedParams.data)
 
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (slug: string, range: TvsChartRange) => {
+  async (slug: string, params: TvsChartDataParams) => {
     const project = await ps.getProject({
       slug,
       where: ['tvsConfig', 'isScaling'],
@@ -33,12 +49,7 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const data = await getTvsChart({
-      range,
-      excludeAssociatedTokens: false,
-      filter: { type: 'projects', projectIds: [project.id] },
-      previewRecategorisation: false,
-    })
+    const data = await getTvsChart(params)
 
     const oldestTvsData = data.at(0)
     const latestTvsData = data.at(-1)
