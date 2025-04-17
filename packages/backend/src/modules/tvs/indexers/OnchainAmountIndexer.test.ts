@@ -1,18 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import type { TvsAmountRecord } from '@l2beat/database/dist/tvs/amount/entity'
 import type { BalanceProvider, TotalSupplyProvider } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type {
-  BalanceOfEscrowAmountFormula,
-  TotalSupplyAmountFormula,
-} from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { Configuration } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import { OnchainAmountIndexer } from './OnchainAmountIndexer'
 
@@ -26,29 +20,13 @@ describe(OnchainAmountIndexer.name, () => {
 
       const token1 = EthereumAddress.random()
       const token2 = EthereumAddress.random()
-      const token3 = EthereumAddress.random()
-      const token4 = EthereumAddress.random()
       const escrow1 = EthereumAddress.random()
       const escrow2 = EthereumAddress.random()
 
-      const mockEscrowConfig1 = createMockEscrowConfig(
-        'escrow-config-1',
-        token1,
-        escrow1,
-      )
-      const mockEscrowConfig2 = createMockEscrowConfig(
-        'escrow-config-2',
-        token2,
-        escrow2,
-      )
-      const mockTotalSupplyConfig1 = createMockTotalSupplyConfig(
-        'supply-config-1',
-        token3,
-      )
-      const mockTotalSupplyConfig2 = createMockTotalSupplyConfig(
-        'supply-config-2',
-        token4,
-      )
+      const mockEscrowConfig1 = escrow('escrow-config-1', token1, escrow1)
+      const mockEscrowConfig2 = escrow('escrow-config-2', token2, escrow2)
+      const mockTotalSupplyConfig1 = totalSupply('supply-config-1', token1)
+      const mockTotalSupplyConfig2 = totalSupply('supply-config-2', token2)
 
       const configs = [
         mockEscrowConfig1,
@@ -113,32 +91,16 @@ describe(OnchainAmountIndexer.name, () => {
       )
 
       expect(totalSupplyProvider.getTotalSupplies).toHaveBeenOnlyCalledWith(
-        [token3, token4],
+        [token1, token2],
         blockNumber,
         'ethereum',
       )
 
       const expectedRecords: TvsAmountRecord[] = [
-        {
-          configurationId: 'escrow-config-1',
-          timestamp: timestamp,
-          amount: BigInt(1000),
-        },
-        {
-          configurationId: 'escrow-config-2',
-          timestamp: timestamp,
-          amount: BigInt(2000),
-        },
-        {
-          configurationId: 'supply-config-1',
-          timestamp: timestamp,
-          amount: BigInt(5000),
-        },
-        {
-          configurationId: 'supply-config-2',
-          timestamp: timestamp,
-          amount: BigInt(6000),
-        },
+        record('escrow-config-1', timestamp, 1000),
+        record('escrow-config-2', timestamp, 2000),
+        record('supply-config-1', timestamp, 5000),
+        record('supply-config-2', timestamp, 6000),
       ]
 
       expect(tvsAmountRepository.insertMany).toHaveBeenOnlyCalledWith(
@@ -152,7 +114,7 @@ describe(OnchainAmountIndexer.name, () => {
       const to = 300
       const timestamp = UnixTime(400) // Greater than 'to'
 
-      const mockEscrowConfig = createMockEscrowConfig(
+      const mockEscrowConfig = escrow(
         'escrow-config-1',
         EthereumAddress.random(),
         EthereumAddress.random(),
@@ -186,7 +148,7 @@ describe(OnchainAmountIndexer.name, () => {
       const to = 300
       const timestamp = UnixTime(200)
 
-      const mockEscrowConfig = createMockEscrowConfig(
+      const mockEscrowConfig = escrow(
         'escrow-config-1',
         EthereumAddress.random(),
         EthereumAddress.random(),
@@ -228,13 +190,13 @@ describe(OnchainAmountIndexer.name, () => {
         deleteByConfigInTimeRange: mockFn().returnsOnce(3).returnsOnce(2),
       })
 
-      const mockEscrowConfig = createMockEscrowConfig(
+      const mockEscrowConfig = escrow(
         'escrow-config-1',
         EthereumAddress.random(),
         EthereumAddress.random(),
       )
 
-      const mockTotalSupplyConfig = createMockTotalSupplyConfig(
+      const mockTotalSupplyConfig = totalSupply(
         'supply-config-1',
         EthereumAddress.random(),
       )
@@ -286,43 +248,50 @@ describe(OnchainAmountIndexer.name, () => {
     })
   })
 
-  function createMockEscrowConfig(
-    id: string,
-    tokenAddress: EthereumAddress,
-    escrowAddress: EthereumAddress,
-  ): Configuration<BalanceOfEscrowAmountFormula> {
-    return mockObject<Configuration<BalanceOfEscrowAmountFormula>>({
-      id,
-      minHeight: 0,
-      maxHeight: null,
-      properties: mockObject<BalanceOfEscrowAmountFormula>({
-        type: 'balanceOfEscrow' as const,
-        address: tokenAddress,
-        escrowAddress: escrowAddress,
-        sinceTimestamp: 0,
-        untilTimestamp: undefined,
-      }),
-    })
-  }
-
-  function createMockTotalSupplyConfig(
-    id: string,
-    tokenAddress: EthereumAddress,
-  ): Configuration<TotalSupplyAmountFormula> {
-    return mockObject<Configuration<TotalSupplyAmountFormula>>({
-      id,
-      minHeight: 0,
-      maxHeight: null,
-      properties: mockObject<TotalSupplyAmountFormula>({
-        type: 'totalSupply' as const,
-        address: tokenAddress,
-        sinceTimestamp: 0,
-        untilTimestamp: undefined,
-      }),
-    })
-  }
-
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+function escrow(
+  id: string,
+  tokenAddress: EthereumAddress,
+  escrowAddress: EthereumAddress,
+) {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      type: 'balanceOfEscrow' as const,
+      address: tokenAddress,
+      escrowAddress: escrowAddress,
+      sinceTimestamp: 0,
+      chain: 'chain',
+      decimals: 18,
+    },
+  }
+}
+
+function totalSupply(id: string, tokenAddress: EthereumAddress) {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      type: 'totalSupply' as const,
+      address: tokenAddress,
+      sinceTimestamp: 0,
+      chain: 'chain',
+      decimals: 18,
+    },
+  }
+}
+
+function record(configurationId: string, timestamp: UnixTime, value: number) {
+  return {
+    configurationId,
+    timestamp: timestamp,
+    amount: BigInt(value),
+  }
+}
