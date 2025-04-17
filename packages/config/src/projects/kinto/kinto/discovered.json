@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 837019,
+  "blockNumber": 838575,
   "configHash": "0xe9c235354927057c52aee349ed5bc3cd5cb0a4534b01f7e4e5c37a68481b4eaa",
   "entries": [
     {
@@ -26,7 +26,7 @@
       "sinceBlock": 234135,
       "values": {
         "$immutable": true,
-        "clock": 1744634952,
+        "clock": 1744808717,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -64,7 +64,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1744634952,
+        "clock": 1744808717,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -280,7 +280,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "29943837108754660475",
+        "getDeposit": "29902281717232600475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -625,7 +625,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 47666,
+        "globalMessageCount": 48133,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1113,7 +1113,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 75628
+        "totalWallets": 75635
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory",
@@ -1587,9 +1587,9 @@
           ]
         },
         "securityCouncilPermission": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
-        "tadKintoAppRegistry": 950400,
-        "tadKintoID": 950400,
-        "tadKintoWalletFactory": 950400,
+        "tadKintoAppRegistry": 1036800,
+        "tadKintoID": 1036800,
+        "tadKintoWalletFactory": 1036800,
         "TargetAdminDelayUpdated": {
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
             "delay": 1036800,
@@ -1904,7 +1904,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1744633929,
+        "lastMonitoredAt": 1744805949,
         "name": "Kinto ID",
         "pendingSanctions": [
           {
@@ -3218,7 +3218,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 75297,
+        "totalSupply": 75304,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0xacC000818e5Bbd911D5d449aA81CB5cA24024739"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
