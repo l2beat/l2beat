@@ -12,10 +12,6 @@ import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import { CirculatingSupplyAmountIndexer } from './CirculatingSupplyAmountIndexer'
 
 describe(CirculatingSupplyAmountIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
-  })
-
   const mockConfig = {
     id: 'config-1',
     minHeight: 0,
@@ -338,5 +334,9 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         'l2b-circulating-supply',
       )
     })
+  })
+
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
   })
 })

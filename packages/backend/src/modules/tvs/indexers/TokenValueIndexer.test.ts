@@ -15,10 +15,6 @@ import type { DBStorage } from '../tools/DBStorage'
 import { TokenValueIndexer } from './TokenValueIndexer'
 
 describe(TokenValueIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
-  })
-
   describe(TokenValueIndexer.prototype.multiUpdate.name, () => {
     it('calculates token values and saves them to DB', async () => {
       const from = 100
@@ -355,4 +351,8 @@ describe(TokenValueIndexer.name, () => {
       maxHeight: null,
     }
   }
+
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
 })

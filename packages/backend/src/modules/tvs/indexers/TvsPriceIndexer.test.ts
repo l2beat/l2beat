@@ -12,21 +12,6 @@ import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import { TvsPriceIndexer } from './TvsPriceIndexer'
 
 describe(TvsPriceIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
-  })
-
-  const mockConfig = {
-    id: 'config-1',
-    minHeight: 0,
-    maxHeight: null,
-    properties: {
-      id: 'config-1',
-      priceId: 'ethereum',
-      sinceTimestamp: UnixTime(0),
-    },
-  }
-
   describe(TvsPriceIndexer.prototype.multiUpdate.name, () => {
     it('fetches prices and saves them to DB', async () => {
       const from = 100
@@ -34,24 +19,15 @@ describe(TvsPriceIndexer.name, () => {
       const adjustedTo = 250
 
       const configs = [
-        mockConfig,
-        {
-          id: 'config-2',
-          minHeight: 0,
-          maxHeight: null,
-          properties: {
-            id: 'config-1',
-            priceId: 'bitcoin',
-            sinceTimestamp: UnixTime(0),
-          },
-        },
+        config('config-1', 'ethereum'),
+        config('config-2', 'bitcoin'),
       ]
 
       const priceProvider = mockObject<PriceProvider>({
         getAdjustedTo: mockFn().returnsOnce(adjustedTo),
         getUsdPriceHistoryHourly: mockFn()
           .returnsOnce([{ timestamp: UnixTime(150), value: 1500 }])
-          .returnsOnce([{ timestamp: UnixTime(200), value: 20000 }]),
+          .returnsOnce([{ timestamp: UnixTime(200), value: 2000 }]),
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -94,18 +70,8 @@ describe(TvsPriceIndexer.name, () => {
       )
 
       const expectedRecords: TvsPriceRecord[] = [
-        {
-          configurationId: 'config-1',
-          timestamp: UnixTime(150),
-          priceUsd: 1500,
-          priceId: 'ethereum',
-        },
-        {
-          configurationId: 'config-2',
-          timestamp: UnixTime(200),
-          priceUsd: 20000,
-          priceId: 'bitcoin',
-        },
+        record('config-1', 'ethereum', 150),
+        record('config-2', 'bitcoin', 200),
       ]
 
       expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith(
@@ -140,7 +106,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum')],
         priceProvider,
         db: mockDatabase({ tvsPrice: tvsPriceRepository }),
         syncOptimizer,
@@ -148,16 +114,13 @@ describe(TvsPriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
       })
 
-      const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum'),
+      ])
       const safeHeight = await updateFn()
 
       const expectedRecords: TvsPriceRecord[] = [
-        {
-          configurationId: 'config-1',
-          timestamp: UnixTime(150),
-          priceUsd: 1500,
-          priceId: 'ethereum',
-        },
+        record('config-1', 'ethereum', 150),
       ]
 
       expect(tvsPriceRepository.insertMany).toHaveBeenOnlyCalledWith(
@@ -181,7 +144,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum')],
         priceProvider,
         db: mockDatabase({ tvsPrice: mockObject() }),
         syncOptimizer,
@@ -189,7 +152,9 @@ describe(TvsPriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
       })
 
-      const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum'),
+      ])
       const safeHeight = await updateFn()
 
       expect(priceProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
@@ -223,7 +188,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum')],
         priceProvider,
         db: mockDatabase({ tvsPrice: tvsPriceRepository }),
         syncOptimizer,
@@ -231,7 +196,9 @@ describe(TvsPriceIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
       })
 
-      const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum'),
+      ])
       const safeHeight = await updateFn()
 
       expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenOnlyCalledWith(
@@ -262,7 +229,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum')],
         priceProvider,
         db: mockDatabase({ tvsPrice: mockObject() }),
         syncOptimizer,
@@ -271,7 +238,7 @@ describe(TvsPriceIndexer.name, () => {
       })
 
       await expect(async () => {
-        await indexer.multiUpdate(from, to, [mockConfig])
+        await indexer.multiUpdate(from, to, [config('config-1', 'ethereum')])
       }).toBeRejectedWith('Network error')
     })
   })
@@ -284,7 +251,7 @@ describe(TvsPriceIndexer.name, () => {
 
       const indexer = new TvsPriceIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum')],
         priceProvider: mockObject<PriceProvider>({}),
         db: mockDatabase({ tvsPrice: tvsPriceRepository }),
         syncOptimizer: mockObject<SyncOptimizer>({}),
@@ -326,4 +293,30 @@ describe(TvsPriceIndexer.name, () => {
       )
     })
   })
+
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
 })
+
+function config(id: string, priceId: string) {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      id,
+      priceId,
+      sinceTimestamp: UnixTime(0),
+    },
+  }
+}
+
+function record(configurationId: string, priceId: string, timestamp: UnixTime) {
+  return {
+    configurationId,
+    timestamp: timestamp,
+    priceUsd: timestamp * 10,
+    priceId,
+  }
+}

@@ -17,10 +17,6 @@ import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import { OnchainAmountIndexer } from './OnchainAmountIndexer'
 
 describe(OnchainAmountIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
-  })
-
   describe(OnchainAmountIndexer.prototype.multiUpdate.name, () => {
     it('fetches balances and total supplies and saves them to DB', async () => {
       const from = 100
@@ -325,4 +321,8 @@ describe(OnchainAmountIndexer.name, () => {
       }),
     })
   }
+
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
 })

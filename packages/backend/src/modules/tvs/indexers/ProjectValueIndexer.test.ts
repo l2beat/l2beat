@@ -68,30 +68,6 @@ describe(ProjectValueIndexer.name, () => {
   ])
 
   describe(ProjectValueIndexer.prototype.multiUpdate.name, () => {
-    it('returns early if no timestamps to process', async () => {
-      const db = mockObject<Database>()
-
-      const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampsToSync: mockFn().returns([]),
-      })
-
-      const indexer = new ProjectValueIndexer({
-        db,
-        logger: Logger.SILENT,
-        configurations: [mockConfiguration],
-        syncOptimizer,
-        tokens: mockTokens,
-        maxTimestampsToProcessAtOnce: 10,
-        parents: [],
-        indexerService: mockObject<IndexerService>(),
-      })
-
-      const result = await (
-        await indexer.multiUpdate(100, 200, [mockConfiguration])
-      )()
-      expect(result).toEqual(200)
-    })
-
     it('processes timestamps and saves aggregated records', async () => {
       const timestamps = [1000, 2000]
 
@@ -157,6 +133,30 @@ describe(ProjectValueIndexer.name, () => {
       expect(projectRepository.upsertMany).toHaveBeenCalledTimes(1)
       // 4 records per timestamp (2 timestamps)
       expect(projectRepository.upsertMany.calls[0].args[0].length).toEqual(8)
+    })
+
+    it('returns early if no timestamps to process', async () => {
+      const db = mockObject<Database>()
+
+      const syncOptimizer = mockObject<SyncOptimizer>({
+        getTimestampsToSync: mockFn().returns([]),
+      })
+
+      const indexer = new ProjectValueIndexer({
+        db,
+        logger: Logger.SILENT,
+        configurations: [mockConfiguration],
+        syncOptimizer,
+        tokens: mockTokens,
+        maxTimestampsToProcessAtOnce: 10,
+        parents: [],
+        indexerService: mockObject<IndexerService>(),
+      })
+
+      const result = await (
+        await indexer.multiUpdate(100, 200, [mockConfiguration])
+      )()
+      expect(result).toEqual(200)
     })
   })
 

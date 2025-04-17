@@ -13,10 +13,6 @@ import type { BlockTimestampConfig } from '../types'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
 
 describe(BlockTimestampIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
-  })
-
   const mockConfig: Configuration<BlockTimestampConfig> = {
     id: 'config-1',
     minHeight: 0,
@@ -204,5 +200,9 @@ describe(BlockTimestampIndexer.name, () => {
           indexerService: mockObject<IndexerService>({}),
         }),
     ).toThrow('This indexer should take only one configuration')
+  })
+
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
   })
 })
