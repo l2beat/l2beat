@@ -1,5 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -18,7 +19,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../types'
-import { assert } from '@l2beat/shared-pure'
 
 export interface TvsChartDataPoint {
   timestamp: number

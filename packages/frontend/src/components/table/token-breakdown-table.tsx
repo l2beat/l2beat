@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import type { Table as TanstackTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import type { Row } from '@tanstack/react-table'
@@ -12,7 +13,6 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
-import { assert } from '@l2beat/shared-pure'
 
 interface Props<T> {
   table: TanstackTable<T>

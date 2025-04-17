@@ -1,5 +1,6 @@
 'use client'
 import type { Stage } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
 import { StageBadge } from '~/components/badge/stage-badge'
@@ -17,7 +18,6 @@ import type { TvsByStage } from '~/server/features/ecosystems/get-tvs-by-stage'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
-import { assert } from '@l2beat/shared-pure'
 
 const chartMeta = {
   stage0: {

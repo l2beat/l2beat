@@ -1,10 +1,10 @@
+import { assert } from '@l2beat/shared-pure'
 import type { SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../../types'
 import { FullGreenPizzaReference } from './full-green-pizza'
 import { FullRedPizzaReference } from './full-red-pizza'
 import { FullYellowPizzaReference } from './full-yellow-pizza'
-import { assert } from '@l2beat/shared-pure'
 
 function LowerLeftMaskPath(props: SvgIconProps) {
   return (

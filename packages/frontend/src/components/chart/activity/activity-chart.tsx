@@ -1,7 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { UnixTime, assert, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'

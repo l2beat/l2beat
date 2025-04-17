@@ -1,4 +1,5 @@
 'use client'
+import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
@@ -15,7 +16,6 @@ import type { TvsByTokenType } from '~/server/features/ecosystems/get-tvs-by-tok
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
-import { assert } from '@l2beat/shared-pure'
 
 const chartMeta = {
   ether: {
