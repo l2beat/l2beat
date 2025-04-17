@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x8f9687e7c43a3a4dc8c6b9d29458e53c5dd24b02
+
+# Diff at Thu, 17 Apr 2025 05:43:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@05487a5913fb2503a4cf31f93b3069296873aa4d block: 22281580
+- current block number: 22286698
+
+## Description
+
+config: name and move txfilterer to contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22281580 (main branch discovery), not current.
+
+```diff
+    contract TransactionFilterer (0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78) {
+    +++ description: None
+      name:
+-        ""
++        "TransactionFilterer"
+    }
+```
+
 Generated with discovered.json: 0x2bd1f58d02abda39b2ad7b377661eb75ea27d478
 
 # Diff at Wed, 16 Apr 2025 12:33:13 GMT:
