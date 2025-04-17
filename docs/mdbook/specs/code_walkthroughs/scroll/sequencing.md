@@ -3,6 +3,11 @@
 **Table of Contents**
 
 - [Sequencing](#sequencing)
+  - [Forced transactions](#forced-transactions)
+    - [High-level flow](#high-level-flow)
+  - [`EnforcedTxGateway`: the `sendTransaction` function](#enforcedtxgateway-the-sendtransaction-function)
+  - [`L1MessageQueueV2`: the `appendEnforcedTransaction` function](#l1messagequeuev2-the-appendenforcedtransaction-function)
+  - [`ScrollChain`: the `commitAndFinalizeBatch` function](#scrollchain-the-commitandfinalizebatch-function)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
