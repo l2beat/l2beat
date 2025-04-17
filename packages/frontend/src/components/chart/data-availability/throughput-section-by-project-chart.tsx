@@ -86,7 +86,6 @@ export function ThroughputSectionByProjectChart({
       </div>
       <DaThroughputByProjectChart
         data={data}
-        range={range}
         isLoading={isLoading}
         projectsToShow={projectsToShow}
         customColors={customColors}

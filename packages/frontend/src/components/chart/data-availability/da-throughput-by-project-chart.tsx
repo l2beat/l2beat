@@ -16,7 +16,6 @@ import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
-import type { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generate-colors'
 import { getDaDataParams } from './get-da-data-params'
@@ -24,7 +23,6 @@ import { getDaDataParams } from './get-da-data-params'
 interface Props {
   data: DaThroughputChartDataByChart | undefined
   isLoading: boolean
-  range: DaThroughputTimeRange
   projectsToShow: string[]
   customColors: Record<string, string>
 }
@@ -32,7 +30,6 @@ interface Props {
 export function DaThroughputByProjectChart({
   data,
   isLoading,
-  range,
   projectsToShow,
   customColors,
 }: Props) {
@@ -104,7 +101,7 @@ export function DaThroughputByProjectChart({
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
-        barCategoryGap={range === '30d' ? 4 : 0}
+        barCategoryGap={0}
       >
         <ChartLegend content={<ChartLegendContent />} />
         {projectsToShow?.map((project) => (
