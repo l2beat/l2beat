@@ -12,6 +12,7 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
+import { assert } from '@l2beat/shared-pure'
 
 interface Props<T> {
   table: TanstackTable<T>
@@ -24,7 +25,8 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
     return <TableEmptyState />
   }
 
-  const headers = table.getHeaderGroups()[0]!
+  const headers = table.getHeaderGroups()[0]
+  assert(headers, 'No table headers')
 
   return (
     <Table>

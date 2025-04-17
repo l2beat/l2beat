@@ -78,10 +78,10 @@ export function BasicDaTable<T extends BasicEntry>({
   assert(maxDepth <= 1, 'Only 1 level of headers is supported')
 
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
-  const actualHeader = maxDepth === 1 ? headerGroups[1]! : headerGroups[0]!
+  const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
 
   const columnLength =
-    actualHeader.headers.length +
+    (actualHeader ? actualHeader.headers.length : 0) +
     (groupedHeader
       ? groupedHeader.headers.filter((h) => !h.isPlaceholder).length
       : 0)
@@ -125,7 +125,7 @@ export function BasicDaTable<T extends BasicEntry>({
             </TableHeaderRow>
           )}
         <TableHeaderRow>
-          {actualHeader.headers.map((header) => {
+          {actualHeader?.headers.map((header) => {
             const groupParams = getBasicTableGroupParams(header.column)
             return (
               <React.Fragment key={`${actualHeader.id}-${header.id}`}>

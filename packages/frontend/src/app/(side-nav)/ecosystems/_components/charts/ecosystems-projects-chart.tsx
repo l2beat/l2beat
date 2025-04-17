@@ -37,7 +37,8 @@ export function EcosystemsProjectsChart({ data, className }: Props) {
       },
     } satisfies ChartMeta
   }, [])
-  const range = getChartRange(data.chart)!
+  const range = getChartRange(data.chart)
+  assert(range, 'No chart range')
   const total = data.chart.at(-1)?.projectCount
   assert(total !== undefined, 'No data')
 
@@ -125,8 +126,11 @@ export function CustomTooltip({
         </div>
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

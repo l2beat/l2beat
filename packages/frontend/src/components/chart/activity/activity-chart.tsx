@@ -1,7 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { UnixTime, assert, assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -181,8 +181,15 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = meta[entry.name!]!
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.type === 'none'
+            )
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}
@@ -215,8 +222,11 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mb-1" />
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

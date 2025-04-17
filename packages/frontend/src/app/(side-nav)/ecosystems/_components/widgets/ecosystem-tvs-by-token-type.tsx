@@ -15,6 +15,7 @@ import type { TvsByTokenType } from '~/server/features/ecosystems/get-tvs-by-tok
 import { formatPercent } from '~/utils/calculate-percentage-change'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
+import { assert } from '@l2beat/shared-pure'
 
 const chartMeta = {
   ether: {
@@ -172,8 +173,10 @@ export function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-36 flex-col gap-1">
         {payload.map((entry) => {
-          if (entry.value === undefined) return null
-          const config = meta[entry.name!]!
+          if (entry.name === undefined || entry.value === undefined) return null
+          const config = meta[entry.name]
+          assert(config, 'No config')
+
           return (
             <div
               key={entry.name}

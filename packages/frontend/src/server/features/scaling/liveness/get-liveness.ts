@@ -197,45 +197,49 @@ function getMockLivenessData(): LivenessResponse {
 
   return {
     ...projects,
-    linea: {
-      ...projects.linea!,
-      batchSubmissions: {
-        '30d': generateDataPoint(),
-        '90d': generateDataPoint(),
-        max: generateDataPoint(),
-        syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - 2 * UnixTime.HOUR,
-          'hour',
-        ),
+    ...(projects.linea && {
+      linea: {
+        ...projects.linea,
+        batchSubmissions: {
+          '30d': generateDataPoint(),
+          '90d': generateDataPoint(),
+          max: generateDataPoint(),
+          syncedUntil: UnixTime.toStartOf(
+            UnixTime.now() - 2 * UnixTime.HOUR,
+            'hour',
+          ),
+        },
+        proofSubmissions: {
+          '30d': generateDataPoint(),
+          '90d': generateDataPoint(),
+          max: generateDataPoint(),
+          syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
+        },
       },
-      proofSubmissions: {
-        '30d': generateDataPoint(),
-        '90d': generateDataPoint(),
-        max: generateDataPoint(),
-        syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
+    }),
+    ...(projects.dydx && {
+      dydx: {
+        ...projects.dydx,
+        stateUpdates: {
+          '30d': generateDataPoint(),
+          '90d': generateDataPoint(),
+          max: generateDataPoint(),
+          syncedUntil: UnixTime.toStartOf(
+            UnixTime.now() - 2 * UnixTime.HOUR,
+            'hour',
+          ),
+        },
+        proofSubmissions: {
+          '30d': generateDataPoint(),
+          '90d': generateDataPoint(),
+          max: generateDataPoint(),
+          syncedUntil: UnixTime.toStartOf(
+            UnixTime.now() - 4 * UnixTime.HOUR,
+            'hour',
+          ),
+        },
       },
-    },
-    dydx: {
-      ...projects.dydx!,
-      stateUpdates: {
-        '30d': generateDataPoint(),
-        '90d': generateDataPoint(),
-        max: generateDataPoint(),
-        syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - 2 * UnixTime.HOUR,
-          'hour',
-        ),
-      },
-      proofSubmissions: {
-        '30d': generateDataPoint(),
-        '90d': generateDataPoint(),
-        max: generateDataPoint(),
-        syncedUntil: UnixTime.toStartOf(
-          UnixTime.now() - 4 * UnixTime.HOUR,
-          'hour',
-        ),
-      },
-    },
+    }),
   }
 }
 

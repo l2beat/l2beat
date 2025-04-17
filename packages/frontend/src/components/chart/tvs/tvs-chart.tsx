@@ -18,6 +18,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../types'
+import { assert } from '@l2beat/shared-pure'
 
 export interface TvsChartDataPoint {
   timestamp: number
@@ -87,8 +88,11 @@ export function TvsCustomTooltip({
         <div>{formatTimestamp(label, { longMonthName: true })}</div>
         <div>
           {payload.map((entry) => {
-            if (entry.value === undefined) return null
-            const config = meta[entry.name!]!
+            if (entry.name === undefined || entry.value === undefined)
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
+
             return (
               <div
                 key={entry.name}

@@ -151,21 +151,23 @@ function NavCollapsibleItem({
         </CollapsibleTrigger>
       ) : (
         <div className="group flex items-center p-1.5" data-active={isActive}>
-          <Link
-            href={group.links[0]!.href}
-            className="flex items-center gap-2"
-            data-active={isActive}
-          >
-            <div>{group.icon}</div>
-            <span
-              className={cn(
-                'text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
-                isActive && 'text-brand',
-              )}
+          {group.links[0]?.href && (
+            <Link
+              href={group.links[0].href}
+              className="flex items-center gap-2"
+              data-active={isActive}
             >
-              {group.title}
-            </span>
-          </Link>
+              <div>{group.icon}</div>
+              <span
+                className={cn(
+                  'text-base font-medium tracking-tight text-primary transition-colors duration-300 ',
+                  isActive && 'text-brand',
+                )}
+              >
+                {group.title}
+              </span>
+            </Link>
+          )}
           <CollapsibleTrigger className="group size-6">
             <ChevronIcon
               className={cn(
