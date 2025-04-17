@@ -1,3 +1,301 @@
+Generated with discovered.json: 0x1cf5e34c63735e0fe75696066fa5a80a7342dcd8
+
+# Diff at Thu, 17 Apr 2025 11:00:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ec33c227dfa86656ed24cde03ee45faaa2dc8cd0 block: 22266722
+- current block number: 22288276
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: None
+      values.delegatorsReward.3:
+-        "137524527461779631638"
++        "123397913578441224841"
+      values.delegatorsReward.2:
+-        "31505383038278874498"
++        "218936315138744130106"
+      values.delegatorsReward.1:
+-        "31034346349265424252"
++        "50777457966269063059"
+      values.delegatorsReward.0:
+-        "311850291839562954995"
++        "16104893532627932222"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22266722 (main branch discovery), not current.
+
+```diff
+    contract WithdrawalManager (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xda0990aeeb22bcf3c867d4f398d00bd7d2f15aef3add8c60800711185b34a09c","0x7ff7f5fd1ef5fec15bf32c69a0cdd350dc14edf95e739c32035dddde5009e3c0"]
+    }
+```
+
+```diff
+    contract StakeManager (0x65218A41Fb92637254B4f8c97448d3dF343A3064) {
+    +++ description: None
+      unverified:
+-        true
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x80Cc222EA02F4334F67e9E55E7412fed62599004","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.description:
++        "can replace all validators."
+      values.auctionPeriod:
++        0
+      values.CHECKPOINT_REWARD:
++        "100000000000000000000"
+      values.checkPointBlockInterval:
++        1024
+      values.checkpointRewardDelta:
++        0
+      values.currentValidatorSetSize:
++        12
+      values.delegationEnabled:
++        true
+      values.delegatorsReward:
++        ["311850291839562954995","31034346349265424252","31505383038278874498","137524527461779631638"]
+      values.dynasty:
++        1
+      values.eventsHub:
++        "0x12185669Dac70749f717247971E0B8819b2e472e"
+      values.extensionCode:
++        "0x17174796E0eF24330aed565c87Ba5e85431DE19e"
+      values.getRegistry:
++        "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB"
+      values.governance:
++        "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06"
+      values.isOwner:
++        false
+      values.locked:
++        false
+      values.logger:
++        "0x539964b3d225194717fb896D26c8b3E635b8A1aE"
+      values.maxRewardedCheckpoints:
++        0
+      values.minDeposit:
++        "1000000000000000000"
+      values.minHeimdallFee:
++        "1000000000000000000"
+      values.NFTContract:
++        "0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0"
+      values.ownerOf:
++        ["0xF41a8315531d225AcC889C207aF7638adDCcf948","0xF0Bf9BA7B71646d73a393d805CaF0c7e67C06a0F","0xb5f7d2A522cB918C3364529b65440a83fab7407C","0xf6aA8B10bAA3C228fC94F3344b4a4A3BBf152CCd"]
+      values.prevBlockInterval:
++        0
+      values.proposerBonus:
++        10
+      values.registry:
++        "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB"
+      values.replacementCoolDown:
++        13608
+      values.rewardDecreasePerCheckpoint:
++        0
+      values.rootChain:
++        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
+      values.signerUpdateLimit:
++        100
+      values.token:
++        "0x9813037ee2218799597d83D4a5B6F3b6778218d9"
+      values.totalRewards:
++        0
+      values.validatorShareFactory:
++        "0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD"
+      values.validatorThreshold:
++        15
+      values.WITHDRAWAL_DELAY:
++        1
+      values.withdrawalDelay:
++        1
+      template:
++        "polygonposbridge/StakeManager_shibarium"
+      sourceHashes:
++        ["0x315e4278520bf097047cc2be4371ac60125bba1043fa4e97e7054988fe3ba503","0x0e16b120e42fc8b8c6ed46c538b263aa895b463415254eba82cc25e7d104a136"]
+    }
+```
+
+```diff
+    contract undefined (0x80Cc222EA02F4334F67e9E55E7412fed62599004) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x98C831cFB18852f7deB3E3a970e907475b49730f"}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x65218A41Fb92637254B4f8c97448d3dF343A3064"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665"}
+      receivedPermissions.9.from:
+-        "0x98C831cFB18852f7deB3E3a970e907475b49730f"
++        "0x12185669Dac70749f717247971E0B8819b2e472e"
+      receivedPermissions.8.from:
+-        "0x65218A41Fb92637254B4f8c97448d3dF343A3064"
++        "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
+      receivedPermissions.7.from:
+-        "0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665"
++        "0xc3897302aB4B42931cB4857050Fa60f53B775870"
+      receivedPermissions.6.from:
+-        "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa"
++        "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
+      receivedPermissions.5.from:
+-        "0xc3897302aB4B42931cB4857050Fa60f53B775870"
++        "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x0057bed57066F61c64DACB395B38c6E1792e03B8"
++        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
+      receivedPermissions.4.description:
++        "can delete arbitrary checkpoints."
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82"
++        "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce"
+      receivedPermissions.3.description:
++        "can update how much of the slashed funds go to the proposer and reporter."
+      receivedPermissions.2.from:
+-        "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9"
++        "0x65218A41Fb92637254B4f8c97448d3dF343A3064"
+      receivedPermissions.2.description:
+-        "can delete arbitrary checkpoints."
++        "can replace all validators."
+      receivedPermissions.1.from:
+-        "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce"
++        "0x17174796E0eF24330aed565c87Ba5e85431DE19e"
+      receivedPermissions.1.description:
+-        "can update how much of the slashed funds go to the proposer and reporter."
++        "can update the validator whitelist."
+    }
+```
+
+```diff
+    contract ERC721Predicate (0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3) {
+    +++ description: None
+      unverified:
+-        true
+      values.CHAINID:
++        109
+      values.networkId:
++        "0x6d"
+      sourceHashes:
++        ["0xd28d2832fa5e35e810073b99fcec18faf119bfc95223abc05bfb353a1f90dfd3"]
+    }
+```
+
+```diff
+    contract ERC20Predicate (0xdaF14950155DF895E9D0fd2521D05477d26F462c) {
+    +++ description: None
+      unverified:
+-        true
+      values.CHAINID:
++        109
+      values.networkId:
++        "0x6d"
+      sourceHashes:
++        ["0xbcd7eec85265625afbc2eb9dda85d5f9134b5a206a965d8f040be01a92d12299"]
+    }
+```
+
+```diff
+    contract ValidatorShare (0xe99f1001c8afD34AcF0CEd6aD33137DeE8D81dE6) {
+    +++ description: None
+      unverified:
+-        true
+      values.activeAmount:
++        0
+      values.commissionRate_deprecated:
++        0
+      values.delegation:
++        false
+      values.eventsHub:
++        "0x0000000000000000000000000000000000000000"
+      values.exchangeRate:
++        100
+      values.isOwner:
++        false
+      values.lastCommissionUpdate_deprecated:
++        0
+      values.locked:
++        false
+      values.minAmount:
++        0
+      values.owner:
++        "0x80Cc222EA02F4334F67e9E55E7412fed62599004"
+      values.rewardPerShare:
++        0
+      values.stakeManager:
++        "0x0000000000000000000000000000000000000000"
+      values.stakingLogger:
++        "0x0000000000000000000000000000000000000000"
+      values.totalStake_deprecated:
++        0
+      values.totalSupply:
++        0
+      values.validatorId:
++        0
+      values.validatorRewards_deprecated:
++        0
+      values.withdrawExchangeRate:
++        100
+      values.withdrawPool:
++        0
+      values.withdrawShares:
++        0
+      sourceHashes:
++        ["0x53808537620653e3fb39027255cc047daae4c6cfb674c4b90c4e18831b27bcbb"]
+      errors:
++        {"getRewardPerShare":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EventsHub (0x12185669Dac70749f717247971E0B8819b2e472e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeManagerExtension (0x17174796E0eF24330aed565c87Ba5e85431DE19e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingNFT (0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorRegistry (0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShareFactory (0x6113E0FDBe8EAE2e95F4a35cB0a6530c518881fD)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd0d871211e1987eadd1af7cec3f1aeb8bcb9654d
 
 # Diff at Mon, 14 Apr 2025 10:46:54 GMT:
