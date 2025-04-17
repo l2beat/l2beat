@@ -316,15 +316,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                  valueForProject:
-                    '$' + formatNumberWithCommas(t.valueForProject),
-                }
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                  valueForSummary:
-                    '$' + formatNumberWithCommas(t.valueForSummary),
-                }
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
                 : {}),
             }
           }),
@@ -342,15 +342,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                  valueForProject:
-                    '$' + formatNumberWithCommas(t.valueForProject),
-                }
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                  valueForSummary:
-                    '$' + formatNumberWithCommas(t.valueForSummary),
-                }
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
                 : {}),
             }
           }),
@@ -368,15 +368,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                  valueForProject:
-                    '$' + formatNumberWithCommas(t.valueForProject),
-                }
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                  valueForSummary:
-                    '$' + formatNumberWithCommas(t.valueForSummary),
-                }
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
                 : {}),
             }
           }),
