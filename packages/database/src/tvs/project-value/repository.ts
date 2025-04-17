@@ -67,6 +67,9 @@ export class ProjectValueRepository extends BaseRepository {
     type: ProjectValueType,
     range: [number | null, number],
   ): Promise<ProjectValueRecord[]> {
+    if (projects.length === 0) {
+      return []
+    }
     const [from, to] = range
     let query = this.db
       .selectFrom('ProjectValue')
@@ -84,9 +87,7 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLastestValues(
-    type: ProjectValueType,
-  ): Promise<ProjectValueRecord[]> {
+  async getLatestValues(type: ProjectValueType): Promise<ProjectValueRecord[]> {
     const subQuery = this.db
       .selectFrom('ProjectValue')
       .select(['project', this.db.fn.max('timestamp').as('maxTimestamp')])
