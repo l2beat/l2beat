@@ -16,13 +16,13 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
+import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getBridgeTechnologySection } from '~/utils/project/technology/get-technology-section'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get-7d-tvs-breakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
-import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 
 export interface BridgesProjectEntry {
   name: string
