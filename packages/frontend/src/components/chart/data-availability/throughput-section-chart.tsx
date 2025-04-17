@@ -10,12 +10,14 @@ import { ThroughputSectionByProjectChart } from './throughput-section-by-project
 interface Props {
   daLayer: ProjectId
   configuredThroughputs: DaLayerThroughput[]
+  customColors: Record<string, string>
   milestones: Milestone[]
 }
 
 export function ThroughputSectionChart({
   daLayer,
   configuredThroughputs,
+  customColors,
   milestones,
 }: Props) {
   const [type, setType] = useState<'combined' | 'by-project'>('combined')
@@ -55,6 +57,7 @@ export function ThroughputSectionChart({
           setRange={setRange}
           selectedProjects={selectedProjects}
           setSelectedProjects={setSelectedProjects}
+          customColors={customColors}
         />
       )}
     </div>

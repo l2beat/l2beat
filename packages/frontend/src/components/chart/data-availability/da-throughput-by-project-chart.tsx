@@ -26,6 +26,7 @@ interface Props {
   isLoading: boolean
   range: DaThroughputTimeRange
   projectsToShow: string[]
+  customColors: Record<string, string>
 }
 
 export function DaThroughputByProjectChart({
@@ -33,6 +34,7 @@ export function DaThroughputByProjectChart({
   isLoading,
   range,
   projectsToShow,
+  customColors,
 }: Props) {
   const colors = useMemo(
     () => generateAccessibleColors(projectsToShow.length),
@@ -57,19 +59,22 @@ export function DaThroughputByProjectChart({
   const { denominator, unit } = getDaDataParams(max)
 
   const chartMeta = useMemo(() => {
-    return projectsToShow?.reduce((acc, project, index) => {
+    let colorIndex = 0
+    return projectsToShow?.reduce((acc, project) => {
       if (!acc[project]) {
         acc[project] = {
           label: project,
           color:
-            project === 'Others' ? 'hsl(var(--secondary))' : colors[index]!,
+            project === 'Others'
+              ? 'hsl(var(--secondary))'
+              : (customColors[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
         }
       }
 
       return acc
     }, {} as ChartMeta)
-  }, [colors, projectsToShow])
+  }, [colors, customColors, projectsToShow])
 
   const chartData = useMemo(() => {
     if (projectsToShow.length === 0) {

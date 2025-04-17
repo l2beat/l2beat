@@ -26,6 +26,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
       }
     | undefined
   totalPosted: number
+  customColors: Record<string, string>
   syncStatus: {
     warning: string | undefined
     isSynced: boolean
@@ -40,6 +41,7 @@ export function ThroughputSection({
   pastDayAvgThroughputPerSecond,
   largestPoster,
   totalPosted,
+  customColors,
   syncStatus,
   milestones,
   ...sectionProps
@@ -63,6 +65,7 @@ export function ThroughputSection({
       <ThroughputSectionChart
         daLayer={projectId}
         configuredThroughputs={throughput}
+        customColors={customColors}
         milestones={milestones}
       />
       <HorizontalSeparator className="my-4" />

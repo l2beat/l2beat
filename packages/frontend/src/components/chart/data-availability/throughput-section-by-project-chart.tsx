@@ -18,6 +18,7 @@ interface Props {
   setRange: (range: DaThroughputTimeRange) => void
   selectedProjects: string[] | undefined
   setSelectedProjects: (projects: string[] | undefined) => void
+  customColors: Record<string, string>
 }
 
 export function ThroughputSectionByProjectChart({
@@ -26,6 +27,7 @@ export function ThroughputSectionByProjectChart({
   setRange,
   selectedProjects,
   setSelectedProjects,
+  customColors,
 }: Props) {
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
     range,
@@ -87,6 +89,7 @@ export function ThroughputSectionByProjectChart({
         range={range}
         isLoading={isLoading}
         projectsToShow={projectsToShow}
+        customColors={customColors}
       />
     </div>
   )
