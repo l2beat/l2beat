@@ -12,20 +12,6 @@ import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
 import { CirculatingSupplyAmountIndexer } from './CirculatingSupplyAmountIndexer'
 
 describe(CirculatingSupplyAmountIndexer.name, () => {
-  const mockConfig = {
-    id: 'config-1',
-    minHeight: 0,
-    maxHeight: null,
-    properties: {
-      type: 'circulatingSupply' as const,
-      sinceTimestamp: 0,
-      apiId: 'ethereum',
-      decimals: 18,
-      address: EthereumAddress.ZERO,
-      chain: 'ethereum',
-    },
-  }
-
   describe(CirculatingSupplyAmountIndexer.prototype.multiUpdate.name, () => {
     it('fetches circulating supplies and saves them to DB', async () => {
       const from = 100
@@ -33,20 +19,8 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const adjustedTo = 250
 
       const configs = [
-        mockConfig,
-        {
-          id: 'config-2',
-          minHeight: 0,
-          maxHeight: null,
-          properties: {
-            type: 'circulatingSupply' as const,
-            sinceTimestamp: 0,
-            apiId: 'bitcoin',
-            decimals: 8,
-            address: EthereumAddress.ZERO,
-            chain: 'bitcoin',
-          },
-        },
+        config('config-1', 'ethereum', 18),
+        config('config-2', 'bitcoin', 8),
       ]
 
       const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
@@ -140,7 +114,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum', 18)],
         circulatingSupplyProvider,
         db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer,
@@ -148,7 +122,9 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
       })
 
-      const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum', 18),
+      ])
       const safeHeight = await updateFn()
 
       const expectedRecords: TvsAmountRecord[] = [
@@ -180,7 +156,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum', 18)],
         circulatingSupplyProvider,
         db: mockDatabase({ tvsAmount: mockObject() }),
         syncOptimizer,
@@ -188,7 +164,9 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
       })
 
-      const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum', 18),
+      ])
       const safeHeight = await updateFn()
 
       expect(circulatingSupplyProvider.getAdjustedTo).toHaveBeenOnlyCalledWith(
@@ -225,7 +203,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum', 18)],
         circulatingSupplyProvider,
         db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer,
@@ -233,7 +211,9 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
       })
 
-      const updateFn = await indexer.multiUpdate(from, to, [mockConfig])
+      const updateFn = await indexer.multiUpdate(from, to, [
+        config('config-1', 'ethereum', 18),
+      ])
       const safeHeight = await updateFn()
 
       expect(
@@ -263,7 +243,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum', 18)],
         circulatingSupplyProvider,
         db: mockDatabase({ tvsAmount: mockObject() }),
         syncOptimizer,
@@ -272,7 +252,9 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       })
 
       await expect(async () => {
-        await indexer.multiUpdate(from, to, [mockConfig])
+        await indexer.multiUpdate(from, to, [
+          config('config-1', 'ethereum', 18),
+        ])
       }).toBeRejectedWith('Network error')
     })
   })
@@ -285,7 +267,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
       const indexer = new CirculatingSupplyAmountIndexer({
         logger: Logger.SILENT,
-        configurations: [mockConfig],
+        configurations: [config('config-1', 'ethereum', 18)],
         circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
         db: mockDatabase({ tvsAmount: tvsAmountRepository }),
         syncOptimizer: mockObject<SyncOptimizer>({}),
@@ -340,3 +322,19 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+function config(id: string, apiId: string, decimals: number) {
+  return {
+    id,
+    minHeight: 0,
+    maxHeight: null,
+    properties: {
+      type: 'circulatingSupply' as const,
+      sinceTimestamp: 0,
+      apiId,
+      decimals,
+      address: EthereumAddress.ZERO,
+      chain: 'chain',
+    },
+  }
+}
