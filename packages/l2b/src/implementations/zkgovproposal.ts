@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import fs from 'fs'
-import path from 'path'
+import { ethers } from 'ethers'
 import chalk from 'chalk'
 import dotenv from 'dotenv'
-import { ethers } from 'ethers'
+import fs from 'fs'
+import path from 'path'
 
 // Load environment variables
 dotenv.config()
@@ -1632,3 +1632,18 @@ main().catch((error) => {
   console.error(error)
   process.exit(1)
 })
+
+export async function decodeZkGovProposal(
+  proposalId: string,
+  {
+    l2RpcUrl = process.env.ZKSYNC2_RPC_URL ?? '',
+    l1RpcUrl = process.env.ETHEREUM_RPC_URL ?? '',
+  }: { l2RpcUrl?: string; l1RpcUrl?: string } = {},
+): Promise<void> {
+  // allow the caller to override the RPC URLs
+  if (l2RpcUrl) process.env.ZKSYNC2_RPC_URL = l2RpcUrl
+  if (l1RpcUrl) process.env.ETHEREUM_RPC_URL = l1RpcUrl
+
+  // ‹main› is the original async entry‑point from your script
+  await main(proposalId) // ← just pass the ID
+}
