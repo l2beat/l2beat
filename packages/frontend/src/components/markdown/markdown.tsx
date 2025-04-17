@@ -1,6 +1,5 @@
 'use client'
 import MarkdownIt from 'markdown-it'
-import React from 'react'
 
 import { cn } from '~/utils/cn'
 import {

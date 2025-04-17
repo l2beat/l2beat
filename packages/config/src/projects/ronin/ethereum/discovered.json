@@ -1,7 +1,7 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 21378535,
+  "blockNumber": 22281691,
   "configHash": "0xf1f40f39010a1842686c397bd6ba61844e4b6acc17940eb69e9da87aa4efec47",
   "entries": [
     {
@@ -263,14 +263,14 @@
           "0x18471CC6d2d427077CAA7896D7956cD066CAbe49",
           "0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9",
           "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031",
-          "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b"
+          "0xCfD1C43CdB2bD66c7B66a7aBe66Fb6BE497d7f86"
         ],
         "$threshold": 3,
         "domainSeparator": "0x260019f7a2799f89a2c91d123a9a78a94ce81ef7e965cb34ba0364d12a9526d4",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -382,7 +382,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 99293,
+        "depositCount": 111234,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
         "getHighTierVoteWeightThreshold": [90, 100],
@@ -452,11 +452,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xA441f1399C8c023798586fbbBcF35f27279638a1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -497,7 +492,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2728790155190780839876210"
+        "totalSupply": "2766850588815060824662844"
       },
       "derivedName": "WETH9"
     },
@@ -518,6 +513,11 @@
     },
     {
       "address": "0xcb8225AA9D1029Af2E8cA537027E26bbe3056353",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xCfD1C43CdB2bD66c7B66a7aBe66Fb6BE497d7f86",
       "type": "EOA",
       "proxyType": "EOA"
     },

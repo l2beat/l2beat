@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xb072eb4fc45a36d20a9b0c80c979a3aaecaa067d
+
+# Diff at Wed, 16 Apr 2025 13:11:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 21778563
+- current block number: 22281707
+
+## Description
+
+Upgrade integrating optional Hashi validation (see gnosis omni bridge). ms signer changes.
+
+## Watched changes
+
+```diff
+    contract GnosisBridgeGovernanceMultisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.10:
+-        "0xd945325557f1FB4374fBf10Ae86D385632Df870A"
++        "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
+      values.$members.9:
+-        "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
++        "0xB646B8b5Fe6cBc7770578B7679208337ef747ae4"
+    }
+```
+
+```diff
+    contract SDaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc9e17870eb8594989459b35217d292000a746beaf237f82e703d3de4b55cc4d2"
++        "0x07db9068db8cb815b37ab00e7a0098b6200657a2c4126fc4c87af49468891d99"
+      values.$implementation:
+-        "0x166124b75c798Cedf1B43655E9B5284eBd5203DB"
++        "0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"
+      values.$pastUpgrades.8:
++        ["2020-03-31T11:16:05.000Z","0x9f50cee64b4e729b7bd61630ed174ea3c7e47e3db1403d9828a9736b2ad7ce79",["0xd40355B17643Bc26554c9A9BBC95b5CAbd92C2CD"]]
+      values.$pastUpgrades.7.2.0:
+-        "0xd40355B17643Bc26554c9A9BBC95b5CAbd92C2CD"
++        "0x0D3726e5a9f37234D6B55216fC971D30F150a60F"
+      values.$pastUpgrades.7.1:
+-        "0x9f50cee64b4e729b7bd61630ed174ea3c7e47e3db1403d9828a9736b2ad7ce79"
++        "2018-12-19T12:49:42.000Z"
+      values.$pastUpgrades.7.0:
+-        "2020-03-31T11:16:05.000Z"
++        "0x29fdf4418b3ab5b5380e7ad0259278b1bbab18e121438c9c9d69ac6091f44a00"
+      values.$pastUpgrades.6.2:
+-        ["0x0D3726e5a9f37234D6B55216fC971D30F150a60F"]
++        "2018-10-08T19:50:23.000Z"
+      values.$pastUpgrades.6.1:
+-        "2018-12-19T12:49:42.000Z"
++        "0x01d8eeea7ea146970fb4fbe8991d6118f8f41a779b06c69041d32362575f1eda"
+      values.$pastUpgrades.6.0:
+-        "0x29fdf4418b3ab5b5380e7ad0259278b1bbab18e121438c9c9d69ac6091f44a00"
++        ["0x710d6eC2b0948dEf1f423Ec77B51b6a55847D2C5"]
+      values.$pastUpgrades.5.2:
+-        "2018-10-08T19:50:23.000Z"
++        ["0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"]
+      values.$pastUpgrades.5.1:
+-        "0x01d8eeea7ea146970fb4fbe8991d6118f8f41a779b06c69041d32362575f1eda"
++        "2025-04-15T09:12:11.000Z"
+      values.$pastUpgrades.5.0:
+-        ["0x710d6eC2b0948dEf1f423Ec77B51b6a55847D2C5"]
++        "0xc4db8a77365d4870af65f44232ca728e5e0fd583cde3ba83ba81cac3d77ff89d"
+      values.$upgradeCount:
+-        8
++        9
+      values.implementation:
+-        "0x166124b75c798Cedf1B43655E9B5284eBd5203DB"
++        "0xb54042F5bA4B048fEa54aaE70abbbe41AC716299"
+      values.version:
+-        8
++        9
+      values.HASHI_IS_ENABLED:
++        true
+      values.HASHI_IS_MANDATORY:
++        false
+      values.hashiManager:
++        "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
+      values.nonce:
++        14
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/xdai/ethereum/.flat/Hashi.sol     |  137 +++
+ .../.flat/HashiManager/EternalStorageProxy.p.sol   |  264 +++++
+ .../ethereum/.flat/HashiManager/HashiManager.sol   |  195 ++++
+ .../src/projects/xdai/ethereum/.flat/Safe/Safe.sol | 1088 ++++++++++++++++++++
+ .../xdai/ethereum/.flat/Safe/SafeProxy.p.sol       |   37 +
+ .../XDaiForeignBridge.sol                          |  171 ++-
+ .../src/projects/xdai/ethereum/.flat/Yaho.sol      |  352 +++++++
+ .../src/projects/xdai/ethereum/.flat/Yaru.sol      |  195 ++++
+ 8 files changed, 2405 insertions(+), 34 deletions(-)
+```
+
 Generated with discovered.json: 0x2187369c4bd1b808796e715b388eefbc5da4deac
 
 # Diff at Tue, 04 Mar 2025 10:40:13 GMT:
