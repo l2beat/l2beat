@@ -21,7 +21,7 @@ export type ProjectsLatestTvsUsd = Record<ProjectId, number>
 const getCachedProjectsLatestTvsUsd = cache(
   async (): Promise<Record<ProjectId, number>> => {
     const db = getDb()
-    const values = await db.tvsProjectValue.getLastestValues('PROJECT')
+    const values = await db.tvsProjectValue.getLatestValues('PROJECT')
 
     const groupedByProject: Record<ProjectId, number> = {}
     for (const value of values) {
