@@ -57,7 +57,7 @@ const getCached7dTokenBreakdown = cache(
     )
     const db = getDb()
     const target = getTvsTargetTimestamp()
-    const values = await db.tvsProjectValue.getProjectValuesAtTimestamps(
+    const values = await db.tvsProjectValue.getLatestValues(
       target - 7 * UnixTime.DAY,
       target,
       ['PROJECT', 'PROJECT_WA'],

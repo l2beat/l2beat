@@ -350,9 +350,19 @@ describeDatabase(ProjectValueRepository.name, (db) => {
 
       expect(result).toEqual([])
     })
+
+    it('returns empty array when projects array is empty', async () => {
+      const result = await repository.getByProjectsForType(
+        [],
+        'PROJECT',
+        [100, 300],
+      )
+
+      expect(result).toEqual([])
+    })
   })
 
-  describe(ProjectValueRepository.prototype.getLastestValues.name, () => {
+  describe(ProjectValueRepository.prototype.getLatestValues.name, () => {
     it('returns the latest values for a given type', async () => {
       await repository.upsertMany([
         projectValue('ethereum', 'SUMMARY', UnixTime(100), 1000),
@@ -362,7 +372,7 @@ describeDatabase(ProjectValueRepository.name, (db) => {
         projectValue('arbitrum', 'PROJECT', UnixTime(300), 4000),
       ])
 
-      const result = await repository.getLastestValues('PROJECT')
+      const result = await repository.getLatestValues('PROJECT')
 
       expect(result).toEqualUnsorted([
         projectValue('ethereum', 'PROJECT', UnixTime(200), 2000),
