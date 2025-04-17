@@ -1,5 +1,3 @@
-import { existsSync, readFileSync } from 'fs'
-import path from 'path'
 import type {
   Milestone,
   Project,
@@ -7,6 +5,8 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
@@ -131,7 +131,7 @@ export async function getEcosystemEntry(
     colors: ecosystem.colors,
     logo: getEcosystemLogo(slug),
     badges: ecosystem.display.badges
-      .map((badge) => getBadgeWithParams(badge, ecosystem))
+      .map((badge) => getBadgeWithParams(badge))
       .filter((badge) => badge !== undefined),
     links: {
       header: getProjectLinks(ecosystem.display.links),

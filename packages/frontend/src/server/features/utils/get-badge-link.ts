@@ -1,9 +1,10 @@
 import type { Badge, Project } from '@l2beat/config'
 import { getFilterSearchParams } from '~/components/table/filters/utils/get-filter-search-params'
+import { getScalingTab } from '../scaling/get-common-scaling-entry'
 
 export function getBadgeLink(
   badge: Badge,
-  project: Project,
+  project: Project<'scalingInfo'>,
 ): string | undefined {
   if (!badge.action) return undefined
   if (badge.action.type === 'scalingFilter') {
@@ -27,6 +28,6 @@ export function getBadgeLink(
   }
 
   if (badge.action.type === 'selfDaHighlight') {
-    return `/data-availability/summary?tab=custom&highlight=${project.slug}`
+    return `/scaling/data-availability?tab=${getScalingTab(project)}&highlight=${project.slug}`
   }
 }
