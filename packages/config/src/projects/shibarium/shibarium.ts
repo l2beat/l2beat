@@ -12,6 +12,16 @@ import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('shibarium')
 
+const currentValidatorSetSize = discovery.getContractValue<number>(
+  'StakeManager',
+  'currentValidatorSetSize',
+)
+
+const currentValidatorSetCap = discovery.getContractValue<number>(
+  'StakeManager',
+  'validatorThreshold',
+)
+
 export const shibarium: ScalingProject = {
   id: ProjectId('shibarium'),
   reasonsForBeingOther: [

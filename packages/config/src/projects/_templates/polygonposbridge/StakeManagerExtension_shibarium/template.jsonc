@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": [
+    "latestSignerUpdateEpoch",
+    "validatorAuction",
+    "validators",
+    "validatorStateChanges",
+    "signers"
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the validator whitelist."
+        }
+      ]
+    }
+  }
+}
