@@ -131,6 +131,24 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-rsETH-1",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "KelpDao Restaked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xc3eACf0612346366Db554C991D7858716db09f58",
+        "chain": "unichain",
+        "decimals": 18,
+        "sinceTimestamp": 1743532853
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-UNI",
       "priceId": "uniswap",
       "symbol": "UNI",
@@ -220,6 +238,24 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-weETH-1",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
+        "chain": "unichain",
+        "decimals": 18,
+        "sinceTimestamp": 1739290250
+      },
+      "category": "ether",
+      "source": "external",
       "isAssociated": false
     },
     {

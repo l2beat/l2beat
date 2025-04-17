@@ -1,3 +1,161 @@
+Generated with discovered.json: 0x9f0b327a5f24a900af2ec030e98b37448108f4a3
+
+# Diff at Wed, 16 Apr 2025 12:41:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22267290
+- current block number: 22281621
+
+## Description
+
+New chain deployed (admin associated with Caldera, chainID not yet found). Sub-MS changes.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.
+      values.chainsCreated.13:
++        {"chainId":9637,"chainTypeManager":"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","chainGovernance":"0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"}
+      values.chainsCreated.12.chainId:
+-        9637
++        388
+      values.chainsCreated.12.chainGovernance:
+-        "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
+      values.chainsCreated.11.chainId:
+-        388
++        325
+      values.chainsCreated.11.chainGovernance:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
+      values.chainsCreated.10.chainId:
+-        325
++        320
+      values.chainsCreated.10.chainGovernance:
+-        "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D"
++        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      values.chainsCreated.9.chainId:
+-        320
++        324
+      values.chainsCreated.9.chainGovernance:
+-        "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+      values.chainsCreated.8.chainId:
+-        324
++        50104
+      values.chainsCreated.8.chainGovernance:
+-        "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
++        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.chainsCreated.7.chainId:
+-        50104
++        543210
+      values.chainsCreated.7.chainGovernance:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      values.chainsCreated.6.chainId:
+-        543210
++        1217
+      values.chainsCreated.6.chainGovernance:
+-        "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
+      values.chainsCreated.5.chainId:
+-        1217
++        375
+      values.chainsCreated.5.chainGovernance:
+-        "0x86F4487949Ac2fb0d5735870f1731e879e1d9680"
++        "0x6ec9117dCFBe2E8Dd747c9D45034E2DF9C7d2da0"
+      values.getAllZKChainChainIDs.13:
++        388
+      values.getAllZKChainChainIDs.12:
+-        388
++        375
+      values.getAllZKChains.13:
++        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      values.getAllZKChains.12:
+-        "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      values.getAllZKChains.11:
+-        "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
+      values.getAllZKChains.10:
+-        "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24"
++        "0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.getAllZKChains.9:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
+      values.getAllZKChains.8:
+-        "0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
+      values.getAllZKChains.7:
+-        "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
++        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.getAllZKChains.6:
+-        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "0x89f90748A9a36C30A324481133fa198f4E16A824"
+      values.getAllZKChains.5:
+-        "0x89f90748A9a36C30A324481133fa198f4E16A824"
++        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
+      values.getAllZKChains.4:
+-        "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E"
++        "0x742A28e22277945BBAAa34810393bf6e8512576C"
+      values.getAllZKChains.3:
+-        "0x742A28e22277945BBAAa34810393bf6e8512576C"
++        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+      values.getAllZKChains.2:
+-        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
++        "0xF2704433d11842d15aa76BBF0E00407267a99C92"
+      values.getAllZKChains.1:
+-        "0xF2704433d11842d15aa76BBF0E00407267a99C92"
++        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
+      values.getAllZKChains.0:
+-        "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9"
++        "0x270bF3978FeA60719Dd25A400EbE6969bF451493"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x55c671BcE13120387Ded710A1d1b80C0e3d8E857) {
+    +++ description: None
+      values.$members.7:
+-        "0x227230CD05e89f41E67df3E5fC61B18411d147A9"
+      values.$members.6:
+-        "0x0e621b0A275A207211e161Ee997aA80661Bc1bcf"
+      values.$members.5:
+-        "0x160669864cDe95c190364ad01eDfbAA32E9DA430"
+      values.$members.4:
+-        "0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D"
+      values.$members.3:
+-        "0x7461633b1Fc7CdAa64A5B7bAb1b1F0145Acd7953"
+      values.$members.2:
+-        "0xa376AaF645dbd9b4f501B2A8a97bc21DcA15B001"
+      values.$members.1:
+-        "0x3620B9e7c75E09cCC37458c7B6EE6c23D8Ee4f0f"
+      values.$members.0:
+-        "0xb799FF3DeF706045B5061B22d748E8F52737415d"
++        "0x9f708301AA8CB86A06D23152fE67F2bFaa094cA1"
+      values.$threshold:
+-        5
++        1
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      values.chainCount:
+-        14
++        15
+      values.getAggregatedRoot:
+-        "0x3b831e3946c9e482436b4dd704221715c4a0737d68f4f4761ea6075405805771"
++        "0x5054187811209ac55f16381dbcbbfb219fd033e43b680f7649de648ba69daaa6"
+    }
+```
+
 Generated with discovered.json: 0x93bc0e69ffc00980d10b7c93ca33bd2cc8f335ca
 
 # Diff at Mon, 14 Apr 2025 12:41:24 GMT:

@@ -1,3 +1,130 @@
+Generated with discovered.json: 0xfa1a198116bb60f60bdd28e2356a011725028810
+
+# Diff at Wed, 16 Apr 2025 12:53:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db872d8b788e204aeb64e983eeb7178891d61d76 block: 22243995
+- current block number: 22281682
+
+## Description
+
+EOA removed from main contract, now 'only' present in the main bridge.
+
+## Watched changes
+
+```diff
+    contract undefined (0x0000000000000000000000000000000000000020) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"disable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"enable the withdrawal limit."},{"permission":"interact","from":"0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3","description":"manage critical access control roles and the role that can upgrade the implementation."}]
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      issuedPermissions.9:
+-        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"disable the withdrawal limit.","via":[]}
+      issuedPermissions.8:
+-        {"permission":"upgrade","to":"0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c","via":[]}
+      issuedPermissions.7:
+-        {"permission":"interact","to":"0xFF57A3bB6465501c993acF8f3b29125a862661C0","description":"enable the withdrawal limit.","via":[]}
+      issuedPermissions.6.to:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      issuedPermissions.5.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      issuedPermissions.5.description:
+-        "disable the withdrawal limit."
+      issuedPermissions.4.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.3.description:
+-        "enable the withdrawal limit."
++        "disable the withdrawal limit."
+      issuedPermissions.2.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      issuedPermissions.2.description:
+-        "enable the withdrawal limit."
++        "manage critical access control roles and the role that can upgrade the implementation."
+      issuedPermissions.1.description:
+-        "manage critical access control roles and the role that can upgrade the implementation."
++        "enable the withdrawal limit."
+      issuedPermissions.0.to:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.GOVERNANCE_ADMIN.members.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.GOVERNANCE_ADMIN.members.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.SECURITY_ADMIN.members.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it via the `GovernanceAdminOnly` modifier or as a role admin in the implementation.
+      values.govAdminAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.secAdminAC.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAdminAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.secAgentAC.2:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.1:
+-        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.0:
+-        "0x0000000000000000000000000000000000000020"
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      issuedPermissions.4:
+-        {"permission":"operateStarknet","to":"0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2","via":[]}
+      issuedPermissions.3:
+-        {"permission":"upgrade","to":"0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","via":[]}
+      issuedPermissions.2.permission:
+-        "upgrade"
++        "operateStarknet"
+      issuedPermissions.2.to:
+-        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++        "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
+      issuedPermissions.1.permission:
+-        "governStarknet"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
++        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++++ description: Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.
++++ severity: HIGH
+      values.$admin:
+-        ["0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f","0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"]
++        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+    }
+```
+
 Generated with discovered.json: 0x07b676fed79eb1ff46c9d1cfc6e03967919be842
 
 # Diff at Fri, 11 Apr 2025 06:46:29 GMT:

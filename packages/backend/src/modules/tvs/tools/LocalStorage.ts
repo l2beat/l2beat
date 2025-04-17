@@ -6,18 +6,21 @@ interface LocalStorageJSON {
   prices: Record<string, number>
   amounts: Record<string, string>
   blocks: Record<string, number>
+  addresses: Record<string, string>
 }
 
 export class LocalStorage implements DataStorage {
   private prices: Map<string, number>
   private amounts: Map<string, string>
   private blocks: Map<string, number>
+  private addresses: Map<string, string>
 
   constructor(private readonly filePath: string) {
-    const { amounts, prices, blocks } = this.readLocalFile()
+    const { amounts, prices, blocks, addresses } = this.readLocalFile()
     this.prices = prices
     this.amounts = amounts
     this.blocks = blocks
+    this.addresses = addresses
   }
 
   async writePrice(
@@ -82,6 +85,16 @@ export class LocalStorage implements DataStorage {
     return await Promise.resolve(block)
   }
 
+  async writeAddress(id: string, address: string): Promise<void> {
+    this.addresses.set(id, address)
+    this.saveToFile()
+    return await Promise.resolve()
+  }
+
+  async getAddress(id: string): Promise<string | undefined> {
+    return await Promise.resolve(this.addresses.get(id))
+  }
+
   private readLocalFile() {
     if (existsSync(this.filePath)) {
       const data = JSON.parse(
@@ -95,12 +108,16 @@ export class LocalStorage implements DataStorage {
         blocks: new Map(
           Object.entries(data.blocks).map(([k, v]) => [k, Number(v)]),
         ),
+        addresses: data.addresses
+          ? new Map(Object.entries(data.addresses).map(([k, v]) => [k, v]))
+          : new Map(),
       }
     } else {
       return {
         prices: new Map(),
         amounts: new Map(),
         blocks: new Map(),
+        addresses: new Map(),
       }
     }
   }
@@ -113,6 +130,9 @@ export class LocalStorage implements DataStorage {
       ),
       blocks: Object.fromEntries(
         Array.from(this.blocks.entries()).map(([k, v]) => [k, v.toString()]),
+      ),
+      addresses: Object.fromEntries(
+        Array.from(this.addresses.entries()).map(([k, v]) => [k, v]),
       ),
     }
     writeFileSync(this.filePath, JSON.stringify(data, null, 2))

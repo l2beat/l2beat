@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 22194605,
+  "blockNumber": 22273522,
   "configHash": "0x997f17fe0e0cb1133efc7bfa031756ef0cfe6d829932c8609c4c0b5bcb6246b1",
   "entries": [
     {
@@ -153,11 +153,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x0000000000000000000000000000000000000000",
+        "anchorGame": "0xfc1D54912aEf0eA2155Fa2D5De9a54D3418C1DBe",
         "disputeGameFactory": "0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "getAnchorRoot": [
-          "0xd182e77f3e9685f696229e17617dbe1627b6c985adbce5784e6ad6f3a1c62b30",
-          133854259
+          "0x1d771fe9ff7065defb020dfb7b9a1f49faac13e16cd081a5b1b2281e50a1345e",
+          134250625
         ],
         "portal": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "respectedGameType": 0,
@@ -419,7 +419,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "8d 20h",
+        "timeSinceLastL2beatInteraction": "5d 17h",
         "version": "1.0.0"
       },
       "derivedName": "LivenessGuard"
@@ -500,7 +500,7 @@
         ],
         "$upgradeCount": 11,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292787829",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292789205",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -578,7 +578,7 @@
         "name": "Wrapped Ether",
         "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "symbol": "WETH",
-        "totalSupply": "13527594000000000000",
+        "totalSupply": "20247594000000000000",
         "version": "1.3.0"
       },
       "derivedName": "DelayedWETH"
@@ -608,7 +608,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 59,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1147,7 +1147,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1342,7 +1342,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 101,
+        "nonce": 102,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1501,7 +1501,7 @@
       ]
     },
     {
-      "name": "OptimismPortal",
+      "name": "OptimismPortal2",
       "address": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
       "type": "Contract",
       "template": "opstack/OptimismPortal2",
@@ -1573,8 +1573,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22194589
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 22273519
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1654,7 +1654,7 @@
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe",
@@ -1859,7 +1859,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 7152,
+        "gameCount": 7416,
         "gameImpls": [
           "0xbA94955CA3422fC57f9D982a0BaD2a9c88e2a9D0",
           "0xd113ad136a0dF1c7FfB7F1606Be1c778bCfE2f3b",

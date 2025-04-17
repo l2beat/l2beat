@@ -15,6 +15,10 @@ export const arbitrumOrbit: BaseProject = {
     },
     badges: [BADGES.Stack.Orbit],
   },
+  colors: {
+    primary: '#12AAFF',
+    secondary: '#12AAFF',
+  },
   ecosystemConfig: {
     links: {
       buildOn:
@@ -22,10 +26,6 @@ export const arbitrumOrbit: BaseProject = {
       learnMore: 'https://arbitrum.io/orbit',
       governanceTopDelegates: 'https://www.tally.xyz/gov/arbitrum/delegates',
       governanceProposals: 'https://www.tally.xyz/gov/arbitrum/proposals',
-    },
-    colors: {
-      primary: '#12AAFF',
-      secondary: '#12AAFF',
     },
     token: {
       tokenId: 'arbitrum-ARB-1',

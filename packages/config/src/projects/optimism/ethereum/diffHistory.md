@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb09d3ca12c8534e7baa49b0d44d2ffd08991e582
+
+# Diff at Tue, 15 Apr 2025 09:37:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7b0857850157d265e4d429d336d4517950f5340c block: 22194605
+- current block number: 22273522
+
+## Description
+
+disco config cleanup and .ts templatize.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22194605 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      name:
+-        "OptimismPortal"
++        "OptimismPortal2"
+    }
+```
+
 Generated with discovered.json: 0xc7bebe076b595202de60cd3e9060a615d06de26a
 
 # Diff at Fri, 11 Apr 2025 13:16:05 GMT:

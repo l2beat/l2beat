@@ -28,6 +28,7 @@ const schema = {
 
   statuses: 'TEXT',
   display: 'TEXT',
+  colors: 'TEXT',
   milestones: 'TEXT',
   chainConfig: 'TEXT',
 

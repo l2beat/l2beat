@@ -20,6 +20,10 @@ export const superchain: BaseProject = {
     },
     badges: [BADGES.Infra.Superchain, BADGES.Stack.OPStack],
   },
+  colors: {
+    primary: '#F00000',
+    secondary: '#F93E3F',
+  },
   ecosystemConfig: {
     links: {
       buildOn: 'https://superchain.eco/develop',
@@ -27,10 +31,6 @@ export const superchain: BaseProject = {
       governanceTopDelegates:
         'https://vote.optimism.io/delegates?orderBy=most_voting_power',
       governanceProposals: 'https://vote.optimism.io/proposals',
-    },
-    colors: {
-      primary: '#F00000',
-      secondary: '#F93E3F',
     },
     token: {
       tokenId: 'optimism-OP',
