@@ -1,8 +1,8 @@
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  assert,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -138,6 +138,10 @@ export const taiko: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     BADGES.Other.BasedSequencing,
   ],
+  colors: {
+    primary: '#E31C95',
+    secondary: '#E31C95',
+  },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Taiko Alethia',
