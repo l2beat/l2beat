@@ -73,6 +73,7 @@ export interface BaseProject {
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
+  colors?: ProjectColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
 
@@ -127,6 +128,10 @@ export interface BaseProject {
 }
 
 // #region common data
+export interface ProjectColors {
+  primary: string
+  secondary: string
+}
 
 export interface ProjectStatuses {
   yellowWarning: string | undefined
@@ -896,10 +901,6 @@ export interface ProjectEcosystemInfo {
 }
 
 export interface ProjectEcosystemConfig {
-  colors: {
-    primary: `#${string}`
-    secondary: `#${string}`
-  }
   token: {
     tokenId: string
     projectId: ProjectId

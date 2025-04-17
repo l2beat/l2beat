@@ -1,44 +1,36 @@
-import type {
-  AssetId,
-  ChainId,
-  EthereumAddress,
-  TokenBridgedUsing,
-} from '@l2beat/shared-pure'
+import type { Formula, TvsToken } from '@l2beat/config'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+
+type AddressData =
+  | {
+      address: EthereumAddress
+      url?: string
+      name?: string
+    }
+  | 'multiple'
 
 export type BaseAssetBreakdownData = {
-  assetId: AssetId
-  chain: {
-    id: ChainId
-    name: string
-  }
+  id: TvsToken['id']
+  symbol: TvsToken['symbol']
+  iconUrl: string
   amount: number
   usdValue: number
-  usdPrice: string
-  tokenAddress?: EthereumAddress
+  source: TvsToken['source']
+  isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean
+  address?: AddressData
+  formula: Formula
+  syncStatus?: string
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
-  escrows: {
-    amount: number
-    usdValue: number
-    escrowAddress: EthereumAddress
-    name?: string
-    isPreminted?: boolean
-    isSharedEscrow?: boolean
-    url?: string
-  }[]
+  escrow?: AddressData
 }
-
-export type ExternalAssetBreakdownData = BaseAssetBreakdownData & {
-  bridgedUsing: TokenBridgedUsing
-  isLockedInEscrow?: boolean
-}
-
+export type ExternalAssetBreakdownData = BaseAssetBreakdownData
 export type NativeAssetBreakdownData = BaseAssetBreakdownData
 
 export type BreakdownRecord = {
-  canonical: Map<AssetId, CanonicalAssetBreakdownData>
+  canonical: CanonicalAssetBreakdownData[]
   external: ExternalAssetBreakdownData[]
   native: NativeAssetBreakdownData[]
 }

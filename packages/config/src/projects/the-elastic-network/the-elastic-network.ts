@@ -16,16 +16,16 @@ export const theElasticNetwork: BaseProject = {
     },
     badges: [BADGES.Stack.ZKStack, BADGES.Infra.ElasticChain],
   },
+  colors: {
+    primary: '#513BE5',
+    secondary: '#4276FF',
+  },
   ecosystemConfig: {
     links: {
       buildOn: 'https://docs.zksync.io/',
       learnMore: 'https://zksync.io/',
       governanceTopDelegates: 'https://www.tally.xyz/gov/zksync/delegates',
       governanceProposals: 'https://www.tally.xyz/gov/zksync/proposals',
-    },
-    colors: {
-      primary: '#513BE5',
-      secondary: '#4276FF',
     },
     token: {
       tokenId: 'zksync2-ZK',

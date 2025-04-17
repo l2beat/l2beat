@@ -6,8 +6,8 @@ import { getProjectsChangeReport } from '../../projects-change-report/get-projec
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
-import type { ProjectSevenDayTvsBreakdown } from './utils/get-7d-tvs-breakdown'
-import { get7dTvsBreakdown } from './utils/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from './get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from './get-7d-tvs-breakdown'
 
 export async function getScalingTvsEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([

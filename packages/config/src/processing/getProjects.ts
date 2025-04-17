@@ -68,7 +68,9 @@ function layer2Or3ToProject(
     shortName: p.display.shortName,
     slug: p.display.slug,
     addedAt: p.addedAt,
+
     // data
+    colors: p.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,

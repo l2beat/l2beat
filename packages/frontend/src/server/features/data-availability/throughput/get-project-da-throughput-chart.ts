@@ -89,10 +89,18 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
 
 function getMockProjectDaThroughputChartData({
   range,
+  projectId,
 }: ProjectDaThroughputChartParams): ProjectDaThroughputChartData {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
+
+  if (!['ethereum', 'celestia', 'avail'].includes(projectId)) {
+    return {
+      chart: [],
+      range: [from, to],
+    }
+  }
 
   const timestamps = generateTimestamps([from, to], 'daily')
   return {

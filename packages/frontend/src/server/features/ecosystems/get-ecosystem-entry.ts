@@ -3,7 +3,7 @@ import path from 'path'
 import type {
   Milestone,
   Project,
-  ProjectEcosystemConfig,
+  ProjectColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
@@ -21,7 +21,7 @@ import {
   type ScalingSummaryEntry,
   getScalingSummaryEntry,
 } from '../scaling/summary/get-scaling-summary-entries'
-import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 import { type BlobsData, getBlobsData } from './get-blobs-data'
 import type { EcosystemProjectsCountData } from './get-ecosystem-projects-chart-data'
@@ -47,7 +47,7 @@ export interface EcosystemEntry {
     height: number
   }
   badges: BadgeWithParams[]
-  colors: ProjectEcosystemConfig['colors']
+  colors: ProjectColors
   projects: EcosystemProjectEntry[]
   projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
@@ -78,7 +78,7 @@ export async function getEcosystemEntry(
 ): Promise<EcosystemEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
-    select: ['ecosystemConfig', 'display'],
+    select: ['ecosystemConfig', 'display', 'colors'],
     optional: ['milestones'],
   })
 
@@ -128,7 +128,7 @@ export async function getEcosystemEntry(
 
   return {
     ...ecosystem,
-    colors: ecosystem.ecosystemConfig.colors,
+    colors: ecosystem.colors,
     logo: getEcosystemLogo(slug),
     badges: ecosystem.display.badges
       .map((badge) => getBadgeWithParams(badge, ecosystem))
