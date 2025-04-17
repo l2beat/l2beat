@@ -4,7 +4,7 @@ set -xe
 cd $(git rev-parse --show-toplevel)
 
 GIT_HEAD=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse HEAD)
-GIT_MAIN=$(git merge-base main $GIT_HEAD)
+GIT_MAIN=$(git merge-base origin/main $GIT_HEAD)
 
 git checkout $GIT_MAIN
 pnpm install
