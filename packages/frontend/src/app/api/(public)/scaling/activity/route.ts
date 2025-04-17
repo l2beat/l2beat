@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   if (parsedParams.error) {
     return NextResponse.json({
       success: false,
-      error: parsedParams.error.errors,
+      errors: parsedParams.error.errors,
     })
   }
 
