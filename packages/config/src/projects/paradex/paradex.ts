@@ -308,6 +308,34 @@ export const paradex: ScalingProject = {
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
+      title: 'Perpetual Options Launch',
+      url: 'https://x.com/tradeparadex/status/1907041207177613610',
+      date: '2025-04-01T00:00:00Z',
+      description: 'Paradex opens perpetual options trading to all users.',
+      type: 'general',
+    },
+    {
+      title: 'Paradex introduces $DIME',
+      url: 'https://x.com/tradeparadex/status/1907041207177613610',
+      date: '2024-12-07T00:00:00Z',
+      description: 'Paradex introduces $DIME, the native token of the Paradex Network',
+      type: 'general',
+    },
+    {
+      title: 'Vaults Launched',
+      url: 'https://x.com/tradeparadex/status/1843550172443512998',
+      date: '2024-10-08T00:00:00Z',
+      description: 'Paradex launches Vaults, the future of on-chain investment management',
+      type: 'general',
+    },
+    {
+      title: 'Paradex exits Open Beta',
+      url: 'https://x.com/tradeparadex/status/1854537396714651707',
+      date: '2024-11-07T00:00:00Z',
+      description: 'Paradex launches XP Warzone Season 1 and exits Open Beta.',
+      type: 'general',
+    },
+    {
       title: 'Paradex starts using blobs',
       url: 'https://twitter.com/tradeparadex/status/1768306190596153799',
       date: '2024-03-26T00:00:00Z',
