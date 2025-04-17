@@ -4,6 +4,7 @@ L2BEAT (Layer 2 Beat) is a website dedicated to providing research and statistic
 
 You can visit the site yourself at https://www.l2beat.com/.
 
+
 ## Contributing
 
 We welcome and encourage contributions. To learn about the project structure and contributions please read [`CONTRIBUTING.md`](https://github.com/l2beat/l2beat/blob/main/CONTRIBUTING.md).
