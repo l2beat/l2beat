@@ -1,7 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { DiscoveryLogger } from '../DiscoveryLogger'
+import { Logger } from '@l2beat/backend-tools'
 import type { IProvider } from '../provider/IProvider'
 import type { Handler, HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
@@ -187,7 +187,7 @@ describe(executeHandlers.name, () => {
     class FunkyHandler implements Handler {
       dependencies: string[] = []
       field = 'foo'
-      logger = DiscoveryLogger.SILENT
+      logger = Logger.SILENT
       async execute(): Promise<HandlerResult> {
         throw new Error('oops')
       }

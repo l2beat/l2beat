@@ -1,6 +1,5 @@
 import {
   type DiscoveryChainConfig,
-  type DiscoveryLogger,
   type DiscoveryPaths,
   type DiscoveryCache as IDiscoveryCache,
   InMemoryCache,
@@ -10,6 +9,7 @@ import {
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
+import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -21,7 +21,7 @@ export function createDiscoveryRunner(
   paths: DiscoveryPaths,
   http: HttpClient,
   peripherals: Peripherals,
-  discoveryLogger: DiscoveryLogger,
+  discoveryLogger: Logger,
   chainConfigs: DiscoveryChainConfig[],
   chain: string,
   cacheEnabled: boolean,

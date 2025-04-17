@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { DiscoveryLogger } from '../DiscoveryLogger'
+import { Logger } from '@l2beat/backend-tools'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import {
@@ -64,7 +64,7 @@ describe(DiscoveryEngine.name, () => {
         relatives: {},
       })
 
-    const engine = new DiscoveryEngine(addressAnalyzer, DiscoveryLogger.SILENT)
+    const engine = new DiscoveryEngine(addressAnalyzer, Logger.SILENT)
     const result = await engine.discover(provider, config.structure)
 
     expect(result).toEqual([
