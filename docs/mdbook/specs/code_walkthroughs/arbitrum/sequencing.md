@@ -1,4 +1,4 @@
-# Forced transactions
+# Sequencing
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -12,16 +12,18 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Forced transactions
+
 Before the implementation of the censorship buffer, each transaction could have been censored by the permissioned sequencer for up to 24h. This was a problem for Orbit L3s on Arbitrum One as, in case of censorship, there wouldn't be enough time to play the challenge game on the L2 (for the L3) if the challenge period was set to 7d, as around ~60 moves are needed to finish a game, implying the need of at least 60 days.
 
-## High-level flow
+### High-level flow
 To force transactions on Arbitrum through L1, the following steps are taken:
 1. The EOA sends a message to the L2 through the `sendL2MessageFromOrigin` function on the `Inbox` contract.
 2. The `sendL2MessageFromOrigin` function calls the `enqueueDelayedMessage` function on the `Bridge` contract, which pushes the message to the `delayedInboxAccs` array.
 3. The EOA waits for `delayBlocks` to pass.
 4. The EOA can finally call the `forceInclusion` function on the `SequencerInbox` contract to force the message to be included in the canonical sequence of messages.
 
-## `Inbox`: the `sendL2MessageFromOrigin` function
+### `Inbox`: the `sendL2MessageFromOrigin` function
 This function acts as the entry point to send L1 to L2 messages from a EOA.
 
 ```solidity
@@ -43,7 +45,7 @@ uint8 constant ROLLUP_PROTOCOL_EVENT_TYPE = 8;
 uint8 constant INITIALIZATION_MSG_TYPE = 11;
 ```
 
-## `Bridge`: the `enqueueDelayedMessage` function
+### `Bridge`: the `enqueueDelayedMessage` function
 The `enqueueDelayedMessage` function can only be called by an authorized inbox, as specified in the `allowedDelayedInbox` mapping. 
 
 ```solidity
@@ -56,7 +58,7 @@ function enqueueDelayedMessage(
 
 A `messageHash` is constructed using the `kind` (set to `L2_MSG` when called through the `sendL2MessageFromOrigin` function), the sender (the L1-to-L2 alised `msg.sender`), the `messageDataHash`, but also the current block number, block timestamp and base fee. This value is then hashed with the latest message hash and pushed to the `delayedInboxAccs` array. The new message count is returned.
 
-## `SequencerInbox`: the `forceInclusion` function
+### `SequencerInbox`: the `forceInclusion` function
 The purpose of this function is to be able to force include messages that have been queued to the `delayedInboxAccs` array.
 
 ```solidity
@@ -74,9 +76,7 @@ The `_totalDelayedMessagesRead` value should represent the new amount of delayed
 
 After the message hash is checked against the latest accumulated hash in the `delayedInboxAccs` array, the message is included in the canonical sequence of messages by calling the `addSequencerL2BatchImpl` function, which ultimately calls the `enqueueSequencerMessage` function on the `Bridge` contract.
 
-
-
-### The `DelayBuffer` library
+#### The `DelayBuffer` library
  The function that handles the core buffer update logic is the `calcPendingBuffer` function that given the block number of the last processed message (`start`), the block number of the new message being considered (`end`), the current buffer size in blocks (`bufferBlocks`), the buffer threshold (`threshold`), the  time of the last update (`sequenced`), the max buffer size (`max`) and the replenish rate (`replenishRateInBasis`), calculates the new available buffer size.
 
 The intuition is as follows: the buffer is first replenished by calculating the elapsed time between the last processed message and the one being considered during this call, where the rate is usually set to `500/10000`, or in other words, such that a block is added to the buffer every 20 blocks between two messages. A delay is calculated as the number of blocks between the last update (not to be confused with the block number of the latest processed message) and the block number of the current message being considered. The buffer doesn't consider any delay of 150 blocks (i.e. the `threshold`) or less (≤30 mins, assuming 12s block times) to be "unexpected", and only the delay on top of it is considered. If the buffer contains more blocks than this value, then the buffer is reduced by the appropriate amount. If not, the `threshold` value is returned as the minimum buffer size. The buffer is capped at the `max` value of blocks, usually set to be 14400 blocks, or 2 days assuming 12s block times.[^3]
