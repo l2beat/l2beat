@@ -20,6 +20,14 @@ address(
   "&$.address:raw").`,
   when: () => true,
 }
+const nonSelfAddressTemplate: InlineTemplate = {
+  content: `
+address(
+  &address,
+  "chain",
+  "&address:raw").`,
+  when: () => true,
+}
 const addressTypeContractTemplate: InlineTemplate = {
   content: `
 addressType(
@@ -138,6 +146,18 @@ export function buildPermissionsModel(
       permissionDelayTemplate,
       permissionConditionTemplate,
     ]) {
+      const to = String(valuesWithPermission['permission.to']).toLowerCase()
+      if (addressToNameMap[to] === undefined) {
+        continue
+        // addressToNameMap[to] = `unknown_${chain}_${to}`
+        // relationsModel.push(
+        //   interpolateModelTemplate(
+        //     nonSelfAddressTemplate.content,
+        //     { 'address': to, chain },
+        //     addressToNameMap,
+        //   ),
+        // )
+      }
       if (template.when(structureEntry, permission)) {
         const interpolated = interpolateModelTemplate(
           template.content,

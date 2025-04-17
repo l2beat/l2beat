@@ -95,6 +95,7 @@ export type ColorEntry = {
   displayName?: string
   description?: string
   fieldMeta?: Record<string, FieldMeta>
+  issuedPermissions?: ReceivedPermission[]
   receivedPermissions?: ReceivedPermission[]
   permissions?: ParsedTransitivePermissionFact[]
   directlyReceivedPermissions?: ReceivedPermission[]

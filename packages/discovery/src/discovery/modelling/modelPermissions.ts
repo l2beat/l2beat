@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
@@ -25,12 +25,14 @@ export async function modelPermissions(
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
+  debug: boolean,
 ) {
   const facts = await buildProjectPageFacts(
     project,
     configReader,
     templateService,
     paths,
+    debug,
   )
   // TODO, why reparsing?
   const parsedFacts = ClingoFactFile.parse(JSON.parse(JSON.stringify(facts)))
@@ -68,7 +70,7 @@ export function parseTransitivePermissionFact(
         : ((fact.params[7] as ClingoFact[]).map((x) =>
             parseTransitivePermissionVia(x, modelIdRegistry),
           ) ?? undefined),
-    // isFinal: fact.params[7] === 'isFinal',
+    isFinal: fact.params[8] === 'isFinal',
   }
 }
 
@@ -105,6 +107,7 @@ export async function buildProjectPageFacts(
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
+  debug: boolean,
 ) {
   const clingo = generateClingoForProject(
     project,
@@ -135,8 +138,10 @@ export async function buildProjectPageFacts(
 
   const parsed = { facts: facts.map(parseClingoFact) }
 
-  // unlinkSync(inputFilePath)
-  // unlinkSync(outputFilePath)
+  if (!debug) {
+    unlinkSync(inputFilePath)
+    unlinkSync(outputFilePath)
+  }
   return parsed
 }
 

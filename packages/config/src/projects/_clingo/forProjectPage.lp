@@ -54,6 +54,12 @@ ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalD
   OriginalPermission != "act",
   canActIndependently(Receiver).
 
+ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, directNonFinal) :-
+  transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via),
+  not ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalCondition, TotalDelay, Via, isFinal),
+  Via == nil, % we only want to show direct permissions
+  not member(Giver, Receiver). % for backwards compatibility, we didn't show direct "act" permission for multisig members
+
 canActIndependently(Msig) :-
   msig(Msig, Threshold),
   Threshold > 1.

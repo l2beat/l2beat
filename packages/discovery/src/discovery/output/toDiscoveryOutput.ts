@@ -63,6 +63,8 @@ export function sortByKeys<T extends object>(obj: T): T {
 }
 
 export function sortEntry(e: EntryParameters): EntryParameters {
+  const issuedPermissions =
+    'issuedPermissions' in e ? e.issuedPermissions : undefined
   return {
     name: e.name,
     address: e.address,
@@ -73,6 +75,7 @@ export function sortEntry(e: EntryParameters): EntryParameters {
     proxyType: e.proxyType,
     displayName: e.displayName,
     description: e.description,
+    issuedPermissions,
     receivedPermissions: e.receivedPermissions,
     directlyReceivedPermissions: e.directlyReceivedPermissions,
     ignoreInWatchMode: e.ignoreInWatchMode,

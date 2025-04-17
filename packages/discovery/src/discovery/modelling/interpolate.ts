@@ -1,3 +1,4 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import type { EntryParameters } from '../output/types'
 import type { ContractValue } from '../output/types'
 
@@ -45,7 +46,11 @@ export function tryCastingToName(
     return value
   }
   const name = addressToNameMap[value.toLowerCase()]
-  return name ? normalizeId(name) : value
+  return name ? normalizeId(name) : quoteEthereumAddress(value)
+}
+
+export function quoteEthereumAddress(address: string) {
+  return EthereumAddress.check(address) ? `"${address}"` : address
 }
 
 // Clingo ids need to start with a lowercase letter
