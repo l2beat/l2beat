@@ -73,8 +73,7 @@ export function ProjectTokenChart({
 
   const { data, isLoading } = api.tvs.tokenChart.useQuery({
     token: {
-      chain: token.chain,
-      address: token.address,
+      tokenId: token.id,
       projectId,
     },
     range: timeRange,

@@ -21,7 +21,7 @@ import {
   type ScalingSummaryEntry,
   getScalingSummaryEntry,
 } from '../scaling/summary/get-scaling-summary-entries'
-import { get7dTvsBreakdown } from '../scaling/tvs/utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'
 import { compareStageAndTvs } from '../scaling/utils/compare-stage-and-tvs'
 import { type BlobsData, getBlobsData } from './get-blobs-data'
 import type { EcosystemProjectsCountData } from './get-ecosystem-projects-chart-data'
