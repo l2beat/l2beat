@@ -7,8 +7,8 @@ import {
   transformToIssued,
   transformToReceived,
 } from '../permission-resolving/transform'
-import type { EntryParameters, StructureOutput } from './types'
 import { withoutUndefinedKeys } from './toDiscoveryOutput'
+import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
   config: StructureConfig,
