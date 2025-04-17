@@ -55,9 +55,14 @@ export function ThroughputSectionByProjectChart({
     [data],
   )
 
-  const projectsToShow =
-    selectedProjects ??
-    allProjects.filter((p) => p !== 'Others').slice(0, DEFAULT_PROJECTS_TO_SHOW)
+  const projectsToShow = useMemo(
+    () =>
+      selectedProjects ??
+      allProjects
+        .filter((p) => p !== 'Others')
+        .slice(0, DEFAULT_PROJECTS_TO_SHOW),
+    [allProjects, selectedProjects],
+  )
 
   return (
     <div>
