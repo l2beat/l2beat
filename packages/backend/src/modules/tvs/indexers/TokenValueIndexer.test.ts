@@ -25,10 +25,7 @@ describe(TokenValueIndexer.name, () => {
       const mockToken1 = createMockToken('token-1')
       const mockToken2 = createMockToken('token-2')
 
-      const configs = [
-        createMockConfig(mockToken1),
-        createMockConfig(mockToken2),
-      ]
+      const configs = [config(mockToken1), config(mockToken2)]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampsToSync: mockFn().returnsOnce(timestamps),
@@ -41,60 +38,12 @@ describe(TokenValueIndexer.name, () => {
 
       const valueService = mockObject<ValueService>({
         calculate: mockFn().returnsOnce([
-          {
-            timestamp: timestamps[0],
-            projectId: project,
-            tokenId: 'token-1',
-            amount: 100,
-            value: 1000,
-            valueForProject: 1000,
-            valueForSummary: 1000,
-          },
-          {
-            timestamp: timestamps[0],
-            projectId: project,
-            tokenId: 'token-2',
-            amount: 200,
-            value: 2000,
-            valueForProject: 2000,
-            valueForSummary: 2000,
-          },
-          {
-            timestamp: timestamps[1],
-            projectId: project,
-            tokenId: 'token-1',
-            amount: 150,
-            value: 1500,
-            valueForProject: 1500,
-            valueForSummary: 1500,
-          },
-          {
-            timestamp: timestamps[1],
-            projectId: project,
-            tokenId: 'token-2',
-            amount: 250,
-            value: 2500,
-            valueForProject: 2500,
-            valueForSummary: 2500,
-          },
-          {
-            timestamp: timestamps[2],
-            projectId: project,
-            tokenId: 'token-1',
-            amount: 180,
-            value: 1800,
-            valueForProject: 1800,
-            valueForSummary: 1800,
-          },
-          {
-            timestamp: timestamps[2],
-            projectId: project,
-            tokenId: 'token-2',
-            amount: 280,
-            value: 2800,
-            valueForProject: 2800,
-            valueForSummary: 2800,
-          },
+          value(timestamps[0], project, 'token-1', 100),
+          value(timestamps[0], project, 'token-2', 200),
+          value(timestamps[1], project, 'token-1', 150),
+          value(timestamps[1], project, 'token-2', 250),
+          value(timestamps[2], project, 'token-1', 180),
+          value(timestamps[2], project, 'token-2', 280),
         ]),
       })
 
@@ -138,12 +87,12 @@ describe(TokenValueIndexer.name, () => {
       )
 
       const expectedRecords: TokenValueRecord[] = [
-        tokenValue(timestamps[0], mockToken1, project, 100),
-        tokenValue(timestamps[0], mockToken2, project, 200),
-        tokenValue(timestamps[1], mockToken1, project, 150),
-        tokenValue(timestamps[1], mockToken2, project, 250),
-        tokenValue(timestamps[2], mockToken1, project, 180),
-        tokenValue(timestamps[2], mockToken2, project, 280),
+        record(timestamps[0], mockToken1, project, 100),
+        record(timestamps[0], mockToken2, project, 200),
+        record(timestamps[1], mockToken1, project, 150),
+        record(timestamps[1], mockToken2, project, 250),
+        record(timestamps[2], mockToken1, project, 180),
+        record(timestamps[2], mockToken2, project, 280),
       ]
 
       expect(tvsTokenValueRepository.insertMany).toHaveBeenOnlyCalledWith(
@@ -159,7 +108,7 @@ describe(TokenValueIndexer.name, () => {
       const project = 'test-project'
 
       const mockToken = createMockToken('token-1')
-      const configs = [createMockConfig(mockToken)]
+      const configs = [config(mockToken)]
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampsToSync: mockFn().returnsOnce(timestamps),
@@ -197,7 +146,7 @@ describe(TokenValueIndexer.name, () => {
       })
 
       const mockToken = createMockToken('token-1')
-      const configs = [createMockConfig(mockToken)]
+      const configs = [config(mockToken)]
 
       const indexer = new TokenValueIndexer({
         logger: Logger.SILENT,
@@ -305,24 +254,6 @@ describe(TokenValueIndexer.name, () => {
     })
   })
 
-  function tokenValue(
-    timestamp: UnixTime,
-    token: TvsToken,
-    projectId: string,
-    amount: number,
-  ) {
-    return {
-      timestamp,
-      configurationId: TokenValueIndexer.idToConfigurationId(token),
-      projectId,
-      tokenId: token.id,
-      amount,
-      value: amount * 10,
-      valueForProject: amount * 10,
-      valueForSummary: amount * 10,
-    }
-  }
-
   function createMockToken(id: string): TvsToken {
     return {
       mode: 'auto',
@@ -343,16 +274,45 @@ describe(TokenValueIndexer.name, () => {
     }
   }
 
-  function createMockConfig(token: TvsToken): Configuration<TvsToken> {
-    return {
-      id: `config-${token.id}`,
-      properties: token,
-      minHeight: 0,
-      maxHeight: null,
-    }
-  }
-
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+function config(token: TvsToken): Configuration<TvsToken> {
+  return {
+    id: `config-${token.id}`,
+    properties: token,
+    minHeight: 0,
+    maxHeight: null,
+  }
+}
+
+function value(
+  timestamp: UnixTime,
+  projectId: string,
+  tokenId: string,
+  amount: number,
+) {
+  return {
+    timestamp,
+    projectId,
+    tokenId,
+    amount,
+    value: amount * 10,
+    valueForProject: amount * 10,
+    valueForSummary: amount * 10,
+  }
+}
+
+function record(
+  timestamp: UnixTime,
+  token: TvsToken,
+  projectId: string,
+  amount: number,
+) {
+  return {
+    ...value(timestamp, projectId, token.id, amount),
+    configurationId: TokenValueIndexer.idToConfigurationId(token),
+  }
+}
