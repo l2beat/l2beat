@@ -10,8 +10,9 @@ export type ProjectToken = TvsToken & {
 }
 
 export async function getTokensForProject(
-  project: Project<'tvsConfig'>,
-): Promise<ProjectTokens> {
+  project: Project<never, 'tvsConfig'>,
+): Promise<ProjectTokens | undefined> {
+  if (!project.tvsConfig) return undefined
   if (env.MOCK) {
     return getMockTokensForProject(project)
   }
@@ -66,7 +67,8 @@ function groupBySource(tokens: ProjectToken[]) {
   }
 }
 
-function getMockTokensForProject(project: Project<'tvsConfig'>) {
+function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
+  if (!project.tvsConfig) return undefined
   return groupBySource(
     project.tvsConfig.map((t) => ({
       ...t,
