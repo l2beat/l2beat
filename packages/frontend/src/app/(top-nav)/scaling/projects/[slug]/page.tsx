@@ -68,7 +68,6 @@ export default async function Page(props: Props) {
       'scalingStage',
       'scalingTechnology',
       'tvlInfo',
-      'tvsConfig',
     ],
     optional: [
       'contracts',
@@ -80,6 +79,7 @@ export default async function Page(props: Props) {
       'archivedAt',
       'milestones',
       'trackedTxsConfig',
+      'tvsConfig',
     ],
   })
   if (!project) {
