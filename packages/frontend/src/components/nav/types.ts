@@ -6,7 +6,7 @@ export type NavGroup =
       icon: React.ReactNode
       preventTitleNavigation?: boolean
       disableMobileTabs?: boolean
-      links: NavLink[]
+      links: [NavLink, ...NavLink[]]
       secondaryLinks?: NavLink[]
     }
   | ({

@@ -59,6 +59,7 @@ export function BasicTable<T extends CommonProjectEntry>(
 
   const groupedHeader = maxDepth === 1 ? headerGroups[0] : undefined
   const actualHeader = maxDepth === 1 ? headerGroups[1] : headerGroups[0]
+  assert(actualHeader, 'Actual header is required')
 
   const rows = getTableRows(props.table)
   return (
@@ -102,7 +103,7 @@ export function BasicTable<T extends CommonProjectEntry>(
             </TableHeaderRow>
           )}
         <TableHeaderRow>
-          {actualHeader?.headers.map((header) => {
+          {actualHeader.headers.map((header) => {
             const groupParams = getBasicTableGroupParams(header.column)
             return (
               <React.Fragment key={`${actualHeader.id}-${header.id}`}>

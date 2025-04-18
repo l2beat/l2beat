@@ -178,7 +178,7 @@ function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
 }
 
 function getMockLivenessData(): LivenessResponse {
-  const projects = [
+  const projectIds = [
     'arbitrum',
     'optimism',
     'apex',
@@ -190,56 +190,57 @@ function getMockLivenessData(): LivenessResponse {
     'myria',
     'scroll',
     'polygonzkevm',
-  ].reduce<Record<string, LivenessProject>>((acc, cur) => {
-    acc[cur] = generateMockData()
-    return acc
-  }, {})
+  ] as const
+
+  const projects = projectIds.reduce(
+    (acc, cur) => {
+      acc[cur] = generateMockData()
+      return acc
+    },
+    {} as Record<(typeof projectIds)[number], LivenessProject>,
+  )
 
   return {
     ...projects,
-    ...(projects.linea && {
-      linea: {
-        ...projects.linea,
-        batchSubmissions: {
-          '30d': generateDataPoint(),
-          '90d': generateDataPoint(),
-          max: generateDataPoint(),
-          syncedUntil: UnixTime.toStartOf(
-            UnixTime.now() - 2 * UnixTime.HOUR,
-            'hour',
-          ),
-        },
-        proofSubmissions: {
-          '30d': generateDataPoint(),
-          '90d': generateDataPoint(),
-          max: generateDataPoint(),
-          syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
-        },
+    linea: {
+      ...projects.linea,
+      batchSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 2 * UnixTime.HOUR,
+          'hour',
+        ),
       },
-    }),
-    ...(projects.dydx && {
-      dydx: {
-        ...projects.dydx,
-        stateUpdates: {
-          '30d': generateDataPoint(),
-          '90d': generateDataPoint(),
-          max: generateDataPoint(),
-          syncedUntil: UnixTime.toStartOf(
-            UnixTime.now() - 2 * UnixTime.HOUR,
-            'hour',
-          ),
-        },
-        proofSubmissions: {
-          '30d': generateDataPoint(),
-          '90d': generateDataPoint(),
-          max: generateDataPoint(),
-          syncedUntil: UnixTime.toStartOf(
-            UnixTime.now() - 4 * UnixTime.HOUR,
-            'hour',
-          ),
-        },
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
       },
-    }),
+    },
+    dydx: {
+      ...projects.dydx,
+      stateUpdates: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 2 * UnixTime.HOUR,
+          'hour',
+        ),
+      },
+      proofSubmissions: {
+        '30d': generateDataPoint(),
+        '90d': generateDataPoint(),
+        max: generateDataPoint(),
+        syncedUntil: UnixTime.toStartOf(
+          UnixTime.now() - 4 * UnixTime.HOUR,
+          'hour',
+        ),
+      },
+    },
   }
 }
 
