@@ -1,8 +1,8 @@
 {
   "name": "xdai",
   "chain": "ethereum",
-  "blockNumber": 22281707,
-  "configHash": "0xef84a5b9b31d2d79cce9dbe6e50a9fcff664fb0777c2c9c11057c6f8f4515d27",
+  "blockNumber": 22297612,
+  "configHash": "0xe2190a0fc663174fa49cdd4512b52e457393bd9d35ca268a5a52c438e7b83445",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -129,7 +129,7 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["maxAvailablePerTx"],
+      "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
       "sinceTimestamp": 1539028166,
       "sinceBlock": 6478422,
       "values": {
@@ -199,10 +199,10 @@
         "hashiManager": "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9999039402170000000000000",
+        "maxAvailablePerTx": "9961054445144258732097276",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 14,
+        "nonce": 47,
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,

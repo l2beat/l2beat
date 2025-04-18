@@ -102,7 +102,7 @@
         "withinLimit",
         "getCurrentDay"
       ],
-      "ignoreInWatchMode": ["maxAvailablePerTx"]
+      "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"]
     },
     "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
       // BridgeValidators
