@@ -15,11 +15,16 @@ export async function GET(
   const { slug } = await props.params
   const searchParams = request.nextUrl.searchParams
 
-  const params = {
-    range: searchParams.get('range') ?? '30d',
+  const range = searchParams.get('range') as
+    | TvsChartDataParams['range']
+    | undefined
+
+  const params: TvsChartDataParams = {
+    range: range ?? '30d',
     filter: { type: 'projects', projectIds: [slug] },
     excludeAssociatedTokens:
       searchParams.get('excludeAssociatedTokens') === 'true',
+    previewRecategorisation: false,
   }
   const parsedParams = TvsChartDataParams.safeParse(params)
 

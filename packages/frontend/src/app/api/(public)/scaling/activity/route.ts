@@ -10,9 +10,28 @@ import {
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
 
-  const params = {
-    filter: { type: searchParams.get('type') ?? 'all' },
-    range: searchParams.get('range') ?? '30d',
+  const type = searchParams.get('type') as
+    | ActivityChartParams['filter']['type']
+    | undefined
+  const range = searchParams.get('range') as
+    | ActivityChartParams['range']
+    | undefined
+  const projectIds = searchParams.get('projectIds')
+
+  if (type === 'projects' && !projectIds) {
+    return NextResponse.json({
+      success: false,
+      errors: [{ message: 'projectIds is required for "projects" type' }],
+    })
+  }
+
+  const params: ActivityChartParams = {
+    filter:
+      type === 'projects'
+        ? { type: 'projects', projectIds: projectIds?.split(',') ?? [] }
+        : { type: type ?? 'all' },
+    range: range ?? '30d',
+    previewRecategorisation: false,
   }
   const parsedParams = ActivityChartParams.safeParse(params)
 

@@ -10,11 +10,33 @@ import {
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
 
-  const params = {
-    range: searchParams.get('range') ?? '30d',
-    filter: { type: searchParams.get('type') ?? 'layer2' },
+  const range = searchParams.get('range') as
+    | TvsChartDataParams['range']
+    | undefined
+  const type = searchParams.get('type') as
+    | TvsChartDataParams['filter']['type']
+    | undefined
+  const projectIds = searchParams.get('projectIds')
+
+  if (type === 'projects' && !projectIds) {
+    return NextResponse.json({
+      success: false,
+      errors: [{ message: 'projectIds is required for "projects" type' }],
+    })
+  }
+
+  const params: TvsChartDataParams = {
+    range: range ?? '30d',
+    filter:
+      type === 'projects'
+        ? {
+            type: 'projects',
+            projectIds: projectIds?.split(',') ?? [],
+          }
+        : { type: type ?? 'layer2' },
     excludeAssociatedTokens:
       searchParams.get('excludeAssociatedTokens') === 'true',
+    previewRecategorisation: false,
   }
 
   const parsedParams = TvsChartDataParams.safeParse(params)

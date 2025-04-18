@@ -15,9 +15,14 @@ export async function GET(
   const { slug } = await props.params
   const searchParams = request.nextUrl.searchParams
 
-  const params = {
+  const range = searchParams.get('range') as
+    | ActivityChartParams['range']
+    | undefined
+
+  const params: ActivityChartParams = {
     filter: { type: 'projects', projectIds: [slug] },
-    range: searchParams.get('range') ?? '30d',
+    range: range ?? '30d',
+    previewRecategorisation: false,
   }
   const parsedParams = ActivityChartParams.safeParse(params)
   if (parsedParams.error) {
