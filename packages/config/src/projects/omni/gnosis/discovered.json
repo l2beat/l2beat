@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 39589758,
-  "configHash": "0x7ae40da8cdca8c0a3a020884f5a47e167fe95591e9d602f08b5a9acbdd1e202a",
+  "blockNumber": 39627531,
+  "configHash": "0x597f57c745a7834cb42a68bb6c3c64103004f422393b4c430cb6c0c0c41ea0bd",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -574,13 +574,14 @@
         "0xf80096ea7a47fdf03cff05c2b054950ec13c7697be27ad236c3634a8b91d89c2"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["getCurrentEpoch", "head"],
       "values": {
         "$immutable": true,
         "GENESIS_TIME": 1606824023,
         "GENESIS_VALIDATORS_ROOT": "0x4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95",
-        "getCurrentEpoch": 357523,
+        "getCurrentEpoch": 359826,
         "guardian": "0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
-        "head": 11440736,
+        "head": 11514432,
         "heliosProgramVkey": "0x00ed996c6f79e241fd4879d34ebfef7514ad8b817d0b40ab82a9856460d298c0",
         "SECONDS_PER_SLOT": 12,
         "SLOTS_PER_EPOCH": 32,
@@ -826,6 +827,7 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["getCurrentDay"],
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
@@ -878,7 +880,7 @@
         "gasLimitManager": "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20194,
+        "getCurrentDay": 20196,
         "implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0x88ad09518695c6c3712AC10a214bE5109a655671",
