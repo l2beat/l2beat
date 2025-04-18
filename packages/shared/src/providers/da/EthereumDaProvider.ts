@@ -10,18 +10,45 @@ export class EthereumDaProvider implements DaBlobProvider {
   constructor(
     private readonly client: BlobScanClient,
     readonly daLayer: string,
+    private readonly batchCount: number,
   ) {}
 
   async getBlobs(from: number, to: number): Promise<DaBlob[]> {
-    const blobs = await this.client.getBlobs(from, to)
+    const batchRanges = toEqualBatches(from, to, this.batchCount)
 
-    return blobs.map((blob) => ({
-      type: 'ethereum',
-      daLayer: this.daLayer,
-      blockTimestamp: UnixTime.fromDate(new Date(blob.blockTimestamp)),
-      size: BLOB_SIZE_BYTES,
-      inbox: blob.transaction.to,
-      sequencer: blob.transaction.from,
-    }))
+    const batchResults = await Promise.all(
+      batchRanges.map(async ({ start, end }) => {
+        const blobs = await this.client.getBlobs(start, end)
+
+        return blobs.map((blob) => ({
+          type: 'ethereum' as const,
+          daLayer: this.daLayer,
+          blockTimestamp: UnixTime.fromDate(new Date(blob.blockTimestamp)),
+          size: BLOB_SIZE_BYTES,
+          inbox: blob.transaction.to,
+          sequencer: blob.transaction.from,
+        }))
+      }),
+    )
+
+    return batchResults.flat()
   }
+}
+
+export function toEqualBatches(from: number, to: number, batchCount: number) {
+  const batchRanges = []
+
+  const totalBlocks = to - from + 1
+  const batchSize = Math.ceil(totalBlocks / batchCount)
+
+  for (let i = 0; i < batchCount; i++) {
+    const batchStart = from + i * batchSize
+
+    if (batchStart > to) break
+
+    const batchEnd = Math.min(batchStart + batchSize - 1, to)
+    batchRanges.push({ start: batchStart, end: batchEnd })
+  }
+
+  return batchRanges
 }

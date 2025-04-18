@@ -253,6 +253,8 @@ export interface DataAvailabilityTrackingConfig {
     callsPerMinute: number
     batchSize: number
     startingBlock: number
+    // used for Ethereum Blobscan
+    batchCount?: number
   }[]
 
   readonly projects: {

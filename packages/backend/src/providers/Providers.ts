@@ -59,7 +59,7 @@ export class Providers {
         : undefined
     this.da = new DaProvider([
       ...this.clients.blobscan.map(
-        (c) => new EthereumDaProvider(c.client, c.daLayer),
+        (c) => new EthereumDaProvider(c.client, c.daLayer, c.batchCount),
       ),
       ...this.clients.celestia.map(
         (c) => new CelestiaDaProvider(c.client, c.daLayer),
