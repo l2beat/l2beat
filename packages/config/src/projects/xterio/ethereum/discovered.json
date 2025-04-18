@@ -577,7 +577,7 @@
         "0x106b0e020294fd04557c64727796c1a7afc80dba9c83e38e52b5282d4d1531f5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled!",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.",
       "issuedPermissions": [
         {
           "permission": "guard",

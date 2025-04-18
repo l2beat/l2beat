@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x670d440766b0725804655cdc96b002d124c34cac
+Generated with discovered.json: 0x574e3e6b593a60efbb40cfe2be94190ec96f3f5b
 
-# Diff at Fri, 18 Apr 2025 18:26:57 GMT:
+# Diff at Fri, 18 Apr 2025 18:48:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@1dee5bc960c23f20e33ad3548023a46f9d9c2128 block: 22208349
@@ -14,7 +14,7 @@ upgrade to 'special' OptiPortal without deposited tx mechanism and with a permis
 
 ```diff
     contract OptimismPortal (0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A) {
-    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled!
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.
       template:
 -        "opstack/OptimismPortal"
 +        "opstack/OptimismPortalAdminWithdraw"
@@ -23,7 +23,7 @@ upgrade to 'special' OptiPortal without deposited tx mechanism and with a permis
 +        "0x106b0e020294fd04557c64727796c1a7afc80dba9c83e38e52b5282d4d1531f5"
       description:
 -        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
-+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled!"
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled."
       issuedPermissions.2:
 +        {"permission":"upgrade","to":"0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574","via":[{"address":"0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"}]}
       issuedPermissions.1.permission:
