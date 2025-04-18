@@ -32,6 +32,7 @@ import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { TokenScreening } from './TokenScreening'
 import { UI } from './UI'
+import { ZkGovProposal } from './ZkGovProposal'
 
 export function getSubcommands() {
   return [
@@ -69,5 +70,6 @@ export function getSubcommands() {
     TVL,
     TokenScreening,
     UI,
+    ZkGovProposal,
   ]
 }
