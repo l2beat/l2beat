@@ -62,7 +62,7 @@ export function DaThroughputByProjectChart({
         acc[project] = {
           label: project,
           color:
-            project === 'Others'
+            project === 'Unknown'
               ? 'hsl(var(--secondary))'
               : (customColors[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
@@ -140,8 +140,8 @@ function CustomTooltip({
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   payload.sort((a, b) => {
-    if (a.name === 'Others') return 1
-    if (b.name === 'Others') return -1
+    if (a.name === 'Unknown') return 1
+    if (b.name === 'Unknown') return -1
     return (b.value ?? 0) - (a.value ?? 0)
   })
 

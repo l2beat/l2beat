@@ -87,7 +87,7 @@ function groupByTimestampAndProjectId(
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
-  // Add the difference between the total size and the sum of the other projects as 'Others'
+  // Add the difference between the total size and the sum of the other projects as 'Unknown'
   for (const record of daLayerRecords) {
     const timestamp = record.timestamp
     const value = record.totalSize
@@ -97,7 +97,7 @@ function groupByTimestampAndProjectId(
     )
     result[timestamp] = {
       ...result[timestamp],
-      ['Others']: Number(value) - restSummed,
+      ['Unknown']: Number(value) - restSummed,
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)

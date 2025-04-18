@@ -42,8 +42,8 @@ export function ThroughputSectionByProjectChart({
             .reverse()
             .flatMap(([_, values]) => Object.keys(values))
             .sort((a, b) => {
-              if (a === 'Others') return 1
-              if (b === 'Others') return -1
+              if (a === 'Unknown') return 1
+              if (b === 'Unknown') return -1
               return 0
             }),
         )
@@ -59,7 +59,7 @@ export function ThroughputSectionByProjectChart({
     () =>
       selectedProjects ??
       allProjects
-        .filter((p) => p !== 'Others')
+        .filter((p) => p !== 'Unknown')
         .slice(0, DEFAULT_PROJECTS_TO_SHOW),
     [allProjects, selectedProjects],
   )
