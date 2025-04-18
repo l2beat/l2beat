@@ -2,21 +2,52 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
-import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import {
+  ActivityChartParams,
+  getActivityChart,
+} from '~/server/features/scaling/activity/get-activity-chart'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
-  const range = ActivityTimeRange.catch('30d').parse(searchParams.get('range'))
-  const response = await getCachedResponse(range)
+
+  const type = searchParams.get('type') as
+    | ActivityChartParams['filter']['type']
+    | null
+  const range = searchParams.get('range') as ActivityChartParams['range'] | null
+  const projectIds = searchParams.get('projectIds')
+
+  if (type === 'projects' && !projectIds) {
+    return NextResponse.json({
+      success: false,
+      errors: [{ message: 'projectIds is required for "projects" type' }],
+    })
+  }
+
+  const params: ActivityChartParams = {
+    filter:
+      type === 'projects'
+        ? { type: 'projects', projectIds: projectIds?.split(',') ?? [] }
+        : { type: type ?? 'all' },
+    range: range ?? '30d',
+    previewRecategorisation: false,
+  }
+  const parsedParams = ActivityChartParams.safeParse(params)
+
+  if (parsedParams.error) {
+    return NextResponse.json({
+      success: false,
+      errors: parsedParams.error.errors,
+    })
+  }
+
+  const response = await getCachedResponse(parsedParams.data)
 
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (range: ActivityTimeRange) => {
-    const { data } = await getActivityChart({ type: 'all' }, range, false)
-
+  async (params: ActivityChartParams) => {
+    const { data } = await getActivityChart(params)
     const latestActivityData = data.at(-1)
 
     if (!latestActivityData) {

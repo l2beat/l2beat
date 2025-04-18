@@ -16,6 +16,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getBridgesRiskSummarySection } from '~/utils/project/risk-summary/get-bridges-risk-summary'
+import { getBridgeOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getBridgeTechnologySection } from '~/utils/project/technology/get-technology-section'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -205,6 +206,37 @@ export async function getBridgesProjectEntry(
         ...technologySection,
         id: 'technology',
         title: 'Technology',
+      },
+    })
+  }
+
+  const otherConsiderationsSection =
+    getBridgeOtherConsiderationsSection(project)
+  if (otherConsiderationsSection) {
+    sections.push({
+      type: 'TechnologySection',
+      props: {
+        id: 'other-considerations',
+        title: 'Other considerations',
+        ...otherConsiderationsSection,
+      },
+    })
+  }
+
+  if (project.bridgeTechnology.upgradesAndGovernance) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'upgrades-and-governance',
+        title: 'Upgrades & Governance',
+        content: project.bridgeTechnology.upgradesAndGovernance,
+        diagram: {
+          type: 'upgrades-and-governance',
+          slug:
+            project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
+        },
+        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+        isUnderReview: project.statuses.isUnderReview,
       },
     })
   }

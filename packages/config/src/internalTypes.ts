@@ -256,6 +256,7 @@ export interface Bridge {
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
   discoveryInfo?: ProjectDiscoveryInfo
+  upgradesAndGovernance?: string
 }
 
 export interface BridgeDisplay {
@@ -268,6 +269,7 @@ export interface BridgeDisplay {
   category: BridgeCategory
   links: ProjectLinks
   architectureImage?: string
+  upgradesAndGovernanceImage?: string
 }
 
 export interface BridgeConfig {

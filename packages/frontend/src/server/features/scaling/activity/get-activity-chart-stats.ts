@@ -17,11 +17,11 @@ export async function getActivityChartStats(
 export const getCachedActivityChartStats = cache(
   async (filter: ActivityProjectFilter, previewRecategorisation: boolean) => {
     // We should use the last 7 days but 30d is probably cached already so it's faster
-    const { data: chartData } = await getActivityChart(
+    const { data: chartData } = await getActivityChart({
       filter,
-      '30d',
+      range: '30d',
       previewRecategorisation,
-    )
+    })
 
     const latestData = chartData.at(-1)
     if (!latestData) {

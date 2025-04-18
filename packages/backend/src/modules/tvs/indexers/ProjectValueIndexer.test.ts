@@ -1,70 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { Database, TokenValueRecord } from '@l2beat/database'
-import { TokenId } from '@l2beat/shared-pure'
+import { TokenId, type UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { Configuration } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../../tvl/utils/SyncOptimizer'
-import type { ProjectValueConfig } from '../types'
 import { ProjectValueIndexer } from './ProjectValueIndexer'
 
 describe(ProjectValueIndexer.name, () => {
-  const PROJECT = 'test-project'
-  const CONFIG_ID = 'test-config-id'
-  const MIN_HEIGHT = 100
-  const MAX_HEIGHT = 200
-
-  const mockConfiguration: Configuration<ProjectValueConfig> = {
-    id: CONFIG_ID,
-    properties: {
-      project: PROJECT,
-    },
-    minHeight: MIN_HEIGHT,
-    maxHeight: MAX_HEIGHT,
-  }
-
   const mockTokens = new Map<string, TvsToken>([
-    [
-      'token1',
-      mockObject<TvsToken>({
-        mode: 'auto',
-        id: TokenId('token1'),
-        priceId: 'token1-price',
-        symbol: 'TKN1',
-        name: 'Token 1',
-        category: 'ether',
-        source: 'canonical',
-        isAssociated: false,
-      }),
-    ],
-    [
-      'token2',
-      mockObject<TvsToken>({
-        mode: 'auto',
-        id: TokenId('token2'),
-        priceId: 'token2-price',
-        symbol: 'TKN2',
-        name: 'Token 2',
-        category: 'stablecoin',
-        source: 'external',
-        isAssociated: true,
-      }),
-    ],
-    [
-      'token3',
-      mockObject<TvsToken>({
-        mode: 'auto',
-        id: TokenId('token3'),
-        priceId: 'token3-price',
-        symbol: 'TKN3',
-        name: 'Token 3',
-        category: 'other',
-        source: 'native',
-        isAssociated: false,
-      }),
-    ],
+    ['token1', tokenConfig('token1', 'canonical', 'ether', false)],
+    ['token2', tokenConfig('token2', 'external', 'stablecoin', true)],
+    ['token3', tokenConfig('token3', 'native', 'other', false)],
   ])
 
   describe(ProjectValueIndexer.prototype.multiUpdate.name, () => {
@@ -72,27 +20,9 @@ describe(ProjectValueIndexer.name, () => {
       const timestamps = [1000, 2000]
 
       const mockTokenValues: TokenValueRecord[] = [
-        mockObject<TokenValueRecord>({
-          timestamp: 1000,
-          projectId: PROJECT,
-          tokenId: 'token1',
-          valueForProject: 100,
-          valueForSummary: 100,
-        }),
-        mockObject<TokenValueRecord>({
-          timestamp: 1000,
-          projectId: PROJECT,
-          tokenId: 'token2',
-          valueForProject: 200,
-          valueForSummary: 200,
-        }),
-        mockObject<TokenValueRecord>({
-          timestamp: 2000,
-          projectId: PROJECT,
-          tokenId: 'token3',
-          valueForProject: 300,
-          valueForSummary: 300,
-        }),
+        tokenRecord('token1', timestamps[0], 100),
+        tokenRecord('token2', timestamps[0], 200),
+        tokenRecord('token3', timestamps[0], 300),
       ]
 
       const tokenRepository = mockObject<Database['tvsTokenValue']>({
@@ -113,7 +43,7 @@ describe(ProjectValueIndexer.name, () => {
       const indexer = new ProjectValueIndexer({
         db,
         logger: Logger.SILENT,
-        configurations: [mockConfiguration],
+        configurations: [config('id', 'project', 100, 200)],
         syncOptimizer,
         tokens: mockTokens,
         maxTimestampsToProcessAtOnce: 10,
@@ -121,11 +51,13 @@ describe(ProjectValueIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
       })
 
-      const result = await indexer.multiUpdate(100, 200, [mockConfiguration])
+      const result = await indexer.multiUpdate(100, 200, [
+        config('id', 'project', 100, 200),
+      ])
       await result()
 
       expect(tokenRepository.getByProject).toHaveBeenOnlyCalledWith(
-        PROJECT,
+        'project',
         1000,
         2000,
       )
@@ -145,7 +77,7 @@ describe(ProjectValueIndexer.name, () => {
       const indexer = new ProjectValueIndexer({
         db,
         logger: Logger.SILENT,
-        configurations: [mockConfiguration],
+        configurations: [config('id', 'project', 100, 200)],
         syncOptimizer,
         tokens: mockTokens,
         maxTimestampsToProcessAtOnce: 10,
@@ -154,7 +86,7 @@ describe(ProjectValueIndexer.name, () => {
       })
 
       const result = await (
-        await indexer.multiUpdate(100, 200, [mockConfiguration])
+        await indexer.multiUpdate(100, 200, [config('id', 'project', 100, 200)])
       )()
       expect(result).toEqual(200)
     })
@@ -165,7 +97,7 @@ describe(ProjectValueIndexer.name, () => {
       const indexer = new ProjectValueIndexer({
         db: mockObject<Database>(),
         logger: Logger.SILENT,
-        configurations: [mockConfiguration],
+        configurations: [config('id', 'project', 100, 200)],
         syncOptimizer: mockObject<SyncOptimizer>(),
         tokens: mockTokens,
         maxTimestampsToProcessAtOnce: 10,
@@ -175,32 +107,14 @@ describe(ProjectValueIndexer.name, () => {
 
       const timestamp = 1000
 
-      const tokensForTimestamp: TokenValueRecord[] = [
-        mockObject<TokenValueRecord>({
-          timestamp,
-          projectId: PROJECT,
-          tokenId: 'token1',
-          valueForProject: 100,
-          valueForSummary: 100,
-        }),
-        mockObject<TokenValueRecord>({
-          timestamp,
-          projectId: PROJECT,
-          tokenId: 'token2',
-          valueForProject: 200,
-          valueForSummary: 200,
-        }),
-        mockObject<TokenValueRecord>({
-          timestamp,
-          projectId: PROJECT,
-          tokenId: 'token3',
-          valueForProject: 300,
-          valueForSummary: 300,
-        }),
+      const tokensForTimestamp = [
+        tokenRecord('token1', timestamp, 100),
+        tokenRecord('token2', timestamp, 200),
+        tokenRecord('token3', timestamp, 300),
       ]
 
       const result = indexer.aggregateForTimestamp(
-        PROJECT,
+        'project',
         timestamp,
         tokensForTimestamp,
       )
@@ -251,7 +165,7 @@ describe(ProjectValueIndexer.name, () => {
       const indexer = new ProjectValueIndexer({
         db,
         logger: Logger.SILENT,
-        configurations: [mockConfiguration],
+        configurations: [config('id', 'project', 100, 200)],
         tokens: mockTokens,
         syncOptimizer: mockObject<SyncOptimizer>(),
         maxTimestampsToProcessAtOnce: 10,
@@ -261,16 +175,16 @@ describe(ProjectValueIndexer.name, () => {
 
       await indexer.removeData([
         {
-          id: CONFIG_ID,
-          from: MIN_HEIGHT,
-          to: MAX_HEIGHT,
+          id: 'id',
+          from: 100,
+          to: 200,
         },
       ])
 
       expect(projectRepository.trimProject).toHaveBeenOnlyCalledWith(
-        PROJECT,
-        MIN_HEIGHT,
-        MAX_HEIGHT,
+        'project',
+        100,
+        200,
       )
     })
   })
@@ -279,3 +193,44 @@ describe(ProjectValueIndexer.name, () => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+function config(
+  id: string,
+  project: string,
+  minHeight: number,
+  maxHeight: number,
+) {
+  return {
+    id,
+    properties: {
+      project,
+    },
+    minHeight,
+    maxHeight,
+  }
+}
+
+function tokenConfig(
+  id: string,
+  source: string,
+  category: string,
+  isAssociated: boolean,
+) {
+  return mockObject<TvsToken>({
+    mode: 'auto',
+    id: TokenId(id),
+    source: source as TvsToken['source'],
+    category: category as TvsToken['category'],
+    isAssociated,
+  })
+}
+
+function tokenRecord(tokenId: string, timestamp: UnixTime, value: number) {
+  return mockObject<TokenValueRecord>({
+    timestamp,
+    tokenId,
+    amount: value,
+    valueForProject: value,
+    valueForSummary: value,
+  })
+}

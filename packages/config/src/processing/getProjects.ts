@@ -230,6 +230,8 @@ function bridgeToProject(p: Bridge, tokenList: Token[]): BaseProject {
     bridgeTechnology: {
       ...p.technology,
       detailedDescription: p.display.detailedDescription,
+      upgradesAndGovernance: p.upgradesAndGovernance,
+      upgradesAndGovernanceImage: p.display.upgradesAndGovernanceImage,
     },
     contracts: p.contracts,
     permissions: p.permissions,
