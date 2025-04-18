@@ -9,7 +9,7 @@ export function unstable_cache<T extends Callback>(
   __?: unknown,
 ): T {
   return ((...args: Parameters<T>) => {
-    const key = keyParts?.join(':') ?? JSON.stringify(args)
+    const key = JSON.stringify(`${keyParts?.join(':')}:${JSON.stringify(args)}`)
 
     const cached = cache.get(key)
     if (cached) {
