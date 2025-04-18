@@ -1,8 +1,6 @@
 import { AboutUsPage } from './about/AboutUsPage'
 import { DonatePage } from './donate/DonatePage'
 import { FaqPage } from './faq/FaqPage'
-import { HomePage } from './home/HomePage'
-import { ProductPage } from './product/ProductPage'
 
 type Pages = typeof pages
 export type SsrData = {
@@ -13,8 +11,6 @@ export type SsrData = {
 }[keyof Pages]
 
 const pages = {
-  HomePage,
-  ProductPage,
   FaqPage,
   AboutUsPage,
   DonatePage,

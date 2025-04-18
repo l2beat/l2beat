@@ -7,12 +7,17 @@ import AboutUs from '../../../../src/app/(side-nav)/about-us/page'
 export interface AboutUsPageProps {
   terms: GlossaryTermWithoutDescription[]
   searchBarProjects: SearchBarProject[]
+  showHiringBadge: boolean
+  ecosystemsEnabled: boolean
 }
 
 export function AboutUsPage(props: AboutUsPageProps) {
   return (
     <AppLayout {...props}>
-      <SideNavLayout showHiringBadge={false}>
+      <SideNavLayout
+        showHiringBadge={props.showHiringBadge}
+        ecosystemsEnabled={props.ecosystemsEnabled}
+      >
         <AboutUs />
       </SideNavLayout>
     </AppLayout>

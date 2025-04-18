@@ -37,6 +37,8 @@ async function getFaqData(manifest: Manifest): Promise<RenderData> {
           ...p,
           iconUrl: manifest.getUrl('/static' + p.iconUrl),
         })),
+        showHiringBadge: false,
+        ecosystemsEnabled: false,
       },
     },
   }
