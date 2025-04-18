@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { KnowledgeBase, groupFacts } from './KnowledgeBase'
+import { KnowledgeBase } from './KnowledgeBase'
 import { ClingoFactFile } from './factTypes'
 
 describe(KnowledgeBase.name, () => {
@@ -85,43 +85,6 @@ describe(KnowledgeBase.name, () => {
         'No fact found with id "contract" and params: ["abc","def"]',
       )
     })
-  })
-})
-
-describe(groupFacts.name, () => {
-  it('correctly groups facts', () => {
-    const factsFile = {
-      facts: [
-        {
-          atom: 'fact',
-          params: ['personA', 'can', 'eat', 'apple'],
-        },
-        {
-          atom: 'fact',
-          params: ['personB', 'can', 'eat', 'apple'],
-        },
-        {
-          atom: 'fact',
-          params: ['personC', 'can', 'eat', 'fruit'],
-        },
-      ],
-    }
-    const knowledgeBase = new KnowledgeBase(
-      ClingoFactFile.parse(factsFile).facts,
-    )
-    const ethereumContractFacts = knowledgeBase.getFacts('fact', [
-      undefined,
-      undefined,
-      undefined,
-      'apple',
-    ])
-    const result = groupFacts(ethereumContractFacts, 0)
-    expect(result).toEqual([
-      {
-        atom: 'fact',
-        params: [['personA', 'personB'], 'can', 'eat', 'apple'],
-      },
-    ])
   })
 })
 
