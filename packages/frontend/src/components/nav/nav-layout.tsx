@@ -6,7 +6,6 @@ import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { EcosystemsIcon } from '~/icons/pages/ecosystems'
 import { ScalingIcon } from '~/icons/pages/scaling'
 import { ZkCatalogIcon } from '~/icons/pages/zk-catalog'
-import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
 import { HiringBadge } from '../badge/hiring-badge'
 import { SidebarProvider } from '../core/sidebar'
@@ -157,11 +156,24 @@ export function NavLayout({
         <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
       preventTitleNavigation: true,
-      links: (
-        await ps.getProjects({
-          select: ['ecosystemConfig'],
-        })
-      )
+      links: [
+        {
+          name: 'AggLayer',
+          slug: 'agglayer',
+        },
+        {
+          name: 'Arbitrum Orbit',
+          slug: 'arbitrum-orbit',
+        },
+        {
+          name: 'Superchain',
+          slug: 'superchain',
+        },
+        {
+          name: 'The Elastic Network',
+          slug: 'the-elastic-network',
+        },
+      ]
         .map((ecosystem) => ({
           title: ecosystem.name,
           href: `/ecosystems/${ecosystem.slug}`,
@@ -194,9 +206,7 @@ export function NavLayout({
     {
       title: 'Jobs',
       href: externalLinks.jobs,
-      accessory: showHiringBadge ? (
-        <HiringBadge />
-      ) : undefined,
+      accessory: showHiringBadge ? <HiringBadge /> : undefined,
     },
     {
       title: 'Brand Kit',
