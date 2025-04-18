@@ -1,4 +1,6 @@
 import type { Router } from 'express'
+import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
+import { getCollection } from '~/content/get-collection'
 import type { Manifest } from '../../../common/Manifest'
 import type { RenderData, RenderFunction } from '../../../ssr/server'
 
@@ -15,6 +17,8 @@ export function ActivityRouter(
 }
 
 async function getActivityData(manifest: Manifest): Promise<RenderData> {
+  const searchBarProjects = await getSearchBarProjects()
+
   return {
     head: {
       manifest,
@@ -24,7 +28,18 @@ async function getActivityData(manifest: Manifest): Promise<RenderData> {
     },
     ssr: {
       page: 'ActivityPage',
-      props: undefined,
+      props: {
+        terms: getCollection('glossary').map((term) => ({
+          id: term.id,
+          matches: [term.data.term, ...(term.data.match ?? [])],
+        })),
+        searchBarProjects: searchBarProjects.map((p) => ({
+          ...p,
+          iconUrl: manifest.getUrl('/static' + p.iconUrl),
+        })),
+        showHiringBadge: false,
+        ecosystemsEnabled: false,
+      },
     },
   }
 }

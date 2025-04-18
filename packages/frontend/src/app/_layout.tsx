@@ -6,15 +6,16 @@ import { RecategorisationPreviewContextProvider } from '~/components/recategoris
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import type { SearchBarProject } from '~/components/search-bar/search-bar-entry'
 
+export interface AppLayoutProps  {
+  terms: GlossaryTermWithoutDescription[]
+  searchBarProjects: SearchBarProject[]
+}
+
 export function AppLayout({
   children,
   terms,
   searchBarProjects,
-}: {
-  children: React.ReactNode
-  terms: GlossaryTermWithoutDescription[]
-  searchBarProjects: SearchBarProject[]
-}) {
+}: AppLayoutProps & { children: React.ReactNode }) {
   return (
     <ThemeProvider
       attribute="class"

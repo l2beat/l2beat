@@ -3,15 +3,16 @@ import { Footer } from '~/components/footer'
 import { NavLayout } from '~/components/nav/nav-layout'
 import { RecategorisationPreviewBanner } from '~/components/recategorisation-preview/recategorisation-preview-banner'
 
+export interface SideNavLayoutProps {
+  ecosystemsEnabled: boolean
+  showHiringBadge: boolean
+}
+
 export function SideNavLayout({
   children,
   ecosystemsEnabled,
   showHiringBadge,
-}: {
-  children: React.ReactNode
-  ecosystemsEnabled: boolean
-  showHiringBadge: boolean
-}) {
+}: SideNavLayoutProps & { children: React.ReactNode }) {
   return (
     <NavLayout
       logoLink="/scaling/summary"
