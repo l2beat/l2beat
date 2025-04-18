@@ -12,8 +12,8 @@ import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
-import { BridgesSummarySingleChainTable } from './table/bridges-summary-singlechain-table'
 import { BridgesSummaryOthersTable } from './table/bridges-summary-others-table'
+import { BridgesSummarySingleChainTable } from './table/bridges-summary-singlechain-table'
 
 type Props = TabbedBridgeEntries<BridgesSummaryEntry>
 export function BridgesSummaryTables(props: Props) {
