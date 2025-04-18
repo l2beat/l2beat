@@ -12,12 +12,12 @@ export function useFilterEntries() {
       }
 
       for (const id in state) {
-        const filter = state[id as FilterableValueId]!
+        const filter = state[id as FilterableValueId]
 
         const matches = filterable.some(
-          (f) => f.id === id && filter.values.includes(f.value),
+          (f) => f.id === id && filter?.values.includes(f.value),
         )
-        const result = filter.inversed ? !matches : matches
+        const result = filter?.inversed ? !matches : matches
 
         if (result === false) {
           return false

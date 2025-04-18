@@ -34,7 +34,7 @@ export function RealPizzaRosetteIcon({
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
-  const selectRisk = (risk: RosetteValue) => {
+  const selectRisk = (risk: RosetteValue | undefined) => {
     setSelectedRisk?.(risk)
   }
 
