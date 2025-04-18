@@ -1,11 +1,12 @@
 import './dotenv'
 
+import * as trpcExpress from '@trpc/server/adapters/express'
 import compression from 'compression'
 import express from 'express'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import sirv from 'sirv'
-import { env } from '~/env'
+import { appRouter } from '~/server/api/root'
 import { type Manifest, getManifest } from './common/Manifest'
 import { ServerPageRouter } from './pages/ServerPageRouter'
 import { type RenderData, render } from './ssr/server'
@@ -34,6 +35,17 @@ if (isProduction) {
 }
 
 ServerPageRouter(app, manifest, renderToHtml)
+const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
+  headers: new Headers(req.headers as Record<string, string>),
+})
+
+app.use(
+  '/api/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  }),
+)
 
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
@@ -44,7 +56,7 @@ function renderToHtml(data: RenderData, url: string) {
   const sizeInBytes = JSON.stringify(data.ssr).length
   const sizeInKiB = (sizeInBytes / 1024).toFixed(2)
   const envData = Object.fromEntries(
-    Object.entries(env)
+    Object.entries(process.env)
       .map(([key, value]) => {
         if (!key.startsWith('NEXT_PUBLIC_')) {
           return undefined
